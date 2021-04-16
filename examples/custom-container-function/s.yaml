@@ -1,0 +1,36 @@
+edition: 1.0.0          #  命令行YAML规范版本，遵循语义化版本（Semantic Versioning）规范
+name: fcDeployApp       #  项目名称
+access: aliyun-release  #  秘钥别名
+
+services:
+  fc-deploy-test: #  服务名称
+    component: fc-deploy  # 组件名称
+    props: #  组件的属性值
+      region: cn-shanghai
+      service:
+        name: qianfeng-fc-deploy-service
+        description: 'demo for fc-deploy component'
+        internetAccess: true
+      function:
+        name: custom-container-function
+        runtime: custom-container
+        customContainerConfig:
+          image: xxx
+        environmentVariables:
+          testEnv: true
+      triggers:
+        - name: httpTrigger
+          type: http
+          config:
+            authType: anonymous
+            methods:
+              - GET
+      customDomains:
+        - domainName: auto
+          protocol: HTTP
+          routeConfigs:
+            - path: /a
+              serviceName: qianfeng-fc-deploy-service
+              functionName: custom-container-function
+              methods:
+                - GET

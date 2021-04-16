@@ -1,0 +1,48 @@
+edition: 1.0.0          #  命令行YAML规范版本，遵循语义化版本（Semantic Versioning）规范
+name: fcApp       #  项目名称
+access: default  #  秘钥别名
+
+services:
+  fc-test: #  服务名称
+    # component: fc  # 组件名称
+    component: /Users/zqf/Documents/git_proj/devsapp/component/fc/
+    props: #  组件的属性值
+      region: cn-shanghai
+      service:
+        name: qianfeng-fc-service
+        description: demo for fc component
+        internetAccess: true
+      function:
+        name: test-function
+        description: this is a test
+        runtime: nodejs10
+        codeUri: ./code
+        handler: index.handler
+        memorySize: 128
+        timeout: 60
+        initializationTimeout: 60
+        initializer: index.initializer
+        instanceConcurrency: 1
+        instanceType: e1
+        environmentVariables:
+          testEnv: true
+      triggers:
+        - name: httpTrigger
+          type: http
+          config:
+            authType: anonymous
+            methods:
+              - GET
+      customDomains:
+        - domainName: auto
+          protocol: HTTP  # HTTP 或 HTTP,HTTPS
+          routeConfigs:
+            - path: /*
+              serviceName: qianfeng-fc-service
+              functionName: test-function
+              methods:
+                - GET
+          # certConfig:
+          #   certName: xxx
+          #   certificate: xxx
+          #   privateKey: xxx
