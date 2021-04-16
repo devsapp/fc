@@ -1,0 +1,111 @@
+Type: Component
+Name: fc-domain
+Provider:
+  - Alibaba
+Version: 0.0.1
+Description: 阿里云函数计算基础组件
+HomePage: https://github.com/devsapp/fc-base
+Tags:
+  - 函数计算
+Category: 基础云产品
+Commands:
+  deploy: 部署域名
+  remove: 移除域名
+Service:
+  函数计算:
+    Authorities:
+      - 函数计算全部权限
+Properties:
+  region:
+    Description:
+      zh: 地域
+      en: Region
+    Required: true
+    Type:
+      - Enum:
+          - cn-beijing
+          - cn-hangzhou
+          - cn-shanghai
+          - cn-qingdao
+          - cn-zhangjiakou
+          - cn-huhehaote
+          - cn-shenzhen
+          - cn-chengdu
+          - cn-hongkong
+          - ap-southeast-1
+          - ap-southeast-2
+          - ap-southeast-3
+          - ap-southeast-5
+          - ap-northeast-1
+          - eu-central-1
+          - eu-west-1
+          - us-west-1
+          - us-east-1
+          - ap-south-1
+  customDomain:
+    Description: 
+    Required: true
+    Type:
+      - Struct:
+          domainName:
+            Required: true
+            Description: domain 名称
+            Type:
+              - String
+          protocol:
+            Required: true
+            Description: 自定义域名支持的协议类型
+            Type:
+              - Enum:
+                - HTTP
+                - HTTP,HTTPS
+          routeConfigs:
+            Required: true
+            Description: 路由表，配置路径和函数的映射关系
+            Type:
+              - List<Struct>:
+                path:
+                  Required: true
+                  Description: 自定义域名路径
+                  Type:
+                    - String
+                serviceName:
+                  Required: true
+                  Description: 服务名称
+                  Type:
+                    - String
+                functionName:
+                  Required: true
+                  Description: 函数名称
+                  Type:
+                    - String
+                qualifier:
+                  Required: false
+                  Description: 服务版本
+                  Type:
+                    - String
+                methods:
+                  Required: true
+                  Description: HTTP 访问方法
+                  Type:
+                    - List<String>
+          certConfig:
+            Required: false
+            Description: https 证书信息（仅当 Protocol 为 HTTP,HTTPS 时配置）
+            Type:
+              - Struct:
+                  certName:
+                    Required: true
+                    Description: 证书名称
+                    Type:
+                      - String
+                  certificate:
+                    Required: true
+                    Description: 证书
+                    Type:
+                      - String
+                  privateKey:
+                    Required: true
+                    Description: 私钥
+                    Type:
+                      - String
