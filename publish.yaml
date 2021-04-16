@@ -2,7 +2,7 @@ Type: Component
 Name: fc-domain
 Provider:
   - Alibaba
-Version: 0.0.1
+Version: 0.1.1
 Description: 阿里云函数计算基础组件
 HomePage: https://github.com/devsapp/fc-base
 Tags:
