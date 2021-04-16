@@ -1,6 +1,6 @@
 {
   "name": "fc",
-  "version": "0.1.1",
+  "version": "0.0.1",
   "dependencies": {
     "@serverless-devs/core": "^0.0.62",
     "@types/shelljs": "^0.8.8"

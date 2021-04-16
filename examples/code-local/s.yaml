@@ -4,8 +4,8 @@ access: default  #  秘钥别名
 
 services:
   fc-test: #  服务名称
-    # component: fc  # 组件名称
-    component: /Users/zqf/Documents/git_proj/devsapp/component/fc/
+    component: fc  # 组件名称
+    # component: /Users/zqf/Documents/git_proj/devsapp/component/fc/
     props: #  组件的属性值
       region: cn-shanghai
       service:
