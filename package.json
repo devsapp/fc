@@ -1,9 +1,11 @@
 {
   "name": "fc",
   "version": "0.0.2",
+  "main": "./dist/index.js",
   "dependencies": {
-    "@serverless-devs/core": "^0.0.62",
-    "@types/shelljs": "^0.8.8"
+    "@serverless-devs/core": "^0.0.85",
+    "@types/shelljs": "^0.8.8",
+    "@alicloud/fc2": "^2.2.1"
   },
   "devDependencies": {
     "@types/eslint": "^7.2.6",

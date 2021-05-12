@@ -1,5 +1,6 @@
 import * as core from '@serverless-devs/core';
 import { ICredentials } from './lib/interface/profile';
+import { Info } from './lib/interface/fc/info';
 import { IInputs, IProperties } from './lib/interface/interface';
 import * as _ from 'lodash';
 
@@ -73,5 +74,22 @@ export default class FcBaseComponent {
     await this.report('fc', 'remove', undefined, inputs?.project?.access);
     const fcDployComponentIns = await core.load(componentName);
     await fcDployComponentIns.remove(fcDeployComponentInputs);
+  }
+
+  async info(inputs: IInputs): Promise<void> {
+    const apts = {
+            boolean: ['help'],
+            alias: {help: 'h'},
+        };
+    const comParse = core.commandParse({args: inputs.args}, apts);
+     // 将Args转成Object
+    comParse.data = comParse.data || {}
+    const region = comParse.data['region'] || inputs.props.region
+    const functionName = comParse.data['function-name']  || inputs.props.function.name
+    const serviceName = comParse.data['service-name']  || inputs.props.service.name
+    await this.report('fc', 'info', undefined, inputs?.project?.access);
+    const credential = await core.getCredential(inputs.project.access)
+    const infoClient = new Info(credential, region)
+    return infoClient.info(serviceName, functionName)
   }
 }
