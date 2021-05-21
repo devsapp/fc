@@ -64,7 +64,7 @@ export default class FcBaseComponent {
     const fcDeployComponentInputs = this.handlerComponentInputs(inputs, componentName);
     await this.report('fc', 'deploy', undefined, inputs?.project?.access);
     const fcDployComponentIns = await core.load(componentName);
-    await fcDployComponentIns.deploy(fcDeployComponentInputs);
+    return await fcDployComponentIns.deploy(fcDeployComponentInputs);
   }
 
   async remove(inputs: IInputs): Promise<void> {
