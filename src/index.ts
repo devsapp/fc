@@ -2,6 +2,7 @@ import * as core from '@serverless-devs/core';
 import { ICredentials } from './lib/interface/profile';
 import { IInputs, IProperties } from './lib/interface/interface';
 import * as _ from 'lodash';
+import { COMPONENT_HELP_INFO } from './lib/static';
 
 export default class FcBaseComponent {
   @core.HLogger('FC') logger: core.ILogger;
@@ -49,7 +50,7 @@ export default class FcBaseComponent {
     return {
       project: {
         component: componentName,
-        projectName,
+        projectName: `${projectName}-${componentName}-project`,
         access,
       },
       appName,
@@ -73,5 +74,9 @@ export default class FcBaseComponent {
     await this.report('fc', 'remove', undefined, inputs?.project?.access);
     const fcDployComponentIns = await core.load(componentName);
     await fcDployComponentIns.remove(fcDeployComponentInputs);
+  }
+
+  help(): void {
+    core.help(COMPONENT_HELP_INFO);
   }
 }
