@@ -5,7 +5,7 @@ export const COMPONENT_HELP_INFO = [
   },
   {
     header: 'Synopsis',
-    content: '$ fc <command> <options>',
+    content: '$ s <command> <options>',
   },
   {
     header: 'Command List',
@@ -13,6 +13,8 @@ export const COMPONENT_HELP_INFO = [
       { name: 'help', summary: 'Display help information.' },
       { name: 'deploy', summary: 'Deploy alicloud function computer resources.' },
       { name: 'remove', summary: 'Remove alicloud function computer resources.' },
+      { name: 'local', summary: 'Local debug alicloud function.' },
+      { name: 'info', summary: 'Get information of alicloud function computer resources.' },
     ],
   },
   {
