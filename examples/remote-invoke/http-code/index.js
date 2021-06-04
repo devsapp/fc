@@ -1,7 +1,6 @@
 const getRawBody = require('raw-body');
 
 module.exports.handler = function (request, response, context) {
-
   // get request body
   getRawBody(request, (err, data) => {
     const respBody = {

@@ -1,7 +1,6 @@
 import * as core from '@serverless-devs/core';
 import * as _ from 'lodash';
 import { COMPONENT_HELP_INFO } from './lib/static';
-import { isAutoConfig, genServiceStateID } from './lib/utils';
 import tarnsformNas from './lib/tarnsform-nas';
 import { ICredentials } from './lib/interface/profile';
 import { IInputs, IProperties } from './lib/interface/interface';
@@ -122,7 +121,7 @@ export default class FcBaseComponent {
       property = {
         region: props?.region,
         serviceName: props?.service?.name,
-      }
+      };
 
       if (!_.isNil(props?.function?.name)) {
         property.functionName = props?.function?.name;
@@ -164,47 +163,46 @@ export default class FcBaseComponent {
     const invokePayload: FcSyncProps = {
       region: props?.region,
       serviceName: props?.service?.name,
-      functionName: props?.function?.name
+      functionName: props?.function?.name,
     };
-    
+
     await this.componentMethodCaller(inputs, 'devsapp/fc-remote-invoke', 'invoke', invokePayload, args);
   }
 
   async logs(inputs: IInputs): Promise<any> {
-    const { props, args, project } = this.handlerComponentInputs(inputs);
+    const { props, args } = this.handlerComponentInputs(inputs);
 
     const comParse: any = core.commandParse({ args });
     if (comParse?.data?.help || comParse?.data?.h) {
-      await this.componentMethodCaller(inputs, 'devsapp/logs', 'logs', props, args)
+      await this.componentMethodCaller(inputs, 'devsapp/logs', 'logs', props, args);
       return;
     }
 
     const region = props?.region;
     const serviceName = props?.service?.name;
-    let logConfig = props?.service?.logConfig;
-    if (!logConfig) {
-      throw new Error('Not fount logConfig.');
-    } else if (isAutoConfig(logConfig)) {
-      const credential: ICredentials = await core.getCredential(project?.access);
-      const stateId = genServiceStateID(credential.AccountID, props?.region, serviceName);
-      logConfig = (await core.getState(stateId))?.resolvedConfig?.logConfig;
-      
-      if (!logConfig) {
-        throw new Error('It is detected that logConfig is auto, but the configuration is not obtained, please execute the [deploy] first.');
+
+    let logsPayload: LogsProps;
+    try {
+      const { logConfig } = (await this.info(inputs)).service || {};
+
+      if (!isLogConfig(logConfig)) {
+        throw new Error('The service logConfig is not found online, please confirm whether logConfig is configured first, and then execute [s exec - deploy].');
       }
+
+      logsPayload = {
+        logConfig,
+        region,
+        topic: serviceName,
+        query: props?.function?.name,
+      };
+    } catch (ex) {
+      if (ex.code?.endsWith('NotFound')) {
+        throw new Error(`Online search failed, error message: ${ex.message}. Please execute [s exec -- deploy]`);
+      }
+      throw ex;
     }
 
-    if (!isLogConfig(logConfig)) {
-      throw new Error(`logConfig does not meet expectations, the value obtained is ${JSON.stringify(logConfig)}, and the expected value exists in project,logstore.`);
-    }
-    const logsPayload: LogsProps = {
-      logConfig,
-      region,
-      topic: serviceName,
-      query: props?.function?.name,
-    }
-
-    await this.componentMethodCaller(inputs, 'devsapp/logs', 'logs', logsPayload, args)
+    await this.componentMethodCaller(inputs, 'devsapp/logs', 'logs', logsPayload, args);
   }
 
   async metrics(inputs: IInputs): Promise<any> {
@@ -215,7 +213,7 @@ export default class FcBaseComponent {
       serviceName: props?.service?.name,
       functionName: props?.function?.name,
     };
-    
+
     await this.componentMethodCaller(inputs, 'devsapp/fc-metrics', 'metrics', payload, args);
   }
 
@@ -225,11 +223,11 @@ export default class FcBaseComponent {
 
   async nas(inputs: IInputs) {
     const { props, args, project } = this.handlerComponentInputs(inputs);
-    const SUPPORTED_METHOD = ['ls', 'cp', 'rm', 'download', 'upload', 'command'];
+    const SUPPORTED_METHOD = ['remove', 'deploy', 'ls', 'cp', 'rm', 'download', 'upload', 'command'];
 
     const apts = {
       boolean: ['all', 'long', 'help', 'recursive', 'no-clobber', 'force'],
-      alias: { force: 'f', 'no-clobber': 'n', recursive: 'r', help: 'h', all: 'a', long: 'l' }
+      alias: { force: 'f', 'no-clobber': 'n', recursive: 'r', help: 'h', all: 'a', long: 'l' },
     };
     const comParse: any = core.commandParse({ args }, apts);
 
@@ -247,7 +245,7 @@ export default class FcBaseComponent {
       return;
     }
 
-    let tarnsformArgs = args.replace(commandName, '').replace(/(^\s*)|(\s*$)/g, '');
+    const tarnsformArgs = args.replace(commandName, '').replace(/(^\s*)|(\s*$)/g, '');
 
     if (nonOptionsArgs.length === 1 && comParse?.data?.help) {
       await this.componentMethodCaller(inputs, 'devsapp/nas', commandName, inputs.props, tarnsformArgs);
