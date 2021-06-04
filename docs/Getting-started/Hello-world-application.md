@@ -218,7 +218,7 @@ RequestId: c254fdb0-281d-4a67-b00f-a9a7d8af0e47 	 Billed Duration: 447 ms 	 Memo
 $ s deploy
 ```
 
-> 注：默认部署模式为 sdk 模式，即底层直接依赖函数计算 SDK 进行部署，若您想切换到 pulumi 模式，则需要运行指令 `s cli fc-default set deploy-type pulumi` 进行模式切换。本教程使用默认的 sdk 模式进行部署，更多信息请参考[部署模式]()。
+> 注：默认部署模式为 sdk 模式，即底层直接依赖函数计算 SDK 进行部署，若您想切换到 pulumi 模式，则需要运行指令 `s cli fc-default set deploy-type pulumi` 进行模式切换。本教程使用默认的 sdk 模式进行部署，更多信息请参考[部署模式](../Usage/deploy.md#部署模式)。
 
 ### 示例输出
 
@@ -364,7 +364,7 @@ End of method: invoke
 
 远端调用会触发线上函数运行并返回结果，由于本教程使用的示例函数是函数计算 HTTP 函数，因此您也可以通过 `curl` 指令来触发线上函数执行。
 
-步骤四中 `s deploy` 的输出会包含 [HTTP 触发器](https://help.aliyun.com/document_detail/71229.html?spm=a2c4g.11186623.6.711.64ad7f8cz2HDWI)的 URL:
+步骤四中 `s deploy` 的输出会包含 [HTTP 触发器](https://help.aliyun.com/document_detail/71229.html?spm=a2c4g.11186623.6.711.64ad7f8cz2HDWI) 的 URL:
 
 ```shell
 systemDomain: >-
