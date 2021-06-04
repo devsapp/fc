@@ -9,8 +9,16 @@ Tags:
   - 函数计算
 Category: 基础云产品
 Commands:
-  deploy: 部署函数
-  remove: 移除函数
+  deploy: 部署资源
+  remove: 删除资源
+  local: 本地调试
+  build: 构建函数
+  invoke: 远端调用
+  info: 获取线上资源配置
+  sync: 同步线上资源配置/代码到本地
+  logs: 实时获取线上函数的运行日志
+  metrics: 查看线上函数的监控指标
+  nas: 管理远端 NAS 文件系统中的文件
 Service:
   函数计算:
     Authorities:
