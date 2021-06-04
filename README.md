@@ -30,10 +30,10 @@
 
 ## 文档目录
 
-- [入门相关](./Getting-started/Getting-started.md)
-    - [开发工具安装](./Getting-started/Install-tutorial.md)
-    - [账号配置](./Getting-started/Setting-up-credentials.md)
-    - [快速体验](./Getting-started/Hello-world-application.md)
+- [入门相关](./docs/Getting-started/Getting-started.md)
+    - [开发工具安装](./docs/Getting-started/Install-tutorial.md)
+    - [账号配置](./docs/Getting-started/Setting-up-credentials.md)
+    - [快速体验](./docs/Getting-started/Hello-world-application.md)
 
 ----
 
