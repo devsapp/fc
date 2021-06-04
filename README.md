@@ -1,139 +1,52 @@
-# 阿里云函数计算组件
+# 阿里云函数计算（FC）组件
 
-## 指令
+[阿里云函数计算（FC）组件](https://github.com/devsapp/fc) 是一个用于支持阿里云 Serverless 应用全生命周期的工具，它通过资源配置文件 (s.yml) ，可以快速帮助用户便捷地开发、构建、测试以及部署应用到[阿里云函数计算平台](https://www.aliyun.com/product/fc?spm=5176.19720258.J_8058803260.115.e9392c4aHejRf3) 。
 
-```shell
-# 部署
-s deploy --help
+阿里云函数计算（FC）组件基于[Serverless Devs](https://www.serverless-devs.com/) 进行开发，主要支持两种使用形态: 
 
-# 删除
-s remove --help
-```
+1. 通过Yaml文件进行资源描述。使用阿里云函数计算（FC）组件的 YAML 规范(`s.yaml`)定义 Serverless 资源。它包含了函数计算的服务、函数、触发器以及自定义域名等资源，阿里云函数计算（FC）组件的 YAML 规范详细信息可参考[FC组件YAML规范](./Others/yaml.md)。
 
-## yaml 示例
+2. 通过交互式命令行进行相关能力管理。您能够利用阿里云函数计算（FC）组件命令行接口来完成 Serverless 应用的开发部署。该命令行接口能够帮助您校验 `s.yml`，构建函数，本地调试函数，部署函数至函数计算并对其进行观测。阿里云函数计算（FC）组件命令行接口的详细使用可参考[命令行接口](./Others/cli.md)。
 
-```yaml
-demo:
-  Component: fc-deploy
-  Provider: alibaba
-  Access: default
-  Properties:
-    region: cn-qingdao
-    service:
-      name: qianfeng-fc-deploy-service
-      description: demo for fc-deploy component
-      internetAccess: true
-      role: 'acs:ram::xxx:role/qianfeng-fc-deploy-test-role'
-      nasConfig:
-        userId: 10003
-        groupId: 10003
-        mountPoints:
-          - serverAddr: xxx.cn-qingdao.nas.aliyuncs.com
-            nasDir: /qianfeng-fc-deploy-service
-            fcDir: /mnt/auto
-      vpcConfig:
-        vpcId: xxx
-        securityGroupId: xxx
-        vswitchIds:
-          - vsw-xxx
-      logConfig:
-        project: xxx
-        logstore: xxx
-    function:
-      name: qianfeng-fc-base-service
-      description: 'this is test'
-      filename: './code.zip'
-      ossBucket: xxx
-      ossKey: xxx
-      handler: 'index.handler'
-      memorySize: 128
-      runtime: nodejs12
-      timeout: 60
-      caPort: 9000
-      customContainerConfig:
-        image: xxx
-        command: xxx
-        args: xxx
-      environmentVariables:
-        key: 'value'
-      initializationTimeout: 20
-      initializer: index.initializer
-      instanceConcurrency: 1
-      instanceType: e
-    triggers:
-    	- name: httpTrigger
-        type: http
-        config:
-          authType: anonymous
-          methods:
-            - GET
-      - name: timerTrigger
-        type: timer
-        config:
-          cronExpression: '0 0 8 * * *'
-          enable: true
-          payload: 'awesome-fc'
-      - name: ossTrigger
-        type: oss
-        role: xxx
-        sourceArn: xxx
-        config:
-          bucketName: fassdemo
-          events:
-            - oss:ObjectCreated:*
-            - oss:ObjectRemoved:DeleteObject
-          filter:
-            Key:
-              Prefix: source/
-              Suffix: .png
-      - name: logTrigger
-        type: log
-        role: xxx
-        sourceArn: xxx
-        config:
-          logConfig:
-            project: fass-demo
-            logstore: fc-log
-          jobConfig:
-            maxRetryTime: 1
-            triggerInterval: 30
-          sourceConfig:
-            logstore: function-log
-          functionParameter:
-            key: val
-          enable: true
-      - name: mnsTrigger
-        type: mns_topic
-        role: xxx
-        sourceArn: xxx
-        config:
-          topicName: test-topic
-          region: cn-hangzhou
-          notifyContentFormat: 'JSON'
-          notifyStrategy: 'BACKOFF_RETRY'
-      - name: cdnTrigger
-        type: cdn_events
-        role: xxx
-        sourceArn: xxx
-        config:
-          eventName: LogFileCreated
-          eventVersion: '1.0.0'
-          notes: cdn events trigger test
-          filter:
-            domain: 
-              - 'www.taobao.com'
-              - 'www.tmall.com'
-    customDomains:
-      - domainName: auto
-        protocol: HTTP
-        routeConfigs:
-          - path: /a
-            serviceName: qianfeng-fc-deploy-service
-            functionName: custom-container-function
-            methods:
-              - GET
-        certConfig:
-        	certName: xxx
-        	certificate: xxx
-        	privateKey: xxx
-```
+> 额外说明：如果您想要通过命令行对函数计算进行管理，例如查看服务列表、函数列表、触发器列表.....，您也可以参考我们的[fc-api 功能](https://github.com/devsapp/fc-api), 或者直接在 Serverless Devs 工具执行命令 `s cli fc-api -h` 获取帮助；
+
+本文档将帮助您使用 阿里云函数计算（FC）组件 去开发函数计算应用。
+
+## 组件的优势
+
+使用阿里云函数计算（FC）组件有如下几点优势：
+
+- 🌇 小而美的设计: 该组件支持部署、移除、调用、调试、构建、日志等十余项功能，为了保证组件使用的流畅性，所有的功能均是按需加载；
+
+- 😉 多样化部署能力: 该组件目前支持两种部署模式：`Pulumi` 以及 `SDK`。用户可以在这两种部署模式之间自由切换，详情可参考[部署模式](Usage/deploy.md#部署模式)；
+
+- 🖥️ 线上资源感知：该组件在进行部署时能够感知线上已有的函数计算资源，并由用户进行自由选择，详情可参考[部署感知](Usage/deploy.md#部署感知)；
+
+- 👁️ 可观测性支持：该组件不仅涵盖了 Serverless 应用的开发态，还能够监控其运行态，详情可参考[监控能力](Usage/metrics.md)；同时也可以查看某些服务的执行日志，详情可参考[监控能力](Usage/logs.md)；
+
+## 快速开始
+
+🔑 为了让您可以更简单体验阿里云函数计算（FC）组件，您可以参考[快速入门文档](./Getting-started/Hello-world-application.md)
+
+## 文档目录
+
+- [入门相关](./Getting-started/Getting-started.md)
+    - [开发工具安装](./Getting-started/Install-tutorial.md)
+    - [账号配置](./Getting-started/Setting-up-credentials.md)
+    - [快速体验](./Getting-started/Hello-world-application.md)
+
+----
+
+# More
+
+## 讨论交流
+
+钉钉群号: `11721331`
+
+## 问题反馈
+
+如您在使用中遇到问题，可以在[这里反馈](https://github.com/devsapp/fc/issues)
+
+## 开源许可
+
+The MIT License
