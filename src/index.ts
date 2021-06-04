@@ -217,10 +217,6 @@ export default class FcBaseComponent {
     await this.componentMethodCaller(inputs, 'devsapp/fc-metrics', 'metrics', payload, args);
   }
 
-  async stress(inputs: IInputs): Promise<any> {
-
-  }
-
   async nas(inputs: IInputs) {
     const { props, args, project } = this.handlerComponentInputs(inputs);
     const SUPPORTED_METHOD = ['remove', 'deploy', 'ls', 'cp', 'rm', 'download', 'upload', 'command'];
