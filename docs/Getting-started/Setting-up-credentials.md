@@ -6,10 +6,10 @@
 
 1. 执行`s config add`，并选择`Alibaba Cloud (alibaba)`选项；
 2. 根据[提示: 🧭 Refer to the document for alibaba key:  http://config.devsapp.net/account/alibaba](http://www.serverless-devs.com/docs/provider-config/alibabacloud) ，获取阿里云密钥信息。   
-也可以通过以下步骤快速获取密钥信息：
+也可以通过以下步骤在[函数计算首页](https://fc.console.aliyun.com/)快速获取密钥信息：
 ![](https://img.alicdn.com/tfs/TB13J02wp67gK0jSZPfXXahhFXa-2424-1380.png)
 ![](https://img.alicdn.com/tfs/TB1cYuGwuH2gK0jSZJnXXaT1FXa-2424-1380.png)
-3. 按照命令行提醒，填入对应的`AccountID`, `AccessKeyID`, `AccessKeySecret`等信息，并推荐您为该密钥提供一个别名（`Alia`）以便于后续配置多密钥时可以更容易区分（密钥别名默认为`default`）。
+3. 按照命令行提醒，填入对应的`AccountID`, `AccessKeyID`, `AccessKeySecret`等信息，并推荐您为该密钥提供一个别名（`Alias`）以便于后续配置多密钥时可以更容易区分（密钥别名默认为`default`）。
 
 > 注意：密钥信息为非常敏感信息，请您注意保护，切勿泄漏给他人使用。强烈推荐您根据阿里云访问控制的最佳实践文档，对密钥进行权限控制等。
 > - [企业上云安全实践](https://help.aliyun.com/document_detail/102600.html?spm=a2c4g.11186623.6.705.17702d44PNMPMr)
