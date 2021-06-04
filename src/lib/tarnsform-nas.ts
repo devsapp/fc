@@ -3,7 +3,7 @@ import { isEmpty, isString } from 'lodash';
 import { isAutoConfig, genServiceStateID } from './utils';
 import { ICredentials } from './interface/profile';
 
-export default async function toNas (props, nonOptionsArgs, args, access) {
+export default async function toNas(props, nonOptionsArgs, args, access) {
   const {
     vpcConfig,
     nasConfig,
@@ -18,7 +18,7 @@ export default async function toNas (props, nonOptionsArgs, args, access) {
   if (!vpcConfig) {
     throw new Error('Not fount vpcConfig.');
   }
-  
+
   const { vpcId, vswitchIds, securityGroupId } = vpcConfig;
 
   if (!vpcId) {
@@ -33,7 +33,7 @@ export default async function toNas (props, nonOptionsArgs, args, access) {
   const fcDirInput = getFcDirPath(nonOptionsArgs);
   const { serverAddr, nasDir, tarnsforInputDir } = getMount(fcDirInput, mountPoints);
   if (!serverAddr) {
-    core.Logger.warn('FC', 'Not fount serverAddr/serverAddr');
+    core.Logger.warn('FC', 'Not fount serverAddr/nasDir');
   }
 
   return {
@@ -51,7 +51,7 @@ export default async function toNas (props, nonOptionsArgs, args, access) {
       mountPointDomain: serverAddr,
       nasDir,
       // excludes,
-    }
+    },
   };
 }
 
@@ -77,18 +77,18 @@ function getFcDirPath(inputPaths: string[]) {
   }
 }
 
-async function getServiceConfig (props, access) {
-  let { name, vpcConfig, nasConfig, role } = props?.service || {};
+async function getServiceConfig(props, access) {
+  const { name, vpcConfig, nasConfig, role } = props?.service || {};
 
   if (isAutoConfig(nasConfig) || isAutoConfig(vpcConfig) || !isString(role)) {
     const credential: ICredentials = await core.getCredential(access);
     const stateId = genServiceStateID(credential.AccountID, props?.region, name);
     const data = (await core.getState(stateId))?.resolvedConfig || {};
-  
+
     if (isEmpty(data)) {
-      throw new Error('Configuration is not obtained, please execute the [deploy] first.');
+      throw new Error('Configuration is not obtained, please execute the [s exec -- deploy] first.');
     }
-    
+
     return data;
   }
 
@@ -97,5 +97,5 @@ async function getServiceConfig (props, access) {
     nasConfig,
     name,
     role: props?.service?.role,
-  }
+  };
 }
