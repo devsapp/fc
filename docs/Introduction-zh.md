@@ -34,7 +34,17 @@
     - [开发工具安装](./Getting-started/Install-tutorial.md)
     - [账号配置](./Getting-started/Setting-up-credentials.md)
     - [快速体验](./Getting-started/Hello-world-application.md)
-
+- 指令使用方法
+    - [部署操作：Deploy](./Usage/deploy.md)
+    - [构建操作：Build](./Usage/build.md)
+    - [查看操作：Info](./Usage/info.md)
+    - [远程调用操作：Invoke](./Usage/invoke.md)
+    - [本地调用操作：Local](./Usage/local.md)
+    - [查看日志操作：Logs](./Usage/logs.md)
+    - [指标查询操作：Metrics](./Usage/metrics.md)
+    - [硬盘挂载操作：Nas](./Usage/nas.md)
+    - [移除操作：Remove](./Usage/remove.md)
+    - [同步操作：Sync](./Usage/sync.md)
 ----
 
 # More

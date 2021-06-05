@@ -49,3 +49,6 @@ Examples with CLI
   You can refer to the usage of fc-api and execute [s cli fc-api -h] for help
 
 ```
+
+# 快速使用
+
