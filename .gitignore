@@ -41,3 +41,4 @@ lerna-debug.log*
 **/s.origin.yaml
 **/.env
 examples/fc-build/java/target
+package-lock.json

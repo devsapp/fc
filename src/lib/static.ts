@@ -4,17 +4,22 @@ export const COMPONENT_HELP_INFO = [
     content: 'You can use the component to manager and develop your alicloud function computer resources.',
   },
   {
-    header: 'Synopsis',
+    header: 'Usage',
     content: '$ s <command> <options>',
   },
   {
     header: 'Command List',
     content: [
       { name: 'help', summary: 'Display help information.' },
-      { name: 'deploy', summary: 'Deploy alicloud function computer resources.' },
-      { name: 'remove', summary: 'Remove alicloud function computer resources.' },
-      { name: 'local', summary: 'Local debug alicloud function.' },
+      { name: 'deploy', summary: 'Deploy serverless application.' },
+      { name: 'remove', summary: 'Remove serverless application.' },
+      { name: 'local', summary: 'Local debug serverless application.' },
       { name: 'info', summary: 'Get information of alicloud function computer resources.' },
+      { name: 'build', summary: 'Build artifacts for your serverless application.' },
+      { name: 'sync', summary: 'Sync remote serverless application config/code to local.' },
+      { name: 'logs', summary: 'Get the logs of the remote serverless application.' },
+      { name: 'metrics', summary: 'Display the metrics of the remote serverless application.' },
+      { name: 'nas', summary: 'Manage the file resource in the NAS file system.' },
     ],
   },
   {
@@ -29,7 +34,7 @@ export const COMPONENT_HELP_INFO = [
     ],
   },
   {
-    header: 'Examples',
+    header: 'Examples with Yaml',
     content: [
       '$ fc {bold deploy} --help',
       '$ fc {bold remove} --help',
