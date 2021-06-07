@@ -1,6 +1,6 @@
 import * as core from '@serverless-devs/core';
 import * as _ from 'lodash';
-import { COMPONENT_HELP_INFO } from './lib/static';
+import { COMPONENT_HELP_INFO, LOCAL_HELP_INFO } from './lib/static';
 import tarnsformNas from './lib/tarnsform-nas';
 import { ICredentials } from './lib/interface/profile';
 import { IInputs, IProperties } from './lib/interface/interface';
@@ -9,6 +9,7 @@ import { FcInfoProps } from './lib/interface/component/fc-info';
 import { FcSyncProps } from './lib/interface/component/fc-sync';
 import { FcMetricsProps } from './lib/interface/component/fc-metrics';
 import { LogsProps } from './lib/interface/component/logs';
+import * as tips from './lib/tips';
 
 const SUPPORTED_LOCAL_METHOD: string[] = ['invoke', 'start'];
 export default class FcBaseComponent {
@@ -81,7 +82,9 @@ export default class FcBaseComponent {
 
   async deploy(inputs: IInputs): Promise<any> {
     const { props, args } = this.handlerComponentInputs(inputs);
-    return await this.componentMethodCaller(inputs, 'devsapp/fc-deploy', 'deploy', props, args);
+    const deployRes: any = await this.componentMethodCaller(inputs, 'devsapp/fc-deploy', 'deploy', props, args);
+    tips.showDeployNextTips();
+    return deployRes;
   }
 
   async remove(inputs: IInputs): Promise<any> {
@@ -134,11 +137,19 @@ export default class FcBaseComponent {
   async build(inputs: IInputs): Promise<any> {
     const { props, args } = this.handlerComponentInputs(inputs);
     await this.componentMethodCaller(inputs, 'devsapp/fc-build', 'build', props, args);
+    tips.showBuildNextTips();
   }
 
   async local(inputs: IInputs): Promise<any> {
     const { props, args } = this.handlerComponentInputs(inputs);
-    const parsedArgs: {[key: string]: any} = core.commandParse({ args });
+    const parsedArgs: {[key: string]: any} = core.commandParse({ args }, {
+      boolean: ['help'],
+      alias: { help: 'h' } });
+    const argsData: any = parsedArgs?.data || {};
+    if (argsData?.help) {
+      core.help(LOCAL_HELP_INFO);
+      return;
+    }
     const nonOptionsArgs = parsedArgs.data?._;
     if (!nonOptionsArgs || nonOptionsArgs.length === 0) {
       this.logger.error(' Error: expects argument invoke/start.');
@@ -154,7 +165,9 @@ export default class FcBaseComponent {
     const fcInfoArgs: string = args ? args.replace(methodName, '').replace(/(^\s*)|(\s*$)/g, '') : '';
 
     this.logger.debug(`Args of fc-info is: ${fcInfoArgs}`);
-    return await this.componentMethodCaller(inputs, 'devsapp/fc-local-invoke', methodName, props, fcInfoArgs);
+    const localRes: any = await this.componentMethodCaller(inputs, 'devsapp/fc-local-invoke', methodName, props, fcInfoArgs);
+    tips.showLocalNextTips();
+    return localRes;
   }
 
   async invoke(inputs: IInputs): Promise<any> {
@@ -255,7 +268,8 @@ export default class FcBaseComponent {
     await this.componentMethodCaller(inputs, 'devsapp/nas', commandName, payload.payload, payload.tarnsformArgs);
   }
 
-  help(): void {
+  async help(inputs: IInputs): Promise<void> {
+    await this.report('fc', 'help', null, inputs?.project?.access);
     core.help(COMPONENT_HELP_INFO);
   }
 }

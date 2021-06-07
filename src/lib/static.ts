@@ -42,3 +42,39 @@ export const COMPONENT_HELP_INFO = [
     ],
   },
 ];
+
+export const LOCAL_HELP_INFO = [
+  {
+    header: 'local',
+    content: 'You can use the subcommand to local invoke your serverless application..',
+  },
+  {
+    header: 'Usage',
+    content: '$ s local <command> <options>',
+  },
+  {
+    header: 'Command List',
+    content: [
+      { name: 'invoke', summary: 'Invoke alicloud fc event function locally.' },
+      { name: 'start', summary: 'Invoke alicloud fc http function locally.' },
+    ],
+  },
+  {
+    header: 'Global Options',
+    optionList: [
+      {
+        name: 'help',
+        description: 'Display help for command.',
+        alias: 'h',
+        type: Boolean,
+      },
+    ],
+  },
+  {
+    header: 'Examples with Yaml',
+    content: [
+      '$ s local {bold invoke} {bold --help}',
+      '$ s local {bold start} {bold --help}',
+    ],
+  },
+];
