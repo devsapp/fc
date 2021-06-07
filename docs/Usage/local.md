@@ -27,7 +27,7 @@ SubCommand:
 ```
 
 Local命令为我们提供了两个子命令：
-- invoke: 本地调试/测试事件函数，，可以通过`s local invoke -h`获取帮助文档
+- invoke: 本地调试/测试事件函数，可以通过`s local invoke -h`获取帮助文档
     ```
     Local Invoke
     
