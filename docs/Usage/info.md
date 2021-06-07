@@ -97,7 +97,6 @@ s cli fc info --region cn-hongkong --service-name ai-album --function-name pre-w
 此时可以看到结果：
 
 ```
-jiangyu@ServerlessSecurity test % s cli fc info --region cn-hongkong --service-name ai-album --function-name pre-warm
 service:
   name: ai-album
   internetAccess: true
@@ -108,26 +107,11 @@ service:
     vswitchIds:
       - vsw-j6c797ywau90y6y03ohbq
     vpcId: vpc-j6c9lk4av0859r4e0tff7
-  nasConfig:
-    userId: 10003
-    groupId: 10003
-    mountPoints:
-      - serverAddr: 12391848a0f-qek21.cn-hongkong.nas.aliyuncs.com
-        nasDir: /ai-album
-        fcDir: /mnt/auto
-  logConfig:
-    logstore: functions
-    project: ai-album
 function:
   name: pre-warm
   runtime: python3
   handler: index.handler
-  timeout: 60
-  instanceType: e1
-  memorySize: 128
-  initializationTimeout: 3
-  instanceConcurrency: 1
-  environmentVariables: {}
+
 ```
 
 # 其他替代方法
