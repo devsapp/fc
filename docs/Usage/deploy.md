@@ -7,7 +7,7 @@
     - [函数部署的"底座"](#函数部署的"底座")
         - [pulumi部署方案](#pulumi部署方案)
         - [sdk部署方案](#sdk部署方案)
-        - [如何支持CI/CD](#如何支持CI/CD)
+    - [如何支持CI/CD](#如何支持CI/CD)
 - [其他方案切换](#其他方案切换)
     - [从Funcraft过渡到Serverless Devs](#从Funcraft过渡到Serverless-Devs)
     - [从ROS切换到Serverless Devs](#从ROS切换到Serverless-Devs)
