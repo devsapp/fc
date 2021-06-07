@@ -59,6 +59,8 @@ Examples with CLI
 
 # 快速使用
 
+当我们下载好[Serverless Devs开发者工具](../Getting-started/Install-tutorial.md), 并完成[阿里云密钥配置](../Getting-started/Setting-up-credentials.md)之后，我们可以根据自身的需求进行日志的查询。
+
 ## 简单使用
 
 如果您想要快速查看当前函数的日志，您可以直接使用`s logs`，此时会默认给您显示当前函数在过去20分钟的日志信息。
