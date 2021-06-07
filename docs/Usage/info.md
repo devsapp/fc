@@ -1,7 +1,7 @@
 # 查看操作：Info
 
 > 使用场景：在使用工具对阿里云函数计算进行操作时可能会生成一些新的资源，例如在进行服务部署时，VPC等参数选择的是Auto，那么此时部署后的线上资源是什么，就会成为一个比较困扰使用者的问题；通过info指令，用户可以快速的查看到函数的详细信息，例如`s info`
-
+ 
 
 - [快速使用](#快速使用)
     - [Yaml资源描述模式使用](#Yaml资源描述模式使用)
@@ -117,10 +117,10 @@ function:
 # 其他替代方法
 
 
-> 类似操作：除了FC组件为我们提供info的命令，帮助我们快速查询线上的某些资源，使用者也可以使用fc-api组件，进行更多信息的查询。例如查询某个地区的服务列表可以是`s cli fc-api listServices --region cn-hangzhou`, 查看函数列表`s cli fc-api listFunctions --serviceName myService  --region cn-hangzhou`，除此之外和可以查询触发器列表/详情，服务详情，函数详情，域名列表/详情，版本列表/详情等，更多操作可以参考`s cli fc-api -h`
+> 类似操作：除了FC组件为我们提供info的命令，帮助我们快速查询线上的某些资源，使用者也可以使用[fc-api](https://github.com/devsapp/fc-api) 组件，进行更多信息的查询。例如查询某个地区的服务列表可以是`s cli fc-api listServices --region cn-hangzhou`, 查看函数列表`s cli fc-api listFunctions --serviceName myService  --region cn-hangzhou`，除此之外和可以查询触发器列表/详情，服务详情，函数详情，域名列表/详情，版本列表/详情等，更多操作可以参考`s cli fc-api -h`
 
 
-当然，除了阿里云函数计算（FC）组件可以进行资源详情的查询，也可以通过fc-api组建进行相关信息的查询。
+当然，除了阿里云函数计算（FC）组件可以进行资源详情的查询，也可以通过[fc-api](https://github.com/devsapp/fc-api) 组建进行相关信息的查询。
 
 例如:
 

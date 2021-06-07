@@ -55,7 +55,7 @@ Examples with CLI
 
 例如我想要将线上香港区（cn-hongkong），服务ai-album下的函数pre-warm同步下来，此时我可以执行：
 
-```
+``` 
 s cli fc sync --region cn-hongkong --service-name ai-album --function-name pre-warm
 ```
 

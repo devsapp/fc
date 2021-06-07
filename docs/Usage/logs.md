@@ -51,7 +51,7 @@ Examples with Yaml
   $ s logs --start-time 2021-11-11T11:11:11+00:00 --end-time 2021-11-11T11:11:12+00:00
   $ s exec -- logs -s 1611823690000 -e 1611827290000
 
-Examples with CLI
+Examples with CLI 
 
   $ s cli fc logs --region cn-hangzhou --service-name myService --function-name myFunction -t
 

@@ -56,7 +56,7 @@ Examples with CLI
 
 # 快速使用
 
-当我们下载好[Serverless Devs开发者工具](../Getting-started/Install-tutorial.md), 并完成[阿里云密钥配置](../Getting-started/Setting-up-credentials.md)之后，我们可以根据自身的需求进行资源的查询。
+当我们下载好[Serverless Devs开发者工具](../Getting-started/Install-tutorial.md), 并完成[阿里云密钥配置](../Getting-started/Setting-up-credentials.md)之后，我们可以根据自身的需求进行资源的部署。
 
 通过`deploy`方法，可以快速将通过Yaml描述的资源，部署到线上，例如现在有一个描述文档：
 
