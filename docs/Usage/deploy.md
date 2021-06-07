@@ -24,21 +24,10 @@
 Deploy
 
   Deploy a serverless application.
-  If service is specified, only the service will be deployed.         
-  If function is specified, only the function will be deployed.        
-  If trigger is specified, only the trigger will be deployed. 
-  If domain is specified, only the domain will be deployed. 
 
 Usage
 
   $ s deploy <RESOURCE> <options> 
-
-Resource
-
-  service            The service resource.
-  function           The function resource.
-  trigger            The trigger resource.
-  domain             The domain resource.
 
 Options
 
