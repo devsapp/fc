@@ -1,6 +1,6 @@
 import * as core from '@serverless-devs/core';
 import * as _ from 'lodash';
-import { COMPONENT_HELP_INFO, LOCAL_HELP_INFO, LOGS_HELP_INFO } from './lib/static';
+import { COMPONENT_HELP_INFO, LOCAL_HELP_INFO, LOGS_HELP_INFO, NAS_HELP_INFO, NAS_SUB_COMMAND_HELP_INFO } from './lib/static';
 import tarnsformNas from './lib/tarnsform-nas';
 import { ICredentials } from './lib/interface/profile';
 import { IInputs, IProperties } from './lib/interface/interface';
@@ -259,27 +259,35 @@ export default class FcBaseComponent {
     };
     const comParse: any = core.commandParse({ args }, apts);
 
-    const errorStr = 'Execution instruction error, example: s exec -- nas <download>/<upload>/<command> -h';
     const nonOptionsArgs = comParse.data?._ || [];
     this.logger.debug(`nonOptionsArgs is ${JSON.stringify(nonOptionsArgs)}`);
-    if (!comParse?.data || nonOptionsArgs.length === 0) {
-      this.logger.error(errorStr);
+    if (!comParse?.data) {
+      this.logger.error('Not fount sub-command.');
+      core.help(NAS_HELP_INFO);
+      return;
+    }
+
+    if (nonOptionsArgs.length === 0) {
+      if (!comParse?.data?.help) {
+        this.logger.error('Not fount sub-command.');
+      }
+      core.help(NAS_HELP_INFO);
       return;
     }
 
     const commandName: string = nonOptionsArgs[0];
     if (!SUPPORTED_METHOD.includes(commandName)) {
-      this.logger.error(`Unsupported subcommand ${commandName}, only download/upload/command are supported.`);
+      this.logger.error(`Not supported sub-command: [${commandName}]`);
+      core.help(NAS_HELP_INFO);
       return;
     }
 
     const tarnsformArgs = args.replace(commandName, '').replace(/(^\s*)|(\s*$)/g, '');
 
-    if (nonOptionsArgs.length === 1 && comParse?.data?.help) {
-      await this.componentMethodCaller(inputs, 'devsapp/nas', commandName, inputs.props, tarnsformArgs);
+    if (comParse?.data?.help) {
+      core.help(NAS_SUB_COMMAND_HELP_INFO[commandName]);
       return;
     }
-
     nonOptionsArgs.shift();
     const payload = await tarnsformNas(props, nonOptionsArgs, tarnsformArgs, project?.access);
     this.logger.debug(`tarnsform nas payload: ${JSON.stringify(payload.payload)}, args: ${payload.tarnsformArgs}, command: ${commandName}`);
