@@ -185,14 +185,29 @@ export default class FcBaseComponent {
   async logs(inputs: IInputs): Promise<any> {
     const { props, args } = this.handlerComponentInputs(inputs);
 
-    const comParse: any = core.commandParse({ args });
-    if (comParse?.data?.help || comParse?.data?.h) {
+    const comParse: any = core.commandParse({ args })?.data;
+    if (comParse?.help || comParse?.h) {
       await this.componentMethodCaller(inputs, 'devsapp/logs', 'logs', props, args);
       return;
     }
 
-    const region = props?.region;
-    const serviceName = props?.service?.name;
+    const getConfig = (argsParse, inputsProps) => {
+      if (argsParse?.region) {
+        return {
+          region: argsParse.region,
+          serviceName: argsParse['service-name'],
+          functionName: argsParse['function-name'],
+        };
+      }
+      return {
+        region: inputsProps?.region,
+        serviceName: inputsProps?.service?.name,
+        functionName: inputsProps?.function?.name,
+      };
+    };
+
+    const { region, serviceName, functionName } = getConfig(comParse, props);
+    this.logger.debug(`[logs] region: ${region}, serviceName: ${serviceName}, functionName: ${functionName}`);
 
     let logsPayload: LogsProps;
     try {
