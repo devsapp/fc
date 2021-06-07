@@ -35,7 +35,7 @@ Examples with Yaml
   $ s invoke
   $ s <ProjectName> invoke
   $ s invoke --region cn-hangzhou --service-name myService --function-name myFunction
-  $ s invoke -- info --region cn-hangzhou --service-name myService --function-name myFunction
+  $ s exec -- invoke --region cn-hangzhou --service-name myService --function-name myFunction
 
 Examples with CLI
 

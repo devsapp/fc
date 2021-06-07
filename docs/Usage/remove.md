@@ -69,11 +69,11 @@ Examples with CLI
 移除资源的前提是，您需要在本地有一个Serverless Devs的项目，即包括符合Serverless Devs规范的资源描述文档（例如`s.yaml`），同时该资源是已经部署在线上的。此时可以执行：
 
 ```
-s remove
+s remove service
 ```
 
-- 重点1：如果当前的yaml中有多个project，在执行`s remove`时，将会将这些资源全部删除；
-- 重点2：如果当前的yaml中有多个project，您只想移除一个，您可以执行`s projectName remove`
+- 重点1：如果当前的yaml中有多个project，在执行`s remove service`时，将会将这些资源全部删除；
+- 重点2：如果当前的yaml中有多个project，您只想移除一个，您可以执行`s projectName remove service`
 
 例如，当我们本地的yaml内容为：
 
@@ -121,13 +121,13 @@ services:
 此时，我要移除`http-trigger-function-b`，我可以执行：
 
 ```
-s fc-deploy-test-function-b remove
+s fc-deploy-test-function-b remove service
 ```
 
 如果我执行
 
 ```
-s remove
+s remove service
 ```
 
 则`http-trigger-function-a`和`http-trigger-function-b`均会被删除。
