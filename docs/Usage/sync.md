@@ -32,6 +32,7 @@ Options
 
 Global Options
 
+  -a, --access        Specify key alias.   
   -y, --assume-yes    Assume that the answer to any question which would be asked is yes. 
   -h, --help          Display help for command.                                           
 
