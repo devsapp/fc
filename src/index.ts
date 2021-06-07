@@ -1,6 +1,6 @@
 import * as core from '@serverless-devs/core';
 import * as _ from 'lodash';
-import { COMPONENT_HELP_INFO, LOCAL_HELP_INFO } from './lib/static';
+import { COMPONENT_HELP_INFO, LOCAL_HELP_INFO, LOGS_HELP_INFO } from './lib/static';
 import tarnsformNas from './lib/tarnsform-nas';
 import { ICredentials } from './lib/interface/profile';
 import { IInputs, IProperties } from './lib/interface/interface';
@@ -185,9 +185,13 @@ export default class FcBaseComponent {
   async logs(inputs: IInputs): Promise<any> {
     const { props, args } = this.handlerComponentInputs(inputs);
 
-    const comParse: any = core.commandParse({ args })?.data;
-    if (comParse?.help || comParse?.h) {
-      await this.componentMethodCaller(inputs, 'devsapp/logs', 'logs', props, args);
+    const comParse: any = core.commandParse({ args },  {
+      boolean: ['help'],
+      string: ['region', 'service-name', 'function-name'],
+      alias: { help: 'h' }
+    })?.data;
+    if (comParse?.help) {
+      core.help(LOGS_HELP_INFO);
       return;
     }
 
@@ -281,6 +285,8 @@ export default class FcBaseComponent {
     this.logger.debug(`tarnsform nas payload: ${JSON.stringify(payload.payload)}, args: ${payload.tarnsformArgs}, command: ${commandName}`);
 
     await this.componentMethodCaller(inputs, 'devsapp/nas', commandName, payload.payload, payload.tarnsformArgs);
+
+    tips.showNasNextTips();
   }
 
   async help(inputs: IInputs): Promise<void> {
