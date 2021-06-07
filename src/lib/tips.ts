@@ -32,8 +32,8 @@ export function showDeployNextTips() {
   Logger.log(`\nTips for next step
 ======================
 * Display information of the deployed resource: ${infoTip}
-* View metrics: ${metrics}
-* View logs: ${logs}
+* Display metrics: ${metrics}
+* Display logs: ${logs}
 * Invoke remote function: ${invokeTip}
 * Remove Service: ${removeServiceTip}
 * Remove Function: ${removeFunctionTip}
