@@ -1,7 +1,7 @@
 # 移除操作：Remove
 
 - [快速使用](#快速使用)
-    - [简单实用](#简单实用)
+    - [简单使用](#简单使用)
     - [高级使用](#高级使用)
 - [其他替代方法](#其他替代方法)
 
@@ -62,7 +62,7 @@ Examples with CLI
 
 当我们下载好[Serverless Devs开发者工具](../Getting-started/Install-tutorial.md), 并完成[阿里云密钥配置](../Getting-started/Setting-up-credentials.md)之后，我们可以根据自身的需求进行资源的移除。
 
-## 简单实用
+## 简单使用
 
 **值得注意的是，资源一旦移除可能无法恢复，所以在使用移除功能时，请您慎重操作**
 
