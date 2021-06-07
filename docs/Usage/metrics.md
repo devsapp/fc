@@ -5,6 +5,7 @@
 - [快速使用](#快速使用)
     - [Yaml资源描述模式使用](#Yaml资源描述模式使用)
     - [命令行模式使用](#命令行模式使用)
+    - [效果预览](#效果预览)
 
 -----
 
@@ -88,3 +89,15 @@ services:
 ```
 s cli fc metrcis --region ch-hangzhou --service-name myService --function-name myFunction
 ```
+
+## 效果预览
+
+指令执行之后，系统会提醒我们本地的地址：
+
+```
+[2021-06-07T12:20:06.661] [INFO ] [FC-METRICS] - 请用浏览器访问Uri地址进行查看: http://localhost:3000
+```
+
+通过浏览器打开地址，可以看到相关信息：
+
+![image](https://user-images.githubusercontent.com/21079031/120958920-419b2400-c78b-11eb-9f3c-8b49c1354a37.png)
