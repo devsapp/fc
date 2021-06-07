@@ -1,7 +1,7 @@
 # 构建操作：Build
 
 - [快速使用](#快速使用)
-- [[Future]: DevsFile](FutureDevsFile)
+- [[Future]: DevsFile](future-devsfile)
 -------
 
 阿里云函数计算（FC）组件为使用者提供了FC相关资源的构建/安装依赖的能力。可以通过`build`指令，快速进行构建/安装依赖操作。
