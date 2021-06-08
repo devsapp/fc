@@ -4,8 +4,8 @@
   "main": "./dist/index.js",
   "dependencies": {
     "@serverless-devs/core": "^0.0.*",
-    "@types/shelljs": "^0.8.8",
-    "@types/lodash": "^4.14.168"
+    "shelljs": "^0.8.4",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@types/eslint": "^7.2.6",
