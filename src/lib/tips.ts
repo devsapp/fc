@@ -26,13 +26,25 @@ export function showDeployNextTips() {
   const removeFunctionTip = 's remove function';
   const removeTriggerTip = 's remove trigger';
   const removeDomainTip = 's remove domain';
+  const metrics = 's metrics';
+  const logs = 's logs';
 
   Logger.log(`\nTips for next step
 ======================
 * Display information of the deployed resource: ${infoTip}
+* Display metrics: ${metrics}
+* Display logs: ${logs}
 * Invoke remote function: ${invokeTip}
 * Remove Service: ${removeServiceTip}
 * Remove Function: ${removeFunctionTip}
 * Remove Trigger: ${removeTriggerTip}
 * Remove CustomDomain: ${removeDomainTip}`, 'yellow');
+}
+
+export function showNasNextTips() {
+  const invokeTip = 's invoke';
+
+  Logger.log(`\nTips for next step
+======================
+* Invoke remote function: ${invokeTip}`, 'yellow');
 }
