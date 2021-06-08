@@ -45,36 +45,18 @@ export const COMPONENT_HELP_INFO = [
 
 export const LOCAL_HELP_INFO = [
   {
-    header: 'local',
-    content: 'You can use the subcommand to local invoke your serverless application.',
+    header: 'Local',
+    content: 'Run your serverless application locally for quick development & testing.',
   },
   {
     header: 'Usage',
-    content: '$ s local <command> <options>',
+    content: '$ s local <sub-command>',
   },
   {
-    header: 'Command List',
+    header: 'SubCommand List',
     content: [
-      { name: 'invoke', summary: 'Invoke alicloud fc event function locally.' },
-      { name: 'start', summary: 'Invoke alicloud fc http function locally.' },
-    ],
-  },
-  {
-    header: 'Global Options',
-    optionList: [
-      {
-        name: 'help',
-        description: 'Display help for command.',
-        alias: 'h',
-        type: Boolean,
-      },
-    ],
-  },
-  {
-    header: 'Examples with Yaml',
-    content: [
-      '$ s local {bold invoke} {bold --help}',
-      '$ s local {bold start} {bold --help}',
+      { name: 'invoke', summary: 'Local start fc event function, you can get help through [s local invoke -h]' },
+      { name: 'start', summary: 'Local invoke fc http function, you can get help through [s local start -h]' },
     ],
   },
 ];
@@ -372,4 +354,4 @@ export const NAS_SUB_COMMAND_HELP_INFO = {
   ls: [],
   cp: [],
   rm: [],
-}
+};
