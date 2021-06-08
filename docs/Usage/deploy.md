@@ -27,7 +27,7 @@ Deploy
 
 Usage
 
-  $ s deploy <RESOURCE> <options> 
+  $ s deploy <options> 
 
 Options
 
@@ -37,7 +37,6 @@ Options
 Global Options
 
   -y, --assume-yes    Assume that the answer to any question which would be asked is yes. 
-  -a, --access        Specify key alias.   
   -h, --help          Display help for command.                                           
 
 Examples with Yaml

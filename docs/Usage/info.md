@@ -29,6 +29,8 @@ Options
   --region string          Specify the region parameter                    
   --service-name string    Specify the service name parameter     
   --function-name string   Specify the function name parameter
+  --trigger-name string    Specify the alicloud fc trigger name, you can set
+                           names by using multiple trigger-name option, eg: --trigger-name triggerA --trigger-name triggerB.
 
 Global Options
 
@@ -39,15 +41,18 @@ Examples with Yaml
 
   $ s info
   $ s <ProjectName> info
-  $ s info --region cn-hangzhou --service-name myService --function-name myFunction
-  $ s exec -- info --region cn-hangzhou --service-name myService --function-name myFunction
 
 Examples with CLI
 
-  $ s cli fc info --region cn-hangzhou --service-name myService --function-name myFunction
-
-  You also can refer to the usage of fc-api and execute [s cli fc-api -h] for help.
-  $ s cli fc-api listSerices
+  $ s cli fc-info info [--service-name serviceName] [--region region] [--access 
+  accessName]                                                                   
+  $ s cli fc-info info [--service-name serviceName] [--function-name            
+  functionName] [--trigger-name functionNameA] [--trigger-name functionNameB]   
+  [--region region] [--access accessName]                                       
+                                                                                
+  You also can refer to the usage of fc-api and execute [s cli fc-api -h] for   
+  help.                                                                         
+  $ s cli fc-api listSerices                                                    
   $ s cli fc-api listFunctions --serviceName myService
 
 ```

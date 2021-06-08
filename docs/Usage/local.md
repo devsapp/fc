@@ -31,11 +31,15 @@ Local命令为我们提供了两个子命令：
     ```
     Local Invoke
     
-      Local start fc event function 
+      Local invoke fc event function 
     
-    Usage
-    
-      $ s invoke <options> 
+    Usage for fc component
+
+      $ s local invoke <options> 
+
+    Usage for fc-local-invoke component
+
+      $ s invoke <options>
     
     Options
     
@@ -61,10 +65,16 @@ Local命令为我们提供了两个子命令：
     
       -h, --help    Display help for command. 
     
-    Examples with Yaml
+    Examples with Yaml for fc component
     
-      $ s local invoke [--debug-port debugPort] [--config config] 
+      $ s local invoke [--debug-port 9000] [--config vscode]         
+      $ s exec -- local invoke [--debug-port 9000] [--config vscode]
 
+    Examples with Yaml for fc-local-invoke component
+
+      $ s invoke [--debug-port 9000] [--config vscode]         
+      $ s exec -- invoke [--debug-port 9000] [--config vscode]
+    
     ```
 - start: 本地调试/测试HTTP函数，可以通过`s local start -h`获取帮助文档
     ```
@@ -72,9 +82,13 @@ Local命令为我们提供了两个子命令：
     
       Local invoke fc http function 
     
-    Usage
-    
-      $ s start <options> 
+    Usage for fc component
+
+      $ s local start <options> 
+
+    Usage for fc-local-invoke component
+
+      $ s start <options>
     
     Options
     
@@ -91,9 +105,15 @@ Local命令为我们提供了两个子命令：
     
       -h, --help    Display help for command. 
     
-    Examples with Yaml
-    
-      $ s local start [--debug-port debugPort] [--config config] 
+    Examples with Yaml for fc component
+
+      $ s local start [--debug-port 9000] [--config vscode]         
+      $ s exec -- local start [--debug-port 9000] [--config vscode] 
+
+    Examples with Yaml for fc-local-invoke component
+
+      $ s start [--debug-port 9000] [--config vscode]         
+      $ s exec -- start [--debug-port 9000] [--config vscode]
     
     ```
 
