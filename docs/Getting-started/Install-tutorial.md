@@ -22,6 +22,14 @@ $ yarn global add @serverless-devs/s
 > - 如果在 Linux 或 MacOS 下执行该命令报错且报错信息为 Error: EACCES: permission denied，请执行命令 sudo npm install @serverless-devs/s -g。   
 > - 如果安装过程较慢，可以考虑使用淘宝 npm 源，安装命令为 npm --registry=https://registry.npm.taobao.org install @serverless-devs/s -g。
 
+## 通过脚本安装
+
+针对 Mac/Linux 用户
+
+```shell script
+$ curl -o- -L http://cli.so/install.sh | bash
+```
+
 
 ## 安装 Docker（可选）
 
