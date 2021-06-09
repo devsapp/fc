@@ -16,5 +16,5 @@ export default class FcBaseComponent {
     logs(inputs: IInputs): Promise<any>;
     metrics(inputs: IInputs): Promise<any>;
     nas(inputs: IInputs): Promise<void>;
-    help(): void;
+    help(inputs: IInputs): Promise<void>;
 }
