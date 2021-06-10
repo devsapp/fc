@@ -29,15 +29,15 @@ Usage
 
 Options
     
-  -t, --tail               Real-time query log                                   
-  -s, --start-time number   Query log start time (Timestamp or time format，like 1611827290000 or 2021-11-11T11:11:12+00:00)                                  
-  -e, --end-time number     Query log end time (Timestamp or time format，like 1611827290000 or 2021-11-11T11:11:12+00:00)                                           
+  -t, --tail               Continuous log output mode                              
+  -s, --start-time string   Query log start time (Timestamp or time format，like 1611827290000 or 2021-11-11T11:11:12+00:00)                                  
+  -e, --end-time string     Query log end time (Timestamp or time format，like 1611827290000 or 2021-11-11T11:11:12+00:00)                                           
   -k, --keyword string     Keyword query                                         
   -r, --request-id string   Query according to requestId within the time interval 
   --type string            Log type query, value: failed     
-  --region string          Specify the region parameter               
-  --service-name string    Specify the service name parameter     
-  --function-name string   Specify the function name parameter                          
+  --region string           Specify region in cli mode               
+  --service-name string     Specify service name in cli mode     
+  --function-name string    Specify function name in cli mode                          
 
 Global Options
 

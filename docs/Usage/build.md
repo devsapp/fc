@@ -25,8 +25,7 @@ Options
 
 Global Options
 
-  -y, --assume-yes    Assume that the answer to any question which would be asked is yes. 
-  -h, --help          Display help for command.                                           
+  -h, --help          Build help for command.                                           
 
 Examples with Yaml
 

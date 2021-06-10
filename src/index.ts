@@ -1,6 +1,13 @@
 import * as core from '@serverless-devs/core';
 import * as _ from 'lodash';
-import { COMPONENT_HELP_INFO, LOCAL_HELP_INFO, LOGS_HELP_INFO, NAS_HELP_INFO, NAS_SUB_COMMAND_HELP_INFO } from './lib/static';
+import {
+  COMPONENT_HELP_INFO,
+  LOCAL_HELP_INFO,
+  LOGS_HELP_INFO,
+  NAS_HELP_INFO,
+  NAS_SUB_COMMAND_HELP_INFO,
+  BUILD_HELP_INFO,
+} from './lib/static';
 import tarnsformNas from './lib/tarnsform-nas';
 import { ICredentials } from './lib/interface/profile';
 import { IInputs, IProperties } from './lib/interface/interface';
@@ -67,6 +74,21 @@ export default class FcBaseComponent {
       path: curPath,
     };
   }
+
+  getFcNames(argsParse, inputsProps) {
+    if (argsParse?.region) {
+      return {
+        region: argsParse.region,
+        serviceName: argsParse['service-name'],
+        functionName: argsParse['function-name'],
+      };
+    }
+    return {
+      region: inputsProps?.region,
+      serviceName: inputsProps?.service?.name,
+      functionName: inputsProps?.function?.name,
+    };
+  };
 
   async componentMethodCaller(inputs: IInputs, componentName: string, methodName: string, props: any, args: string): Promise<any> {
     const componentInputs: any = this.handlerComponentInputs(inputs, componentName);
@@ -136,6 +158,15 @@ export default class FcBaseComponent {
 
   async build(inputs: IInputs): Promise<any> {
     const { props, args } = this.handlerComponentInputs(inputs);
+    const parsedArgs: {[key: string]: any} = core.commandParse({ args }, {
+      boolean: ['help'],
+      alias: { help: 'h' } });
+    
+    if (parsedArgs?.data?.help) {
+      core.help(BUILD_HELP_INFO);
+      return;
+    }
+
     await this.componentMethodCaller(inputs, 'devsapp/fc-build', 'build', props, args);
     tips.showBuildNextTips();
   }
@@ -195,22 +226,7 @@ export default class FcBaseComponent {
       return;
     }
 
-    const getConfig = (argsParse, inputsProps) => {
-      if (argsParse?.region) {
-        return {
-          region: argsParse.region,
-          serviceName: argsParse['service-name'],
-          functionName: argsParse['function-name'],
-        };
-      }
-      return {
-        region: inputsProps?.region,
-        serviceName: inputsProps?.service?.name,
-        functionName: inputsProps?.function?.name,
-      };
-    };
-
-    const { region, serviceName, functionName } = getConfig(comParse, props);
+    const { region, serviceName, functionName } = this.getFcNames(comParse, props);
     this.logger.debug(`[logs] region: ${region}, serviceName: ${serviceName}, functionName: ${functionName}`);
 
     let logsPayload: LogsProps;
@@ -240,12 +256,17 @@ export default class FcBaseComponent {
   async metrics(inputs: IInputs): Promise<any> {
     const { props, args } = this.handlerComponentInputs(inputs);
 
-    const payload: FcMetricsProps = {
-      region: props?.region,
-      serviceName: props?.service?.name,
-      functionName: props?.function?.name,
-    };
+    const comParse: any = core.commandParse({ args },  {
+      boolean: ['help'],
+      string: ['region', 'service-name', 'function-name'],
+      alias: { help: 'h' }
+    })?.data;
+    if (comParse?.help) {
+      core.help(LOGS_HELP_INFO);
+      return;
+    }
 
+    const payload: FcMetricsProps = this.getFcNames(comParse, props);
     await this.componentMethodCaller(inputs, 'devsapp/fc-metrics', 'metrics', payload, args);
   }
 

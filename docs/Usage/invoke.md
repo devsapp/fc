@@ -29,14 +29,13 @@ Usage
 
 Options
     
-  --t, --invocation-type string   Invocation type: optional value "async"|"sync", default value "sync"          
-                                  (default: "sync")                                                             
-  --e, --event string             Event data (strings) passed to the function during invocation (default: "")   
-  --f, --event-file string        A file containing event data passed to the function during invoke. You can get the format of different events through [https://help.aliyun.com/document_detail/70140.html], or get help through [s cli fc-event -h], and quickly create the template of the corresponding event format           
-  --s, --event-stdin              Read from standard input, to support script pipeline.                         
-  --region string                 Specify the region parameter                    
-  --service-name string           Specify the service name parameter     
-  --function-name string          Specify the function name parameter
+  -t, --invocation-type string   Invocation type: optional value "async"|"sync", default value "sync" (default: "sync")                       
+  -e, --event string             Event data (strings) passed to the function during invocation (default: "").Http function format refers to [https://github.com/devsapp/fc-remote-invoke#特别说明] 
+  -f, --event-file string        Event funtion: A file containing event data passed to the function during invoke. Http function: A file containing http request options sent to http trigger. Format refers to [https://github.com/devsapp/fc-remote-invoke#特别说明]
+  -s, --event-stdin              Read from standard input, to support script pipeline.Http function format refers to [https://github.com/devsapp/fc-remote-invoke#特别说明]                       
+  --region string                 Specify region in cli mode               
+  --service-name string           Specify service name in cli mode     
+  --function-name string          Specify function name in cli mode
 
 Global Options
 
@@ -47,15 +46,17 @@ Examples with Yaml
 
   $ s invoke
   $ s <ProjectName> invoke
-  $ s invoke --region cn-hangzhou --service-name myService --function-name myFunction
-  $ s exec -- invoke --region cn-hangzhou --service-name myService --function-name myFunction
+  $ s exec -- invoke --invocation-type sync --event <payload>
+  $ s exec -- invoke --event-file <file-path>
+  $ s exec -- invoke --event-stdin
 
 Examples with CLI
 
-  $ s cli fc invoke --region cn-hangzhou --service-name myService --function-name myFunction
+  $ s cli fc-remote-invoke invoke --region * --service-name * --function-name * --event <payload>
+  $ s cli fc-remote-invoke invoke --region * --service-name * --function-name * --event-file <file-path>
+  $ s cli fc-remote-invoke invoke --region * --service-name * --function-name * --event-stdin 
 
-  You also can refer to the usage of fc-api and execute [s cli fc-api -h] for help.
-  $ s cli fc-api invokeFunction -h
+  You also can refer to the usage of fc-api and execute [s cli fc-api -h] for help. $ s cli fc-api invokeFunction -h
 
 ```
 

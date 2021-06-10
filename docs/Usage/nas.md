@@ -38,7 +38,7 @@ Nas命令为我们提供了三个子命令：
     
     Usage
     
-      $ s nas download  <fc_dir> <src_path> <options> 
+      $ s nas download  <options> <fc_dir> <src_path>
     
     Options
         
@@ -46,8 +46,7 @@ Nas命令为我们提供了三个子命令：
       -n, --no-clobber    Do not override existing files
     
     Global Options
-    
-      -a, --access        Specify key alias.   
+
       -h, --help          Display help for command.                                           
     
     Examples with Yaml
@@ -65,7 +64,7 @@ Nas命令为我们提供了三个子命令：
     
     Usage
     
-      $ s nas upload <src_path> <fc_dir> <options> 
+      $ s nas upload <options> <src_path> <fc_dir>
     
     Options
         
@@ -73,8 +72,7 @@ Nas命令为我们提供了三个子命令：
       -n, --no-clobber    Do not override existing files
     
     Global Options
-    
-      -a, --access        Specify key alias.   
+  
       -h, --help          Display help for command.                                           
     
     Examples with Yaml
@@ -95,8 +93,7 @@ Nas命令为我们提供了三个子命令：
       $ s nas command <command>
     
     Global Options
-    
-      -a, --access        Specify key alias.   
+  
       -h, --help          Display help for command.                                           
     
     Examples with Yaml
