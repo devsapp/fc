@@ -34,6 +34,7 @@
     - [开发工具安装](./Getting-started/Install-tutorial.md)
     - [账号配置](./Getting-started/Setting-up-credentials.md)
     - [快速体验](./Getting-started/Hello-world-application.md)
+    - [Yaml规范](./Others/yaml.md)
 - 指令使用方法
     - [部署操作：Deploy](./Usage/deploy.md)
     - [构建操作：Build](./Usage/build.md)
@@ -45,6 +46,10 @@
     - [硬盘挂载操作：Nas](./Usage/nas.md)
     - [移除操作：Remove](./Usage/remove.md)
     - [同步操作：Sync](./Usage/sync.md)
+- 更多方案
+    - [从Funcraft迁移到Serverless Devs](./Others/fun-fc.md)
+    - CI/CD解决方案
+        - [Github Action 与 Serverless Devs](./Others/github-action.md)
 ----
 
 # More
