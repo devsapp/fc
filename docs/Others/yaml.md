@@ -124,9 +124,9 @@ services:
             methods:
               - GET
         certConfig:
-        	certName: xxx
-        	certificate: xxx
-        	privateKey: xxx
+          certName: xxx
+          certificate: xxx
+          privateKey: xxx
 ```
 
 
