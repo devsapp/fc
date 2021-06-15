@@ -185,10 +185,10 @@ export default class FcBaseComponent {
   async logs(inputs: IInputs): Promise<any> {
     const { props, args } = this.handlerComponentInputs(inputs);
 
-    const comParse: any = core.commandParse({ args },  {
+    const comParse: any = core.commandParse({ args }, {
       boolean: ['help'],
       string: ['region', 'service-name', 'function-name'],
-      alias: { help: 'h' }
+      alias: { help: 'h' },
     })?.data;
     if (comParse?.help) {
       core.help(LOGS_HELP_INFO);
