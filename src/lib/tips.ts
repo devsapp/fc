@@ -1,4 +1,4 @@
-import { Logger } from '@serverless-devs/core';
+import { Logger, commandParse } from '@serverless-devs/core';
 
 export function showBuildNextTips() {
   const eventInvokeTip = 's local invoke';
@@ -47,4 +47,14 @@ export function showNasNextTips() {
   Logger.log(`\nTips for next step
 ======================
 * Invoke remote function: ${invokeTip}`, 'yellow');
+}
+
+export function showNextTip(args: string, showMethod: Function): void {
+  const parsedArgs: {[key: string]: any} = commandParse({ args }, {
+    boolean: ['help'],
+    alias: { help: 'h' } });
+  const argsData: any = parsedArgs?.data || {};
+  if (!argsData?.help) {
+    showMethod();
+  }
 }

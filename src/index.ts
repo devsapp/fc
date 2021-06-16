@@ -1,6 +1,7 @@
 import * as core from '@serverless-devs/core';
 import * as _ from 'lodash';
-import { COMPONENT_HELP_INFO, LOCAL_HELP_INFO, LOGS_HELP_INFO, NAS_HELP_INFO, NAS_SUB_COMMAND_HELP_INFO } from './lib/static';
+import { COMPONENT_HELP_INFO, LOCAL_HELP_INFO, LOGS_HELP_INFO, NAS_HELP_INFO,
+  NAS_SUB_COMMAND_HELP_INFO, INVOKE_HELP_INFO, LOCAL_INVOKE_HELP_INFO, LOCAL_START_HELP_INFO } from './lib/static';
 import tarnsformNas from './lib/tarnsform-nas';
 import { ICredentials } from './lib/interface/profile';
 import { IInputs, IProperties } from './lib/interface/interface';
@@ -83,7 +84,8 @@ export default class FcBaseComponent {
   async deploy(inputs: IInputs): Promise<any> {
     const { props, args } = this.handlerComponentInputs(inputs);
     const deployRes: any = await this.componentMethodCaller(inputs, 'devsapp/fc-deploy', 'deploy', props, args);
-    tips.showDeployNextTips();
+    tips.showNextTip(args, tips.showDeployNextTips);
+
     return deployRes;
   }
 
@@ -136,8 +138,9 @@ export default class FcBaseComponent {
 
   async build(inputs: IInputs): Promise<any> {
     const { props, args } = this.handlerComponentInputs(inputs);
+
     await this.componentMethodCaller(inputs, 'devsapp/fc-build', 'build', props, args);
-    tips.showBuildNextTips();
+    tips.showNextTip(args, tips.showBuildNextTips);
   }
 
   async local(inputs: IInputs): Promise<any> {
@@ -146,11 +149,12 @@ export default class FcBaseComponent {
       boolean: ['help'],
       alias: { help: 'h' } });
     const argsData: any = parsedArgs?.data || {};
-    if (argsData?.help) {
+    const nonOptionsArgs = parsedArgs.data?._;
+    if (argsData?.help && nonOptionsArgs.length === 0) {
       core.help(LOCAL_HELP_INFO);
       return;
     }
-    const nonOptionsArgs = parsedArgs.data?._;
+
     if (!nonOptionsArgs || nonOptionsArgs.length === 0) {
       this.logger.error(' Error: expects argument invoke/start.');
       // help info
@@ -161,18 +165,34 @@ export default class FcBaseComponent {
       this.logger.error(`Unsupported subcommand ${methodName} for local method, only start and invoke are supported.`);
       return;
     }
+    if (argsData?.help && methodName === 'start') {
+      core.help(LOCAL_START_HELP_INFO);
+      return;
+    }
+    if (argsData?.help && methodName === 'invoke') {
+      core.help(LOCAL_INVOKE_HELP_INFO);
+      return;
+    }
     // 删除 methodName
     const fcInfoArgs: string = args ? args.replace(methodName, '').replace(/(^\s*)|(\s*$)/g, '') : '';
 
     this.logger.debug(`Args of fc-info is: ${fcInfoArgs}`);
     const localRes: any = await this.componentMethodCaller(inputs, 'devsapp/fc-local-invoke', methodName, props, fcInfoArgs);
-    tips.showLocalNextTips();
+    tips.showNextTip(args, tips.showLocalNextTips);
+
     return localRes;
   }
 
   async invoke(inputs: IInputs): Promise<any> {
     const { props, args } = this.handlerComponentInputs(inputs);
-
+    const parsedArgs: {[key: string]: any} = core.commandParse({ args }, {
+      boolean: ['help'],
+      alias: { help: 'h' } });
+    const argsData: any = parsedArgs?.data || {};
+    if (argsData?.help) {
+      core.help(INVOKE_HELP_INFO);
+      return;
+    }
     const invokePayload: FcSyncProps = {
       region: props?.region,
       serviceName: props?.service?.name,
