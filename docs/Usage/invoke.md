@@ -52,9 +52,9 @@ Examples with Yaml
 
 Examples with CLI
 
-  $ s cli fc-remote-invoke invoke --region * --service-name * --function-name * --event <payload>
-  $ s cli fc-remote-invoke invoke --region * --service-name * --function-name * --event-file <file-path>
-  $ s cli fc-remote-invoke invoke --region * --service-name * --function-name * --event-stdin 
+  $ s cli fc invoke --region cn-hangzhou --service-name myService --function-name myFunction --event <payload>
+  $ s cli fc invoke --region cn-hangzhou --service-name myService --function-name myFunction --event-file <file-path>
+  $ s cli fc invoke --region cn-hangzhou --service-name myService --function-name myFunction --event-stdin 
   You also can refer to the usage of fc-api and execute [s cli fc-api -h] for help. $ s cli fc-api invokeFunction -h
 
 ```
