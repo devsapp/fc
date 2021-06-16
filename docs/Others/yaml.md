@@ -30,6 +30,8 @@ services:
       logConfig:
         project: xxx
         logstore: xxx
+        enableRequestMetrics: true
+        enableInstanceMetrics: true
     function:
       name: qianfeng-fc-base-service
       description: 'this is test'
@@ -191,7 +193,8 @@ role:
 | --- |  ---  |  ---  |  ---  |
 | logStore | False | String | loghub中的logstore名称 |
 | project | False | String | loghub中的project名称 |
-
+| enableRequestMetrics | False | Boolean | RequestMetrics开关，取值`true`/`false` |
+| enableInstanceMetrics | False | Boolean | InstanceMetrics开关，取值`true`/`false` |
 
 
 ### vpcConfig
