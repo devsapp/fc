@@ -18,7 +18,7 @@ Nas
 
 Usage
 
-  $ s nas <sub-command> 
+  $ s nas download <options> <fc_dir> <src_path> 
 
 SubCommand:
 
@@ -65,7 +65,7 @@ Nas命令为我们提供了三个子命令：
     
     Usage
     
-      $ s nas upload <src_path> <fc_dir> <options> 
+      $ s nas upload <options> <src_path> <fc_dir>
     
     Options
         
