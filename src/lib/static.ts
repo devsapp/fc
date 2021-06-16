@@ -174,6 +174,79 @@ export const LOGS_HELP_INFO = [
   },
 ];
 
+export const METRICS_HELP_INFO = [
+  {
+    header: 'Metrics',
+    content: 'Query function metrics information',
+  },
+  {
+    header: 'Usage',
+    content: '$ s metrcis <options> ',
+  },
+  {
+    header: 'Options',
+    optionList: [
+      {
+        name: 'region',
+        description: 'Specify the region parameter',
+        defaultOption: false,
+        type: String,
+      },
+      {
+        name: 'service-name',
+        description: 'Specify the service name parameter',
+        defaultOption: false,
+        type: String,
+      },
+      {
+        name: 'function-name',
+        description: 'Specify the function name parameter',
+        defaultOption: false,
+        type: String,
+      },
+    ],
+  },
+  {
+    header: 'Global Options',
+    optionList: [
+      {
+        name: 'access',
+        description: 'Specify key alias.',
+        alias: 'a',
+        type: Boolean,
+      },
+      {
+        name: 'help',
+        description: 'Display help for command.',
+        alias: 'h',
+        type: Boolean,
+      },
+    ],
+  },
+  {
+    header: 'Examples with Yaml',
+    content: [
+      {
+        example: '$ s metrcis',
+      },
+      {
+        example: '$ s <ProjectName> metrcis',
+      },
+      {
+        example: '$ s exec -- metrcis --region ch-hangzhou --service-name myService --function-name myFunction',
+      },
+    ],
+  },
+  {
+    header: 'Examples with CLI',
+    content: [
+      {
+        example: '$ s cli fc metrcis --region ch-hangzhou --service-name myService --function-name myFunction',
+      },
+    ],
+  },
+];
+
 export const NAS_HELP_INFO = [
   {
     header: 'Nas',
@@ -210,7 +283,7 @@ const UPLOADHELP = [
   {
     header: 'Usage',
     content: [
-      { example: '$ s exec -- nas upload <option>' },
+      { example: '$ s nas upload <options> <src_path> <fc_dir>' },
     ],
   },
   {
@@ -269,7 +342,7 @@ const DOWNLOADHELP = [
   {
     header: 'Usage',
     content: [
-      { example: '$ s exec -- nas download <option>' },
+      { example: '$ s nas download <options> <fc_dir> <src_path>' },
     ],
   },
   {
@@ -440,13 +513,13 @@ export const INVOKE_HELP_INFO = [
     header: 'Examples with CLI',
     content: [
       {
-        example: '$ s cli fc invoke --region * --service-name * --function-name * --event <payload>',
+        example: '$ s cli fc invoke --region cn-hangzhou --service-name myService --function-name myFunction --event <payload>',
       },
       {
-        example: '$ s cli fc invoke --region * --service-name * --function-name * --event-file <file-path>',
+        example: '$ s cli fc invoke --region cn-hangzhou --service-name myService --function-name myFunction --event-file <file-path>',
       },
       {
-        example: '$ s cli fc invoke --region * --service-name * --function-name * --event-stdin',
+        example: '$ s cli fc invoke --region cn-hangzhou --service-name myService --function-name myFunction --event-stdin',
       },
       {
         example: '\nYou also can refer to the usage of fc-api and execute [s cli fc-api -h] for help.   $ s cli fc-api invokeFunction -h',
@@ -613,6 +686,74 @@ export const LOCAL_START_HELP_INFO = [
     content: [
       '$ s {bold local start} [{bold --debug-port} {underline 9000}] [{bold --config} {underline vscode}]',
       '$ s exec -- {bold local start} [{bold --debug-port} {underline 9000}] [{bold --config} {underline vscode}]',
+    ],
+  },
+];
+
+export const BUILD_HELP_INFO = [
+  {
+    header: 'Build',
+    content: 'Build the dependencies.',
+  },
+  {
+    header: 'Usage',
+    content: [
+      { example: '$ s exec -- build <option>' },
+    ],
+  },
+  {
+    header: 'Options',
+    optionList: [
+      {
+        name: 'dockerfile',
+        description: 'Specify the dockerfile path',
+        alias: 'f',
+        defaultOption: false,
+        type: String,
+      },
+      {
+        name: 'use-docker',
+        description: 'Use docker container to build functions',
+        alias: 'd',
+        defaultOption: false,
+        type: String,
+      },
+    ],
+  },
+  {
+    header: 'Global Options',
+    optionList: [
+      {
+        name: 'help',
+        description: 'Build help for command',
+        alias: 'h',
+        type: Boolean,
+      },
+    ],
+  },
+  {
+    header: 'Examples with Yaml',
+    content: [
+      {
+        example: '$ s build --use-docker',
+      },
+      {
+        example: '$ s <ProjectName> build',
+      },
+      {
+        example: '$ s build --use-docker ',
+      },
+      {
+        example: '$ s exec -- build',
+      },
+    ],
+  },
+  {
+    header: 'Examples with CLI',
+    content: [
+      {
+        example: '$ s cli fc build --use-docker ',
+      },
     ],
   },
 ];
