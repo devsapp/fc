@@ -45,7 +45,7 @@ Examples with Yaml
 
 Examples with CLI
 
-  $ s cli fc sync --region * --service-name * --type all
+  $ s cli fc sync --region cn-shanghai --service-name myService --type config
 
 ```
 

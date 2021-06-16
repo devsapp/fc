@@ -1,7 +1,7 @@
 import * as core from '@serverless-devs/core';
 import * as _ from 'lodash';
 import { COMPONENT_HELP_INFO, LOCAL_HELP_INFO, LOGS_HELP_INFO, NAS_HELP_INFO,
-  NAS_SUB_COMMAND_HELP_INFO, INVOKE_HELP_INFO, LOCAL_INVOKE_HELP_INFO, LOCAL_START_HELP_INFO } from './lib/static';
+  NAS_SUB_COMMAND_HELP_INFO, INVOKE_HELP_INFO, LOCAL_INVOKE_HELP_INFO, LOCAL_START_HELP_INFO, BUILD_HELP_INFO } from './lib/static';
 import tarnsformNas from './lib/tarnsform-nas';
 import { ICredentials } from './lib/interface/profile';
 import { IInputs, IProperties } from './lib/interface/interface';
@@ -138,7 +138,14 @@ export default class FcBaseComponent {
 
   async build(inputs: IInputs): Promise<any> {
     const { props, args } = this.handlerComponentInputs(inputs);
+    const parsedArgs: {[key: string]: any} = core.commandParse({ args }, {
+      boolean: ['help'],
+      alias: { help: 'h' } });
 
+    if (parsedArgs?.data?.help) {
+      core.help(BUILD_HELP_INFO);
+      return;
+    }
     await this.componentMethodCaller(inputs, 'devsapp/fc-build', 'build', props, args);
     tips.showNextTip(args, tips.showBuildNextTips);
   }
