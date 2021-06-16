@@ -210,7 +210,7 @@ const UPLOADHELP = [
   {
     header: 'Usage',
     content: [
-      { example: '$ s exec -- nas upload <option>' },
+      { example: '$ s nas upload <options> <src_path> <fc_dir>' },
     ],
   },
   {
@@ -269,7 +269,7 @@ const DOWNLOADHELP = [
   {
     header: 'Usage',
     content: [
-      { example: '$ s exec -- nas download <option>' },
+      { example: '$ s nas download <options> <fc_dir> <src_path>' },
     ],
   },
   {
@@ -613,6 +613,74 @@ export const LOCAL_START_HELP_INFO = [
     content: [
       '$ s {bold local start} [{bold --debug-port} {underline 9000}] [{bold --config} {underline vscode}]',
       '$ s exec -- {bold local start} [{bold --debug-port} {underline 9000}] [{bold --config} {underline vscode}]',
+    ],
+  },
+];
+
+export const BUILD_HELP_INFO = [
+  {
+    header: 'Build',
+    content: 'Build the dependencies.',
+  },
+  {
+    header: 'Usage',
+    content: [
+      { example: '$ s exec -- build <option>' },
+    ],
+  },
+  {
+    header: 'Options',
+    optionList: [
+      {
+        name: 'dockerfile',
+        description: 'Specify the dockerfile path',
+        alias: 'f',
+        defaultOption: false,
+        type: String,
+      },
+      {
+        name: 'use-docker',
+        description: 'Use docker container to build functions',
+        alias: 'd',
+        defaultOption: false,
+        type: String,
+      },
+    ],
+  },
+  {
+    header: 'Global Options',
+    optionList: [
+      {
+        name: 'help',
+        description: 'Build help for command',
+        alias: 'h',
+        type: Boolean,
+      },
+    ],
+  },
+  {
+    header: 'Examples with Yaml',
+    content: [
+      {
+        example: '$ s build --use-docker',
+      },
+      {
+        example: '$ s <ProjectName> build',
+      },
+      {
+        example: '$ s build --use-docker ',
+      },
+      {
+        example: '$ s exec -- build',
+      },
+    ],
+  },
+  {
+    header: 'Examples with CLI',
+    content: [
+      {
+        example: '$ s cli fc build --use-docker ',
+      },
     ],
   },
 ];
