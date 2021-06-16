@@ -1,6 +1,6 @@
 import * as core from '@serverless-devs/core';
 import * as _ from 'lodash';
-import { COMPONENT_HELP_INFO, LOCAL_HELP_INFO, LOGS_HELP_INFO, NAS_HELP_INFO,
+import { COMPONENT_HELP_INFO, LOCAL_HELP_INFO, LOGS_HELP_INFO, NAS_HELP_INFO, METRICS_HELP_INFO,
   NAS_SUB_COMMAND_HELP_INFO, INVOKE_HELP_INFO, LOCAL_INVOKE_HELP_INFO, LOCAL_START_HELP_INFO, BUILD_HELP_INFO } from './lib/static';
 import tarnsformNas from './lib/tarnsform-nas';
 import { ICredentials } from './lib/interface/profile';
@@ -10,6 +10,7 @@ import { FcInfoProps } from './lib/interface/component/fc-info';
 import { FcSyncProps } from './lib/interface/component/fc-sync';
 import { FcMetricsProps } from './lib/interface/component/fc-metrics';
 import { LogsProps } from './lib/interface/component/logs';
+import { getFcNames } from './lib/utils';
 import * as tips from './lib/tips';
 
 const SUPPORTED_LOCAL_METHOD: string[] = ['invoke', 'start'];
@@ -17,7 +18,7 @@ export default class FcBaseComponent {
   @core.HLogger('FC') logger: core.ILogger;
 
   // 解析入参
-  handlerInputs(inputs: IInputs): any {
+  private handlerInputs(inputs: IInputs): any {
     const project = inputs?.project;
     const props: IProperties = inputs?.props;
     const access: string = project?.access;
@@ -35,7 +36,7 @@ export default class FcBaseComponent {
       curPath,
     };
   }
-  async report(componentName: string, command: string, accountID?: string, access?: string): Promise<void> {
+  private async report(componentName: string, command: string, accountID?: string, access?: string): Promise<void> {
     let uid: string = accountID;
     if (_.isEmpty(accountID)) {
       const credentials: ICredentials = await core.getCredential(access);
@@ -47,7 +48,7 @@ export default class FcBaseComponent {
       uid,
     });
   }
-  handlerComponentInputs(inputs: IInputs, componentName?: string): any {
+  private handlerComponentInputs(inputs: IInputs, componentName?: string): any {
     const {
       appName,
       projectName,
@@ -69,7 +70,7 @@ export default class FcBaseComponent {
     };
   }
 
-  async componentMethodCaller(inputs: IInputs, componentName: string, methodName: string, props: any, args: string): Promise<any> {
+  private async componentMethodCaller(inputs: IInputs, componentName: string, methodName: string, props: any, args: string): Promise<any> {
     const componentInputs: any = this.handlerComponentInputs(inputs, componentName);
     await this.report(componentName, methodName, undefined, inputs?.project?.access);
     componentInputs.props = props;
@@ -222,22 +223,7 @@ export default class FcBaseComponent {
       return;
     }
 
-    const getConfig = (argsParse, inputsProps) => {
-      if (argsParse?.region) {
-        return {
-          region: argsParse.region,
-          serviceName: argsParse['service-name'],
-          functionName: argsParse['function-name'],
-        };
-      }
-      return {
-        region: inputsProps?.region,
-        serviceName: inputsProps?.service?.name,
-        functionName: inputsProps?.function?.name,
-      };
-    };
-
-    const { region, serviceName, functionName } = getConfig(comParse, props);
+    const { region, serviceName, functionName } = getFcNames(comParse, props);
     this.logger.debug(`[logs] region: ${region}, serviceName: ${serviceName}, functionName: ${functionName}`);
 
     let logsPayload: LogsProps;
@@ -267,11 +253,18 @@ export default class FcBaseComponent {
   async metrics(inputs: IInputs): Promise<any> {
     const { props, args } = this.handlerComponentInputs(inputs);
 
-    const payload: FcMetricsProps = {
-      region: props?.region,
-      serviceName: props?.service?.name,
-      functionName: props?.function?.name,
-    };
+    const comParse: any = core.commandParse({ args }, {
+      boolean: ['help'],
+      string: ['region', 'service-name', 'function-name'],
+      alias: { help: 'h' },
+    })?.data;
+
+    if (comParse?.help) {
+      core.help(METRICS_HELP_INFO);
+      return;
+    }
+
+    const payload: FcMetricsProps = getFcNames(comParse, props);
 
     await this.componentMethodCaller(inputs, 'devsapp/fc-metrics', 'metrics', payload, args);
   }

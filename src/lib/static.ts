@@ -174,6 +174,79 @@ export const LOGS_HELP_INFO = [
   },
 ];
 
+export const METRICS_HELP_INFO = [
+  {
+    header: 'Metrics',
+    content: 'Query function metrics information',
+  },
+  {
+    header: 'Usage',
+    content: '$ s metrcis <options> ',
+  },
+  {
+    header: 'Options',
+    optionList: [
+      {
+        name: 'region',
+        description: 'Specify the region parameter',
+        defaultOption: false,
+        type: String,
+      },
+      {
+        name: 'service-name',
+        description: 'Specify the service name parameter',
+        defaultOption: false,
+        type: String,
+      },
+      {
+        name: 'function-name',
+        description: 'Specify the function name parameter',
+        defaultOption: false,
+        type: String,
+      },
+    ],
+  },
+  {
+    header: 'Global Options',
+    optionList: [
+      {
+        name: 'access',
+        description: 'Specify key alias.',
+        alias: 'a',
+        type: Boolean,
+      },
+      {
+        name: 'help',
+        description: 'Display help for command.',
+        alias: 'h',
+        type: Boolean,
+      },
+    ],
+  },
+  {
+    header: 'Examples with Yaml',
+    content: [
+      {
+        example: '$ s metrcis',
+      },
+      {
+        example: '$ s <ProjectName> metrcis',
+      },
+      {
+        example: '$ s exec -- metrcis --region ch-hangzhou --service-name myService --function-name myFunction',
+      },
+    ],
+  },
+  {
+    header: 'Examples with CLI',
+    content: [
+      {
+        example: '$ s cli fc metrcis --region ch-hangzhou --service-name myService --function-name myFunction',
+      },
+    ],
+  },
+];
+
 export const NAS_HELP_INFO = [
   {
     header: 'Nas',
@@ -440,13 +513,13 @@ export const INVOKE_HELP_INFO = [
     header: 'Examples with CLI',
     content: [
       {
-        example: '$ s cli fc invoke --region * --service-name * --function-name * --event <payload>',
+        example: '$ s cli fc invoke --region cn-hangzhou --service-name myService --function-name myFunction --event <payload>',
       },
       {
-        example: '$ s cli fc invoke --region * --service-name * --function-name * --event-file <file-path>',
+        example: '$ s cli fc invoke --region cn-hangzhou --service-name myService --function-name myFunction --event-file <file-path>',
       },
       {
-        example: '$ s cli fc invoke --region * --service-name * --function-name * --event-stdin',
+        example: '$ s cli fc invoke --region cn-hangzhou --service-name myService --function-name myFunction --event-stdin',
       },
       {
         example: '\nYou also can refer to the usage of fc-api and execute [s cli fc-api -h] for help.   $ s cli fc-api invokeFunction -h',
