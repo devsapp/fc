@@ -1,11 +1,12 @@
 {
   "name": "fc",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "main": "./dist/index.js",
   "dependencies": {
     "@serverless-devs/core": "^0.0.*",
     "shelljs": "^0.8.4",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "js-yaml": "^4.0.0"
   },
   "devDependencies": {
     "@types/eslint": "^7.2.6",

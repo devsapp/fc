@@ -1,3 +1,7 @@
+import { IProperties } from './interface/interface';
+import { TriggerConfig } from './interface/fc/trigger';
+import _ from 'lodash';
+
 export function isAutoConfig(config: any): boolean {
   return config === 'auto' || config === 'Auto';
 }
@@ -20,4 +24,13 @@ export function getFcNames(argsParse, inputsProps) {
     serviceName: inputsProps?.service?.name,
     functionName: inputsProps?.function?.name,
   };
+}
+
+export function isHttpFunction(props: IProperties): boolean {
+  const triggers: TriggerConfig[] = props?.triggers;
+  if (_.isEmpty(triggers)) { return false; }
+  for (const trigger of triggers) {
+    if (trigger.type === 'http') { return true; }
+  }
+  return false;
 }
