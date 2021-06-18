@@ -1,6 +1,6 @@
 # 从Funcraft迁移到Serverless Devs
 
-如果您之前使用了Funcracf来进行函数的管理，此时我们强烈推荐您将相关资源迁移到Serverless Devs进行管理。
+如果您之前使用了Funcraft来进行函数的管理，此时我们强烈推荐您将相关资源迁移到Serverless Devs进行管理。
 
 因为Serverless Devs将会提供更多更优质的能力，包括不限于：
 - 优秀的可拓展性：可以非常简单的与更多产品进行结合，与更多功能进行集成
@@ -86,7 +86,7 @@ services:
 
 此时，即可完成Funcraft到Serverless Devs的过渡。
 
-例如，我需要使用`deploy`方法，此时可以直接执行`s deploy`。你可以认为只是把`fun ***`重的`fun`变为`s`。
+例如，我需要使用`deploy`方法，此时可以直接执行`s deploy`。你可以认为只是把`fun ***`中的`fun`变为`s`。
 
 ## 资源同步方案
 
