@@ -1,7 +1,8 @@
 import * as core from '@serverless-devs/core';
 import * as _ from 'lodash';
 import { COMPONENT_HELP_INFO, LOCAL_HELP_INFO, LOGS_HELP_INFO, NAS_HELP_INFO, METRICS_HELP_INFO,
-  NAS_SUB_COMMAND_HELP_INFO, INVOKE_HELP_INFO, LOCAL_INVOKE_HELP_INFO, LOCAL_START_HELP_INFO, BUILD_HELP_INFO } from './lib/static';
+  NAS_SUB_COMMAND_HELP_INFO, INVOKE_HELP_INFO, LOCAL_INVOKE_HELP_INFO, LOCAL_START_HELP_INFO, BUILD_HELP_INFO,
+  STRESS_HTLP_INFO, STRESS_SUB_COMMAND_HELP_INFO } from './lib/static';
 import tarnsformNas from './lib/tarnsform-nas';
 import { ICredentials } from './lib/interface/profile';
 import { IInputs, IProperties } from './lib/interface/interface';
@@ -10,8 +11,11 @@ import { FcInfoProps } from './lib/interface/component/fc-info';
 import { FcSyncProps } from './lib/interface/component/fc-sync';
 import { FcMetricsProps } from './lib/interface/component/fc-metrics';
 import { LogsProps } from './lib/interface/component/logs';
-import { getFcNames } from './lib/utils';
+import { getFcNames, isHttpFunction } from './lib/utils';
 import * as tips from './lib/tips';
+import FcStress from './lib/component/fc-stress';
+import { StressOption, PayloadOption, EventTypeOption, HttpTypeOption } from './lib/interface/component/fs-stress';
+import * as yaml from 'js-yaml';
 
 const SUPPORTED_LOCAL_METHOD: string[] = ['invoke', 'start'];
 export default class FcBaseComponent {
@@ -23,7 +27,7 @@ export default class FcBaseComponent {
     const props: IProperties = inputs?.props;
     const access: string = project?.access;
     const args: string = inputs?.args;
-    const curPath: string = inputs?.path;
+    const curPath: any = inputs?.path;
     const projectName: string = project?.projectName;
     const appName: string = inputs?.appName;
 
@@ -315,6 +319,91 @@ export default class FcBaseComponent {
     await this.componentMethodCaller(inputs, 'devsapp/nas', commandName, payload.payload, payload.tarnsformArgs);
 
     tips.showNasNextTips();
+  }
+
+  async stress(inputs: IInputs): Promise<any> {
+    const { props, project } = this.handlerComponentInputs(inputs);
+    const SUPPORTED_METHOD: string[] = ['start', 'clean'];
+
+    const apts = {
+      boolean: ['help', 'assume-yes'],
+      alias: {
+        help: 'h',
+        region: 'r',
+        access: 'a',
+        qualifier: 'q',
+        url: 'u',
+        method: 'm',
+        payload: 'p',
+        'payload-file': 'f',
+        'assume-yes': 'y',
+      },
+    };
+    const comParse: any = core.commandParse(inputs, apts);
+    const argsData: any = comParse?.data || {};
+    const nonOptionsArgs = argsData?._ || [];
+
+    this.logger.debug(`nonOptionsArgs is ${JSON.stringify(nonOptionsArgs)}`);
+    if (!argsData) {
+      this.logger.error('Not fount sub-command.');
+      core.help(STRESS_HTLP_INFO);
+      return;
+    }
+    if (nonOptionsArgs.length === 0) {
+      if (!argsData?.help) {
+        this.logger.error('Not fount sub-command.');
+      }
+      core.help(STRESS_HTLP_INFO);
+      return;
+    }
+
+    const commandName: string = nonOptionsArgs[0];
+    if (!SUPPORTED_METHOD.includes(commandName)) {
+      this.logger.error(`Not supported sub-command: [${commandName}]`);
+      core.help(STRESS_HTLP_INFO);
+      return;
+    }
+
+    if (argsData?.help) {
+      core.help(STRESS_SUB_COMMAND_HELP_INFO[commandName]);
+      return;
+    }
+    const stressOpts: StressOption = {
+      functionType: argsData['function-type'] || isHttpFunction(props) ? 'http' : 'event',
+      numUser: argsData['num-user'],
+      spawnRate: argsData['spawn-rate'],
+      runningTime: argsData['run-time'],
+    };
+
+    let eventTypeOpts: EventTypeOption = null;
+    let httpTypeOpts: HttpTypeOption = null;
+    if (stressOpts?.functionType === 'event') {
+      eventTypeOpts = {
+        serviceName: argsData['service-name'] || props?.service?.name,
+        functionName: argsData['function-name'] || props?.function?.name,
+        qualifier: argsData?.qualifier,
+      };
+      this.logger.debug(`Using event options: \n${yaml.dump(eventTypeOpts)}`);
+    } else if (stressOpts?.functionType === 'http') {
+      httpTypeOpts = {
+        url: argsData?.url,
+        method: argsData?.method,
+      };
+      this.logger.debug(`Using http options: \n${yaml.dump(httpTypeOpts)}`);
+    }
+    const payloadOpts: PayloadOption = {
+      payloadFile: argsData['payload-file'],
+      payload: argsData?.payload,
+    };
+    const fcStress: FcStress = new FcStress(project?.access, props?.region || argsData?.region, stressOpts, httpTypeOpts, eventTypeOpts, payloadOpts);
+    let fcStressArgs: string;
+    if (commandName === 'start') {
+      fcStressArgs = fcStress.makeStartArgs();
+    } else if (commandName === 'clean') {
+      fcStressArgs = fcStress.makeCleanArgs(argsData['assume-yes']);
+    }
+    this.logger.debug(`Input args of fc-stress component is: ${fcStressArgs}`);
+    return await this.componentMethodCaller(inputs, 'devsapp/fc-stress', commandName, null, fcStressArgs);
   }
 
   async help(inputs: IInputs): Promise<void> {

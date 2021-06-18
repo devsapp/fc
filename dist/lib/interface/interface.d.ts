@@ -6,7 +6,10 @@ import { ServerlessProfile } from './profile';
 export interface IInputs extends ServerlessProfile {
     props: IProperties;
     args: string;
-    path: string;
+    path: {
+        configPath: string;
+    };
+    command: string;
 }
 export interface IProperties {
     region: string;
