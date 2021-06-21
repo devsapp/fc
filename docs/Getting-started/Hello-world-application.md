@@ -5,11 +5,13 @@
 首先，我们提供一系列指令来展示如何初始化一个 Hello World 函数并进行构建以及部署操作，对于每一个指令的作用，可以参考本教程的后半部分。
 
 ```shell
-# 步骤一 初始化
+# 步骤一 初始化，并进入到项目中
 $ s init node.js12-http -d fc-hello-world-demo
+$ cd fc-hello-world-demo
+
 
 # 步骤二 构建应用
-$ cd fc-hello-world-demo
+# 如果无需构建，或者安装依赖，可以跳过这个步骤
 $ s build
 
 # 步骤三 本地调试（可选）
