@@ -232,7 +232,16 @@ export default class FcBaseComponent {
 
     let logsPayload: LogsProps;
     try {
-      const { logConfig } = (await this.info(inputs)).service || {};
+      const { logConfig } = (await this.info({
+        ...inputs,
+        props: {
+          region,
+          service: { name: serviceName },
+          // @ts-ignore
+          function: { name: functionName },
+        },
+        args: '',
+      })).service || {};
 
       if (!isLogConfig(logConfig)) {
         throw new Error('The service logConfig is not found online, please confirm whether logConfig is configured first, and then execute [s exec - deploy].');
