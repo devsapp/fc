@@ -40,11 +40,11 @@ Examples with Yaml
 
   $ s metrcis
   $ s <ProjectName> metrcis
-  $ s exec -- metrcis --region ch-hangzhou --service-name myService --function-name myFunction
+  $ s exec -- metrcis --region cn-hangzhou --service-name myService --function-name myFunction
 
 Examples with CLI
 
-  $ s cli fc metrcis --region ch-hangzhou --service-name myService --function-name myFunction
+  $ s cli fc metrcis --region cn-hangzhou --service-name myService --function-name myFunction
 
 ```
 
