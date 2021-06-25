@@ -233,7 +233,7 @@ export const METRICS_HELP_INFO = [
         example: '$ s <ProjectName> metrcis',
       },
       {
-        example: '$ s exec -- metrcis --region ch-hangzhou --service-name myService --function-name myFunction',
+        example: '$ s exec -- metrcis --region cn-hangzhou --service-name myService --function-name myFunction',
       },
     ],
   },
@@ -241,7 +241,7 @@ export const METRICS_HELP_INFO = [
     header: 'Examples with CLI',
     content: [
       {
-        example: '$ s cli fc metrcis --region ch-hangzhou --service-name myService --function-name myFunction',
+        example: '$ s cli fc metrcis --region cn-hangzhou --service-name myService --function-name myFunction',
       },
     ],
   },
