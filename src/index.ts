@@ -322,7 +322,7 @@ export default class FcBaseComponent {
       return;
     }
     nonOptionsArgs.shift();
-    const payload = await tarnsformNas(props, nonOptionsArgs, tarnsformArgs, project?.access);
+    const payload = await tarnsformNas(props, nonOptionsArgs, tarnsformArgs, project?.access, commandName);
     this.logger.debug(`tarnsform nas payload: ${JSON.stringify(payload.payload)}, args: ${payload.tarnsformArgs}, command: ${commandName}`);
 
     await this.componentMethodCaller(inputs, 'devsapp/nas', commandName, payload.payload, payload.tarnsformArgs);
