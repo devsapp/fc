@@ -3,7 +3,9 @@ import { isEmpty, isString } from 'lodash';
 import { isAutoConfig, genServiceStateID } from './utils';
 import { ICredentials } from './interface/profile';
 
-export default async function toNas(props, nonOptionsArgs, args, access) {
+const HANDlER_NAS_COMMANDS = ['ls', 'cp', 'rm', 'download', 'upload', 'command'];
+
+export default async function toNas(props, nonOptionsArgs, args, access, commandName) {
   const {
     vpcConfig,
     nasConfig,
@@ -31,7 +33,10 @@ export default async function toNas(props, nonOptionsArgs, args, access) {
   }
 
   const fcDirInput = getFcDirPath(nonOptionsArgs);
-  const { serverAddr, nasDir, tarnsforInputDir } = getMount(fcDirInput, mountPoints);
+  if (HANDlER_NAS_COMMANDS.includes(commandName) && !fcDirInput) {
+    throw new Error(`The path of nas was not found in [${args}]`);
+  }
+  const { serverAddr, nasDir, tarnsforInputDir } = getMount(mountPoints, fcDirInput);
   if (!serverAddr) {
     core.Logger.warn('FC', 'Not fount serverAddr/nasDir');
   }
@@ -55,7 +60,7 @@ export default async function toNas(props, nonOptionsArgs, args, access) {
   };
 }
 
-function getMount(fcDirInput: string, mountPoints) {
+function getMount(mountPoints, fcDirInput = '') {
   for (const { serverAddr, nasDir, fcDir } of mountPoints) {
     const suffix = fcDirInput.slice(fcDir.length);
     if (fcDirInput.startsWith(fcDir) && (!suffix || suffix.startsWith('/'))) {
