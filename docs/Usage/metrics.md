@@ -23,7 +23,7 @@ Metrics
 
 Usage
 
-  $ s metrcis <options> 
+  $ s metrics <options> 
 
 Options
 
@@ -38,13 +38,13 @@ Global Options
 
 Examples with Yaml
 
-  $ s metrcis
-  $ s <ProjectName> metrcis
-  $ s exec -- metrcis --region cn-hangzhou --service-name myService --function-name myFunction
+  $ s metrics
+  $ s <ProjectName> metrics
+  $ s exec -- metrics --region cn-hangzhou --service-name myService --function-name myFunction
 
 Examples with CLI
 
-  $ s cli fc metrcis --region cn-hangzhou --service-name myService --function-name myFunction
+  $ s cli fc metrics --region cn-hangzhou --service-name myService --function-name myFunction
 
 ```
 
@@ -87,7 +87,7 @@ services:
 在某些时候，我们单纯的需要进行某些函数资源的指标信息查看，此时我们可以通过命令行的形式直接进行操作：
 
 ```
-s cli fc metrcis --region ch-hangzhou --service-name myService --function-name myFunction
+s cli fc metrics --region ch-hangzhou --service-name myService --function-name myFunction
 ```
 
 ## 效果预览
