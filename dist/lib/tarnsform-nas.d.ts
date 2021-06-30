@@ -1,4 +1,4 @@
-export default function toNas(props: any, nonOptionsArgs: any, args: any, access: any): Promise<{
+export default function toNas(props: any, nonOptionsArgs: any, args: any, access: any, commandName: any): Promise<{
     tarnsformArgs: any;
     payload: {
         regionId: any;

@@ -13,8 +13,8 @@ export interface IInputs extends ServerlessProfile {
 }
 export interface IProperties {
     region: string;
-    service: ServiceConfig;
-    function: FunctionConfig;
-    triggers: TriggerConfig[];
-    customDomains: CustomDomainConfig[];
+    service?: ServiceConfig;
+    function?: FunctionConfig;
+    triggers?: TriggerConfig[];
+    customDomains?: CustomDomainConfig[];
 }

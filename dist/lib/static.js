@@ -181,7 +181,7 @@ exports.METRICS_HELP_INFO = [
     },
     {
         header: 'Usage',
-        content: '$ s metrcis <options> ',
+        content: '$ s metrics <options> ',
     },
     {
         header: 'Options',
@@ -227,13 +227,13 @@ exports.METRICS_HELP_INFO = [
         header: 'Examples with Yaml',
         content: [
             {
-                example: '$ s metrcis',
+                example: '$ s metrics',
             },
             {
-                example: '$ s <ProjectName> metrcis',
+                example: '$ s <ProjectName> metrics',
             },
             {
-                example: '$ s exec -- metrcis --region ch-hangzhou --service-name myService --function-name myFunction',
+                example: '$ s exec -- metrics --region cn-hangzhou --service-name myService --function-name myFunction',
             },
         ],
     },
@@ -241,7 +241,7 @@ exports.METRICS_HELP_INFO = [
         header: 'Examples with CLI',
         content: [
             {
-                example: '$ s cli fc metrcis --region ch-hangzhou --service-name myService --function-name myFunction',
+                example: '$ s cli fc metrics --region cn-hangzhou --service-name myService --function-name myFunction',
             },
         ],
     },
