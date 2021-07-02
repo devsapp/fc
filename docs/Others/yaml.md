@@ -15,6 +15,7 @@ services:
       description: demo for fc-deploy component
       internetAccess: true
       role: 'acs:ram::xxx:role/qianfeng-fc-deploy-test-role'
+      tracingConfig: Enable
       nasConfig:
         userId: 10003
         groupId: 10003
@@ -52,7 +53,24 @@ services:
       initializationTimeout: 20
       initializer: index.initializer
       instanceConcurrency: 1
-      instanceType: e
+      instanceType: e1
+      instanceLifecycleConfig:
+        preFreeze:
+          handler: index.xxx
+          timeout: 60
+        preStop:
+          handler: index.xxx
+          preStop: 60
+      asyncConfiguration:
+        destination:
+          onSuccess: acs:fc:{region}:{uid}:services/{serviceName}.{qualifier}/functions/{functionName} 
+          onFailure: acs:fc:{region}:{uid}:services/{serviceName}.{qualifier}/functions/{functionName}
+          # onSuccess: acs:fc:::services/{serviceName}.{qualifier}/functions/{functionName}
+          # onSuccess: acs:mns:::/queues/{queuesName}/messages # mns/queues
+          # onSuccess: acs:mns:::/topics/{topicsName}/messages # mns/topics
+        maxAsyncEventAgeInSeconds: 456
+        maxAsyncRetryAttempts: 3
+        statefulInvocation: true
     triggers:
       - name: httpTrigger
         type: http
@@ -150,6 +168,7 @@ services:
 | name | True | String | service名称 |
 | description | True | String | Service的简短描述 |
 | internetAccess | False | Boolean | 设为true让function可以访问公网 |
+| tracingConfig | False | String | 链路追踪，可取值：Enable、Disable |
 | role | False | String[简单配置]/Struct[详细配置] | 授予函数计算所需权限的RAM role, 使用场景包含 1. 把 function产生的 log 发送到用户的 logstore 中 2. 为function 在执行中访问其它云资源生成 token |
 | logConfig | False | Enum[简单配置]/Struct[详细配置] | log配置，function产生的log会写入这里配置的logstore |
 | vpcConfig | False | Enum[简单配置]/Struct[详细配置] | VPC配置, 配置后function可以访问指定VPC |
@@ -250,6 +269,8 @@ role:
 | initializer | False | String | 初始化方法 |
 | instanceConcurrency | String | Struct | 单实例多并发 |
 | instanceType | False | String | 实例类型 |
+| instanceLifecycleConfig | False | Struct | 扩展函数 |
+| asyncConfiguration | False | Struct | 异步配置 |
 
 runtime目前支持：nodejs4.4、nodejs6、nodejs8、nodejs10、nodejs12、python2.7、python3、java8、java11、php7.2、dotnetcore2.1、custom及custom-container
 
@@ -268,6 +289,36 @@ Object格式，例如：
 ```
 TempKey: tempValue
 ```
+
+
+### instanceLifecycleConfig
+
+| 参数名 |  必填  |  类型  |  参数描述  |
+| --- |  ---  |  ---  |  ---  |
+| preFreeze | False | Struct |  PreFreeze 函数 |
+| preStop | False | Struct |  PreStop 函数 |
+
+#### preFreeze ｜ preStop
+| 参数名 |  必填  |  类型  |  参数描述  |
+| --- |  ---  |  ---  |  ---  |
+| handler | False | String |  函数入口 |
+| timeout | False | Number |  超时时间 |
+
+### asyncConfiguration
+| 参数名 |  必填  |  类型  |  参数描述  |
+| --- |  ---  |  ---  |  ---  |
+| maxAsyncEventAgeInSeconds | False | Number |  
+消息最大有效期(s) |
+| maxAsyncRetryAttempts | False | Number |  最大重试次数 |
+| statefulInvocation | False | Boolean |  异步调用状态 |
+| destination | False | Boolean |  目标地址 |
+
+#### destination
+| 参数名 |  必填  |  类型  |  参数描述  |
+| --- |  ---  |  ---  |  ---  |
+| onSuccess | False | String |  失败时 |
+| onFailure | False | String |  失败时 |
+
 
 ## triggers
 
