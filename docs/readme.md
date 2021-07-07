@@ -46,6 +46,11 @@
     - [硬盘挂载操作：Nas](./Usage/nas.md)
     - [移除操作：Remove](./Usage/remove.md)
     - [同步操作：Sync](./Usage/sync.md)
+    - [版本操作：Version](./Usage/version.md)
+    - [别名操作：Alias](./Usage/alias.md)
+    - [预留操作：Provision](./Usage/provision.md)
+    - [按量资源操作：OnDemand](./Usage/onDemand.md)
+    - [层的操作：Layer](./Usage/layer.md)
 - 更多方案
     - [从Funcraft迁移到Serverless Devs](./Others/fun-fc.md)
     - CI/CD解决方案
