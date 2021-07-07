@@ -18,14 +18,6 @@ export default class FcStress {
     this.httpTypeOpts = httpTypeOpts;
   }
 
-
-  private isEventFunctionType() {
-    return this.stressOpts?.functionType === 'event';
-  }
-  private isHttpFunctionType() {
-    return this.stressOpts?.functionType === 'http';
-  }
-
   makeStartArgs(): string {
     let args = `--region ${this.region} --access ${this.access} --function-type ${this.stressOpts?.functionType}`;
     if (this.stressOpts?.numUser) {
@@ -61,5 +53,12 @@ export default class FcStress {
       args += ' -y';
     }
     return args;
+  }
+
+  private isEventFunctionType() {
+    return this.stressOpts?.functionType === 'event';
+  }
+  private isHttpFunctionType() {
+    return this.stressOpts?.functionType === 'http';
   }
 }
