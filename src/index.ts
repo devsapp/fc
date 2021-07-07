@@ -17,6 +17,7 @@ import * as tips from './lib/tips';
 import FcStress from './lib/component/fc-stress';
 import Version from './lib/component/version';
 import Alias from './lib/component/alias';
+import OnDemand from './lib/component/on-demand';
 import Provision from './lib/component/provision';
 import { StressOption, PayloadOption, EventTypeOption, HttpTypeOption } from './lib/interface/component/fs-stress';
 import * as yaml from 'js-yaml';
@@ -420,6 +421,28 @@ export default class FcBaseComponent {
 
     const provision = new Provision({ region: props.region, credentials });
     return await provision[subCommand](props, table);
+  }
+
+  async onDemand(inputs: IInputs): Promise<any> {
+    const {
+      credentials,
+      help,
+      props,
+      subCommand,
+      table,
+      errorMessage,
+    } = await OnDemand.handlerInputs(inputs);
+
+    await this.report('fc', subCommand ? `onDemand ${subCommand}` : 'onDemand', credentials?.AccountID, inputs?.project?.access);
+    if (errorMessage) {
+      throw new Error(errorMessage);
+    }
+    if (help) {
+      return;
+    }
+
+    const onDemand = new OnDemand({ region: props.region, credentials });
+    return await onDemand[subCommand](props, table);
   }
 
   async help(inputs: IInputs): Promise<void> {

@@ -6,6 +6,8 @@ export * from './metrics';
 export * from './nas';
 export * from './stress';
 export * from './version';
+export * from './provision';
+export * from './on-demand';
 
 export const COMPONENT_HELP_INFO = [
   {
@@ -32,6 +34,7 @@ export const COMPONENT_HELP_INFO = [
       { name: 'version', summary: 'Service version operation' },
       { name: 'alias', summary: 'Service alias operation' },
       { name: 'provision', summary: 'Resource reservation operation' },
+      { name: 'onDemand', summary: 'Resource OnDemand operation' },
     ],
   },
   {

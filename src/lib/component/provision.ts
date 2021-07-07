@@ -12,7 +12,6 @@ interface IProps {
   functionName?: string;
   config?: string;
   target?: number;
-  maximumInstanceCount?: number;
 }
 
 const PROVISION_COMMADN: string[] = ['list', 'get', 'put'];
@@ -24,8 +23,8 @@ export default class Provision {
     const parsedArgs: {[key: string]: any} = core.commandParse(inputs, {
       boolean: ['help', 'table'],
       string: ['region', 'service-name', 'qualifier', 'function-name', 'config'],
-      number: ['target', 'maximum-instance-count'],
-      alias: { help: 'h', 'maximum-instance-count': 'max' },
+      number: ['target'],
+      alias: { help: 'h' },
     });
 
     const parsedData = parsedArgs?.data || {};
@@ -58,7 +57,6 @@ export default class Provision {
       functionName: parsedData['function-name'] || props.function?.name,
       config: parsedData.config,
       target: parsedData.target,
-      maximumInstanceCount: parsedData['maximum-instance-count'],
     };
 
     const credentials = inputs.credentials || await core.getCredential(inputs.project.access);
