@@ -133,7 +133,7 @@ const LIST = [
 
 const VERSION_CONFIG = [
   {
-    header: 'fc-layer versionConfig',
+    header: 'layer versionConfig',
     content: 'Get layer versionConfig',
   },
   {

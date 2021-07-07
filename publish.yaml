@@ -20,6 +20,11 @@ Commands:
   metrics: 查看线上函数的监控指标
   nas: 管理远端 NAS 文件系统中的文件
   stress: 压测函数
+  layer: 层
+  alias: 服务别名
+  version: 服务版本
+  onDemand: 按量资源
+  provision: 预留实例
 Service:
   函数计算:
     Authorities:
