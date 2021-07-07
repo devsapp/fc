@@ -8,6 +8,7 @@ export * from './stress';
 export * from './version';
 export * from './provision';
 export * from './on-demand';
+export * from './layer';
 
 export const COMPONENT_HELP_INFO = [
   {
@@ -35,6 +36,7 @@ export const COMPONENT_HELP_INFO = [
       { name: 'alias', summary: 'Service alias operation' },
       { name: 'provision', summary: 'Resource reservation operation' },
       { name: 'onDemand', summary: 'Resource OnDemand operation' },
+      { name: 'layer', summary: 'Resource layer operation' },
     ],
   },
   {

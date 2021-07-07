@@ -3,7 +3,7 @@ import * as _ from 'lodash';
 import Logger from './common/logger';
 import { COMPONENT_HELP_INFO, LOCAL_HELP_INFO, LOGS_HELP_INFO, NAS_HELP_INFO, METRICS_HELP_INFO,
   NAS_SUB_COMMAND_HELP_INFO, INVOKE_HELP_INFO, LOCAL_INVOKE_HELP_INFO, LOCAL_START_HELP_INFO, BUILD_HELP_INFO,
-  STRESS_HTLP_INFO, STRESS_SUB_COMMAND_HELP_INFO } from './lib/help';
+  STRESS_HTLP_INFO, STRESS_SUB_COMMAND_HELP_INFO, LAYER, LAYER_COMMAND } from './lib/help';
 import tarnsformNas from './lib/tarnsform-nas';
 import { ICredentials } from './lib/interface/profile';
 import { IInputs, IProperties } from './lib/interface/interface';
@@ -443,6 +443,38 @@ export default class FcBaseComponent {
 
     const onDemand = new OnDemand({ region: props.region, credentials });
     return await onDemand[subCommand](props, table);
+  }
+
+  async layer(inputs: IInputs): Promise<any> {
+    const { props, args } = this.handlerComponentInputs(inputs);
+    const SUPPORTED_METHOD: string[] = Object.keys(LAYER_COMMAND);
+
+    const apts = {
+      boolean: ['help'],
+      alias: { help: 'h' },
+    };
+    const comParse: any = core.commandParse({ args }, apts);
+    const argsData: any = comParse?.data || {};
+    const nonOptionsArgs = argsData?._ || [];
+    this.logger.debug(`nonOptionsArgs is ${JSON.stringify(nonOptionsArgs)}`);
+    if (nonOptionsArgs.length === 0) {
+      core.help(LAYER);
+      return;
+    }
+
+    const commandName: string = nonOptionsArgs[0];
+    if (!SUPPORTED_METHOD.includes(commandName)) {
+      this.logger.error(`Not supported sub-command: [${commandName}]`);
+      core.help(LAYER);
+      return;
+    }
+
+    if (argsData?.help) {
+      core.help(LAYER_COMMAND[commandName]);
+      return;
+    }
+
+    return await this.componentMethodCaller(inputs, 'devsapp/fc-layer', commandName, { region: props?.region }, args);
   }
 
   async help(inputs: IInputs): Promise<void> {
