@@ -1,5 +1,6 @@
 import * as core from '@serverless-devs/core';
 import * as _ from 'lodash';
+import Logger from './common/logger';
 import { COMPONENT_HELP_INFO, LOCAL_HELP_INFO, LOGS_HELP_INFO, NAS_HELP_INFO, METRICS_HELP_INFO,
   NAS_SUB_COMMAND_HELP_INFO, INVOKE_HELP_INFO, LOCAL_INVOKE_HELP_INFO, LOCAL_START_HELP_INFO, BUILD_HELP_INFO,
   STRESS_HTLP_INFO, STRESS_SUB_COMMAND_HELP_INFO } from './lib/help';
@@ -14,12 +15,16 @@ import { LogsProps } from './lib/interface/component/logs';
 import { getFcNames, isHttpFunction } from './lib/utils';
 import * as tips from './lib/tips';
 import FcStress from './lib/component/fc-stress';
+import Version from './lib/component/version';
+import Alias from './lib/component/alias';
 import { StressOption, PayloadOption, EventTypeOption, HttpTypeOption } from './lib/interface/component/fs-stress';
 import * as yaml from 'js-yaml';
 
+Logger.setContent('FC');
 const SUPPORTED_LOCAL_METHOD: string[] = ['invoke', 'start'];
+
 export default class FcBaseComponent {
-  @core.HLogger('FC') logger: core.ILogger;
+  logger = Logger;
 
   async deploy(inputs: IInputs): Promise<any> {
     const { props, args } = this.handlerComponentInputs(inputs);
@@ -348,6 +353,50 @@ export default class FcBaseComponent {
     }
     this.logger.debug(`Input args of fc-stress component is: ${fcStressArgs}`);
     return await this.componentMethodCaller(inputs, 'devsapp/fc-stress', commandName, null, fcStressArgs);
+  }
+
+  async version(inputs: IInputs): Promise<any> {
+    const {
+      credentials,
+      help,
+      props,
+      subCommand,
+      table,
+      errorMessage,
+    } = await Version.handlerInputs(inputs);
+
+    await this.report('fc', subCommand ? `version ${subCommand}` : 'version', credentials?.AccountID, inputs?.project?.access);
+    if (errorMessage) {
+      throw new Error(errorMessage);
+    }
+    if (help) {
+      return;
+    }
+
+    const qualifier = new Version({ region: props.region, credentials });
+    return await qualifier[subCommand](props, table);
+  }
+
+  async alias(inputs: IInputs): Promise<any> {
+    const {
+      credentials,
+      help,
+      props,
+      subCommand,
+      table,
+      errorMessage,
+    } = await Alias.handlerInputs(inputs);
+
+    await this.report('fc', subCommand ? `alias ${subCommand}` : 'alias', credentials?.AccountID, inputs?.project?.access);
+    if (errorMessage) {
+      throw new Error(errorMessage);
+    }
+    if (help) {
+      return;
+    }
+
+    const qualifier = new Alias({ region: props.region, credentials });
+    return await qualifier[subCommand](props, table);
   }
 
   async help(inputs: IInputs): Promise<void> {

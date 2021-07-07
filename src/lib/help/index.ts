@@ -5,6 +5,7 @@ export * from './logs';
 export * from './metrics';
 export * from './nas';
 export * from './stress';
+export * from './version';
 
 export const COMPONENT_HELP_INFO = [
   {
@@ -28,6 +29,8 @@ export const COMPONENT_HELP_INFO = [
       { name: 'logs', summary: 'Get the logs of the remote serverless application.' },
       { name: 'metrics', summary: 'Display the metrics of the remote serverless application.' },
       { name: 'nas', summary: 'Manage the file resource in the NAS file system.' },
+      { name: 'version', summary: 'Service version operation' },
+      { name: 'alias', summary: 'Service alias operation' },
     ],
   },
   {

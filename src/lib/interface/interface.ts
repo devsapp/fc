@@ -2,7 +2,7 @@ import { ServiceConfig } from './fc/service';
 import { FunctionConfig } from './fc/function';
 import { TriggerConfig } from './fc/trigger';
 import { CustomDomainConfig } from './fc/custom-domain';
-import { ServerlessProfile } from './profile';
+import { ServerlessProfile, ICredentials } from './profile';
 
 export interface IInputs extends ServerlessProfile {
   props: IProperties;
@@ -10,6 +10,7 @@ export interface IInputs extends ServerlessProfile {
   path: {
     configPath: string; // 配置路径
   };
+  credentials?: ICredentials;
   command: string;
 }
 
