@@ -17,6 +17,7 @@ import * as tips from './lib/tips';
 import FcStress from './lib/component/fc-stress';
 import Version from './lib/component/version';
 import Alias from './lib/component/alias';
+import Provision from './lib/component/provision';
 import { StressOption, PayloadOption, EventTypeOption, HttpTypeOption } from './lib/interface/component/fs-stress';
 import * as yaml from 'js-yaml';
 
@@ -397,6 +398,28 @@ export default class FcBaseComponent {
 
     const qualifier = new Alias({ region: props.region, credentials });
     return await qualifier[subCommand](props, table);
+  }
+
+  async provision(inputs: IInputs): Promise<any> {
+    const {
+      credentials,
+      help,
+      props,
+      subCommand,
+      table,
+      errorMessage,
+    } = await Provision.handlerInputs(inputs);
+
+    await this.report('fc', subCommand ? `provision ${subCommand}` : 'provision', credentials?.AccountID, inputs?.project?.access);
+    if (errorMessage) {
+      throw new Error(errorMessage);
+    }
+    if (help) {
+      return;
+    }
+
+    const provision = new Provision({ region: props.region, credentials });
+    return await provision[subCommand](props, table);
   }
 
   async help(inputs: IInputs): Promise<void> {

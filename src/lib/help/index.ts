@@ -31,6 +31,7 @@ export const COMPONENT_HELP_INFO = [
       { name: 'nas', summary: 'Manage the file resource in the NAS file system.' },
       { name: 'version', summary: 'Service version operation' },
       { name: 'alias', summary: 'Service alias operation' },
+      { name: 'provision', summary: 'Resource reservation operation' },
     ],
   },
   {
