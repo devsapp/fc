@@ -227,15 +227,15 @@ services:
 
 ### pulumi部署方案
 
-使用pulumi部署方案很简答， 只需要执行`s cli fc-default set deploy-type pulumi`，即可切换默认部署方法为通过pulumi部署。
+使用pulumi部署方案很简单， 只需要执行`s cli fc-default set deploy-type pulumi`，即可切换默认部署方法为通过pulumi部署。
 
-通过Pulumi部署速度可能会相对慢一下，但是他会相对来说更加安全和科学，所有的流程交给pulumi托管。
+通过Pulumi部署速度可能会相对慢一些，但是他会相对来说更加安全和科学，所有的流程交给pulumi托管。
 
 ### sdk部署方案
 
-使用sdk部署方案很简答， 只需要执行`s cli fc-default set deploy-type sdk`，即可切换默认部署方法为通过sdk部署。
+使用sdk部署方案很简单， 只需要执行`s cli fc-default set deploy-type sdk`，即可切换默认部署方法为通过sdk部署。
 
-通过SDK部署速度可能会相对快一下。
+通过SDK部署速度可能会相对快一些。
 
 ## 如何支持CI/CD
 
