@@ -1,8 +1,9 @@
 import * as core from '@serverless-devs/core';
 import * as _ from 'lodash';
+import Logger from './common/logger';
 import { COMPONENT_HELP_INFO, LOCAL_HELP_INFO, LOGS_HELP_INFO, NAS_HELP_INFO, METRICS_HELP_INFO,
   NAS_SUB_COMMAND_HELP_INFO, INVOKE_HELP_INFO, LOCAL_INVOKE_HELP_INFO, LOCAL_START_HELP_INFO, BUILD_HELP_INFO,
-  STRESS_HTLP_INFO, STRESS_SUB_COMMAND_HELP_INFO } from './lib/static';
+  STRESS_HTLP_INFO, STRESS_SUB_COMMAND_HELP_INFO, LAYER, LAYER_COMMAND } from './lib/help';
 import tarnsformNas from './lib/tarnsform-nas';
 import { ICredentials } from './lib/interface/profile';
 import { IInputs, IProperties } from './lib/interface/interface';
@@ -14,77 +15,18 @@ import { LogsProps } from './lib/interface/component/logs';
 import { getFcNames, isHttpFunction } from './lib/utils';
 import * as tips from './lib/tips';
 import FcStress from './lib/component/fc-stress';
+import Version from './lib/component/version';
+import Alias from './lib/component/alias';
+import OnDemand from './lib/component/on-demand';
+import Provision from './lib/component/provision';
 import { StressOption, PayloadOption, EventTypeOption, HttpTypeOption } from './lib/interface/component/fs-stress';
 import * as yaml from 'js-yaml';
 
+Logger.setContent('FC');
 const SUPPORTED_LOCAL_METHOD: string[] = ['invoke', 'start'];
+
 export default class FcBaseComponent {
-  @core.HLogger('FC') logger: core.ILogger;
-
-  // 解析入参
-  private handlerInputs(inputs: IInputs): any {
-    const project = inputs?.project;
-    const props: IProperties = inputs?.props;
-    const access: string = project?.access;
-    const args: string = inputs?.args;
-    const curPath: any = inputs?.path;
-    const projectName: string = project?.projectName;
-    const appName: string = inputs?.appName;
-
-    return {
-      appName,
-      projectName,
-      access,
-      props,
-      args,
-      curPath,
-    };
-  }
-  private async report(componentName: string, command: string, accountID?: string, access?: string): Promise<void> {
-    let uid: string = accountID;
-    if (_.isEmpty(accountID)) {
-      const credentials: ICredentials = await core.getCredential(access);
-      uid = credentials.AccountID;
-    }
-
-    core.reportComponent(componentName, {
-      command,
-      uid,
-    });
-  }
-  private handlerComponentInputs(inputs: IInputs, componentName?: string): any {
-    const {
-      appName,
-      projectName,
-      access,
-      props,
-      args,
-      curPath,
-    } = this.handlerInputs(inputs);
-    return {
-      project: {
-        component: componentName,
-        projectName: componentName ? `${projectName}-${componentName}-project` : projectName,
-        access,
-      },
-      appName,
-      props,
-      args,
-      path: curPath,
-    };
-  }
-
-  private async componentMethodCaller(inputs: IInputs, componentName: string, methodName: string, props: any, args: string): Promise<any> {
-    const componentInputs: any = this.handlerComponentInputs(inputs, componentName);
-    await this.report(componentName, methodName, undefined, inputs?.project?.access);
-    componentInputs.props = props;
-    componentInputs.args = args;
-
-    // const componentIns: any = await core.load(`devsapp/${componentName}`);
-    const componentIns: any = await core.load(`${componentName}`);
-    this.logger.debug(`Inputs of component: ${componentName} is: ${JSON.stringify(componentInputs, null, '  ')}`);
-    return await componentIns[methodName](componentInputs);
-  }
+  logger = Logger;
 
   async deploy(inputs: IInputs): Promise<any> {
     const { props, args } = this.handlerComponentInputs(inputs);
@@ -415,8 +357,193 @@ export default class FcBaseComponent {
     return await this.componentMethodCaller(inputs, 'devsapp/fc-stress', commandName, null, fcStressArgs);
   }
 
+  async version(inputs: IInputs): Promise<any> {
+    const {
+      credentials,
+      help,
+      props,
+      subCommand,
+      table,
+      errorMessage,
+    } = await Version.handlerInputs(inputs);
+
+    await this.report('fc', subCommand ? `version ${subCommand}` : 'version', credentials?.AccountID, inputs?.project?.access);
+    if (errorMessage) {
+      throw new Error(errorMessage);
+    }
+    if (help) {
+      return;
+    }
+
+    const qualifier = new Version({ region: props.region, credentials });
+    return await qualifier[subCommand](props, table);
+  }
+
+  async alias(inputs: IInputs): Promise<any> {
+    const {
+      credentials,
+      help,
+      props,
+      subCommand,
+      table,
+      errorMessage,
+    } = await Alias.handlerInputs(inputs);
+
+    await this.report('fc', subCommand ? `alias ${subCommand}` : 'alias', credentials?.AccountID, inputs?.project?.access);
+    if (errorMessage) {
+      throw new Error(errorMessage);
+    }
+    if (help) {
+      return;
+    }
+
+    const qualifier = new Alias({ region: props.region, credentials });
+    return await qualifier[subCommand](props, table);
+  }
+
+  async provision(inputs: IInputs): Promise<any> {
+    const {
+      credentials,
+      help,
+      props,
+      subCommand,
+      table,
+      errorMessage,
+    } = await Provision.handlerInputs(inputs);
+
+    await this.report('fc', subCommand ? `provision ${subCommand}` : 'provision', credentials?.AccountID, inputs?.project?.access);
+    if (errorMessage) {
+      throw new Error(errorMessage);
+    }
+    if (help) {
+      return;
+    }
+
+    const provision = new Provision({ region: props.region, credentials });
+    return await provision[subCommand](props, table);
+  }
+
+  async onDemand(inputs: IInputs): Promise<any> {
+    const {
+      credentials,
+      help,
+      props,
+      subCommand,
+      table,
+      errorMessage,
+    } = await OnDemand.handlerInputs(inputs);
+
+    await this.report('fc', subCommand ? `onDemand ${subCommand}` : 'onDemand', credentials?.AccountID, inputs?.project?.access);
+    if (errorMessage) {
+      throw new Error(errorMessage);
+    }
+    if (help) {
+      return;
+    }
+
+    const onDemand = new OnDemand({ region: props.region, credentials });
+    return await onDemand[subCommand](props, table);
+  }
+
+  async layer(inputs: IInputs): Promise<any> {
+    const { props, args } = this.handlerComponentInputs(inputs);
+    const SUPPORTED_METHOD: string[] = Object.keys(LAYER_COMMAND);
+
+    const apts = {
+      boolean: ['help'],
+      alias: { help: 'h' },
+    };
+    const comParse: any = core.commandParse({ args }, apts);
+    const argsData: any = comParse?.data || {};
+    const nonOptionsArgs = argsData?._ || [];
+    this.logger.debug(`nonOptionsArgs is ${JSON.stringify(nonOptionsArgs)}`);
+    if (nonOptionsArgs.length === 0) {
+      core.help(LAYER);
+      return;
+    }
+
+    const commandName: string = nonOptionsArgs[0];
+    if (!SUPPORTED_METHOD.includes(commandName)) {
+      this.logger.error(`Not supported sub-command: [${commandName}]`);
+      core.help(LAYER);
+      return;
+    }
+
+    if (argsData?.help) {
+      core.help(LAYER_COMMAND[commandName]);
+      return;
+    }
+
+    return await this.componentMethodCaller(inputs, 'devsapp/fc-layer', commandName, { region: props?.region }, args);
+  }
+
   async help(inputs: IInputs): Promise<void> {
     await this.report('fc', 'help', null, inputs?.project?.access);
     core.help(COMPONENT_HELP_INFO);
+  }
+
+  // 解析入参
+  private handlerInputs(inputs: IInputs): any {
+    const project = inputs?.project;
+    const props: IProperties = inputs?.props;
+    const access: string = project?.access;
+    const args: string = inputs?.args;
+    const curPath: any = inputs?.path;
+    const projectName: string = project?.projectName;
+    const appName: string = inputs?.appName;
+
+    return {
+      appName,
+      projectName,
+      access,
+      props,
+      args,
+      curPath,
+    };
+  }
+  private async report(componentName: string, command: string, accountID?: string, access?: string): Promise<void> {
+    let uid: string = accountID;
+    if (_.isEmpty(accountID)) {
+      const credentials: ICredentials = await core.getCredential(access);
+      uid = credentials.AccountID;
+    }
+
+    core.reportComponent(componentName, {
+      command,
+      uid,
+    });
+  }
+  private handlerComponentInputs(inputs: IInputs, componentName?: string): any {
+    const {
+      appName,
+      projectName,
+      access,
+      props,
+      args,
+      curPath,
+    } = this.handlerInputs(inputs);
+    return {
+      project: {
+        component: componentName,
+        projectName: componentName ? `${projectName}-${componentName}-project` : projectName,
+        access,
+      },
+      appName,
+      props,
+      args,
+      path: curPath,
+    };
+  }
+
+  private async componentMethodCaller(inputs: IInputs, componentName: string, methodName: string, props: any, args: string): Promise<any> {
+    const componentInputs: any = this.handlerComponentInputs(inputs, componentName);
+    await this.report(componentName, methodName, undefined, inputs?.project?.access);
+    componentInputs.props = props;
+    componentInputs.args = args;
+
+    // const componentIns: any = await core.load(`devsapp/${componentName}`);
+    const componentIns: any = await core.load(`${componentName}`);
+    this.logger.debug(`Inputs of component: ${componentName} is: ${JSON.stringify(componentInputs, null, '  ')}`);
+    return await componentIns[methodName](componentInputs);
   }
 }
