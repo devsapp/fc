@@ -1,20 +1,61 @@
-## devsapp/fc 组件
-### deploy、remove 指令
-参考 [服务篇](https://yuque.antfin.com/docs/share/6d667063-809c-4ffc-ba63-7fe236bbc029?# 《服务篇》) [函数篇](https://yuque.antfin.com/docs/share/153c4149-3dde-4e4a-86c2-d9d6a60e496d?# 《函数篇》) [触发器篇](https://yuque.antfin.com/docs/share/4044a9f7-7a80-49a3-9109-3a59df0e5f7f?# 《触发器篇》)
-​
+# 命令相关权限配置
 
-### info、sync 指令
-系统策略：AliyunFCReadOnlyAccess
-​
+本文档给出了命令相关配置对应的权限情况，其实一部分的策略是可以参考[阿里云函数计算的权限文档](https://help.aliyun.com/document_detail/253969.html#title-0wo-zl0-c61) , 但是还有一些权限的可能在使用命令中会比较细化，所以特编写该文档。
 
-### build、local 指令
-不需要权限
-​
+**目录**
+- [deploy、remove 指令](#deploy、remove-指令)
+- [info、sync 指令](#info、sync-指令)
+- [build、local 指令](#build、local-指令)
+- [invoke 指令](#invoke-指令)
+    - [最大权限](#最大权限)
+    - [最小权限](#最小权限)
+- [logs 指令](#logs-指令)
+    - [最大权限](#最大权限-1)
+    - [最小权限](#最小权限-1)
+- [metrics 指令](#metrics-指令)
+- [nas 指令](#nas-指令)
+- [layer 指令](#layer-指令)
+    - [查看操作权限：list、versions、versionConfig](#查看操作权限：list、versions、versionConfig)
+    - [部署版本权限：publish](#部署版本权限：publish)
+    - [删除层的版本：deleteVersion、deleteLayer](#删除层的版本：deleteVersion、deleteLayer)
+    - [删除层：deleteLayer](#删除层：deleteLayer)
+- [version 指令](#version-指令)
+    - [查看操作权限：list](#查看操作权限：list)
+    - [发布版本：publish](#发布版本：publish)
+    - [删除版本：delete](#删除版本：delete)
+- [alias 指令](#alias-指令)
+    - [查看操作权限：list](#查看操作权限：list-1)
+    - [发布版本：publish](#发布版本：publish-1)
+    - [删除：delete](#删除：delete)
+- [provision 指令](#provision-指令)
+    - [查看操作权限：list get](#查看操作权限：list-get)
+    - [操作权限：put](#操作权限：put)
+- [onDemand 指令](#onDemand-指令)
+    - [查看操作权限：list get](#查看操作权限：list-get-1)
+    - [发布/修改：put](#发布修改：put)
+    - [删除：delete](#删除：delete)
 
-### invoke 指令
-#### 最大权限
-AliyunFCInvocationAccess 或者 AliyunFCFullAccess
-#### 最小权限
+## deploy、remove 指令
+
+这一部分和Yaml配置相关比较紧密，所以请[参考Yaml权限相关配置](./yaml.md)
+
+## info、sync 指令
+
+系统策略：`AliyunFCReadOnlyAccess`
+
+
+## build、local 指令
+
+这一部分是本地相关操作，所以无需线上权限
+
+## invoke 指令
+
+### 最大权限
+
+`AliyunFCInvocationAccess` 或者 `AliyunFCFullAccess`
+
+### 最小权限
+
 ```yaml
 {
     "Version": "1",
@@ -27,13 +68,16 @@ AliyunFCInvocationAccess 或者 AliyunFCFullAccess
     ]
 }
 ```
-​
 
-### logs 指令
-#### 最大权限
-AliyunFCReadOnlyAccess、AliyunLogReadOnlyAccess
-#### 最小权限
-AliyunFCReadOnlyAccess
+## logs 指令
+### 最大权限
+
+`AliyunFCReadOnlyAccess`、`AliyunLogReadOnlyAccess`
+
+### 最小权限
+
+`AliyunFCReadOnlyAccess`
+
 ```yaml
 {
     "Version": "1",
@@ -47,20 +91,24 @@ AliyunFCReadOnlyAccess
 }
 ```
 
+## metrics 指令
 
-### metrics 指令
-AliyunLogFullAccess、AliyunCloudMonitorReadOnlyAccess、AliyunFCReadOnlyAccess
-​
+`AliyunLogFullAccess`、`AliyunCloudMonitorReadOnlyAccess`、`AliyunFCReadOnlyAccess`
 
-### nas 指令
+
+## nas 指令
+
 参考 [nas 部署](https://yuque.antfin.com/docs/share/6d667063-809c-4ffc-ba63-7fe236bbc029?#s2Oda)
 
-### layer 指令
-#### 查看操作权限：list、versions、versionConfig
-AliyunFCReadOnlyAccess
+## layer 指令
+
+### 查看操作权限：list、versions、versionConfig
+
+`AliyunFCReadOnlyAccess`
 
 
-#### 部署版本权限：publish
+### 部署版本权限：publish
+
 ```yaml
 {
     "Version": "1",
@@ -73,7 +121,8 @@ AliyunFCReadOnlyAccess
     ]
 }
 ```
-#### 删除层的版本：deleteVersion、deleteLayer
+### 删除层的版本：deleteVersion、deleteLayer
+
 ```yaml
 {
     "Version": "1",
@@ -86,8 +135,8 @@ AliyunFCReadOnlyAccess
     ]
 }
 ```
-#### 删除层：deleteLayer
-AliyunFCReadOnlyAccess
+### 删除层：deleteLayer
+`AliyunFCReadOnlyAccess`
 ```yaml
 {
     "Version": "1",
@@ -101,13 +150,11 @@ AliyunFCReadOnlyAccess
 }
 ```
 
+## version 指令
+### 查看操作权限：list
+`AliyunFCReadOnlyAccess`
 
-### version 指令
-#### 查看操作权限：list
-AliyunFCReadOnlyAccess
-​
-
-#### 发布版本：publish
+### 发布版本：publish
 ```yaml
 {
     "Version": "1",
@@ -120,7 +167,7 @@ AliyunFCReadOnlyAccess
     ]
 }
 ```
-#### 删除版本：delete
+### 删除版本：delete
 ```yaml
 {
     "Version": "1",
@@ -134,13 +181,11 @@ AliyunFCReadOnlyAccess
 }
 ```
 
+## alias 指令
+### 查看操作权限：list
+`AliyunFCReadOnlyAccess`
 
-### alias 指令
-#### 查看操作权限：list
-AliyunFCReadOnlyAccess
-​
-
-#### 发布/修改：publish
+### 发布/修改：publish
 ```yaml
 {
     "Version": "1",
@@ -156,7 +201,7 @@ AliyunFCReadOnlyAccess
     ]
 }
 ```
-#### 删除：delete
+### 删除：delete
 ```yaml
 {
     "Version": "1",
@@ -170,13 +215,11 @@ AliyunFCReadOnlyAccess
 }
 ```
 
+## provision 指令
+### 查看操作权限：list get
+`AliyunFCReadOnlyAccess`
 
-### provision 指令
-#### 查看操作权限：list get
-AliyunFCReadOnlyAccess
-​
-
-#### 操作权限：put
+### 操作权限：put
 ```yaml
 {
     "Version": "1",
@@ -189,14 +232,13 @@ AliyunFCReadOnlyAccess
     ]
 }
 ```
-​
 
-### onDemand 指令
-#### 查看操作权限：list get
-AliyunFCReadOnlyAccess
-​
+## onDemand 指令
+### 查看操作权限：list get
+`AliyunFCReadOnlyAccess`
 
-#### 发布/修改：put
+
+### 发布/修改：put
 ```yaml
 {
     "Version": "1",
@@ -209,7 +251,7 @@ AliyunFCReadOnlyAccess
     ]
 }
 ```
-#### 删除：delete
+### 删除：delete
 ```yaml
 {
     "Version": "1",

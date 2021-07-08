@@ -1,18 +1,28 @@
 # Yaml相关权限配置
 
-本文档给出了Yaml相关配置对应的权限情况。
+本文档给出了Yaml相关配置对应的权限情况，其实一部分的策略是可以参考[阿里云函数计算的权限文档](https://help.aliyun.com/document_detail/253969.html#title-0wo-zl0-c61) , 但是还有一些权限的可能在Yaml中配置时会比较细化，所以特编写该文档。
 
-目录：
+
+**目录**
 - [服务相关权限配置](#服务相关权限配置)
     - [基础配置](#基础配置)
     - [存在日志配置的情况](#存在日志配置的情况)
-    - [存在 vpc 配置](#存在vpc配置)
-
+    - [存在 VPC 配置](#存在-VPC-配置)
+    - [存在 NAS 配置](#存在-NAS-配置)
+    - [存在链路追踪配置](#存在链路追踪配置)
+    - [如果需要操作角色](#如果需要操作角色)
+- [函数相关权限配置](#函数相关权限配置)
+    - [基础配置](#基础配置-1)
+    - [Runtime 为 custom-container](#Runtime-为-custom-container)
+    - [存在 asyncConfig 配置](#存在-asyncConfig-配置)
+- [触发器相关权限配置](#触发器相关权限配置)
+    - [基础配置](#基础配置-2)
+- [自定义域名相关权限配置](#自定义域名相关权限配置)
+    - [基础配置](#基础配置-3)
+    
 # 服务相关权限配置
 
 ## 基础配置
-
-### 
 
 ```yaml
 service:
@@ -27,11 +37,14 @@ service:
 系统策略：AliyunFCFullAccess
 
 #### 部署最小权限
+
 **自定义策略**
-⚠️ fc:GetService 的权限默认可以选填，但是如果是 --use-remote 建议必填
+
+⚠️ `fc:GetService` 的权限默认可以选填。
+
 ```json
 {
-		"Version": "1",
+	"Version": "1",
         "Statement": [
         {
             "Action": "fc:CreateService",
@@ -53,7 +66,9 @@ service:
 ```
 
 #### 删除最小权限
+
 **自定义策略**
+
 ```json
 {
     "Version": "1",
@@ -68,6 +83,7 @@ service:
 ```
 
 ## 存在日志配置的情况
+
 ### yaml
 ```yaml
 service:
@@ -87,12 +103,14 @@ service:
 
 
 ### 子账号需要的权限
+
 #### 最大权限
-系统策略：AliyunFCFullAccess、AliyunLogFullAccess
 
-#### 部署最小权限**<**[**服务权限参考**](#qW2hs)**>**
+系统策略：`AliyunFCFullAccess`、`AliyunLogFullAccess`
 
-logConfig 不为 auto 
+#### 部署最小权限 **<**[**服务权限参考**](#子账号需要的权限)**>**
+
+- 当 `logConfig` 不为 `auto` 
 
 **自定义策略**
 
@@ -109,7 +127,7 @@ logConfig 不为 auto
 }
 ```
 
-logConfg === auto
+- 当 `logConfg` 为 `auto`
 
 **自定义策略**
 
@@ -168,7 +186,8 @@ logConfg === auto
 ```
 
 
-## 存在 vpc 配置
+## 存在 VPC 配置
+
 ### yaml
 ```yaml
 service:
@@ -185,12 +204,15 @@ service:
 ```
 
 ### 子账号需要的权限
+
 #### 最大权限
 
 **系统策略**：`AliyunFCFullAccess`、`AliyunVPCFullAccess`、`AliyunECSFullAccess`
 
-#### 部署最小权限**<**[**服务权限参考**](#qW2hs)**>**
-vpcConfig 不为 auto
+#### 部署最小权限 **<**[**服务权限参考**](#子账号需要的权限)**>**
+
+- 当 `vpcConfig` 不为 `auto`
+
 **自定义策略**
 ```json
 {
@@ -204,9 +226,13 @@ vpcConfig 不为 auto
     "Version": "1"
 }
 ```
-vpcConfig === auto
-**系统策略**：AliyunVPCReadOnlyAccess
+
+- 当 `vpcConfig` 为 `auto`
+
+**系统策略**：`AliyunVPCReadOnlyAccess`
+
 **自定义策略**
+
 ```json
 {
     "Statement": [
@@ -236,29 +262,24 @@ vpcConfig === auto
 }
 ```
 
-
 ### 服务角色权限
-**系统策略**：AliyunECSNetworkInterfaceManagementAccess
+
+**系统策略**：`AliyunECSNetworkInterfaceManagementAccess`
 
 
-
-
-## 存在 nas 配置
+## 存在 NAS 配置
 ### yaml
 ```yaml
-component: devsapp/fc
-props:
-  region: cn-shenzhen
-  service:
+service:
     name: unit-deploy-service
     description: 'demo for fc-deploy component'
     internetAccess: true
-		role: <role-arn> # role 为已配置好的，配置内容参考服务角色权限
+        role: <role-arn> # role 为已配置好的，配置内容参考服务角色权限
     vpcConfig:
       vpcId: xxx
       securityGroupId: xxx
       vswitchIds:
-      	- vsw-xxx
+        - vsw-xxx
     nasConfig:
       userId: 10003
       groupId: 10003
@@ -268,15 +289,19 @@ props:
           fcDir: /mnt/auto
 ```
 
-
 ### 子账号需要的权限
+
 #### 最大权限
-**系统策略**：AliyunFCFullAccess、AliyunVPCFullAccess、AliyunNasFullAccess
-​
+
+**系统策略**：`AliyunFCFullAccess`、`AliyunVPCFullAccess`、`AliyunNasFullAccess`
+
 
 #### 部署最小权限
-nasConfig 不为 auto
+
+- 当 `nasConfig` 不为 `auto`
+
 **自定义策略**
+
 ```json
 {
     "Statement": [
@@ -289,9 +314,13 @@ nasConfig 不为 auto
     "Version": "1"
 }
 ```
-nasConfig === auto
-**系统策略**：AliyunNasReadOnlyAccess
+
+- 当 `nasConfig` 为 `auto`
+
+**系统策略**：`AliyunNasReadOnlyAccess`
+
 **自定义策略**
+
 ```json
 {
     "Statement": [
@@ -346,32 +375,24 @@ nasConfig === auto
 }
 ```
 
-
 ### 服务角色权限
-**系统策略**：AliyunECSNetworkInterfaceManagementAccess
-​
 
-## 存在链路追踪
+**系统策略**：`AliyunECSNetworkInterfaceManagementAccess`
+
+## 存在链路追踪配置
+
 ### yaml
 ```yaml
-edition: 1.0.0
-name: fcDeployApp 
-access: unit 
-
-services:
-  fc-deploy-test: 
-    component: devsapp/fc 
-    props:
-      region: cn-shenzhen
-      service:
-        name: unit-deploy-service
-        description: 'demo for fc-deploy component'
-        internetAccess: true
-        tracingConfig: Enable
-        
+service:
+    name: unit-deploy-service
+    description: 'demo for fc-deploy component'
+    internetAccess: true
+    tracingConfig: Enable     
 ```
 ### 子账号需要的权限
-**系统策略**：AliyunFCFullAccess、AliyunARMSFullAccess
+
+**系统策略**：`AliyunFCFullAccess`、`AliyunARMSFullAccess`
+
 ```yaml
 {
     "Statement": [
@@ -384,9 +405,9 @@ services:
     "Version": "1"
 }
 ```
-​
 
 ## 如果需要操作角色
+
 ### yaml
 ```yaml
 role:
@@ -400,16 +421,15 @@ role:
         Effect: Allow
         Resource: '*'
 ```
-​
-
-​
 
 ### 子账号需要权限
-#### 最大权限
-**系统策略**：AliyunFCFullAccess、AliyunRAMFullAccess
-​
 
-#### 更细度的策略**<**[**服务权限参考**](#qW2hs)**>**
+#### 最大权限
+
+**系统策略**：`AliyunFCFullAccess`、`AliyunRAMFullAccess`
+
+#### 更细度的策略 **<**[**服务权限参考**](#子账号需要的权限)**>**
+
 ```json
 {
     "Statement": [
@@ -437,39 +457,29 @@ role:
 # 函数相关权限配置
 
 ## 基础配置
+
 ### yaml
 ```yaml
-edition: 1.0.0
-name: fcDeployApp 
-access: unit
-
-services:
-  fc-deploy-test: 
-    component: devsapp/fc 
-    props:
-      region: cn-shenzhen
-      service:
-        name: unit-deploy-service
-        description: 'demo for fc-deploy component'
-        internetAccess: true
-      function:
-        name: event-function
-        description: this is a test
-        runtime: nodejs12
-        codeUri: ./
-        handler: index.handler
-        memorySize: 128
-        timeout: 60
+function:
+    name: event-function
+    description: this is a test
+    runtime: nodejs12
+    codeUri: ./
+    handler: index.handler
+    memorySize: 128
+    timeout: 60
 ```
 
-
 ### 子账号需要的函数权限
+
 #### 最大权限
-AliyunFCFullAccess
-​
+
+`AliyunFCFullAccess`
 
 #### 部署最小权限
-⚠️ fc:GetFunctionAsyncInvokeConfig 选填，不影响使用
+
+⚠️ `fc:GetFunctionAsyncInvokeConfig` 选填，不影响使用
+
 ```json
 {
     "Statement": [
@@ -489,6 +499,7 @@ AliyunFCFullAccess
 
 
 #### 删除最小权限
+
 ```json
 {
 		"Version": "1",
@@ -502,30 +513,34 @@ AliyunFCFullAccess
 }
 ```
 
+## Runtime 为 custom-container
 
-​
-
-## runtime 为 custom-container
 ### 子账号需要的权限
-> 参考基础配置
+
+> [参考基础配置](#子账号需要的函数权限)
 
 ### 服务角色权限
-**系统策略**：AliyunContainerRegistryReadOnlyAccess
+
+**系统策略**：`AliyunContainerRegistryReadOnlyAccess`
 
 ## 存在 asyncConfig 配置
-### 子账号需要的权限
-#### 最大权限
-**系统策略**：AliyunFCFullAccess、AliyunMNSReadOnlyAccess【查看消息服务(MNS)的权限】、AliyunEventBridgeReadOnlyAccess【事件总线（EventBridge）的权限】、AliyunMQReadOnlyAccess【消息队列(MQ)的权限】、AliyunFCInvocationAccess【调用函数权限】
 
+### 子账号需要的权限
+
+#### 最大权限
+
+**系统策略**：`AliyunFCFullAccess`、`AliyunMNSReadOnlyAccess`【查看消息服务(MNS)的权限】、`AliyunEventBridgeReadOnlyAccess`【事件总线（EventBridge）的权限】、`AliyunMQReadOnlyAccess`【消息队列(MQ)的权限】、`AliyunFCInvocationAccess`【调用函数权限】
 
 #### 最小权限
+
 **系统策略**
 
-- 如果配置了mns相关 AliyunMNSReadOnlyAccess
-- 如果配置了EventBridge相关 AliyunEventBridgeReadOnlyAccess
-- 如果配置了MQ相关 AliyunMQReadOnlyAccess
+- 如果配置了mns相关 `AliyunMNSReadOnlyAccess`
+- 如果配置了EventBridge相关 `AliyunEventBridgeReadOnlyAccess`
+- 如果配置了MQ相关 `AliyunMQReadOnlyAccess`
 
 **自定义策略**
+
 ```json
 {
     "Version": "1",
@@ -566,46 +581,28 @@ AliyunFCFullAccess
 # 触发器相关权限配置
 
 ## 基础配置
-### yaml
-```yaml
-edition: 1.0.0
-name: fcDeployApp 
-access: unit 
 
-services:
-  fc-deploy-test: 
-    component: devsapp/fc 
-    props:
-      region: cn-shenzhen
-      service:
-        name: unit-deploy-service
-        description: 'demo for fc-deploy component'
-        internetAccess: true
-      function:
-        name: event-function
-        description: this is a test
-        runtime: nodejs12
-        codeUri: ./
-        handler: index.handler
-        memorySize: 128
-        timeout: 60
-      triggers:
-        - name: httpTrigger
-          type: http
-          config:
-            authType: anonymous
-            methods:
-              - GET
-              - POST
+### yaml
+
+```yaml
+triggers:
+    - name: httpTrigger
+      type: http
+      config:
+        authType: anonymous
+        methods:
+          - GET
+          - POST
 ```
 
-
 ### 子账号需要的函数权限
+
 #### 最大权限
-AliyunFCFullAccess
-​
+
+`AliyunFCFullAccess`
 
 #### 部署最小权限
+
 ```json
 {
     "Version": "1",
@@ -623,7 +620,6 @@ AliyunFCFullAccess
 }
 ```
 
-
 #### 删除最小权限
 ```json
 {
@@ -638,63 +634,31 @@ AliyunFCFullAccess
 }
 ```
 
-
-## 触发器角色配置参考
-[https://help.aliyun.com/document_detail/253969.html#title-0wo-zl0-c61](https://help.aliyun.com/document_detail/253969.html#title-0wo-zl0-c61)
-
-# 触发器相关权限配置
+# 自定义域名相关权限配置
 
 ## 基础配置
 
 ### yaml
-```yaml
-edition: 1.0.0
-name: fcDeployApp 
-access: unit 
-# access: default 
 
-services:
-  fc-deploy-test: 
-    component: devsapp/fc 
-    props:
-      region: cn-shenzhen
-      service:
-        name: unit-deploy-service
-        description: 'demo for fc-deploy component'
-        internetAccess: true
-      function:
-        name: event-function
-        description: this is a test
-        runtime: nodejs12
-        codeUri: ./
-        handler: index.handler
-        memorySize: 128
-        timeout: 60
-      triggers:
-        - name: httpTrigger
-          type: http
-          config:
-            authType: anonymous
-            methods:
-              - GET
-              - POST
-      customDomains:
-        - domainName: auto
-          protocol: HTTP
-          routeConfigs:
-            - path: /*
-              serviceName: unit-deploy-service
-              functionName: event-function
+```yaml
+customDomains:
+    - domainName: auto
+      protocol: HTTP
+      routeConfigs:
+        - path: /*
+          serviceName: unit-deploy-service
+          functionName: event-function
 ```
 
-
 ### 子账号需要的权限
+
 #### 最大权限
-系统策略：AliyunFCFullAccess
-​
+
+系统策略：`AliyunFCFullAccess`
 
 #### 最小权限
-> 服务和函数权限较多的原因：domainName 为 auto，需要创建http函数作为一个辅助函数，使用完之后会进行删除
+
+> 服务和函数权限较多的原因：`domainName` 为 `auto`，需要创建http函数作为一个辅助函数，使用完之后会进行删除
 
 ```yaml
 {
