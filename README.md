@@ -49,10 +49,14 @@
 - 权限相关
     - [Yaml字段相关配置权限](./docs/Others/authority/yaml.md)
     - [命令使用相关权限](./docs/Others/authority/command.md)
-- 更多方案
+- 更多内容
     - [从Funcraft迁移到Serverless Devs](./docs/Others/fun-fc.md)
-    - CI/CD解决方案
+    - CI/CD相关
         - [Github Action 与 Serverless Devs](./docs/Others/github-action.md)
+        - [阿里云Custom Container的CI/CD最佳实践案例](http://www.serverless-devs.com/blog/aliyun-custom-container-ci-cd)
+        - [通过Gitee+Serverless Devs快速实现函数代码更新与版本发布](http://www.serverless-devs.com/blog/gitee-gitee-go-serverless-devs-ci-cd)
+        - [只更新代码，然后发布版本：基于Serverless Devs原子化操作阿里云函数计算](http://www.serverless-devs.com/blog/serverless-devs-update-fc-code)
+        - [Serverless Devs的官网是通过Serverless Devs部署的](http://www.serverless-devs.com/blog/serverless-devs-static-website-and-cd)
 ----
 
 # More
