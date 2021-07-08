@@ -4,6 +4,7 @@
     - [Download指令](#Download指令)
     - [Upload指令](#Upload指令)
     - [Command指令](#Command指令)
+- [操作所需权限](../Others/authority/command.md#nas-指令)
 
 --------
 

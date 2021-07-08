@@ -1,6 +1,5 @@
 # 部署操作：Deploy
 
-
 - [快速使用](#快速使用)
 - [高阶功能](#高阶功能)
     - [如何部署多个函数](#如何部署多个函数)
@@ -11,7 +10,7 @@
 - [其他方案切换](#其他方案切换)
     - [从Funcraft过渡到Serverless Devs](#从Funcraft过渡到Serverless-Devs)
     - [从ROS切换到Serverless Devs](#从ROS切换到Serverless-Devs)
-    
+- [操作所需权限](../Others/authority/command.md#deployremove-指令)
 
 --------
 
@@ -350,3 +349,4 @@ services:
 ## 从ROS切换到Serverless Devs
 
 可以直接参考已有的[ROS组件](https://github.com/devsapp/ros) ，通过该组件，可以部署ROS规范的项目。
+

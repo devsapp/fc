@@ -1,5 +1,35 @@
 # Yaml规范说明
 
+本文介绍了Yaml配置的相关字段含义。字段对应的权限配置可以参考[权限配置文档](./authority/yaml.md)
+
+**目录**
+- [Yaml完整配置](#Yaml完整配置)
+- [字段解析](#字段解析)
+    - [service字段](#service字段)
+        - [role](#role)
+        - [logConfig](#logConfig)
+        - [vpcConfig](#vpcConfig)
+        - [nasConfig](#nasConfig)
+    - [function字段](#function字段)
+        - [customContainerConfig](#customContainerConfig)
+        - [environmentVariables](#environmentVariables)
+        - [instanceLifecycleConfig](#instanceLifecycleConfig)
+        - [asyncConfiguration](#asyncConfiguration)
+        - [destination](#destination)
+    - [triggers字段](#triggers字段)
+        - [OSS触发器](#OSS触发器)
+        - [Log触发器](#Log触发器)
+        - [Timer触发器](#Timer触发器)
+        - [Http触发器](#Http触发器)
+        - [MNS触发器](#MNS触发器)
+        - [CDN触发器](#CDN触发器)
+    - [customDomains字段](#customDomains字段)
+        - [certConfig](#certConfig)
+        - [routeConfigs](#routeConfigs)
+        
+
+# Yaml完整配置
+
 阿里云函数计算（FC）组件的Yaml字段如下：
 
 ```yaml
@@ -152,6 +182,8 @@ services:
 ```
 
 
+
+
 # 字段解析
 
 | 参数名 |  必填  |  类型  |  参数描述  |
@@ -162,7 +194,7 @@ services:
 | triggers | True | Struct | 触发器 |
 | customDomains | True | Struct | 自定义域名 |
 
-地区目前支持：cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1
+地区目前支持：`cn-beijing`, `cn-hangzhou`, `cn-shanghai`, `cn-qingdao`, `cn-zhangjiakou`, `cn-huhehaote`, `cn-shenzhen`, `cn-chengdu`, `cn-hongkong`, `ap-southeast-1`, `ap-southeast-2`, `ap-southeast-3`, `ap-southeast-5`, `ap-northeast-1`, `eu-central-1`, `eu-west-1`, `us-west-1`, `us-east-1`, `ap-south-1`
 
 ## service字段
 | 参数名 |  必填  |  类型  |  参数描述  |
@@ -204,6 +236,8 @@ role:
           - acs:log:*:*:project/*
 ```
 
+> 相关权限可以参考[权限文档](./authority/yaml.md#如果需要操作角色)
+
 ### logConfig
 
 当`logConfig`参数为简单配置是，可以是：`auto`
@@ -217,6 +251,7 @@ role:
 | enableRequestMetrics | False | Boolean | RequestMetrics开关，取值`true`/`false` |
 | enableInstanceMetrics | False | Boolean | InstanceMetrics开关，取值`true`/`false` |
 
+> 相关权限可以参考[权限文档](./authority/yaml.md#存在日志配置的情况)
 
 ### vpcConfig
 
@@ -230,6 +265,8 @@ role:
 | vSwitchIds | False | List<String> | 一个或多个VSwitch ID |
 | vpcId | False | String | VPC ID |
 
+> 相关权限可以参考[权限文档](./authority/yaml.md#存在-VPC-配置)
+
 ### nasConfig
 
 当`nasConfig`参数为简单配置是，可以是：`auto`
@@ -242,6 +279,8 @@ role:
 | userId | False | String | userID, 默认为10003 |
 | groupId | False | String | groupID, 默认为10003 |
 
+> 相关权限可以参考[权限文档](./authority/yaml.md#存在-NAS-配置)
+
 #### mountPoints
 
 | 参数名 |  必填  |  类型  |  参数描述  |
@@ -251,7 +290,7 @@ role:
 | fcDir | False | String | 函数计算目录 |
 
 
-## function
+## function字段
 | 参数名 |  必填  |  类型  |  参数描述  |
 | --- |  ---  |  ---  |  ---  |
 | name | True | String | function名称 |
@@ -274,7 +313,7 @@ role:
 | instanceLifecycleConfig | False | Struct | 扩展函数 |
 | asyncConfiguration | False | Struct | 异步配置 |
 
-runtime目前支持：nodejs4.4、nodejs6、nodejs8、nodejs10、nodejs12、python2.7、python3、java8、java11、php7.2、dotnetcore2.1、custom及custom-container
+runtime目前支持：`nodejs4.4`、`nodejs6`、`nodejs8`、`nodejs10`、`nodejs12`、`python2.7`、`python3`、`java8`、`java11`、`php7.2`、`dotnetcore2.1`、`custom`及`custom-container`
 
 ### customContainerConfig
 | 参数名 |  必填  |  类型  |  参数描述  |
@@ -283,6 +322,7 @@ runtime目前支持：nodejs4.4、nodejs6、nodejs8、nodejs10、nodejs12、pyth
 | command | False | String | 指令 |
 | args | False | String | 参数 |
 
+> 相关权限可以参考[权限文档](./authority/yaml.md#Runtime-为-custom-container)
 
 ### environmentVariables
 
@@ -292,7 +332,6 @@ Object格式，例如：
 TempKey: tempValue
 ```
 
-
 ### instanceLifecycleConfig
 
 | 参数名 |  必填  |  类型  |  参数描述  |
@@ -300,7 +339,8 @@ TempKey: tempValue
 | preFreeze | False | Struct |  PreFreeze 函数 |
 | preStop | False | Struct |  PreStop 函数 |
 
-#### preFreeze ｜ preStop
+#### preFreeze和preStop
+
 | 参数名 |  必填  |  类型  |  参数描述  |
 | --- |  ---  |  ---  |  ---  |
 | handler | False | String |  函数入口 |
@@ -309,11 +349,13 @@ TempKey: tempValue
 ### asyncConfiguration
 | 参数名 |  必填  |  类型  |  参数描述  |
 | --- |  ---  |  ---  |  ---  |
-| maxAsyncEventAgeInSeconds | False | Number |  
-消息最大有效期(s) |
+| maxAsyncEventAgeInSeconds | False | Number |  消息最大有效期(s) |
 | maxAsyncRetryAttempts | False | Number |  最大重试次数 |
 | statefulInvocation | False | Boolean |  异步调用状态 |
 | destination | False | Boolean |  目标地址 |
+
+> 相关权限可以参考[权限文档](./authority/yaml.md#存在-asyncConfig-配置)
+
 
 #### destination
 | 参数名 |  必填  |  类型  |  参数描述  |
@@ -322,7 +364,7 @@ TempKey: tempValue
 | onFailure | False | String |  失败时 |
 
 
-## triggers
+## triggers字段
 
 | 参数名 |  必填  |  类型  |  参数描述  |
 | --- |  ---  |  ---  |  ---  |
@@ -332,7 +374,10 @@ TempKey: tempValue
 | sourceArn | False | String | 资源Arn |
 | config | True | Struct | 触发器配置 |
 
-type目前支持：http, timer, oss, log, mns_topic, cdn_events
+type目前支持：`http`, `timer`, `oss`, `log`, `mns_topic`, `cdn_events`
+
+> 相关权限可以参考[权限文档](./authority/yaml.md#触发器相关权限配置)
+
 
 ### OSS触发器
 
@@ -436,7 +481,7 @@ TempKey: tempValue
 
 
 
-## customDomains
+## customDomains字段
 
 | 参数名 |  必填  |  类型  |  参数描述  |
 | --- |  ---  |  ---  |  ---  |
@@ -444,6 +489,8 @@ TempKey: tempValue
 | protocol | True | String | 协议，取值：`HTTP`, `HTTPS`, `HTTP, HTTPS` |
 | routeConfigs | True | List<Struct> | 路由 |
 | certConfig | False | Struct | 域名证书 |
+
+> 相关权限可以参考[权限文档](./authority/yaml.md#自定义域名相关权限配置)
 
 ### certConfig
 | 参数名 |  必填  |  类型  |  参数描述  |

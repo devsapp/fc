@@ -46,6 +46,9 @@
     - [硬盘挂载操作：Nas](./Usage/nas.md)
     - [移除操作：Remove](./Usage/remove.md)
     - [同步操作：Sync](./Usage/sync.md)
+- 权限相关
+    - [Yaml字段相关配置权限](./Others/authority/yaml.md)
+    - [命令使用相关权限](./Others/authority/command.md)
 - 更多方案
     - [从Funcraft迁移到Serverless Devs](./Others/fun-fc.md)
     - CI/CD解决方案

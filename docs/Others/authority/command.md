@@ -98,7 +98,7 @@
 
 ## nas 指令
 
-参考 [nas 部署](https://yuque.antfin.com/docs/share/6d667063-809c-4ffc-ba63-7fe236bbc029?#s2Oda)
+参考 [nas 部署](./yaml.md#存在-NAS-配置)
 
 ## layer 指令
 
