@@ -300,7 +300,7 @@ role:
 | ossKey | False | String | 如果指定oss代码，所对应的对象，不能与codeUri同时出现  |
 | handler | False | String | function执行的入口，具体格式和语言相关 |
 | memorySize | False | Number | function的内存规格 |
-| runtime | False | String | 运行时 |
+| runtime | True | String | 运行时 |
 | timeout | False | Number | function运行的超时时间 |
 | caPort | False | Number | CustomContainer/Runtime指定端口 |
 | customContainerConfig | False | Struct | 自定义镜像配置 |
@@ -352,7 +352,7 @@ TempKey: tempValue
 | maxAsyncEventAgeInSeconds | False | Number |  消息最大有效期(s) |
 | maxAsyncRetryAttempts | False | Number |  最大重试次数 |
 | statefulInvocation | False | Boolean |  异步调用状态 |
-| destination | False | Boolean |  目标地址 |
+| destination | False | Struct |  目标地址 |
 
 > 相关权限可以参考[权限文档](./authority/yaml.md#存在-asyncConfig-配置)
 
@@ -411,7 +411,7 @@ type目前支持：`http`, `timer`, `oss`, `log`, `mns_topic`, `cdn_events`
 | jobConfig | True | List | job配置 |
 | sourceConfig | True | Struct | source配置 |
 | functionParameter | True | Struct | 日志服务将该配置内容作为函数 event, 当事件触发时 |
-| enable | True | Struct | 开关 |
+| enable | True | Boolean | 开关 |
 
 #### logConfig
 | 参数名 |  必填  |  类型  |  参数描述  |
@@ -444,8 +444,8 @@ TempKey: tempValue
 | 参数名 |  必填  |  类型  |  参数描述  |
 | --- |  ---  |  ---  |  ---  |
 | cronExpression | True | String | 时间触发器表达式 |
-| enable | True | List | 表示是否启用该触发器 |
-| payload | True | Struct | 传入参数 |
+| enable | True | Boolean | 表示是否启用该触发器 |
+| payload | False | String | 传入参数 |
 
 ### Http触发器
 
@@ -461,15 +461,15 @@ TempKey: tempValue
 | topicName | True | String | mns topic的名字 |
 | region | False | List | mns topic 所在的 region，如果不填，默认为和函数一样的 region |
 | notifyContentFormat | False | String | 推送给函数入参 event 的格式，可选值：STREAM, JSON |
-| notifyStrategy | False | List | 调用函数的重试策略，可选值：BACKOFF_RETRY, EXPONENTIAL_DECAY_RETRY |
-| filterTag | False | List | 描述了该订阅中消息过滤的标签（标签一致的消息才会被推送）,不超过 16 个字符的字符串，默认不进行消息过滤，即默认不填写该字段 |
+| notifyStrategy | False | String | 调用函数的重试策略，可选值：BACKOFF_RETRY, EXPONENTIAL_DECAY_RETRY |
+| filterTag | False | String | 描述了该订阅中消息过滤的标签（标签一致的消息才会被推送）,不超过 16 个字符的字符串，默认不进行消息过滤，即默认不填写该字段 |
 
 ### CDN触发器
 
 | 参数名 |  必填  |  类型  |  参数描述  |
 | --- |  ---  |  ---  |  ---  |
 | eventName | True | String | 为 CDN 端触发函数执行的事件，一经创建不能更改 |
-| eventVersion | True | List | 为 CDN 端触发函数执行事件的版本，一经创建不能更改 |
+| eventVersion | True | String | 为 CDN 端触发函数执行事件的版本，一经创建不能更改 |
 | notes | True | String | 备注信息 |
 | filter | True | Struct | 过滤器（至少需要一个过滤器） |
 
