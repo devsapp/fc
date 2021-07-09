@@ -1,5 +1,6 @@
 import { IProperties } from './interface/interface';
 import { TriggerConfig } from './interface/fc/trigger';
+import Table from 'tty-table';
 import _ from 'lodash';
 
 export function isAutoConfig(config: any): boolean {
@@ -34,3 +35,28 @@ export function isHttpFunction(props: IProperties): boolean {
   }
   return false;
 }
+
+export const tableShow = (data, showKey) => {
+  const options = {
+    borderStyle: 'solid',
+    borderColor: 'blue',
+    headerAlign: 'center',
+    align: 'left',
+    color: 'cyan',
+    width: '100%',
+  };
+  const header_option = {
+    headerColor: 'cyan',
+    color: 'cyan',
+    align: 'left',
+    width: 'auto',
+    formatter: (value) => value,
+  };
+  const header = showKey.map((value) => (_.isString(value) ? ({
+    ...header_option,
+    value,
+  }) : ({ ...header_option, ...value })));
+
+  console.log(Table(header, data, options).render());
+};
+

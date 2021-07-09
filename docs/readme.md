@@ -46,6 +46,11 @@
     - [硬盘挂载操作：Nas](./Usage/nas.md)
     - [移除操作：Remove](./Usage/remove.md)
     - [同步操作：Sync](./Usage/sync.md)
+    - [版本操作：Version](./Usage/version.md)
+    - [别名操作：Alias](./Usage/alias.md)
+    - [预留操作：Provision](./Usage/provision.md)
+    - [按量资源操作：OnDemand](./Usage/onDemand.md)
+    - [层的操作：Layer](./Usage/layer.md)
 - 权限相关
     - [Yaml字段相关配置权限](./Others/authority/yaml.md)
     - [命令使用相关权限](./Others/authority/command.md)
@@ -56,8 +61,7 @@
         - [阿里云Custom Container的CI/CD最佳实践案例](http://www.serverless-devs.com/blog/aliyun-custom-container-ci-cd)
         - [通过Gitee+Serverless Devs快速实现函数代码更新与版本发布](http://www.serverless-devs.com/blog/gitee-gitee-go-serverless-devs-ci-cd)
         - [只更新代码，然后发布版本：基于Serverless Devs原子化操作阿里云函数计算](http://www.serverless-devs.com/blog/serverless-devs-update-fc-code)
-           
-----
+
 
 # More
 
