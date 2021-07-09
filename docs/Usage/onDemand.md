@@ -3,6 +3,7 @@
 - [快速使用](#快速使用)
   - [简单使用](#简单使用)
   - [高级使用](#高级使用)
+- [操作所需权限](../Others/authority/command.md#onDemand-指令)
 
 
 ------
@@ -29,7 +30,9 @@ SubCommand
   delete   Delete resource on-demand, you can get help through [s onDemand get -h]
 
 ```
+
 OnDemand命令为我们提供了一些子命令：
+
 - list: 查看按量资源列表，可以通过`s onDemand list -h`获取帮助文档
     ```
     onDemand list
