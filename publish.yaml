@@ -115,7 +115,7 @@ Properties:
                     Default: 10003
                     Type:
                       - Number
-                  groupId: 10003
+                  groupId:
                     Description: groupID, 默认为10003
                     Required: False
                     Default: 10003
