@@ -127,5 +127,5 @@ s config add --AccountID ${{secrets.ALIYUN_ACCOUNT_ID}} --AccessKeyID ${{secrets
 # Others
 
 Best practices：
-- 🍉 Serverless Devs的官网是通过Serverless Devs部署的: http://short.devsapp.cn/cicd/github/action/practice
-
+- [🍉 阿里云Custom Container的CI/CD最佳实践案例](http://www.serverless-devs.com/blog/aliyun-custom-container-ci-cd)
+- [🍉 只更新代码，然后发布版本：基于Serverless Devs原子化操作阿里云函数计算](http://www.serverless-devs.com/blog/serverless-devs-update-fc-code)

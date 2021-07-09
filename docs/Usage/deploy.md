@@ -1,6 +1,5 @@
 # 部署操作：Deploy
 
-
 - [快速使用](#快速使用)
 - [高阶功能](#高阶功能)
     - [如何部署多个函数](#如何部署多个函数)
@@ -11,7 +10,7 @@
 - [其他方案切换](#其他方案切换)
     - [从Funcraft过渡到Serverless Devs](#从Funcraft过渡到Serverless-Devs)
     - [从ROS切换到Serverless Devs](#从ROS切换到Serverless-Devs)
-    
+- [操作所需权限](../Others/authority/command.md#deployremove-指令)
 
 --------
 
@@ -228,15 +227,15 @@ services:
 
 ### pulumi部署方案
 
-使用pulumi部署方案很简答， 只需要执行`s cli fc-default set deploy-type pulumi`，即可切换默认部署方法为通过pulumi部署。
+使用pulumi部署方案很简单， 只需要执行`s cli fc-default set deploy-type pulumi`，即可切换默认部署方法为通过pulumi部署。
 
-通过Pulumi部署速度可能会相对慢一下，但是他会相对来说更加安全和科学，所有的流程交给pulumi托管。
+通过Pulumi部署速度可能会相对慢一些，但是他会相对来说更加安全和科学，所有的流程交给pulumi托管。
 
 ### sdk部署方案
 
-使用sdk部署方案很简答， 只需要执行`s cli fc-default set deploy-type sdk`，即可切换默认部署方法为通过sdk部署。
+使用sdk部署方案很简单， 只需要执行`s cli fc-default set deploy-type sdk`，即可切换默认部署方法为通过sdk部署。
 
-通过SDK部署速度可能会相对快一下。
+通过SDK部署速度可能会相对快一些。
 
 ## 如何支持CI/CD
 
@@ -350,3 +349,4 @@ services:
 ## 从ROS切换到Serverless Devs
 
 可以直接参考已有的[ROS组件](https://github.com/devsapp/ros) ，通过该组件，可以部署ROS规范的项目。
+
