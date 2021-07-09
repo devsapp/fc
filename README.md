@@ -46,6 +46,11 @@
     - [硬盘挂载操作：Nas](./docs/Usage/nas.md)
     - [移除操作：Remove](./docs/Usage/remove.md)
     - [同步操作：Sync](./docs/Usage/sync.md)
+    - [版本操作：Version](./docs/Usage/version.md)
+    - [别名操作：Alias](./docs/Usage/alias.md)
+    - [预留操作：Provision](./docs/Usage/provision.md)
+    - [按量资源操作：OnDemand](./docs/Usage/onDemand.md)
+    - [层的操作：Layer](./docs/Usage/layer.md)
 - 权限相关
     - [Yaml字段相关配置权限](./docs/Others/authority/yaml.md)
     - [命令使用相关权限](./docs/Others/authority/command.md)

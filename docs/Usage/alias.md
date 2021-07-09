@@ -3,7 +3,7 @@
 - [快速使用](#快速使用)
   - [简单使用](#简单使用)
   - [高级使用](#高级使用)
-
+- [操作所需权限](../Others/authority/command.md#alias-指令)
 
 ------
 
@@ -28,7 +28,9 @@ SubCommand
   publish   Publish service alias, you can get help through [s alias publish -h]       
   delete    Delete service alias, you can get help through [s alias delete -h]  
 ```
+
 Alias命令为我们提供了一些子命令：
+
 - list: 查看按量资源列表，可以通过`s alias list -h`获取帮助文档
     ```
     alias list
@@ -93,6 +95,7 @@ Alias命令为我们提供了一些子命令：
 
       $ s cli fc alias publish --region cn-hangzhou --service-name name --alias-name pre --version-id 2 
     ```
+  
 - get: 查看按量资源，可以通过`s alias get -h`获取帮助文档
     ```
     alias get
@@ -123,6 +126,7 @@ Alias命令为我们提供了一些子命令：
 
       $ s cli fc alias get --region cn-hangzhou --service-name name --alias-name pre 
     ```
+  
 - delete: 删除按量资源，可以通过`s alias delete -h`获取帮助文档
     ```
     alias delete
