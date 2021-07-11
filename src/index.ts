@@ -89,9 +89,7 @@ export default class FcBaseComponent {
     }
 
 
-    console.log(deployRes)
-
-    return deployRes;
+    return result;
   }
 
   async remove(inputs: IInputs): Promise<any> {
