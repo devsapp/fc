@@ -7,8 +7,8 @@ export default class FcStress {
     private readonly region;
     private readonly access;
     constructor(access: string, region: string, stressOpts?: StressOption, httpTypeOpts?: HttpTypeOption, eventTypeOpts?: EventTypeOption, payloadOpts?: PayloadOption);
-    private isEventFunctionType;
-    private isHttpFunctionType;
     makeStartArgs(): string;
     makeCleanArgs(assumeYes?: boolean): string;
+    private isEventFunctionType;
+    private isHttpFunctionType;
 }
