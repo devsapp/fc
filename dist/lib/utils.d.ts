@@ -7,3 +7,4 @@ export declare function getFcNames(argsParse: any, inputsProps: any): {
     functionName: any;
 };
 export declare function isHttpFunction(props: IProperties): boolean;
+export declare const tableShow: (data: any, showKey: any) => void;

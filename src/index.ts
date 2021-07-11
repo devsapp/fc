@@ -33,6 +33,64 @@ export default class FcBaseComponent {
     const deployRes: any = await this.componentMethodCaller(inputs, 'devsapp/fc-deploy', 'deploy', props, args);
     tips.showNextTip(args, tips.showDeployNextTips);
 
+    console.log("\n\n")
+    const result = {}
+    if(deployRes.region){
+      result['region'] = deployRes.region
+    }
+    if(deployRes.service){
+      result['service'] = {}
+      if(deployRes.service.name){
+        result['service']['name'] = deployRes.service.name
+      }
+    }
+    if(deployRes.function){
+      result['function'] = {}
+      if(deployRes.function.name){
+        result['function']['name'] = deployRes.function.name
+      }
+      if(deployRes.function.runtime){
+        result['function']['runtime'] = deployRes.function.runtime
+      }
+      if(deployRes.function.handler){
+        result['function']['handler'] = deployRes.function.handler
+      }
+      if(deployRes.function.memorySize){
+        result['function']['memorySize'] = deployRes.function.memorySize
+      }
+      if(deployRes.function.timeout){
+        result['function']['timeout'] = deployRes.function.timeout
+      }
+    }
+    if(deployRes.systemDomain){
+      result['url'] = {
+        "system_url":  deployRes.systemDomain
+      }
+    }
+    if(deployRes.customDomains){
+      result['url'] = result['url'] || {}
+      const temp_url = []
+      for(let i=0; i< deployRes.customDomains.length; i++){
+        temp_url.push({
+          "domain": deployRes.customDomains[i].domainName,
+          "path": deployRes.customDomains[i].path
+        })
+      }
+      result['url']['custom_domain'] = temp_url
+    }
+    if(deployRes.triggers){
+      result['triggers'] = []
+      for(let i=0; i< deployRes.triggers.length; i++){
+        result['triggers'].push({
+          "type": deployRes.triggers[i].type,
+          "name": deployRes.triggers[i].name
+        })
+      }
+    }
+
+
+    console.log(deployRes)
+
     return deployRes;
   }
 
