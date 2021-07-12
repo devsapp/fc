@@ -1,18 +1,21 @@
+/* eslint-disable no-await-in-loop */
 import * as core from '@serverless-devs/core';
 import { ICredentials } from '../interface/profile';
+import _ from 'lodash';
 import Client from '../client';
 import logger from '../../common/logger';
 import * as help_constant from '../help/alias';
-import { tableShow } from '../utils';
+import { tableShow, promptForConfirmOrDetails } from '../utils';
 
 interface IProps {
   region?: string;
   serviceName: string;
   description?: string;
-  versionId?: string;
+  version?: string;
   aliasName?: string;
   gversion?: string;
   weight?: number;
+  assumeYes?: boolean;
 }
 
 const ALIAS_COMMAND: string[] = ['list', 'get', 'publish', 'delete', 'deleteAll'];
@@ -22,10 +25,10 @@ export default class Alias {
     logger.debug(`inputs.props: ${JSON.stringify(inputs.props)}`);
 
     const parsedArgs: {[key: string]: any} = core.commandParse(inputs, {
-      boolean: ['help', 'table'],
+      boolean: ['help', 'table', 'y'],
       string: ['region', 'service-name', 'description', 'alias-name', 'id', 'gversion'],
       number: ['weight'],
-      alias: { help: 'h', 'version-id': 'id' },
+      alias: { help: 'h', version: 'id', 'assume-yes': 'y' },
     });
 
     const parsedData = parsedArgs?.data || {};
@@ -53,7 +56,8 @@ export default class Alias {
       region: parsedData.region || props.region,
       serviceName: parsedData['service-name'] || props.service?.name,
       description: parsedData.description,
-      versionId: parsedData.id,
+      version: parsedData.id,
+      assumeYes: parsedData.y,
       aliasName: parsedData['alias-name'],
       gversion: parsedData.gversion,
       weight: parsedData.weight,
@@ -91,8 +95,8 @@ export default class Alias {
     return false;
   }
 
-  async publish({ serviceName, description, aliasName, versionId, gversion, weight }: IProps) {
-    if (!versionId) {
+  async publish({ serviceName, description, aliasName, version, gversion, weight }: IProps) {
+    if (!version) {
       throw new Error('Not fount versionId');
     }
     const hasWeight = typeof weight === 'number';
@@ -112,9 +116,9 @@ export default class Alias {
 
     const aliasConfig = await this.findAlias({ serviceName, aliasName });
     if (aliasConfig) {
-      return await this.updateAlias({ aliasName, serviceName, versionId, parames });
+      return await this.updateAlias({ aliasName, serviceName, version, parames });
     } else {
-      return await this.createAlias({ aliasName, serviceName, versionId, parames });
+      return await this.createAlias({ aliasName, serviceName, version, parames });
     }
   }
 
@@ -122,17 +126,7 @@ export default class Alias {
     logger.info(`Getting listAliases: ${serviceName}`);
     const data = await Client.fcClient.get_all_list_data(`/services/${serviceName}/aliases`, 'aliases');
     if (table) {
-      const showWeight = {
-        value: 'additionalVersionWeight',
-        formatter: (value) => {
-          const gversion = Object.keys(value)[0];
-          if (gversion) {
-            return `additionalVersion: ${gversion}\nWeight: ${value[gversion] * 100}%`;
-          }
-          return '';
-        },
-      };
-      tableShow(data, ['aliasName', 'versionId', 'description', 'createdTime', 'lastModifiedTime', showWeight]);
+      this.showAlias(data);
     } else {
       return data;
     }
@@ -148,20 +142,48 @@ export default class Alias {
     return (await Client.fcClient.deleteAlias(serviceName, aliasName)).data;
   }
 
-  async deleteAll({ serviceName }) {
+  async deleteAll({ serviceName, assumeYes }) {
     const aliasList = await this.list({ serviceName });
-    for (const { aliasName } of aliasList) {
+
+    if (!_.isEmpty(aliasList)) {
+      const meg = `Alias configuration exists under service ${serviceName}, whether to delete all alias resources`;
+      if (assumeYes) {
+        return await this.forDataDelete(serviceName, aliasList);
+      }
+      this.showAlias(aliasList);
+      if (await promptForConfirmOrDetails(meg)) {
+        return await this.forDataDelete(serviceName, aliasList);
+      }
+    }
+  }
+
+  private async forDataDelete(serviceName, data) {
+    for (const { aliasName } of data) {
       await this.delete({ serviceName, aliasName });
     }
   }
 
-  private async updateAlias({ aliasName, serviceName, versionId, parames }) {
-    logger.info(`Updating alias: ${aliasName}`);
-    await Client.fcClient.updateAlias(serviceName, aliasName, versionId, parames);
+  private showAlias(data) {
+    const showWeight = {
+      value: 'additionalVersionWeight',
+      formatter: (value) => {
+        const gversion = Object.keys(value)[0];
+        if (gversion) {
+          return `additionalVersion: ${gversion}\nWeight: ${value[gversion] * 100}%`;
+        }
+        return '';
+      },
+    };
+    tableShow(data, ['aliasName', 'versionId', 'description', 'createdTime', 'lastModifiedTime', showWeight]);
   }
 
-  private async createAlias({ aliasName, serviceName, versionId, parames }) {
+  private async updateAlias({ aliasName, serviceName, version, parames }) {
+    logger.info(`Updating alias: ${aliasName}`);
+    await Client.fcClient.updateAlias(serviceName, aliasName, version, parames);
+  }
+
+  private async createAlias({ aliasName, serviceName, version, parames }) {
     logger.info(`Creating alias: ${aliasName}`);
-    await Client.fcClient.createAlias(serviceName, aliasName, versionId, parames);
+    await Client.fcClient.createAlias(serviceName, aliasName, version, parames);
   }
 }

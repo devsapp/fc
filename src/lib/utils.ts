@@ -4,6 +4,18 @@ import Table from 'tty-table';
 import _ from 'lodash';
 import * as core from '@serverless-devs/core';
 import logger from '../common/logger';
+import inquirer from 'inquirer';
+
+export async function promptForConfirmOrDetails(message: string): Promise<boolean> {
+  const answers: any = await inquirer.prompt([{
+    type: 'list',
+    name: 'prompt',
+    message,
+    choices: ['yes', 'no'],
+  }]);
+
+  return answers.prompt === 'yes';
+}
 
 export function isAutoConfig(config: any): boolean {
   return config === 'auto' || config === 'Auto';

@@ -180,7 +180,7 @@ export const ALIAS_PUBLISH = [
         type: String,
       },
       {
-        name: 'version-id',
+        name: 'version',
         description: 'Specify the version id parameter',
         alias: '-id',
         type: String,
@@ -222,14 +222,14 @@ export const ALIAS_PUBLISH = [
   {
     header: 'Examples with Yaml',
     content: [
-      '$ s alias publish --alias-name pre --version-id 2',
-      '$ s exec -- alias publish --description xxx --alias-name pre --version-id 2 --gversion 3 --weight 20',
+      '$ s alias publish --alias-name pre --version 2',
+      '$ s exec -- alias publish --description xxx --alias-name pre --version 2 --gversion 3 --weight 20',
     ],
   },
   {
     header: 'Examples with CLI',
     content: [
-      '$ s cli fc alias publish --region cn-hangzhou --service-name name --alias-name pre --version-id 2',
+      '$ s cli fc alias publish --region cn-hangzhou --service-name name --alias-name pre --version 2',
     ],
   },
 ];

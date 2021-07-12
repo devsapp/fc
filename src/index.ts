@@ -18,6 +18,7 @@ import FcStress from './lib/component/fc-stress';
 import Version from './lib/component/version';
 import Alias from './lib/component/alias';
 import OnDemand from './lib/component/on-demand';
+import Remove from './lib/component/remove';
 import Provision from './lib/component/provision';
 import { StressOption, PayloadOption, EventTypeOption, HttpTypeOption } from './lib/interface/component/fs-stress';
 import * as yaml from 'js-yaml';
@@ -97,8 +98,27 @@ export default class FcBaseComponent extends BaseComponent {
   }
 
   async remove(inputs: IInputs): Promise<any> {
-    const { props, args } = this.handlerComponentInputs(inputs);
-    return await this.componentMethodCaller(inputs, 'devsapp/fc-deploy', 'remove', props, args);
+    const {
+      credentials,
+      help,
+      props,
+      subCommand,
+      errorMessage,
+    } = await Remove.handlerInputs(inputs);
+
+    await this.report('fc', subCommand ? `remove ${subCommand}` : 'remove', credentials?.AccountID, inputs?.project?.access);
+    if (errorMessage) {
+      throw new Error(errorMessage);
+    }
+    if (help) {
+      return;
+    }
+
+    return await new Remove({ region: props.region, credentials }).remove({
+      props,
+      subCommand,
+      credentials,
+    }, this.handlerInputs(inputs));
   }
 
   async info(inputs: IInputs): Promise<any> {

@@ -3,7 +3,8 @@ import fs from 'fs';
 import logger from '../../common/logger';
 import * as help_constant from '../help/provision';
 import Client from '../client';
-import { tableShow } from '../utils';
+import { promptForConfirmOrDetails, tableShow } from '../utils';
+import _ from 'lodash';
 
 interface IProps {
   region?: string;
@@ -15,6 +16,23 @@ interface IProps {
 }
 
 const PROVISION_COMMADN: string[] = ['list', 'get', 'put'];
+const TABLE = [
+  { value: 'serviceName', width: '10%' },
+  { value: 'qualifier', width: '10%' },
+  { value: 'functionName', width: '10%' },
+  { value: 'target', width: '10%', alias: 'target', formatter: (value) => value || '0' },
+  { value: 'current', width: '10%', alias: 'current', formatter: (value) => value || '0' },
+  {
+    value: 'scheduledActions',
+    width: '25%',
+    formatter: (value) => (value && value.length ? JSON.stringify(value, null, 2) : value),
+  },
+  {
+    value: 'targetTrackingPolicies',
+    width: '25%',
+    formatter: (value) => (value && value.length ? JSON.stringify(value, null, 2) : value),
+  },
+];
 
 export default class Provision {
   static async handlerInputs(inputs) {
@@ -96,7 +114,7 @@ export default class Provision {
     }
   }
 
-  async put({ serviceName, qualifier, functionName, config, target }) {
+  async put({ serviceName, qualifier, functionName, config, target }: any) {
     if (!functionName) {
       throw new Error('Not fount functionName parameter');
     }
@@ -135,30 +153,41 @@ export default class Provision {
 
   async list({ serviceName, qualifier }: IProps, table?) {
     logger.info(`Getting list provision: ${serviceName}`);
-    const data = await Client.fcClient.get_all_list_data('/provision-configs', 'provisionConfigs', {
+    const data = (await Client.fcClient.get_all_list_data('/provision-configs', 'provisionConfigs', {
       serviceName,
       qualifier,
-    });
+    }))?.filter((item) => item.target || item.current)
+      .map((item) => ({
+        serviceName: item.resource.split('#')[1],
+        qualifier: item.resource.split('#')[2],
+        functionName: item.resource.split('#')[3],
+        ...item,
+      }));
     if (table) {
-      tableShow(data, [
-        { value: 'resource', width: '10%', alias: 'serviceName', formatter: (value) => value.split('#')[1] },
-        { value: 'resource', width: '10%', alias: 'qualifier', formatter: (value) => value.split('#')[2] },
-        { value: 'resource', width: '10%', alias: 'functionName', formatter: (value) => value.split('#')[3] },
-        { value: 'target', width: '10%', alias: 'target', formatter: (value) => value || '0' },
-        { value: 'current', width: '10%', alias: 'current', formatter: (value) => value || '0' },
-        {
-          value: 'scheduledActions',
-          width: '25%',
-          formatter: (value) => (value && value.length ? JSON.stringify(value, null, 2) : value),
-        },
-        {
-          value: 'targetTrackingPolicies',
-          width: '25%',
-          formatter: (value) => (value && value.length ? JSON.stringify(value, null, 2) : value),
-        },
-      ]);
+      tableShow(data, TABLE);
     } else {
       return data;
+    }
+  }
+
+  async deleteAll({ serviceName, assumeYes }) {
+    const provisionList = await this.list({ serviceName });
+    if (!_.isEmpty(provisionList)) {
+      if (assumeYes) {
+        return await this.forDelete(provisionList);
+      }
+
+      tableShow(provisionList, TABLE);
+      const meg = `Provision configuration exists under service ${serviceName}, whether to delete all provision resources`;
+      if (await promptForConfirmOrDetails(meg)) {
+        return await this.forDelete(provisionList);
+      }
+    }
+  }
+
+  private async forDelete(data) {
+    for (const { serviceName, qualifier, functionName } of data) {
+      await this.put({ serviceName, qualifier, functionName, target: 0 });
     }
   }
 }

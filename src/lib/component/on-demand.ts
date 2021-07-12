@@ -2,7 +2,8 @@ import * as core from '@serverless-devs/core';
 import logger from '../../common/logger';
 import * as help_constant from '../help/on-demand';
 import Client from '../client';
-import { tableShow } from '../utils';
+import { promptForConfirmOrDetails, tableShow } from '../utils';
+import _ from 'lodash';
 
 interface IProps {
   region?: string;
@@ -12,6 +13,12 @@ interface IProps {
   maximumInstanceCount?: number;
 }
 const ONDEMAND_COMMADN = ['list', 'get', 'put', 'delete'];
+const TABLE = [
+  'serviceName',
+  'qualifier',
+  'functionName',
+  'maximumInstanceCount',
+];
 
 export default class OnDemand {
   static async handlerInputs(inputs) {
@@ -72,25 +79,20 @@ export default class OnDemand {
 
   async list({ serviceName }: IProps, table?) {
     logger.info(`Getting list on-demand: ${serviceName}`);
-    const data = await Client.fcClient.get_all_list_data('/on-demand-configs', 'configs', {
+    const data = (await Client.fcClient.get_all_list_data('/on-demand-configs', 'configs', {
       prefix: serviceName ? `services/${serviceName}` : '',
+    }))?.map((item) => {
+      const [, service, , functionName] = item.resource.split('/');
+      const serviceArr = service.split('.');
+      return {
+        serviceName: serviceArr[0],
+        qualifier: serviceArr[1],
+        functionName,
+        ...item,
+      };
     });
     if (table) {
-      tableShow(data.map((item) => {
-        const [, service, , functionName] = item.resource.split('/');
-        const serviceArr = service.split('.');
-        return {
-          serviceName: serviceArr[0],
-          qualifier: serviceArr[1],
-          functionName,
-          ...item,
-        };
-      }), [
-        'serviceName',
-        'qualifier',
-        'functionName',
-        'maximumInstanceCount',
-      ]);
+      tableShow(data, TABLE);
     } else {
       return data;
     }
@@ -155,5 +157,26 @@ export default class OnDemand {
     logger.info(`Updating on-demand: ${serviceName}.${qualifier}/${functionName}`);
     const { data } = await Client.fcClient.on_demand_put(serviceName, qualifier, functionName, options);
     return data;
+  }
+
+  async deleteAll({ serviceName, assumeYes }) {
+    const onDemandList = await this.list({ serviceName });
+    if (!_.isEmpty(onDemandList)) {
+      if (assumeYes) {
+        return await this.forDelete(onDemandList);
+      }
+
+      tableShow(onDemandList, TABLE);
+      const meg = `On-demand configuration exists under service ${serviceName}, whether to delete all On-demand resources`;
+      if (await promptForConfirmOrDetails(meg)) {
+        return await this.forDelete(onDemandList);
+      }
+    }
+  }
+
+  private async forDelete(data) {
+    for (const item of data) {
+      await this.delete(item);
+    }
   }
 }

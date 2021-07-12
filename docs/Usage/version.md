@@ -104,7 +104,7 @@ Version命令为我们提供了一些子命令：
 
       --region string             Specify the region parameter       
       --service-name string       Specify the service name parameter 
-      --id, --version-id string   Specify the version parameter      
+      --id, --version string   Specify the version parameter      
 
     Global Options
 
@@ -114,11 +114,11 @@ Version命令为我们提供了一些子命令：
     Examples with Yaml
 
       $ s version delete --id xxx                 
-      $ s exec -- version delete --version-id xxx 
+      $ s exec -- version delete --version xxx 
 
     Examples with CLI
 
-      $ s cli fc version delete --region cn-hangzhou --service-name name --version-id xxx 
+      $ s cli fc version delete --region cn-hangzhou --service-name name --version xxx 
     ```
 
 # 快速使用
@@ -143,7 +143,7 @@ s version publish
 
 
 ```
-s version delete --version-id 1
+s version delete --version 1
 ```
 
 - 重点1：region、serviceName、versionId 必填

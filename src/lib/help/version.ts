@@ -171,7 +171,7 @@ export const VERSION_DELETE = [
         type: String,
       },
       {
-        name: 'version-id',
+        name: 'version',
         description: 'Specify the version parameter',
         alias: '-id',
         type: String,
@@ -199,13 +199,13 @@ export const VERSION_DELETE = [
     header: 'Examples with Yaml',
     content: [
       '$ s version delete --id xxx',
-      '$ s exec -- version delete --version-id xxx',
+      '$ s exec -- version delete --version xxx',
     ],
   },
   {
     header: 'Examples with CLI',
     content: [
-      '$ s cli fc version delete --region cn-hangzhou --service-name name --version-id xxx',
+      '$ s cli fc version delete --region cn-hangzhou --service-name name --version xxx',
     ],
   },
 ];

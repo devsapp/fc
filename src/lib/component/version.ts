@@ -3,13 +3,15 @@ import { ICredentials } from '../interface/profile';
 import Client from '../client';
 import logger from '../../common/logger';
 import * as help_constant from '../help/version';
-import { tableShow } from '../utils';
+import { promptForConfirmOrDetails, tableShow } from '../utils';
+import _ from 'lodash';
 
 interface IProps {
   region: string;
   serviceName: string;
   description?: string;
-  versionId?: string;
+  version?: string;
+  assumeYes?: boolean;
 }
 
 const VERSION_COMMAND: string[] = ['list', 'publish', 'delete', 'deleteAll'];
@@ -19,9 +21,9 @@ export default class Version {
     logger.debug(`inputs.props: ${JSON.stringify(inputs.props)}`);
 
     const parsedArgs: {[key: string]: any} = core.commandParse(inputs, {
-      boolean: ['help', 'table'],
+      boolean: ['help', 'table', 'y'],
       string: ['region', 'service-name', 'description', 'id'],
-      alias: { help: 'h', 'version-id': 'id' },
+      alias: { help: 'h', version: 'id', 'assume-yes': 'y' },
     });
 
     const parsedData = parsedArgs?.data || {};
@@ -49,7 +51,8 @@ export default class Version {
       region: parsedData.region || props.region,
       serviceName: parsedData['service-name'] || props.service?.name,
       description: parsedData.description,
-      versionId: parsedData.id,
+      version: parsedData.id,
+      assumeYes: parsedData.y,
     };
 
     if (!endProps.region) {
@@ -91,20 +94,33 @@ export default class Version {
     return data;
   }
 
-  async delete({ serviceName, versionId }) {
-    if (!versionId) {
-      throw new Error('Not fount versionId');
+  async delete({ serviceName, version }) {
+    if (!version) {
+      throw new Error('Not fount version');
     }
-    logger.info(`Removing service version: ${serviceName}.${versionId}`);
-    const res = await Client.fcClient.deleteVersion(serviceName, versionId);
+    logger.info(`Removing service version: ${serviceName}.${version}`);
+    const res = await Client.fcClient.deleteVersion(serviceName, version);
     logger.debug(`delete version: ${JSON.stringify(res)}`);
   }
 
-  async deleteAll(props: IProps) {
-    const listData = await this.list(props);
-    const { serviceName } = props;
+  async deleteAll({ serviceName, assumeYes }) {
+    const listData = await this.list({ serviceName });
+    if (assumeYes) {
+      return await this.forDeleteVersion(serviceName, listData);
+    }
+
+    if (!_.isEmpty(listData)) {
+      tableShow(listData, ['versionId', 'description', 'createdTime', 'lastModifiedTime']);
+      const meg = `Version configuration exists under service ${serviceName}, whether to delete all version resources`;
+      if (await promptForConfirmOrDetails(meg)) {
+        return await this.forDeleteVersion(serviceName, listData);
+      }
+    }
+  }
+
+  private async forDeleteVersion(serviceName, listData) {
     for (const { versionId } of listData) {
-      await this.delete({ serviceName, versionId });
+      await this.delete({ serviceName, version: versionId });
     }
   }
 }
