@@ -10,6 +10,7 @@ export interface IInputs extends ServerlessProfile {
         configPath: string;
     };
     credentials?: ICredentials;
+    argsObj: any;
     command: string;
 }
 export interface IProperties {

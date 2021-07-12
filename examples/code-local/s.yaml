@@ -6,7 +6,7 @@ services:
   fc-deploy-test: #  服务名称
     component: ${path(../..)}
     props: #  组件的属性值
-      region: cn-shanghai
+      region: cn-hangzhou
       service:
         name: qianfeng-demo
         description: demo for fc-deploy component

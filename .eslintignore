@@ -6,3 +6,5 @@ test/
 **/*-min.js
 **/*.bundle.js
 examples/
+doc/
+src/common/

@@ -1,6 +1,6 @@
 {
   "name": "fc",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "main": "./dist/index.js",
   "dependencies": {
     "@alicloud/fc2": "^2.2.2",
@@ -23,19 +23,21 @@
     "ts-node": "^9.1.1",
     "typescript": "^3.9.7",
     "webpack": "^4.46.0",
-    "webpack-cli": "^4.4.0"
+    "webpack-cli": "^4.4.0",
+    "typedoc": "^0.20.35"
   },
   "scripts": {
     "dev": "npx tsc -w -p tsconfig.json",
     "prebuild": "rimraf dist",
-    "build": "npx tsc -p tsconfig.json",
+    "build": "npm run lint && npm run fix && npm run doc && npx tsc -p tsconfig.json",
     "build:component": "npx webpack --mode=production",
     "publish": "npm run build:component && s platform publish",
     "test": "jest",
     "test:cov": "jest --coverage",
     "lint": "f2elint scan",
     "fix": "f2elint fix",
-    "typecheck": "npx tsc -p tsconfig.json --noEmit"
+    "typecheck": "npx tsc -p tsconfig.json --noEmit",
+    "doc": "npx typedoc src --json doc/doc.json --out doc"
   },
   "husky": {
     "hooks": {

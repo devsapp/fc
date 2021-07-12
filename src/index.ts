@@ -21,11 +21,14 @@ import OnDemand from './lib/component/on-demand';
 import Provision from './lib/component/provision';
 import { StressOption, PayloadOption, EventTypeOption, HttpTypeOption } from './lib/interface/component/fs-stress';
 import * as yaml from 'js-yaml';
+import { PROXIED_COMMAND } from './lib/help/proxied';
+import BaseComponent from './common/base';
+import FcProxiedInvoke from './lib/component/fc-proxied-invoke';
 
 Logger.setContent('FC');
 const SUPPORTED_LOCAL_METHOD: string[] = ['invoke', 'start'];
 
-export default class FcBaseComponent {
+export default class FcBaseComponent extends BaseComponent {
   logger = Logger;
 
   async deploy(inputs: IInputs): Promise<any> {
@@ -33,58 +36,58 @@ export default class FcBaseComponent {
     const deployRes: any = await this.componentMethodCaller(inputs, 'devsapp/fc-deploy', 'deploy', props, args);
     tips.showNextTip(args, tips.showDeployNextTips);
 
-    console.log("\n\n")
-    const result = {}
-    if(deployRes.region){
-      result['region'] = deployRes.region
+    console.log('\n\n');
+    const result: any = {};
+    if (deployRes.region) {
+      result.region = deployRes.region;
     }
-    if(deployRes.service){
-      result['service'] = {}
-      if(deployRes.service.name){
-        result['service']['name'] = deployRes.service.name
-      }
-    }
-    if(deployRes.function){
-      result['function'] = {}
-      if(deployRes.function.name){
-        result['function']['name'] = deployRes.function.name
-      }
-      if(deployRes.function.runtime){
-        result['function']['runtime'] = deployRes.function.runtime
-      }
-      if(deployRes.function.handler){
-        result['function']['handler'] = deployRes.function.handler
-      }
-      if(deployRes.function.memorySize){
-        result['function']['memorySize'] = deployRes.function.memorySize
-      }
-      if(deployRes.function.timeout){
-        result['function']['timeout'] = deployRes.function.timeout
+    if (deployRes.service) {
+      result.service = {};
+      if (deployRes.service.name) {
+        result.service.name = deployRes.service.name;
       }
     }
-    if(deployRes.systemDomain){
-      result['url'] = {
-        "system_url":  deployRes.systemDomain
+    if (deployRes.function) {
+      result.function = {};
+      if (deployRes.function.name) {
+        result.function.name = deployRes.function.name;
+      }
+      if (deployRes.function.runtime) {
+        result.function.runtime = deployRes.function.runtime;
+      }
+      if (deployRes.function.handler) {
+        result.function.handler = deployRes.function.handler;
+      }
+      if (deployRes.function.memorySize) {
+        result.function.memorySize = deployRes.function.memorySize;
+      }
+      if (deployRes.function.timeout) {
+        result.function.timeout = deployRes.function.timeout;
       }
     }
-    if(deployRes.customDomains){
-      result['url'] = result['url'] || {}
-      const temp_url = []
-      for(let i=0; i< deployRes.customDomains.length; i++){
+    if (deployRes.systemDomain) {
+      result.url = {
+        system_url: deployRes.systemDomain,
+      };
+    }
+    if (deployRes.customDomains) {
+      result.url = result.url || {};
+      const temp_url = [];
+      for (let i = 0; i < deployRes.customDomains.length; i++) {
         temp_url.push({
-          "domain": deployRes.customDomains[i].domainName,
-          "path": deployRes.customDomains[i].path
-        })
+          domain: deployRes.customDomains[i].domainName,
+          path: deployRes.customDomains[i].path,
+        });
       }
-      result['url']['custom_domain'] = temp_url
+      result.url.custom_domain = temp_url;
     }
-    if(deployRes.triggers){
-      result['triggers'] = []
-      for(let i=0; i< deployRes.triggers.length; i++){
-        result['triggers'].push({
-          "type": deployRes.triggers[i].type,
-          "name": deployRes.triggers[i].name
-        })
+    if (deployRes.triggers) {
+      result.triggers = [];
+      for (let i = 0; i < deployRes.triggers.length; i++) {
+        result.triggers.push({
+          type: deployRes.triggers[i].type,
+          name: deployRes.triggers[i].name,
+        });
       }
     }
 
@@ -533,9 +536,57 @@ export default class FcBaseComponent {
     return await this.componentMethodCaller(inputs, 'devsapp/fc-layer', commandName, { region: props?.region }, args);
   }
 
-  async help(inputs: IInputs): Promise<void> {
-    await this.report('fc', 'help', null, inputs?.project?.access);
+  async proxied(inputs: IInputs): Promise<any> {
+    const { args, argsObj } = this.handlerComponentInputs(inputs);
+    const SUPPORTED_METHOD: string[] = Object.keys(PROXIED_COMMAND);
+
+    const apts = {
+      boolean: ['help'],
+      alias: { help: 'h' },
+    };
+    const comParse: any = core.commandParse({ args, argsObj }, apts);
+    const argsData: any = comParse?.data || {};
+    const nonOptionsArgs = argsData?._ || [];
+    this.logger.debug(`nonOptionsArgs is ${JSON.stringify(nonOptionsArgs)}`);
+    if (argsData?.help && nonOptionsArgs.length === 0) {
+      super.help('ProxiedInputsArgs');
+      return;
+    }
+    if (nonOptionsArgs.length === 0) {
+      super.help('ProxiedInputsArgs');
+      return;
+    }
+    const methodName: string = nonOptionsArgs[0];
+    if (!SUPPORTED_METHOD.includes(methodName)) {
+      this.logger.error(`Not supported sub-command: [${methodName}]`);
+      super.help('ProxiedInputsArgs');
+      return;
+    }
+    const creds: ICredentials = await core.getCredential(inputs?.project?.access);
+    const fcProxiedInvoke: FcProxiedInvoke = new FcProxiedInvoke(inputs);
+    if (methodName === 'setup') {
+      await this.proxied_method_invoker(fcProxiedInvoke.makeInputs(methodName), methodName, argsData?.help, 'ProxiedSetupInputsArgs', creds);
+    } else if (methodName === 'invoke') {
+      await this.proxied_method_invoker(fcProxiedInvoke.makeInputs(methodName), methodName, argsData?.help, 'ProxiedInvokeInputsArgs', creds);
+    } else {
+      // clean
+      await this.proxied_method_invoker(fcProxiedInvoke.makeInputs(methodName), methodName, argsData?.help, 'ProxiedCleanInputsArgs', creds);
+    }
+  }
+
+
+  async help(): Promise<void> {
+    await this.report('fc', 'help');
     core.help(COMPONENT_HELP_INFO);
+  }
+
+  private async proxied_method_invoker(inputs: IInputs, methodName: string, isHelp?: boolean, helpName?: string, creds?: ICredentials): Promise<any> {
+    await this.report('fc', `proxied_${methodName}`, creds?.AccountID);
+    if (isHelp) {
+      super.help(helpName);
+      return;
+    }
+    await this.componentMethodCaller(inputs, 'devsapp/fc-proxied-invoke', methodName);
   }
 
   // 解析入参
@@ -544,6 +595,7 @@ export default class FcBaseComponent {
     const props: IProperties = inputs?.props;
     const access: string = project?.access;
     const args: string = inputs?.args;
+    const argsObj: any = inputs?.argsObj;
     const curPath: any = inputs?.path;
     const projectName: string = project?.projectName;
     const appName: string = inputs?.appName;
@@ -554,12 +606,13 @@ export default class FcBaseComponent {
       access,
       props,
       args,
+      argsObj,
       curPath,
     };
   }
   private async report(componentName: string, command: string, accountID?: string, access?: string): Promise<void> {
     let uid: string = accountID;
-    if (_.isEmpty(accountID)) {
+    if (_.isEmpty(accountID) && !_.isEmpty(access)) {
       const credentials: ICredentials = await core.getCredential(access);
       uid = credentials.AccountID;
     }
@@ -576,6 +629,7 @@ export default class FcBaseComponent {
       access,
       props,
       args,
+      argsObj,
       curPath,
     } = this.handlerInputs(inputs);
     return {
@@ -587,16 +641,17 @@ export default class FcBaseComponent {
       appName,
       props,
       args,
+      argsObj,
       path: curPath,
     };
   }
 
-  private async componentMethodCaller(inputs: IInputs, componentName: string, methodName: string, props: any, args: string): Promise<any> {
+  private async componentMethodCaller(inputs: IInputs, componentName: string, methodName: string, props?: any, args?: string, argsObj?: any): Promise<any> {
     const componentInputs: any = this.handlerComponentInputs(inputs, componentName);
     await this.report(componentName, methodName, undefined, inputs?.project?.access);
-    componentInputs.props = props;
-    componentInputs.args = args;
-
+    componentInputs.props = props || inputs?.props;
+    componentInputs.args = args || inputs?.args;
+    componentInputs.argsObj = argsObj || inputs?.argsObj;
     // const componentIns: any = await core.load(`devsapp/${componentName}`);
     const componentIns: any = await core.load(`${componentName}`);
     this.logger.debug(`Inputs of component: ${componentName} is: ${JSON.stringify(componentInputs, null, '  ')}`);
