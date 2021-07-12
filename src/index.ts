@@ -24,6 +24,7 @@ import * as yaml from 'js-yaml';
 import { PROXIED_COMMAND } from './lib/help/proxied';
 import BaseComponent from './common/base';
 import FcProxiedInvoke from './lib/component/fc-proxied-invoke';
+import * as proxied from './command/proxied';
 
 Logger.setContent('FC');
 const SUPPORTED_LOCAL_METHOD: string[] = ['invoke', 'start'];
@@ -565,12 +566,27 @@ export default class FcBaseComponent extends BaseComponent {
     const creds: ICredentials = await core.getCredential(inputs?.project?.access);
     const fcProxiedInvoke: FcProxiedInvoke = new FcProxiedInvoke(inputs);
     if (methodName === 'setup') {
-      await this.proxied_method_invoker(fcProxiedInvoke.makeInputs(methodName), methodName, argsData?.help, 'ProxiedSetupInputsArgs', creds);
+      await this.report('fc', 'proxied_setup', creds?.AccountID);
+      if (argsData?.help) {
+        super.help('ProxiedSetupInputsArgs');
+        return;
+      }
+      return await proxied.setup(fcProxiedInvoke.makeInputs(methodName));
     } else if (methodName === 'invoke') {
-      await this.proxied_method_invoker(fcProxiedInvoke.makeInputs(methodName), methodName, argsData?.help, 'ProxiedInvokeInputsArgs', creds);
+      await this.report('fc', 'proxied_invoke', creds?.AccountID);
+      if (argsData?.help) {
+        super.help('ProxiedInvokeInputsArgs');
+        return;
+      }
+      return await proxied.invoke(fcProxiedInvoke.makeInputs(methodName));
     } else {
       // clean
-      await this.proxied_method_invoker(fcProxiedInvoke.makeInputs(methodName), methodName, argsData?.help, 'ProxiedCleanInputsArgs', creds);
+      await this.report('fc', 'proxied_clean', creds?.AccountID);
+      if (argsData?.help) {
+        super.help('ProxiedCleanInputsArgs');
+        return;
+      }
+      return await proxied.clean(fcProxiedInvoke.makeInputs(methodName));
     }
   }
 
@@ -578,15 +594,6 @@ export default class FcBaseComponent extends BaseComponent {
   async help(): Promise<void> {
     await this.report('fc', 'help');
     core.help(COMPONENT_HELP_INFO);
-  }
-
-  private async proxied_method_invoker(inputs: IInputs, methodName: string, isHelp?: boolean, helpName?: string, creds?: ICredentials): Promise<any> {
-    await this.report('fc', `proxied_${methodName}`, creds?.AccountID);
-    if (isHelp) {
-      super.help(helpName);
-      return;
-    }
-    await this.componentMethodCaller(inputs, 'devsapp/fc-proxied-invoke', methodName);
   }
 
   // 解析入参
