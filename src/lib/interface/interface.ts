@@ -11,6 +11,7 @@ export interface IInputs extends ServerlessProfile {
     configPath: string; // 配置路径
   };
   credentials?: ICredentials;
+  argsObj: any;
   command: string;
 }
 

@@ -1,6 +1,7 @@
 import Logger from './common/logger';
 import { IInputs } from './lib/interface/interface';
-export default class FcBaseComponent {
+import BaseComponent from './common/base';
+export default class FcBaseComponent extends BaseComponent {
     logger: typeof Logger;
     deploy(inputs: IInputs): Promise<any>;
     remove(inputs: IInputs): Promise<any>;
@@ -18,7 +19,9 @@ export default class FcBaseComponent {
     provision(inputs: IInputs): Promise<any>;
     onDemand(inputs: IInputs): Promise<any>;
     layer(inputs: IInputs): Promise<any>;
-    help(inputs: IInputs): Promise<void>;
+    proxied(inputs: IInputs): Promise<any>;
+    help(): Promise<void>;
+    private proxied_method_invoker;
     private handlerInputs;
     private report;
     private handlerComponentInputs;
