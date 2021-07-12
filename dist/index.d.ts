@@ -21,7 +21,6 @@ export default class FcBaseComponent extends BaseComponent {
     layer(inputs: IInputs): Promise<any>;
     proxied(inputs: IInputs): Promise<any>;
     help(): Promise<void>;
-    private proxied_method_invoker;
     private handlerInputs;
     private report;
     private handlerComponentInputs;

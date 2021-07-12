@@ -1,7 +1,9 @@
-import { IProperties } from './interface/interface';
+import { IInputs, IProperties } from './interface/interface';
 import { TriggerConfig } from './interface/fc/trigger';
 import Table from 'tty-table';
 import _ from 'lodash';
+import * as core from '@serverless-devs/core';
+import logger from '../common/logger';
 
 export function isAutoConfig(config: any): boolean {
   return config === 'auto' || config === 'Auto';
@@ -59,4 +61,13 @@ export const tableShow = (data, showKey) => {
 
   console.log(Table(header, data, options).render());
 };
+
+export async function componentMethodCaller(inputs: IInputs, componentName: string, methodName: string, props?: any, args?: string, argsObj?: any): Promise<any> {
+  inputs.props = props || inputs?.props;
+  inputs.args = args || inputs?.args;
+  inputs.argsObj = argsObj || inputs?.argsObj;
+  const componentIns: any = await core.load(`${componentName}`);
+  logger.debug(`Inputs of component: ${componentName} is: ${JSON.stringify(inputs, null, '  ')}`);
+  return await componentIns[methodName](inputs);
+}
 
