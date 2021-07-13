@@ -188,10 +188,10 @@ export default class FcBaseComponent extends BaseComponent {
       return;
     }
     // 删除 methodName
-    const fcInfoArgs: string = args ? args.replace(methodName, '').replace(/(^\s*)|(\s*$)/g, '') : '';
+    const fcLocalInvokeArgs: string = args ? args.replace(methodName, '').replace(/(^\s*)|(\s*$)/g, '') : '';
+    this.logger.debug(`Args of fc-info is: ${fcLocalInvokeArgs}`);
 
-    this.logger.debug(`Args of fc-info is: ${fcInfoArgs}`);
-    const localRes: any = await this.componentMethodCaller(inputs, 'devsapp/fc-local-invoke', methodName, props, fcInfoArgs);
+    const localRes: any = await this.componentMethodCaller(inputs, 'devsapp/fc-local-invoke', methodName, props, fcLocalInvokeArgs);
     tips.showNextTip(args, tips.showLocalNextTips);
 
     return localRes;
@@ -653,12 +653,11 @@ export default class FcBaseComponent extends BaseComponent {
     };
   }
 
-  private async componentMethodCaller(inputs: IInputs, componentName: string, methodName: string, props?: any, args?: string, argsObj?: any): Promise<any> {
+  private async componentMethodCaller(inputs: IInputs, componentName: string, methodName: string, props?: any, args?: string): Promise<any> {
     const componentInputs: any = this.handlerComponentInputs(inputs, componentName);
     await this.report(componentName, methodName, undefined, inputs?.project?.access);
-    componentInputs.props = props || inputs?.props;
-    componentInputs.args = args || inputs?.args;
-    componentInputs.argsObj = argsObj || inputs?.argsObj;
+    componentInputs.props = props;
+    componentInputs.args = args;
     // const componentIns: any = await core.load(`devsapp/${componentName}`);
     const componentIns: any = await core.load(`${componentName}`);
     this.logger.debug(`Inputs of component: ${componentName} is: ${JSON.stringify(componentInputs, null, '  ')}`);
