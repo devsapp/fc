@@ -51,6 +51,7 @@
     - [预留操作：Provision](./docs/Usage/provision.md)
     - [按量资源操作：OnDemand](./docs/Usage/onDemand.md)
     - [层的操作：Layer](./docs/Usage/layer.md)
+    - [端云联调: Proxied](./docs/Usage/proxied.md)
 - 权限相关
     - [Yaml字段相关配置权限](./docs/Others/authority/yaml.md)
     - [命令使用相关权限](./docs/Others/authority/command.md)
