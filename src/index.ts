@@ -1,9 +1,8 @@
 import * as core from '@serverless-devs/core';
 import * as _ from 'lodash';
 import Logger from './common/logger';
-import { COMPONENT_HELP_INFO, LOCAL_HELP_INFO, LOGS_HELP_INFO, NAS_HELP_INFO, METRICS_HELP_INFO,
-  NAS_SUB_COMMAND_HELP_INFO, INVOKE_HELP_INFO, LOCAL_INVOKE_HELP_INFO, LOCAL_START_HELP_INFO, BUILD_HELP_INFO,
-  STRESS_HTLP_INFO, STRESS_SUB_COMMAND_HELP_INFO, LAYER, LAYER_COMMAND } from './lib/help';
+import { COMPONENT_HELP_INFO, LOCAL_HELP_INFO, NAS_HELP_INFO,
+  NAS_SUB_COMMAND_HELP_INFO, LOCAL_INVOKE_HELP_INFO, LOCAL_START_HELP_INFO, BUILD_HELP_INFO } from './lib/help';
 import tarnsformNas from './lib/tarnsform-nas';
 import { ICredentials } from './lib/interface/profile';
 import { IInputs, IProperties } from './lib/interface/interface';
@@ -123,6 +122,10 @@ export default class FcBaseComponent extends BaseComponent {
 
   async info(inputs: IInputs): Promise<any> {
     const { props, args } = this.handlerComponentInputs(inputs);
+    if (this.isHelp(args)) {
+      super.help('InfoInputsArgs');
+      return;
+    }
     const propsGenerator = (property: any) => {
       if (_.isEmpty(property)) { return null; }
       const res: FcInfoProps = {
@@ -146,6 +149,10 @@ export default class FcBaseComponent extends BaseComponent {
 
   async sync(inputs: IInputs): Promise<any> {
     const { props, args } = this.handlerComponentInputs(inputs);
+    if (this.isHelp(args)) {
+      super.help('SyncInputsArgs');
+      return;
+    }
 
     let property: undefined | FcSyncProps;
 
@@ -219,12 +226,8 @@ export default class FcBaseComponent extends BaseComponent {
 
   async invoke(inputs: IInputs): Promise<any> {
     const { props, args } = this.handlerComponentInputs(inputs);
-    const parsedArgs: {[key: string]: any} = core.commandParse({ args }, {
-      boolean: ['help'],
-      alias: { help: 'h' } });
-    const argsData: any = parsedArgs?.data || {};
-    if (argsData?.help) {
-      core.help(INVOKE_HELP_INFO);
+    if (this.isHelp(args)) {
+      super.help('InvokeInputsArgs');
       return;
     }
     const invokePayload: FcSyncProps = {
@@ -245,7 +248,7 @@ export default class FcBaseComponent extends BaseComponent {
       alias: { help: 'h' },
     })?.data;
     if (comParse?.help) {
-      core.help(LOGS_HELP_INFO);
+      super.help('LogsInputsArgs');
       return;
     }
 
@@ -295,7 +298,7 @@ export default class FcBaseComponent extends BaseComponent {
     })?.data;
 
     if (comParse?.help) {
-      core.help(METRICS_HELP_INFO);
+      super.help('MetricsInputsArgs');
       return;
     }
 
@@ -355,6 +358,10 @@ export default class FcBaseComponent extends BaseComponent {
   async stress(inputs: IInputs): Promise<any> {
     const { props, project } = this.handlerComponentInputs(inputs);
     const SUPPORTED_METHOD: string[] = ['start', 'clean'];
+    const STRESS_SUB_COMMAND_HELP_KEY = {
+      start: 'StressStartInputsArgs',
+      clean: 'StressCleanInputsArgs',
+    };
 
     const apts = {
       boolean: ['help', 'assume-yes'],
@@ -377,26 +384,26 @@ export default class FcBaseComponent extends BaseComponent {
     this.logger.debug(`nonOptionsArgs is ${JSON.stringify(nonOptionsArgs)}`);
     if (!argsData) {
       this.logger.error('Not fount sub-command.');
-      core.help(STRESS_HTLP_INFO);
+      super.help('StressInputsArgs');
       return;
     }
     if (nonOptionsArgs.length === 0) {
       if (!argsData?.help) {
         this.logger.error('Not fount sub-command.');
       }
-      core.help(STRESS_HTLP_INFO);
+      super.help('StressInputsArgs');
       return;
     }
 
     const commandName: string = nonOptionsArgs[0];
     if (!SUPPORTED_METHOD.includes(commandName)) {
       this.logger.error(`Not supported sub-command: [${commandName}]`);
-      core.help(STRESS_HTLP_INFO);
+      super.help('StressInputsArgs');
       return;
     }
 
     if (argsData?.help) {
-      core.help(STRESS_SUB_COMMAND_HELP_INFO[commandName]);
+      super.help(STRESS_SUB_COMMAND_HELP_KEY[commandName]);
       return;
     }
     const stressOpts: StressOption = {
@@ -441,6 +448,7 @@ export default class FcBaseComponent extends BaseComponent {
     const {
       credentials,
       help,
+      helpKey,
       props,
       subCommand,
       table,
@@ -448,10 +456,11 @@ export default class FcBaseComponent extends BaseComponent {
     } = await Version.handlerInputs(inputs);
 
     await this.report('fc', subCommand ? `version ${subCommand}` : 'version', credentials?.AccountID, inputs?.project?.access);
-    if (errorMessage) {
-      throw new Error(errorMessage);
-    }
     if (help) {
+      super.help(helpKey);
+      if (errorMessage) {
+        throw new Error(errorMessage);
+      }
       return;
     }
 
@@ -463,6 +472,7 @@ export default class FcBaseComponent extends BaseComponent {
     const {
       credentials,
       help,
+      helpKey,
       props,
       subCommand,
       table,
@@ -470,10 +480,11 @@ export default class FcBaseComponent extends BaseComponent {
     } = await Alias.handlerInputs(inputs);
 
     await this.report('fc', subCommand ? `alias ${subCommand}` : 'alias', credentials?.AccountID, inputs?.project?.access);
-    if (errorMessage) {
-      throw new Error(errorMessage);
-    }
     if (help) {
+      super.help(helpKey);
+      if (errorMessage) {
+        throw new Error(errorMessage);
+      }
       return;
     }
 
@@ -485,6 +496,7 @@ export default class FcBaseComponent extends BaseComponent {
     const {
       credentials,
       help,
+      helpKey,
       props,
       subCommand,
       table,
@@ -492,10 +504,11 @@ export default class FcBaseComponent extends BaseComponent {
     } = await Provision.handlerInputs(inputs);
 
     await this.report('fc', subCommand ? `provision ${subCommand}` : 'provision', credentials?.AccountID, inputs?.project?.access);
-    if (errorMessage) {
-      throw new Error(errorMessage);
-    }
     if (help) {
+      super.help(helpKey);
+      if (errorMessage) {
+        throw new Error(errorMessage);
+      }
       return;
     }
 
@@ -507,6 +520,7 @@ export default class FcBaseComponent extends BaseComponent {
     const {
       credentials,
       help,
+      helpKey,
       props,
       subCommand,
       table,
@@ -514,10 +528,11 @@ export default class FcBaseComponent extends BaseComponent {
     } = await OnDemand.handlerInputs(inputs);
 
     await this.report('fc', subCommand ? `onDemand ${subCommand}` : 'onDemand', credentials?.AccountID, inputs?.project?.access);
-    if (errorMessage) {
-      throw new Error(errorMessage);
-    }
     if (help) {
+      super.help(helpKey);
+      if (errorMessage) {
+        throw new Error(errorMessage);
+      }
       return;
     }
 
@@ -527,30 +542,36 @@ export default class FcBaseComponent extends BaseComponent {
 
   async layer(inputs: IInputs): Promise<any> {
     const { props, args } = this.handlerComponentInputs(inputs);
-    const SUPPORTED_METHOD: string[] = Object.keys(LAYER_COMMAND);
+    const LAYER_COMMAND = {
+      publish: 'LayerPublishInputsArgs',
+      list: 'LayerListInputsArgs',
+      versionConfig: 'LayerVersionConfigInputsArgs',
+      deleteVersion: 'LayerDeleteVerisonInputsArgs',
+      versions: 'LayerVersionsInputsArgs',
+      deleteLayer: 'LayerDeleteLayerInputsArgs',
+    };
 
-    const apts = {
+    const comParse: any = core.commandParse({ args }, {
       boolean: ['help'],
       alias: { help: 'h' },
-    };
-    const comParse: any = core.commandParse({ args }, apts);
+    });
     const argsData: any = comParse?.data || {};
     const nonOptionsArgs = argsData?._ || [];
     this.logger.debug(`nonOptionsArgs is ${JSON.stringify(nonOptionsArgs)}`);
     if (nonOptionsArgs.length === 0) {
-      core.help(LAYER);
+      super.help('LayerInputsArgs');
       return;
     }
 
     const commandName: string = nonOptionsArgs[0];
-    if (!SUPPORTED_METHOD.includes(commandName)) {
+    if (!LAYER_COMMAND[commandName]) {
       this.logger.error(`Not supported sub-command: [${commandName}]`);
-      core.help(LAYER);
+      super.help('LayerInputsArgs');
       return;
     }
 
     if (argsData?.help) {
-      core.help(LAYER_COMMAND[commandName]);
+      super.help(LAYER_COMMAND[commandName]);
       return;
     }
 
@@ -617,6 +638,13 @@ export default class FcBaseComponent extends BaseComponent {
   }
 
   // 解析入参
+  private isHelp(args) {
+    const comParse: any = core.commandParse({ args }, {
+      boolean: ['help'],
+      alias: { help: 'h' },
+    });
+    return comParse?.data?.help;
+  }
   private handlerInputs(inputs: IInputs): any {
     const project = inputs?.project;
     const props: IProperties = inputs?.props;

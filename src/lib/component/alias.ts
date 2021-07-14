@@ -4,7 +4,6 @@ import { ICredentials } from '../interface/profile';
 import _ from 'lodash';
 import Client from '../client';
 import logger from '../../common/logger';
-import * as help_constant from '../help/alias';
 import { tableShow, promptForConfirmOrDetails } from '../utils';
 
 interface IProps {
@@ -19,6 +18,13 @@ interface IProps {
 }
 
 const ALIAS_COMMAND: string[] = ['list', 'get', 'publish', 'delete', 'deleteAll'];
+const ALIAS_COMMAND_HELP_KEY = {
+  list: 'AliasListInputsArgs',
+  get: 'AliasGetInputsArgs',
+  publish: 'AliasPublishInputsArgs',
+  delete: 'AliasDeleteInputsArgs',
+  deleteAll: 'AliasDeleteAllInputsArgs',
+};
 
 export default class Alias {
   static async handlerInputs(inputs) {
@@ -34,20 +40,21 @@ export default class Alias {
     const parsedData = parsedArgs?.data || {};
     const rawData = parsedData._ || [];
     if (!rawData.length) {
-      core.help(help_constant.ALIAS);
-      process.exit();
+      return { help: true, helpKey: 'AliasInputsArgs' };
     }
 
     const subCommand = rawData[0];
     logger.debug(`version subCommand: ${subCommand}`);
     if (!ALIAS_COMMAND.includes(subCommand)) {
-      core.help(help_constant.ALIAS);
-      return { errorMessage: `Does not support ${subCommand} command` };
+      return {
+        help: true,
+        helpKey: 'AliasInputsArgs',
+        errorMessage: `Does not support ${subCommand} command`,
+      };
     }
 
     if (parsedData.help) {
-      core.help(help_constant[`alias_${subCommand}`.toLocaleUpperCase()]);
-      return { help: true, subCommand };
+      return { help: true, subCommand, helpKey: ALIAS_COMMAND_HELP_KEY[subCommand] };
     }
 
     const props = inputs.props || {};

@@ -33,15 +33,15 @@ export default class BaseComponent {
     return this.basePath;
   }
 
-  private getEntityByName(name) {
+  private getEntityByName(entityName) {
     const docPath = path.join(__dirname, '../..', 'doc', 'doc.json');
     if (fs.existsSync(docPath)) {
       const fileContent: string = fs.readFileSync(docPath).toString();
       const result = JSON.parse(fileContent);
-      const interfaces = get(result, 'children', []).filter((item) => item.name.indexOf('interface') !== -1 || item.name.indexOf('entity') !== -1);
+      const interfaces = get(result, 'children', []).filter(({ name }) => name.includes('interface') || name.includes('command/') || name.includes('entity'));
       let fullInputParams: any = {};
       interfaces.forEach((_interface) => {
-        const data = get(_interface, 'children', []).filter((item) => item.name === name)[0];
+        const data = get(_interface, 'children', []).filter((item) => item.name === entityName)[0];
         if (data) {
           fullInputParams = data;
         }

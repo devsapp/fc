@@ -1,7 +1,6 @@
 import * as core from '@serverless-devs/core';
 import fs from 'fs';
 import logger from '../../common/logger';
-import * as help_constant from '../help/provision';
 import Client from '../client';
 import { promptForConfirmOrDetails, tableShow } from '../utils';
 import _ from 'lodash';
@@ -16,6 +15,11 @@ interface IProps {
 }
 
 const PROVISION_COMMADN: string[] = ['list', 'get', 'put'];
+const PROVISION_COMMADN_HELP_KEY = {
+  list: 'ProvisionListInputsArgs',
+  get: 'ProvisionGetInputsArgs',
+  put: 'ProvisionPutInputsArgs',
+};
 const TABLE = [
   { value: 'serviceName', width: '10%' },
   { value: 'qualifier', width: '10%' },
@@ -48,19 +52,16 @@ export default class Provision {
     const parsedData = parsedArgs?.data || {};
     const rawData = parsedData._ || [];
     if (!rawData.length) {
-      core.help(help_constant.PROVISION);
-      process.exit();
+      return { help: true, helpKey: 'ProvisionInputsArgs' };
     }
 
     const subCommand = rawData[0];
     logger.debug(`provision subCommand: ${subCommand}`);
     if (!PROVISION_COMMADN.includes(subCommand)) {
-      core.help(help_constant.PROVISION);
-      return { errorMessage: `Does not support ${subCommand} command` };
+      return { help: true, helpKey: 'ProvisionInputsArgs', errorMessage: `Does not support ${subCommand} command` };
     }
     if (parsedData.help) {
-      core.help(help_constant[`provision_${subCommand}`.toLocaleUpperCase()]);
-      return { help: true, subCommand };
+      return { help: true, subCommand, helpKey: PROVISION_COMMADN_HELP_KEY[subCommand] };
     }
 
     const props = inputs.props || {};

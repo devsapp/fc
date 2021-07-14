@@ -2,7 +2,6 @@ import * as core from '@serverless-devs/core';
 import { ICredentials } from '../interface/profile';
 import Client from '../client';
 import logger from '../../common/logger';
-import * as help_constant from '../help/version';
 import { promptForConfirmOrDetails, tableShow } from '../utils';
 import _ from 'lodash';
 
@@ -15,6 +14,12 @@ interface IProps {
 }
 
 const VERSION_COMMAND: string[] = ['list', 'publish', 'delete', 'deleteAll'];
+const VERSION_COMMAND_HELP_KEY = {
+  list: 'VersionListInputsArgs',
+  publish: 'VersionPublishInputsArgs',
+  delete: 'VersionDeleteInputsArgs',
+  deleteAll: 'VersionDeleteAllInputsArgs',
+};
 
 export default class Version {
   static async handlerInputs(inputs) {
@@ -29,20 +34,21 @@ export default class Version {
     const parsedData = parsedArgs?.data || {};
     const rawData = parsedData._ || [];
     if (!rawData.length) {
-      core.help(help_constant.VERSION);
-      process.exit();
+      return { help: true, helpKey: 'VersionInputsArgs' };
     }
 
     const subCommand = rawData[0];
     logger.debug(`version subCommand: ${subCommand}`);
     if (!VERSION_COMMAND.includes(subCommand)) {
-      core.help(help_constant.VERSION);
-      return { errorMessage: `Does not support ${subCommand} command` };
+      return {
+        help: true,
+        helpKey: 'VersionInputsArgs',
+        errorMessage: `Does not support ${subCommand} command`,
+      };
     }
 
     if (parsedData.help) {
-      core.help(help_constant[`version_${subCommand}`.toLocaleUpperCase()]);
-      return { help: true, subCommand };
+      return { help: true, helpKey: VERSION_COMMAND_HELP_KEY[subCommand], subCommand };
     }
 
     const props = inputs.props || {};
