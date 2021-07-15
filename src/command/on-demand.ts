@@ -8,7 +8,7 @@ export function list() {}
  * @pre_help
  * {"header":"OnDemand","content":"Resource on-demand operation"}
  * @after_help
- * {"header":"SubCommand List","content":[{"desc":"list","example":"View the list of resource on-demand, you can get help through [s onDemand list -h]"},{"desc":"put","example":"Put resource on-demand, you can get help through [s onDemand get -h]"},{"desc":"get","example":"Get resource on-demand, you can get help through [s onDemand get -h]"}]}
+ * {"header":"SubCommand List","content":[{"desc":"list","example":"View the list of resource on-demand, you can get help through [s onDemand list -h]"},{"desc":"put","example":"Put resource on-demand, you can get help through [s onDemand put -h]"},{"desc":"get","example":"Get resource on-demand, you can get help through [s onDemand get -h]"}]}
  */
 export interface OnDemandInputsArgs {
 }
