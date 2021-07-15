@@ -13,12 +13,12 @@ interface IProps {
   assumeYes?: boolean;
 }
 
-const VERSION_COMMAND: string[] = ['list', 'publish', 'delete', 'deleteAll'];
+const VERSION_COMMAND: string[] = ['list', 'publish', 'remove', 'removeAll'];
 const VERSION_COMMAND_HELP_KEY = {
   list: 'VersionListInputsArgs',
   publish: 'VersionPublishInputsArgs',
-  delete: 'VersionDeleteInputsArgs',
-  deleteAll: 'VersionDeleteAllInputsArgs',
+  remove: 'VersionDeleteInputsArgs',
+  removeAll: 'VersionDeleteAllInputsArgs',
 };
 
 export default class Version {
@@ -100,7 +100,7 @@ export default class Version {
     return data;
   }
 
-  async delete({ serviceName, version }) {
+  async remove({ serviceName, version }) {
     if (!version) {
       throw new Error('Not fount version');
     }
@@ -109,7 +109,7 @@ export default class Version {
     logger.debug(`delete version: ${JSON.stringify(res)}`);
   }
 
-  async deleteAll({ serviceName, assumeYes }) {
+  async removeAll({ serviceName, assumeYes }) {
     const listData = await this.list({ serviceName });
     if (assumeYes) {
       return await this.forDeleteVersion(serviceName, listData);
@@ -126,7 +126,7 @@ export default class Version {
 
   private async forDeleteVersion(serviceName, listData) {
     for (const { versionId } of listData) {
-      await this.delete({ serviceName, version: versionId });
+      await this.remove({ serviceName, version: versionId });
     }
   }
 }

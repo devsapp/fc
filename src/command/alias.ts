@@ -1,14 +1,14 @@
 export function list() {}
 export function publish() {}
 export function get() {}
-export function _delete() {}
+// export function _delete() {}
 
 /**
  * s alias <sub-command>\n
  * @pre_help
  * {"header":"Alias","content":"Service alias operation"}
  * @after_help
- * {"header": "SubCommand List", "content": [{"desc":"get","example":"Get alias details, you can get help through [s alias get -h]"},{"desc":"list","example":"View the list of service alias, you can get help through [s alias list -h]"},{"desc":"publish","example":"Publish service alias, you can get help through [s alias publish -h]"},{"desc":"delete","example":"Delete service alias, you can get help through [s alias delete -h]"}]}
+ * {"header": "SubCommand List", "content": [{"desc":"get","example":"Get alias details, you can get help through [s alias get -h]"},{"desc":"list","example":"View the list of service alias, you can get help through [s alias list -h]"},{"desc":"publish","example":"Publish service alias, you can get help through [s alias publish -h]"}]}
  */
 export interface AliasInputsArgs {
 }

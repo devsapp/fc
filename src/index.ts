@@ -3,6 +3,7 @@ import * as _ from 'lodash';
 import Logger from './common/logger';
 import { COMPONENT_HELP_INFO, LOCAL_HELP_INFO, NAS_HELP_INFO,
   NAS_SUB_COMMAND_HELP_INFO, LOCAL_INVOKE_HELP_INFO, LOCAL_START_HELP_INFO, BUILD_HELP_INFO } from './lib/help';
+import * as DEPLOY_HELP from './lib/help/deploy';
 import tarnsformNas from './lib/tarnsform-nas';
 import { ICredentials } from './lib/interface/profile';
 import { IInputs, IProperties } from './lib/interface/interface';
@@ -21,7 +22,6 @@ import Remove from './lib/component/remove';
 import Provision from './lib/component/provision';
 import { StressOption, PayloadOption, EventTypeOption, HttpTypeOption } from './lib/interface/component/fs-stress';
 import * as yaml from 'js-yaml';
-import { PROXIED_COMMAND } from './lib/help/proxied';
 import BaseComponent from './common/base';
 import FcProxiedInvoke from './lib/component/fc-proxied-invoke';
 import * as proxied from './command/proxied';
@@ -34,6 +34,26 @@ export default class FcBaseComponent extends BaseComponent {
 
   async deploy(inputs: IInputs): Promise<any> {
     const { props, args } = this.handlerComponentInputs(inputs);
+    const parsedArgs: {[key: string]: any} = core.commandParse(inputs, {
+      boolean: ['help'],
+      alias: { help: 'h' },
+    });
+
+    const parsedData = parsedArgs?.data || {};
+    const rawData = parsedData._ || [];
+    const commandList = ['all', 'service', 'function', 'trigger', 'domain'];
+
+    const subCommand = rawData[0] || 'all';
+    this.logger.debug(`deploy subCommand: ${subCommand}`);
+    if (!commandList.includes(subCommand)) {
+      return core.help(DEPLOY_HELP.DEPLOY);
+    }
+
+    if (parsedData.help) {
+      rawData[0] ? core.help(DEPLOY_HELP[`DEPLOY_${subCommand}`.toLocaleUpperCase()]) : core.help(DEPLOY_HELP.DEPLOY);
+      return;
+    }
+
     const deployRes: any = await this.componentMethodCaller(inputs, 'devsapp/fc-deploy', 'deploy', props, args);
     tips.showNextTip(args, tips.showDeployNextTips);
 
@@ -91,7 +111,6 @@ export default class FcBaseComponent extends BaseComponent {
         });
       }
     }
-
 
     return result;
   }
@@ -580,7 +599,7 @@ export default class FcBaseComponent extends BaseComponent {
 
   async proxied(inputs: IInputs): Promise<any> {
     const { args, argsObj } = this.handlerComponentInputs(inputs);
-    const SUPPORTED_METHOD: string[] = Object.keys(PROXIED_COMMAND);
+    const SUPPORTED_METHOD = ['setup', 'invoke', 'clean'];
 
     const apts = {
       boolean: ['help'],

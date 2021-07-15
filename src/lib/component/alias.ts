@@ -17,13 +17,13 @@ interface IProps {
   assumeYes?: boolean;
 }
 
-const ALIAS_COMMAND: string[] = ['list', 'get', 'publish', 'delete', 'deleteAll'];
+const ALIAS_COMMAND: string[] = ['list', 'get', 'publish', 'remove', 'removeAll'];
 const ALIAS_COMMAND_HELP_KEY = {
   list: 'AliasListInputsArgs',
   get: 'AliasGetInputsArgs',
   publish: 'AliasPublishInputsArgs',
-  delete: 'AliasDeleteInputsArgs',
-  deleteAll: 'AliasDeleteAllInputsArgs',
+  remove: 'AliasDeleteInputsArgs',
+  removeAll: 'AliasDeleteAllInputsArgs',
 };
 
 export default class Alias {
@@ -144,12 +144,12 @@ export default class Alias {
     return (await Client.fcClient.getAlias(serviceName, aliasName)).data;
   }
 
-  async delete({ serviceName, aliasName }) {
+  async remove({ serviceName, aliasName }) {
     logger.info(`Removing alias: ${aliasName}`);
     return (await Client.fcClient.deleteAlias(serviceName, aliasName)).data;
   }
 
-  async deleteAll({ serviceName, assumeYes }) {
+  async removeAll({ serviceName, assumeYes }) {
     const aliasList = await this.list({ serviceName });
 
     if (!_.isEmpty(aliasList)) {
@@ -166,7 +166,7 @@ export default class Alias {
 
   private async forDataDelete(serviceName, data) {
     for (const { aliasName } of data) {
-      await this.delete({ serviceName, aliasName });
+      await this.remove({ serviceName, aliasName });
     }
   }
 

@@ -3,16 +3,16 @@
  */
 export interface GlobalParams {
   /**
-   * Output debug informations.
+   * Output debug informations
    */
   debug: string;
   /**
-   * Display help for command.
+   * Help for command.
    * @alias h
    */
   help: string;
   /**
-   * Specify key alias.
+   * Specify key alias
    * @alias a
    */
   access: string;

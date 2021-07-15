@@ -1,13 +1,13 @@
 export function list() {}
 export function publish() {}
-export function _delete() {}
+// export function _delete() {}
 
 /**
  * s version <sub-command>\n
  * @pre_help
  * {"header":"Version","content":"Service version operation"}
  * @after_help
- * {"header": "SubCommand List", "content": [{"desc":"list","example":"View the list of service versions, you can get help through [s version list -h]"},{"desc":"publish","example":"Publish service version, you can get help through [s version publish -h]"},{"desc":"delete","example":"Delete service version, you can get help through [s version delete -h]"}]}
+ * {"header": "SubCommand List", "content": [{"desc":"list","example":"View the list of service versions, you can get help through [s version list -h]"},{"desc":"publish","example":"Publish service version, you can get help through [s version publish -h]"}]}
  */
 export interface VersionInputsArgs {
 }

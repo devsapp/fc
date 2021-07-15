@@ -9,6 +9,7 @@ import OnDemand from './on-demand';
 import Provision from './provision';
 import Alias from './alias';
 import Version from './version';
+import * as HELP from '../help/remove';
 import _ from 'lodash';
 
 const COMMAND: string[] = [
@@ -60,12 +61,12 @@ export default class Remvoe {
     const subCommand = rawData[0] || 'service';
     logger.debug(`remove subCommand: ${subCommand}`);
     if (!COMMAND.includes(subCommand)) {
-      core.help('');
+      core.help(HELP.REMOVE);
       return { errorMessage: `Does not support ${subCommand} command` };
     }
 
     if (parsedData.help) {
-      core.help('');
+      rawData[0] ? core.help(HELP[`remove_${subCommand}`.toLocaleUpperCase()]) : core.help(HELP.REMOVE);
       return { help: true, subCommand };
     }
 
@@ -74,7 +75,7 @@ export default class Remvoe {
     const endProps = {
       region: parsedData.region || props.region,
       assumeYes: parsedData['assume-yes'] || parsedData.y,
-      onlyLocal: parsedData['only-local'],
+      onlyLocal: parsedData['use-local'],
       serviceName: parsedData['service-name'] || props.service?.name,
       functionName: parsedData['function-name'] || props.function?.name,
       qualifier: parsedData.qualifier,
@@ -110,10 +111,10 @@ export default class Remvoe {
 
     const onDemand = new OnDemand({ region, credentials });
     if (!_.isEmpty(qualifier)) {
-      return await onDemand.delete({ qualifier, serviceName, functionName });
+      return await onDemand.remove({ qualifier, serviceName, functionName });
     }
 
-    await onDemand.deleteAll({ serviceName, assumeYes });
+    await onDemand.removeAll({ serviceName, qualifier, assumeYes });
   }
 
   async removeProvision(credentials, { region, qualifier, serviceName, functionName, assumeYes }: RemoveOnDemandOrProvision) {
@@ -126,25 +127,25 @@ export default class Remvoe {
       return await provision.put({ qualifier, serviceName, functionName, target: 0 });
     }
 
-    await provision.deleteAll({ serviceName, assumeYes });
+    await provision.deleteAll({ serviceName, qualifier, assumeYes });
   }
 
   async removeAlias(credentials, { region, serviceName, aliasName, assumeYes }: RemoveAlias) {
     const alias = new Alias({ region, credentials });
 
     if (aliasName) {
-      return alias.delete({ serviceName, aliasName });
+      return alias.remove({ serviceName, aliasName });
     }
 
-    return await alias.deleteAll({ serviceName, assumeYes });
+    return await alias.removeAll({ serviceName, assumeYes });
   }
 
   async removeVersion(credentials, { region, serviceName, version, assumeYes }: RemoveVersion) {
     const versionClient = new Version({ region, credentials });
     if (version) {
-      return versionClient.delete({ serviceName, version });
+      return versionClient.remove({ serviceName, version });
     }
-    return await versionClient.deleteAll({ serviceName, assumeYes });
+    return await versionClient.removeAll({ serviceName, assumeYes });
   }
 
   async remove({ props, subCommand, credentials }, inputs) {
@@ -203,7 +204,7 @@ export default class Remvoe {
 
     const commandName = 'devsapp/fc-deploy';
     const getInputs = this.genInputs(inputs, commandName, inputs.props);
-    return (await core.loadComponent('/Users/wb447188/Desktop/new-repo/fc-deploy')).remove(getInputs);
+    return (await core.loadComponent(commandName)).remove(getInputs);
   }
 
   private genInputs({

@@ -11,12 +11,12 @@ interface IProps {
   functionName?: string;
   maximumInstanceCount?: number;
 }
-const ONDEMAND_COMMADN = ['list', 'get', 'put', 'delete'];
+const ONDEMAND_COMMADN = ['list', 'get', 'put', 'remove'];
 const ONDEMAND_COMMADN_HELP_KEY = {
   list: 'OnDemandListInputsArgs',
   get: 'OnDemandGetInputsArgs',
   put: 'OnDemandPutInputsArgs',
-  delete: 'OnDemandDeleteInputsArgs',
+  remove: 'OnDemandDeleteInputsArgs',
 };
 const TABLE = [
   'serviceName',
@@ -122,7 +122,7 @@ export default class OnDemand {
     }
   }
 
-  async delete({ serviceName, qualifier, functionName }) {
+  async remove({ serviceName, qualifier, functionName }) {
     if (!functionName) {
       throw new Error('Not fount functionName');
     }
@@ -161,8 +161,8 @@ export default class OnDemand {
     return data;
   }
 
-  async deleteAll({ serviceName, assumeYes }) {
-    const onDemandList = await this.list({ serviceName });
+  async removeAll({ serviceName, qualifier, assumeYes }) {
+    const onDemandList = await this.list({ serviceName, qualifier });
     if (!_.isEmpty(onDemandList)) {
       if (assumeYes) {
         return await this.forDelete(onDemandList);
@@ -178,7 +178,7 @@ export default class OnDemand {
 
   private async forDelete(data) {
     for (const item of data) {
-      await this.delete(item);
+      await this.remove(item);
     }
   }
 }

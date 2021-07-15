@@ -171,8 +171,8 @@ export default class Provision {
     }
   }
 
-  async deleteAll({ serviceName, assumeYes }) {
-    const provisionList = await this.list({ serviceName });
+  async deleteAll({ serviceName, qualifier, assumeYes }) {
+    const provisionList = await this.list({ serviceName, qualifier });
     if (!_.isEmpty(provisionList)) {
       if (assumeYes) {
         return await this.forDelete(provisionList);
