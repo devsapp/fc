@@ -1,6 +1,7 @@
 # 移除操作：Remove
 
 - [快速使用](#快速使用)
+    - s remove [交互设计](#交互设计)
     - [简单使用](#简单使用)
     - [高级使用](#高级使用)
 - [其他替代方法](#其他替代方法)
@@ -13,54 +14,43 @@
 您可以通过`remove -h`/`remove --help`参数，唤起帮助信息。例如执行`s remove -h`后，可以看到：
 
 ```
+Remove
 
-Remove 
-
-    Specify RESOURCE to remove it and resource belonging to it.                   
-    If service is specified, service and its functions should be removed.         
-    If function is specified, function and its triggers should be removed.        
-    If trigger is specified, you can specify the trigger name to remove the       
-    specific trigger or remove all triggers without trigger name.                 
-    If domain is specified, you can specify the domain name to remove the         
-    specific domain or remove all domains without domain name.   
+  The ability to delete resources.                                              
+  If executing s remove is equivalent to s remove service                       
 
 Usage
 
-  $ s remove <RESOURCE> <options> 
+  $ s remove <sub-command> 
 
-Resource
+SubCommand List
 
-  service            The service resource.
-  function           The function resource.
-  trigger            The trigger resource.
-  domain             The domain resource.
-
-Options
-
-  --n, --name <name>   Resource name to be removed, only for trigger/domain resource. 
-
-Global Options
-
-  -y, --assume-yes    Assume that the answer to any question which would be asked is yes. 
-  -h, --help          Display help for command.                                           
-
-Examples with Yaml
-
-  $ s remove 
-  $ s <ProjectName> remove
-  $ s remove service               
-  $ s remove domain --name myDomain
-  $ s exec -- remove domain --name myDomain
-
-Examples with CLI
-
-  You can refer to the usage of fc-api and execute [s cli fc-api -h] for help
-
+  service     Ability to delete services, you can get help through [s remove service -h]    
+  function    Ability to delete function, you can get help through [s remove function -h]   
+  trigger     Ability to delete trigger, you can get help through [s remove trigger -h]     
+  domain      Ability to delete domain, you can get help through [s remove domain -h]       
+  version     Ability to delete version, you can get help through [s remove version -h]     
+  alias       Ability to delete alias, you can get help through [s remove alias -h]         
+  provision   Ability to delete provision, you can get help through [s remove provision -h] 
+  onDemand    Ability to delete onDemand, you can get help through [s remove onDemand -h]   
+  layer       Ability to delete layer, you can get help through [s remove layer -h]   
 ```
 
 # 快速使用
 
 当我们下载好[Serverless Devs开发者工具](../Getting-started/Install-tutorial.md), 并完成[阿里云密钥配置](../Getting-started/Setting-up-credentials.md)之后，我们可以根据自身的需求进行资源的移除。
+
+
+## 交互设计
+
+执行`s remove`等同于依次执行 s remove onDemand、s remove provision、s remove alias、s remove version、s remove trigger、s remove function 如果查询到相关资源则提示是否删除删除这些资源，然后尝试删除服务资源
+
+如果传入参数 --use-local，那么仅删除传入的触发器、函数、服务配置；如果-y/--assume-yes那么就会**强制删除**服务下**所有的资源**，请谨慎使用此参数。
+
+案例：假如在上海地区又一个服务，服务下有两个函数，yaml 中仅配置了服务和其中一个函数
+- 如果执行了 s remove，则会提示此服务下两个函数，是否删除所有的函数
+- 如果执行 s remove --use-local，那么仅仅会删除传入的函数和服务，不会list function
+- 如果执行 s remove -y，会强制删除两个函数和服务
 
 ## 简单使用
 

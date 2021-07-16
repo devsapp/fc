@@ -26,8 +26,7 @@ Usage
 SubCommand
 
   list      View the list of service versions, you can get help through [s version list -h] 
-  publish   Publish service version, you can get help through [s version publish -h]        
-  delete    Delete service version, you can get help through [s version delete -h]
+  publish   Publish service version, you can get help through [s version publish -h]
 ```
 Version命令为我们提供了一些子命令：
 - list: 查看按量资源列表，可以通过`s version list -h`获取帮助文档
@@ -90,37 +89,6 @@ Version命令为我们提供了一些子命令：
 
       $ s cli fc version publish --region cn-hangzhou --service-name name --description xxx 
     ```
-- delete: 删除按量资源，可以通过`s version delete -h`获取帮助文档
-    ```
-    version delete
-
-      Delete service version 
-
-    Usage
-
-      $ s version delete 
-
-    Command List
-
-      --region string             Specify the region parameter       
-      --service-name string       Specify the service name parameter 
-      --id, --version string   Specify the version parameter      
-
-    Global Options
-
-      -a, --access    Specify key version        
-      -h, --help      Display help for command 
-
-    Examples with Yaml
-
-      $ s version delete --id xxx                 
-      $ s exec -- version delete --version xxx 
-
-    Examples with CLI
-
-      $ s cli fc version delete --region cn-hangzhou --service-name name --version xxx 
-    ```
-
 # 快速使用
 
 当我们下载好[Serverless Devs开发者工具](../Getting-started/Install-tutorial.md), 并完成[阿里云密钥配置](../Getting-started/Setting-up-credentials.md)之后，我们可以根据自身的需求进行资源的移除。
@@ -140,13 +108,6 @@ s version publish
 ```
 
 - 重点1：region、serviceName 必填
-
-
-```
-s version delete --version 1
-```
-
-- 重点1：region、serviceName、versionId 必填
 
 
 

@@ -22,34 +22,20 @@
 
 Deploy
 
-  Deploy a serverless application.
+  The ability to deploy resources                                               
+  If executing s deploy is equivalent to s deploy all                           
 
 Usage
 
-  $ s deploy <options> 
+  $ s deploy <sub-command> 
 
-Options
+SubCommand List
 
-  --use-remote    Deploy resource using remote config. 
-  --use-local     Deploy resource using local config.  
-
-Global Options
-
-  -y, --assume-yes    Assume that the answer to any question which would be asked is yes. 
-  -h, --help          Display help for command.                                           
-
-Examples with Yaml
-
-  $ s deploy
-  $ s <ProjectName> deploy
-  $ s deploy --use-remote
-  $ s exec -- deploy --use-remote
-  $ s exec <ProjectName> -- deploy --use-remote
-
-Examples with CLI
-
-  You can refer to the usage of fc-api and execute [s cli fc-api -h] for help
-
+  all        Deploy all resources, you can get help through [s deploy all -h]                
+  service    Only deploy service resources, you can get help through [s deploy service -h]   
+  function   Only deploy function resources, you can get help through [s deploy function -h] 
+  trigger    Only deploy trigger resources, you can get help through [s deploy trigger -h]   
+  domain     Only deploy domain resources, you can get help through [s deploy domain -h] 
 ```
 
 # 快速使用

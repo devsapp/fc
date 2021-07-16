@@ -25,8 +25,7 @@ SubCommand
 
   get       Get alias details, you can get help through [s alias get -h]               
   list      View the list of service alias, you can get help through [s alias list -h] 
-  publish   Publish service alias, you can get help through [s alias publish -h]       
-  delete    Delete service alias, you can get help through [s alias delete -h]  
+  publish   Publish service alias, you can get help through [s alias publish -h]
 ```
 
 Alias命令为我们提供了一些子命令：
@@ -61,6 +60,7 @@ Alias命令为我们提供了一些子命令：
 
       $ s cli fc alias list --region cn-hangzhou --service-name name 
     ```
+
 - publish: 配置按量资源，可以通过`s alias publish -h`获取帮助文档
     ```
     alias publish
@@ -126,37 +126,7 @@ Alias命令为我们提供了一些子命令：
 
       $ s cli fc alias get --region cn-hangzhou --service-name name --alias-name pre 
     ```
-  
-- delete: 删除按量资源，可以通过`s alias delete -h`获取帮助文档
-    ```
-    alias delete
 
-      Delete service alias 
-
-    Usage
-
-      $ s alias delete 
-
-    Command List
-
-      --region string         Specify the region parameter       
-      --service-name string   Specify the service name parameter 
-      --alias-name string     Specify the alias parameter        
-
-    Global Options
-
-      -a, --access    Specify key alias        
-      -h, --help      Display help for command 
-
-    Examples with Yaml
-
-      $ s alias delete --alias-name pre         
-      $ s exec -- alias delete --alias-name pre 
-
-    Examples with CLI
-
-      $ s cli fc alias delete --region cn-hangzhou --service-name name --alias-name pre 
-    ```
 
 # 快速使用
 
@@ -181,13 +151,6 @@ s alias publish --alias-name pre --version 2
 
 ```
 s alias get --alias-name pre
-```
-
-- 重点1：region、serviceName、aliasName 必填
-
-
-```
-s alias delete --alias-name pre
 ```
 
 - 重点1：region、serviceName、aliasName 必填
