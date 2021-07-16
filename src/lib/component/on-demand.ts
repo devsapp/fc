@@ -1,9 +1,15 @@
 import * as core from '@serverless-devs/core';
 import logger from '../../common/logger';
-import * as help_constant from '../help/on-demand';
 import Client from '../client';
-import { tableShow } from '../utils';
+import { promptForConfirmOrDetails, tableShow } from '../utils';
+import _ from 'lodash';
+import { ICredentials } from '../interface/profile';
 
+interface GetOnDemand { serviceName: string; qualifier: string; functionName: string }
+interface ListOnDemand { serviceName: string }
+interface RemoveOnDemand { serviceName: string; qualifier: string; functionName: string }
+interface RemoveAllOnDemand { serviceName: string; qualifier?: string; assumeYes?: boolean }
+interface PutOnDemand { serviceName: string; qualifier: string; functionName: string; maximumInstanceCount: number }
 interface IProps {
   region?: string;
   serviceName?: string;
@@ -11,7 +17,19 @@ interface IProps {
   functionName?: string;
   maximumInstanceCount?: number;
 }
-const ONDEMAND_COMMADN = ['list', 'get', 'put', 'delete'];
+const ONDEMAND_COMMADN = ['list', 'get', 'put', 'remove'];
+const ONDEMAND_COMMADN_HELP_KEY = {
+  list: 'OnDemandListInputsArgs',
+  get: 'OnDemandGetInputsArgs',
+  put: 'OnDemandPutInputsArgs',
+  remove: 'OnDemandDeleteInputsArgs',
+};
+const TABLE = [
+  'serviceName',
+  'qualifier',
+  'functionName',
+  'maximumInstanceCount',
+];
 
 export default class OnDemand {
   static async handlerInputs(inputs) {
@@ -27,19 +45,16 @@ export default class OnDemand {
     const parsedData = parsedArgs?.data || {};
     const rawData = parsedData._ || [];
     if (!rawData.length) {
-      core.help(help_constant.ONDEMAND);
-      process.exit();
+      return { help: true, helpKey: 'OnDemandInputsArgs' };
     }
 
     const subCommand = rawData[0];
     logger.debug(`onDemand subCommand: ${subCommand}`);
     if (!ONDEMAND_COMMADN.includes(subCommand)) {
-      core.help(help_constant.ONDEMAND);
-      return { errorMessage: `Does not support ${subCommand} command` };
+      return { help: true, helpKey: 'OnDemandInputsArgs', errorMessage: `Does not support ${subCommand} command` };
     }
     if (parsedData.help) {
-      core.help(help_constant[`onDemand_${subCommand}`.toLocaleUpperCase()]);
-      return { help: true, subCommand };
+      return { help: true, subCommand, helpKey: ONDEMAND_COMMADN_HELP_KEY[subCommand] };
     }
 
     const props = inputs.props || {};
@@ -66,37 +81,35 @@ export default class OnDemand {
     };
   }
 
-  constructor({ region, credentials }) {
+  constructor({ region, credentials }: { region: string; credentials: ICredentials }) {
     Client.setFcClient(region, credentials);
   }
 
-  async list({ serviceName }: IProps, table?) {
+  async list({ serviceName }: ListOnDemand, table?) {
     logger.info(`Getting list on-demand: ${serviceName}`);
-    const data = await Client.fcClient.get_all_list_data('/on-demand-configs', 'configs', {
+
+    const onDemandConfigs = (await Client.fcClient.get_all_list_data('/on-demand-configs', 'configs', {
       prefix: serviceName ? `services/${serviceName}` : '',
+    }));
+
+    const data = onDemandConfigs?.map((item) => {
+      const [, service, , functionName] = item.resource.split('/');
+      const serviceArr = service.split('.');
+      return {
+        serviceName: serviceArr[0],
+        qualifier: serviceArr[1],
+        functionName,
+        ...item,
+      };
     });
     if (table) {
-      tableShow(data.map((item) => {
-        const [, service, , functionName] = item.resource.split('/');
-        const serviceArr = service.split('.');
-        return {
-          serviceName: serviceArr[0],
-          qualifier: serviceArr[1],
-          functionName,
-          ...item,
-        };
-      }), [
-        'serviceName',
-        'qualifier',
-        'functionName',
-        'maximumInstanceCount',
-      ]);
+      tableShow(data, TABLE);
     } else {
       return data;
     }
   }
 
-  async get({ serviceName, qualifier, functionName }) {
+  async get({ serviceName, qualifier, functionName }: GetOnDemand) {
     if (!functionName) {
       throw new Error('Not fount functionName');
     }
@@ -118,7 +131,7 @@ export default class OnDemand {
     }
   }
 
-  async delete({ serviceName, qualifier, functionName }) {
+  async remove({ serviceName, qualifier, functionName }: RemoveOnDemand) {
     if (!functionName) {
       throw new Error('Not fount functionName');
     }
@@ -133,7 +146,7 @@ export default class OnDemand {
     return data;
   }
 
-  async put({ serviceName, qualifier, functionName, maximumInstanceCount }) {
+  async put({ serviceName, qualifier, functionName, maximumInstanceCount }: PutOnDemand) {
     if (!functionName) {
       throw new Error('Not fount functionName parameter');
     }
@@ -155,5 +168,27 @@ export default class OnDemand {
     logger.info(`Updating on-demand: ${serviceName}.${qualifier}/${functionName}`);
     const { data } = await Client.fcClient.on_demand_put(serviceName, qualifier, functionName, options);
     return data;
+  }
+
+  async removeAll({ serviceName, qualifier, assumeYes }: RemoveAllOnDemand) {
+    const onDemandAllList = await this.list({ serviceName });
+    const onDemandList = onDemandAllList?.filter((item) => item.qualifier === qualifier);
+    if (!_.isEmpty(onDemandList)) {
+      if (assumeYes) {
+        return await this.forDelete(onDemandList);
+      }
+
+      tableShow(onDemandList, TABLE);
+      const meg = `On-demand configuration exists under service ${serviceName}, whether to delete all On-demand resources`;
+      if (await promptForConfirmOrDetails(meg)) {
+        return await this.forDelete(onDemandList);
+      }
+    }
+  }
+
+  private async forDelete(data: any[]) {
+    for (const item of data) {
+      await this.remove(item);
+    }
   }
 }

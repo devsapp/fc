@@ -26,8 +26,7 @@ SubCommand
 
   list     View the list of resource on-demand, you can get help through [s onDemand list -h] 
   put      Put resource on-demand, you can get help through [s onDemand get -h]               
-  get      Get resource on-demand, you can get help through [s onDemand get -h]               
-  delete   Delete resource on-demand, you can get help through [s onDemand get -h]
+  get      Get resource on-demand, you can get help through [s onDemand get -h]
 
 ```
 
@@ -128,38 +127,6 @@ OnDemand命令为我们提供了一些子命令：
 
       $ s cli fc onDemand get --region cn-hangzhou --service-name name --function-name name --qualifier pre 
     ```
-- delete: 删除按量资源，可以通过`s onDemand delete -h`获取帮助文档
-    ```
-    onDemand delete
-
-      Delete onDemand configuration 
-
-    Usage
-
-      $ s onDemand delete 
-
-    Command List
-
-      --region string          Specify the region parameter                                    
-      --service-name string    Specify the service name parameter                              
-      --qualifier string       Specify the qualifier parameter. Only supports LATEST and alias 
-      --function-name string   Specify the function name parameter                             
-
-    Global Options
-
-      -a, --access    Specify key alias        
-      -h, --help      Display help for command 
-
-    Examples with Yaml
-
-      $ s onDemand delete --qualifier pre         
-      $ s exec -- onDemand delete --qualifier pre 
-
-    Examples with CLI
-
-      $ s cli fc onDemand delete --region cn-hangzhou --service-name name           
-      --function-name name --qualifier pre  
-    ```
 
 # 快速使用
 
@@ -183,12 +150,6 @@ s onDemand put --qualifier pre --maximum-instance-count 1
 
 ```
 s onDemand get --qualifier pre
-```
-- 重点1：region、serviceName、functionName、qualifier 必填
-
-
-```
-s onDemand delete --qualifier pre
 ```
 - 重点1：region、serviceName、functionName、qualifier 必填
 

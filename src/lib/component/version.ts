@@ -2,45 +2,56 @@ import * as core from '@serverless-devs/core';
 import { ICredentials } from '../interface/profile';
 import Client from '../client';
 import logger from '../../common/logger';
-import * as help_constant from '../help/version';
-import { tableShow } from '../utils';
+import { promptForConfirmOrDetails, tableShow } from '../utils';
+import _ from 'lodash';
 
 interface IProps {
   region: string;
   serviceName: string;
   description?: string;
-  versionId?: string;
+  version?: string;
+  assumeYes?: boolean;
 }
+interface Publish { serviceName: string; description?: string }
+interface Remove { serviceName: string; version: string }
+interface RemoveAll { serviceName: string; assumeYes?: boolean }
 
-const VERSION_COMMAND: string[] = ['list', 'publish', 'delete', 'deleteAll'];
+const VERSION_COMMAND: string[] = ['list', 'publish', 'remove', 'removeAll'];
+const VERSION_COMMAND_HELP_KEY = {
+  list: 'VersionListInputsArgs',
+  publish: 'VersionPublishInputsArgs',
+  remove: 'VersionDeleteInputsArgs',
+  removeAll: 'VersionDeleteAllInputsArgs',
+};
 
 export default class Version {
   static async handlerInputs(inputs) {
     logger.debug(`inputs.props: ${JSON.stringify(inputs.props)}`);
 
     const parsedArgs: {[key: string]: any} = core.commandParse(inputs, {
-      boolean: ['help', 'table'],
+      boolean: ['help', 'table', 'y'],
       string: ['region', 'service-name', 'description', 'id'],
-      alias: { help: 'h', 'version-id': 'id' },
+      alias: { help: 'h', version: 'id', 'assume-yes': 'y' },
     });
 
     const parsedData = parsedArgs?.data || {};
     const rawData = parsedData._ || [];
     if (!rawData.length) {
-      core.help(help_constant.VERSION);
-      process.exit();
+      return { help: true, helpKey: 'VersionInputsArgs' };
     }
 
     const subCommand = rawData[0];
     logger.debug(`version subCommand: ${subCommand}`);
     if (!VERSION_COMMAND.includes(subCommand)) {
-      core.help(help_constant.VERSION);
-      return { errorMessage: `Does not support ${subCommand} command` };
+      return {
+        help: true,
+        helpKey: 'VersionInputsArgs',
+        errorMessage: `Does not support ${subCommand} command`,
+      };
     }
 
     if (parsedData.help) {
-      core.help(help_constant[`version_${subCommand}`.toLocaleUpperCase()]);
-      return { help: true, subCommand };
+      return { help: true, helpKey: VERSION_COMMAND_HELP_KEY[subCommand], subCommand };
     }
 
     const props = inputs.props || {};
@@ -49,7 +60,8 @@ export default class Version {
       region: parsedData.region || props.region,
       serviceName: parsedData['service-name'] || props.service?.name,
       description: parsedData.description,
-      versionId: parsedData.id,
+      version: parsedData.id,
+      assumeYes: parsedData.y,
     };
 
     if (!endProps.region) {
@@ -70,11 +82,11 @@ export default class Version {
     };
   }
 
-  constructor({ region, credentials }) {
+  constructor({ region, credentials }: { region: string; credentials: ICredentials }) {
     Client.setFcClient(region, credentials);
   }
 
-  async list({ serviceName }, table?) {
+  async list({ serviceName }: { serviceName: string }, table?: boolean) {
     logger.info(`Getting listVersions: ${serviceName}`);
     const data = await Client.fcClient.get_all_list_data(`/services/${serviceName}/versions`, 'versions');
     if (table) {
@@ -84,27 +96,40 @@ export default class Version {
     }
   }
 
-  async publish({ serviceName, description }) {
+  async publish({ serviceName, description }: Publish) {
     logger.info(`Creating service version: ${serviceName}`);
     const { data } = await Client.fcClient.publishVersion(serviceName, description);
     logger.debug(`publish version: ${JSON.stringify(data)}`);
     return data;
   }
 
-  async delete({ serviceName, versionId }) {
-    if (!versionId) {
-      throw new Error('Not fount versionId');
+  async remove({ serviceName, version }: Remove) {
+    if (!version) {
+      throw new Error('Not fount version');
     }
-    logger.info(`Removing service version: ${serviceName}.${versionId}`);
-    const res = await Client.fcClient.deleteVersion(serviceName, versionId);
+    logger.info(`Removing service version: ${serviceName}.${version}`);
+    const res = await Client.fcClient.deleteVersion(serviceName, version);
     logger.debug(`delete version: ${JSON.stringify(res)}`);
   }
 
-  async deleteAll(props: IProps) {
-    const listData = await this.list(props);
-    const { serviceName } = props;
+  async removeAll({ serviceName, assumeYes }: RemoveAll) {
+    const listData = await this.list({ serviceName });
+    if (assumeYes) {
+      return await this.forDeleteVersion(serviceName, listData);
+    }
+
+    if (!_.isEmpty(listData)) {
+      tableShow(listData, ['versionId', 'description', 'createdTime', 'lastModifiedTime']);
+      const meg = `Version configuration exists under service ${serviceName}, whether to delete all version resources`;
+      if (await promptForConfirmOrDetails(meg)) {
+        return await this.forDeleteVersion(serviceName, listData);
+      }
+    }
+  }
+
+  private async forDeleteVersion(serviceName: string, listData: any[]) {
     for (const { versionId } of listData) {
-      await this.delete({ serviceName, versionId });
+      await this.remove({ serviceName, version: versionId });
     }
   }
 }

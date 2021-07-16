@@ -27,9 +27,7 @@ SubCommand
   publish         New layer version, you can get help through [s layer publish -h]             
   list            Get layer list, you can get help through [s layer list -h]                   
   versionConfig   Get layer versionConfig, you can get help through [s layer versionConfig -h] 
-  versions        Get layer versions, you can get help through [s layer versions -h]           
-  deleteVersion   Delete layer version, you can get help through [s layer deleteVersion -h]    
-  deleteLayer     Delete layer all version, you can get help through [s layer deleteLayer -h] 
+  versions        Get layer versions, you can get help through [s layer versions -h]
 ```
 Layer命令为我们提供了一些子命令：
 - publish: 发布层的版本，可以通过`s layer publish -h`获取帮助文档
@@ -155,66 +153,6 @@ Layer命令为我们提供了一些子命令：
 
       $ s cli fc layer versions --region cn-hangzhou --layer-name name
     ```
-- deleteVersion: 删除指定的层版本，可以通过`s layer deleteVersion -h`获取帮助文档
-    ```
-    layer deleteVersion
-
-      Delete layer version 
-
-    Usage
-
-      $ s layer deleteVersion <options> 
-
-    Command List
-
-      --region string       Specify the region parameter     
-      --layer-name string   Specify the layer name parameter 
-      --version number      Specify the version parameter    
-
-    Global Options
-
-      -a, --access    Specify key alias        
-      -h, --help      Display help for command 
-
-    Examples with Yaml
-
-      $ s layer deleteVersion --layer-name name --version 1         
-      $ s exec -- layer deleteVersion --layer-name name --version 1 
-
-    Examples with CLI
-
-      $ s cli fc layer deleteVersion --region cn-hangzhou --layer-name name --version 1 
-    ```
-- deleteLayer: 删除指定层的所有版本，可以通过`s layer deleteLayer -h`获取帮助文档
-    ```
-    layer deleteLayer
-
-      Delete layer all version 
-
-    Usage
-
-      $ s layer deleteLayer <options> 
-
-    Command List
-
-      --region string       Specify the region parameter     
-      --layer-name string   Specify the layer name parameter 
-
-    Global Options
-
-      -a, --access    Specify key alias        
-      -h, --help      Display help for command 
-
-    Examples with Yaml
-
-      $ s layer deleteLayer --layer-name name         
-      $ s exec -- layer deleteLayer --layer-name name 
-
-    Examples with CLI
-
-      $ s cli fc layer deleteLayer --region cn-hangzhou --layer-name name 
-    ```
-
 # 快速使用
 
 当我们下载好[Serverless Devs开发者工具](../Getting-started/Install-tutorial.md), 并完成[阿里云密钥配置](../Getting-started/Setting-up-credentials.md)之后，我们可以根据自身的需求进行资源的移除。
@@ -238,20 +176,6 @@ s layer versionConfig --layer-name name --version 1
 
 ```
 s layer versions --layer-name name
-```
-
-- 重点1: region、layerName 必填
-
-
-```
-s layer deleteVersion --layer-name name --version 1
-```
-
-- 重点1: region、layerName、version 必填
-
-
-```
-s layer deleteLayer --layer-name name
 ```
 
 - 重点1: region、layerName 必填

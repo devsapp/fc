@@ -1,9 +1,10 @@
 import * as core from '@serverless-devs/core';
 import fs from 'fs';
 import logger from '../../common/logger';
-import * as help_constant from '../help/provision';
 import Client from '../client';
-import { tableShow } from '../utils';
+import { promptForConfirmOrDetails, tableShow } from '../utils';
+import _ from 'lodash';
+import { ICredentials } from '../interface/profile';
 
 interface IProps {
   region?: string;
@@ -13,8 +14,34 @@ interface IProps {
   config?: string;
   target?: number;
 }
+interface GetProvision { serviceName: string; qualifier: string; functionName: string }
+interface ListProvision { serviceName?: string; qualifier?: string }
+interface RemoveAllProvision { serviceName: string; qualifier?: string; assumeYes?: boolean }
+interface PutProvision { serviceName: string; qualifier: string; functionName: string; target?: number; config?: string }
 
 const PROVISION_COMMADN: string[] = ['list', 'get', 'put'];
+const PROVISION_COMMADN_HELP_KEY = {
+  list: 'ProvisionListInputsArgs',
+  get: 'ProvisionGetInputsArgs',
+  put: 'ProvisionPutInputsArgs',
+};
+const TABLE = [
+  { value: 'serviceName', width: '10%' },
+  { value: 'qualifier', width: '10%' },
+  { value: 'functionName', width: '10%' },
+  { value: 'target', width: '10%', alias: 'target', formatter: (value) => value || '0' },
+  { value: 'current', width: '10%', alias: 'current', formatter: (value) => value || '0' },
+  {
+    value: 'scheduledActions',
+    width: '25%',
+    formatter: (value) => (value && value.length ? JSON.stringify(value, null, 2) : value),
+  },
+  {
+    value: 'targetTrackingPolicies',
+    width: '25%',
+    formatter: (value) => (value && value.length ? JSON.stringify(value, null, 2) : value),
+  },
+];
 
 export default class Provision {
   static async handlerInputs(inputs) {
@@ -30,19 +57,16 @@ export default class Provision {
     const parsedData = parsedArgs?.data || {};
     const rawData = parsedData._ || [];
     if (!rawData.length) {
-      core.help(help_constant.PROVISION);
-      process.exit();
+      return { help: true, helpKey: 'ProvisionInputsArgs' };
     }
 
     const subCommand = rawData[0];
     logger.debug(`provision subCommand: ${subCommand}`);
     if (!PROVISION_COMMADN.includes(subCommand)) {
-      core.help(help_constant.PROVISION);
-      return { errorMessage: `Does not support ${subCommand} command` };
+      return { help: true, helpKey: 'ProvisionInputsArgs', errorMessage: `Does not support ${subCommand} command` };
     }
     if (parsedData.help) {
-      core.help(help_constant[`provision_${subCommand}`.toLocaleUpperCase()]);
-      return { help: true, subCommand };
+      return { help: true, subCommand, helpKey: PROVISION_COMMADN_HELP_KEY[subCommand] };
     }
 
     const props = inputs.props || {};
@@ -70,11 +94,11 @@ export default class Provision {
     };
   }
 
-  constructor({ region, credentials }) {
+  constructor({ region, credentials }: { region: string; credentials: ICredentials }) {
     Client.setFcClient(region, credentials);
   }
 
-  async get({ serviceName, qualifier, functionName }) {
+  async get({ serviceName, qualifier, functionName }: GetProvision) {
     if (!functionName) {
       throw new Error('Not fount functionName');
     }
@@ -96,7 +120,7 @@ export default class Provision {
     }
   }
 
-  async put({ serviceName, qualifier, functionName, config, target }) {
+  async put({ serviceName, qualifier, functionName, config, target }: PutProvision) {
     if (!functionName) {
       throw new Error('Not fount functionName parameter');
     }
@@ -133,32 +157,46 @@ export default class Provision {
     return data;
   }
 
-  async list({ serviceName, qualifier }: IProps, table?) {
+  async list({ serviceName, qualifier }: ListProvision, table?) {
     logger.info(`Getting list provision: ${serviceName}`);
-    const data = await Client.fcClient.get_all_list_data('/provision-configs', 'provisionConfigs', {
+
+    const provisionConfigs = (await Client.fcClient.get_all_list_data('/provision-configs', 'provisionConfigs', {
       serviceName,
       qualifier,
-    });
+    }));
+
+    const data = provisionConfigs?.filter((item) => item.target || item.current)
+      .map((item) => ({
+        serviceName: item.resource.split('#')[1],
+        qualifier: item.resource.split('#')[2],
+        functionName: item.resource.split('#')[3],
+        ...item,
+      }));
     if (table) {
-      tableShow(data, [
-        { value: 'resource', width: '10%', alias: 'serviceName', formatter: (value) => value.split('#')[1] },
-        { value: 'resource', width: '10%', alias: 'qualifier', formatter: (value) => value.split('#')[2] },
-        { value: 'resource', width: '10%', alias: 'functionName', formatter: (value) => value.split('#')[3] },
-        { value: 'target', width: '10%', alias: 'target', formatter: (value) => value || '0' },
-        { value: 'current', width: '10%', alias: 'current', formatter: (value) => value || '0' },
-        {
-          value: 'scheduledActions',
-          width: '25%',
-          formatter: (value) => (value && value.length ? JSON.stringify(value, null, 2) : value),
-        },
-        {
-          value: 'targetTrackingPolicies',
-          width: '25%',
-          formatter: (value) => (value && value.length ? JSON.stringify(value, null, 2) : value),
-        },
-      ]);
+      tableShow(data, TABLE);
     } else {
       return data;
+    }
+  }
+
+  async removeAll({ serviceName, qualifier, assumeYes }: RemoveAllProvision) {
+    const provisionList = await this.list({ serviceName, qualifier });
+    if (!_.isEmpty(provisionList)) {
+      if (assumeYes) {
+        return await this.forDelete(provisionList);
+      }
+
+      tableShow(provisionList, TABLE);
+      const meg = `Provision configuration exists under service ${serviceName}, whether to delete all provision resources`;
+      if (await promptForConfirmOrDetails(meg)) {
+        return await this.forDelete(provisionList);
+      }
+    }
+  }
+
+  private async forDelete(data: any[]) {
+    for (const { serviceName, qualifier, functionName } of data) {
+      await this.put({ serviceName, qualifier, functionName, target: 0 });
     }
   }
 }

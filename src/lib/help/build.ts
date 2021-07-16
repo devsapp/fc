@@ -56,12 +56,4 @@ export const BUILD_HELP_INFO = [
       },
     ],
   },
-  {
-    header: 'Examples with CLI',
-    content: [
-      {
-        example: '$ s cli fc build --use-docker ',
-      },
-    ],
-  },
 ];
