@@ -12,6 +12,9 @@ interface IProps {
   version?: string;
   assumeYes?: boolean;
 }
+interface Publish { serviceName: string; description?: string }
+interface Remove { serviceName: string; version: string }
+interface RemoveAll { serviceName: string; assumeYes?: boolean }
 
 const VERSION_COMMAND: string[] = ['list', 'publish', 'remove', 'removeAll'];
 const VERSION_COMMAND_HELP_KEY = {
@@ -79,11 +82,11 @@ export default class Version {
     };
   }
 
-  constructor({ region, credentials }) {
+  constructor({ region, credentials }: { region: string; credentials: ICredentials }) {
     Client.setFcClient(region, credentials);
   }
 
-  async list({ serviceName }, table?) {
+  async list({ serviceName }: { serviceName: string }, table?: boolean) {
     logger.info(`Getting listVersions: ${serviceName}`);
     const data = await Client.fcClient.get_all_list_data(`/services/${serviceName}/versions`, 'versions');
     if (table) {
@@ -93,14 +96,14 @@ export default class Version {
     }
   }
 
-  async publish({ serviceName, description }) {
+  async publish({ serviceName, description }: Publish) {
     logger.info(`Creating service version: ${serviceName}`);
     const { data } = await Client.fcClient.publishVersion(serviceName, description);
     logger.debug(`publish version: ${JSON.stringify(data)}`);
     return data;
   }
 
-  async remove({ serviceName, version }) {
+  async remove({ serviceName, version }: Remove) {
     if (!version) {
       throw new Error('Not fount version');
     }
@@ -109,7 +112,7 @@ export default class Version {
     logger.debug(`delete version: ${JSON.stringify(res)}`);
   }
 
-  async removeAll({ serviceName, assumeYes }) {
+  async removeAll({ serviceName, assumeYes }: RemoveAll) {
     const listData = await this.list({ serviceName });
     if (assumeYes) {
       return await this.forDeleteVersion(serviceName, listData);
@@ -124,7 +127,7 @@ export default class Version {
     }
   }
 
-  private async forDeleteVersion(serviceName, listData) {
+  private async forDeleteVersion(serviceName: string, listData: any[]) {
     for (const { versionId } of listData) {
       await this.remove({ serviceName, version: versionId });
     }

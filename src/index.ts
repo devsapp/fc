@@ -124,7 +124,7 @@ export default class FcBaseComponent extends BaseComponent {
       errorMessage,
     } = await Remove.handlerInputs(inputs);
 
-    await this.report('fc', subCommand ? `remove ${subCommand}` : 'remove', credentials?.AccountID, inputs?.project?.access);
+    await this.report('fc', subCommand ? `remove ${subCommand}` : 'remove', credentials?.AccountID);
     if (errorMessage) {
       throw new Error(errorMessage);
     }
@@ -474,7 +474,7 @@ export default class FcBaseComponent extends BaseComponent {
       errorMessage,
     } = await Version.handlerInputs(inputs);
 
-    await this.report('fc', subCommand ? `version ${subCommand}` : 'version', credentials?.AccountID, inputs?.project?.access);
+    await this.report('fc', subCommand ? `version ${subCommand}` : 'version', credentials?.AccountID);
     if (help) {
       super.help(helpKey);
       if (errorMessage) {
@@ -498,7 +498,7 @@ export default class FcBaseComponent extends BaseComponent {
       errorMessage,
     } = await Alias.handlerInputs(inputs);
 
-    await this.report('fc', subCommand ? `alias ${subCommand}` : 'alias', credentials?.AccountID, inputs?.project?.access);
+    await this.report('fc', subCommand ? `alias ${subCommand}` : 'alias', credentials?.AccountID);
     if (help) {
       super.help(helpKey);
       if (errorMessage) {
@@ -522,7 +522,7 @@ export default class FcBaseComponent extends BaseComponent {
       errorMessage,
     } = await Provision.handlerInputs(inputs);
 
-    await this.report('fc', subCommand ? `provision ${subCommand}` : 'provision', credentials?.AccountID, inputs?.project?.access);
+    await this.report('fc', subCommand ? `provision ${subCommand}` : 'provision', credentials?.AccountID);
     if (help) {
       super.help(helpKey);
       if (errorMessage) {
@@ -546,7 +546,7 @@ export default class FcBaseComponent extends BaseComponent {
       errorMessage,
     } = await OnDemand.handlerInputs(inputs);
 
-    await this.report('fc', subCommand ? `onDemand ${subCommand}` : 'onDemand', credentials?.AccountID, inputs?.project?.access);
+    await this.report('fc', subCommand ? `onDemand ${subCommand}` : 'onDemand', credentials?.AccountID);
     if (help) {
       super.help(helpKey);
       if (errorMessage) {
@@ -657,7 +657,7 @@ export default class FcBaseComponent extends BaseComponent {
   }
 
   // 解析入参
-  private isHelp(args) {
+  private isHelp(args: string) {
     const comParse: any = core.commandParse({ args }, {
       boolean: ['help'],
       alias: { help: 'h' },
@@ -684,16 +684,10 @@ export default class FcBaseComponent extends BaseComponent {
       curPath,
     };
   }
-  private async report(componentName: string, command: string, accountID?: string, access?: string): Promise<void> {
-    let uid: string = accountID;
-    if (_.isEmpty(accountID) && !_.isEmpty(access)) {
-      const credentials: ICredentials = await core.getCredential(access);
-      uid = credentials.AccountID;
-    }
-
+  private async report(componentName: string, command: string, accountID?: string): Promise<void> {
     core.reportComponent(componentName, {
       command,
-      uid,
+      uid: accountID,
     });
   }
   private handlerComponentInputs(inputs: IInputs, componentName?: string): any {
@@ -722,7 +716,7 @@ export default class FcBaseComponent extends BaseComponent {
 
   private async componentMethodCaller(inputs: IInputs, componentName: string, methodName: string, props?: any, args?: string): Promise<any> {
     const componentInputs: any = this.handlerComponentInputs(inputs, componentName);
-    await this.report(componentName, methodName, undefined, inputs?.project?.access);
+    await this.report(componentName, methodName, inputs?.credentials?.AccountID);
     componentInputs.props = props;
     componentInputs.args = args;
     // const componentIns: any = await core.load(`devsapp/${componentName}`);

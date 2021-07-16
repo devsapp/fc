@@ -3,7 +3,13 @@ import logger from '../../common/logger';
 import Client from '../client';
 import { promptForConfirmOrDetails, tableShow } from '../utils';
 import _ from 'lodash';
+import { ICredentials } from '../interface/profile';
 
+interface GetOnDemand { serviceName: string; qualifier: string; functionName: string }
+interface ListOnDemand { serviceName: string }
+interface RemoveOnDemand { serviceName: string; qualifier: string; functionName: string }
+interface RemoveAllOnDemand { serviceName: string; qualifier?: string; assumeYes?: boolean }
+interface PutOnDemand { serviceName: string; qualifier: string; functionName: string; maximumInstanceCount: number }
 interface IProps {
   region?: string;
   serviceName?: string;
@@ -75,15 +81,18 @@ export default class OnDemand {
     };
   }
 
-  constructor({ region, credentials }) {
+  constructor({ region, credentials }: { region: string; credentials: ICredentials }) {
     Client.setFcClient(region, credentials);
   }
 
-  async list({ serviceName }: IProps, table?) {
+  async list({ serviceName }: ListOnDemand, table?) {
     logger.info(`Getting list on-demand: ${serviceName}`);
-    const data = (await Client.fcClient.get_all_list_data('/on-demand-configs', 'configs', {
+
+    const onDemandConfigs = (await Client.fcClient.get_all_list_data('/on-demand-configs', 'configs', {
       prefix: serviceName ? `services/${serviceName}` : '',
-    }))?.map((item) => {
+    }));
+
+    const data = onDemandConfigs?.map((item) => {
       const [, service, , functionName] = item.resource.split('/');
       const serviceArr = service.split('.');
       return {
@@ -100,7 +109,7 @@ export default class OnDemand {
     }
   }
 
-  async get({ serviceName, qualifier, functionName }) {
+  async get({ serviceName, qualifier, functionName }: GetOnDemand) {
     if (!functionName) {
       throw new Error('Not fount functionName');
     }
@@ -122,7 +131,7 @@ export default class OnDemand {
     }
   }
 
-  async remove({ serviceName, qualifier, functionName }) {
+  async remove({ serviceName, qualifier, functionName }: RemoveOnDemand) {
     if (!functionName) {
       throw new Error('Not fount functionName');
     }
@@ -137,7 +146,7 @@ export default class OnDemand {
     return data;
   }
 
-  async put({ serviceName, qualifier, functionName, maximumInstanceCount }) {
+  async put({ serviceName, qualifier, functionName, maximumInstanceCount }: PutOnDemand) {
     if (!functionName) {
       throw new Error('Not fount functionName parameter');
     }
@@ -161,8 +170,9 @@ export default class OnDemand {
     return data;
   }
 
-  async removeAll({ serviceName, qualifier, assumeYes }) {
-    const onDemandList = await this.list({ serviceName, qualifier });
+  async removeAll({ serviceName, qualifier, assumeYes }: RemoveAllOnDemand) {
+    const onDemandAllList = await this.list({ serviceName });
+    const onDemandList = onDemandAllList?.filter((item) => item.qualifier === qualifier);
     if (!_.isEmpty(onDemandList)) {
       if (assumeYes) {
         return await this.forDelete(onDemandList);
@@ -176,7 +186,7 @@ export default class OnDemand {
     }
   }
 
-  private async forDelete(data) {
+  private async forDelete(data: any[]) {
     for (const item of data) {
       await this.remove(item);
     }

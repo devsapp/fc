@@ -109,15 +109,15 @@ export interface AliasPublishInputsArgs {
 }
 
 /**
- * s alias delete <options>\n
+ * s alias remove <options>\n
  * @pre_help
- * {"header":"Alias delete","content":"Delete service alias"}
+ * {"header":"Alias remove","content":"Delete service alias"}
  * @after_help
  * {"ref":"GlobalParams"}
  * @example
- * {"header": "Examples with Yaml","content": ["$ s alias delete --alias-name xxx"]}
+ * {"header": "Examples with Yaml","content": ["$ s alias remove --alias-name xxx"]}
  * @example
- * {"header": "Examples with CLI","content": ["$ s cli fc alias delete --region cn-hangzhou --service-name name --alias-name xxx"]}
+ * {"header": "Examples with CLI","content": ["$ s cli fc alias remove --region cn-hangzhou --service-name name --alias-name xxx"]}
  */
 export interface AliasDeleteInputsArgs {
   /**
@@ -135,15 +135,15 @@ export interface AliasDeleteInputsArgs {
 }
 
 /**
- * s alias deleteAll <options>\n
+ * s alias removeAll <options>\n
  * @pre_help
- * {"header":"Alias deleteAll","content":"Delete service all alias"}
+ * {"header":"Alias removeAll","content":"Delete service all alias"}
  * @after_help
  * {"ref":"GlobalParams"}
  * @example
- * {"header": "Examples with Yaml","content": ["$ s alias deleteAll"]}
+ * {"header": "Examples with Yaml","content": ["$ s alias removeAll"]}
  * @example
- * {"header": "Examples with CLI","content": ["$ s cli fc alias deleteAll --region cn-hangzhou --service-name name"]}
+ * {"header": "Examples with CLI","content": ["$ s cli fc alias removeAll --region cn-hangzhou --service-name name"]}
  */
 export interface AliasDeleteAllInputsArgs {
   /**

@@ -2,8 +2,8 @@ export function publish() {}
 export function list() {}
 export function versionConfig() {}
 export function versions() {}
-export function deleteVersion() {}
-export function deleteLayer() {}
+// export function deleteVersion() {}
+// export function deleteLayer() {}
 
 
 /**
@@ -11,7 +11,7 @@ export function deleteLayer() {}
  * @pre_help
  * {"header":"Layer","content":"Resource layer operation"}
  * @after_help
- * {"header":"SubCommand List","content":[{"desc":"publish","example":"New layer version, you can get help through [s layer publish -h]"},{"desc":"list","example":"Get layer list, you can get help through [s layer list -h]"},{"desc":"versionConfig","example":"Get layer versionConfig, you can get help through [s layer versionConfig -h]"},{"desc":"versions","example":"Get layer versions, you can get help through [s layer versions -h]"},{"desc":"deleteVersion","example":"Delete layer version, you can get help through [s layer deleteVersion -h]"},{"desc":"deleteLayer","example":"Delete layer all version, you can get help through [s layer deleteLayer -h]"}]}
+ * {"header":"SubCommand List","content":[{"desc":"publish","example":"New layer version, you can get help through [s layer publish -h]"},{"desc":"list","example":"Get layer list, you can get help through [s layer list -h]"},{"desc":"versionConfig","example":"Get layer versionConfig, you can get help through [s layer versionConfig -h]"},{"desc":"versions","example":"Get layer versions, you can get help through [s layer versions -h]"}]}
  */
 export interface LayerInputsArgs {
 }

@@ -46,7 +46,24 @@ interface RemoveVersion {
   assumeYes?: boolean;
 }
 
-export default class Remvoe {
+interface EndProps {
+  region: string;
+  assumeYes?: boolean;
+  onlyLocal?: boolean;
+  serviceName?: string;
+  functionName?: string;
+  qualifier?: string;
+  layerName?: string;
+  version?: string;
+  aliasName?: string;
+}
+interface IRemove {
+  props: EndProps;
+  subCommand?: 'layer' | 'domain' | 'onDemand' | 'provision' | 'alias' | 'version' | 'service' | 'function' | 'trigger';
+  credentials: ICredentials;
+}
+
+export default class Remove {
   static async handlerInputs(inputs) {
     logger.debug(`inputs.props: ${JSON.stringify(inputs.props)}`);
 
@@ -72,7 +89,7 @@ export default class Remvoe {
 
     const props = inputs.props || {};
 
-    const endProps = {
+    const endProps: EndProps = {
       region: parsedData.region || props.region,
       assumeYes: parsedData['assume-yes'] || parsedData.y,
       onlyLocal: parsedData['use-local'],
@@ -100,11 +117,11 @@ export default class Remvoe {
     };
   }
 
-  constructor({ region, credentials }) {
+  constructor({ region, credentials }: { region: string; credentials: ICredentials }) {
     Client.setFcClient(region, credentials);
   }
 
-  async removeOnDemand(credentials, { region, qualifier, serviceName, functionName, assumeYes }: RemoveOnDemandOrProvision) {
+  async removeOnDemand(credentials: ICredentials, { region, qualifier, serviceName, functionName, assumeYes }: RemoveOnDemandOrProvision) {
     if (!_.isEmpty(qualifier) && _.isEmpty(functionName)) {
       throw new Error('not fount functionName');
     }
@@ -117,7 +134,7 @@ export default class Remvoe {
     await onDemand.removeAll({ serviceName, qualifier, assumeYes });
   }
 
-  async removeProvision(credentials, { region, qualifier, serviceName, functionName, assumeYes }: RemoveOnDemandOrProvision) {
+  async removeProvision(credentials: ICredentials, { region, qualifier, serviceName, functionName, assumeYes }: RemoveOnDemandOrProvision) {
     if (!_.isEmpty(qualifier) && _.isEmpty(functionName)) {
       throw new Error('not fount functionName');
     }
@@ -127,10 +144,10 @@ export default class Remvoe {
       return await provision.put({ qualifier, serviceName, functionName, target: 0 });
     }
 
-    await provision.deleteAll({ serviceName, qualifier, assumeYes });
+    await provision.removeAll({ serviceName, qualifier, assumeYes });
   }
 
-  async removeAlias(credentials, { region, serviceName, aliasName, assumeYes }: RemoveAlias) {
+  async removeAlias(credentials: ICredentials, { region, serviceName, aliasName, assumeYes }: RemoveAlias) {
     const alias = new Alias({ region, credentials });
 
     if (aliasName) {
@@ -140,7 +157,7 @@ export default class Remvoe {
     return await alias.removeAll({ serviceName, assumeYes });
   }
 
-  async removeVersion(credentials, { region, serviceName, version, assumeYes }: RemoveVersion) {
+  async removeVersion(credentials: ICredentials, { region, serviceName, version, assumeYes }: RemoveVersion) {
     const versionClient = new Version({ region, credentials });
     if (version) {
       return versionClient.remove({ serviceName, version });
@@ -148,7 +165,7 @@ export default class Remvoe {
     return await versionClient.removeAll({ serviceName, assumeYes });
   }
 
-  async remove({ props, subCommand, credentials }, inputs) {
+  async remove({ props, subCommand, credentials }: IRemove, inputs) {
     const {
       region,
       assumeYes,
@@ -161,18 +178,18 @@ export default class Remvoe {
     } = props;
 
     if (subCommand === 'layer') {
-      const commandName = 'devsapp/fc-layer';
-      const getInputs = this.genInputs(inputs, commandName, props);
+      const componentName = 'devsapp/fc-layer';
+      const componentInputs = this.genInputs(inputs, componentName, props);
       if (version) {
-        return (await core.loadComponent(commandName)).deleteVersion(getInputs);
+        return (await core.loadComponent(componentName)).deleteVersion(componentInputs);
       }
-      return (await core.loadComponent(commandName)).deleteLayer(getInputs);
+      return (await core.loadComponent(componentName)).deleteLayer(componentInputs);
     }
 
     if (subCommand === 'domain') {
-      const commandName = 'devsapp/fc-deploy';
-      const getInputs = this.genInputs(inputs, commandName, inputs.props);
-      return (await core.loadComponent(commandName)).remove(getInputs);
+      const componentName = 'devsapp/fc-deploy';
+      const componentInputs = this.genInputs(inputs, componentName, inputs.props);
+      return (await core.loadComponent(componentName)).remove(componentInputs);
     }
 
     if (_.isEmpty(serviceName)) {
@@ -202,9 +219,9 @@ export default class Remvoe {
       await this.removeVersion(credentials, { region, serviceName, assumeYes });
     }
 
-    const commandName = 'devsapp/fc-deploy';
-    const getInputs = this.genInputs(inputs, commandName, inputs.props);
-    return (await core.loadComponent(commandName)).remove(getInputs);
+    const componentName = 'devsapp/fc-deploy';
+    const componentInputs = this.genInputs(inputs, componentName, inputs.props);
+    return (await core.loadComponent(componentName)).remove(componentInputs);
   }
 
   private genInputs({

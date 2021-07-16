@@ -65,15 +65,15 @@ export interface VersionPublishInputsArgs {
 }
 
 /**
- * s version delete <options>\n
+ * s version remove <options>\n
  * @pre_help
- * {"header":"Version delete","content":"Delete service version"}
+ * {"header":"Version remove","content":"Delete service version"}
  * @after_help
  * {"ref":"GlobalParams"}
  * @example
- * {"header": "Examples with Yaml","content": ["$ s version delete --version xxx"]}
+ * {"header": "Examples with Yaml","content": ["$ s version remove --version xxx"]}
  * @example
- * {"header": "Examples with CLI","content": ["$ s cli fc version delete --region cn-hangzhou --service-name name --version xxx"]}
+ * {"header": "Examples with CLI","content": ["$ s cli fc version remove --region cn-hangzhou --service-name name --version xxx"]}
  */
 export interface VersionDeleteInputsArgs {
   /**
@@ -91,15 +91,15 @@ export interface VersionDeleteInputsArgs {
 }
 
 /**
- * s version deleteAll <options>\n
+ * s version removeAll <options>\n
  * @pre_help
- * {"header":"Version deleteAll","content":"Delete service all version"}
+ * {"header":"Version removeAll","content":"Delete service all version"}
  * @after_help
  * {"ref":"GlobalParams"}
  * @example
- * {"header": "Examples with Yaml","content": ["$ s version deleteAll"]}
+ * {"header": "Examples with Yaml","content": ["$ s version removeAll"]}
  * @example
- * {"header": "Examples with CLI","content": ["$ s cli fc version deleteAll --region cn-hangzhou --service-name name"]}
+ * {"header": "Examples with CLI","content": ["$ s cli fc version removeAll --region cn-hangzhou --service-name name"]}
  */
 export interface VersionDeleteAllInputsArgs {
   /**

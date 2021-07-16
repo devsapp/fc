@@ -4,6 +4,7 @@ import logger from '../../common/logger';
 import Client from '../client';
 import { promptForConfirmOrDetails, tableShow } from '../utils';
 import _ from 'lodash';
+import { ICredentials } from '../interface/profile';
 
 interface IProps {
   region?: string;
@@ -13,6 +14,10 @@ interface IProps {
   config?: string;
   target?: number;
 }
+interface GetProvision { serviceName: string; qualifier: string; functionName: string }
+interface ListProvision { serviceName?: string; qualifier?: string }
+interface RemoveAllProvision { serviceName: string; qualifier?: string; assumeYes?: boolean }
+interface PutProvision { serviceName: string; qualifier: string; functionName: string; target?: number; config?: string }
 
 const PROVISION_COMMADN: string[] = ['list', 'get', 'put'];
 const PROVISION_COMMADN_HELP_KEY = {
@@ -89,11 +94,11 @@ export default class Provision {
     };
   }
 
-  constructor({ region, credentials }) {
+  constructor({ region, credentials }: { region: string; credentials: ICredentials }) {
     Client.setFcClient(region, credentials);
   }
 
-  async get({ serviceName, qualifier, functionName }) {
+  async get({ serviceName, qualifier, functionName }: GetProvision) {
     if (!functionName) {
       throw new Error('Not fount functionName');
     }
@@ -115,7 +120,7 @@ export default class Provision {
     }
   }
 
-  async put({ serviceName, qualifier, functionName, config, target }: any) {
+  async put({ serviceName, qualifier, functionName, config, target }: PutProvision) {
     if (!functionName) {
       throw new Error('Not fount functionName parameter');
     }
@@ -152,12 +157,15 @@ export default class Provision {
     return data;
   }
 
-  async list({ serviceName, qualifier }: IProps, table?) {
+  async list({ serviceName, qualifier }: ListProvision, table?) {
     logger.info(`Getting list provision: ${serviceName}`);
-    const data = (await Client.fcClient.get_all_list_data('/provision-configs', 'provisionConfigs', {
+
+    const provisionConfigs = (await Client.fcClient.get_all_list_data('/provision-configs', 'provisionConfigs', {
       serviceName,
       qualifier,
-    }))?.filter((item) => item.target || item.current)
+    }));
+
+    const data = provisionConfigs?.filter((item) => item.target || item.current)
       .map((item) => ({
         serviceName: item.resource.split('#')[1],
         qualifier: item.resource.split('#')[2],
@@ -171,7 +179,7 @@ export default class Provision {
     }
   }
 
-  async deleteAll({ serviceName, qualifier, assumeYes }) {
+  async removeAll({ serviceName, qualifier, assumeYes }: RemoveAllProvision) {
     const provisionList = await this.list({ serviceName, qualifier });
     if (!_.isEmpty(provisionList)) {
       if (assumeYes) {
@@ -186,7 +194,7 @@ export default class Provision {
     }
   }
 
-  private async forDelete(data) {
+  private async forDelete(data: any[]) {
     for (const { serviceName, qualifier, functionName } of data) {
       await this.put({ serviceName, qualifier, functionName, target: 0 });
     }

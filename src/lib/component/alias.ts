@@ -17,8 +17,22 @@ interface IProps {
   assumeYes?: boolean;
 }
 
+interface FindAlias { serviceName: string; aliasName: string }
+interface GetAlias { serviceName: string; aliasName: string }
+interface RemoveAlias { serviceName: string; aliasName: string }
+interface RemoveAliasAll { serviceName: string; assumeYes?: boolean }
+
+interface Publish {
+  serviceName: string;
+  aliasName: string;
+  version: string;
+  description?: string;
+  gversion?: string;
+  weight?: number;
+}
+
 const ALIAS_COMMAND: string[] = ['list', 'get', 'publish', 'remove', 'removeAll'];
-const ALIAS_COMMAND_HELP_KEY = {
+const ALIAS_COMMAND_HELP_KEY: {[key: string]: string} = {
   list: 'AliasListInputsArgs',
   get: 'AliasGetInputsArgs',
   publish: 'AliasPublishInputsArgs',
@@ -88,11 +102,11 @@ export default class Alias {
     };
   }
 
-  constructor({ region, credentials }) {
+  constructor({ region, credentials }: { region: string; credentials: ICredentials }) {
     Client.setFcClient(region, credentials);
   }
 
-  async findAlias({ serviceName, aliasName }) {
+  async findAlias({ serviceName, aliasName }: FindAlias) {
     const aliasList = await this.list({ serviceName });
     for (const aliasItem of aliasList) {
       if (aliasItem.aliasName === aliasName) {
@@ -102,7 +116,7 @@ export default class Alias {
     return false;
   }
 
-  async publish({ serviceName, description, aliasName, version, gversion, weight }: IProps) {
+  async publish({ serviceName, description, aliasName, version, gversion, weight }: Publish) {
     if (!version) {
       throw new Error('Not fount versionId');
     }
@@ -129,7 +143,7 @@ export default class Alias {
     }
   }
 
-  async list({ serviceName }, table?) {
+  async list({ serviceName }: { serviceName: string }, table?: boolean) {
     logger.info(`Getting listAliases: ${serviceName}`);
     const data = await Client.fcClient.get_all_list_data(`/services/${serviceName}/aliases`, 'aliases');
     if (table) {
@@ -139,17 +153,17 @@ export default class Alias {
     }
   }
 
-  async get({ serviceName, aliasName }) {
+  async get({ serviceName, aliasName }: GetAlias) {
     logger.info(`Getting alias: ${aliasName}`);
     return (await Client.fcClient.getAlias(serviceName, aliasName)).data;
   }
 
-  async remove({ serviceName, aliasName }) {
+  async remove({ serviceName, aliasName }: RemoveAlias) {
     logger.info(`Removing alias: ${aliasName}`);
     return (await Client.fcClient.deleteAlias(serviceName, aliasName)).data;
   }
 
-  async removeAll({ serviceName, assumeYes }) {
+  async removeAll({ serviceName, assumeYes }: RemoveAliasAll) {
     const aliasList = await this.list({ serviceName });
 
     if (!_.isEmpty(aliasList)) {
@@ -164,13 +178,13 @@ export default class Alias {
     }
   }
 
-  private async forDataDelete(serviceName, data) {
+  private async forDataDelete(serviceName: string, data: Array<{[key: string]: any}>) {
     for (const { aliasName } of data) {
       await this.remove({ serviceName, aliasName });
     }
   }
 
-  private showAlias(data) {
+  private showAlias(data: Array<{[key: string]: any}>) {
     const showWeight = {
       value: 'additionalVersionWeight',
       formatter: (value) => {
@@ -184,12 +198,12 @@ export default class Alias {
     tableShow(data, ['aliasName', 'versionId', 'description', 'createdTime', 'lastModifiedTime', showWeight]);
   }
 
-  private async updateAlias({ aliasName, serviceName, version, parames }) {
+  private async updateAlias({ aliasName, serviceName, version, parames }: {[key: string]: any}) {
     logger.info(`Updating alias: ${aliasName}`);
     await Client.fcClient.updateAlias(serviceName, aliasName, version, parames);
   }
 
-  private async createAlias({ aliasName, serviceName, version, parames }) {
+  private async createAlias({ aliasName, serviceName, version, parames }: {[key: string]: any}) {
     logger.info(`Creating alias: ${aliasName}`);
     await Client.fcClient.createAlias(serviceName, aliasName, version, parames);
   }
