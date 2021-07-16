@@ -61,9 +61,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core = __importStar(require("@serverless-devs/core"));
 var client_1 = __importDefault(require("../client"));
 var logger_1 = __importDefault(require("../../common/logger"));
-var help_constant = __importStar(require("../help/version"));
 var utils_1 = require("../utils");
-var VERSION_COMMAND = ['list', 'publish', 'delete', 'deleteAll'];
+var lodash_1 = __importDefault(require("lodash"));
+var VERSION_COMMAND = ['list', 'publish', 'remove', 'removeAll'];
+var VERSION_COMMAND_HELP_KEY = {
+    list: 'VersionListInputsArgs',
+    publish: 'VersionPublishInputsArgs',
+    remove: 'VersionDeleteInputsArgs',
+    removeAll: 'VersionDeleteAllInputsArgs',
+};
 var Version = /** @class */ (function () {
     function Version(_a) {
         var region = _a.region, credentials = _a.credentials;
@@ -78,32 +84,34 @@ var Version = /** @class */ (function () {
                     case 0:
                         logger_1.default.debug("inputs.props: " + JSON.stringify(inputs.props));
                         parsedArgs = core.commandParse(inputs, {
-                            boolean: ['help', 'table'],
+                            boolean: ['help', 'table', 'y'],
                             string: ['region', 'service-name', 'description', 'id'],
-                            alias: { help: 'h', 'version-id': 'id' },
+                            alias: { help: 'h', version: 'id', 'assume-yes': 'y' },
                         });
                         parsedData = (parsedArgs === null || parsedArgs === void 0 ? void 0 : parsedArgs.data) || {};
                         rawData = parsedData._ || [];
                         if (!rawData.length) {
-                            core.help(help_constant.VERSION);
-                            process.exit();
+                            return [2 /*return*/, { help: true, helpKey: 'VersionInputsArgs' }];
                         }
                         subCommand = rawData[0];
                         logger_1.default.debug("version subCommand: " + subCommand);
                         if (!VERSION_COMMAND.includes(subCommand)) {
-                            core.help(help_constant.VERSION);
-                            return [2 /*return*/, { errorMessage: "Does not support " + subCommand + " command" }];
+                            return [2 /*return*/, {
+                                    help: true,
+                                    helpKey: 'VersionInputsArgs',
+                                    errorMessage: "Does not support " + subCommand + " command",
+                                }];
                         }
                         if (parsedData.help) {
-                            core.help(help_constant[("version_" + subCommand).toLocaleUpperCase()]);
-                            return [2 /*return*/, { help: true, subCommand: subCommand }];
+                            return [2 /*return*/, { help: true, helpKey: VERSION_COMMAND_HELP_KEY[subCommand], subCommand: subCommand }];
                         }
                         props = inputs.props || {};
                         endProps = {
                             region: parsedData.region || props.region,
                             serviceName: parsedData['service-name'] || ((_a = props.service) === null || _a === void 0 ? void 0 : _a.name),
                             description: parsedData.description,
-                            versionId: parsedData.id,
+                            version: parsedData.id,
+                            assumeYes: parsedData.y,
                         };
                         if (!endProps.region) {
                             throw new Error('Not fount region');
@@ -169,18 +177,18 @@ var Version = /** @class */ (function () {
             });
         });
     };
-    Version.prototype.delete = function (_a) {
-        var serviceName = _a.serviceName, versionId = _a.versionId;
+    Version.prototype.remove = function (_a) {
+        var serviceName = _a.serviceName, version = _a.version;
         return __awaiter(this, void 0, void 0, function () {
             var res;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        if (!versionId) {
-                            throw new Error('Not fount versionId');
+                        if (!version) {
+                            throw new Error('Not fount version');
                         }
-                        logger_1.default.info("Removing service version: " + serviceName + "." + versionId);
-                        return [4 /*yield*/, client_1.default.fcClient.deleteVersion(serviceName, versionId)];
+                        logger_1.default.info("Removing service version: " + serviceName + "." + version);
+                        return [4 /*yield*/, client_1.default.fcClient.deleteVersion(serviceName, version)];
                     case 1:
                         res = _b.sent();
                         logger_1.default.debug("delete version: " + JSON.stringify(res));
@@ -189,28 +197,51 @@ var Version = /** @class */ (function () {
             });
         });
     };
-    Version.prototype.deleteAll = function (props) {
+    Version.prototype.removeAll = function (_a) {
+        var serviceName = _a.serviceName, assumeYes = _a.assumeYes;
         return __awaiter(this, void 0, void 0, function () {
-            var listData, serviceName, _i, listData_1, versionId;
+            var listData, meg;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0: return [4 /*yield*/, this.list({ serviceName: serviceName })];
+                    case 1:
+                        listData = _b.sent();
+                        if (!assumeYes) return [3 /*break*/, 3];
+                        return [4 /*yield*/, this.forDeleteVersion(serviceName, listData)];
+                    case 2: return [2 /*return*/, _b.sent()];
+                    case 3:
+                        if (!!lodash_1.default.isEmpty(listData)) return [3 /*break*/, 6];
+                        utils_1.tableShow(listData, ['versionId', 'description', 'createdTime', 'lastModifiedTime']);
+                        meg = "Version configuration exists under service " + serviceName + ", whether to delete all version resources";
+                        return [4 /*yield*/, utils_1.promptForConfirmOrDetails(meg)];
+                    case 4:
+                        if (!_b.sent()) return [3 /*break*/, 6];
+                        return [4 /*yield*/, this.forDeleteVersion(serviceName, listData)];
+                    case 5: return [2 /*return*/, _b.sent()];
+                    case 6: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    Version.prototype.forDeleteVersion = function (serviceName, listData) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _i, listData_1, versionId;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.list(props)];
-                    case 1:
-                        listData = _a.sent();
-                        serviceName = props.serviceName;
+                    case 0:
                         _i = 0, listData_1 = listData;
-                        _a.label = 2;
-                    case 2:
-                        if (!(_i < listData_1.length)) return [3 /*break*/, 5];
+                        _a.label = 1;
+                    case 1:
+                        if (!(_i < listData_1.length)) return [3 /*break*/, 4];
                         versionId = listData_1[_i].versionId;
-                        return [4 /*yield*/, this.delete({ serviceName: serviceName, versionId: versionId })];
-                    case 3:
+                        return [4 /*yield*/, this.remove({ serviceName: serviceName, version: versionId })];
+                    case 2:
                         _a.sent();
-                        _a.label = 4;
-                    case 4:
+                        _a.label = 3;
+                    case 3:
                         _i++;
-                        return [3 /*break*/, 2];
-                    case 5: return [2 /*return*/];
+                        return [3 /*break*/, 1];
+                    case 4: return [2 /*return*/];
                 }
             });
         });
@@ -218,4 +249,4 @@ var Version = /** @class */ (function () {
     return Version;
 }());
 exports.default = Version;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoidmVyc2lvbi5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uL3NyYy9saWIvY29tcG9uZW50L3ZlcnNpb24udHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBQUEsMERBQThDO0FBRTlDLHFEQUErQjtBQUMvQiwrREFBeUM7QUFDekMsNkRBQWlEO0FBQ2pELGtDQUFxQztBQVNyQyxJQUFNLGVBQWUsR0FBYSxDQUFDLE1BQU0sRUFBRSxTQUFTLEVBQUUsUUFBUSxFQUFFLFdBQVcsQ0FBQyxDQUFDO0FBRTdFO0lBd0RFLGlCQUFZLEVBQXVCO1lBQXJCLE1BQU0sWUFBQSxFQUFFLFdBQVcsaUJBQUE7UUFDL0IsZ0JBQU0sQ0FBQyxXQUFXLENBQUMsTUFBTSxFQUFFLFdBQVcsQ0FBQyxDQUFDO0lBQzFDLENBQUM7SUF6RFkscUJBQWEsR0FBMUIsVUFBMkIsTUFBTTs7Ozs7Ozt3QkFDL0IsZ0JBQU0sQ0FBQyxLQUFLLENBQUMsbUJBQWlCLElBQUksQ0FBQyxTQUFTLENBQUMsTUFBTSxDQUFDLEtBQUssQ0FBRyxDQUFDLENBQUM7d0JBRXhELFVBQVUsR0FBeUIsSUFBSSxDQUFDLFlBQVksQ0FBQyxNQUFNLEVBQUU7NEJBQ2pFLE9BQU8sRUFBRSxDQUFDLE1BQU0sRUFBRSxPQUFPLENBQUM7NEJBQzFCLE1BQU0sRUFBRSxDQUFDLFFBQVEsRUFBRSxjQUFjLEVBQUUsYUFBYSxFQUFFLElBQUksQ0FBQzs0QkFDdkQsS0FBSyxFQUFFLEVBQUUsSUFBSSxFQUFFLEdBQUcsRUFBRSxZQUFZLEVBQUUsSUFBSSxFQUFFO3lCQUN6QyxDQUFDLENBQUM7d0JBRUcsVUFBVSxHQUFHLENBQUEsVUFBVSxhQUFWLFVBQVUsdUJBQVYsVUFBVSxDQUFFLElBQUksS0FBSSxFQUFFLENBQUM7d0JBQ3BDLE9BQU8sR0FBRyxVQUFVLENBQUMsQ0FBQyxJQUFJLEVB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
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoidmVyc2lvbi5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uL3NyYy9saWIvY29tcG9uZW50L3ZlcnNpb24udHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBQUEsMERBQThDO0FBRTlDLHFEQUErQjtBQUMvQiwrREFBeUM7QUFDekMsa0NBQWdFO0FBQ2hFLGtEQUF1QjtBQWF2QixJQUFNLGVBQWUsR0FBYSxDQUFDLE1BQU0sRUFBRSxTQUFTLEVBQUUsUUFBUSxFQUFFLFdBQVcsQ0FBQyxDQUFDO0FBQzdFLElBQU0sd0JBQXdCLEdBQUc7SUFDL0IsSUFBSSxFQUFFLHVCQUF1QjtJQUM3QixPQUFPLEVBQUUsMEJBQTBCO0lBQ25DLE1BQU0sRUFBRSx5QkFBeUI7SUFDakMsU0FBUyxFQUFFLDRCQUE0QjtDQUN4QyxDQUFDO0FBRUY7SUEwREUsaUJBQVksRUFBc0U7WUFBcEUsTUFBTSxZQUFBLEVBQUUsV0FBVyxpQkFBQTtRQUMvQixnQkFBTSxDQUFDLFdBQVcsQ0FBQyxNQUFNLEVBQUUsV0FBVyxDQUFDLENBQUM7SUFDMUMsQ0FBQztJQTNEWSxxQkFBYSxHQUExQixVQUEyQixNQUFNOzs7Ozs7O3dCQUMvQixnQkFBTSxDQUFDLEtBQUssQ0FBQyxtQkFBaUIsSUFBSSxDQUFDLFNBQVMsQ0FBQyxNQUFNLENBQUMsS0FBSyxDQUFHLENBQUMsQ0FBQzt3QkFFeEQsVUFBVSxHQUF5QixJQUFJLENBQUMsWUFBWSxDQUFDLE1BQU0sRUFBRTs0QkFDakUsT0FBTyxFQUFFLENBQUMsTUFBTSxFQUFFLE9BQU8sRUFBRSxHQUFHLENBQUM7NEJBQy9CLE1BQU0sRUFBRSxDQUFDLFFBQVEsRUFBRSxjQUFjLEVBQUUsYUFBYSxFQUFFLElBQUksQ0FBQzs0QkFDdkQsS0FBSyxFQUFFLEVBQUUsSUFBSSxFQUFFLEdBQUcsRUFBRSxPQUFPLEVBQUUsSUFB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

@@ -1,4 +1,5 @@
 import { IInputs, IProperties } from './interface/interface';
+export declare function promptForConfirmOrDetails(message: string): Promise<boolean>;
 export declare function isAutoConfig(config: any): boolean;
 export declare function genServiceStateID(accountID: any, region: any, serviceName: any): string;
 export declare function getFcNames(argsParse: any, inputsProps: any): {

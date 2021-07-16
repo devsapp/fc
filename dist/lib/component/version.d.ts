@@ -3,18 +3,41 @@ interface IProps {
     region: string;
     serviceName: string;
     description?: string;
-    versionId?: string;
+    version?: string;
+    assumeYes?: boolean;
+}
+interface Publish {
+    serviceName: string;
+    description?: string;
+}
+interface Remove {
+    serviceName: string;
+    version: string;
+}
+interface RemoveAll {
+    serviceName: string;
+    assumeYes?: boolean;
 }
 export default class Version {
     static handlerInputs(inputs: any): Promise<{
-        errorMessage: string;
-        help?: undefined;
+        help: boolean;
+        helpKey: string;
+        errorMessage?: undefined;
         subCommand?: undefined;
         credentials?: undefined;
         props?: undefined;
         table?: undefined;
     } | {
         help: boolean;
+        helpKey: string;
+        errorMessage: string;
+        subCommand?: undefined;
+        credentials?: undefined;
+        props?: undefined;
+        table?: undefined;
+    } | {
+        help: boolean;
+        helpKey: any;
         subCommand: any;
         errorMessage?: undefined;
         credentials?: undefined;
@@ -25,24 +48,20 @@ export default class Version {
         subCommand: any;
         props: IProps;
         table: any;
-        errorMessage?: undefined;
         help?: undefined;
+        helpKey?: undefined;
+        errorMessage?: undefined;
     }>;
     constructor({ region, credentials }: {
-        region: any;
-        credentials: any;
+        region: string;
+        credentials: ICredentials;
     });
     list({ serviceName }: {
-        serviceName: any;
-    }, table?: any): Promise<any>;
-    publish({ serviceName, description }: {
-        serviceName: any;
-        description: any;
-    }): Promise<any>;
-    delete({ serviceName, versionId }: {
-        serviceName: any;
-        versionId: any;
-    }): Promise<void>;
-    deleteAll(props: IProps): Promise<void>;
+        serviceName: string;
+    }, table?: boolean): Promise<any>;
+    publish({ serviceName, description }: Publish): Promise<any>;
+    remove({ serviceName, version }: Remove): Promise<void>;
+    removeAll({ serviceName, assumeYes }: RemoveAll): Promise<void>;
+    private forDeleteVersion;
 }
 export {};

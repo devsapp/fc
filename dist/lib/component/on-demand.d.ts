@@ -1,3 +1,28 @@
+import { ICredentials } from '../interface/profile';
+interface GetOnDemand {
+    serviceName: string;
+    qualifier: string;
+    functionName: string;
+}
+interface ListOnDemand {
+    serviceName: string;
+}
+interface RemoveOnDemand {
+    serviceName: string;
+    qualifier: string;
+    functionName: string;
+}
+interface RemoveAllOnDemand {
+    serviceName: string;
+    qualifier?: string;
+    assumeYes?: boolean;
+}
+interface PutOnDemand {
+    serviceName: string;
+    qualifier: string;
+    functionName: string;
+    maximumInstanceCount: number;
+}
 interface IProps {
     region?: string;
     serviceName?: string;
@@ -7,8 +32,17 @@ interface IProps {
 }
 export default class OnDemand {
     static handlerInputs(inputs: any): Promise<{
+        help: boolean;
+        helpKey: string;
+        errorMessage?: undefined;
+        subCommand?: undefined;
+        credentials?: undefined;
+        props?: undefined;
+        table?: undefined;
+    } | {
+        help: boolean;
+        helpKey: string;
         errorMessage: string;
-        help?: undefined;
         subCommand?: undefined;
         credentials?: undefined;
         props?: undefined;
@@ -16,6 +50,7 @@ export default class OnDemand {
     } | {
         help: boolean;
         subCommand: any;
+        helpKey: any;
         errorMessage?: undefined;
         credentials?: undefined;
         props?: undefined;
@@ -25,29 +60,19 @@ export default class OnDemand {
         subCommand: any;
         props: IProps;
         table: any;
-        errorMessage?: undefined;
         help?: undefined;
+        helpKey?: undefined;
+        errorMessage?: undefined;
     }>;
     constructor({ region, credentials }: {
-        region: any;
-        credentials: any;
+        region: string;
+        credentials: ICredentials;
     });
-    list({ serviceName }: IProps, table?: any): Promise<any>;
-    get({ serviceName, qualifier, functionName }: {
-        serviceName: any;
-        qualifier: any;
-        functionName: any;
-    }): Promise<any>;
-    delete({ serviceName, qualifier, functionName }: {
-        serviceName: any;
-        qualifier: any;
-        functionName: any;
-    }): Promise<any>;
-    put({ serviceName, qualifier, functionName, maximumInstanceCount }: {
-        serviceName: any;
-        qualifier: any;
-        functionName: any;
-        maximumInstanceCount: any;
-    }): Promise<any>;
+    list({ serviceName }: ListOnDemand, table?: any): Promise<any>;
+    get({ serviceName, qualifier, functionName }: GetOnDemand): Promise<any>;
+    remove({ serviceName, qualifier, functionName }: RemoveOnDemand): Promise<any>;
+    put({ serviceName, qualifier, functionName, maximumInstanceCount }: PutOnDemand): Promise<any>;
+    removeAll({ serviceName, qualifier, assumeYes }: RemoveAllOnDemand): Promise<void>;
+    private forDelete;
 }
 export {};
