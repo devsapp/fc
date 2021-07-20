@@ -145,6 +145,8 @@ s nas upload -r -n ./event-code nas:///mnt/auto1/folder
 
 - 将本地文件压缩上传，在线上进行解压
 - 在线上进行一下编译操作，将结果存储到Nas中
+- 查看线上NAS的文件列表
+- 删除线上NAS中的某个文件
 
 此时就需要一些命令操作。
 
