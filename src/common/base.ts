@@ -2,7 +2,7 @@
 import fs from 'fs';
 import path from 'path';
 // import Table from 'tty-table';
-import get from 'lodash.get';
+import { get } from 'lodash';
 import { help } from '@serverless-devs/core';
 
 const SINGLE_VARS = ['string', 'number', 'boolean', 'null', 'undefined'];
