@@ -1,7 +1,6 @@
 import * as core from '@serverless-devs/core';
 import _, { isEmpty } from 'lodash';
-import { ICredentials } from './interface/profile';
-import Client from './client';
+import { isAutoConfig, genServiceStateID } from './utils';
 
 const HANDlER_NAS_COMMANDS = ['ls', 'cp', 'rm', 'download', 'upload', 'command'];
 
@@ -87,7 +86,7 @@ function throwError(args, commandName, nonOptionsArgs) {
     }
 
     if (nonOptionsArgs.length === 2) {
-      throw new Error(`The nas remote path was not obtained in [${args}]${example}`);
+      throw new Error(`The nas remote path was not started with /mnt/ or /home/ in [${args}]${example}`);
     }
   }
 
@@ -141,14 +140,25 @@ function isFcDirStart(dirInput: string): boolean {
 }
 
 async function getServiceConfig(props, access, credentials) {
-  const region = props?.region;
-  const name = props?.service?.name;
-  if (_.isNil(name) || _.isNil(region)) {
-    return {};
-  }
-  const credential: ICredentials = credentials || await core.getCredential(access);
+  const { name, vpcConfig, nasConfig, role } = props?.service || {};
+  const config = {
+    name, vpcConfig, nasConfig, role,
+  };
 
-  Client.setFcClient(region, credential);
-  const { role, vpcConfig, nasConfig } = (await Client.fcClient.getService(name)).data;
-  return { name, role, vpcConfig, nasConfig };
+  if (_.isEmpty(credentials)) {
+    credentials = await core.getCredential(access);
+  }
+  const stateId = genServiceStateID(credentials.AccountID, props?.region, name);
+  const cacheData = (await core.getState(stateId)) || {};
+
+  if (isAutoConfig(vpcConfig) || _.isEmpty(vpcConfig)) {
+    config.vpcConfig = cacheData?.statefulAutoConfig?.vpcConfig || cacheData?.statefulConfig?.vpcConfig;
+  }
+  if (isAutoConfig(nasConfig)) {
+    config.nasConfig = cacheData?.statefulAutoConfig?.nasConfig || cacheData?.statefulConfig?.nasConfig;
+  }
+  if (!_.isString(role)) {
+    config.role = cacheData?.statefulAutoConfig?.role || cacheData?.statefulConfig?.role;
+  }
+  return config;
 }
