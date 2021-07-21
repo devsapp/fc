@@ -1,11 +1,15 @@
 # 端云联调操作：Proxied
 
+- [简介与原理](#简介与原理)
+
 - [快速使用](#快速使用)
     - [简单使用](#简单使用)
         - [准备工作](#准备工作)
         - [本地调用](#本地调用)
         - [清理工作](#清理工作)
+   
     - [断点调试](#断点调试)
+ 
 -------
 
 阿里云函数计算（FC）组件为使用者提供了 FC 相关资源本地与云端联合调试的能力。可以通过`proxied`指令，快速进行端云联调操作。
@@ -146,6 +150,60 @@ Proxied 命令为我们提供了三个子命令：
       Just clean.   $ s proxied clean
 
     ```
+    
+# 简介与原理
+![](https://img.alicdn.com/imgextra/i1/O1CN010nHlUP1drrmcnotR6_!!6000000003790-2-tps-1266-669.png)
+
+如上图所示， S 工具会根据你的函数的 yml 文件配置,  创建一个辅助服务和函数，这个辅助服务和函数的配置跟您的服务和函数是相同的。
+
+1.  调用这个辅助函数， 流量会打回到本地的调试实例， 这个时候本地实例接受到 event 和 context 是真实来自线上的
+2.  本地调试的实例运行函数逻辑， 能直接利用辅助函数运行的那个容器， 可以直接访问 vpc 内网以及一些云服务的内网地址
+
+比如我有s.yml 配置了 vpc， 同时函数代码大致如下：
+
+```python
+# -*- coding: utf-8 -*-
+import logging
+import os
+import pymysql
+import pymysql.cursors
+
+def handler(event, context):
+    print("\n***test fc internal endpoint***")
+    os.system("curl --connect-timeout 3 1.cn-hangzhou-internal.fc.aliyuncs.com")
+
+    print("\n***test oss internal endpoint***")
+    os.system("curl --connect-timeout 3 oss-cn-hangzhou-internal.aliyuncs.com")
+
+    print("\n***test db internal addr ***")
+    test_mysql()
+
+    return 'hello world'
+
+def test_mysql():
+    # rds 在 vpc 的内网地址
+    connection = pymysql.connect(host='rm-xxxxxxx.mysql.rds.aliyuncs.com',
+                                 user='userName',
+                                 password='userPwd',
+                                 db='testDB',
+                                 port=3306,
+                                 charset='utf8')
+    try:
+        with connection.cursor() as cursor:
+            sql = "select * from users"
+            cout = cursor.execute(sql)
+            print("total： "+str(cout))
+
+            for row in cursor.fetchall():
+                print("ID: "+str(row[0])+'  Name： '+row[1])
+            connection.commit()
+
+    finally:
+        connection.close()
+```
+
+在端云联调通道成功建立以后， 可以直接在本地完成对函数（无需代码修改， 比如使用rds 公网地址）调试。
+
 
 # 快速使用
 
