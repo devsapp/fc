@@ -2,7 +2,6 @@
 
 - [快速使用](#快速使用)
   - [简单使用](#简单使用)
-  - [高级使用](#高级使用)
 - [操作所需权限](../Others/authority/command.md#version-指令)
 
 
@@ -96,26 +95,26 @@ Version命令为我们提供了一些子命令：
 
 ## 简单使用
 
+查看版本列表
 ```
 s version list
 ```
 
-- 重点1：region、serviceName 必填
+- region、serviceName 必填
+- table 参数选填，如果指定了 --table，那么则会以表格形式输出列表，但是组件最终返回为空；如果不指定 --table，那么组件将返回所有数据
 
 
+发布版本
 ```
 s version publish
 ```
 
-- 重点1：region、serviceName 必填
+- region、serviceName 必填，description 选填
 
-
-
-## 高级使用
-
-
+删除版本
+> 更多参数可以执行 s remove version -h 查看
 ```
-s version list --table
+s remove version
 ```
-
-- 重点1：如果指定了 --table，那么则会以表格形式输出列表，但是组件最终返回为空；如果不指定 --table，那么组件将返回所有数据
+- region、serviceName 必填
+- version 选填，如果指定 --version 删除当前服务指定的版本，如果没有指定则删除当前服务所有的版本
