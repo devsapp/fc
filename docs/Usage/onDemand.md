@@ -2,7 +2,6 @@
 
 - [快速使用](#快速使用)
   - [简单使用](#简单使用)
-  - [高级使用](#高级使用)
 - [操作所需权限](../Others/authority/command.md#onDemand-指令)
 
 
@@ -134,32 +133,30 @@ OnDemand命令为我们提供了一些子命令：
 
 ## 简单使用
 
-```
-s onDemand list
-```
-
-- 重点1：region、serviceName 必填
-
-
+配置按量资源
 ```
 s onDemand put --qualifier pre --maximum-instance-count 1 
 ```
 
-- 重点1：region、serviceName、functionName、qualifier、maximumInstanceCount 必填
+- region、serviceName、functionName、qualifier、maximumInstanceCount 必填
 
-
+查看按量资源配置
 ```
 s onDemand get --qualifier pre
 ```
-- 重点1：region、serviceName、functionName、qualifier 必填
+- region、serviceName、functionName、qualifier 必填
 
-
-
-
-## 高级使用
-
+查看按量资源列表
 ```
-s onDemand list --table
+s onDemand list
 ```
 
-- 重点1：如果指定了 --table，那么则会以表格形式输出列表，但是组件最终返回为空；如果不指定 --table，那么组件将返回所有数据
+- region、serviceName 必填
+- 如果指定了 --table，那么则会以表格形式输出列表，但是组件最终返回为空；如果不指定 --table，那么组件将返回所有数据
+
+删除按量资源
+> 更多参数可执行 s remove onDemand -h 查看
+```
+s remove onDemand
+s remove onDemand --qualifier xxx --function-name xxx 
+```

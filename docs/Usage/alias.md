@@ -2,7 +2,6 @@
 
 - [快速使用](#快速使用)
   - [简单使用](#简单使用)
-  - [高级使用](#高级使用)
 - [操作所需权限](../Others/authority/command.md#alias-指令)
 
 ------
@@ -134,33 +133,34 @@ Alias命令为我们提供了一些子命令：
 
 ## 简单使用
 
+查看别名列表
 ```
 s alias list
 ```
 
-- 重点1：region、serviceName 必填
+- region、serviceName 必填
+- table 参数选填，如果指定了 --table，那么则会以表格形式输出列表，但是组件最终返回为空；如果不指定 --table，那么组件将返回所有数据
 
 
+发布或者修改别名
 ```
 s alias publish --alias-name pre --version 2
 ```
 
-- 重点1：region、serviceName、aliasName、versionId 必填
-- 重点2：指定--gversion【灰度版本】和--weight【灰度权重】可以配置灰度发布
+- region、serviceName、aliasName、version 必填
+- 灰度发布需要同时指定--gversion【灰度版本】和--weight【灰度权重】
 
-
+查看别名配置
 ```
 s alias get --alias-name pre
 ```
 
-- 重点1：region、serviceName、aliasName 必填
+- region、serviceName、aliasName 必填
 
-
-
-## 高级使用
-
+删除别名
+> 更多参数可以执行 s remove alias -h 查看
 ```
-s alias list --table
+s remove alias
 ```
-
-- 重点1：如果指定了 --table，那么则会以表格形式输出列表，但是组件最终返回为空；如果不指定 --table，那么组件将返回所有数据
+- region、serviceName 必填
+- 如果指定 --alias-name 则删除指定的别名，如果没有指定则删除服务下所有的别名

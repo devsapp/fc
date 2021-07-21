@@ -135,27 +135,39 @@ OnDemand命令为我们提供了一些子命令：
 
 ## 简单使用
 
+配置预留
 ```
 s provision put --target 1 --qualifier alias
 ```
 
-- 重点1：target 如果大于0，配置函数预留**预留资源会持续产生费用，如果不需要请您及时释放资源**；target 如果等于0，释放预留资源
-- 重点2：qualifier 仅支持 LATEST 和别名
+- target 如果大于0，配置函数预留**预留资源会持续产生费用，如果不需要请您及时释放资源**；target 如果等于0，释放预留资源
+- qualifier 仅支持服务的 LATEST 和别名
 
-## 高级使用
+查看预留配置
+```
+s provision get --qualifier alias
+```
 
+查看预留列表
 ```
 s provision list --table
 ```
+- 如果指定了 --table，那么则会以表格形式输出列表，但是组件最终返回为空；如果不指定 --table，那么组件将返回所有数据
 
-- 重点1：如果指定了 --table，那么则会以表格形式输出列表，但是组件最终返回为空；如果不指定 --table，那么组件将返回所有数据
+删除预留
+> 更多参数可执行 s remove provision -h 查看
+```
+s remove provision
+s remove provision --qualifier xxx --function-name xxx
+```
 
+## 高级使用
 
 ```
 s fc provision put --qualifier alias --config ./provision.json --target 1
 ```
 
-- 重点1：自动伸缩配置比较复杂，所以新增 --config 指定可以指定一个文件作为配置，文件内容示例如下【[参数参考文档](https://help.aliyun.com/document_detail/191172.html?#h2-url-4)】：
+- 自动伸缩配置比较复杂，所以新增 --config 指定可以指定一个文件作为配置，文件内容示例如下【[参数参考文档](https://help.aliyun.com/document_detail/191172.html?#h2-url-4)】：
 
 ```
 {
@@ -170,4 +182,4 @@ s fc provision put --qualifier alias --config ./provision.json --target 1
   ]
 }
 ```
-- 重点2：--target参数的权重大于--config中的target
+- --target参数的权重大于--config中的target，即如果config的配置文件中和参数指定同时存在target配置，优先使用参数中的target配置

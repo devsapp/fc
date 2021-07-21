@@ -2,7 +2,6 @@
 
 - [快速使用](#快速使用)
   - [简单使用](#简单使用)
-  - [高级使用](#高级使用)
 - [操作所需权限](../Others/authority/command.md#layer-指令)
 
 
@@ -158,24 +157,35 @@ Layer命令为我们提供了一些子命令：
 当我们下载好[Serverless Devs开发者工具](../Getting-started/Install-tutorial.md), 并完成[阿里云密钥配置](../Getting-started/Setting-up-credentials.md)之后，我们可以根据自身的需求进行资源的移除。
 
 ## 简单使用
-
+发布层的版本
 ```
 s layer publish --layer-name testName --code ./src  
 ```
 
-- 重点1: region、layerName、code 必填
-- 重点2: compatibleRuntime 不填写默认值为 nodejs12,nodejs10,nodejs8,nodejs6,python3,python2.7
+- region、layerName、code 必填
+- compatibleRuntime 不填写默认值为 nodejs12,nodejs10,nodejs8,nodejs6,python3,python2.7
 
-
+获取层的配置
 ```
 s layer versionConfig --layer-name name --version 1  
 ```
+- region、layerName、version 必填
 
-- 重点1: region、layerName、version 必填
+查看层的列表
+```
+s layer list
+```
+- region、layerName 必填
 
-
+查看层的版本
 ```
 s layer versions --layer-name name
 ```
+- region、layerName 必填
 
-- 重点1: region、layerName 必填
+删除层
+> 更多参数可以执行 s remove layer -h 查看
+````
+s remove layer --layer-name name
+````
+- 如果指定--version，仅删除指定层的版本；如果不指定则删除指定层的所有版本
