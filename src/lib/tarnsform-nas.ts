@@ -1,17 +1,16 @@
 import * as core from '@serverless-devs/core';
-import { isEmpty, isString } from 'lodash';
+import _, { isEmpty } from 'lodash';
 import { isAutoConfig, genServiceStateID } from './utils';
-import { ICredentials } from './interface/profile';
 
 const HANDlER_NAS_COMMANDS = ['ls', 'cp', 'rm', 'download', 'upload', 'command'];
 
-export default async function toNas(props, nonOptionsArgs, args, access, commandName) {
+export default async function toNas(props, nonOptionsArgs, args, access, commandName, credentials) {
   const {
     vpcConfig,
     nasConfig,
     role,
     name,
-  } = await getServiceConfig(props, access);
+  } = await getServiceConfig(props, access, credentials);
 
   if (!nasConfig) {
     throw new Error('Not fount nasConfig.');
@@ -21,7 +20,7 @@ export default async function toNas(props, nonOptionsArgs, args, access, command
     throw new Error('Not fount vpcConfig.');
   }
 
-  const { vpcId, vswitchIds, securityGroupId } = vpcConfig;
+  const { vpcId, vSwitchIds, securityGroupId } = vpcConfig;
 
   if (!vpcId) {
     throw new Error(`Service ${name} is configured for query to vpc`);
@@ -32,23 +31,29 @@ export default async function toNas(props, nonOptionsArgs, args, access, command
     throw new Error(`Service ${name} is configured for query to nas`);
   }
 
-  const fcDirInput = getFcDirPath(nonOptionsArgs);
+  const { fcDirInput, needAppendNas } = getFcDirPath(nonOptionsArgs, commandName);
   if (HANDlER_NAS_COMMANDS.includes(commandName) && !fcDirInput) {
-    throw new Error(`The path of nas was not found in [${args}]`);
+    throwError(args, commandName, nonOptionsArgs);
   }
-  const { serverAddr, nasDir, tarnsforInputDir } = getMount(mountPoints, fcDirInput);
+  const { serverAddr, nasDir, transformInputDir } = getMount(mountPoints, fcDirInput);
   if (!serverAddr) {
-    core.Logger.warn('FC', 'Not fount serverAddr/nasDir');
+    throw new Error(`There is no nas configuration matching the path [${fcDirInput}]`);
   }
 
+  let tarnsformArgs = args;
+  if (!_.isNil(transformInputDir)) {
+    tarnsformArgs = transfromArgsFunction(args, fcDirInput, needAppendNas ? `nas://${transformInputDir}` : transformInputDir);
+  }
+  core.Logger.debug('FC', `tarnsformArgs: ${tarnsformArgs}`);
+
   return {
-    tarnsformArgs: args.replace(fcDirInput, tarnsforInputDir),
+    tarnsformArgs,
     payload: {
       regionId: props?.region,
       serviceName: `_FC_NAS_${name}`,
       description: `service for fc nas used for service ${name}`,
       vpcId,
-      vSwitchId: vswitchIds[0],
+      vSwitchId: vSwitchIds[0],
       securityGroupId,
       role,
       userId,
@@ -60,47 +65,100 @@ export default async function toNas(props, nonOptionsArgs, args, access, command
   };
 }
 
+function transfromArgsFunction(tarnsformArgs, fcDirInput, transformInputDir) {
+  tarnsformArgs = tarnsformArgs.replace(fcDirInput, transformInputDir);
+  if (tarnsformArgs.includes(fcDirInput)) {
+    return transfromArgsFunction(tarnsformArgs, fcDirInput, transformInputDir);
+  }
+  return tarnsformArgs;
+}
+
+function throwError(args, commandName, nonOptionsArgs) {
+  const example = `\n     Example: \n\t  s nas upload -r -n ./local-path /mnt/nas-path
+\t  s nas download -r /mnt/nas-path ./local-path`;
+
+  if (['upload', 'download'].includes(commandName)) {
+    if (nonOptionsArgs.length < 2) {
+      throw new Error(`It is expected that there needs to be a local path and a remote path, only one path is obtained in [${args}]${example}`);
+    }
+    if (nonOptionsArgs.length > 2) {
+      throw new Error(`It is expected that there needs to be a local path and a remote path, and multiple paths are obtained in [${args}]${example}`);
+    }
+
+    if (nonOptionsArgs.length === 2) {
+      throw new Error(`The nas remote path was not started with /mnt/ or /home/ in [${args}]${example}`);
+    }
+  }
+
+  throw new Error(`The path of nas was not found in [${args}]${example}`);
+}
+
 function getMount(mountPoints, fcDirInput = '') {
-  for (const { serverAddr, nasDir, fcDir } of mountPoints) {
+  for (const mountPointItem of mountPoints) {
+    const { mountDir: fcDir } = mountPointItem;
+    if (_.isNil(mountPointItem.serverAddr) || _.isNil(fcDir)) {
+      throw new Error(`Handling mountPoints exception，mountPoint is ${JSON.stringify(mountPoints)}`);
+    }
+    const [serverAddr, nasDir] = mountPointItem.serverAddr.split(':');
     const suffix = fcDirInput.slice(fcDir.length);
     if (fcDirInput.startsWith(fcDir) && (!suffix || suffix.startsWith('/'))) {
-      const tarnsforInputDir = fcDirInput.replace(fcDir, nasDir);
-      return { serverAddr, nasDir, tarnsforInputDir };
+      const transformInputDir = fcDirInput.replace(fcDir, nasDir);
+      return { serverAddr, nasDir, transformInputDir };
     }
   }
 
   return {};
 }
 
-function getFcDirPath(inputPaths: string[]) {
+function getFcDirPath(inputPaths: string[], commandName) {
   for (const inputPath of inputPaths) {
     if (inputPath.indexOf('nas://') === 0) {
       const fcDirInput = inputPath.slice(6);
       core.Logger.debug('FC', `inputNasPath: ${inputPath}, fcDirInput: ${fcDirInput}`);
-      return fcDirInput;
+      return { fcDirInput, needAppendNas: false };
     }
   }
+
+  // 支持非 nas:// 写法
+  if (commandName === 'upload' && isFcDirStart(inputPaths[1])) {
+    return { fcDirInput: inputPaths[1], needAppendNas: true };
+  } else if (commandName === 'download' && isFcDirStart(inputPaths[0])) {
+    return { fcDirInput: inputPaths[0], needAppendNas: true };
+  } else if (commandName === 'command') {
+    for (const inputPath of inputPaths) {
+      if (isFcDirStart(inputPath)) {
+        return { fcDirInput: inputPath, needAppendNas: false };
+      }
+    }
+  }
+
+  return {};
 }
 
-async function getServiceConfig(props, access) {
+function isFcDirStart(dirInput: string): boolean {
+  return dirInput?.startsWith('/mnt/') || dirInput?.startsWith('/home/');
+}
+
+async function getServiceConfig(props, access, credentials) {
   const { name, vpcConfig, nasConfig, role } = props?.service || {};
-
-  if (isAutoConfig(nasConfig) || isAutoConfig(vpcConfig) || !isString(role)) {
-    const credential: ICredentials = await core.getCredential(access);
-    const stateId = genServiceStateID(credential.AccountID, props?.region, name);
-    const data = (await core.getState(stateId))?.resolvedConfig || {};
-
-    if (isEmpty(data)) {
-      throw new Error('Configuration is not obtained, please execute the [s exec -- deploy] first.');
-    }
-
-    return data;
-  }
-
-  return {
-    vpcConfig,
-    nasConfig,
-    name,
-    role: props?.service?.role,
+  const config = {
+    name, vpcConfig, nasConfig, role,
   };
+
+  if (_.isEmpty(credentials)) {
+    credentials = await core.getCredential(access);
+  }
+  const stateId = genServiceStateID(credentials.AccountID, props?.region, name);
+  const cacheData = (await core.getState(stateId)) || {};
+
+  if (isAutoConfig(vpcConfig) || _.isEmpty(vpcConfig)) {
+    config.vpcConfig = cacheData?.statefulAutoConfig?.vpcConfig || cacheData?.statefulConfig?.vpcConfig;
+  }
+  if (isAutoConfig(nasConfig)) {
+    config.nasConfig = cacheData?.statefulAutoConfig?.nasConfig || cacheData?.statefulConfig?.nasConfig;
+  }
+  if (!_.isString(role)) {
+    config.role = cacheData?.statefulAutoConfig?.role || cacheData?.statefulConfig?.role;
+  }
+  return config;
 }

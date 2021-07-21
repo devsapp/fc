@@ -360,13 +360,16 @@ export default class FcBaseComponent extends BaseComponent {
     }
 
     const tarnsformArgs = args.replace(commandName, '').replace(/(^\s*)|(\s*$)/g, '');
+    if (tarnsformArgs.startsWith('cp ')) {
+      throw new Error('Not supported command cp, please [s nas upload <option>]');
+    }
 
     if (comParse?.data?.help) {
       core.help(NAS_SUB_COMMAND_HELP_INFO[commandName]);
       return;
     }
     nonOptionsArgs.shift();
-    const payload = await tarnsformNas(props, nonOptionsArgs, tarnsformArgs, project?.access, commandName);
+    const payload = await tarnsformNas(props, nonOptionsArgs, tarnsformArgs, project?.access, commandName, inputs.credentials);
     this.logger.debug(`tarnsform nas payload: ${JSON.stringify(payload.payload)}, args: ${payload.tarnsformArgs}, command: ${commandName}`);
 
     await this.componentMethodCaller(inputs, 'devsapp/nas', commandName, payload.payload, payload.tarnsformArgs);
