@@ -1,6 +1,6 @@
 import * as core from '@serverless-devs/core';
 import _, { isEmpty } from 'lodash';
-import { isAutoConfig, genServiceStateID } from './utils';
+import { isAutoConfig, genServiceStateID, getCredentials } from './utils';
 
 const HANDlER_NAS_COMMANDS = ['ls', 'cp', 'rm', 'download', 'upload', 'command'];
 
@@ -145,9 +145,7 @@ async function getServiceConfig(props, access, credentials) {
     name, vpcConfig, nasConfig, role,
   };
 
-  if (_.isEmpty(credentials)) {
-    credentials = await core.getCredential(access);
-  }
+  credentials = await getCredentials(credentials, access);
   const stateId = genServiceStateID(credentials.AccountID, props?.region, name);
   const cacheData = (await core.getState(stateId)) || {};
 

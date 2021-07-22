@@ -2,7 +2,7 @@ import * as core from '@serverless-devs/core';
 import fs from 'fs';
 import logger from '../../common/logger';
 import Client from '../client';
-import { promptForConfirmOrDetails, tableShow } from '../utils';
+import { getCredentials, promptForConfirmOrDetails, tableShow } from '../utils';
 import _ from 'lodash';
 import { ICredentials } from '../interface/profile';
 
@@ -83,7 +83,7 @@ export default class Provision {
       target: parsedData.target,
     };
 
-    const credentials = inputs.credentials || await core.getCredential(inputs.project.access);
+    const credentials: ICredentials = await getCredentials(inputs.credentials, inputs?.project?.access);
     logger.debug(`handler inputs props: ${JSON.stringify(endProps)}`);
 
     return {

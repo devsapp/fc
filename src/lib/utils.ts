@@ -1,10 +1,18 @@
 import { IInputs, IProperties } from './interface/interface';
+import { ICredentials } from './interface/profile';
 import { TriggerConfig } from './interface/fc/trigger';
 import Table from 'tty-table';
 import _ from 'lodash';
 import * as core from '@serverless-devs/core';
 import logger from '../common/logger';
 import inquirer from 'inquirer';
+
+export async function getCredentials(credentials: ICredentials, access: string) {
+  if (_.isEmpty(credentials)) {
+    return await core.getCredential(access);
+  }
+  return credentials;
+}
 
 export async function promptForConfirmOrDetails(message: string): Promise<boolean> {
   const answers: any = await inquirer.prompt([{
