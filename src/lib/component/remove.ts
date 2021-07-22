@@ -43,7 +43,7 @@ interface RemoveAlias {
 interface RemoveVersion {
   region: string;
   serviceName: string;
-  version?: string;
+  versionId?: string;
   assumeYes?: boolean;
 }
 
@@ -55,7 +55,7 @@ interface EndProps {
   functionName?: string;
   qualifier?: string;
   layerName?: string;
-  version?: string;
+  versionId?: string;
   aliasName?: string;
 }
 interface IRemove {
@@ -98,7 +98,7 @@ export default class Remove {
       functionName: parsedData['function-name'] || props.function?.name,
       qualifier: parsedData.qualifier,
       layerName: parsedData['layer-name'],
-      version: parsedData.version,
+      versionId: parsedData['version-id'] || parsedData.id,
       aliasName: parsedData['alias-name'],
     };
 
@@ -158,10 +158,10 @@ export default class Remove {
     return await alias.removeAll({ serviceName, assumeYes });
   }
 
-  async removeVersion(credentials: ICredentials, { region, serviceName, version, assumeYes }: RemoveVersion) {
+  async removeVersion(credentials: ICredentials, { region, serviceName, versionId, assumeYes }: RemoveVersion) {
     const versionClient = new Version({ region, credentials });
-    if (version) {
-      return versionClient.remove({ serviceName, version });
+    if (versionId) {
+      return versionClient.remove({ serviceName, versionId });
     }
     return await versionClient.removeAll({ serviceName, assumeYes });
   }
@@ -174,14 +174,14 @@ export default class Remove {
       serviceName,
       functionName,
       qualifier,
-      version,
+      versionId,
       aliasName,
     } = props;
 
     if (subCommand === 'layer') {
       const componentName = 'devsapp/fc-layer';
       const componentInputs = this.genInputs(inputs, componentName, props);
-      if (version) {
+      if (versionId) {
         return (await core.loadComponent(componentName)).deleteVersion(componentInputs);
       }
       return (await core.loadComponent(componentName)).deleteLayer(componentInputs);
@@ -210,7 +210,7 @@ export default class Remove {
     }
 
     if (subCommand === 'version') {
-      return await this.removeVersion(credentials, { region, serviceName, version, assumeYes });
+      return await this.removeVersion(credentials, { region, serviceName, versionId, assumeYes });
     }
 
     if (!onlyLocal && subCommand === 'service') {

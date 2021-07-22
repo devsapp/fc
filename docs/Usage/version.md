@@ -117,4 +117,4 @@ s version publish
 s remove version
 ```
 - region、serviceName 必填
-- version 选填，如果指定 --version 删除当前服务指定的版本，如果没有指定则删除当前服务所有的版本
+- version 选填，如果指定 --version-id 删除当前服务指定的版本，如果没有指定则删除当前服务所有的版本
