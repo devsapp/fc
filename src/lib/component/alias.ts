@@ -4,7 +4,7 @@ import { ICredentials } from '../interface/profile';
 import _ from 'lodash';
 import Client from '../client';
 import logger from '../../common/logger';
-import { tableShow, promptForConfirmOrDetails } from '../utils';
+import { tableShow, promptForConfirmOrDetails, getCredentials } from '../utils';
 
 interface IProps {
   region?: string;
@@ -91,7 +91,7 @@ export default class Alias {
       throw new Error('Not fount serviceName');
     }
 
-    const credentials: ICredentials = inputs.credentials || await core.getCredential(inputs?.project?.access);
+    const credentials: ICredentials = await getCredentials(inputs.credentials, inputs?.project?.access);
     logger.debug(`handler inputs props: ${JSON.stringify(endProps)}`);
 
     return {

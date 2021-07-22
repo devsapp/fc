@@ -11,6 +11,7 @@ import Alias from './alias';
 import Version from './version';
 import * as HELP from '../help/remove';
 import _ from 'lodash';
+import { getCredentials } from '../utils';
 
 const COMMAND: string[] = [
   'service',
@@ -105,7 +106,7 @@ export default class Remove {
       throw new Error('Not fount region');
     }
 
-    const credentials: ICredentials = inputs.credentials || await core.getCredential(inputs?.project?.access);
+    const credentials: ICredentials = await getCredentials(inputs.credentials, inputs?.project?.access);
     logger.debug(`handler inputs props: ${JSON.stringify(endProps)}`);
 
     return {

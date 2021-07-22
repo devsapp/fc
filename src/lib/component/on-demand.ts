@@ -1,7 +1,7 @@
 import * as core from '@serverless-devs/core';
 import logger from '../../common/logger';
 import Client from '../client';
-import { promptForConfirmOrDetails, tableShow } from '../utils';
+import { getCredentials, promptForConfirmOrDetails, tableShow } from '../utils';
 import _ from 'lodash';
 import { ICredentials } from '../interface/profile';
 
@@ -70,7 +70,7 @@ export default class OnDemand {
       maximumInstanceCount: parsedData['maximum-instance-count'],
     };
 
-    const credentials = inputs.credentials || await core.getCredential(inputs.project.access);
+    const credentials: ICredentials = await getCredentials(inputs.credentials, inputs?.project?.access);
     logger.debug(`handler inputs props: ${JSON.stringify(endProps)}`);
 
     return {
