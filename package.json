@@ -30,7 +30,7 @@
   },
   "scripts": {
     "dev": "npx tsc -w -p tsconfig.json",
-    "prebuild": "rimraf dist",
+    "prebuild": "rm -rf node_modules && rm package-lock.json && npm i && rimraf dist",
     "build": "npm run lint && npm run fix && npm run doc && npx tsc -p tsconfig.json",
     "build:component": "npx webpack --mode=production",
     "publish": "npm run build:component && s platform publish",
