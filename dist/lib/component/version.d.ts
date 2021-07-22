@@ -3,7 +3,7 @@ interface IProps {
     region: string;
     serviceName: string;
     description?: string;
-    version?: string;
+    versionId?: string;
     assumeYes?: boolean;
 }
 interface Publish {
@@ -12,7 +12,7 @@ interface Publish {
 }
 interface Remove {
     serviceName: string;
-    version: string;
+    versionId: string;
 }
 interface RemoveAll {
     serviceName: string;
@@ -60,7 +60,7 @@ export default class Version {
         serviceName: string;
     }, table?: boolean): Promise<any>;
     publish({ serviceName, description }: Publish): Promise<any>;
-    remove({ serviceName, version }: Remove): Promise<void>;
+    remove({ serviceName, versionId }: Remove): Promise<void>;
     removeAll({ serviceName, assumeYes }: RemoveAll): Promise<void>;
     private forDeleteVersion;
 }

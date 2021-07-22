@@ -1,4 +1,6 @@
 import { IInputs, IProperties } from './interface/interface';
+import { ICredentials } from './interface/profile';
+export declare function getCredentials(credentials: ICredentials, access: string): Promise<any>;
 export declare function promptForConfirmOrDetails(message: string): Promise<boolean>;
 export declare function isAutoConfig(config: any): boolean;
 export declare function genServiceStateID(accountID: any, region: any, serviceName: any): string;

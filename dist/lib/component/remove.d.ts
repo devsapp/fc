@@ -15,7 +15,7 @@ interface RemoveAlias {
 interface RemoveVersion {
     region: string;
     serviceName: string;
-    version?: string;
+    versionId?: string;
     assumeYes?: boolean;
 }
 interface EndProps {
@@ -26,7 +26,7 @@ interface EndProps {
     functionName?: string;
     qualifier?: string;
     layerName?: string;
-    version?: string;
+    versionId?: string;
     aliasName?: string;
 }
 interface IRemove {
@@ -67,7 +67,7 @@ export default class Remove {
     removeOnDemand(credentials: ICredentials, { region, qualifier, serviceName, functionName, assumeYes }: RemoveOnDemandOrProvision): Promise<any>;
     removeProvision(credentials: ICredentials, { region, qualifier, serviceName, functionName, assumeYes }: RemoveOnDemandOrProvision): Promise<any>;
     removeAlias(credentials: ICredentials, { region, serviceName, aliasName, assumeYes }: RemoveAlias): Promise<any>;
-    removeVersion(credentials: ICredentials, { region, serviceName, version, assumeYes }: RemoveVersion): Promise<void>;
+    removeVersion(credentials: ICredentials, { region, serviceName, versionId, assumeYes }: RemoveVersion): Promise<void>;
     remove({ props, subCommand, credentials }: IRemove, inputs: any): Promise<any>;
     private genInputs;
 }

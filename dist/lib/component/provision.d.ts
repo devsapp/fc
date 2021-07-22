@@ -54,7 +54,7 @@ export default class Provision {
         props?: undefined;
         table?: undefined;
     } | {
-        credentials: any;
+        credentials: ICredentials;
         subCommand: any;
         props: IProps;
         table: any;

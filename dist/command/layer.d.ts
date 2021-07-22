@@ -76,9 +76,9 @@ export interface LayerListInputsArgs {
  * @after_help
  * {"ref":"GlobalParams"}
  * @example
- * {"header":"Examples with Yaml","content":["$ s layer versionConfig --layer-name name --version 1"]}
+ * {"header":"Examples with Yaml","content":["$ s layer versionConfig --layer-name name --version-id 1"]}
  * @example
- * {"header":"Examples with CLI","content":["$ s cli fc layer versionConfig --region cn-hangzhou --layer-name name --version 1"]}
+ * {"header":"Examples with CLI","content":["$ s cli fc layer versionConfig --region cn-hangzhou --layer-name name --version-id 1"]}
  */
 export interface LayerVersionConfigInputsArgs {
     /**
@@ -92,7 +92,7 @@ export interface LayerVersionConfigInputsArgs {
     /**
      *  Specify the version parameter
      */
-    'version': number;
+    'version-id': number;
 }
 /**
  * s layer deleteVersion <options>\n
@@ -101,9 +101,9 @@ export interface LayerVersionConfigInputsArgs {
  * @after_help
  * {"ref":"GlobalParams"}
  * @example
- * {"header":"Examples with Yaml","content":["$ s layer deleteVersion --layer-name name --version 1"]}
+ * {"header":"Examples with Yaml","content":["$ s layer deleteVersion --layer-name name --version-id 1"]}
  * @example
- * {"header":"Examples with CLI","content":["$ s cli fc layer deleteVersion --region cn-hangzhou --layer-name name --version 1"]}
+ * {"header":"Examples with CLI","content":["$ s cli fc layer deleteVersion --region cn-hangzhou --layer-name name --version-id 1"]}
  */
 export interface LayerDeleteVerisonInputsArgs {
     /**
@@ -117,7 +117,7 @@ export interface LayerDeleteVerisonInputsArgs {
     /**
      *  Specify the version parameter
      */
-    'version': number;
+    'version-id': number;
 }
 /**
  * s layer versions\n

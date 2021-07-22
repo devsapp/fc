@@ -3,7 +3,7 @@ interface IProps {
     region?: string;
     serviceName: string;
     description?: string;
-    version?: string;
+    versionId?: string;
     aliasName?: string;
     gversion?: string;
     weight?: number;
@@ -28,7 +28,7 @@ interface RemoveAliasAll {
 interface Publish {
     serviceName: string;
     aliasName: string;
-    version: string;
+    versionId: string;
     description?: string;
     gversion?: string;
     weight?: number;
@@ -72,7 +72,7 @@ export default class Alias {
         credentials: ICredentials;
     });
     findAlias({ serviceName, aliasName }: FindAlias): Promise<any>;
-    publish({ serviceName, description, aliasName, version, gversion, weight }: Publish): Promise<void>;
+    publish({ serviceName, description, aliasName, versionId, gversion, weight }: Publish): Promise<void>;
     list({ serviceName }: {
         serviceName: string;
     }, table?: boolean): Promise<any>;

@@ -81,10 +81,10 @@
 						<dd><p>{&quot;ref&quot;:&quot;GlobalParams&quot;}</p>
 						</dd>
 						<dt>example</dt>
-						<dd><p>{&quot;header&quot;: &quot;Examples with Yaml&quot;,&quot;content&quot;: [&quot;$ s alias publish --alias-name pre --version 2&quot;,&quot;$ s exec -- alias publish --description xxx --alias-name pre --version 2 --gversion 3 --weight 20&quot;]}</p>
+						<dd><p>{&quot;header&quot;: &quot;Examples with Yaml&quot;,&quot;content&quot;: [&quot;$ s alias publish --alias-name pre --version-id 2&quot;,&quot;$ s exec -- alias publish --description xxx --alias-name pre --version-id 2 --gversion 3 --weight 20&quot;]}</p>
 						</dd>
 						<dt>example</dt>
-						<dd><p>{&quot;header&quot;: &quot;Examples with CLI&quot;,&quot;content&quot;: [&quot;$ s cli fc alias publish --region cn-hangzhou --service-name name --alias-name pre --version 2&quot;]}</p>
+						<dd><p>{&quot;header&quot;: &quot;Examples with CLI&quot;,&quot;content&quot;: [&quot;$ s cli fc alias publish --region cn-hangzhou --service-name name --alias-name pre --version-id 2&quot;]}</p>
 						</dd>
 					</dl>
 				</div>
@@ -109,7 +109,7 @@
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="command_alias.aliaspublishinputsargs.html#gversion" class="tsd-kind-icon">gversion</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="command_alias.aliaspublishinputsargs.html#region" class="tsd-kind-icon">region</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="command_alias.aliaspublishinputsargs.html#service_name" class="tsd-kind-icon">service-<wbr>name</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="command_alias.aliaspublishinputsargs.html#version" class="tsd-kind-icon">version</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="command_alias.aliaspublishinputsargs.html#version_id" class="tsd-kind-icon">version-<wbr>id</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="command_alias.aliaspublishinputsargs.html#weight" class="tsd-kind-icon">weight</a></li>
 							</ul>
 						</section>
@@ -124,7 +124,7 @@
 					<div class="tsd-signature tsd-kind-icon">alias-<wbr>name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/devsapp/fc/blob/498146e/src/command/alias.ts#L88">command/alias.ts:88</a></li>
+							<li>Defined in <a href="https://github.com/devsapp/fc/blob/10578cd/src/command/alias.ts#L88">command/alias.ts:88</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -139,7 +139,7 @@
 					<div class="tsd-signature tsd-kind-icon">description<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/devsapp/fc/blob/498146e/src/command/alias.ts#L96">command/alias.ts:96</a></li>
+							<li>Defined in <a href="https://github.com/devsapp/fc/blob/10578cd/src/command/alias.ts#L96">command/alias.ts:96</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -154,7 +154,7 @@
 					<div class="tsd-signature tsd-kind-icon">gversion<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/devsapp/fc/blob/498146e/src/command/alias.ts#L100">command/alias.ts:100</a></li>
+							<li>Defined in <a href="https://github.com/devsapp/fc/blob/10578cd/src/command/alias.ts#L100">command/alias.ts:100</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -169,7 +169,7 @@
 					<div class="tsd-signature tsd-kind-icon">region<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/devsapp/fc/blob/498146e/src/command/alias.ts#L84">command/alias.ts:84</a></li>
+							<li>Defined in <a href="https://github.com/devsapp/fc/blob/10578cd/src/command/alias.ts#L84">command/alias.ts:84</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -184,7 +184,7 @@
 					<div class="tsd-signature tsd-kind-icon">service-<wbr>name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/devsapp/fc/blob/498146e/src/command/alias.ts#L84">command/alias.ts:84</a></li>
+							<li>Defined in <a href="https://github.com/devsapp/fc/blob/10578cd/src/command/alias.ts#L84">command/alias.ts:84</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -194,12 +194,12 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="version" class="tsd-anchor"></a>
-					<h3>version</h3>
-					<div class="tsd-signature tsd-kind-icon">version<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="version_id" class="tsd-anchor"></a>
+					<h3>version-<wbr>id</h3>
+					<div class="tsd-signature tsd-kind-icon">version-<wbr>id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/devsapp/fc/blob/498146e/src/command/alias.ts#L92">command/alias.ts:92</a></li>
+							<li>Defined in <a href="https://github.com/devsapp/fc/blob/10578cd/src/command/alias.ts#L92">command/alias.ts:92</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -214,7 +214,7 @@
 					<div class="tsd-signature tsd-kind-icon">weight<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/devsapp/fc/blob/498146e/src/command/alias.ts#L104">command/alias.ts:104</a></li>
+							<li>Defined in <a href="https://github.com/devsapp/fc/blob/10578cd/src/command/alias.ts#L104">command/alias.ts:104</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -274,7 +274,7 @@
 								<a href="command_alias.aliaspublishinputsargs.html#service_name" class="tsd-kind-icon">service-<wbr>name</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="command_alias.aliaspublishinputsargs.html#version" class="tsd-kind-icon">version</a>
+								<a href="command_alias.aliaspublishinputsargs.html#version_id" class="tsd-kind-icon">version-<wbr>id</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="command_alias.aliaspublishinputsargs.html#weight" class="tsd-kind-icon">weight</a>

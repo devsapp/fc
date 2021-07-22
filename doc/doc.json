@@ -480,11 +480,11 @@
 							},
 							{
 								"tag": "example",
-								"text": "\n{\"header\": \"Examples with Yaml\",\"content\": [\"$ s alias publish --alias-name pre --version 2\",\"$ s exec -- alias publish --description xxx --alias-name pre --version 2 --gversion 3 --weight 20\"]}"
+								"text": "\n{\"header\": \"Examples with Yaml\",\"content\": [\"$ s alias publish --alias-name pre --version-id 2\",\"$ s exec -- alias publish --description xxx --alias-name pre --version-id 2 --gversion 3 --weight 20\"]}"
 							},
 							{
 								"tag": "example",
-								"text": "\n{\"header\": \"Examples with CLI\",\"content\": [\"$ s cli fc alias publish --region cn-hangzhou --service-name name --alias-name pre --version 2\"]}\n"
+								"text": "\n{\"header\": \"Examples with CLI\",\"content\": [\"$ s cli fc alias publish --region cn-hangzhou --service-name name --alias-name pre --version-id 2\"]}\n"
 							}
 						]
 					},
@@ -523,7 +523,7 @@
 								{
 									"fileName": "command/alias.ts",
 									"line": 96,
-									"character": 20
+									"character": 23
 								}
 							],
 							"type": {
@@ -596,7 +596,7 @@
 						},
 						{
 							"id": 21,
-							"name": "version",
+							"name": "version-id",
 							"kind": 1024,
 							"kindString": "Property",
 							"flags": {},
@@ -1286,11 +1286,11 @@
 							},
 							{
 								"tag": "example",
-								"text": "\n{\"header\":\"Examples with Yaml\",\"content\":[\"$ s layer deleteVersion --layer-name name --version 1\"]}"
+								"text": "\n{\"header\":\"Examples with Yaml\",\"content\":[\"$ s layer deleteVersion --layer-name name --version-id 1\"]}"
 							},
 							{
 								"tag": "example",
-								"text": "\n{\"header\":\"Examples with CLI\",\"content\":[\"$ s cli fc layer deleteVersion --region cn-hangzhou --layer-name name --version 1\"]}\n"
+								"text": "\n{\"header\":\"Examples with CLI\",\"content\":[\"$ s cli fc layer deleteVersion --region cn-hangzhou --layer-name name --version-id 1\"]}\n"
 							}
 						]
 					},
@@ -1339,7 +1339,7 @@
 						},
 						{
 							"id": 73,
-							"name": "version",
+							"name": "version-id",
 							"kind": 1024,
 							"kindString": "Property",
 							"flags": {},
@@ -1690,11 +1690,11 @@
 							},
 							{
 								"tag": "example",
-								"text": "\n{\"header\":\"Examples with Yaml\",\"content\":[\"$ s layer versionConfig --layer-name name --version 1\"]}"
+								"text": "\n{\"header\":\"Examples with Yaml\",\"content\":[\"$ s layer versionConfig --layer-name name --version-id 1\"]}"
 							},
 							{
 								"tag": "example",
-								"text": "\n{\"header\":\"Examples with CLI\",\"content\":[\"$ s cli fc layer versionConfig --region cn-hangzhou --layer-name name --version 1\"]}\n"
+								"text": "\n{\"header\":\"Examples with CLI\",\"content\":[\"$ s cli fc layer versionConfig --region cn-hangzhou --layer-name name --version-id 1\"]}\n"
 							}
 						]
 					},
@@ -1743,7 +1743,7 @@
 						},
 						{
 							"id": 69,
-							"name": "version",
+							"name": "version-id",
 							"kind": 1024,
 							"kindString": "Property",
 							"flags": {},
@@ -5167,11 +5167,11 @@
 							},
 							{
 								"tag": "example",
-								"text": "\n{\"header\": \"Examples with Yaml\",\"content\": [\"$ s version remove --version xxx\"]}"
+								"text": "\n{\"header\": \"Examples with Yaml\",\"content\": [\"$ s version remove --version-id xxx\"]}"
 							},
 							{
 								"tag": "example",
-								"text": "\n{\"header\": \"Examples with CLI\",\"content\": [\"$ s cli fc version remove --region cn-hangzhou --service-name name --version xxx\"]}\n"
+								"text": "\n{\"header\": \"Examples with CLI\",\"content\": [\"$ s cli fc version remove --region cn-hangzhou --service-name name --version-id xxx\"]}\n"
 							}
 						]
 					},
@@ -5220,7 +5220,7 @@
 						},
 						{
 							"id": 220,
-							"name": "version",
+							"name": "version-id",
 							"kind": 1024,
 							"kindString": "Property",
 							"flags": {},
@@ -8158,7 +8158,7 @@
 															"sources": [
 																{
 																	"fileName": "lib/component/alias.ts",
-																	"line": 105,
+																	"line": 104,
 																	"character": 68
 																}
 															],
@@ -8177,7 +8177,7 @@
 															"sources": [
 																{
 																	"fileName": "lib/component/alias.ts",
-																	"line": 105,
+																	"line": 104,
 																	"character": 47
 																}
 															],
@@ -8220,7 +8220,7 @@
 							"sources": [
 								{
 									"fileName": "lib/component/alias.ts",
-									"line": 206,
+									"line": 205,
 									"character": 27
 								}
 							],
@@ -8295,7 +8295,7 @@
 							"sources": [
 								{
 									"fileName": "lib/component/alias.ts",
-									"line": 109,
+									"line": 108,
 									"character": 17
 								}
 							],
@@ -8343,7 +8343,7 @@
 							"sources": [
 								{
 									"fileName": "lib/component/alias.ts",
-									"line": 181,
+									"line": 180,
 									"character": 29
 								}
 							],
@@ -8432,7 +8432,7 @@
 							"sources": [
 								{
 									"fileName": "lib/component/alias.ts",
-									"line": 156,
+									"line": 155,
 									"character": 11
 								}
 							],
@@ -8478,7 +8478,7 @@
 							"sources": [
 								{
 									"fileName": "lib/component/alias.ts",
-									"line": 146,
+									"line": 145,
 									"character": 12
 								}
 							],
@@ -8514,7 +8514,7 @@
 															"sources": [
 																{
 																	"fileName": "lib/component/alias.ts",
-																	"line": 146,
+																	"line": 145,
 																	"character": 43
 																}
 															],
@@ -8572,7 +8572,7 @@
 							"sources": [
 								{
 									"fileName": "lib/component/alias.ts",
-									"line": 119,
+									"line": 118,
 									"character": 15
 								}
 							],
@@ -8618,7 +8618,7 @@
 							"sources": [
 								{
 									"fileName": "lib/component/alias.ts",
-									"line": 161,
+									"line": 160,
 									"character": 14
 								}
 							],
@@ -8664,7 +8664,7 @@
 							"sources": [
 								{
 									"fileName": "lib/component/alias.ts",
-									"line": 166,
+									"line": 165,
 									"character": 17
 								}
 							],
@@ -8712,7 +8712,7 @@
 							"sources": [
 								{
 									"fileName": "lib/component/alias.ts",
-									"line": 187,
+									"line": 186,
 									"character": 19
 								}
 							],
@@ -8786,7 +8786,7 @@
 							"sources": [
 								{
 									"fileName": "lib/component/alias.ts",
-									"line": 201,
+									"line": 200,
 									"character": 27
 								}
 							],
@@ -10768,8 +10768,9 @@
 																	"kindString": "Property",
 																	"flags": {},
 																	"type": {
-																		"type": "intrinsic",
-																		"name": "any"
+																		"type": "reference",
+																		"id": 1705,
+																		"name": "ICredentials"
 																	}
 																},
 																{
@@ -11653,8 +11654,9 @@
 																	"kindString": "Property",
 																	"flags": {},
 																	"type": {
-																		"type": "intrinsic",
-																		"name": "any"
+																		"type": "reference",
+																		"id": 1705,
+																		"name": "ICredentials"
 																	}
 																},
 																{
@@ -11854,7 +11856,7 @@
 															"sources": [
 																{
 																	"fileName": "lib/component/remove.ts",
-																	"line": 120,
+																	"line": 121,
 																	"character": 68
 																}
 															],
@@ -11873,7 +11875,7 @@
 															"sources": [
 																{
 																	"fileName": "lib/component/remove.ts",
-																	"line": 120,
+																	"line": 121,
 																	"character": 47
 																}
 															],
@@ -11916,7 +11918,7 @@
 							"sources": [
 								{
 									"fileName": "lib/component/remove.ts",
-									"line": 227,
+									"line": 228,
 									"character": 19
 								}
 							],
@@ -12110,7 +12112,7 @@
 							"sources": [
 								{
 									"fileName": "lib/component/remove.ts",
-									"line": 168,
+									"line": 169,
 									"character": 14
 								}
 							],
@@ -12167,7 +12169,7 @@
 							"sources": [
 								{
 									"fileName": "lib/component/remove.ts",
-									"line": 150,
+									"line": 151,
 									"character": 19
 								}
 							],
@@ -12225,7 +12227,7 @@
 							"sources": [
 								{
 									"fileName": "lib/component/remove.ts",
-									"line": 124,
+									"line": 125,
 									"character": 22
 								}
 							],
@@ -12283,7 +12285,7 @@
 							"sources": [
 								{
 									"fileName": "lib/component/remove.ts",
-									"line": 137,
+									"line": 138,
 									"character": 23
 								}
 							],
@@ -12341,7 +12343,7 @@
 							"sources": [
 								{
 									"fileName": "lib/component/remove.ts",
-									"line": 160,
+									"line": 161,
 									"character": 21
 								}
 							],
@@ -12401,7 +12403,7 @@
 							"sources": [
 								{
 									"fileName": "lib/component/remove.ts",
-									"line": 67,
+									"line": 68,
 									"character": 28
 								}
 							],
@@ -12793,7 +12795,7 @@
 					"sources": [
 						{
 							"fileName": "lib/component/remove.ts",
-							"line": 66,
+							"line": 67,
 							"character": 27
 						}
 					]
@@ -12868,7 +12870,7 @@
 															"sources": [
 																{
 																	"fileName": "lib/component/version.ts",
-																	"line": 85,
+																	"line": 86,
 																	"character": 68
 																}
 															],
@@ -12887,7 +12889,7 @@
 															"sources": [
 																{
 																	"fileName": "lib/component/version.ts",
-																	"line": 85,
+																	"line": 86,
 																	"character": 47
 																}
 															],
@@ -12930,7 +12932,7 @@
 							"sources": [
 								{
 									"fileName": "lib/component/version.ts",
-									"line": 130,
+									"line": 131,
 									"character": 32
 								}
 							],
@@ -12990,7 +12992,7 @@
 							"sources": [
 								{
 									"fileName": "lib/component/version.ts",
-									"line": 89,
+									"line": 90,
 									"character": 12
 								}
 							],
@@ -13026,7 +13028,7 @@
 															"sources": [
 																{
 																	"fileName": "lib/component/version.ts",
-																	"line": 89,
+																	"line": 90,
 																	"character": 43
 																}
 															],
@@ -13084,7 +13086,7 @@
 							"sources": [
 								{
 									"fileName": "lib/component/version.ts",
-									"line": 99,
+									"line": 100,
 									"character": 15
 								}
 							],
@@ -13130,7 +13132,7 @@
 							"sources": [
 								{
 									"fileName": "lib/component/version.ts",
-									"line": 106,
+									"line": 107,
 									"character": 14
 								}
 							],
@@ -13176,7 +13178,7 @@
 							"sources": [
 								{
 									"fileName": "lib/component/version.ts",
-									"line": 115,
+									"line": 116,
 									"character": 17
 								}
 							],
@@ -13224,7 +13226,7 @@
 							"sources": [
 								{
 									"fileName": "lib/component/version.ts",
-									"line": 28,
+									"line": 29,
 									"character": 28
 								}
 							],
@@ -13724,7 +13726,7 @@
 					"sources": [
 						{
 							"fileName": "lib/component/version.ts",
-							"line": 27,
+							"line": 28,
 							"character": 28
 						}
 					]
@@ -13755,7 +13757,7 @@
 			"flags": {},
 			"children": [
 				{
-					"id": 1814,
+					"id": 1818,
 					"name": "BUILD_HELP_INFO",
 					"kind": 16777216,
 					"kindString": "Reference",
@@ -13763,7 +13765,7 @@
 					"target": 749
 				},
 				{
-					"id": 1815,
+					"id": 1819,
 					"name": "LOCAL_HELP_INFO",
 					"kind": 16777216,
 					"kindString": "Reference",
@@ -13771,7 +13773,7 @@
 					"target": 957
 				},
 				{
-					"id": 1816,
+					"id": 1820,
 					"name": "LOCAL_INVOKE_HELP_INFO",
 					"kind": 16777216,
 					"kindString": "Reference",
@@ -13779,7 +13781,7 @@
 					"target": 967
 				},
 				{
-					"id": 1817,
+					"id": 1821,
 					"name": "LOCAL_START_HELP_INFO",
 					"kind": 16777216,
 					"kindString": "Reference",
@@ -13787,7 +13789,7 @@
 					"target": 1004
 				},
 				{
-					"id": 1818,
+					"id": 1822,
 					"name": "NAS_HELP_INFO",
 					"kind": 16777216,
 					"kindString": "Reference",
@@ -13795,7 +13797,7 @@
 					"target": 1045
 				},
 				{
-					"id": 1819,
+					"id": 1823,
 					"name": "NAS_SUB_COMMAND_HELP_INFO",
 					"kind": 16777216,
 					"kindString": "Reference",
@@ -14188,12 +14190,12 @@
 					"title": "References",
 					"kind": 16777216,
 					"children": [
-						1814,
-						1815,
-						1816,
-						1817,
 						1818,
-						1819
+						1819,
+						1820,
+						1821,
+						1822,
+						1823
 					]
 				},
 				{
@@ -30821,7 +30823,7 @@
 			"flags": {},
 			"children": [
 				{
-					"id": 1802,
+					"id": 1806,
 					"name": "componentMethodCaller",
 					"kind": 64,
 					"kindString": "Function",
@@ -30829,20 +30831,20 @@
 					"sources": [
 						{
 							"fileName": "lib/utils.ts",
-							"line": 77,
+							"line": 85,
 							"character": 43
 						}
 					],
 					"signatures": [
 						{
-							"id": 1803,
+							"id": 1807,
 							"name": "componentMethodCaller",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 1804,
+									"id": 1808,
 									"name": "inputs",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -30854,7 +30856,7 @@
 									}
 								},
 								{
-									"id": 1805,
+									"id": 1809,
 									"name": "componentName",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -30865,7 +30867,7 @@
 									}
 								},
 								{
-									"id": 1806,
+									"id": 1810,
 									"name": "methodName",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -30876,7 +30878,7 @@
 									}
 								},
 								{
-									"id": 1807,
+									"id": 1811,
 									"name": "props",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -30889,7 +30891,7 @@
 									}
 								},
 								{
-									"id": 1808,
+									"id": 1812,
 									"name": "args",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -30902,7 +30904,7 @@
 									}
 								},
 								{
-									"id": 1809,
+									"id": 1813,
 									"name": "argsObj",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -30929,7 +30931,7 @@
 					]
 				},
 				{
-					"id": 1786,
+					"id": 1790,
 					"name": "genServiceStateID",
 					"kind": 64,
 					"kindString": "Function",
@@ -30937,20 +30939,20 @@
 					"sources": [
 						{
 							"fileName": "lib/utils.ts",
-							"line": 24,
+							"line": 32,
 							"character": 33
 						}
 					],
 					"signatures": [
 						{
-							"id": 1787,
+							"id": 1791,
 							"name": "genServiceStateID",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 1788,
+									"id": 1792,
 									"name": "accountID",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -30961,7 +30963,7 @@
 									}
 								},
 								{
-									"id": 1789,
+									"id": 1793,
 									"name": "region",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -30972,7 +30974,7 @@
 									}
 								},
 								{
-									"id": 1790,
+									"id": 1794,
 									"name": "serviceName",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -30991,7 +30993,65 @@
 					]
 				},
 				{
-					"id": 1791,
+					"id": 1780,
+					"name": "getCredentials",
+					"kind": 64,
+					"kindString": "Function",
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "lib/utils.ts",
+							"line": 10,
+							"character": 36
+						}
+					],
+					"signatures": [
+						{
+							"id": 1781,
+							"name": "getCredentials",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 1782,
+									"name": "credentials",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "reference",
+										"id": 1705,
+										"name": "ICredentials"
+									}
+								},
+								{
+									"id": 1783,
+									"name": "access",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								}
+							],
+							"type": {
+								"type": "reference",
+								"typeArguments": [
+									{
+										"type": "intrinsic",
+										"name": "any"
+									}
+								],
+								"name": "Promise"
+							}
+						}
+					]
+				},
+				{
+					"id": 1795,
 					"name": "getFcNames",
 					"kind": 64,
 					"kindString": "Function",
@@ -30999,20 +31059,20 @@
 					"sources": [
 						{
 							"fileName": "lib/utils.ts",
-							"line": 28,
+							"line": 36,
 							"character": 26
 						}
 					],
 					"signatures": [
 						{
-							"id": 1792,
+							"id": 1796,
 							"name": "getFcNames",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 1793,
+									"id": 1797,
 									"name": "argsParse",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -31023,7 +31083,7 @@
 									}
 								},
 								{
-									"id": 1794,
+									"id": 1798,
 									"name": "inputsProps",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -31037,14 +31097,14 @@
 							"type": {
 								"type": "reflection",
 								"declaration": {
-									"id": 1795,
+									"id": 1799,
 									"name": "__type",
 									"kind": 65536,
 									"kindString": "Type literal",
 									"flags": {},
 									"children": [
 										{
-											"id": 1798,
+											"id": 1802,
 											"name": "functionName",
 											"kind": 1024,
 											"kindString": "Property",
@@ -31056,7 +31116,7 @@
 											"defaultValue": "..."
 										},
 										{
-											"id": 1796,
+											"id": 1800,
 											"name": "region",
 											"kind": 1024,
 											"kindString": "Property",
@@ -31068,7 +31128,7 @@
 											"defaultValue": "..."
 										},
 										{
-											"id": 1797,
+											"id": 1801,
 											"name": "serviceName",
 											"kind": 1024,
 											"kindString": "Property",
@@ -31085,9 +31145,9 @@
 											"title": "Properties",
 											"kind": 1024,
 											"children": [
-												1798,
-												1796,
-												1797
+												1802,
+												1800,
+												1801
 											]
 										}
 									]
@@ -31097,7 +31157,7 @@
 					]
 				},
 				{
-					"id": 1783,
+					"id": 1787,
 					"name": "isAutoConfig",
 					"kind": 64,
 					"kindString": "Function",
@@ -31105,20 +31165,20 @@
 					"sources": [
 						{
 							"fileName": "lib/utils.ts",
-							"line": 20,
+							"line": 28,
 							"character": 28
 						}
 					],
 					"signatures": [
 						{
-							"id": 1784,
+							"id": 1788,
 							"name": "isAutoConfig",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 1785,
+									"id": 1789,
 									"name": "config",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -31137,7 +31197,7 @@
 					]
 				},
 				{
-					"id": 1799,
+					"id": 1803,
 					"name": "isHttpFunction",
 					"kind": 64,
 					"kindString": "Function",
@@ -31145,20 +31205,20 @@
 					"sources": [
 						{
 							"fileName": "lib/utils.ts",
-							"line": 44,
+							"line": 52,
 							"character": 30
 						}
 					],
 					"signatures": [
 						{
-							"id": 1800,
+							"id": 1804,
 							"name": "isHttpFunction",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 1801,
+									"id": 1805,
 									"name": "props",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -31178,7 +31238,7 @@
 					]
 				},
 				{
-					"id": 1780,
+					"id": 1784,
 					"name": "promptForConfirmOrDetails",
 					"kind": 64,
 					"kindString": "Function",
@@ -31186,20 +31246,20 @@
 					"sources": [
 						{
 							"fileName": "lib/utils.ts",
-							"line": 9,
+							"line": 17,
 							"character": 47
 						}
 					],
 					"signatures": [
 						{
-							"id": 1781,
+							"id": 1785,
 							"name": "promptForConfirmOrDetails",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 1782,
+									"id": 1786,
 									"name": "message",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -31224,7 +31284,7 @@
 					]
 				},
 				{
-					"id": 1810,
+					"id": 1814,
 					"name": "tableShow",
 					"kind": 64,
 					"kindString": "Function",
@@ -31234,20 +31294,20 @@
 					"sources": [
 						{
 							"fileName": "lib/utils.ts",
-							"line": 53,
+							"line": 61,
 							"character": 22
 						}
 					],
 					"signatures": [
 						{
-							"id": 1811,
+							"id": 1815,
 							"name": "tableShow",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 1812,
+									"id": 1816,
 									"name": "data",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -31258,7 +31318,7 @@
 									}
 								},
 								{
-									"id": 1813,
+									"id": 1817,
 									"name": "showKey",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -31282,13 +31342,14 @@
 					"title": "Functions",
 					"kind": 64,
 					"children": [
-						1802,
-						1786,
-						1791,
-						1783,
-						1799,
+						1806,
+						1790,
 						1780,
-						1810
+						1795,
+						1787,
+						1803,
+						1784,
+						1814
 					]
 				}
 			],
