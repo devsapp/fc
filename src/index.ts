@@ -463,6 +463,7 @@ export default class FcBaseComponent extends BaseComponent {
       fcStressArgs = fcStress.makeCleanArgs(argsData['assume-yes']);
     }
     this.logger.debug(`Input args of fc-stress component is: ${fcStressArgs}`);
+    delete inputs.argsObj;
     return await this.componentMethodCaller(inputs, 'devsapp/fc-stress', commandName, null, fcStressArgs);
   }
 
