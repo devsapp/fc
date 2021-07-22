@@ -73,9 +73,9 @@ export interface AliasListInputsArgs {
  * @after_help
  * {"ref":"GlobalParams"}
  * @example
- * {"header": "Examples with Yaml","content": ["$ s alias publish --alias-name pre --version 2","$ s exec -- alias publish --description xxx --alias-name pre --version 2 --gversion 3 --weight 20"]}
+ * {"header": "Examples with Yaml","content": ["$ s alias publish --alias-name pre --version-id 2","$ s exec -- alias publish --description xxx --alias-name pre --version-id 2 --gversion 3 --weight 20"]}
  * @example
- * {"header": "Examples with CLI","content": ["$ s cli fc alias publish --region cn-hangzhou --service-name name --alias-name pre --version 2"]}
+ * {"header": "Examples with CLI","content": ["$ s cli fc alias publish --region cn-hangzhou --service-name name --alias-name pre --version-id 2"]}
  */
 export interface AliasPublishInputsArgs {
   /**
@@ -93,7 +93,7 @@ export interface AliasPublishInputsArgs {
   /**
     *  Specify the version parameter
     */
-  'version': string;
+  'version-id': string;
   /**
     *  Specify the description parameter
     */

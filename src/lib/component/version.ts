@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 import * as core from '@serverless-devs/core';
 import { ICredentials } from '../interface/profile';
 import Client from '../client';
@@ -9,11 +10,11 @@ interface IProps {
   region: string;
   serviceName: string;
   description?: string;
-  version?: string;
+  versionId?: string;
   assumeYes?: boolean;
 }
 interface Publish { serviceName: string; description?: string }
-interface Remove { serviceName: string; version: string }
+interface Remove { serviceName: string; versionId: string }
 interface RemoveAll { serviceName: string; assumeYes?: boolean }
 
 const VERSION_COMMAND: string[] = ['list', 'publish', 'remove', 'removeAll'];
@@ -31,7 +32,7 @@ export default class Version {
     const parsedArgs: {[key: string]: any} = core.commandParse(inputs, {
       boolean: ['help', 'table', 'y'],
       string: ['region', 'service-name', 'description', 'id'],
-      alias: { help: 'h', version: 'id', 'assume-yes': 'y' },
+      alias: { help: 'h', 'version-id': 'id', 'assume-yes': 'y' },
     });
 
     const parsedData = parsedArgs?.data || {};
@@ -60,7 +61,7 @@ export default class Version {
       region: parsedData.region || props.region,
       serviceName: parsedData['service-name'] || props.service?.name,
       description: parsedData.description,
-      version: parsedData.id,
+      versionId: parsedData.id,
       assumeYes: parsedData.y,
     };
 
@@ -68,7 +69,7 @@ export default class Version {
       throw new Error('Not fount region');
     }
     if (!endProps.serviceName) {
-      throw new Error('Not fount serviceName');
+      throw new Error('Not fount service name');
     }
 
     const credentials: ICredentials = await getCredentials(inputs.credentials, inputs?.project?.access);
@@ -103,12 +104,12 @@ export default class Version {
     return data;
   }
 
-  async remove({ serviceName, version }: Remove) {
-    if (!version) {
+  async remove({ serviceName, versionId }: Remove) {
+    if (!versionId) {
       throw new Error('Not fount version');
     }
-    logger.info(`Removing service version: ${serviceName}.${version}`);
-    const res = await Client.fcClient.deleteVersion(serviceName, version);
+    logger.info(`Removing service version: ${serviceName}.${versionId}`);
+    const res = await Client.fcClient.deleteVersion(serviceName, versionId);
     logger.debug(`delete version: ${JSON.stringify(res)}`);
   }
 
@@ -129,7 +130,7 @@ export default class Version {
 
   private async forDeleteVersion(serviceName: string, listData: any[]) {
     for (const { versionId } of listData) {
-      await this.remove({ serviceName, version: versionId });
+      await this.remove({ serviceName, versionId });
     }
   }
 }

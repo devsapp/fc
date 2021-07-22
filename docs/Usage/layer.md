@@ -105,7 +105,7 @@ Layer命令为我们提供了一些子命令：
 
       --region string       Specify the region parameter     
       --layer-name string   Specify the layer name parameter 
-      --version number      Specify the version parameter    
+      --version-id number      Specify the version parameter    
 
     Global Options
 
@@ -114,13 +114,13 @@ Layer命令为我们提供了一些子命令：
 
     Examples with Yaml
 
-      $ s layer versionConfig --layer-name name --version 1         
-      $ s exec -- layer versionConfig --layer-name name --version 1 
+      $ s layer versionConfig --layer-name name --version-id 1         
+      $ s exec -- layer versionConfig --layer-name name --version-id 1 
 
     Examples with CLI
 
       $ s cli fc layer versionConfig --region cn-hangzhou --layer-name name         
-      --version 1 
+      --version-id 1 
     ```
 - versions: 获取指定层的所有版本信息，可以通过`s layer versions -h`获取帮助文档
     ```
@@ -167,7 +167,7 @@ s layer publish --layer-name testName --code ./src
 
 获取层的配置
 ```
-s layer versionConfig --layer-name name --version 1  
+s layer versionConfig --layer-name name --version-id 1  
 ```
 - region、layerName、version 必填
 

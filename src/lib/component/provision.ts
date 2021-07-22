@@ -100,13 +100,13 @@ export default class Provision {
 
   async get({ serviceName, qualifier, functionName }: GetProvision) {
     if (!functionName) {
-      throw new Error('Not fount functionName');
+      throw new Error('Not fount function name');
     }
     if (!qualifier) {
       throw new Error('Not fount qualifier');
     }
     if (!serviceName) {
-      throw new Error('Not fount serviceName');
+      throw new Error('Not fount service name');
     }
     logger.info(`Getting provision: ${serviceName}.${qualifier}/${functionName}`);
     const { data } = await Client.fcClient.getProvisionConfig(serviceName, functionName, qualifier);
@@ -122,13 +122,13 @@ export default class Provision {
 
   async put({ serviceName, qualifier, functionName, config, target }: PutProvision) {
     if (!functionName) {
-      throw new Error('Not fount functionName parameter');
+      throw new Error('Not fount function name parameter');
     }
     if (!qualifier) {
       throw new Error('Not fount qualifier parameter');
     }
     if (!serviceName) {
-      throw new Error('Not fount serviceName parameter');
+      throw new Error('Not fount service name parameter');
     }
     if (!config && typeof target !== 'number') {
       throw new Error('config and target must fill in one');

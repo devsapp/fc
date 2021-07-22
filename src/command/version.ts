@@ -71,9 +71,9 @@ export interface VersionPublishInputsArgs {
  * @after_help
  * {"ref":"GlobalParams"}
  * @example
- * {"header": "Examples with Yaml","content": ["$ s version remove --version xxx"]}
+ * {"header": "Examples with Yaml","content": ["$ s version remove --version-id xxx"]}
  * @example
- * {"header": "Examples with CLI","content": ["$ s cli fc version remove --region cn-hangzhou --service-name name --version xxx"]}
+ * {"header": "Examples with CLI","content": ["$ s cli fc version remove --region cn-hangzhou --service-name name --version-id xxx"]}
  */
 export interface VersionDeleteInputsArgs {
   /**
@@ -87,7 +87,7 @@ export interface VersionDeleteInputsArgs {
   /**
     *  Specify the version parameter
     */
-  'version': string;
+  'version-id': string;
 }
 
 /**

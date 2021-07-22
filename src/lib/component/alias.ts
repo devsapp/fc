@@ -10,7 +10,7 @@ interface IProps {
   region?: string;
   serviceName: string;
   description?: string;
-  version?: string;
+  versionId?: string;
   aliasName?: string;
   gversion?: string;
   weight?: number;
@@ -25,7 +25,7 @@ interface RemoveAliasAll { serviceName: string; assumeYes?: boolean }
 interface Publish {
   serviceName: string;
   aliasName: string;
-  version: string;
+  versionId: string;
   description?: string;
   gversion?: string;
   weight?: number;
@@ -48,9 +48,8 @@ export default class Alias {
       boolean: ['help', 'table', 'y'],
       string: ['region', 'service-name', 'description', 'alias-name', 'id', 'gversion'],
       number: ['weight'],
-      alias: { help: 'h', version: 'id', 'assume-yes': 'y' },
+      alias: { help: 'h', 'version-id': 'id', 'assume-yes': 'y' },
     });
-
     const parsedData = parsedArgs?.data || {};
     const rawData = parsedData._ || [];
     if (!rawData.length) {
@@ -77,7 +76,7 @@ export default class Alias {
       region: parsedData.region || props.region,
       serviceName: parsedData['service-name'] || props.service?.name,
       description: parsedData.description,
-      version: parsedData.id,
+      versionId: parsedData.id,
       assumeYes: parsedData.y,
       aliasName: parsedData['alias-name'],
       gversion: parsedData.gversion,
@@ -88,7 +87,7 @@ export default class Alias {
       throw new Error('Not fount region');
     }
     if (!endProps.serviceName) {
-      throw new Error('Not fount serviceName');
+      throw new Error('Not fount service name');
     }
 
     const credentials: ICredentials = await getCredentials(inputs.credentials, inputs?.project?.access);
@@ -116,9 +115,9 @@ export default class Alias {
     return false;
   }
 
-  async publish({ serviceName, description, aliasName, version, gversion, weight }: Publish) {
-    if (!version) {
-      throw new Error('Not fount versionId');
+  async publish({ serviceName, description, aliasName, versionId, gversion, weight }: Publish) {
+    if (!versionId) {
+      throw new Error('Not fount version id');
     }
     const hasWeight = typeof weight === 'number';
     if (hasWeight && !gversion) {
@@ -137,9 +136,9 @@ export default class Alias {
 
     const aliasConfig = await this.findAlias({ serviceName, aliasName });
     if (aliasConfig) {
-      return await this.updateAlias({ aliasName, serviceName, version, parames });
+      return await this.updateAlias({ aliasName, serviceName, versionId, parames });
     } else {
-      return await this.createAlias({ aliasName, serviceName, version, parames });
+      return await this.createAlias({ aliasName, serviceName, versionId, parames });
     }
   }
 
@@ -198,13 +197,13 @@ export default class Alias {
     tableShow(data, ['aliasName', 'versionId', 'description', 'createdTime', 'lastModifiedTime', showWeight]);
   }
 
-  private async updateAlias({ aliasName, serviceName, version, parames }: {[key: string]: any}) {
+  private async updateAlias({ aliasName, serviceName, versionId, parames }: {[key: string]: any}) {
     logger.info(`Updating alias: ${aliasName}`);
-    await Client.fcClient.updateAlias(serviceName, aliasName, version, parames);
+    await Client.fcClient.updateAlias(serviceName, aliasName, versionId, parames);
   }
 
-  private async createAlias({ aliasName, serviceName, version, parames }: {[key: string]: any}) {
+  private async createAlias({ aliasName, serviceName, versionId, parames }: {[key: string]: any}) {
     logger.info(`Creating alias: ${aliasName}`);
-    await Client.fcClient.createAlias(serviceName, aliasName, version, parames);
+    await Client.fcClient.createAlias(serviceName, aliasName, versionId, parames);
   }
 }

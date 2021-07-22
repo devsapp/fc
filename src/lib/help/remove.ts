@@ -282,7 +282,7 @@ export const REMOVE_VERSION = [
     header: 'Examples with Yaml',
     content: [
       '$ s remove version',
-      '$ s remove version --version xxx',
+      '$ s remove version --version-id xxx',
     ],
   },
 ];
@@ -480,7 +480,7 @@ export const REMOVE_LAYER = [
     header: 'Examples with Yaml',
     content: [
       '$ s remove layer --layer-name xxx',
-      '$ s remove layer --layer-name xxx --version xxx',
+      '$ s remove layer --layer-name xxx --version-id xxx',
     ],
   },
 ];
