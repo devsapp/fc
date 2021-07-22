@@ -99,7 +99,7 @@ export interface LayerVersionConfigInputsArgs {
   /**
    *  Specify the version parameter
    */
-  'version': number;
+  'version-id': number;
 }
 
 /**
@@ -125,7 +125,7 @@ export interface LayerDeleteVerisonInputsArgs {
   /**
    *  Specify the version parameter
    */
-  'version': number;
+  'version-id': number;
 }
 
 /**

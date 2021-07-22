@@ -87,7 +87,7 @@ export interface VersionDeleteInputsArgs {
   /**
     *  Specify the version parameter
     */
-  'version': string;
+  'version-id': string;
 }
 
 /**

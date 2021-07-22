@@ -93,7 +93,7 @@ export interface AliasPublishInputsArgs {
   /**
     *  Specify the version parameter
     */
-  'version': string;
+  'version-id': string;
   /**
     *  Specify the description parameter
     */
