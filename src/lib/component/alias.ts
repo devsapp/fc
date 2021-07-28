@@ -2,9 +2,11 @@
 import * as core from '@serverless-devs/core';
 import { ICredentials } from '../interface/profile';
 import _ from 'lodash';
+import Version from './version';
 import Client from '../client';
 import logger from '../../common/logger';
 import { tableShow, promptForConfirmOrDetails, getCredentials } from '../utils';
+import inquirer from 'inquirer';
 
 interface IProps {
   region?: string;
@@ -100,8 +102,12 @@ export default class Alias {
       table: parsedData.table,
     };
   }
+  region: string;
+  credentials: ICredentials;
 
   constructor({ region, credentials }: { region: string; credentials: ICredentials }) {
+    this.region = region;
+    this.credentials = credentials;
     Client.setFcClient(region, credentials);
   }
 
@@ -116,9 +122,6 @@ export default class Alias {
   }
 
   async publish({ serviceName, description, aliasName, versionId, gversion, weight }: Publish) {
-    if (!versionId) {
-      throw new Error('Not fount version id');
-    }
     const hasWeight = typeof weight === 'number';
     if (hasWeight && !gversion) {
       throw new Error('weight exists, gversion is required');
@@ -132,6 +135,27 @@ export default class Alias {
     };
     if (hasWeight) {
       parames.additionalVersionWeight = { [gversion]: weight / 100 };
+    }
+
+    if (!/^[_a-zA-Z][-_a-zA-Z0-9]*$/.test(aliasName)) {
+      throw new Error(`AliasName doesn't match expected format (allowed: ^[_a-zA-Z][-_a-zA-Z0-9]*$, actual: '${aliasName}')`);
+    }
+    if (!versionId) {
+      const versionClient = new Version({ region: this.region, credentials: this.credentials });
+      const versionList = await versionClient.list({ serviceName });
+      if (versionList.length === 0) {
+        throw new Error('Not fount version.Please use [s version publish --description xxx] to publish the version');
+      } else if (versionList.length === 1) {
+        versionId = versionList[0].versionId;
+      } else {
+        const answers: any = await inquirer.prompt([{
+          type: 'list',
+          name: 'versionId',
+          message: 'Please select the version pointed to by the alias, and display the latest 20 versions. If you want to see more, please execute [s version list --table]',
+          choices: versionList.slice(0, 20).map((item) => item.versionId),
+        }]);
+        versionId = answers.versionId;
+      }
     }
 
     const aliasConfig = await this.findAlias({ serviceName, aliasName });
@@ -166,7 +190,7 @@ export default class Alias {
     const aliasList = await this.list({ serviceName });
 
     if (!_.isEmpty(aliasList)) {
-      const meg = `Alias configuration exists under service ${serviceName}, whether to delete all alias resources`;
+      const meg = `Alias configuration exists under service ${serviceName}, whether to delete all alias resources.To delete only a single configuration, execute [s remove alias --alias-name xxx]`;
       if (assumeYes) {
         return await this.forDataDelete(serviceName, aliasList);
       }

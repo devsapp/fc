@@ -179,7 +179,7 @@ export default class OnDemand {
       }
 
       tableShow(onDemandList, TABLE);
-      const meg = `On-demand configuration exists under service ${serviceName}, whether to delete all On-demand resources`;
+      const meg = `On-demand configuration exists under service ${serviceName}, whether to delete all On-demand resources.To delete only a single configuration, execute [s remove onDemand --qualifier xxx --function-name xxx]`;
       if (await promptForConfirmOrDetails(meg)) {
         return await this.forDelete(onDemandList);
       }
