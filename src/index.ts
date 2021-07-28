@@ -132,10 +132,9 @@ export default class FcBaseComponent extends BaseComponent {
       return;
     }
 
-    return await new Remove({ region: props.region, credentials }).remove({
+    return await new Remove().remove({
       props,
       subCommand,
-      credentials,
     }, this.handlerInputs(inputs));
   }
 
@@ -487,7 +486,7 @@ export default class FcBaseComponent extends BaseComponent {
       return;
     }
 
-    const qualifier = new Version({ region: props.region, credentials });
+    const qualifier = new Version();
     return await qualifier[subCommand](props, table);
   }
 
@@ -511,7 +510,7 @@ export default class FcBaseComponent extends BaseComponent {
       return;
     }
 
-    const qualifier = new Alias({ region: props.region, credentials });
+    const qualifier = new Alias();
     return await qualifier[subCommand](props, table);
   }
 
@@ -535,7 +534,7 @@ export default class FcBaseComponent extends BaseComponent {
       return;
     }
 
-    const provision = new Provision({ region: props.region, credentials });
+    const provision = new Provision();
     return await provision[subCommand](props, table);
   }
 
@@ -559,7 +558,7 @@ export default class FcBaseComponent extends BaseComponent {
       return;
     }
 
-    const onDemand = new OnDemand({ region: props.region, credentials });
+    const onDemand = new OnDemand();
     return await onDemand[subCommand](props, table);
   }
 

@@ -94,6 +94,7 @@ export default class Alias {
 
     const credentials: ICredentials = await getCredentials(inputs.credentials, inputs?.project?.access);
     logger.debug(`handler inputs props: ${JSON.stringify(endProps)}`);
+    await Client.setFcClient(endProps.region, credentials);
 
     return {
       credentials,
@@ -104,12 +105,6 @@ export default class Alias {
   }
   region: string;
   credentials: ICredentials;
-
-  constructor({ region, credentials }: { region: string; credentials: ICredentials }) {
-    this.region = region;
-    this.credentials = credentials;
-    Client.setFcClient(region, credentials);
-  }
 
   async findAlias({ serviceName, aliasName }: FindAlias) {
     const aliasList = await this.list({ serviceName });

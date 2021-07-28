@@ -61,7 +61,6 @@ interface EndProps {
 interface IRemove {
   props: EndProps;
   subCommand?: 'layer' | 'domain' | 'onDemand' | 'provision' | 'alias' | 'version' | 'service' | 'function' | 'trigger';
-  credentials: ICredentials;
 }
 
 export default class Remove {
@@ -108,6 +107,7 @@ export default class Remove {
 
     const credentials: ICredentials = await getCredentials(inputs.credentials, inputs?.project?.access);
     logger.debug(`handler inputs props: ${JSON.stringify(endProps)}`);
+    await Client.setFcClient(endProps.region, credentials);
 
     return {
       credentials,
@@ -118,16 +118,13 @@ export default class Remove {
     };
   }
 
-  constructor({ region, credentials }: { region: string; credentials: ICredentials }) {
-    Client.setFcClient(region, credentials);
-  }
-
-  async removeOnDemand(credentials: ICredentials, { region, qualifier, serviceName, functionName, assumeYes }: RemoveOnDemandOrProvision) {
+  async removeOnDemand({ region, qualifier, serviceName, functionName, assumeYes }: RemoveOnDemandOrProvision) {
+    logger.debug(`region is ${region}`);
     if (!_.isEmpty(qualifier) && _.isEmpty(functionName)) {
       throw new Error('not fount functionName');
     }
 
-    const onDemand = new OnDemand({ region, credentials });
+    const onDemand = new OnDemand();
     if (!_.isEmpty(qualifier)) {
       return await onDemand.remove({ qualifier, serviceName, functionName });
     }
@@ -135,12 +132,13 @@ export default class Remove {
     await onDemand.removeAll({ serviceName, qualifier, assumeYes });
   }
 
-  async removeProvision(credentials: ICredentials, { region, qualifier, serviceName, functionName, assumeYes }: RemoveOnDemandOrProvision) {
+  async removeProvision({ region, qualifier, serviceName, functionName, assumeYes }: RemoveOnDemandOrProvision) {
+    logger.debug(`region is ${region}`);
     if (!_.isEmpty(qualifier) && _.isEmpty(functionName)) {
       throw new Error('not fount functionName');
     }
 
-    const provision = new Provision({ region, credentials });
+    const provision = new Provision();
     if (!_.isEmpty(qualifier)) {
       return await provision.put({ qualifier, serviceName, functionName, target: 0 });
     }
@@ -148,8 +146,9 @@ export default class Remove {
     await provision.removeAll({ serviceName, qualifier, assumeYes });
   }
 
-  async removeAlias(credentials: ICredentials, { region, serviceName, aliasName, assumeYes }: RemoveAlias) {
-    const alias = new Alias({ region, credentials });
+  async removeAlias({ region, serviceName, aliasName, assumeYes }: RemoveAlias) {
+    logger.debug(`region is ${region}`);
+    const alias = new Alias();
 
     if (aliasName) {
       return alias.remove({ serviceName, aliasName });
@@ -158,15 +157,16 @@ export default class Remove {
     return await alias.removeAll({ serviceName, assumeYes });
   }
 
-  async removeVersion(credentials: ICredentials, { region, serviceName, versionId, assumeYes }: RemoveVersion) {
-    const versionClient = new Version({ region, credentials });
+  async removeVersion({ region, serviceName, versionId, assumeYes }: RemoveVersion) {
+    logger.debug(`region is ${region}`);
+    const versionClient = new Version();
     if (versionId) {
       return versionClient.remove({ serviceName, versionId });
     }
     return await versionClient.removeAll({ serviceName, assumeYes });
   }
 
-  async remove({ props, subCommand, credentials }: IRemove, inputs) {
+  async remove({ props, subCommand }: IRemove, inputs) {
     const {
       region,
       assumeYes,
@@ -198,26 +198,26 @@ export default class Remove {
     }
 
     if (subCommand === 'onDemand') {
-      return await this.removeOnDemand(credentials, { region, qualifier, serviceName, functionName, assumeYes });
+      return await this.removeOnDemand({ region, qualifier, serviceName, functionName, assumeYes });
     }
 
     if (subCommand === 'provision') {
-      return await this.removeProvision(credentials, { region, qualifier, serviceName, functionName, assumeYes });
+      return await this.removeProvision({ region, qualifier, serviceName, functionName, assumeYes });
     }
 
     if (subCommand === 'alias') {
-      return await this.removeAlias(credentials, { region, serviceName, aliasName, assumeYes });
+      return await this.removeAlias({ region, serviceName, aliasName, assumeYes });
     }
 
     if (subCommand === 'version') {
-      return await this.removeVersion(credentials, { region, serviceName, versionId, assumeYes });
+      return await this.removeVersion({ region, serviceName, versionId, assumeYes });
     }
 
     if (!onlyLocal && subCommand === 'service') {
-      await this.removeOnDemand(credentials, { region, serviceName, assumeYes });
-      await this.removeProvision(credentials, { region, serviceName, assumeYes });
-      await this.removeAlias(credentials, { region, serviceName, assumeYes });
-      await this.removeVersion(credentials, { region, serviceName, assumeYes });
+      await this.removeOnDemand({ region, serviceName, assumeYes });
+      await this.removeProvision({ region, serviceName, assumeYes });
+      await this.removeAlias({ region, serviceName, assumeYes });
+      await this.removeVersion({ region, serviceName, assumeYes });
     }
 
     const componentName = 'devsapp/fc-deploy';
