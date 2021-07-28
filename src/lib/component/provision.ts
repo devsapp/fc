@@ -187,7 +187,7 @@ export default class Provision {
       }
 
       tableShow(provisionList, TABLE);
-      const meg = `Provision configuration exists under service ${serviceName}, whether to delete all provision resources`;
+      const meg = `Provision configuration exists under service ${serviceName}, whether to delete all provision resources. To delete only a single configuration, execute [s remove provision --qualifier xxx --function-name xxx]`;
       if (await promptForConfirmOrDetails(meg)) {
         return await this.forDelete(provisionList);
       }

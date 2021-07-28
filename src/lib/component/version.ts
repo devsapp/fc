@@ -121,7 +121,7 @@ export default class Version {
 
     if (!_.isEmpty(listData)) {
       tableShow(listData, ['versionId', 'description', 'createdTime', 'lastModifiedTime']);
-      const meg = `Version configuration exists under service ${serviceName}, whether to delete all version resources`;
+      const meg = `Version configuration exists under service ${serviceName}, whether to delete all version resources.To delete only a single configuration, execute [s remove version --version-id xxx]`;
       if (await promptForConfirmOrDetails(meg)) {
         return await this.forDeleteVersion(serviceName, listData);
       }

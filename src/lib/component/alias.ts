@@ -190,7 +190,7 @@ export default class Alias {
     const aliasList = await this.list({ serviceName });
 
     if (!_.isEmpty(aliasList)) {
-      const meg = `Alias configuration exists under service ${serviceName}, whether to delete all alias resources`;
+      const meg = `Alias configuration exists under service ${serviceName}, whether to delete all alias resources.To delete only a single configuration, execute [s remove alias --alias-name xxx]`;
       if (assumeYes) {
         return await this.forDataDelete(serviceName, aliasList);
       }
