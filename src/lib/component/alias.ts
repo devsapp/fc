@@ -94,6 +94,7 @@ export default class Alias {
 
     const credentials: ICredentials = await getCredentials(inputs.credentials, inputs?.project?.access);
     logger.debug(`handler inputs props: ${JSON.stringify(endProps)}`);
+    await Client.setFcClient(endProps.region, credentials);
 
     return {
       credentials,
@@ -104,12 +105,6 @@ export default class Alias {
   }
   region: string;
   credentials: ICredentials;
-
-  constructor({ region, credentials }: { region: string; credentials: ICredentials }) {
-    this.region = region;
-    this.credentials = credentials;
-    Client.setFcClient(region, credentials);
-  }
 
   async findAlias({ serviceName, aliasName }: FindAlias) {
     const aliasList = await this.list({ serviceName });
@@ -141,7 +136,7 @@ export default class Alias {
       throw new Error(`AliasName doesn't match expected format (allowed: ^[_a-zA-Z][-_a-zA-Z0-9]*$, actual: '${aliasName}')`);
     }
     if (!versionId) {
-      const versionClient = new Version({ region: this.region, credentials: this.credentials });
+      const versionClient = new Version();
       const versionList = await versionClient.list({ serviceName });
       if (versionList.length === 0) {
         throw new Error('Not fount version.Please use [s version publish --description xxx] to publish the version');

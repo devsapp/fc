@@ -74,6 +74,7 @@ export default class Version {
 
     const credentials: ICredentials = await getCredentials(inputs.credentials, inputs?.project?.access);
     logger.debug(`handler inputs props: ${JSON.stringify(endProps)}`);
+    await Client.setFcClient(endProps.region, credentials);
 
     return {
       credentials,
@@ -81,10 +82,6 @@ export default class Version {
       props: endProps,
       table: parsedData.table,
     };
-  }
-
-  constructor({ region, credentials }: { region: string; credentials: ICredentials }) {
-    Client.setFcClient(region, credentials);
   }
 
   async list({ serviceName }: { serviceName: string }, table?: boolean) {

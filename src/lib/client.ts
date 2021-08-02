@@ -1,4 +1,5 @@
 import FC from '@alicloud/fc2';
+import * as core from '@serverless-devs/core';
 import _ from 'lodash';
 
 FC.prototype.on_demand_list = async function (options = {}) {
@@ -38,7 +39,7 @@ FC.prototype.get_all_list_data = async function (path, dataKeyword, options: { [
 export default class Client {
   static fcClient: any;
 
-  static setFcClient(region: string, credentials) {
+  static async setFcClient(region: string, credentials) {
     const {
       AccountID,
       AccessKeyID,
@@ -51,11 +52,21 @@ export default class Client {
       accessKeySecret: AccessKeySecret,
       securityToken: SecurityToken,
       region,
+      endpoint: await this.getFcEndpoint(),
       timeout: 6000000,
     });
 
     this.fcClient = fcClient;
 
     return fcClient;
+  }
+
+  static async getFcEndpoint(): Promise<string | undefined> {
+    const fcDefault = await core.loadComponent('devsapp/fc-default');
+    const fcEndpoint: string = await fcDefault.get({ args: 'fc-endpoint' });
+    if (!fcEndpoint) { return undefined; }
+    const enableFcEndpoint: any = await fcDefault.get({ args: 'enable-fc-endpoint' });
+    // @ts-ignore: .
+    return (enableFcEndpoint === true || enableFcEndpoint === 'true') ? fcEndpoint : undefined;
   }
 }
