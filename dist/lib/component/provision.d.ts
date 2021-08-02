@@ -62,10 +62,6 @@ export default class Provision {
         helpKey?: undefined;
         errorMessage?: undefined;
     }>;
-    constructor({ region, credentials }: {
-        region: string;
-        credentials: ICredentials;
-    });
     get({ serviceName, qualifier, functionName }: GetProvision): Promise<any>;
     put({ serviceName, qualifier, functionName, config, target }: PutProvision): Promise<any>;
     list({ serviceName, qualifier }: ListProvision, table?: any): Promise<any>;

@@ -67,10 +67,8 @@ export default class Alias {
         helpKey?: undefined;
         errorMessage?: undefined;
     }>;
-    constructor({ region, credentials }: {
-        region: string;
-        credentials: ICredentials;
-    });
+    region: string;
+    credentials: ICredentials;
     findAlias({ serviceName, aliasName }: FindAlias): Promise<any>;
     publish({ serviceName, description, aliasName, versionId, gversion, weight }: Publish): Promise<void>;
     list({ serviceName }: {

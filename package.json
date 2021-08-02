@@ -1,6 +1,6 @@
 {
   "name": "fc",
-  "version": "0.1.21",
+  "version": "0.1.22",
   "main": "./dist/index.js",
   "dependencies": {
     "@alicloud/fc2": "^2.2.2",

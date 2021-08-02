@@ -52,10 +52,6 @@ export default class Version {
         helpKey?: undefined;
         errorMessage?: undefined;
     }>;
-    constructor({ region, credentials }: {
-        region: string;
-        credentials: ICredentials;
-    });
     list({ serviceName }: {
         serviceName: string;
     }, table?: boolean): Promise<any>;

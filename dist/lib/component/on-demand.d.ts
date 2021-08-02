@@ -64,10 +64,6 @@ export default class OnDemand {
         helpKey?: undefined;
         errorMessage?: undefined;
     }>;
-    constructor({ region, credentials }: {
-        region: string;
-        credentials: ICredentials;
-    });
     list({ serviceName }: ListOnDemand, table?: any): Promise<any>;
     get({ serviceName, qualifier, functionName }: GetOnDemand): Promise<any>;
     remove({ serviceName, qualifier, functionName }: RemoveOnDemand): Promise<any>;
