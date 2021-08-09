@@ -391,7 +391,7 @@ service:
 ```
 ### 子账号需要的权限
 
-**系统策略**：`AliyunFCFullAccess`、`AliyunARMSFullAccess`
+**系统策略**：`AliyunFCFullAccess`、`AliyunTracingAnalysisReadOnlyAccess`
 
 ```yaml
 {
