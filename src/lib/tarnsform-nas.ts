@@ -152,11 +152,20 @@ async function getServiceConfig(props, access, credentials) {
   if (isAutoConfig(vpcConfig) || _.isEmpty(vpcConfig)) {
     config.vpcConfig = cacheData?.statefulAutoConfig?.vpcConfig || cacheData?.statefulConfig?.vpcConfig;
   }
+
   if (isAutoConfig(nasConfig)) {
     config.nasConfig = cacheData?.statefulAutoConfig?.nasConfig || cacheData?.statefulConfig?.nasConfig;
+  } else if (!_.isEmpty(nasConfig?.mountPoints)) {
+    // 兼容首次手动指定 nas 配置
+    config.nasConfig.mountPoints = nasConfig?.mountPoints?.map((item) => ({
+      serverAddr: `${item.serverAddr}:${item.nasDir}`,
+      mountDir: item.fcDir,
+    }));
   }
+
   if (!_.isString(role)) {
     config.role = cacheData?.statefulAutoConfig?.role || cacheData?.statefulConfig?.role;
   }
+
   return config;
 }
