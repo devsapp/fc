@@ -94,7 +94,7 @@ service:
     # logConfig: auto
     logConfig:
         project: XXX
-      logstore: XXX
+        logstore: XXX
 ```
 
 > logConfig 为 auto时
