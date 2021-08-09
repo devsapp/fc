@@ -106,13 +106,13 @@ s cli fc info --region cn-hongkong --service-name ai-album --function-name pre-w
 service:
   name: ai-album
   internetAccess: true
-  role: acs:ram::1583208943291465:role/al-album
+  role: acs:ram::<account-id>:role/al-album
   description: 基于函数计算的人工智能相册系统
   vpcConfig:
-    securityGroupId: sg-j6c45wkv4vf4ghg104mc
+    securityGroupId: sg-xxxxxx
     vswitchIds:
-      - vsw-j6c797ywau90y6y03ohbq
-    vpcId: vpc-j6c9lk4av0859r4e0tff7
+      - vsw-xxxxxx
+    vpcId: vpc-xxxxxx
 function:
   name: pre-warm
   runtime: python3
