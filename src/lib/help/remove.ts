@@ -466,7 +466,7 @@ export const REMOVE_LAYER = [
         type: String,
       },
       {
-        name: 'version',
+        name: 'version-id',
         description: 'Only delete the version of the specified layer',
         type: String,
       },
