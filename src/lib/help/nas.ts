@@ -71,15 +71,10 @@ const UPLOADHELP = [
     header: 'Examples with Yaml',
     content: [
       {
-        example: '$ s exec -- nas upload /home/usr/demo.file nas://<fc_dir>',
+        example: '$ s exec -- nas upload /home/usr/demo.file /mnt/auto',
       },
-    ],
-  },
-  {
-    header: 'Examples',
-    content: [
       {
-        example: '$ s exec -- upload /home/usr/demo.file nas://<fc_dir>',
+        example: '$ s exec -- nas upload /home/usr/demo.file nas:///mnt/auto',
       },
     ],
   },
@@ -130,7 +125,10 @@ const DOWNLOADHELP = [
     header: 'Examples with Yaml',
     content: [
       {
-        example: '$ s exec -- nas download nas://<fc_dir> /home/usr/demo',
+        example: '$ s exec -- nas download /mnt/auto /home/usr/demo',
+      },
+      {
+        example: '$ s exec -- nas download nas:///mnt/auto /home/usr/demo',
       },
     ],
   },
@@ -162,7 +160,10 @@ const COMMANDHELP = [
     header: 'Examples',
     content: [
       {
-        example: '$ s exec -- nas command ls nas:///<nas_dir>',
+        example: '$ s exec -- nas command ls /mnt/auto',
+      },
+      {
+        example: '$ s exec -- nas command ls nas:///mnt/auto',
       },
     ],
   },

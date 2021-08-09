@@ -94,7 +94,7 @@ service:
     # logConfig: auto
     logConfig:
         project: XXX
-      logstore: XXX
+        logstore: XXX
 ```
 
 > logConfig 为 auto时
@@ -145,7 +145,7 @@ service:
                 "log:GetProject",
                 "log:CreateProject"
             ],
-            "Resource": "acs:log:cn-shenzhen:1899690531354629:project/1899690531354629-cn-shenzhen-logproject",
+            "Resource": "acs:log:<region>:<account-id>:project/<project-name>",
             "Effect": "Allow"
         },
         {
@@ -155,7 +155,7 @@ service:
                 "log:GetLogStore",
                 "log:CreateIndex"
             ],
-            "Resource": "acs:log:cn-shenzhen:1899690531354629:project/1899690531354629-cn-shenzhen-logproject/logstore/fc-service-unit-deploy-service-logstore",
+            "Resource": "acs:log:<region>:<account-id>:project/<project-name>/logstore/<logstore-name>",
             "Effect": "Allow"
         }
     ]
@@ -490,7 +490,7 @@ function:
                 "fc:UpdateFunction"
             ],
             "Effect": "Allow",
-            "Resource": "acs:fc:cn-shenzhen:1899690531354629:services/unit-deploy-service/functions/*"
+            "Resource": "acs:fc:<region>:<account-id>:services/<service-name>/functions/*"
         }
     ],
     "Version": "1"
