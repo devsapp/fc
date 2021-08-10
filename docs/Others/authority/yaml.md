@@ -391,7 +391,7 @@ service:
 ```
 ### 子账号需要的权限
 
-**系统策略**：`AliyunFCFullAccess`、`AliyunARMSFullAccess`
+**系统策略**：`AliyunFCFullAccess`、`AliyunTracingAnalysisReadOnlyAccess`
 
 ```yaml
 {
@@ -523,7 +523,7 @@ function:
 
 **系统策略**：`AliyunContainerRegistryReadOnlyAccess`
 
-## 存在 asyncConfig 配置
+## 存在 asyncConfiguration 配置
 
 ### 子账号需要的权限
 
