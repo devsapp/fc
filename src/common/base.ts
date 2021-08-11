@@ -11,9 +11,11 @@ export default class BaseComponent {
   protected client;
   name: string;
   private basePath: string;
+  private docPath: string;
   constructor(protected inputs: any) {
     const libBasePath = this.__getBasePath();
     const pkgPath = path.join(libBasePath, '..', 'package.json');
+    this.docPath = path.resolve(libBasePath, '..', 'doc', 'doc.json');
     if (pkgPath) {
       const pkg = JSON.parse(fs.readFileSync(path.join(pkgPath), 'utf8'));
       this.name = pkg.name;
@@ -25,7 +27,7 @@ export default class BaseComponent {
       return this.basePath;
     }
     const baseName = path.basename(__dirname);
-    if (baseName !== 'lib') {
+    if (baseName !== 'dist') {
       this.basePath = path.join(__dirname, '..');
     } else {
       this.basePath = __dirname;
@@ -34,9 +36,8 @@ export default class BaseComponent {
   }
 
   private getEntityByName(entityName) {
-    const docPath = path.join(__dirname, '../..', 'doc', 'doc.json');
-    if (fs.existsSync(docPath)) {
-      const fileContent: string = fs.readFileSync(docPath).toString();
+    if (fs.existsSync(this.docPath)) {
+      const fileContent: string = fs.readFileSync(this.docPath).toString();
       const result = JSON.parse(fileContent);
       const interfaces = get(result, 'children', []).filter(({ name }) => name.includes('interface') || name.includes('command/') || name.includes('entity'));
       let fullInputParams: any = {};
