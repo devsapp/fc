@@ -1,6 +1,7 @@
 import FC from '@alicloud/fc2';
 import * as core from '@serverless-devs/core';
 import _ from 'lodash';
+import { extract } from "./utils";
 
 FC.prototype.on_demand_list = async function (options = {}) {
   return this.get('/on-demand-configs', options);
@@ -46,13 +47,14 @@ export default class Client {
       AccessKeySecret,
       SecurityToken,
     } = credentials;
-
-    const fcClient = new FC(AccountID, {
+    const customFcEndpoint = await Client.getFcEndpoint();
+    const uid = customFcEndpoint?.accountId || AccountID;
+    const fcClient = new FC(uid, {
       accessKeyID: AccessKeyID,
       accessKeySecret: AccessKeySecret,
       securityToken: SecurityToken,
-      region,
-      endpoint: await this.getFcEndpoint(),
+      region: customFcEndpoint?.region || region,
+      endpoint: customFcEndpoint?.fcEndpoint,
       timeout: 6000000,
     });
 
@@ -61,12 +63,30 @@ export default class Client {
     return fcClient;
   }
 
-  static async getFcEndpoint(): Promise<string | undefined> {
+  static async getFcEndpoint(): Promise<any> {
     const fcDefault = await core.loadComponent('devsapp/fc-default');
     const fcEndpoint: string = await fcDefault.get({ args: 'fc-endpoint' });
     if (!fcEndpoint) { return undefined; }
     const enableFcEndpoint: any = await fcDefault.get({ args: 'enable-fc-endpoint' });
-    // @ts-ignore: .
-    return (enableFcEndpoint === true || enableFcEndpoint === 'true') ? fcEndpoint : undefined;
+    if (!(enableFcEndpoint === true || enableFcEndpoint === 'true')) { return undefined; }
+    return {
+      fcEndpoint,
+      accountId: Client.extractAccountId(fcEndpoint),
+      region: Client.extractRegion(fcEndpoint),
+      protocol: Client.extractProtocol(fcEndpoint),
+    };
+  }
+
+  static extractAccountId(endpoint: string) {
+    return extract(/^https?:\/\/([^.]+)\..+$/, endpoint);
+  }
+
+  static extractRegion(endpoint: string) {
+    return extract(/^https?:\/\/[^.]+\.([^.]+)\..+$/, endpoint);
+  }
+
+  static extractProtocol(endpoint: string) {
+    const array = endpoint.split(':', 1);
+    return array.length !== 0 ? array[0] : '';
   }
 }
