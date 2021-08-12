@@ -23,4 +23,8 @@ export interface InfoInputsArgs {
    *  Specify the alicloud fc function name
    */
   'function-name'?: string;
+  /**
+   *  Specify the alicloud fc trigger name
+   */
+  'trigger-name'?: string;
 }
