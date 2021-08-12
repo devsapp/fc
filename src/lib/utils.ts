@@ -91,3 +91,10 @@ export async function componentMethodCaller(inputs: IInputs, componentName: stri
   return await componentIns[methodName](inputs);
 }
 
+export function extract(regex: RegExp, endpoint: string) {
+  const matchs = endpoint.match(regex);
+  if (matchs) {
+    return matchs[1];
+  }
+  return null;
+}
