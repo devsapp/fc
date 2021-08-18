@@ -2,9 +2,9 @@
 
 [阿里云函数计算（FC）组件](https://github.com/devsapp/fc) 是一个用于支持阿里云 Serverless 应用全生命周期的工具，它通过资源配置文件 (s.yml) ，可以快速帮助用户便捷地开发、构建、测试以及部署应用到[阿里云函数计算平台](https://www.aliyun.com/product/fc?spm=5176.19720258.J_8058803260.115.e9392c4aHejRf3) 。
 
-阿里云函数计算（FC）组件基于[Serverless Devs](https://www.serverless-devs.com/) 进行开发，主要支持两种使用形态: 
+阿里云函数计算（FC）组件基于[Serverless Devs](https://www.serverless-devs.com/) 进行开发，主要支持两种使用形态:
 
-1. 通过Yaml文件进行资源描述。使用阿里云函数计算（FC）组件的 YAML 规范(`s.yaml`)定义 Serverless 资源。它包含了函数计算的服务、函数、触发器以及自定义域名等资源，阿里云函数计算（FC）组件的 YAML 规范详细信息可参考[FC组件YAML规范](./docs/Others/yaml.md)。
+1. 通过 Yaml 文件进行资源描述。使用阿里云函数计算（FC）组件的 YAML 规范(`s.yaml`)定义 Serverless 资源。它包含了函数计算的服务、函数、触发器以及自定义域名等资源，阿里云函数计算（FC）组件的 YAML 规范详细信息可参考[FC 组件 YAML 规范](./docs/Others/yaml.md)。
 
 2. 通过交互式命令行进行相关能力管理。您能够利用阿里云函数计算（FC）组件命令行接口来完成 Serverless 应用的开发部署。该命令行接口能够帮助您校验 `s.yml`，构建函数，本地调试函数，部署函数至函数计算并对其进行观测。
 
@@ -31,39 +31,39 @@
 ## 文档目录
 
 - [入门相关](./docs/Getting-started/Getting-started.md)
-    - [开发工具安装](./docs/Getting-started/Install-tutorial.md)
-    - [账号配置](./docs/Getting-started/Setting-up-credentials.md)
-    - [快速体验](./docs/Getting-started/Hello-world-application.md)
-    - [Yaml规范](./docs/Others/yaml.md)
+  - [开发工具安装](./docs/Getting-started/Install-tutorial.md)
+  - [账号配置](./docs/Getting-started/Setting-up-credentials.md)
+  - [快速体验](./docs/Getting-started/Hello-world-application.md)
+  - [Yaml 规范](./docs/Others/yaml.md)
 - 指令使用方法
-    - [部署操作：Deploy](./docs/Usage/deploy.md)
-    - [构建操作：Build](./docs/Usage/build.md)
-    - [查看操作：Info](./docs/Usage/info.md)
-    - [远程调用操作：Invoke](./docs/Usage/invoke.md)
-    - [本地调用操作：Local](./docs/Usage/local.md)
-    - [查看日志操作：Logs](./docs/Usage/logs.md)
-    - [指标查询操作：Metrics](./docs/Usage/metrics.md)
-    - [硬盘挂载操作：Nas](./docs/Usage/nas.md)
-    - [移除操作：Remove](./docs/Usage/remove.md)
-    - [同步操作：Sync](./docs/Usage/sync.md)
-    - [版本操作：Version](./docs/Usage/version.md)
-    - [别名操作：Alias](./docs/Usage/alias.md)
-    - [预留操作：Provision](./docs/Usage/provision.md)
-    - [按量资源操作：OnDemand](./docs/Usage/onDemand.md)
-    - [层的操作：Layer](./docs/Usage/layer.md)
-    - [端云联调: Proxied](./docs/Usage/proxied.md)
+  - [部署操作：Deploy](./docs/Usage/deploy.md)
+  - [构建操作：Build](./docs/Usage/build/build.md)
+  - [查看操作：Info](./docs/Usage/info.md)
+  - [远程调用操作：Invoke](./docs/Usage/invoke.md)
+  - [本地调用操作：Local](./docs/Usage/local.md)
+  - [查看日志操作：Logs](./docs/Usage/logs.md)
+  - [指标查询操作：Metrics](./docs/Usage/metrics.md)
+  - [硬盘挂载操作：Nas](./docs/Usage/nas.md)
+  - [移除操作：Remove](./docs/Usage/remove.md)
+  - [同步操作：Sync](./docs/Usage/sync.md)
+  - [版本操作：Version](./docs/Usage/version.md)
+  - [别名操作：Alias](./docs/Usage/alias.md)
+  - [预留操作：Provision](./docs/Usage/provision.md)
+  - [按量资源操作：OnDemand](./docs/Usage/onDemand.md)
+  - [层的操作：Layer](./docs/Usage/layer.md)
+  - [端云联调: Proxied](./docs/Usage/proxied.md)
 - 权限相关
-    - [Yaml字段相关配置权限](./docs/Others/authority/yaml.md)
-    - [命令使用相关权限](./docs/Others/authority/command.md)
+  - [Yaml 字段相关配置权限](./docs/Others/authority/yaml.md)
+  - [命令使用相关权限](./docs/Others/authority/command.md)
 - 更多内容
-    - [从Funcraft迁移到Serverless Devs](./docs/Others/fun-fc.md)
-    - CI/CD相关
-        - [Github Action 与 Serverless Devs](./docs/Others/github-action.md)
-        - [阿里云Custom Container的CI/CD最佳实践案例](http://www.serverless-devs.com/blog/aliyun-custom-container-ci-cd)
-        - [通过Gitee+Serverless Devs快速实现函数代码更新与版本发布](http://www.serverless-devs.com/blog/gitee-gitee-go-serverless-devs-ci-cd)
-        - [只更新代码，然后发布版本：基于Serverless Devs原子化操作阿里云函数计算](http://www.serverless-devs.com/blog/serverless-devs-update-fc-code)
-   
-----
+  - [从 Funcraft 迁移到 Serverless Devs](./docs/Others/fun-fc.md)
+  - CI/CD 相关
+    - [Github Action 与 Serverless Devs](./docs/Others/github-action.md)
+    - [阿里云 Custom Container 的 CI/CD 最佳实践案例](http://www.serverless-devs.com/blog/aliyun-custom-container-ci-cd)
+    - [通过 Gitee+Serverless Devs 快速实现函数代码更新与版本发布](http://www.serverless-devs.com/blog/gitee-gitee-go-serverless-devs-ci-cd)
+    - [只更新代码，然后发布版本：基于 Serverless Devs 原子化操作阿里云函数计算](http://www.serverless-devs.com/blog/serverless-devs-update-fc-code)
+
+---
 
 # More
 
