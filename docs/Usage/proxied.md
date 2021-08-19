@@ -45,7 +45,7 @@ Example1
 
   Help for setup.    $ s proxied setup -h  
   Help for invoke.   $ s proxied invoke -h 
-  Help for clean.    $ s proxied clean -h 
+  Help for clean.    $ s proxied cleanup -h 
 
 ```
 
@@ -125,7 +125,7 @@ Proxied 命令为我们提供了三个子命令：
     
     ```
 
-- clean: 清理本次端云联调的辅助资源和相关环境，可以通过`s proxied clean -h`获取帮助文档
+- clean: 清理本次端云联调的辅助资源和相关环境，可以通过`s proxied cleanup -h`获取帮助文档
     ```
     Clean
 
@@ -137,7 +137,7 @@ Proxied 命令为我们提供了三个子命令：
     
     Usage
     
-      s proxied clean <options>
+      s proxied cleanup <options>
     
     
     Global Options
@@ -147,7 +147,7 @@ Proxied 命令为我们提供了三个子命令：
     
     Example
     
-      Just clean.   $ s proxied clean
+      Just cleanup.   $ s proxied cleanup
 
     ```
     
@@ -270,10 +270,10 @@ hello world
 
 ### 清理工作
 
-上述调试完成后，执行 `s proxied clean` 清理端云联调所需的辅助资源以及本地环境。
+上述调试完成后，执行 `s proxied cleanup` 清理端云联调所需的辅助资源以及本地环境。
 
 ```
-$ s proxied clean   
+$ s proxied cleanup
 [2021-07-13T08:59:46.635] [INFO ] [S-CLI] - Start ...
 ✔ Stop container succeed.
 ✔ Unset helper function provision and on-demand config done.

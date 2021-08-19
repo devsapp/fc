@@ -602,7 +602,7 @@ export default class FcBaseComponent extends BaseComponent {
 
   async proxied(inputs: IInputs): Promise<any> {
     const { args, argsObj } = this.handlerComponentInputs(inputs);
-    const SUPPORTED_METHOD = ['setup', 'invoke', 'clean'];
+    const SUPPORTED_METHOD = ['setup', 'invoke', 'clean', 'cleanup'];
 
     const apts = {
       boolean: ['help'],
@@ -642,7 +642,7 @@ export default class FcBaseComponent extends BaseComponent {
         return;
       }
       return await proxied.invoke(fcProxiedInvoke.makeInputs(methodName));
-    } else {
+    } else if (methodName === 'clean') {
       // clean
       await this.report('fc', 'proxied_clean', creds?.AccountID);
       if (argsData?.help) {
@@ -650,6 +650,14 @@ export default class FcBaseComponent extends BaseComponent {
         return;
       }
       return await proxied.clean(fcProxiedInvoke.makeInputs(methodName));
+    } else {
+      // cleanup
+      await this.report('fc', 'proxied_cleanup', creds?.AccountID);
+      if (argsData?.help) {
+        super.help('ProxiedCleanupInputsArgs');
+        return;
+      }
+      return await proxied.cleanup(fcProxiedInvoke.makeInputs(methodName));
     }
   }
 
