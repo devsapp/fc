@@ -13,6 +13,9 @@ export async function invoke(inputs: IInputs): Promise<any> {
 export async function clean(inputs: IInputs): Promise<any> {
   return await componentMethodCaller(inputs, 'devsapp/fc-proxied-invoke', 'clean');
 }
+export async function cleanup(inputs: IInputs): Promise<any> {
+  return await componentMethodCaller(inputs, 'devsapp/fc-proxied-invoke', 'cleanup');
+}
 
 /**
  * s proxied <SubCommand> <options>\n
@@ -21,11 +24,11 @@ export async function clean(inputs: IInputs): Promise<any> {
  * @pre_help
  * {"header": "Detail", "content": "Local invoke with real net traffic via proxied service."}
  * @pre_help
- * {"header": "SubCommand List", "content": [{"name": "setup", "summary": "Setup the preconditions."},{"name": "invoke", "summary": "Invoke local function."}, {"name": "clean", "summary": "Clean the related resource and environment.."}]}
+ * {"header": "SubCommand List", "content": [{"name": "setup", "summary": "Setup the preconditions."},{"name": "invoke", "summary": "Invoke local function."}, {"name": "clean", "summary": "Decrepted. Clean the related resource and environment."}, {"name": "cleanup", "summary": "Clean the related resource and environment."}]}
  * @after_help
  * {"ref":"GlobalParams"}
  * @example
- * {"header": "Example1","content": [{"desc":"Help for setup.","example":"$ s proxied setup -h"},{"desc":"Help for invoke.","example":"$ s proxied invoke -h"},{"desc":"Help for clean.","example":"$ s proxied clean -h"}]}
+ * {"header": "Example1","content": [{"desc":"Help for setup.","example":"$ s proxied setup -h"},{"desc":"Help for invoke.","example":"$ s proxied invoke -h"},{"desc":"Help for cleanup.","example":"$ s proxied cleanup -h"}]}
  */
 export interface ProxiedInputsArgs {
 }
@@ -96,9 +99,23 @@ export interface ProxiedInvokeInputsArgs {
 }
 
 /**
+ * s proxied cleanup <options>\n
+ * @pre_help
+ * {"header":"Cleanup","content":"Clean the related resource and environment."}
+ * @pre_help
+ * {"header": "Detail", "content": "Clean the helper resource and the local container."}
+ * @after_help
+ * {"ref":"GlobalParams"}
+ * @example
+ * {"header": "Example","content": [{"desc":"Just cleanup.","example":"$ s proxied cleanup"}]}
+ */
+export interface ProxiedCleanupInputsArgs {
+}
+
+/**
  * s proxied clean <options>\n
  * @pre_help
- * {"header":"Clean","content":"Clean the related resource and environment."}
+ * {"header":"Clean","content":"Decrepted.Clean the related resource and environment."}
  * @pre_help
  * {"header": "Detail", "content": "Clean the helper resource and the local container."}
  * @after_help
