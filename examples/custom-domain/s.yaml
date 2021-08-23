@@ -3,7 +3,8 @@ name: fcDeployApp
 
 services:
   fc-deploy-test:
-    component: ${path(../..)}
+    # component: ${path(../..)}
+    component: devsapp/fc
     props:
       region: cn-shenzhen
       service:
