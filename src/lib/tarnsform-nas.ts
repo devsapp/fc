@@ -66,11 +66,7 @@ export default async function toNas(props, nonOptionsArgs, args, access, command
 }
 
 function transfromArgsFunction(tarnsformArgs, fcDirInput, transformInputDir) {
-  tarnsformArgs = tarnsformArgs.replace(fcDirInput, transformInputDir);
-  if (tarnsformArgs.includes(fcDirInput)) {
-    return transfromArgsFunction(tarnsformArgs, fcDirInput, transformInputDir);
-  }
-  return tarnsformArgs;
+  return tarnsformArgs.replace(new RegExp(fcDirInput, 'g'), transformInputDir);
 }
 
 function throwError(args, commandName, nonOptionsArgs) {
@@ -151,6 +147,10 @@ async function getServiceConfig(props, access, credentials) {
 
   if (isAutoConfig(vpcConfig) || _.isEmpty(vpcConfig)) {
     config.vpcConfig = cacheData?.statefulAutoConfig?.vpcConfig || cacheData?.statefulConfig?.vpcConfig;
+  }
+
+  if (!_.isEmpty(vpcConfig?.vswitchIds)) {
+    vpcConfig.vSwitchIds = vpcConfig.vswitchIds;
   }
 
   if (isAutoConfig(nasConfig)) {
