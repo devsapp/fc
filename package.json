@@ -28,6 +28,7 @@
     "typedoc": "^0.20.35"
   },
   "scripts": {
+    "start": "npm run dev",
     "dev": "npx tsc -w -p tsconfig.json",
     "prebuild": "rm -rf node_modules && rm -rf package-lock.json && npm i && rimraf dist",
     "build": "npm run lint && npm run fix && npm run doc && ncc build src/index.ts -m -e @serverless-devs/core -o dist",
