@@ -189,8 +189,8 @@ export default class FcBaseComponent extends BaseComponent {
   }
 
   async build(inputs: IInputs): Promise<any> {
-    const { props, args } = this.handlerComponentInputs(inputs);
-    const parsedArgs: {[key: string]: any} = core.commandParse({ args }, {
+    const { props, args, argsObj } = this.handlerComponentInputs(inputs);
+    const parsedArgs: {[key: string]: any} = core.commandParse({ args, argsObj }, {
       boolean: ['help'],
       alias: { help: 'h' } });
 
@@ -203,8 +203,8 @@ export default class FcBaseComponent extends BaseComponent {
   }
 
   async local(inputs: IInputs): Promise<any> {
-    const { props, args } = this.handlerComponentInputs(inputs);
-    const parsedArgs: {[key: string]: any} = core.commandParse({ args }, {
+    const { props, args, argsObj } = this.handlerComponentInputs(inputs);
+    const parsedArgs: {[key: string]: any} = core.commandParse({ args, argsObj }, {
       boolean: ['help'],
       alias: { help: 'h' } });
     const argsData: any = parsedArgs?.data || {};
@@ -258,9 +258,9 @@ export default class FcBaseComponent extends BaseComponent {
   }
 
   async logs(inputs: IInputs): Promise<any> {
-    const { props, args } = this.handlerComponentInputs(inputs);
+    const { props, args, argsObj } = this.handlerComponentInputs(inputs);
 
-    const comParse: any = core.commandParse({ args }, {
+    const comParse: any = core.commandParse({ args, argsObj }, {
       boolean: ['help'],
       string: ['region', 'service-name', 'function-name'],
       alias: { help: 'h' },
@@ -307,9 +307,9 @@ export default class FcBaseComponent extends BaseComponent {
   }
 
   async metrics(inputs: IInputs): Promise<any> {
-    const { props, args } = this.handlerComponentInputs(inputs);
+    const { props, args, argsObj } = this.handlerComponentInputs(inputs);
 
-    const comParse: any = core.commandParse({ args }, {
+    const comParse: any = core.commandParse({ args, argsObj }, {
       boolean: ['help'],
       string: ['region', 'service-name', 'function-name'],
       alias: { help: 'h' },
@@ -326,14 +326,14 @@ export default class FcBaseComponent extends BaseComponent {
   }
 
   async nas(inputs: IInputs) {
-    const { props, args, project } = this.handlerComponentInputs(inputs);
+    const { props, args, project, argsObj } = this.handlerComponentInputs(inputs);
     const SUPPORTED_METHOD = ['remove', 'deploy', 'ls', 'cp', 'rm', 'download', 'upload', 'command'];
 
     const apts = {
       boolean: ['all', 'long', 'help', 'recursive', 'no-clobber', 'force'],
       alias: { force: 'f', 'no-clobber': 'n', recursive: 'r', help: 'h', all: 'a', long: 'l' },
     };
-    const comParse: any = core.commandParse({ args }, apts);
+    const comParse: any = core.commandParse({ args, argsObj }, apts);
 
     const nonOptionsArgs = comParse.data?._ || [];
     this.logger.debug(`nonOptionsArgs is ${JSON.stringify(nonOptionsArgs)}`);
@@ -563,7 +563,7 @@ export default class FcBaseComponent extends BaseComponent {
   }
 
   async layer(inputs: IInputs): Promise<any> {
-    const { props, args } = this.handlerComponentInputs(inputs);
+    const { props, args, argsObj } = this.handlerComponentInputs(inputs);
     const LAYER_COMMAND = {
       publish: 'LayerPublishInputsArgs',
       list: 'LayerListInputsArgs',
@@ -573,7 +573,7 @@ export default class FcBaseComponent extends BaseComponent {
       deleteLayer: 'LayerDeleteLayerInputsArgs',
     };
 
-    const comParse: any = core.commandParse({ args }, {
+    const comParse: any = core.commandParse({ args, argsObj }, {
       boolean: ['help'],
       alias: { help: 'h' },
     });
@@ -659,6 +659,15 @@ export default class FcBaseComponent extends BaseComponent {
       }
       return await proxied.cleanup(fcProxiedInvoke.makeInputs(methodName));
     }
+  }
+
+  async fun2s(inputs: IInputs): Promise<any> {
+    const { args } = this.handlerComponentInputs(inputs);
+    const isHelp = this.isHelp(args);
+    if (isHelp) {
+      return super.help('Fun2SInputsArgs');
+    }
+    return await this.componentMethodCaller(inputs, 'fc-transform', 'fun2fc', {}, args);
   }
 
 

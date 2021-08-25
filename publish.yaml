@@ -25,6 +25,8 @@ Commands:
   version: 服务版本
   onDemand: 按量资源
   provision: 预留实例
+  proxied: 端云连调
+  fun2s: 将fun转化为s可读的配置
 Service:
   函数计算:
     Authorities:
