@@ -1,9 +1,7 @@
 node_modules
 .s
-tsconfig.json
-tsconfig.base.json
 LICENSE
-package-lok.json
+package-lock.json
 .prettierrc.js
 .prettierignore
 .eslintrc.js
