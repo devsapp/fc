@@ -53,7 +53,7 @@ export default async function toNas(props, nonOptionsArgs, args, access, command
       serviceName: `_FC_NAS_${name}`,
       description: `service for fc nas used for service ${name}`,
       vpcId,
-      vSwitchId: vSwitchIds[0],
+      vSwitchId: vSwitchIds,
       securityGroupId,
       role,
       userId,
