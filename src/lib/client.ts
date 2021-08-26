@@ -1,7 +1,7 @@
 import FC from '@alicloud/fc2';
 import * as core from '@serverless-devs/core';
 import _ from 'lodash';
-import { extract } from "./utils";
+import { extract } from './utils';
 
 FC.prototype.on_demand_list = async function (options = {}) {
   return this.get('/on-demand-configs', options);
