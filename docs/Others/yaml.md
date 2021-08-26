@@ -304,12 +304,11 @@ role:
 | timeout | False | Number | function运行的超时时间 |
 | caPort | False | Number | CustomContainer/Runtime指定端口 |
 | customContainerConfig | False | Struct | 自定义镜像配置 |
-| InstanceConcurrency | False | Number | 单实例多并发 |
 | environmentVariables | False | List<Struct> | 环境变量 |
 | initializationTimeout | False | Number | 初始化方法超时时间 |
 | initializer | False | String | 初始化方法 |
-| instanceConcurrency | String | Struct | 单实例多并发 |
-| instanceType | False | String | 实例类型 |
+| instanceConcurrency | False | Number | 单实例多并发 |
+| instanceType | False | String | 函数实例类型，可选址为：e1、c1 |
 | instanceLifecycleConfig | False | Struct | 扩展函数 |
 | asyncConfiguration | False | Struct | 异步配置 |
 
