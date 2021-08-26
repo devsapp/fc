@@ -42,7 +42,7 @@ lerna-debug.log*
 **/.env
 examples/fc-build/java/target
 package-lock.json
-dist
-doc
+doc/*
+!doc/doc.json
 target
 *.iml
