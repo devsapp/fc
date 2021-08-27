@@ -4,7 +4,7 @@ import Logger from './common/logger';
 import { COMPONENT_HELP_INFO, LOCAL_HELP_INFO, NAS_HELP_INFO,
   NAS_SUB_COMMAND_HELP_INFO, LOCAL_INVOKE_HELP_INFO, LOCAL_START_HELP_INFO, BUILD_HELP_INFO } from './lib/help';
 import * as DEPLOY_HELP from './lib/help/deploy';
-import tarnsformNas from './lib/tarnsform-nas';
+import tarnsformNas, { toNasAbility } from './lib/tarnsform-nas';
 import { ICredentials } from './lib/interface/profile';
 import { IInputs, IProperties } from './lib/interface/interface';
 import { isLogConfig } from './lib/interface/sls';
@@ -12,7 +12,7 @@ import { FcInfoProps } from './lib/interface/component/fc-info';
 import { FcSyncProps } from './lib/interface/component/fc-sync';
 import { FcMetricsProps } from './lib/interface/component/fc-metrics';
 import { LogsProps } from './lib/interface/component/logs';
-import { getFcNames, isHttpFunction } from './lib/utils';
+import { getFcNames, isAutoConfig, isHttpFunction } from './lib/utils';
 import * as tips from './lib/tips';
 import FcStress from './lib/component/fc-stress';
 import Version from './lib/component/version';
@@ -327,14 +327,16 @@ export default class FcBaseComponent extends BaseComponent {
 
   async nas(inputs: IInputs) {
     const { props, args, project, argsObj } = this.handlerComponentInputs(inputs);
-    const SUPPORTED_METHOD = ['remove', 'deploy', 'ls', 'cp', 'rm', 'download', 'upload', 'command'];
+    const SUPPORTED_METHOD = ['init', 'ls', 'cp', 'rm', 'download', 'upload', 'command'];
 
     const apts = {
-      boolean: ['all', 'long', 'help', 'recursive', 'no-clobber', 'force'],
-      alias: { force: 'f', 'no-clobber': 'n', recursive: 'r', help: 'h', all: 'a', long: 'l' },
+      boolean: ['all', 'long', 'help', 'recursive', 'no-clobber', 'force', 'assume-yes'],
+      alias: { force: 'f', 'no-clobber': 'n', recursive: 'r', help: 'h', long: 'l', 'assume-yes': 'y'},
     };
     const comParse: any = core.commandParse({ args, argsObj }, apts);
+    const argsData: any = comParse?.data || {};
 
+    const assumeYes: boolean = argsData.y || argsData['assume-yes'];
     const nonOptionsArgs = comParse.data?._ || [];
     this.logger.debug(`nonOptionsArgs is ${JSON.stringify(nonOptionsArgs)}`);
     if (!comParse?.data) {
@@ -357,7 +359,6 @@ export default class FcBaseComponent extends BaseComponent {
       core.help(NAS_HELP_INFO);
       return;
     }
-
     const tarnsformArgs = args.replace(commandName, '').replace(/(^\s*)|(\s*$)/g, '');
     if (tarnsformArgs.startsWith('cp ')) {
       throw new Error('Not supported command cp, please [s nas upload <option>]');
@@ -368,9 +369,28 @@ export default class FcBaseComponent extends BaseComponent {
       return;
     }
     nonOptionsArgs.shift();
-    const payload = await tarnsformNas(props, nonOptionsArgs, tarnsformArgs, project?.access, commandName, inputs.credentials);
-    this.logger.debug(`tarnsform nas payload: ${JSON.stringify(payload.payload)}, args: ${payload.tarnsformArgs}, command: ${commandName}`);
+    const { nasConfig, vpcConfig, name, role } = props?.service || {};
+    if (commandName === 'init' && isAutoConfig(nasConfig)) {
+      return await this.componentMethodCaller(inputs, 'devsapp/fc-deploy', 'deployAutoNas', props, assumeYes ? '--assume-yes' : null);
+    } else if (commandName === 'init') {
+      // nasConfig is not auto
+      for (const mountPoint of nasConfig?.mountPoints) {
+        const ensureVm = core.spinner(`Ensuring nas dir: ${mountPoint.nasDir} in mount point: ${mountPoint.serverAddr}...`);
+        try {
+          const payload = await toNasAbility(props?.region, vpcConfig, name, role, {userId: nasConfig?.userId, groupId: nasConfig?.groupId, nasDir: mountPoint.nasDir, mountPointDomain: mountPoint.serverAddr});
+          await this.componentMethodCaller(inputs, 'devsapp/nas', 'ensureNasDir', payload.payload);
+          ensureVm.succeed(`Nas dir: ${mountPoint.nasDir} in mount point: ${mountPoint.serverAddr} exists.`);
+        } catch (e) {
+          ensureVm.fail(`Ensure nas dir: ${mountPoint.nasDir} in mount point: ${mountPoint.serverAddr} failed.`);
+          this.logger.debug(`Ensure nas dir: ${mountPoint.nasDir} in mount point: ${mountPoint.serverAddr} failed, error: ${e}`);
+        }
+      }
+      return;
+    }
 
+    const payload = await tarnsformNas(props, nonOptionsArgs, tarnsformArgs, project?.access, commandName, inputs.credentials);
+
+    this.logger.debug(`tarnsform nas payload: ${JSON.stringify(payload.payload)}, args: ${payload.tarnsformArgs}, command: ${commandName}`);
     await this.componentMethodCaller(inputs, 'devsapp/nas', commandName, payload.payload, payload.tarnsformArgs);
 
     tips.showNasNextTips();

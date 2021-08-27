@@ -22,6 +22,10 @@ export const NAS_HELP_INFO = [
         desc: 'command',
         example: 'Execute relevant instructions, you can get help through [s nas command -h]',
       },
+      {
+        desc: 'init',
+        example: 'init nas resource, you can get help through [s nas init -h]',
+      },
     ],
   },
 ];
@@ -169,13 +173,45 @@ const COMMANDHELP = [
   },
 ];
 
+const INITHELP = [
+  {
+    header: 'Nas Init',
+    content: 'Init nas resources.',
+  },
+  {
+    header: 'Usage',
+    content: [
+      { example: '$ s nas init' },
+    ],
+  },
+  {
+    header: 'Global Options',
+    optionList: [
+      {
+        name: 'help',
+        description: 'Download help for command',
+        alias: 'h',
+        type: Boolean,
+      },
+    ],
+  },
+  {
+    header: 'Examples with Yaml',
+    content: [
+      {
+        example: '$ s nas init',
+      },
+    ],
+  },
+];
+
 export const NAS_SUB_COMMAND_HELP_INFO = {
   download: DOWNLOADHELP,
   upload: UPLOADHELP,
   command: COMMANDHELP,
   // fc 组件不推的几个指令，但是支持
   remove: [],
-  deploy: [],
+  init: INITHELP,
   ls: [],
   cp: [],
   rm: [],
