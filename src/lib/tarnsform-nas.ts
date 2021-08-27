@@ -1,8 +1,33 @@
 import * as core from '@serverless-devs/core';
 import _, { isEmpty } from 'lodash';
 import { isAutoConfig, genServiceStateID, getCredentials } from './utils';
+import { VpcConfig } from "./interface/vpc";
 
 const HANDlER_NAS_COMMANDS = ['ls', 'cp', 'rm', 'download', 'upload', 'command'];
+
+export async function toNasAbility(region: string, vpcConfig: VpcConfig, serviceName: string, role: string, { userId, groupId, mountPointDomain, nasDir }, args?: string): Promise<any> {
+  const res = {
+    payload: {
+      regionId: region,
+      serviceName: `_FC_NAS_${serviceName}`,
+      description: `service for fc nas used for service ${serviceName}`,
+      vpcId: vpcConfig.vpcId,
+      vSwitchId: vpcConfig.vswitchIds,
+      securityGroupId: vpcConfig.securityGroupId,
+      role,
+      userId,
+      groupId,
+      mountPointDomain,
+      nasDir,
+    },
+  };
+  if (args) {
+    Object.assign(res, {
+      tarnsformArgs: args,
+    });
+  }
+  return res;
+}
 
 export default async function toNas(props, nonOptionsArgs, args, access, commandName, credentials) {
   const {
@@ -13,6 +38,9 @@ export default async function toNas(props, nonOptionsArgs, args, access, command
   } = await getServiceConfig(props, access, credentials);
 
   if (!nasConfig) {
+    if (isAutoConfig(props?.service?.nasConfig)) {
+      throw new Error('Please run \'s nas init\' first to create nas when use auto nasConfig.');
+    }
     throw new Error('Not fount nasConfig.');
   }
 
@@ -20,7 +48,7 @@ export default async function toNas(props, nonOptionsArgs, args, access, command
     throw new Error('Not fount vpcConfig.');
   }
 
-  const { vpcId, vSwitchIds, securityGroupId } = vpcConfig;
+  const { vpcId } = vpcConfig;
 
   if (!vpcId) {
     throw new Error(`Service ${name} is configured for query to vpc`);
@@ -46,23 +74,7 @@ export default async function toNas(props, nonOptionsArgs, args, access, command
   }
   core.Logger.debug('FC', `tarnsformArgs: ${tarnsformArgs}`);
 
-  return {
-    tarnsformArgs,
-    payload: {
-      regionId: props?.region,
-      serviceName: `_FC_NAS_${name}`,
-      description: `service for fc nas used for service ${name}`,
-      vpcId,
-      vSwitchId: vSwitchIds,
-      securityGroupId,
-      role,
-      userId,
-      groupId,
-      mountPointDomain: serverAddr,
-      nasDir,
-      // excludes,
-    },
-  };
+  return toNasAbility(props?.region, vpcConfig, name, role, { userId, groupId, mountPointDomain: serverAddr, nasDir }, tarnsformArgs);
 }
 
 function transfromArgsFunction(tarnsformArgs, fcDirInput, transformInputDir) {
