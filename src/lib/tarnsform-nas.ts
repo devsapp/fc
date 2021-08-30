@@ -41,22 +41,22 @@ export default async function toNas(props, nonOptionsArgs, args, access, command
     if (isAutoConfig(props?.service?.nasConfig)) {
       throw new Error('Please run \'s nas init\' first to create nas when use auto nasConfig.');
     }
-    throw new Error('Not fount nasConfig.');
+    throw new Error('Use this command nasConfig is necessary, but no configuration was found.Please refer to https://help.aliyun.com/document_detail/295899.html#h3-url-4 for nasConfig');
   }
 
   if (!vpcConfig) {
-    throw new Error('Not fount vpcConfig.');
+    throw new Error('Use this command vpcConfig is necessary, but no configuration was found.Please refer to https://help.aliyun.com/document_detail/295899.html#title-l5q-ggd-p0c for nasConfig');
   }
 
   const { vpcId } = vpcConfig;
 
   if (!vpcId) {
-    throw new Error(`Service ${name} is configured for query to vpc`);
+    throw new Error('VpcConfig has required fields for vpcId, but it is not found.Please refer to https://help.aliyun.com/document_detail/295899.html#h3-url-4 for nasConfig');
   }
 
   const { userId, groupId, mountPoints } = nasConfig;
   if (isEmpty(mountPoints)) {
-    throw new Error(`Service ${name} is configured for query to nas`);
+    throw new Error('NasConfig has required fields for mountPoints, but it is not found.Please refer to https://help.aliyun.com/document_detail/295899.html#h3-url-4 for nasConfig');
   }
 
   const { fcDirInput, needAppendNas } = getFcDirPath(nonOptionsArgs, commandName);
@@ -83,7 +83,9 @@ function transfromArgsFunction(tarnsformArgs, fcDirInput, transformInputDir) {
 
 function throwError(args, commandName, nonOptionsArgs) {
   const example = `\n     Example: \n\t  s nas upload -r -n ./local-path /mnt/nas-path
-\t  s nas download -r /mnt/nas-path ./local-path`;
+\t  s nas download -r /mnt/nas-path ./local-path
+\t  s nas command 'ls -al /mnt/nas-path'
+\t  s nas command 'rm -rf /mnt/nas-path'`;
 
   if (['upload', 'download'].includes(commandName)) {
     if (nonOptionsArgs.length < 2) {
