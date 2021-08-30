@@ -1,7 +1,7 @@
 import * as core from '@serverless-devs/core';
 import _, { isEmpty } from 'lodash';
 import { isAutoConfig, genServiceStateID, getCredentials } from './utils';
-import { VpcConfig } from "./interface/vpc";
+import { VpcConfig } from './interface/vpc';
 
 const HANDlER_NAS_COMMANDS = ['ls', 'cp', 'rm', 'download', 'upload', 'command'];
 
