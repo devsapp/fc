@@ -331,7 +331,7 @@ export default class FcBaseComponent extends BaseComponent {
 
     const apts = {
       boolean: ['all', 'long', 'help', 'recursive', 'no-clobber', 'force', 'assume-yes'],
-      alias: { force: 'f', 'no-clobber': 'n', recursive: 'r', help: 'h', long: 'l', 'assume-yes': 'y'},
+      alias: { force: 'f', 'no-clobber': 'n', recursive: 'r', help: 'h', long: 'l', 'assume-yes': 'y' },
     };
     const comParse: any = core.commandParse({ args, argsObj }, apts);
     const argsData: any = comParse?.data || {};
@@ -377,7 +377,7 @@ export default class FcBaseComponent extends BaseComponent {
       for (const mountPoint of nasConfig?.mountPoints) {
         const ensureVm = core.spinner(`Ensuring nas dir: ${mountPoint.nasDir} in mount point: ${mountPoint.serverAddr}...`);
         try {
-          const payload = await toNasAbility(props?.region, vpcConfig, name, role, {userId: nasConfig?.userId, groupId: nasConfig?.groupId, nasDir: mountPoint.nasDir, mountPointDomain: mountPoint.serverAddr});
+          const payload = await toNasAbility(props?.region, vpcConfig, name, role, { userId: nasConfig?.userId, groupId: nasConfig?.groupId, nasDir: mountPoint.nasDir, mountPointDomain: mountPoint.serverAddr });
           await this.componentMethodCaller(inputs, 'devsapp/nas', 'ensureNasDir', payload.payload);
           ensureVm.succeed(`Nas dir: ${mountPoint.nasDir} in mount point: ${mountPoint.serverAddr} exists.`);
         } catch (e) {
