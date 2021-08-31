@@ -25,6 +25,8 @@ import * as yaml from 'js-yaml';
 import BaseComponent from './common/base';
 import FcProxiedInvoke from './lib/component/fc-proxied-invoke';
 import * as proxied from './command/proxied';
+import FcRemoteDebug from './lib/component/fc-remote-debug';
+import * as remote from './command/remote';
 
 Logger.setContent('FC');
 const SUPPORTED_LOCAL_METHOD: string[] = ['invoke', 'start'];
@@ -690,6 +692,58 @@ export default class FcBaseComponent extends BaseComponent {
     return await this.componentMethodCaller(inputs, 'fc-transform', 'fun2fc', {}, args);
   }
 
+
+  async remote(inputs: IInputs): Promise<any> {
+    const { args, argsObj } = this.handlerComponentInputs(inputs);
+    const SUPPORTED_METHOD = ['setup', 'invoke', 'cleanup'];
+
+    const apts = {
+      boolean: ['help'],
+      alias: { help: 'h' },
+    };
+    const comParse: any = core.commandParse({ args, argsObj }, apts);
+    const argsData: any = comParse?.data || {};
+    const nonOptionsArgs = argsData?._ || [];
+    this.logger.debug(`nonOptionsArgs is ${JSON.stringify(nonOptionsArgs)}`);
+    if (argsData?.help && nonOptionsArgs.length === 0) {
+      super.help('RemoteInputsArgs');
+      return;
+    }
+    if (nonOptionsArgs.length === 0) {
+      super.help('RemoteInputsArgs');
+      return;
+    }
+    const methodName: string = nonOptionsArgs[0];
+    if (!SUPPORTED_METHOD.includes(methodName)) {
+      this.logger.error(`Not supported sub-command: [${methodName}]`);
+      super.help('RemoteInputsArgs');
+      return;
+    }
+    const creds: ICredentials = await core.getCredential(inputs?.project?.access);
+    const fcRemoteDebug: FcRemoteDebug = new FcRemoteDebug(inputs);
+    if (methodName === 'setup') {
+      await this.report('fc', 'remote_setup', creds?.AccountID);
+      if (argsData?.help) {
+        super.help('RemoteSetupInputsArgs');
+        return;
+      }
+      return await remote.setup(fcRemoteDebug.makeInputs(methodName));
+    } else if (methodName === 'invoke') {
+      await this.report('fc', 'remote_invoke', creds?.AccountID);
+      if (argsData?.help) {
+        super.help('RemoteInvokeInputsArgs');
+        return;
+      }
+      return await remote.invoke(fcRemoteDebug.makeInputs(methodName));
+    } else if (methodName === 'cleanup') {
+      await this.report('fc', 'remote_cleanup', creds?.AccountID);
+      if (argsData?.help) {
+        super.help('RemoteCleanupInputsArgs');
+        return;
+      }
+      return await remote.cleanup(fcRemoteDebug.makeInputs(methodName));
+    }
+  }
 
   async help(): Promise<void> {
     await this.report('fc', 'help');
