@@ -23,7 +23,7 @@ export async function toNasAbility(region: string, vpcConfig: VpcConfig, service
   };
   if (args) {
     Object.assign(res, {
-      tarnsformArgs: args,
+      transformArgs: args,
     });
   }
   return res;
@@ -68,17 +68,17 @@ export default async function toNas(props, nonOptionsArgs, args, access, command
     throw new Error(`There is no nas configuration matching the path [${fcDirInput}]`);
   }
 
-  let tarnsformArgs = args;
+  let transformArgs = args;
   if (!_.isNil(transformInputDir)) {
-    tarnsformArgs = transfromArgsFunction(args, fcDirInput, needAppendNas ? `nas://${transformInputDir}` : transformInputDir);
+    transformArgs = transformArgsFunction(args, fcDirInput, needAppendNas ? `nas://${transformInputDir}` : transformInputDir);
   }
-  core.Logger.debug('FC', `tarnsformArgs: ${tarnsformArgs}`);
+  core.Logger.debug('FC', `transformArgs: ${transformArgs}`);
 
-  return toNasAbility(props?.region, vpcConfig, name, role, { userId, groupId, mountPointDomain: serverAddr, nasDir }, tarnsformArgs);
+  return toNasAbility(props?.region, vpcConfig, name, role, { userId, groupId, mountPointDomain: serverAddr, nasDir }, transformArgs);
 }
 
-function transfromArgsFunction(tarnsformArgs, fcDirInput, transformInputDir) {
-  return tarnsformArgs.replace(new RegExp(fcDirInput, 'g'), transformInputDir);
+function transformArgsFunction(transformArgs, fcDirInput, transformInputDir) {
+  return transformArgs.replace(new RegExp(fcDirInput, 'g'), transformInputDir);
 }
 
 function throwError(args, commandName, nonOptionsArgs) {

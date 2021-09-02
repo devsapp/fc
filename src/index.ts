@@ -4,7 +4,7 @@ import Logger from './common/logger';
 import { COMPONENT_HELP_INFO, LOCAL_HELP_INFO, NAS_HELP_INFO,
   NAS_SUB_COMMAND_HELP_INFO, LOCAL_INVOKE_HELP_INFO, LOCAL_START_HELP_INFO, BUILD_HELP_INFO } from './lib/help';
 import * as DEPLOY_HELP from './lib/help/deploy';
-import tarnsformNas, { toNasAbility } from './lib/tarnsform-nas';
+import transformNas, { toNasAbility } from './lib/transform-nas';
 import { ICredentials } from './lib/interface/profile';
 import { IInputs, IProperties } from './lib/interface/interface';
 import { isLogConfig } from './lib/interface/sls';
@@ -361,8 +361,8 @@ export default class FcBaseComponent extends BaseComponent {
       core.help(NAS_HELP_INFO);
       return;
     }
-    const tarnsformArgs = args.replace(commandName, '').replace(/(^\s*)|(\s*$)/g, '');
-    if (tarnsformArgs.startsWith('cp ')) {
+    const transformArgs = args.replace(commandName, '').replace(/(^\s*)|(\s*$)/g, '');
+    if (transformArgs.startsWith('cp ')) {
       throw new Error('Not supported command cp, please [s nas upload <option>]');
     }
 
@@ -390,10 +390,10 @@ export default class FcBaseComponent extends BaseComponent {
       return;
     }
 
-    const payload = await tarnsformNas(props, nonOptionsArgs, tarnsformArgs, project?.access, commandName, inputs.credentials);
+    const payload = await transformNas(props, nonOptionsArgs, transformArgs, project?.access, commandName, inputs.credentials);
 
-    this.logger.debug(`tarnsform nas payload: ${JSON.stringify(payload.payload)}, args: ${payload.tarnsformArgs}, command: ${commandName}`);
-    await this.componentMethodCaller(inputs, 'devsapp/nas', commandName, payload.payload, payload.tarnsformArgs);
+    this.logger.debug(`transform nas payload: ${JSON.stringify(payload.payload)}, args: ${payload.transformArgs}, command: ${commandName}`);
+    await this.componentMethodCaller(inputs, 'devsapp/nas', commandName, payload.payload, payload.transformArgs);
 
     tips.showNasNextTips();
   }
