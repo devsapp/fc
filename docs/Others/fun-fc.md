@@ -14,24 +14,23 @@
 [推荐] 通过我们提供一键切换指令，将Funcraft的Yaml切换成Serverless Devs可以识别的Yaml；
 
 
-使用方法为：`s cli fc-transform fun2fc`
+使用方法为：`s cli fc fun2s`
 
 参数包括：
 
 ```
---source          Specify fun configuration path(default: template.[yaml|yml]). 
---target          Specify serverless devs configuration path(default: s.yaml).  
---force           Mandatory overwrite s file                                    
---region string   Pass in region in cli mode     
+--source          Specify fun configuration path(default: template.[yaml|yml]).
+--target          Specify serverless devs configuration path(default: s.yaml).
+--force           Mandatory overwrite s file
+--region string   Pass in region in cli mode
 ```
 
 例如：
 
 ```
-$ s cli fc-transform fun2fc --target test.yaml
-
-[2021-06-11T12:21:51.022] [INFO ] [FC-TRANSFORM] - Using funcraft yaml: /Users/jiangyu/Desktop/test/template.yml
-[2021-06-11T12:21:51.022] [INFO ] [FC-TRANSFORM] - Reminder serverless devs yaml path: /Users/jiangyu/Desktop/test/test.yaml
+[raykie@VM-12-14-centos testFun]$ s cli fc fun2s --target test.yaml
+[2021-09-02T15:24:22.025] [INFO ] [FC-TRANSFORM] - Using funcraft yaml: /home/raykie/workSpace/nodejs/fc/testFun/template.yml
+[2021-09-02T15:24:22.070] [INFO ] [FC-TRANSFORM] - Reminder serverless devs yaml path: /home/raykie/workSpace/nodejs/fc/testFun/test.yaml
 
 Tips for next step
 
@@ -40,31 +39,39 @@ Tips for next step
 * Invoke Http Function: s local start -t test.yaml
 * Deploy Resources: s deploy -t test.yaml
 
-End of method: fun2fc
+End of method: fun2s
 ```
 
 即可看到已经生成文档`test.yaml`:
 
 ```
 edition: 1.0.0
-name: tramsform_fun
+name: transform_fun
 access: default
 vars:
-  region: cn-shenzhen
+  region: '***'
 services:
-  fc-test-test:
+  fc-testFun-testFun:
     component: devsapp/fc
     props:
       region: ${vars.region}
       service:
-        name: test
+        name: testFun
         description: helloworld
         internetAccess: true
       function:
-        name: test
+        name: testFun
         handler: index.handler
-        runtime: nodejs10
+        runtime: python3
         codeUri: ./
+      triggers:
+        - name: httpTrigger
+          type: http
+          config:
+            authType: anonymous
+            methods:
+              - POST
+              - GET
 ```
 
 ## Yaml规范兼容性处理
