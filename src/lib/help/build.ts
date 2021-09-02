@@ -58,6 +58,6 @@ export const BUILD_HELP_INFO = [
   },
   {
     header: 'Others',
-    content: "You can use the environment variable 'FC_DOCKER_VERSION' to modify fc docker to use the default version number. For example: export 'FC_DOCKER_VERSION=1.9.19'",
+    content: "You can override the default docker image version by setting up the 'FC_DOCKER_VERSION' environment variable. For example: export 'FC_DOCKER_VERSION=1.9.19'",
   },
 ];
