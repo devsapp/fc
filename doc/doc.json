@@ -14900,7 +14900,7 @@
 													"type": "intrinsic",
 													"name": "string"
 												},
-												"defaultValue": "'The ability to deploy resources\\nIf executing s deploy is equivalent to s deploy all'"
+												"defaultValue": "'The ability to deploy resources\\nExecuting `s deploy` is equivalent to `s deploy all`'"
 											},
 											{
 												"id": 786,

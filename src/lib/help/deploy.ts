@@ -1,7 +1,7 @@
 export const DEPLOY = [
   {
     header: 'Deploy',
-    content: 'The ability to deploy resources\nIf executing s deploy is equivalent to s deploy all',
+    content: 'The ability to deploy resources\nExecuting `s deploy` is equivalent to `s deploy all`',
   },
   {
     header: 'Usage',
