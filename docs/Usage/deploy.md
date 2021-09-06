@@ -23,7 +23,7 @@
 Deploy
 
   The ability to deploy resources                                               
-  If executing s deploy is equivalent to s deploy all                           
+  Executing `s deploy` is equivalent to `s deploy all`                           
 
 Usage
 
