@@ -10,23 +10,20 @@ services:
       service:
         name: fc-test
         description: demo for fc component
-        role: acs:ram::1899690531354629:role/fcdeploydefaultrole-fc-test
+        role: acs:ram::xxxx:role/fcdeploydefaultrole-fc-test
         vpcConfig:
-          vpcId: vpc-wz990xfkncm9w3j57zq4v
-          securityGroupId: sg-wz99fef2zmvogr61vpuw
+          vpcId: vpc-xxxxxxxxxx
+          securityGroupId: sg-xxxxxxxxxx
           vswitchIds:
-            - vsw-wz9jh9zi3s06wd89n4b3x
+            - vsw-xxxxxxxxxx
         internetAccess: true
         nasConfig:
           userId: 10003
           groupId: 10003
           mountPoints:
-            - serverAddr: 2e6d44b644-snl78.cn-shenzhen.nas.aliyuncs.com
+            - serverAddr: xxx.cn-shenzhen.nas.aliyuncs.com
               nasDir: /fc-test
               fcDir: /mnt/auto
-            - serverAddr: 2e6d44b644-snl78.cn-shenzhen.nas.aliyuncs.com
-              nasDir: /fc-test2
-              fcDir: /mnt/auto1
       function:
         name: event-function
         description: this is a test

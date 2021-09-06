@@ -81,7 +81,7 @@ $ s deploy -y
 
 1. 开发编辑源代码
 
-2. s build --use-docker 之后， 自动根据 requirements.txt 下载对应的依赖到本地， 并且和源码一起组成交付物
+2. s build --use-docker 之后， 自动根据 package.json 下载对应的依赖到本地， 并且和源码一起组成交付物
 
 3. s deploy 将整个交付物 zip 打包， 创建函数， 同时设置好依赖包的环境变量， 让函数可以直接 require 对应的代码依赖包
 
@@ -106,7 +106,7 @@ $ s deploy -y
 
 1. 开发编辑源代码
 
-2. s build --use-docker 之后， 自动根据 requirements.txt 下载对应的依赖到本地， 并且和源码一起组成交付物
+2. s build --use-docker 之后， 自动根据 composer.json 下载对应的依赖到本地， 并且和源码一起组成交付物
 
 3. s deploy 将整个交付物 zip 打包， 创建函数，让函数可以直接 require 对应的代码依赖包
 
