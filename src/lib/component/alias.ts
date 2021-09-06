@@ -86,10 +86,10 @@ export default class Alias {
     };
 
     if (!endProps.region) {
-      throw new Error('Not fount region');
+      throw new Error('Not found region');
     }
     if (!endProps.serviceName) {
-      throw new Error('Not fount service name');
+      throw new Error('Not found service name');
     }
 
     const credentials: ICredentials = await getCredentials(inputs.credentials, inputs?.project?.access);
@@ -139,7 +139,7 @@ export default class Alias {
       const versionClient = new Version();
       const versionList = await versionClient.list({ serviceName });
       if (versionList.length === 0) {
-        throw new Error('Not fount version.Please use [s version publish --description xxx] to publish the version');
+        throw new Error('Not found version.Please use [s version publish --description xxx] to publish the version');
       } else if (versionList.length === 1) {
         versionId = versionList[0].versionId;
       } else {
