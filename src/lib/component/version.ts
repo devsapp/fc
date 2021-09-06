@@ -66,10 +66,10 @@ export default class Version {
     };
 
     if (!endProps.region) {
-      throw new Error('Not fount region');
+      throw new Error('Not found region');
     }
     if (!endProps.serviceName) {
-      throw new Error('Not fount service name');
+      throw new Error('Not found service name');
     }
 
     const credentials: ICredentials = await getCredentials(inputs.credentials, inputs?.project?.access);
@@ -103,7 +103,7 @@ export default class Version {
 
   async remove({ serviceName, versionId }: Remove) {
     if (!versionId) {
-      throw new Error('Not fount version');
+      throw new Error('Not found version');
     }
     logger.info(`Removing service version: ${serviceName}.${versionId}`);
     const res = await Client.fcClient.deleteVersion(serviceName, versionId);

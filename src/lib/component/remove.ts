@@ -102,7 +102,7 @@ export default class Remove {
     };
 
     if (!endProps.region) {
-      throw new Error('Not fount region');
+      throw new Error('Not found region');
     }
 
     const credentials: ICredentials = await getCredentials(inputs.credentials, inputs?.project?.access);
@@ -121,7 +121,7 @@ export default class Remove {
   async removeOnDemand({ region, qualifier, serviceName, functionName, assumeYes }: RemoveOnDemandOrProvision) {
     logger.debug(`region is ${region}`);
     if (!_.isEmpty(qualifier) && _.isEmpty(functionName)) {
-      throw new Error('not fount functionName');
+      throw new Error('not found functionName');
     }
 
     const onDemand = new OnDemand();
@@ -135,7 +135,7 @@ export default class Remove {
   async removeProvision({ region, qualifier, serviceName, functionName, assumeYes }: RemoveOnDemandOrProvision) {
     logger.debug(`region is ${region}`);
     if (!_.isEmpty(qualifier) && _.isEmpty(functionName)) {
-      throw new Error('not fount functionName');
+      throw new Error('not found functionName');
     }
 
     const provision = new Provision();
@@ -194,7 +194,7 @@ export default class Remove {
     }
 
     if (_.isEmpty(serviceName)) {
-      throw new Error('not fount serviceName');
+      throw new Error('not found serviceName');
     }
 
     if (subCommand === 'onDemand') {

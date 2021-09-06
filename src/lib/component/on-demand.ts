@@ -60,7 +60,7 @@ export default class OnDemand {
     const props = inputs.props || {};
     const region = parsedData.region || props.region;
     if (!region) {
-      throw new Error('Not fount region');
+      throw new Error('Not found region');
     }
     const endProps: IProps = {
       region,
@@ -108,13 +108,13 @@ export default class OnDemand {
 
   async get({ serviceName, qualifier, functionName }: GetOnDemand) {
     if (!functionName) {
-      throw new Error('Not fount functio name');
+      throw new Error('Not found functio name');
     }
     if (!qualifier) {
-      throw new Error('Not fount qualifier');
+      throw new Error('Not found qualifier');
     }
     if (!serviceName) {
-      throw new Error('Not fount service name');
+      throw new Error('Not found service name');
     }
     logger.info(`Getting on-demand: ${serviceName}.${qualifier}/${functionName}`);
     const { data } = await Client.fcClient.on_demand_get(serviceName, qualifier, functionName);
@@ -130,13 +130,13 @@ export default class OnDemand {
 
   async remove({ serviceName, qualifier, functionName }: RemoveOnDemand) {
     if (!functionName) {
-      throw new Error('Not fount function name');
+      throw new Error('Not found function name');
     }
     if (!qualifier) {
-      throw new Error('Not fount qualifier');
+      throw new Error('Not found qualifier');
     }
     if (!serviceName) {
-      throw new Error('Not fount service name');
+      throw new Error('Not found service name');
     }
     logger.info(`Removing on-demand: ${serviceName}.${qualifier}/${functionName}`);
     const { data } = await Client.fcClient.on_demand_delete(serviceName, qualifier, functionName);
@@ -145,16 +145,16 @@ export default class OnDemand {
 
   async put({ serviceName, qualifier, functionName, maximumInstanceCount }: PutOnDemand) {
     if (!functionName) {
-      throw new Error('Not fount function name parameter');
+      throw new Error('Not found function name parameter');
     }
     if (!qualifier) {
-      throw new Error('Not fount qualifier parameter');
+      throw new Error('Not found qualifier parameter');
     }
     if (!serviceName) {
-      throw new Error('Not fount service name parameter');
+      throw new Error('Not found service name parameter');
     }
     if (typeof maximumInstanceCount !== 'number') {
-      throw new Error('Not fount maximumInstanceCount parameter');
+      throw new Error('Not found maximumInstanceCount parameter');
     }
 
     const options: any = {

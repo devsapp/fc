@@ -342,14 +342,14 @@ export default class FcBaseComponent extends BaseComponent {
     const nonOptionsArgs = comParse.data?._ || [];
     this.logger.debug(`nonOptionsArgs is ${JSON.stringify(nonOptionsArgs)}`);
     if (!comParse?.data) {
-      this.logger.error('Not fount sub-command.');
+      this.logger.error('Not found sub-command.');
       core.help(NAS_HELP_INFO);
       return;
     }
 
     if (nonOptionsArgs.length === 0) {
       if (!comParse?.data?.help) {
-        this.logger.error('Not fount sub-command.');
+        this.logger.error('Not found sub-command.');
       }
       core.help(NAS_HELP_INFO);
       return;
@@ -426,13 +426,13 @@ export default class FcBaseComponent extends BaseComponent {
 
     this.logger.debug(`nonOptionsArgs is ${JSON.stringify(nonOptionsArgs)}`);
     if (!argsData) {
-      this.logger.error('Not fount sub-command.');
+      this.logger.error('Not found sub-command.');
       super.help('StressInputsArgs');
       return;
     }
     if (nonOptionsArgs.length === 0) {
       if (!argsData?.help) {
-        this.logger.error('Not fount sub-command.');
+        this.logger.error('Not found sub-command.');
       }
       super.help('StressInputsArgs');
       return;

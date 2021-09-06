@@ -72,7 +72,7 @@ export default class Provision {
     const props = inputs.props || {};
     const region = parsedData.region || props.region;
     if (!region) {
-      throw new Error('Not fount region');
+      throw new Error('Not found region');
     }
     const endProps: IProps = {
       region,
@@ -97,13 +97,13 @@ export default class Provision {
 
   async get({ serviceName, qualifier, functionName }: GetProvision) {
     if (!functionName) {
-      throw new Error('Not fount function name');
+      throw new Error('Not found function name');
     }
     if (!qualifier) {
-      throw new Error('Not fount qualifier');
+      throw new Error('Not found qualifier');
     }
     if (!serviceName) {
-      throw new Error('Not fount service name');
+      throw new Error('Not found service name');
     }
     logger.info(`Getting provision: ${serviceName}.${qualifier}/${functionName}`);
     const { data } = await Client.fcClient.getProvisionConfig(serviceName, functionName, qualifier);
@@ -119,13 +119,13 @@ export default class Provision {
 
   async put({ serviceName, qualifier, functionName, config, target }: PutProvision) {
     if (!functionName) {
-      throw new Error('Not fount function name parameter');
+      throw new Error('Not found function name parameter');
     }
     if (!qualifier) {
-      throw new Error('Not fount qualifier parameter');
+      throw new Error('Not found qualifier parameter');
     }
     if (!serviceName) {
-      throw new Error('Not fount service name parameter');
+      throw new Error('Not found service name parameter');
     }
     if (!config && typeof target !== 'number') {
       throw new Error('config and target must fill in one');
