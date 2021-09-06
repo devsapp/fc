@@ -12,6 +12,7 @@ Commands:
   deploy: 部署资源
   remove: 删除资源
   local: 本地调试
+  remote: 远程调试
   build: 构建函数
   invoke: 远端调用
   info: 获取线上资源配置
