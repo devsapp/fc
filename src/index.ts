@@ -238,6 +238,8 @@ export default class FcBaseComponent extends BaseComponent {
     const fcLocalInvokeArgs: string = args ? args.replace(methodName, '').replace(/(^\s*)|(\s*$)/g, '') : '';
     this.logger.debug(`Args of fc-info is: ${fcLocalInvokeArgs}`);
 
+    inputs.argsObj.shift();
+    console.log(inputs.argsObj);
     const localRes: any = await this.componentMethodCaller(inputs, 'devsapp/fc-local-invoke', methodName, props, fcLocalInvokeArgs);
     tips.showNextTip(args, tips.showLocalNextTips);
 
