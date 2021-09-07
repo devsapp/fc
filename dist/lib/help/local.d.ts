@@ -38,6 +38,12 @@ export declare const LOCAL_INVOKE_HELP_INFO: ({
         description: string;
         type: StringConstructor;
         alias?: undefined;
+    } | {
+        name: string;
+        typeLabel: string;
+        description: string;
+        type: NumberConstructor;
+        alias?: undefined;
     })[];
     content?: undefined;
 } | {
@@ -68,6 +74,12 @@ export declare const LOCAL_START_HELP_INFO: ({
         typeLabel: string;
         description: string;
         type: StringConstructor;
+        alias?: undefined;
+    } | {
+        name: string;
+        typeLabel: string;
+        description: string;
+        type: NumberConstructor;
         alias?: undefined;
     })[];
     content?: undefined;
