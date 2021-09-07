@@ -90,6 +90,12 @@ export const LOCAL_INVOKE_HELP_INFO = [
         description: 'The temp directory mounted to /tmp , default to \'./.s/tmp/invoke/serviceName/functionName/\'',
         type: String,
       },
+      {
+        name: 'server-port',
+        typeLabel: '{underline <port>}',
+        description: 'The exposed port of http server when `--mode api` is set, default value is the random port between 7000 and 8000.',
+        type: Number,
+      },
     ],
   },
   {
@@ -134,7 +140,7 @@ export const LOCAL_START_HELP_INFO = [
       {
         name: 'debug-port',
         typeLabel: '{underline <port>}',
-        description: 'Specify the sandboxed container starting in debug mode, and exposing this port on localhos.',
+        description: 'Specify the sandboxed container starting in debug mode, and exposing this port on localhost.',
         alias: 'd',
         type: Number,
       },
@@ -155,6 +161,12 @@ export const LOCAL_START_HELP_INFO = [
         typeLabel: '{underline <tmpDir>}',
         description: 'The temp directory mounted to /tmp , default to \'./.s/tmp/invoke/serviceName/functionName/\'',
         type: String,
+      },
+      {
+        name: 'server-port',
+        typeLabel: '{underline <port>}',
+        description: 'The exposed port of http server, default value is the random port between 7000 and 8000.',
+        type: Number,
       },
     ],
   },
