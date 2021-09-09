@@ -14638,7 +14638,7 @@
 			"flags": {},
 			"children": [
 				{
-					"id": 1882,
+					"id": 1883,
 					"name": "BUILD_HELP_INFO",
 					"kind": 16777216,
 					"kindString": "Reference",
@@ -14646,7 +14646,7 @@
 					"target": 785
 				},
 				{
-					"id": 1883,
+					"id": 1884,
 					"name": "LOCAL_HELP_INFO",
 					"kind": 16777216,
 					"kindString": "Reference",
@@ -14654,7 +14654,7 @@
 					"target": 993
 				},
 				{
-					"id": 1884,
+					"id": 1885,
 					"name": "LOCAL_INVOKE_HELP_INFO",
 					"kind": 16777216,
 					"kindString": "Reference",
@@ -14662,7 +14662,7 @@
 					"target": 1003
 				},
 				{
-					"id": 1885,
+					"id": 1886,
 					"name": "LOCAL_START_HELP_INFO",
 					"kind": 16777216,
 					"kindString": "Reference",
@@ -14670,7 +14670,7 @@
 					"target": 1046
 				},
 				{
-					"id": 1886,
+					"id": 1887,
 					"name": "NAS_HELP_INFO",
 					"kind": 16777216,
 					"kindString": "Reference",
@@ -14678,7 +14678,7 @@
 					"target": 1093
 				},
 				{
-					"id": 1887,
+					"id": 1888,
 					"name": "NAS_SUB_COMMAND_HELP_INFO",
 					"kind": 16777216,
 					"kindString": "Reference",
@@ -15071,12 +15071,12 @@
 					"title": "References",
 					"kind": 16777216,
 					"children": [
-						1882,
 						1883,
 						1884,
 						1885,
 						1886,
-						1887
+						1887,
+						1888
 					]
 				},
 				{
@@ -31562,7 +31562,7 @@
 						},
 						{
 							"id": 1808,
-							"name": "vpcId",
+							"name": "vSwitchIds",
 							"kind": 1024,
 							"kindString": "Property",
 							"flags": {
@@ -31572,6 +31572,29 @@
 								{
 									"fileName": "lib/interface/vpc.ts",
 									"line": 4,
+									"character": 12
+								}
+							],
+							"type": {
+								"type": "array",
+								"elementType": {
+									"type": "intrinsic",
+									"name": "string"
+								}
+							}
+						},
+						{
+							"id": 1809,
+							"name": "vpcId",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isOptional": true
+							},
+							"sources": [
+								{
+									"fileName": "lib/interface/vpc.ts",
+									"line": 5,
 									"character": 7
 								}
 							],
@@ -31585,7 +31608,9 @@
 							"name": "vswitchIds",
 							"kind": 1024,
 							"kindString": "Property",
-							"flags": {},
+							"flags": {
+								"isOptional": true
+							},
 							"sources": [
 								{
 									"fileName": "lib/interface/vpc.ts",
@@ -31609,6 +31634,7 @@
 							"children": [
 								1806,
 								1808,
+								1809,
 								1807
 							]
 						}
@@ -31640,14 +31666,14 @@
 			]
 		},
 		{
-			"id": 1809,
+			"id": 1810,
 			"name": "lib/tips",
 			"kind": 1,
 			"kindString": "Module",
 			"flags": {},
 			"children": [
 				{
-					"id": 1810,
+					"id": 1811,
 					"name": "showBuildNextTips",
 					"kind": 64,
 					"kindString": "Function",
@@ -31661,7 +31687,7 @@
 					],
 					"signatures": [
 						{
-							"id": 1811,
+							"id": 1812,
 							"name": "showBuildNextTips",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -31674,7 +31700,7 @@
 					]
 				},
 				{
-					"id": 1814,
+					"id": 1815,
 					"name": "showDeployNextTips",
 					"kind": 64,
 					"kindString": "Function",
@@ -31688,7 +31714,7 @@
 					],
 					"signatures": [
 						{
-							"id": 1815,
+							"id": 1816,
 							"name": "showDeployNextTips",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -31701,7 +31727,7 @@
 					]
 				},
 				{
-					"id": 1812,
+					"id": 1813,
 					"name": "showLocalNextTips",
 					"kind": 64,
 					"kindString": "Function",
@@ -31715,7 +31741,7 @@
 					],
 					"signatures": [
 						{
-							"id": 1813,
+							"id": 1814,
 							"name": "showLocalNextTips",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -31728,7 +31754,7 @@
 					]
 				},
 				{
-					"id": 1816,
+					"id": 1817,
 					"name": "showNasNextTips",
 					"kind": 64,
 					"kindString": "Function",
@@ -31742,7 +31768,7 @@
 					],
 					"signatures": [
 						{
-							"id": 1817,
+							"id": 1818,
 							"name": "showNasNextTips",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -31755,7 +31781,7 @@
 					]
 				},
 				{
-					"id": 1818,
+					"id": 1819,
 					"name": "showNextTip",
 					"kind": 64,
 					"kindString": "Function",
@@ -31769,14 +31795,14 @@
 					],
 					"signatures": [
 						{
-							"id": 1819,
+							"id": 1820,
 							"name": "showNextTip",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 1820,
+									"id": 1821,
 									"name": "args",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -31787,7 +31813,7 @@
 									}
 								},
 								{
-									"id": 1821,
+									"id": 1822,
 									"name": "showMethod",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -31811,11 +31837,11 @@
 					"title": "Functions",
 					"kind": 64,
 					"children": [
-						1810,
-						1814,
-						1812,
-						1816,
-						1818
+						1811,
+						1815,
+						1813,
+						1817,
+						1819
 					]
 				}
 			],
@@ -31828,14 +31854,14 @@
 			]
 		},
 		{
-			"id": 1822,
+			"id": 1823,
 			"name": "lib/transform-nas",
 			"kind": 1,
 			"kindString": "Module",
 			"flags": {},
 			"children": [
 				{
-					"id": 1831,
+					"id": 1832,
 					"name": "default",
 					"kind": 64,
 					"kindString": "Function",
@@ -31849,14 +31875,14 @@
 					],
 					"signatures": [
 						{
-							"id": 1832,
+							"id": 1833,
 							"name": "default",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 1833,
+									"id": 1834,
 									"name": "props",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -31867,7 +31893,7 @@
 									}
 								},
 								{
-									"id": 1834,
+									"id": 1835,
 									"name": "nonOptionsArgs",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -31878,7 +31904,7 @@
 									}
 								},
 								{
-									"id": 1835,
+									"id": 1836,
 									"name": "args",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -31889,7 +31915,7 @@
 									}
 								},
 								{
-									"id": 1836,
+									"id": 1837,
 									"name": "access",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -31900,7 +31926,7 @@
 									}
 								},
 								{
-									"id": 1837,
+									"id": 1838,
 									"name": "commandName",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -31911,7 +31937,7 @@
 									}
 								},
 								{
-									"id": 1838,
+									"id": 1839,
 									"name": "credentials",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -31936,7 +31962,7 @@
 					]
 				},
 				{
-					"id": 1823,
+					"id": 1824,
 					"name": "toNasAbility",
 					"kind": 64,
 					"kindString": "Function",
@@ -31950,14 +31976,14 @@
 					],
 					"signatures": [
 						{
-							"id": 1824,
+							"id": 1825,
 							"name": "toNasAbility",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 1825,
+									"id": 1826,
 									"name": "region",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -31968,7 +31994,7 @@
 									}
 								},
 								{
-									"id": 1826,
+									"id": 1827,
 									"name": "vpcConfig",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -31980,7 +32006,7 @@
 									}
 								},
 								{
-									"id": 1827,
+									"id": 1828,
 									"name": "serviceName",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -31991,7 +32017,7 @@
 									}
 								},
 								{
-									"id": 1828,
+									"id": 1829,
 									"name": "role",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -32002,7 +32028,7 @@
 									}
 								},
 								{
-									"id": 1829,
+									"id": 1830,
 									"name": "__namedParameters",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -32013,7 +32039,7 @@
 									}
 								},
 								{
-									"id": 1830,
+									"id": 1831,
 									"name": "args",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -32045,8 +32071,8 @@
 					"title": "Functions",
 					"kind": 64,
 					"children": [
-						1831,
-						1823
+						1832,
+						1824
 					]
 				}
 			],
@@ -32059,14 +32085,14 @@
 			]
 		},
 		{
-			"id": 1839,
+			"id": 1840,
 			"name": "lib/utils",
 			"kind": 1,
 			"kindString": "Module",
 			"flags": {},
 			"children": [
 				{
-					"id": 1866,
+					"id": 1867,
 					"name": "componentMethodCaller",
 					"kind": 64,
 					"kindString": "Function",
@@ -32080,14 +32106,14 @@
 					],
 					"signatures": [
 						{
-							"id": 1867,
+							"id": 1868,
 							"name": "componentMethodCaller",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 1868,
+									"id": 1869,
 									"name": "inputs",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -32099,7 +32125,7 @@
 									}
 								},
 								{
-									"id": 1869,
+									"id": 1870,
 									"name": "componentName",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -32110,7 +32136,7 @@
 									}
 								},
 								{
-									"id": 1870,
+									"id": 1871,
 									"name": "methodName",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -32121,7 +32147,7 @@
 									}
 								},
 								{
-									"id": 1871,
+									"id": 1872,
 									"name": "props",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -32134,7 +32160,7 @@
 									}
 								},
 								{
-									"id": 1872,
+									"id": 1873,
 									"name": "args",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -32147,7 +32173,7 @@
 									}
 								},
 								{
-									"id": 1873,
+									"id": 1874,
 									"name": "argsObj",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -32174,7 +32200,7 @@
 					]
 				},
 				{
-					"id": 1874,
+					"id": 1875,
 					"name": "extract",
 					"kind": 64,
 					"kindString": "Function",
@@ -32188,14 +32214,14 @@
 					],
 					"signatures": [
 						{
-							"id": 1875,
+							"id": 1876,
 							"name": "extract",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 1876,
+									"id": 1877,
 									"name": "regex",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -32206,7 +32232,7 @@
 									}
 								},
 								{
-									"id": 1877,
+									"id": 1878,
 									"name": "endpoint",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -32225,7 +32251,7 @@
 					]
 				},
 				{
-					"id": 1850,
+					"id": 1851,
 					"name": "genServiceStateID",
 					"kind": 64,
 					"kindString": "Function",
@@ -32239,14 +32265,14 @@
 					],
 					"signatures": [
 						{
-							"id": 1851,
+							"id": 1852,
 							"name": "genServiceStateID",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 1852,
+									"id": 1853,
 									"name": "accountID",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -32257,7 +32283,7 @@
 									}
 								},
 								{
-									"id": 1853,
+									"id": 1854,
 									"name": "region",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -32268,7 +32294,7 @@
 									}
 								},
 								{
-									"id": 1854,
+									"id": 1855,
 									"name": "serviceName",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -32287,7 +32313,7 @@
 					]
 				},
 				{
-					"id": 1840,
+					"id": 1841,
 					"name": "getCredentials",
 					"kind": 64,
 					"kindString": "Function",
@@ -32301,14 +32327,14 @@
 					],
 					"signatures": [
 						{
-							"id": 1841,
+							"id": 1842,
 							"name": "getCredentials",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 1842,
+									"id": 1843,
 									"name": "credentials",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -32320,7 +32346,7 @@
 									}
 								},
 								{
-									"id": 1843,
+									"id": 1844,
 									"name": "access",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -32345,7 +32371,7 @@
 					]
 				},
 				{
-					"id": 1855,
+					"id": 1856,
 					"name": "getFcNames",
 					"kind": 64,
 					"kindString": "Function",
@@ -32359,14 +32385,14 @@
 					],
 					"signatures": [
 						{
-							"id": 1856,
+							"id": 1857,
 							"name": "getFcNames",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 1857,
+									"id": 1858,
 									"name": "argsParse",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -32377,7 +32403,7 @@
 									}
 								},
 								{
-									"id": 1858,
+									"id": 1859,
 									"name": "inputsProps",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -32391,14 +32417,14 @@
 							"type": {
 								"type": "reflection",
 								"declaration": {
-									"id": 1859,
+									"id": 1860,
 									"name": "__type",
 									"kind": 65536,
 									"kindString": "Type literal",
 									"flags": {},
 									"children": [
 										{
-											"id": 1862,
+											"id": 1863,
 											"name": "functionName",
 											"kind": 1024,
 											"kindString": "Property",
@@ -32410,7 +32436,7 @@
 											"defaultValue": "..."
 										},
 										{
-											"id": 1860,
+											"id": 1861,
 											"name": "region",
 											"kind": 1024,
 											"kindString": "Property",
@@ -32422,7 +32448,7 @@
 											"defaultValue": "..."
 										},
 										{
-											"id": 1861,
+											"id": 1862,
 											"name": "serviceName",
 											"kind": 1024,
 											"kindString": "Property",
@@ -32439,9 +32465,9 @@
 											"title": "Properties",
 											"kind": 1024,
 											"children": [
-												1862,
-												1860,
-												1861
+												1863,
+												1861,
+												1862
 											]
 										}
 									]
@@ -32451,7 +32477,7 @@
 					]
 				},
 				{
-					"id": 1847,
+					"id": 1848,
 					"name": "isAutoConfig",
 					"kind": 64,
 					"kindString": "Function",
@@ -32465,14 +32491,14 @@
 					],
 					"signatures": [
 						{
-							"id": 1848,
+							"id": 1849,
 							"name": "isAutoConfig",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 1849,
+									"id": 1850,
 									"name": "config",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -32491,7 +32517,7 @@
 					]
 				},
 				{
-					"id": 1863,
+					"id": 1864,
 					"name": "isHttpFunction",
 					"kind": 64,
 					"kindString": "Function",
@@ -32505,14 +32531,14 @@
 					],
 					"signatures": [
 						{
-							"id": 1864,
+							"id": 1865,
 							"name": "isHttpFunction",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 1865,
+									"id": 1866,
 									"name": "props",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -32532,7 +32558,7 @@
 					]
 				},
 				{
-					"id": 1844,
+					"id": 1845,
 					"name": "promptForConfirmOrDetails",
 					"kind": 64,
 					"kindString": "Function",
@@ -32546,14 +32572,14 @@
 					],
 					"signatures": [
 						{
-							"id": 1845,
+							"id": 1846,
 							"name": "promptForConfirmOrDetails",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 1846,
+									"id": 1847,
 									"name": "message",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -32578,7 +32604,7 @@
 					]
 				},
 				{
-					"id": 1878,
+					"id": 1879,
 					"name": "tableShow",
 					"kind": 64,
 					"kindString": "Function",
@@ -32594,14 +32620,14 @@
 					],
 					"signatures": [
 						{
-							"id": 1879,
+							"id": 1880,
 							"name": "tableShow",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 1880,
+									"id": 1881,
 									"name": "data",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -32612,7 +32638,7 @@
 									}
 								},
 								{
-									"id": 1881,
+									"id": 1882,
 									"name": "showKey",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -32636,15 +32662,15 @@
 					"title": "Functions",
 					"kind": 64,
 					"children": [
-						1866,
-						1874,
-						1850,
-						1840,
-						1855,
-						1847,
-						1863,
-						1844,
-						1878
+						1867,
+						1875,
+						1851,
+						1841,
+						1856,
+						1848,
+						1864,
+						1845,
+						1879
 					]
 				}
 			],
@@ -32711,9 +32737,9 @@
 				1784,
 				1797,
 				1804,
-				1809,
-				1822,
-				1839
+				1810,
+				1823,
+				1840
 			]
 		}
 	]
