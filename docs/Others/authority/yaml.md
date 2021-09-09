@@ -525,6 +525,21 @@ function:
 
 ## 存在 asyncConfiguration 配置
 
+### 服务角色权限
+
+- 配置了 fc：`AliyunFCInvocationAccess`
+- 配置了 mns
+````
+{
+    Action: [
+    'mns:SendMessage',
+    'mns:PublishMessage',
+    ],
+    Resource: '*',
+    Effect: 'Allow',
+}
+````
+
 ### 子账号需要的权限
 
 #### 最大权限
