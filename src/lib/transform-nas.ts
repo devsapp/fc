@@ -12,7 +12,7 @@ export async function toNasAbility(region: string, vpcConfig: VpcConfig, service
       serviceName: `_FC_NAS_${serviceName}`,
       description: `service for fc nas used for service ${serviceName}`,
       vpcId: vpcConfig.vpcId,
-      vSwitchId: vpcConfig.vswitchIds,
+      vSwitchId: !isEmpty(vpcConfig.vswitchIds) ? vpcConfig.vswitchIds : vpcConfig.vSwitchIds,
       securityGroupId: vpcConfig.securityGroupId,
       role,
       userId,
