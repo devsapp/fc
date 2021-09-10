@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import * as core from '@serverless-devs/core';
 import * as _ from 'lodash';
 import Logger from './common/logger';
@@ -20,13 +21,16 @@ import Alias from './lib/component/alias';
 import OnDemand from './lib/component/on-demand';
 import Remove from './lib/component/remove';
 import Provision from './lib/component/provision';
-import { StressOption, PayloadOption, EventTypeOption, HttpTypeOption } from './lib/interface/component/fs-stress';
+import { PayloadOption, EventTypeOption, HttpTypeOption } from './lib/interface/component/fc-common';
+import { StressOption } from './lib/interface/component/fc-stress';
 import * as yaml from 'js-yaml';
 import BaseComponent from './common/base';
 import FcProxiedInvoke from './lib/component/fc-proxied-invoke';
 import * as proxied from './command/proxied';
 import FcRemoteDebug from './lib/component/fc-remote-debug';
 import * as remote from './command/remote';
+import FcEval from './lib/component/fc-eval';
+import { EvalOption } from './lib/interface/component/fc-eval';
 
 Logger.setContent('FC');
 const SUPPORTED_LOCAL_METHOD: string[] = ['invoke', 'start'];
@@ -745,6 +749,92 @@ export default class FcBaseComponent extends BaseComponent {
       }
       return await remote.cleanup(fcRemoteDebug.makeInputs(methodName));
     }
+  }
+
+  async eval(inputs: IInputs): Promise<any> {
+    const { props, project } = this.handlerComponentInputs(inputs);
+    const SUPPORTED_METHOD: string[] = ['start', 'clean'];
+    const EVAL_SUB_COMMAND_HELP_KEY = {
+      start: 'EvalStartInputsArgs',
+      clean: 'EvalCleanInputsArgs',
+    };
+
+    const apts = {
+      boolean: ['help', 'assume-yes'],
+      alias: {
+        help: 'h',
+        region: 'r',
+        access: 'a',
+        qualifier: 'q',
+        'payload-file': 'f',
+        'assume-yes': 'y',
+      },
+    };
+    const comParse: any = core.commandParse(inputs, apts);
+    const argsData: any = comParse?.data || {};
+    const nonOptionsArgs = argsData?._ || [];
+
+    this.logger.debug(`nonOptionsArgs is ${JSON.stringify(nonOptionsArgs)}`);
+    if (!argsData) {
+      this.logger.error('Not fount sub-command.');
+      super.help('EvalInputsArgs');
+      return;
+    }
+    if (nonOptionsArgs.length === 0) {
+      if (!argsData?.help) {
+        this.logger.error('Not fount sub-command.');
+      }
+      super.help('EvalInputsArgs');
+      return;
+    }
+
+    const commandName: string = nonOptionsArgs[0];
+    if (!SUPPORTED_METHOD.includes(commandName)) {
+      this.logger.error(`Not supported sub-command: [${commandName}]`);
+      super.help('EvalInputsArgs');
+      return;
+    }
+
+    if (argsData?.help) {
+      super.help(EVAL_SUB_COMMAND_HELP_KEY[commandName]);
+      return;
+    }
+    const evalOpts: EvalOption = {
+      serviceName: argsData['service-name'] || props?.service?.name,
+      functionName: argsData['function-name'] || props?.function?.name,
+      qualifier: argsData?.qualifier,
+      functionType: argsData['function-type'] || isHttpFunction(props) ? 'http' : 'event',
+      evalType: argsData['eval-type'],
+      memorySizeList: argsData['memory-size'],
+      runCount: argsData['run-count'],
+    };
+
+    let httpTypeOpts: HttpTypeOption = null;
+    if (evalOpts?.functionType === 'http') {
+      httpTypeOpts = {
+        url: argsData?.url,
+        method: argsData?.method,
+        path: argsData?.path,
+        query: argsData?.query,
+        body: argsData?.body,
+      };
+      this.logger.debug(`Using http options: \n${yaml.dump(httpTypeOpts)}`);
+    }
+    const payloadOpts: PayloadOption = {
+      payloadFile: argsData['payload-file'],
+      payload: argsData?.payload,
+    };
+    const fcEval: FcEval = new FcEval(project?.access, props?.region || argsData?.region,
+      evalOpts, httpTypeOpts, payloadOpts);
+    let fcEvalArgs: string;
+    if (commandName === 'start') {
+      fcEvalArgs = fcEval.makeStartArgs();
+    } else if (commandName === 'clean') {
+      fcEvalArgs = fcEval.makeCleanArgs(argsData['assume-yes']);
+    }
+    this.logger.debug(`Input args of fc-eval component is: ${fcEvalArgs}`);
+    delete inputs.argsObj;
+    return await this.componentMethodCaller(inputs, 'devsapp/fc-eval', commandName, null, fcEvalArgs);
   }
 
   async help(): Promise<void> {

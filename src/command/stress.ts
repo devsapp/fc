@@ -35,7 +35,7 @@ export interface StressCleanInputsArgs {
 }
 
 /**
- * s start clean <options>\n
+ * s stress start <options>\n
  * @pre_help
  * {"header":"Stress start","content":"Start stress test"}
  * @after_help
