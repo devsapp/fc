@@ -8,11 +8,10 @@ import * as DEPLOY_HELP from './lib/help/deploy';
 import transformNas, { toNasAbility } from './lib/transform-nas';
 import { ICredentials } from './lib/interface/profile';
 import { IInputs, IProperties } from './lib/interface/interface';
-import { isLogConfig } from './lib/interface/sls';
+import { isLogConfig, LogsProps } from './lib/interface/sls';
 import { FcInfoProps } from './lib/interface/component/fc-info';
 import { FcSyncProps } from './lib/interface/component/fc-sync';
 import { FcMetricsProps } from './lib/interface/component/fc-metrics';
-import { LogsProps } from './lib/interface/component/logs';
 import { getFcNames, isAutoConfig, isHttpFunction } from './lib/utils';
 import * as tips from './lib/tips';
 import FcStress from './lib/component/fc-stress';
@@ -299,8 +298,9 @@ export default class FcBaseComponent extends BaseComponent {
       }
 
       logsPayload = {
-        logConfig,
-        region,
+        project: logConfig?.project,
+        logstore: logConfig?.logstore,
+        regionId: region,
         topic: serviceName,
         query: props?.function?.name,
       };
@@ -311,7 +311,7 @@ export default class FcBaseComponent extends BaseComponent {
       throw ex;
     }
 
-    await this.componentMethodCaller(inputs, 'devsapp/logs', 'logs', logsPayload, args);
+    await this.componentMethodCaller(inputs, 'devsapp/sls', 'logs', logsPayload, args);
   }
 
   async metrics(inputs: IInputs): Promise<any> {

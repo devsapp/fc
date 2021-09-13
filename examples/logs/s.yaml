@@ -13,7 +13,7 @@ services:
         internetAccess: true
         logConfig: auto
       function:
-        name: event-function
+        name: test-logs-function
         description: this is a test
         runtime: nodejs10
         codeUri: ./code
