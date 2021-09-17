@@ -52,6 +52,8 @@
   - [按量资源操作：OnDemand](./docs/Usage/onDemand.md)
   - [层的操作：Layer](./docs/Usage/layer.md)
   - [端云联调: Proxied](./docs/Usage/proxied.md)
+  - [压测操作: Stress](./docs/Usage/stress.md)
+  - [远程调试: Remote](./docs/Usage/remote.md)
 - 权限相关
   - [Yaml 字段相关配置权限](./docs/Others/authority/yaml.md)
   - [命令使用相关权限](./docs/Others/authority/command.md)
