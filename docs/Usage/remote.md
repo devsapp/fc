@@ -223,7 +223,7 @@ s remote cleanup
 2. 进入代理容器
 
    ```bash
-   docker exec -it ${CONTAINER_ID}
+   docker exec -it ${CONTAINER_ID} bash
    ```
 
 3. 登陆远程计算实例
