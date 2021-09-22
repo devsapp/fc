@@ -14,7 +14,7 @@ export interface StressInputsArgs {
 /**
  * s stress clean <options>\n
  * @pre_help
- * {"header":"Stress clean","content":"Clean the relevant resources"}
+ * {"header":"Stress clean","content":"Clean the relevant resources, including local html report files and helper resources."}
  * @after_help
  * {"ref":"GlobalParams"}
  * @example

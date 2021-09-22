@@ -3,7 +3,7 @@ name: fcDeployApp       #  项目名称
 access: default  #  秘钥别名
 
 services:
-  fc-event-test: #  服务名称
+  fc-event-test:
     component: ${path(../..)}  # 组件名称
     props: #  组件的属性值
       region: cn-shenzhen
@@ -18,7 +18,7 @@ services:
         codeUri: ./event-code
         handler: index.handler
         memorySize: 128
-  fc-http-test: #  服务名称
+  fc-http-test:
     component: ${path(../..)}  # 组件名称
     props: #  组件的属性值
       region: cn-shenzhen

@@ -68,7 +68,7 @@ export const LOCAL_INVOKE_HELP_INFO = [
       {
         name: 'debug-port',
         typeLabel: '{underline <port>}',
-        description: 'Specify the sandboxed container starting in debug mode, and exposing this port on localhos.',
+        description: 'Specify the local function container starting in debug mode, and exposing this port on localhost.',
         alias: 'd',
         type: Number,
       },
@@ -113,7 +113,7 @@ export const LOCAL_INVOKE_HELP_INFO = [
     header: 'Examples with Yaml',
     content: [
       '$ s {bold local invoke} [{bold --debug-port} {underline 9000}] [{bold --config} {underline vscode}]',
-      '$ s exec -- {bold local invoke} [{bold --debug-port} {underline 9000}] [{bold --config} {underline vscode}]',
+      '$ s {bold local invoke} [{bold --event} {underline "hello world!"}]',
     ],
   },
 ];
@@ -185,7 +185,6 @@ export const LOCAL_START_HELP_INFO = [
     header: 'Examples with Yaml',
     content: [
       '$ s {bold local start} [{bold --debug-port} {underline 9000}] [{bold --config} {underline vscode}]',
-      '$ s exec -- {bold local start} [{bold --debug-port} {underline 9000}] [{bold --config} {underline vscode}]',
     ],
   },
 ];

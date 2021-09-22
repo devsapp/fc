@@ -29,6 +29,9 @@ export const COMPONENT_HELP_INFO = [
       { name: 'provision', summary: 'Resource reservation operation' },
       { name: 'onDemand', summary: 'Resource OnDemand operation' },
       { name: 'layer', summary: 'Resource layer operation' },
+      { name: 'remote', summary: 'Remote invoke via proxied service'},
+      { name: 'proxied', summary: 'Local invoke via proxied service.'},
+      { name: 'stress', summary: 'Stress test for the serverless application'}
     ],
   },
   {

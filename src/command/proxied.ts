@@ -74,7 +74,7 @@ export interface ProxiedSetupInputsArgs {
  * @pre_help
  * {"header":"Invoke","content":"Invoke local function."}
  * @pre_help
- * {"header": "Detail", "content": "Invoke local function in the container.Need setup first"}
+ * {"header": "Detail", "content": "Invoke local function in the container.Need `s setup` first"}
  * @after_help
  * {"ref":"GlobalParams"}
  * @example
@@ -87,7 +87,7 @@ export interface ProxiedInvokeInputsArgs {
    */
   event: string;
   /**
-   *  Event funtion: A file containing event data passed to the function during invoke. Http function: A file containing http request options sent to https strigger. Format refers to [https://github.com/devsapp/fc-remote-invoke#特别说明]
+   *  Event funtion: A file containing event data passed to the function during invoke. Http function: A file containing http request options sent to http trigger. Format refers to [https://github.com/devsapp/fc-remote-invoke#特别说明]
    *  @alias f
    */
   'event-file': string;

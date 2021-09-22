@@ -2,8 +2,8 @@ edition: 1.0.0        #  命令行YAML规范版本，遵循语义化版本（Sem
 name: compoent-test   #  项目名称
 
 services:
-  component-test: #  服务名称
-    component: ${path(../..)}  # 这里引入的是相对路径，正式配置替换成你自己的component名称即可 
+  component-test:
+    component: ${path(../..)}  # 这里引入的是相对路径，正式配置替换成你自己的component名称即可
     props:
       region: cn-shanghai
       service:

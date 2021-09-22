@@ -74,7 +74,7 @@ edition: 1.0.0          #  命令行YAML规范版本，遵循语义化版本（S
 name: fcDeployApp       #  项目名称
 
 services:
-  fc-deploy-test: #  服务名称
+  fc-deploy-test: 
     component: devsapp/fc  # 组件名称
     props: #  组件的属性值
       region: cn-hangzhou

@@ -69,7 +69,7 @@ export const DEPLOY_ALL = [
       {
         name: 'type',
         description: 'Only deploy configuration or code. Value: code, config',
-        type: Boolean,
+        type: String,
       },
       {
         name: 'use-local',
@@ -150,7 +150,7 @@ export const DEPLOY_FUNCTION = [
       {
         name: 'type',
         description: 'Only deploy configuration or code Value: code, config',
-        type: Boolean,
+        type: String,
       },
       {
         name: 'use-local',
@@ -192,8 +192,8 @@ export const DEPLOY_TRIGGER = [
     optionList: [
       {
         name: 'trigger-name',
-        description: 'Only deploy the specified trigger',
-        type: Boolean,
+        description: 'Only deploy the specified trigger, multiple triggers can be specified using --trigger-name name1 --trigger-name name2',
+        type: Array,
       },
       {
         name: 'use-local',
