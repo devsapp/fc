@@ -38,22 +38,22 @@ name: ffmpeg-app        #  项目名称
 access: default         #  秘钥别名
 
 services:
-  fc-deploy-test: #  服务名称
+  fc-deploy-test:
     component: devsapp/fc  # 组件名称
     props: #  组件的属性值
       region: cn-qingdao
       service:
-        name: qianfeng-fc-deploy-service
+        name: fc-deploy-service
         description: demo for fc-deploy component
         internetAccess: true
-        role: 'acs:ram::xxx:role/qianfeng-fc-deploy-test-role'
-        tracingConfig: Enable
+        role: 'acs:ram::xxx:role/AliyunFcDefaultRole'
+        tracingConfig: Enable  # 'Enable' or 'Disable'
         nasConfig:
           userId: 10003
           groupId: 10003
           mountPoints:
             - serverAddr: xxx.cn-qingdao.nas.aliyuncs.com
-              nasDir: /qianfeng-fc-deploy-service
+              nasDir: /fc-deploy-service
               fcDir: /mnt/auto
         vpcConfig:
           vpcId: xxx
@@ -66,11 +66,11 @@ services:
           enableRequestMetrics: true
           enableInstanceMetrics: true
       function:
-        name: qianfeng-fc-base-service
+        name: fc-base-service
         description: 'this is test'
         codeUri: './code.zip'
         ossBucket: xxx
-        ossKey: xxx
+        ossKey: xxx  # conflict with codeUri
         handler: 'index.handler'
         memorySize: 128
         runtime: nodejs12
@@ -80,12 +80,17 @@ services:
           image: xxx
           command: xxx
           args: xxx
+          instanceID: cri-xxxxxx  # 容器镜像服务企业版实例的ID，共享实例时不需要指定该参数
+          accelerationType: Default  # 镜像加速开关，'Default' or 'None'
         environmentVariables:
           key: 'value'
         initializationTimeout: 20
         initializer: index.initializer
         instanceConcurrency: 1
-        instanceType: e1
+        instanceType: e1  # e1(弹性实例) or c1(性能实例)
+        layer: 
+          - xxx
+          - xxx
         instanceLifecycleConfig:
           preFreeze:
             handler: index.xxx
@@ -166,12 +171,19 @@ services:
               domain: 
                 - 'www.taobao.com'
                 - 'www.tmall.com'
+        - name: tablestoreTrigger
+          type: tablestore
+          role: xxx
+          sourceArn: xxx
+          config:
+            instanceName: xxx
+            tableName: xxxs
       customDomains:
         - domainName: auto
           protocol: HTTP
           routeConfigs:
             - path: /a
-              serviceName: qianfeng-fc-deploy-service
+              serviceName: fc-deploy-service
               functionName: custom-container-function
               methods:
                 - GET
@@ -180,9 +192,6 @@ services:
             certificate: xxx
             privateKey: xxx
 ```
-
-
-
 
 # 字段解析
 
@@ -200,7 +209,7 @@ services:
 | 参数名 |  必填  |  类型  |  参数描述  |
 | --- |  ---  |  ---  |  ---  |
 | name | True | String | service名称 |
-| description | True | String | Service的简短描述 |
+| description | False | String | Service的简短描述 |
 | internetAccess | False | Boolean | 设为true让function可以访问公网 |
 | tracingConfig | False | String | 链路追踪，可取值：Enable、Disable |
 | role | False | String[简单配置]/Struct[详细配置] | 授予函数计算所需权限的RAM role, 使用场景包含 1. 把 function产生的 log 发送到用户的 logstore 中 2. 为function 在执行中访问其它云资源生成 token |
@@ -210,7 +219,7 @@ services:
 
 ### role
 
-当`role`参数为字符串时，可以是：`acs:ram::xxx:role/qianfeng-fc-deploy-test-role`
+当`role`参数为字符串时，可以是：`acs:ram::xxx:role/AliyunFcDefaultRole`
 
 当`role`参数为结构时，可以参考：
 
@@ -219,7 +228,28 @@ services:
 | name | True | String | 角色名 |
 | policies | True | List<String> | 策略列表 |
 
-例如：
+#### policies
+
+其中 `policies` 表示策略列表，当使用了这个字段，需要本地配置的 ak 具有创建 policy 和 role 的权限，列表中的元素支持字符串和 `policy` 结构体，该结构体可以参考:
+
+| 参数名 |  必填  |  类型  |  参数描述  |
+| --- |  ---  |  ---  |  ---  |
+| name | True | String | 策略名称 |
+| description | False | String | 策略描述 |
+| statement | True | List<Struct> | 策略内容列表 |
+
+#### statement
+
+其中 `statement` 表示策略内容列表，列表中元素的结构体可以参考：
+
+| 参数名 |  必填  |  类型  |  参数描述  |
+| --- |  ---  |  ---  |  ---  |
+| Effect | True | String | 策略效果，可选值有 'Allow' 和 'Deny' |
+| Action | True | List<String> | 策略动作 |
+| Resource | True | String/List<String> | 策略的目标资源 |
+| Condition | False | Object | 策略的目标资源 |
+
+role 的示例如下所示：
 
 ```
 role:
@@ -262,7 +292,7 @@ role:
 | 参数名 |  必填  |  类型  |  参数描述  |
 | --- |  ---  |  ---  |  ---  |
 | securityGroupId | False | String | 安全组ID |
-| vSwitchIds | False | List<String> | 一个或多个VSwitch ID |
+| vSwitchIds | False | List<String> | 交换机 ID 列表 |
 | vpcId | False | String | VPC ID |
 
 > 相关权限可以参考[权限文档](./authority/yaml.md#存在-VPC-配置)
@@ -296,8 +326,8 @@ role:
 | name | True | String | function名称 |
 | description | False | String | function的简短描述 |
 | codeUri | False | String | 代码位置 |
-| ossBucket | False | String | 如果指定oss代码，所在的存储桶，不能与codeUri同时出现 |
-| ossKey | False | String | 如果指定oss代码，所对应的对象，不能与codeUri同时出现  |
+| ossBucket | False | String | 代码存放的 oss 存储桶 |
+| ossKey | False | String | 如果指定 oss 代码，所对应的对象，不能与codeUri同时出现  |
 | handler | False | String | function执行的入口，具体格式和语言相关 |
 | memorySize | False | Number | function的内存规格 |
 | runtime | True | String | 运行时 |
@@ -308,7 +338,7 @@ role:
 | initializationTimeout | False | Number | 初始化方法超时时间 |
 | initializer | False | String | 初始化方法 |
 | instanceConcurrency | False | Number | 单实例多并发 |
-| instanceType | False | String | 函数实例类型，可选址为：e1、c1 |
+| instanceType | False | String | 函数实例类型，可选值为：e1（弹性实例）、c1（性能实例） |
 | instanceLifecycleConfig | False | Struct | 扩展函数 |
 | asyncConfiguration | False | Struct | 异步配置 |
 
@@ -317,9 +347,12 @@ runtime目前支持：`nodejs4.4`、`nodejs6`、`nodejs8`、`nodejs10`、`nodejs
 ### customContainerConfig
 | 参数名 |  必填  |  类型  |  参数描述  |
 | --- |  ---  |  ---  |  ---  |
-| image | False | String | 仓库地址 |
-| command | False | String | 指令 |
-| args | False | String | 参数 |
+| image | False | String | 容器镜像仓库地址 |
+| command | False | String | 容器启动指令，示例值: '["/code/myserver"]' |
+| args | False | String | 容器启动参数，示例值: '["-arg1", "value1"]' |
+| accelerationType | False | String | 镜像加速开关，可选值：'Default'、'None'，前者表示开启，后者表示关闭 |
+| instanceID | False | String | 容器镜像服务企业版实例的ID。当容器镜像选择的是企业版实例时，您需要给容器镜像服务企业版添加实例ID，该实例的默认解析必须是服务所在的VPC网络地址。目前不支持PrivateZone产品定义域名解析 |
+
 
 > 相关权限可以参考[权限文档](./authority/yaml.md#Runtime-为-custom-container)
 
@@ -342,16 +375,16 @@ TempKey: tempValue
 
 | 参数名 |  必填  |  类型  |  参数描述  |
 | --- |  ---  |  ---  |  ---  |
-| handler | False | String |  函数入口 |
+| handler | True | String |  函数入口 |
 | timeout | False | Number |  超时时间 |
 
 ### asyncConfiguration
 | 参数名 |  必填  |  类型  |  参数描述  |
 | --- |  ---  |  ---  |  ---  |
-| maxAsyncEventAgeInSeconds | False | Number |  消息最大有效期(s) |
-| maxAsyncRetryAttempts | False | Number |  最大重试次数 |
-| statefulInvocation | False | Boolean |  异步调用状态 |
-| destination | False | Struct |  目标地址 |
+| maxAsyncEventAgeInSeconds | False | Number |  消息最大存活时长，取值范围[1,2592000]。单位：秒 |
+| maxAsyncRetryAttempts | False | Number |  异步调用失败后的最大重试次数，默认值为3。取值范围[0,8] |
+| statefulInvocation | False | Boolean |  是否开启有状态异步调用 |
+| destination | False | Struct |  异步调用目标的配置结构体 |
 
 > 相关权限可以参考[权限文档](./authority/yaml.md#存在-asyncConfig-配置)
 
@@ -359,8 +392,8 @@ TempKey: tempValue
 #### destination
 | 参数名 |  必填  |  类型  |  参数描述  |
 | --- |  ---  |  ---  |  ---  |
-| onSuccess | False | String |  失败时 |
-| onFailure | False | String |  失败时 |
+| onSuccess | False | String |  异步调用失败的目标服务 |
+| onFailure | False | String |  异步调用成功的目标服务 |
 
 
 ## triggers字段
@@ -370,28 +403,26 @@ TempKey: tempValue
 | name | True | String | 触发器名称 |
 | type | True | Enum | 触发器类型 |
 | role | False | String | 使用一个 RAM 角色的 ARN 为函数指定执行角色，事件源会使用该角色触发函数执行，请确保该角色有调用函数的权限 |
-| sourceArn | False | String | 资源Arn |
+| sourceArn | False | String | 触发器事件源的 ARN |
 | config | True | Struct | 触发器配置 |
 
-type目前支持：`http`, `timer`, `oss`, `log`, `mns_topic`, `cdn_events`
+type目前支持：`http`, `timer`, `oss`, `log`, `mns_topic`, `cdn_events`, `tablestore`
 
 > 相关权限可以参考[权限文档](./authority/yaml.md#触发器相关权限配置)
 
-
 ### OSS触发器
-
 
 | 参数名 |  必填  |  类型  |  参数描述  |
 | --- |  ---  |  ---  |  ---  |
-| bucketName | True | String | 为 OSS 中对应的 bucket 名称 |
-| events | True | List | 为 OSS 端触发函数执行的事件 |
-| filter | True | Struct | 筛选条件 |
+| bucketName | True | String | OSS 中目标 bucket 名称 |
+| events | True | List<String> | OSS 端触发函数执行的事件列表 |
+| filter | True | Struct | 触发条件 |
 
 #### filter
 
 | 参数名 |  必填  |  类型  |  参数描述  |
 | --- |  ---  |  ---  |  ---  |
-| Key | False | Struct |  |
+| Key | False | Struct | 键值 |
 
 ##### Key
 
@@ -406,29 +437,29 @@ type目前支持：`http`, `timer`, `oss`, `log`, `mns_topic`, `cdn_events`
 
 | 参数名 |  必填  |  类型  |  参数描述  |
 | --- |  ---  |  ---  |  ---  |
-| logConfig | True | String | log配置 |
+| logConfig | True | Struct | 日志配置 |
 | jobConfig | True | List | job配置 |
 | sourceConfig | True | Struct | source配置 |
-| functionParameter | True | Struct | 日志服务将该配置内容作为函数 event, 当事件触发时 |
-| enable | True | Boolean | 开关 |
+| functionParameter | True | Struct | 该参数将作为函数Event的Parameter传入函数。默认值为空（{}） |
+| enable | True | Boolean | 触发器开关 |
 
 #### logConfig
 | 参数名 |  必填  |  类型  |  参数描述  |
 | --- |  ---  |  ---  |  ---  |
-| project | False | String | 表示日志服务 Project 名称 |
-| logStore | False | String | 表示触发函数执行时，产生的日志会记录到该 Logstore |
+| project | False | String | 日志项目名称 |
+| logstore | False | String | 日志仓库名称，日志服务触发函数执行过程的日志会记录到该日志仓库中 |
 
 
 #### jobConfig
 | 参数名 |  必填  |  类型  |  参数描述  |
 | --- |  ---  |  ---  |  ---  |
-| maxRetryTime | False | String | 表示日志服务触发函数执行时，如果遇到错误，所允许的最大尝试次数 |
-| triggerInterval | False | String | 表示日志服务触发函数执行的间隔 |
+| maxRetryTime | False | String | 表示日志服务触发函数执行时，如果遇到错误，所允许的最大尝试次数，取值范围：[0,100] |
+| triggerInterval | False | String | 日志服务触发函数运行的时间间隔，取值范围：[3,600]，单位：秒 |
 
 #### sourceConfig
 | 参数名 |  必填  |  类型  |  参数描述  |
 | --- |  ---  |  ---  |  ---  |
-| logstore | False | String | 数据源的 Logstore 名称。触发器会定时从该 Logstore 订阅数据到函数计算 |
+| logstore | False | String | 触发器会定时从该日志仓库中订阅数据到函数服务进行自定义加工 |
 
 #### functionParameter
 
@@ -442,16 +473,16 @@ TempKey: tempValue
 
 | 参数名 |  必填  |  类型  |  参数描述  |
 | --- |  ---  |  ---  |  ---  |
-| cronExpression | True | String | 时间触发器表达式 |
-| enable | True | Boolean | 表示是否启用该触发器 |
-| payload | False | String | 传入参数 |
+| cronExpression | True | String | 时间触发器表达式，支持两种设置：@every、cron 表达式 |
+| enable | True | Boolean | 是否启用该触发器 |
+| payload | False | String | 代表触发器事件本身的输入内容 |
 
 ### Http触发器
 
 | 参数名 |  必填  |  类型  |  参数描述  |
 | --- |  ---  |  ---  |  ---  |
 | authType | True | String | 鉴权类型，可选值：anonymous、function |
-| methods | True | List | HTTP 触发器支持的访问方法，可选值：GET、POST、PUT、DELETE、HEAD |
+| methods | True | List<String> | HTTP 触发器支持的访问方法，可选值：GET、POST、PUT、DELETE、HEAD |
 
 ### MNS触发器
 
@@ -463,7 +494,7 @@ TempKey: tempValue
 | notifyStrategy | False | String | 调用函数的重试策略，可选值：BACKOFF_RETRY, EXPONENTIAL_DECAY_RETRY |
 | filterTag | False | String | 描述了该订阅中消息过滤的标签（标签一致的消息才会被推送）,不超过 16 个字符的字符串，默认不进行消息过滤，即默认不填写该字段 |
 
-### CDN触发器
+### CDN 触发器
 
 | 参数名 |  必填  |  类型  |  参数描述  |
 | --- |  ---  |  ---  |  ---  |
@@ -476,9 +507,14 @@ TempKey: tempValue
 
 | 参数名 |  必填  |  类型  |  参数描述  |
 | --- |  ---  |  ---  |  ---  |
-| domain | True | List<String> | 网址 |
+| domain | True | List<String> | 过滤参数值的集合 |
 
+### Tablestore 触发器
 
+| 参数名 |  必填  |  类型  |  参数描述  |
+| --- |  ---  |  ---  |  ---  |
+| instanceName | True | List<String> | 表格存储实例的名称 |
+| tableName | True | List<String> | 实例中的表名称 |
 
 ## customDomains字段
 
@@ -494,7 +530,7 @@ TempKey: tempValue
 ### certConfig
 | 参数名 |  必填  |  类型  |  参数描述  |
 | --- |  ---  |  ---  |  ---  |
-| certName | False | String | 名称 |
+| certName | False | String | 证书名称 |
 | privateKey | False | String | 表示私钥 |
 | certificate | False | String | 表示证书 |
 
@@ -504,3 +540,4 @@ TempKey: tempValue
 | path | True | String | 路径 |
 | serviceName | False | String | 服务名 |
 | functionName | False | String | 函数名 |
+| qualifier | False | String | 服务的版本 |

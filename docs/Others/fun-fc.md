@@ -84,7 +84,7 @@ name: funApp       #  项目名称
 access: default  #  秘钥别名
 
 services:
-  fun-test: #  服务名称
+  fun-test: 
     component: fun  # 组件名称
     props: #  组件的属性值
       region: cn-hangzhou

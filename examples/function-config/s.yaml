@@ -3,7 +3,7 @@ name: fcDeployApp       #  项目名称
 access: default  #  秘钥别名
 
 services:
-  fc-deploy-test: #  服务名称
+  fc-deploy-test:
     component: ${path(../..)}
     props: #  组件的属性值
       region: cn-shenzhen
