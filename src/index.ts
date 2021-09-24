@@ -808,7 +808,7 @@ export default class FcBaseComponent extends BaseComponent {
     const evalOpts: EvalOption = {
       serviceName: argsData['service-name'] || props?.service?.name,
       functionName: argsData['function-name'] || props?.function?.name,
-      functionType: argsData['function-type'] || isHttpFunction(props) ? 'http' : 'event',
+      functionType: argsData['function-type'] || (isHttpFunction(props) ? 'http' : 'event'),
       evalType: argsData['eval-type'] || DEFAULT_EVAL_TYPE,
       memorySizeList: argsData['memory-size'] || DEFAULT_MEMORY_SIZE,
       runCount: argsData['run-count'] || DEFAULT_RUN_COUNT,
