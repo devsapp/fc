@@ -456,7 +456,7 @@ export default class FcBaseComponent extends BaseComponent {
       return;
     }
     const stressOpts: StressOption = {
-      functionType: argsData['function-type'] || isHttpFunction(props) ? 'http' : 'event',
+      functionType: argsData['function-type'] || (isHttpFunction(props) ? 'http' : 'event'),
       numUser: argsData['num-user'],
       spawnRate: argsData['spawn-rate'],
       runningTime: argsData['run-time'],
