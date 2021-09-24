@@ -753,11 +753,18 @@ export default class FcBaseComponent extends BaseComponent {
 
   async eval(inputs: IInputs): Promise<any> {
     const { props, project } = this.handlerComponentInputs(inputs);
-    const SUPPORTED_METHOD: string[] = ['start', 'clean'];
+    const SUPPORTED_METHOD: string[] = ['start'];
     const EVAL_SUB_COMMAND_HELP_KEY = {
       start: 'EvalStartInputsArgs',
-      clean: 'EvalCleanInputsArgs',
     };
+
+    // default const args
+    const DEFAULT_RUN_COUNT = 50;
+    const DEFAULT_MEMORY_SIZE = '128,256,512,1024';
+    const DEFAULT_RT = 250;
+    const DEFAULT_CONCURRENCY_ARGS = '2,20,5';
+    const DEFAULT_MEMORY = 1536;
+    const DEFAULT_EVAL_TYPE = 'memory';
 
     const apts = {
       boolean: ['help', 'assume-yes'],
@@ -765,7 +772,6 @@ export default class FcBaseComponent extends BaseComponent {
         help: 'h',
         region: 'r',
         access: 'a',
-        qualifier: 'q',
         'payload-file': 'f',
         'assume-yes': 'y',
       },
@@ -802,11 +808,13 @@ export default class FcBaseComponent extends BaseComponent {
     const evalOpts: EvalOption = {
       serviceName: argsData['service-name'] || props?.service?.name,
       functionName: argsData['function-name'] || props?.function?.name,
-      qualifier: argsData?.qualifier,
       functionType: argsData['function-type'] || isHttpFunction(props) ? 'http' : 'event',
-      evalType: argsData['eval-type'],
-      memorySizeList: argsData['memory-size'],
-      runCount: argsData['run-count'],
+      evalType: argsData['eval-type'] || DEFAULT_EVAL_TYPE,
+      memorySizeList: argsData['memory-size'] || DEFAULT_MEMORY_SIZE,
+      runCount: argsData['run-count'] || DEFAULT_RUN_COUNT,
+      rt: argsData?.rt || DEFAULT_RT,
+      memory: argsData?.memory || DEFAULT_MEMORY,
+      concurrencyArgs: argsData['concurrency-args'] || DEFAULT_CONCURRENCY_ARGS,
     };
 
     let httpTypeOpts: HttpTypeOption = null;
@@ -829,8 +837,9 @@ export default class FcBaseComponent extends BaseComponent {
     let fcEvalArgs: string;
     if (commandName === 'start') {
       fcEvalArgs = fcEval.makeStartArgs();
-    } else if (commandName === 'clean') {
-      fcEvalArgs = fcEval.makeCleanArgs(argsData['assume-yes']);
+    } else {
+      this.logger.error(`invalid command ${commandName}`);
+      return;
     }
     this.logger.debug(`Input args of fc-eval component is: ${fcEvalArgs}`);
     delete inputs.argsObj;

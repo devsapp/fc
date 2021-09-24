@@ -5,16 +5,12 @@ export async function start(inputs: IInputs): Promise<any> {
   return await componentMethodCaller(inputs, 'devsapp/fc-eval', 'start');
 }
 
-export async function clean(inputs: IInputs): Promise<any> {
-  return await componentMethodCaller(inputs, 'devsapp/fc-eval', 'clean');
-}
-
 /**
   * s eval <sub-command>\n
   * @pre_help
   * {"header":"Eval","content":"Power tunning online functions"}
   * @after_help
-  * {"header": "SubCommand List", "content": [{"name":"start","summary":"Power tunning online functions, you can get help through [s eval start -h]"},{"name":"clean","summary":"Clean the relevant resources , you can get help through [s eval clean -h]"}]}
+  * {"header": "SubCommand List", "content": [{"name":"start","summary":"Power tunning online functions, you can get help through [s eval start -h]"}]}
   */
 export interface EvalInputsArgs {}
 
@@ -25,7 +21,7 @@ export interface EvalInputsArgs {}
   * @after_help
   * {"ref":"GlobalParams"}
   * @example
-  * {"header": "Examples with CLI","content": ["$ s cli fc eval start --region=cn-hangzhou --function-name=myFunctionName --service-name=myServiceName --function-type=http --run-count=50  --payload='hello world'  --eval-type=memory --memory-size=128,256,512,1024 --method=get --path=/login --access=default","$ s cli fc eval start --region=cn-hangzhou --function-name=myFunctionName --service-name=myServiceName --function-type=event --run-count=10  --payload-file=./payload.file  --eval-type=memory --memory-size=128,256,512,1024 --access=default"]}
+  * {"header": "Examples with CLI","content": ["$ s cli fc-eval start --region=cn-hangzhou --function-name=myFunctionName --service-name=myServiceName --function-type=event --eval-type=memory --run-count=10  --payload-file=./payload.file  --memory-size=128,256,512,1024 --access=default","$ s cli fc-eval start --region=cn-hangzhou --function-name=myFunctionName --service-name=myServiceName --function-type=http  --eval-type=memory --run-count=50  --payload='hello world'  --memory-size=128,256,512,1024 --method=get --path=/login --query='a=1&b=2' --access=default", "s cli fc-eval start --region=cn-hangzhou --function-name=myFunctionName --service-name=myServiceName --function-type=event --eval-type=concurrency --memory=1536 --concurrency-args=2,30,5 --rt 1000  --payload-file=./payload.file  --access=default","s cli fc-eval start --region=cn-hangzhou --function-name=myFunctionName --service-name=myServiceName --function-type=http  --eval-type=concurrency --memory=1536 --concurrency-args=2,20,5 --rt 1000 --method=get --path=/login  --query='a=1&b=2' --access=default"]}
   */
 export interface EvalStartInputsArgs {
   /**
@@ -42,22 +38,33 @@ export interface EvalStartInputsArgs {
    */
   'function-name'?: string;
   /**
-   *  Qualifier of the target function, only for --function-type event
-   * @alias q
-   */
-  'qualifier'?: string;
-  /**
   *  Type of the power tunning, including memory and concurrency
   */
   'eval-type': string;
   /**
-  *  Number of Invoke Function, only for --eval-type memory
-  */
-  'runCount': number;
-  /**
   *  Type of the target function, including event and http
   */
   'function-type': string;
+  /**
+  *  Number of Invoke Function, only for --eval-type memory
+  */
+  'run-count': number;
+  /**
+  *  Function MemorySize List of power tunning, only for --eval-type memory
+  */
+  'memory-size': string;
+  /**
+  *  Concurrency args of power tunning that can convert to concurrency list, only for --eval-type concurrency
+  */
+  'concurrency-args': string;
+  /**
+  *  Function memory of power tunning, only for --eval-type concurrency
+  */
+  'memory': number;
+  /**
+  *  Max response time, only for --eval-type concurrency
+  */
+  'rt': number;
   /**
   * Target method, only for --function-type http
   */
@@ -79,25 +86,4 @@ export interface EvalStartInputsArgs {
   * @alias f
   */
   'payload-file': string;
-}
-
-/**
- * s eval clean <options>\n
- * @pre_help
- * {"header":"Eval clean","content":"Clean the relevant resources"}
- * @after_help
- * {"ref":"GlobalParams"}
- * @example
- * {"header": "Examples with CLI","content": ["$ s cli fc eval clean --region myRegion --access myAccess -y"]}
- */
-export interface EvalCleanInputsArgs {
-  /**
-  *  Specify the region of alicloud
-  */
-  region: string;
-  /**
-  *  Assume that the answer to any question which would be asked is yes
-  * @alias y
-  */
-  'assume-yes': boolean;
 }

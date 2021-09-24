@@ -1,9 +1,12 @@
 export interface EvalOption {
   serviceName: string;
   functionName: string;
-  runCount?: number;
   functionType: string;
   evalType: string;
-  memorySizeList: string;
+  runCount?: number;
+  memorySizeList?: string;
   qualifier?: string;
+  rt?: number;
+  memory?: number;
+  concurrencyArgs?: string;
 }
