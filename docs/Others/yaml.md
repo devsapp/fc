@@ -246,7 +246,7 @@ role:
 
 | 参数名 |  必填  |  类型  |  参数描述  |
 | --- |  ---  |  ---  |  ---  |
-| logStore | False | String | loghub中的logstore名称 |
+| logstore | False | String | loghub中的logstore名称 |
 | project | False | String | loghub中的project名称 |
 | enableRequestMetrics | False | Boolean | RequestMetrics开关，取值`true`/`false` |
 | enableInstanceMetrics | False | Boolean | InstanceMetrics开关，取值`true`/`false` |
