@@ -8,6 +8,7 @@ export interface FunctionConfig {
   customContainerConfig?: CustomContainerConfig;
   handler: string;
   memorySize?: number;
+  gpuMemorySize?: number;
   runtime: string;
   timeout?: number;
   environmentVariables?: {
