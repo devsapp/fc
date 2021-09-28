@@ -11,7 +11,7 @@
 
 阿里云函数计算（FC）组件为使用者提供了对 event 函数以及匿名 http 函数发起压测的能力。可以通过`stress`指令，快速进行压测操作。
 
-您可以通过`s cli stress -h`指令，唤起帮助信息：
+您可以通过`s cli fc stress -h`指令，唤起帮助信息：
 
 ```
 Stress
@@ -30,7 +30,7 @@ SubCommand List
 ```
 
 Stress 命令为我们提供了两个子命令：
-- start: 开始压测流程，可以通过`s cli stress start -h`获取帮助文档:
+- start: 开始压测流程，可以通过`s cli fc stress start -h`获取帮助文档:
   ```
   Stress start
   
@@ -81,7 +81,7 @@ Stress 命令为我们提供了两个子命令：
     --region myRegion --access myAccess
   ```
 
-- clean: 清理压测的辅助资源和本地缓存文件，可以通过`s cli stress clean -h`获取帮助文档:
+- clean: 清理压测的辅助资源和本地缓存文件，可以通过`s cli fc stress clean -h`获取帮助文档:
   ```
   Stress clean
 
