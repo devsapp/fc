@@ -42,7 +42,7 @@ Examples with CLI
 
 # 快速使用
 
-当我们下载好[Serverless Devs开发者工具](../Getting-started/Install-tutorial.md), 并完成[阿里云密钥配置](../Getting-started/Setting-up-credentials.md)之后，我们可以根据自身的需求进行资源的快速构建。
+当我们下载好[Serverless Devs开发者工具](../../Getting-started/Install-tutorial.md), 并完成[阿里云密钥配置](../../Getting-started/Setting-up-credentials.md)之后，我们可以根据自身的需求进行资源的快速构建。
 
 除了Python语言之外，Java语言、Nodejs语言、Php语言，以及容器镜像等都可以支持。以下例举可以识别的依赖文件名（即通过识别该文件，进行相关依赖下载，或者资源构建）：
 
