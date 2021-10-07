@@ -10,7 +10,7 @@ export async function start(inputs: IInputs): Promise<any> {
   * @pre_help
   * {"header":"Eval","content":"Power tunning online functions"}
   * @after_help
-  * {"header": "SubCommand List", "content": [{"name":"start","summary":"Power tunning online functions, you can get help through [s eval start -h]"}]}
+  * {"header": "SubCommand List", "content": [{"name":"start","summary":"Power tunning online functions, you can get help through [s cli fc eval start -h]"}]}
   */
 export interface EvalInputsArgs {}
 
@@ -21,7 +21,7 @@ export interface EvalInputsArgs {}
   * @after_help
   * {"ref":"GlobalParams"}
   * @example
-  * {"header": "Examples with CLI","content": ["$ s cli fc-eval start --region=cn-hangzhou --function-name=myFunctionName --service-name=myServiceName --function-type=event --eval-type=memory --run-count=10  --payload-file=./payload.file  --memory-size=128,256,512,1024 --access=default","$ s cli fc-eval start --region=cn-hangzhou --function-name=myFunctionName --service-name=myServiceName --function-type=http  --eval-type=memory --run-count=50  --payload='hello world'  --memory-size=128,256,512,1024 --method=get --path=/login --query='a=1&b=2' --access=default", "s cli fc-eval start --region=cn-hangzhou --function-name=myFunctionName --service-name=myServiceName --function-type=event --eval-type=concurrency --memory=1536 --concurrency-args=2,30,5 --rt 1000  --payload-file=./payload.file  --access=default","s cli fc-eval start --region=cn-hangzhou --function-name=myFunctionName --service-name=myServiceName --function-type=http  --eval-type=concurrency --memory=1536 --concurrency-args=2,20,5 --rt 1000 --method=get --path=/login  --query='a=1&b=2' --access=default"]}
+  * {"header": "Examples with CLI","content": ["$ s cli fc eval start --region cn-hangzhou --function-name myFunctionName --service-name myServiceName --function-type event --eval-type memory --run-count 10  --payload-file ./payload.file  --memory-size 128,256,512,1024 --access default","\n$ s cli fc start --region cn-hangzhou --function-name myFunctionName --service-name myServiceName --function-type http  --eval-type memory --run-count 50  --payload 'hello world'  --memory-size 128,256,512,1024 --method get --path '/login' --query 'a=1&b=2' --access default", "\n$ s cli fc start --region cn-hangzhou --function-name myFunctionName --service-name myServiceName --function-type event --eval-type concurrency --memory 1536 --concurrency-args 2,30,5 --rt 250  --payload-file ./payload.file  --access default","\n$ s cli fc start --region cn-hangzhou --function-name myFunctionName --service-name myServiceName --function-type http  --eval-type concurrency --memory 1536 --concurrency-args 2,20,5 --rt 250 --method get --path '/login' --query 'a=1&b=2' --access default"]}
   */
 export interface EvalStartInputsArgs {
   /**
