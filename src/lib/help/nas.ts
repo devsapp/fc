@@ -5,7 +5,7 @@ export const NAS_HELP_INFO = [
   },
   {
     header: 'Usage',
-    content: '$ s exec -- nas <sub-command>',
+    content: '$ s nas <sub-command>',
   },
   {
     header: 'SubCommand',
@@ -75,10 +75,10 @@ const UPLOADHELP = [
     header: 'Examples with Yaml',
     content: [
       {
-        example: '$ s exec -- nas upload /home/usr/demo.file /mnt/auto',
+        example: '$ s nas upload /home/usr/demo.file /mnt/auto',
       },
       {
-        example: '$ s exec -- nas upload /home/usr/demo.file nas:///mnt/auto',
+        example: '$ s nas upload /home/usr/demo.file nas:///mnt/auto',
       },
     ],
   },
@@ -129,10 +129,10 @@ const DOWNLOADHELP = [
     header: 'Examples with Yaml',
     content: [
       {
-        example: '$ s exec -- nas download /mnt/auto /home/usr/demo',
+        example: '$ s nas download /mnt/auto /home/usr/demo',
       },
       {
-        example: '$ s exec -- nas download nas:///mnt/auto /home/usr/demo',
+        example: '$ s nas download nas:///mnt/auto /home/usr/demo',
       },
     ],
   },
@@ -146,7 +146,7 @@ const COMMANDHELP = [
   {
     header: 'Usage',
     content: [
-      { example: '$ s exec -- nas command <option>' },
+      { example: '$ s nas command <option>' },
     ],
   },
   {
@@ -164,10 +164,13 @@ const COMMANDHELP = [
     header: 'Examples',
     content: [
       {
-        example: '$ s exec -- nas command ls /mnt/auto',
+        example: '$ s nas command ls /mnt/auto',
       },
       {
-        example: '$ s exec -- nas command ls nas:///mnt/auto',
+        example: '$ s nas command rm /mnt/auto/a.txt',
+      },
+      {
+        example: '$ s nas command mkdir /mnt/auto/dir',
       },
     ],
   },

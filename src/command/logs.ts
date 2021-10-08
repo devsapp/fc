@@ -6,7 +6,7 @@
  * @after_help
  * {"ref":"GlobalParams"}
  * @example
- * {"header": "Examples with Yaml","content": [{"desc":"Query logs in the time interval","example":"$ s exec -- logs -s 2021-06-07T02:54:00+08:00 -e 2021-06-07T02:54:59+08:00"},{"desc":"Continuous log output mode","example":"$ s exec -- logs -t"}]}
+ * {"header": "Examples with Yaml","content": [{"desc":"Query logs in the time interval","example":"$ s logs -s 2021-06-07T02:54:00+08:00 -e 2021-06-07T02:54:59+08:00"},{"desc":"Continuous log output mode","example":"$ s logs -t"}]}
  * @example
  * {"header": "Examples with CLI","content": [{"example":"$ s cli fc logs --region cn-hangzhou --service-name myService --function-name myFunction -t"}]}
  */

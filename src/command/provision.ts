@@ -50,7 +50,7 @@ export interface ProvisionGetInputsArgs {
  * @after_help
  * {"ref":"GlobalParams"}
  * @example
- * {"header":"Examples with Yaml","content":["$ s provision put --target 1 --qualifier alias","$ s provision put --config ./provision.json --qualifier alias","$ s exec -- provision put --target 1 --qualifier alias"]}
+ * {"header":"Examples with Yaml","content":["$ s provision put --target 1 --qualifier alias","$ s provision put --config ./provision.json --qualifier alias","$ s provision put --target 1 --qualifier alias"]}
  * @example
  * {"header":"Examples with CLI","content":["$ s cli fc provision put --region cn-hangzhou --service-name name --function-name name --qualifier alias --target 1","$ s cli fc provision put --region cn-hangzhou --service-name name --function-name name --qualifier alias --config ./provision.json"]}
  */

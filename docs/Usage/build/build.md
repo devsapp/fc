@@ -21,7 +21,8 @@ Usage
 Options
 
   -f, --dockerfile string   Specify the dockerfile path
-  -d, --use-docker string   Use docker container to build functions
+  -d, --use-docker boolean   Use docker container to build functions
+  use-buildkit boolean   Use buildkit to build functions
 
 Global Options
 
@@ -31,8 +32,7 @@ Examples with Yaml
 
   $ s build
   $ s <ProjectName> build
-  $ s build --use-docker 
-  $ s exec -- build --use-docker 
+  $ s build --use-docker
 
 Examples with CLI
 
@@ -122,6 +122,10 @@ $ s deploy --push-registry acr-internet -y
 
 
 # 高阶
+
+可以通过环境变量 `FC_DOCKER_VERSION` 控制镜像的版本，例如 export FC_DOCKER_VERSION=latest。所有可用版本可查看 https://github.com/aliyun/fc-docker 或者 https://hub.docker.com/u/aliyunfc .
+
+
 
 在代码包的场景中， 除了各自语言的库以外， 其实还有一种更加复杂的情况， 比如说， 在函数计算的 nodejs runtime 部署 puppeteer 应用， puppeteer 库还需要安装底层的 so 库， 比如 [apt-get.list](https://github.com/devsapp/start-puppeteer/blob/master/src/nodejs12/src/apt-get.list),  具体如下图所示：
 

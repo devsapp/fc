@@ -33,7 +33,7 @@ Options
   -s, --start-time string   Query log start time (Timestamp or time format，like 1611827290000 or 2021-11-11T11:11:12+00:00)                                  
   -e, --end-time string     Query log end time (Timestamp or time format，like 1611827290000 or 2021-11-11T11:11:12+00:00)                                           
   -k, --keyword string     Keyword query                                         
-  -r, --request-id string   Query according to requestId within the time interval 
+  --request-id string      Query according to requestId within the time interval 
   --type string            Log type query, value: failed     
   --region string           Specify region in cli mode               
   --service-name string     Specify service name in cli mode     
@@ -49,7 +49,7 @@ Examples with Yaml
   $ s logs
   $ s <ProjectName> logs -t
   $ s logs --start-time 2021-11-11T11:11:11+00:00 --end-time 2021-11-11T11:11:12+00:00
-  $ s exec -- logs -s 1611823690000 -e 1611827290000
+  $ s logs -s 1611823690000 -e 1611827290000
 
 Examples with CLI 
 
@@ -111,7 +111,7 @@ s logs --start-time 2021-11-11T11:11:11+00:00 --end-time 2021-11-11T11:11:12+00:
 当我们明确某个日志的RequestId之后，我们可以通过指定RequestId的方法进行日志查询：
 
 ```
-s logs -r requestId
+s logs --request-id requestId
 ```
 
 但是在某些特殊情况下，该方法可能无法正确查询出日志：

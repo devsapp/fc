@@ -6,7 +6,7 @@ export const BUILD_HELP_INFO = [
   {
     header: 'Usage',
     content: [
-      { example: '$ s exec -- build <option>' },
+      { example: '$ s build <option>' },
     ],
   },
   {
@@ -24,7 +24,14 @@ export const BUILD_HELP_INFO = [
         description: 'Use docker container to build functions',
         alias: 'd',
         defaultOption: false,
-        type: String,
+        type: Boolean,
+      },
+      {
+        name: 'use-buildkit',
+        description: 'Use buildkit to build functions',
+        alias: 'd',
+        defaultOption: false,
+        type: Boolean,
       },
     ],
   },
@@ -43,6 +50,9 @@ export const BUILD_HELP_INFO = [
     header: 'Examples with Yaml',
     content: [
       {
+        example: '$ s build',
+      },
+      {
         example: '$ s build --use-docker',
       },
       {
@@ -50,9 +60,6 @@ export const BUILD_HELP_INFO = [
       },
       {
         example: '$ s build --use-docker ',
-      },
-      {
-        example: '$ s exec -- build',
       },
     ],
   },

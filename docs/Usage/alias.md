@@ -52,8 +52,7 @@ Alias命令为我们提供了一些子命令：
 
     Examples with Yaml
 
-      $ s alias list         
-      $ s exec -- alias list 
+      $ s alias list
 
     Examples with CLI
 
@@ -88,7 +87,7 @@ Alias命令为我们提供了一些子命令：
     Examples with Yaml
 
       $ s alias publish --alias-name pre --version-id 2                             
-      $ s exec -- alias publish --description xxx --alias-name pre --version-id 2 --gversion 3 --weight 20                                                      
+      $ s alias publish --description xxx --alias-name pre --version-id 2 --gversion 3 --weight 20                                                      
 
     Examples with CLI
 
@@ -118,8 +117,7 @@ Alias命令为我们提供了一些子命令：
 
     Examples with Yaml
 
-      $ s alias get --alias-name pre         
-      $ s exec -- alias get --alias-name pre 
+      $ s alias get --alias-name pre
 
     Examples with CLI
 

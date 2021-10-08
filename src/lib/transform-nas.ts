@@ -84,8 +84,9 @@ function transformArgsFunction(transformArgs, fcDirInput, transformInputDir) {
 function throwError(args, commandName, nonOptionsArgs) {
   const example = `\n     Example: \n\t  s nas upload -r -n ./local-path /mnt/nas-path
 \t  s nas download -r /mnt/nas-path ./local-path
-\t  s nas command 'ls -al /mnt/nas-path'
-\t  s nas command 'rm -rf /mnt/nas-path'`;
+\t  s nas command ls -al /mnt/nas-path
+\t  s nas command mkdir /mnt/nas-path
+\t  s nas command rm -rf /mnt/nas-path`;
 
   if (['upload', 'download'].includes(commandName)) {
     if (nonOptionsArgs.length < 2) {

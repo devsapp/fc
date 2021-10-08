@@ -51,8 +51,7 @@ Version命令为我们提供了一些子命令：
 
     Examples with Yaml
 
-      $ s version list         
-      $ s exec -- version list 
+      $ s version list
 
     Examples with CLI
 
@@ -81,8 +80,7 @@ Version命令为我们提供了一些子命令：
 
     Examples with Yaml
 
-      $ s version publish --description xxx         
-      $ s exec -- version publish --description xxx 
+      $ s version publish --description xxx
 
     Examples with CLI
 

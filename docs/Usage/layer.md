@@ -55,7 +55,7 @@ Layer命令为我们提供了一些子命令：
     Examples with Yaml
 
       $ s layer publish --layer-name testName --code ./src         
-      $ s exec -- layer publish --layer-name testName --code ./src 
+      $ s layer publish --layer-name testName --code ./src 
 
     Examples with CLI
 
@@ -84,8 +84,7 @@ Layer命令为我们提供了一些子命令：
 
     Examples with Yaml
 
-      $ s layer list         
-      $ s exec -- layer list 
+      $ s layer list
 
     Examples with CLI
 
@@ -114,8 +113,7 @@ Layer命令为我们提供了一些子命令：
 
     Examples with Yaml
 
-      $ s layer versionConfig --layer-name name --version-id 1         
-      $ s exec -- layer versionConfig --layer-name name --version-id 1 
+      $ s layer versionConfig --layer-name name --version-id 1
 
     Examples with CLI
 
@@ -145,8 +143,7 @@ Layer命令为我们提供了一些子命令：
 
     Examples with Yaml
 
-      $ s layer versions --layer-name name         
-      $ s exec -- layer versions --layer-name name 
+      $ s layer versions --layer-name name
 
     Examples with CLI
 
@@ -188,4 +185,5 @@ s layer versions --layer-name name
 ````
 s remove layer --layer-name name
 ````
-- 如果指定--version，仅删除指定层的版本；如果不指定则删除指定层的所有版本
+- 如果指定--version，仅删除指定层的版本
+- 如果不指定则删除指定层的所有版本

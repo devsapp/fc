@@ -67,13 +67,11 @@ Local命令为我们提供了两个子命令：
     
     Examples with Yaml for fc component
     
-      $ s local invoke [--debug-port 9000] [--config vscode]         
-      $ s exec -- local invoke [--debug-port 9000] [--config vscode]
+      $ s local invoke [--debug-port 9000] [--config vscode]
 
     Examples with Yaml for fc-local-invoke component
 
-      $ s invoke [--debug-port 9000] [--config vscode]         
-      $ s exec -- invoke [--debug-port 9000] [--config vscode]
+      $ s invoke [--debug-port 9000] [--config vscode]
     
     ```
 - start: 本地调试/测试HTTP函数，可以通过`s local start -h`获取帮助文档
@@ -107,13 +105,11 @@ Local命令为我们提供了两个子命令：
     
     Examples with Yaml for fc component
 
-      $ s local start [--debug-port 9000] [--config vscode]         
-      $ s exec -- local start [--debug-port 9000] [--config vscode] 
+      $ s local start [--debug-port 9000] [--config vscode]
 
     Examples with Yaml for fc-local-invoke component
 
-      $ s start [--debug-port 9000] [--config vscode]         
-      $ s exec -- start [--debug-port 9000] [--config vscode]
+      $ s start [--debug-port 9000] [--config vscode]
     
     ```
 

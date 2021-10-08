@@ -23,7 +23,7 @@ export interface LayerInputsArgs {
  * @after_help
  * {"ref":"GlobalParams"}
  * @example
- * {"header":"Examples with Yaml","content":["$ s layer publish --layer-name testName --code ./src","$ s exec -- layer publish --layer-name testName --code ./src"]}
+ * {"header":"Examples with Yaml","content":["$ s layer publish --layer-name testName --code ./src","$ s layer publish --layer-name testName --code ./src"]}
  * @example
  * {"header":"Examples with CLI","content":["$ s cli fc layer publish --region cn-hangzhou --layer-name testName --code ./src --compatible-runtime nodejs12,nodejs10,python3"]}
  */

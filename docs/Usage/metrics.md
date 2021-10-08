@@ -41,7 +41,7 @@ Examples with Yaml
 
   $ s metrics
   $ s <ProjectName> metrics
-  $ s exec -- metrics --region cn-hangzhou --service-name myService --function-name myFunction
+  $ s metrics --region cn-hangzhou --service-name myService --function-name myFunction
 
 Examples with CLI
 
