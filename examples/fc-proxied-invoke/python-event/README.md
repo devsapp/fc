@@ -106,7 +106,7 @@ $ s proxied invoke
 若要在调用的时候制定传入的 event 参数，可以使用 --event，详情请执行:
 
 ```bash
-$ s cli /Users/zqf/Documents/git_proj/devsapp/component/fc-alibaba-component/ proxied invoke -h
+$ s cli fc proxied invoke -h
 ```
 
 ## clean
