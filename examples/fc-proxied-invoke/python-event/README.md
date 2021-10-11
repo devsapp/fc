@@ -7,6 +7,7 @@
 ```bash
 $ s proxied setup
 ```
+
 支持解释型语言热更。
 
 ## Proxied Invoke
@@ -39,7 +40,7 @@ End of method: invoke
 清理辅助资源、session 以及本地调试容器。
 
 ```bash
-$ s proxied clean
+$ s proxied cleanup
 ```
 
 ## Debugging
@@ -81,12 +82,12 @@ $ s proxied setup --config vscode --debug-port 3000
 
 - vscode debug config
 
-    1. 创建 launch.json 文件。
-    ![img](https://img.alicdn.com/imgextra/i4/O1CN01XSXosD1y6KbSg3zBa_!!6000000006529-2-tps-474-293.png)
-    2. 复制上述日志中 `config begin` 和 `config end` 之间的配置到 launch.json 中，此时在 DEBUG 视图中选中配置的函数列表。
-    ![img](https://img.alicdn.com/imgextra/i3/O1CN01QpCZnE1RvHLBX4qb5_!!6000000002173-2-tps-3458-1550.png)
-    3. 完成上述配置后，在 vscode 编辑器侧边栏为函数代码增加断点，点击"开始调试"按钮。
-    ![img](https://img.alicdn.com/imgextra/i3/O1CN01jTQLGc1lPUA9Ww5NG_!!6000000004811-2-tps-3576-2218.png)
+  1. 创建 launch.json 文件。
+     ![img](https://img.alicdn.com/imgextra/i4/O1CN01XSXosD1y6KbSg3zBa_!!6000000006529-2-tps-474-293.png)
+  2. 复制上述日志中 `config begin` 和 `config end` 之间的配置到 launch.json 中，此时在 DEBUG 视图中选中配置的函数列表。
+     ![img](https://img.alicdn.com/imgextra/i3/O1CN01QpCZnE1RvHLBX4qb5_!!6000000002173-2-tps-3458-1550.png)
+  3. 完成上述配置后，在 vscode 编辑器侧边栏为函数代码增加断点，点击"开始调试"按钮。
+     ![img](https://img.alicdn.com/imgextra/i3/O1CN01jTQLGc1lPUA9Ww5NG_!!6000000004811-2-tps-3576-2218.png)
 
 ## Proxied Invoke
 
@@ -113,5 +114,5 @@ $ s cli /Users/zqf/Documents/git_proj/devsapp/component/fc-alibaba-component/ pr
 清理辅助资源、session 以及本地调试容器。
 
 ```bash
-$ s proxied clean
+$ s proxied cleanup
 ```
