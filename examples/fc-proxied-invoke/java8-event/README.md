@@ -15,6 +15,7 @@ $ s build --use-docker
 ```bash
 $ s proxied setup
 ```
+
 目前不支持编译型语言热更。
 
 ## Proxied Invoke
@@ -49,7 +50,7 @@ End of method: invoke
 清理辅助资源、session 以及本地调试容器。
 
 ```bash
-$ s proxied clean
+$ s proxied cleanup
 ```
 
 ## Debugging with vscode
@@ -74,7 +75,7 @@ $ s build --use-docker
 $ s build --use-docker
 ```
 
-### Setup 
+### Setup
 
 ```bash
 $ s proxied setup --debug-port 3000
@@ -84,15 +85,15 @@ $ s proxied setup --debug-port 3000
 
 - IDEA remote debug config
 
-    1. 在菜单栏选择 Run… > Edit Configurations 。
-    ![img](https://img.alicdn.com/imgextra/i4/O1CN01CffYNv1UbX74nFI0d_!!6000000002536-2-tps-734-432.png)
-    2. 新建一个 Remote Debugging 。
-    ![img](https://img.alicdn.com/imgextra/i2/O1CN014nVPkX1voLpEUKiS9_!!6000000006219-2-tps-2216-1514.png)
-    3. 自定义调试器名称，并将端口配置为 3000 。
-    ![img](https://img.alicdn.com/imgextra/i2/O1CN014xCgf21lnl9h2QGTA_!!6000000004864-2-tps-2142-1620.png)
-    4. 上述配置完成后，在 IDEA 编辑器侧边栏为函数代码增加断点，点击"开始调试"按钮。
-    ![img](https://img.alicdn.com/imgextra/i1/O1CN01PPR4V61RM0qRiP16r_!!6000000002096-2-tps-3528-2166.png)
-       
+  1. 在菜单栏选择 Run… > Edit Configurations 。
+     ![img](https://img.alicdn.com/imgextra/i4/O1CN01CffYNv1UbX74nFI0d_!!6000000002536-2-tps-734-432.png)
+  2. 新建一个 Remote Debugging 。
+     ![img](https://img.alicdn.com/imgextra/i2/O1CN014nVPkX1voLpEUKiS9_!!6000000006219-2-tps-2216-1514.png)
+  3. 自定义调试器名称，并将端口配置为 3000 。
+     ![img](https://img.alicdn.com/imgextra/i2/O1CN014xCgf21lnl9h2QGTA_!!6000000004864-2-tps-2142-1620.png)
+  4. 上述配置完成后，在 IDEA 编辑器侧边栏为函数代码增加断点，点击"开始调试"按钮。
+     ![img](https://img.alicdn.com/imgextra/i1/O1CN01PPR4V61RM0qRiP16r_!!6000000002096-2-tps-3528-2166.png)
+
 ### Invoke
 
 ```bash
@@ -108,5 +109,5 @@ $ s proxied invoke
 清理辅助资源、session 以及本地调试容器。
 
 ```bash
-$ s proxied clean
+$ s proxied cleanup
 ```
