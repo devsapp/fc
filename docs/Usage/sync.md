@@ -41,7 +41,6 @@ Examples with Yaml
   $ s sync
   $ s <ProjectName> sync
   $ s sync --region cn-hangzhou --service-name myService
-  $ s exec -- sync  --region cn-hangzhou --service-name myService
 
 Examples with CLI
 

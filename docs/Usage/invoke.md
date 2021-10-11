@@ -45,9 +45,9 @@ Examples with Yaml
 
   $ s invoke
   $ s <ProjectName> invoke
-  $ s exec -- invoke --invocation-type sync --event <payload>
-  $ s exec -- invoke --event-file <file-path>
-  $ s exec -- invoke --event-stdin
+  $ s invoke --invocation-type sync --event <payload>
+  $ s invoke --event-file <file-path>
+  $ s invoke --event-stdin
 
 Examples with CLI
 

@@ -55,6 +55,7 @@
   - [压测操作: Stress](./Usage/stress.md)
   - [内存和并发度探测: Eval](./Usage/eval.md)
   - [远程调试: Remote](./Usage/remote.md)
+  - [迁移Funcraft：Fun2s](./Others/fun-fc.md)
 - 权限相关
   - [Yaml 字段相关配置权限](./Others/authority/yaml.md)
   - [命令使用相关权限](./Others/authority/command.md)

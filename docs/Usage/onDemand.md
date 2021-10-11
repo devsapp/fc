@@ -54,8 +54,7 @@ OnDemand命令为我们提供了一些子命令：
 
     Examples with Yaml
 
-      $ s onDemand list         
-      $ s exec -- onDemand list 
+      $ s onDemand list
 
     Examples with CLI
 
@@ -88,7 +87,7 @@ OnDemand命令为我们提供了一些子命令：
 
       $ s onDemand put --qualifier pre --max 1                    
       $ s onDemand put --qualifier pre --maximum-instance-count 1 
-      $ s exec -- onDemand put --qualifier pre --max 1            
+      $ s onDemand put --qualifier pre --max 1            
 
     Examples with CLI
 
@@ -119,8 +118,7 @@ OnDemand命令为我们提供了一些子命令：
 
     Examples with Yaml
 
-      $ s onDemand get --qualifier pre         
-      $ s exec -- onDemand get --qualifier pre 
+      $ s onDemand get --qualifier pre
 
     Examples with CLI
 

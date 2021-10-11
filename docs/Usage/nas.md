@@ -53,8 +53,7 @@ Nas命令为我们提供了三个子命令：
     
     Examples with Yaml
     
-      $ s nas download nas://<fc_dir> /home/usr/demo 
-      $ s exec -- nas download nas://<fc_dir> /home/usr/demo 
+      $ s nas download nas://<fc_dir> /home/usr/demo
     
     ```
 - upload: 将本地的内容上传到Nas，可以通过`s nas upload -h`获取帮助文档
@@ -80,8 +79,7 @@ Nas命令为我们提供了三个子命令：
     
     Examples with Yaml
     
-      $ s nas upload /home/usr/demo.file nas://<fc_dir> 
-      $ s exec -- nas upload /home/usr/demo.file nas://<fc_dir> 
+      $ s nas upload /home/usr/demo.file nas://<fc_dir>
     
     ```
 - command: 可以在实例中执行某些指令，对Nas进行操作，可以通过`s nas command -h`获取帮助文档
@@ -102,8 +100,7 @@ Nas命令为我们提供了三个子命令：
     
     Examples with Yaml
     
-      $ s nas command ls -a nas:///mnt/auto1/folder
-      $ s exec -- nas command ls -a nas:///mnt/auto1/folder
+      $ s nas command ls -al nas:///mnt/auto1/folder
     
     ```
 
@@ -116,7 +113,7 @@ Nas命令为我们提供了三个子命令：
 Download指令是将Nas已有的内容下载到本地。例如，我需要将线上NAS中的`mnt/auto/folder/`文件夹同步到本地，我可以直接执行：
 
 ```
-s exec -- nas download -r -n nas:///mnt/auto/folder/. ./folder
+s nas download -r -n nas:///mnt/auto/folder/. ./folder
 ```
 
 当然，如果在Serverless Devs的资源描述文件中，只有一个Project，我们可以将上述指令简写成：
@@ -130,7 +127,7 @@ s nas download -r -n nas:///mnt/auto/folder/. ./folder
 与Download指令类似，该指令也适用于本地和线上资源同步使用，只不过该指令是将本地资源上传到Nas制定目录中，例如：
 
 ```
-s exec -- nas upload -r -n ./event-code nas:///mnt/auto1/folder
+s nas upload -r -n ./event-code nas:///mnt/auto1/folder
 ```
 
 同样，如果在Serverless Devs的资源描述文件中，只有一个Project，我们可以将上述指令简写成：
@@ -153,11 +150,13 @@ s nas upload -r -n ./event-code nas:///mnt/auto1/folder
 查看Nas的某个目录内容：
 
 ```
-s exec -- nas command ls -a nas:///mnt/auto1/folder
+s nas command ls -al nas:///mnt/auto1/folder
 ```
+> 注：此处需要注意 ls -a 存在问题，因为 -a 是系统指令
+
 
 删除Nas下的某个文件夹：
 
 ```
-s exec -- nas command rm -r nas:///mnt/auto1/folder
+s nas command rm -r nas:///mnt/auto1/folder
 ```
