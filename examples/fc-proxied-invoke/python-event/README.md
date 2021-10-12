@@ -51,43 +51,15 @@ $ s proxied cleanup
 $ s proxied setup --config vscode --debug-port 3000
 ```
 
-命令执行完成后会在末尾出现如下调试配置部分：
+命令执行完成后， 本地的函数计算执行环境会阻塞等待调用(执行环境本质是一个 HTTP Server), 如下图中的 5：
 
-```bash
-///////////////// config begin /////////////////
-{
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "name": "Python: fc/python-event/python-event",
-            "type": "python",
-            "request": "attach",
-            "connect": {
-                "host": "localhost",
-                "port": 3000
-            },
-            "pathMappings": [
-                {
-                    "localRoot": "/Users/zqf/Documents/git_proj/devsapp/component/fc-proxied-invoke/example/python-event",
-                    "remoteRoot": "/code"
-                }
-            ]
-        }
-    ]
-}
-///////////////// config end /////////////////
-```
+![](https://img.alicdn.com/imgextra/i2/O1CN018mgNZh20wCiDHdoMT_!!6000000006913-2-tps-2255-1282.png)
 
-此时程序会阻塞住，若直接执行下一步 `Invoke`，进行的是正常模式的本地调用流程。若要进行断点调试，需要在首次调试时进行如下配置：
+此时直接执行下一步 `Proxied Invoke`，进行的是正常模式的调用流程。若要进行断点调试，进行如下操作：
 
-- vscode debug config
+> 工具直接自动给您工程目录下面生成 .vscode/launch.json 文件, 完成调试配置，直接按下图操作即可。
 
-  1. 创建 launch.json 文件。
-     ![img](https://img.alicdn.com/imgextra/i4/O1CN01XSXosD1y6KbSg3zBa_!!6000000006529-2-tps-474-293.png)
-  2. 复制上述日志中 `config begin` 和 `config end` 之间的配置到 launch.json 中，此时在 DEBUG 视图中选中配置的函数列表。
-     ![img](https://img.alicdn.com/imgextra/i3/O1CN01QpCZnE1RvHLBX4qb5_!!6000000002173-2-tps-3458-1550.png)
-  3. 完成上述配置后，在 vscode 编辑器侧边栏为函数代码增加断点，点击"开始调试"按钮。
-     ![img](https://img.alicdn.com/imgextra/i3/O1CN01jTQLGc1lPUA9Ww5NG_!!6000000004811-2-tps-3576-2218.png)
+![](https://img.alicdn.com/imgextra/i1/O1CN01kNeLy01Omd2Ge3Q6J_!!6000000001748-2-tps-341-233.png)
 
 ## Proxied Invoke
 
@@ -106,7 +78,7 @@ $ s proxied invoke
 若要在调用的时候制定传入的 event 参数，可以使用 --event，详情请执行:
 
 ```bash
-$ s cli fc proxied invoke -h
+$ s proxied invoke -h
 ```
 
 ## clean

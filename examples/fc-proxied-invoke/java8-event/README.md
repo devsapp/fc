@@ -7,6 +7,7 @@
 本地调试之前需要进行 build 操作。
 
 ```bash
+# 如果本地安装了 openjdk8, 可以直接执行 s build
 $ s build --use-docker
 ```
 
@@ -15,8 +16,6 @@ $ s build --use-docker
 ```bash
 $ s proxied setup
 ```
-
-目前不支持编译型语言热更。
 
 ## Proxied Invoke
 
@@ -45,6 +44,21 @@ hello world
 End of method: invoke
 ```
 
+如果有代码修改， 可以先执行：
+
+```bash
+# 如果本地安装了 openjdk8, 可以直接执行 s build
+$ s build --use-docker
+```
+
+工具会自动检测到代码有变化， 会重新加载一个新的执行环境容器， 等待这个新的执行环境 ready, 然后执行:
+
+```bash
+$ s proxied invoke
+```
+
+这个时候， 调用的就是新代码的函数。
+
 ## clean
 
 清理辅助资源、session 以及本地调试容器。
@@ -53,25 +67,12 @@ End of method: invoke
 $ s proxied cleanup
 ```
 
-## Debugging with vscode
-
-### Build
-
-```bash
-$ s build --use-docker
-```
-
-构建完成后后续步骤可以参考 [python-event](../python-event/README.md) 中的调试步骤。
-
-注意，使用 vscode 调试 java 时，需要安装两个插件：Language Support for Java(TM) by Red Hat、Debugger for Java 。
-
-利用 VSCode 的插件市场安装插件请参见此 [操作介绍](https://code.visualstudio.com/docs/languages/java?spm=a2c4g.11186623.2.16.69092a26ZukfQg)
-
 ## Debugging with intellij
 
 ### Build
 
 ```bash
+# 如果本地安装了 openjdk8, 可以直接执行 s build
 $ s build --use-docker
 ```
 
@@ -81,7 +82,7 @@ $ s build --use-docker
 $ s proxied setup --debug-port 3000
 ```
 
-此时程序会阻塞住，若直接执行下一步 `Invoke`，进行的是正常模式的本地调用流程。若要进行断点调试，需要在首次调试时进行如下配置：
+命令执行完毕后，本地的函数计算执行环境会阻塞等待调用(执行环境本质是一个 HTTP Server)。此时若直接执行下一步 `Proxied Invoke`，进行的是正常模式的调用流程。若要进行断点调试，需要在首次调试时进行如下配置：
 
 - IDEA remote debug config
 
@@ -94,7 +95,7 @@ $ s proxied setup --debug-port 3000
   4. 上述配置完成后，在 IDEA 编辑器侧边栏为函数代码增加断点，点击"开始调试"按钮。
      ![img](https://img.alicdn.com/imgextra/i1/O1CN01PPR4V61RM0qRiP16r_!!6000000002096-2-tps-3528-2166.png)
 
-### Invoke
+### Proxied Invoke
 
 ```bash
 $ s proxied invoke
@@ -103,6 +104,21 @@ $ s proxied invoke
 上述指令执行完成后，回到 IDEA 界面，函数就开始了断点调试。
 
 ![img](https://img.alicdn.com/imgextra/i2/O1CN01gZdC9B20nxYxFvLTr_!!6000000006895-2-tps-3566-2232.png)
+
+## Debugging with vscode
+
+### Build
+
+```bash
+# 如果本地安装了 openjdk8, 可以直接执行 s build
+$ s build --use-docker
+```
+
+构建完成后后续步骤可以参考 [python-event](../python-event/README.md) 中的调试步骤。
+
+注意，使用 vscode 调试 java 时，需要安装两个插件：Language Support for Java(TM) by Red Hat、Debugger for Java 。
+
+利用 VSCode 的插件市场安装插件请参见此 [操作介绍](https://code.visualstudio.com/docs/languages/java?spm=a2c4g.11186623.2.16.69092a26ZukfQg)
 
 ## clean
 
