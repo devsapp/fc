@@ -8,16 +8,16 @@ export async function start(inputs: IInputs): Promise<any> {
 /**
   * s eval <sub-command>\n
   * @pre_help
-  * {"header":"Eval","content":"Power tunning online functions"}
+  * {"header":"Eval","content":"Power tuning online functions"}
   * @after_help
-  * {"header": "SubCommand List", "content": [{"name":"start","summary":"Power tunning online functions, you can get help through [s cli fc eval start -h]"}]}
+  * {"header": "SubCommand List", "content": [{"name":"start","summary":"Power tuning online functions, you can get help through [s cli fc eval start -h]"}]}
   */
 export interface EvalInputsArgs {}
 
 /**
   * s start <options>\n
   * @pre_help
-  * {"header":"Eval start","content":"Power tunning start"}
+  * {"header":"Eval start","content":"Power tuning start"}
   * @after_help
   * {"ref":"GlobalParams"}
   * @example
@@ -38,7 +38,7 @@ export interface EvalStartInputsArgs {
    */
   'function-name'?: string;
   /**
-  *  Type of the power tunning, including memory and concurrency
+  *  Type of the power tuning, including memory and concurrency
   */
   'eval-type': string;
   /**
@@ -50,15 +50,15 @@ export interface EvalStartInputsArgs {
   */
   'run-count': number;
   /**
-  *  Function MemorySize List of power tunning, only for --eval-type memory
+  *  Function MemorySize List of power tuning, only for --eval-type memory
   */
   'memory-size': string;
   /**
-  *  Concurrency args of power tunning that can convert to concurrency list, only for --eval-type concurrency
+  *  Concurrency args of power tuning that can convert to concurrency list, only for --eval-type concurrency
   */
   'concurrency-args': string;
   /**
-  *  Function memory of power tunning, only for --eval-type concurrency
+  *  Function memory of power tuning, only for --eval-type concurrency
   */
   'memory': number;
   /**
