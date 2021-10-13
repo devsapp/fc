@@ -15,7 +15,7 @@
 ```
 Eval
 
-  Power tunning online functions
+  Power tuning online functions
 
 Usage
 
@@ -24,7 +24,7 @@ Usage
 
 SubCommand List
 
-  start   Power tunning online functions, you can get help through [s cli fc eval start -h]
+  start   Power tuning online functions, you can get help through [s cli fc eval start -h]
 ```
 
 Eval 命令只有一个子命令：
@@ -34,7 +34,7 @@ Eval 命令只有一个子命令：
 ```
 Eval start
 
-  Power tunning start
+  Power tuning start
 
 Usage
 
@@ -43,13 +43,13 @@ Usage
 
 Options
 
-  --concurrency-args string   Concurrency args of power tunning that can convert to concurrency list,
+  --concurrency-args string   Concurrency args of power tuning that can convert to concurrency list,
                               only for --eval-type concurrency
-  --eval-type string          Type of the power tunning, including memory and concurrency
+  --eval-type string          Type of the power tuning, including memory and concurrency
   --function-name string      Specify the alicloud fc function name
   --function-type string      Type of the target function, including event and http
-  --memory number             Function memory of power tunning, only for --eval-type concurrency
-  --memory-size string        Function MemorySize List of power tunning, only for --eval-type memory
+  --memory number             Function memory of power tuning, only for --eval-type concurrency
+  --memory-size string        Function MemorySize List of power tuning, only for --eval-type memory
   --method string             Target method, only for --function-type http
   --path string               Target path, only for --function-type http
   --payload string            For --function-type event, represents the event passed to the function;
@@ -109,7 +109,7 @@ s cli fc eval start --region=cn-hangzhou --function-name cpu-test --service-name
 
 上述命令， 表示对 Event 类型的函数 dsp-test/cpu-test 进行内存模式探测， 探测的内存列表为 `[128, 256, 512, 1024, 1536, 3072]` , 被探测的函数在不同的内存模式下各自被调用 10 次，探测结束后， 会生成一个 url， 打开这个 url， 可以可视化展示结果， 比如：
 
-[http://memory-tunning.devsapp.cn/#gAAAAQACAAQ=;ZMsORykTkEZcbQVGKexxRQ==;naKfOJZloTgdDZY4jhWIOA==](http://memory-tunning.devsapp.cn/#gAAAAQACAAQ=;ZMsORykTkEZcbQVGKexxRQ==;naKfOJZloTgdDZY4jhWIOA==)
+[http://memory-tuning.devsapp.cn/#gAAAAQACAAQ=;ZMsORykTkEZcbQVGKexxRQ==;naKfOJZloTgdDZY4jhWIOA==](http://memory-tuning.devsapp.cn/#gAAAAQACAAQ=;ZMsORykTkEZcbQVGKexxRQ==;naKfOJZloTgdDZY4jhWIOA==)
 
 ### 并发度探测模式
 
@@ -122,7 +122,7 @@ s cli fc@dev eval start --region cn-hangzhou --function-name http-hello --servic
 
 上述命令， 表示对 Http 类型的函数 dsp-test/http-hello 进行并发度模式探测，探测的函数内存为 1.5G，并发度范围为 2-20, 步长为 5，即探测的并发度列表为 `[2, 7, 12, 17]` ，最大 RT 为 200ms(即随着并发度增大， RT 增加大超过这个限制值， 则后续更大的并发度不用探测了), 探测结束后， 会生成一个 url， 打开这个 url， 可以可视化展示结果， 比如：
 
-[http://concurrency-tunning.devsapp.cn/#AgAHAAwAEQA=;MZ3FQWCjv0FrF7xBS63kQQ==;AADAQAAAIEIAAFBCAAAwQg==](http://concurrency-tunning.devsapp.cn/#AgAHAAwAEQA=;MZ3FQWCjv0FrF7xBS63kQQ==;AADAQAAAIEIAAFBCAAAwQg==)
+[http://concurrency-tuning.devsapp.cn/#AgAHAAwAEQA=;MZ3FQWCjv0FrF7xBS63kQQ==;AADAQAAAIEIAAFBCAAAwQg==](http://concurrency-tuning.devsapp.cn/#AgAHAAwAEQA=;MZ3FQWCjv0FrF7xBS63kQQ==;AADAQAAAIEIAAFBCAAAwQg==)
 
 #### 建议
 
