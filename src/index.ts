@@ -757,13 +757,6 @@ export default class FcBaseComponent extends BaseComponent {
     const EVAL_SUB_COMMAND_HELP_KEY = {
       start: 'EvalStartInputsArgs',
     };
-
-    // default const args
-    const DEFAULT_RUN_COUNT = 50;
-    const DEFAULT_MEMORY_SIZE = '128,256,512,1024';
-    const DEFAULT_RT = 250;
-    const DEFAULT_CONCURRENCY_ARGS = '2,20,5';
-    const DEFAULT_MEMORY = 1536;
     const DEFAULT_EVAL_TYPE = 'memory';
 
     const apts = {
@@ -776,7 +769,8 @@ export default class FcBaseComponent extends BaseComponent {
         'assume-yes': 'y',
       },
     };
-    const comParse: any = core.commandParse(inputs, apts);
+    const args: string = (inputs?.args || '').replace(/(^\s*)|(\s*$)/g, '');
+    const comParse: any = core.commandParse({ ...inputs, args }, apts);
     const argsData: any = comParse?.data || {};
     const nonOptionsArgs = argsData?._ || [];
 
@@ -810,11 +804,11 @@ export default class FcBaseComponent extends BaseComponent {
       functionName: argsData['function-name'] || props?.function?.name,
       functionType: argsData['function-type'] || (isHttpFunction(props) ? 'http' : 'event'),
       evalType: argsData['eval-type'] || DEFAULT_EVAL_TYPE,
-      memorySizeList: argsData['memory-size'] || DEFAULT_MEMORY_SIZE,
-      runCount: argsData['run-count'] || DEFAULT_RUN_COUNT,
-      rt: argsData?.rt || DEFAULT_RT,
-      memory: argsData?.memory || DEFAULT_MEMORY,
-      concurrencyArgs: argsData['concurrency-args'] || DEFAULT_CONCURRENCY_ARGS,
+      memorySizeList: argsData['memory-size'],
+      runCount: argsData['run-count'],
+      rt: argsData?.rt,
+      memory: argsData?.memory,
+      concurrencyArgs: argsData['concurrency-args'],
     };
 
     let httpTypeOpts: HttpTypeOption = null;

@@ -17,6 +17,22 @@ export default class FcEval {
     this.httpTypeOpts = httpTypeOpts;
   }
 
+  isJSONString(str) {
+    if (typeof str === 'string') {
+      try {
+        const obj = JSON.parse(str);
+        if (typeof obj === 'object' && obj) {
+          return true;
+        } else {
+          return false;
+        }
+      } catch (e) {
+        return false;
+      }
+    }
+    return false;
+  }
+
   makeStartArgs(): string {
     let args = `--region ${this.region} --access ${this.access} --function-type ${this.evalOpts?.functionType} --eval-type ${this.evalOpts?.evalType}`;
     if (this.evalOpts.evalType === 'memory') {
@@ -48,7 +64,13 @@ export default class FcEval {
     }
 
     if (this.payloadOpts?.payload) {
-      args += ` --payload ${JSON.stringify(this.payloadOpts?.payload)}`;
+      const payload = this.payloadOpts?.payload;
+      if (this.isJSONString(payload)) {
+        const jsonObj = JSON.parse(payload);
+        args += ` --payload ${JSON.stringify(jsonObj)}`;
+      } else {
+        args += ` --payload ${payload}`;
+      }
     }
     if (this.payloadOpts?.payloadFile) {
       args += ` --payload-file ${this.payloadOpts?.payloadFile}`;
