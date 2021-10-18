@@ -5,7 +5,7 @@
  * @after_help
  * {"ref":"GlobalParams"}
  * @example
- * {"header": "Examples with Yaml","content": ["$ s sync", "$ s <ProjectName> sync", "$ s sync --region cn-hangzhou --service-name myService", "$ s exec -- sync  --region cn-hangzhou --service-name myService"]}
+ * {"header": "Examples with Yaml","content": ["$ s sync", "$ s <ProjectName> sync", "$ s sync --region cn-hangzhou --service-name myService", "$ s sync  --region cn-hangzhou --service-name myService"]}
  * @example
  * {"header": "Examples with CLI","content": ["$ s cli fc sync --region cn-shanghai --service-name myService --type config"]}
  */

@@ -12,7 +12,7 @@ export interface StressInputsArgs {
 /**
  * s stress clean <options>\n
  * @pre_help
- * {"header":"Stress clean","content":"Clean the relevant resources"}
+ * {"header":"Stress clean","content":"Clean the relevant resources, including local html report files and helper resources."}
  * @after_help
  * {"ref":"GlobalParams"}
  * @example
@@ -32,7 +32,7 @@ export interface StressCleanInputsArgs {
     'assume-yes': boolean;
 }
 /**
- * s start clean <options>\n
+ * s stress start <options>\n
  * @pre_help
  * {"header":"Stress start","content":"Start stress test"}
  * @after_help

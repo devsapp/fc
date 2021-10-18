@@ -5,7 +5,7 @@
  * @after_help
  * {"ref":"GlobalParams"}
  * @example
- * {"header":"Examples with Yaml","content":[{"example":"$ s metrics"},{"example":"$ s <ProjectName> metrics"},{"example":"$ s exec -- metrics --region cn-hangzhou --service-name myService --function-name myFunction"}]}
+ * {"header":"Examples with Yaml","content":[{"example":"$ s metrics"},{"example":"$ s <ProjectName> metrics"},{"example":"$ s metrics --region cn-hangzhou --service-name myService --function-name myFunction"}]}
  * @example
  * {"header":"Examples with CLI","content":[{"example":"$ s cli fc metrics --region cn-hangzhou --service-name myService --function-name myFunction"}]}
  */

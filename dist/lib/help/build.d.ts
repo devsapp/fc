@@ -10,13 +10,19 @@ export declare const BUILD_HELP_INFO: ({
     optionList?: undefined;
 } | {
     header: string;
-    optionList: {
+    optionList: ({
         name: string;
         description: string;
         alias: string;
         defaultOption: boolean;
         type: StringConstructor;
-    }[];
+    } | {
+        name: string;
+        description: string;
+        alias: string;
+        defaultOption: boolean;
+        type: BooleanConstructor;
+    })[];
     content?: undefined;
 } | {
     header: string;
