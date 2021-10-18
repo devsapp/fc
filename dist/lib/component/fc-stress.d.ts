@@ -1,4 +1,5 @@
-import { HttpTypeOption, EventTypeOption, StressOption, PayloadOption } from '../interface/component/fs-stress';
+import { HttpTypeOption, EventTypeOption, PayloadOption } from '../interface/component/fc-common';
+import { StressOption } from '../interface/component/fc-stress';
 export default class FcStress {
     private readonly httpTypeOpts?;
     private readonly eventTypeOpts?;

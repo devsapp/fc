@@ -20,7 +20,7 @@ export default class GenerateNasProps {
     if (isEmpty(nasConfig.mountPoints)) {
       throw new Error('NasConfig has required fields for mountPoints, but it is not found.Please refer to https://help.aliyun.com/document_detail/295899.html#h3-url-4 for nasConfig');
     } else {
-      nasConfig.mountPoints = nasConfig.mountPoints.map(item => {
+      nasConfig.mountPoints = nasConfig.mountPoints.map((item) => {
         if (item.mountDir) {
           const [serverAddr, nasDir] = item.serverAddr.split(':');
           return { serverAddr, nasDir, fcDir: item.mountDir };

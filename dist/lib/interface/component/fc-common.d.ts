@@ -1,13 +1,10 @@
-export interface StressOption {
-    numUser?: number;
-    spawnRate?: number;
-    runningTime?: number;
-    functionType: string;
-}
 export interface HttpTypeOption {
-    url: number;
+    url?: string;
     method?: string;
+    path?: string;
+    query?: string;
     body?: any;
+    qualifier?: string;
 }
 export interface EventTypeOption {
     serviceName: string;

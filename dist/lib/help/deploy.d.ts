@@ -17,6 +17,25 @@ export declare const DEPLOY_ALL: ({
     optionList: ({
         name: string;
         description: string;
+        type: StringConstructor;
+        alias?: undefined;
+    } | {
+        name: string;
+        description: string;
+        type: BooleanConstructor;
+        alias?: undefined;
+    } | {
+        name: string;
+        description: string;
+        alias: string;
+        type: BooleanConstructor;
+    })[];
+    content?: undefined;
+} | {
+    header: string;
+    optionList: ({
+        name: string;
+        description: string;
         alias: string;
         type: BooleanConstructor;
     } | {
@@ -73,6 +92,25 @@ export declare const DEPLOY_FUNCTION: ({
     optionList: ({
         name: string;
         description: string;
+        type: StringConstructor;
+        alias?: undefined;
+    } | {
+        name: string;
+        description: string;
+        type: BooleanConstructor;
+        alias?: undefined;
+    } | {
+        name: string;
+        description: string;
+        alias: string;
+        type: BooleanConstructor;
+    })[];
+    content?: undefined;
+} | {
+    header: string;
+    optionList: ({
+        name: string;
+        description: string;
         alias: string;
         type: BooleanConstructor;
     } | {
@@ -96,6 +134,25 @@ export declare const DEPLOY_TRIGGER: ({
     header: string;
     content: string;
     optionList?: undefined;
+} | {
+    header: string;
+    optionList: ({
+        name: string;
+        description: string;
+        type: ArrayConstructor;
+        alias?: undefined;
+    } | {
+        name: string;
+        description: string;
+        type: BooleanConstructor;
+        alias?: undefined;
+    } | {
+        name: string;
+        description: string;
+        alias: string;
+        type: BooleanConstructor;
+    })[];
+    content?: undefined;
 } | {
     header: string;
     optionList: ({
