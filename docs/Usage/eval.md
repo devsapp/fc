@@ -117,7 +117,7 @@ s cli fc eval start --region=cn-hangzhou --function-name cpu-test --service-name
 在函数计算中， CPU 能力跟内存大小成正比， 大约 1.5G 对应 1 核 CPU, 所以在单实例多并发模式下， 一般建议函数内存足够大些， 比如 1.5G 进行探测:
 
 ```bash
-s cli fc@dev eval start --region cn-hangzhou --function-name http-hello --service-name dsp-test --function-type http   --eval-type concurrency --memory 1536 --concurrency-args 2,20,5 --rt 200 --method=get --path /login  --query 'a=1&b=2' --access default
+s cli fc eval start --region cn-hangzhou --function-name http-hello --service-name dsp-test --function-type http   --eval-type concurrency --memory 1536 --concurrency-args 2,20,5 --rt 200 --method=get --path /login  --query 'a=1&b=2' --access default
 ```
 
 上述命令， 表示对 Http 类型的函数 dsp-test/http-hello 进行并发度模式探测，探测的函数内存为 1.5G，并发度范围为 2-20, 步长为 5，即探测的并发度列表为 `[2, 7, 12, 17]` ，最大 RT 为 200ms(即随着并发度增大， RT 增加大超过这个限制值， 则后续更大的并发度不用探测了), 探测结束后， 会生成一个 url， 打开这个 url， 可以可视化展示结果， 比如：

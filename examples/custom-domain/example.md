@@ -32,7 +32,7 @@ s deploy domain
 ````
 # 发布版本
 s version publish --description xxx
-# s cli /Users/wb447188/Desktop/new-repo/fc version publish --region cn-shenzhen --service-name guide --description xxx -a default
+# s cli fc version publish --region cn-shenzhen --service-name guide --description xxx -a default
 ````
 构建版本场景
 1. 修改或者函数的配置
@@ -51,7 +51,7 @@ s version list --table
 ````
 # 发布
 s alias publish --alias-name pre --version-id 1 --description xxx
-# s cli /Users/wb447188/Desktop/new-repo/fc alias publish --alias-name pre --version-id 1 --region cn-shenzhen --service-name guide --description xxx -a default
+# s cli fc alias publish --alias-name pre --version-id 1 --region cn-shenzhen --service-name guide --description xxx -a default
 s alias publish --alias-name stc --version-id 2 --description xxx --gversion 1 --weight 20
 
 # 查看列表
