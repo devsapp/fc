@@ -5,7 +5,7 @@ import Logger from './common/logger';
 import { COMPONENT_HELP_INFO, LOCAL_HELP_INFO, NAS_HELP_INFO,
   NAS_SUB_COMMAND_HELP_INFO, LOCAL_INVOKE_HELP_INFO, LOCAL_START_HELP_INFO, BUILD_HELP_INFO } from './lib/help';
 import * as DEPLOY_HELP from './lib/help/deploy';
-import transformNas, { toNasAbility } from './lib/transform-nas';
+import GenerateNasProps from './lib/transform-nas';
 import { ICredentials } from './lib/interface/profile';
 import { IInputs, IProperties } from './lib/interface/interface';
 import { isLogConfig, LogsProps } from './lib/interface/sls';
@@ -86,6 +86,9 @@ export default class FcBaseComponent extends BaseComponent {
       }
       if (deployRes.function.memorySize) {
         result.function.memorySize = deployRes.function.memorySize;
+      }
+      if (!_.isEmpty(deployRes.function.gpuMemorySize)) {
+        result.function.gpuMemorySize = deployRes.function.gpuMemorySize;
       }
       if (deployRes.function.timeout) {
         result.function.timeout = deployRes.function.timeout;
@@ -335,7 +338,7 @@ export default class FcBaseComponent extends BaseComponent {
 
   async nas(inputs: IInputs) {
     const { props, args, project, argsObj } = this.handlerComponentInputs(inputs);
-    const SUPPORTED_METHOD = ['init', 'ls', 'cp', 'rm', 'download', 'upload', 'command'];
+    const SUPPORTED_METHOD = ['init', 'download', 'upload', 'command'];
 
     const apts = {
       boolean: ['all', 'long', 'help', 'recursive', 'no-clobber', 'force', 'assume-yes'],
@@ -378,28 +381,23 @@ export default class FcBaseComponent extends BaseComponent {
     }
     nonOptionsArgs.shift();
     const { nasConfig, vpcConfig, name, role } = props?.service || {};
+
+    const componentInputs = _.cloneDeep(inputs);
+    delete componentInputs.argsObj;
+
     if (commandName === 'init' && isAutoConfig(nasConfig)) {
-      return await this.componentMethodCaller(inputs, 'devsapp/fc-deploy', 'deployAutoNas', props, assumeYes ? '--assume-yes' : null);
+      return await this.componentMethodCaller(componentInputs, 'devsapp/fc-deploy', 'deployAutoNas', props, assumeYes ? '--assume-yes' : null);
     } else if (commandName === 'init') {
-      // nasConfig is not auto
-      for (const mountPoint of nasConfig?.mountPoints) {
-        const ensureVm = core.spinner(`Ensuring nas dir: ${mountPoint.nasDir} in mount point: ${mountPoint.serverAddr}...`);
-        try {
-          const payload = await toNasAbility(props?.region, vpcConfig, name, role, { userId: nasConfig?.userId, groupId: nasConfig?.groupId, nasDir: mountPoint.nasDir, mountPointDomain: mountPoint.serverAddr });
-          await this.componentMethodCaller(inputs, 'devsapp/nas', 'ensureNasDir', payload.payload);
-          ensureVm.succeed(`Nas dir: ${mountPoint.nasDir} in mount point: ${mountPoint.serverAddr} exists.`);
-        } catch (e) {
-          ensureVm.fail(`Ensure nas dir: ${mountPoint.nasDir} in mount point: ${mountPoint.serverAddr} failed.`);
-          this.logger.debug(`Ensure nas dir: ${mountPoint.nasDir} in mount point: ${mountPoint.serverAddr} failed, error: ${e}`);
-        }
-      }
+      this.logger.info('Ensuring nas dir');
+      const payload = await GenerateNasProps.toNasAbility(props?.region, vpcConfig, name, role, nasConfig);
+      await this.componentMethodCaller(componentInputs, 'devsapp/nas', 'ensureNasDir', payload.payload);
       return;
     }
 
-    const payload = await transformNas(props, nonOptionsArgs, transformArgs, project?.access, commandName, inputs.credentials);
+    const payload = await GenerateNasProps.generateNasProps(props, project?.access, inputs.credentials);
 
-    this.logger.debug(`transform nas payload: ${JSON.stringify(payload.payload)}, args: ${payload.transformArgs}, command: ${commandName}`);
-    await this.componentMethodCaller(inputs, 'devsapp/nas', commandName, payload.payload, payload.transformArgs);
+    this.logger.debug(`transform nas payload: ${JSON.stringify(payload.payload)}, args: ${transformArgs}, command: ${commandName}`);
+    await this.componentMethodCaller(componentInputs, 'devsapp/nas', commandName, payload.payload, transformArgs);
 
     tips.showNasNextTips();
   }
