@@ -212,7 +212,20 @@ Proxied 命令为我们提供了三个子命令：
 
 # 快速使用
 
-当我们下载好[Serverless Devs 开发者工具](../Getting-started/Install-tutorial.md), 并完成[阿里云密钥配置](../Getting-started/Setting-up-credentials.md)之后，我们可以根据自身的需求进行函数的端云联调。
+当我们下载好[Serverless Devs 开发者工具](../Getting-started/Install-tutorial.md), 并完成[阿里云密钥配置](../Getting-started/Setting-up-credentials.md)之后，我们可以根据自身的需求进行函数的端云联调。如果你使用的是非 admin 全息的子账号的 AK, 需要给这个子账号增加如下 policy:
+
+```json
+{
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "tns:*",
+            "Resource": "*"
+        }
+    ],
+    "Version": "1"
+}
+```
 
 ## 简单使用
 
