@@ -246,7 +246,7 @@ export default class FcBaseComponent extends BaseComponent {
 
     inputs.argsObj.shift();
     console.log(inputs.argsObj);
-    const localRes: any = await this.componentMethodCaller(inputs, 'devsapp/fc-local-invoke', methodName, props, fcLocalInvokeArgs);
+    const localRes: any = await this.componentMethodCaller(inputs, 'devsapp/fc-local-invoke@0.0.20', methodName, props, fcLocalInvokeArgs);
     tips.showNextTip(args, tips.showLocalNextTips);
 
     return localRes;
