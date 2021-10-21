@@ -111,12 +111,14 @@ services:
       triggers:
         - name: httpTrigger
           type: http
+          qualifier: xxx
           config:
             authType: anonymous
             methods:
               - GET
         - name: timerTrigger
           type: timer
+          qualifier: xxx
           config:
             cronExpression: '0 0 8 * * *'
             enable: true
@@ -125,6 +127,7 @@ services:
           type: oss
           role: xxx
           sourceArn: xxx
+          qualifier: xxx
           config:
             bucketName: fassdemo
             events:
@@ -138,6 +141,7 @@ services:
           type: log
           role: xxx
           sourceArn: xxx
+          qualifier: xxx
           config:
             logConfig:
               project: fass-demo
@@ -154,6 +158,7 @@ services:
           type: mns_topic
           role: xxx
           sourceArn: xxx
+          qualifier: xxx
           config:
             topicName: test-topic
             region: cn-hangzhou
@@ -163,6 +168,7 @@ services:
           type: cdn_events
           role: xxx
           sourceArn: xxx
+          qualifier: xxx
           config:
             eventName: LogFileCreated
             eventVersion: '1.0.0'
@@ -175,6 +181,7 @@ services:
           type: tablestore
           role: xxx
           sourceArn: xxx
+          qualifier: xxx
           config:
             instanceName: xxx
             tableName: xxxs
@@ -404,6 +411,7 @@ TempKey: tempValue
 | type | True | Enum | 触发器类型 |
 | role | False | String | 使用一个 RAM 角色的 ARN 为函数指定执行角色，事件源会使用该角色触发函数执行，请确保该角色有调用函数的权限 |
 | sourceArn | False | String | 触发器事件源的 ARN |
+| qualifier | False | String | 触发器函数的版本或者别名，默认 `LATEST` |
 | config | True | Struct | 触发器配置 |
 
 type目前支持：`http`, `timer`, `oss`, `log`, `mns_topic`, `cdn_events`, `tablestore`
