@@ -110,9 +110,9 @@ remote 命令为我们提供了三个子命令：
                                  invoke#特别说明]                                                                  
       -f, --event-file string    Event funtion: A file containing event data passed to the function during     
                                  invoke. Http function: A file containing http request options sent to https   
-                                 strigger. Format refers to [https://github.com/devsapp/fc-remote-invoke#特别说明] 
+                                 strigger. Format refers to [https://github.com/devsapp/fc/blob/main/docs/Usage/invoke.md#invoke-http-parameter] 
       -s, --event-stdin string   Read from standard input, to support script pipeline.Http function format     
-                                 refers to [https://github.com/devsapp/fc-remote-invoke#特别说明]                  
+                                 refers to [https://github.com/devsapp/fc/blob/main/docs/Usage/invoke.md#invoke-http-parameter]                  
     
     Global Options
     

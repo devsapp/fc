@@ -287,6 +287,7 @@ role:
 | project | False | String | loghub中的project名称 |
 | enableRequestMetrics | False | Boolean | RequestMetrics开关，取值`true`/`false` |
 | enableInstanceMetrics | False | Boolean | InstanceMetrics开关，取值`true`/`false` |
+| logBeginRule | False | String | 日志是否切分，取值 `DefaultRegex`/`None` |
 
 > 相关权限可以参考[权限文档](./authority/yaml.md#存在日志配置的情况)
 
