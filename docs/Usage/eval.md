@@ -104,7 +104,7 @@ Examples with CLI
 如果您的函数是 cpu 密集型， 一般就是默认的单实例单并发， 比如音视频处理， 游戏中的战斗结算等函数， 这时您可以选择 `eval-type `为 `memory` 对具体的函数进行探测, 比如：
 
 ```bash
-s cli fc eval start --region cn-hangzhou --function-name cpu-test --service-name dsp-test --function-type event  --eval-type memory  --run-count 10   --payload {"key":"val"} --memory-size 128,256,512,1024,1536,3072  --access default
+s cli fc eval start --region cn-hangzhou --function-name cpu-test --service-name dsp-test --function-type event  --eval-type memory  --run-count 10   --payload '{"key":"val"}' --memory-size 128,256,512,1024,1536,3072  --access default
 ```
 
 上述命令， 表示对 Event 类型的函数 dsp-test/cpu-test 进行内存模式探测， 探测的内存列表为 `[128, 256, 512, 1024, 1536, 3072]` , 被探测的函数在不同的内存模式下各自被调用 10 次，探测结束后， 会生成一个 url， 打开这个 url， 可以可视化展示结果， 比如：
