@@ -28,10 +28,10 @@ Usage
 
 Options
     
-  -t, --invocation-type string   Invocation type: optional value "async"|"sync", default value "sync" (default: "sync")                       
-  -e, --event string             Event data (strings) passed to the function during invocation (default: "").Http function format refers to [https://github.com/devsapp/fc-remote-invoke#特别说明] 
-  -f, --event-file string        Event funtion: A file containing event data passed to the function during invoke. Http function: A file containing http request options sent to http trigger. Format refers to [https://github.com/devsapp/fc-remote-invoke#特别说明]
-  -s, --event-stdin              Read from standard input, to support script pipeline.Http function format refers to [https://github.com/devsapp/fc-remote-invoke#特别说明]                       
+  --invocation-type string   Invocation type: optional value "async"|"sync", default value "sync" (default: "sync")                       
+  --event string             Event data (strings) passed to the function during invocation (default: "").Http function format refers to [https://github.com/devsapp/fc/blob/main/docs/Usage/invoke.md#invoke-http-parameter] 
+  --event-file string        Event funtion: A file containing event data passed to the function during invoke. Http function: A file containing http request options sent to http trigger. Format refers to [https://github.com/devsapp/fc/blob/main/docs/Usage/invoke.md#invoke-http-parameter]
+  --event-stdin              Read from standard input, to support script pipeline.Http function format refers to [https://github.com/devsapp/fc/blob/main/docs/Usage/invoke.md#invoke-http-parameter]                       
   --region string                 Specify region in cli mode               
   --service-name string           Specify service name in cli mode     
   --function-name string          Specify function name in cli mode
@@ -90,9 +90,34 @@ services:
         handler: index.handler
         memorySize: 128
         timeout: 60
+      triggers:
+        - name: httpTrigger
+          type: http
+          config:
+            authType: anonymous
+            methods:
+              - GET
 ```
 
 此时，当我部署完（`s deploy`）该应用之后，我可以通过`s invoke`进行线上函数的触发。
+
+<a id="invoke-http-parameter" href="#invoke-http-parameter"></a>
+
+当函数是 http 函数时，--event/--event-file/--event-stdin 这三个参数最终获取值目前仅支持 json 字符串，[示例参考](../../examples/remote-invoke/http-code/http.json)
+````
+{
+  "body": "body",
+  "method": "POST",
+  "headers": {
+    "key": "value"
+  },
+  "queries": {
+    "key": "value"
+  },
+  "path": "string"
+}
+````
+
 
 ### 命令行模式使用
 
@@ -100,48 +125,6 @@ services:
 
 ```
 s cli fc invoke --region cn-hongkong --service-name ai-album --function-name pre-warm
-```
-
-此时可以看到结果：
-
-```
-[2021-06-07T17:41:38.758] [INFO ] [S-CLI] - Start ...
-https://1583208943291465.cn-hangzhou.fc.aliyuncs.com/2016-08-15/proxy/fc-deploy-service/http-trigger-function/
-
-========= FC invoke Logs begin =========
-FC Initialize Start RequestId: f9c7e925-b9c5-4b30-bd9d-84e35a9ee81e
-load code for handler:index.initializer
-2021-06-07T09:41:48.592Z f9c7e925-b9c5-4b30-bd9d-84e35a9ee81e [verbose] i am initializing
-FC Initialize End RequestId: f9c7e925-b9c5-4b30-bd9d-84e35a9ee81e
-FC Invoke Start RequestId: f9c7e925-b9c5-4b30-bd9d-84e35a9ee81e
-load code for handler:index.handler
-2021-06-07T09:41:48.603Z f9c7e925-b9c5-4b30-bd9d-84e35a9ee81e [verbose] hello world
-FC Invoke End RequestId: f9c7e925-b9c5-4b30-bd9d-84e35a9ee81e
-
-Duration: 5.72 ms, Billed Duration: 6 ms, Memory Size: 128 MB, Max Memory Used: 49.55 MB
-========= FC invoke Logs end =========
-
-FC Invoke Result:
-{
-    "message": "Hello World",
-    "path": "/",
-    "queries": {},
-    "headers": {
-        "accept": "application/json",
-        "authorization": "FC LTAI4G8rgRovHuP7WRJVtZCW:ep6HtOdPcMQwMPI7KDYKO0BxpJgzSVg09ZmJICCXmo0=",
-        "date": "Mon, 07 Jun 2021 09:41:47 GMT",
-        "host": "1583208943291465.cn-hangzhou.fc.aliyuncs.com",
-        "user-agent": "Node.js(v12.15.0) OS(darwin/x64) SDK(@alicloud/fc2@v2.2.2)",
-        "x-forwarded-proto": "http"
-    },
-    "method": "GET",
-    "requestURI": "/2016-08-15/proxy/fc-deploy-service/http-trigger-function/",
-    "clientIP": "106.11.31.167",
-    "uuid": "069d2d15-8bc0-4e72-94ad-2a40baadb405",
-    "body": ""
-}
-
-
 ```
 
 ## 高级使用
@@ -171,7 +154,7 @@ s cli fc-event oss
 此时，我们利用该路径的模板（可以额外进行修改），触发函数：
 
 ```
-s invoke --event-file  event-template/oss-event.json
+s invoke --event-file event-template/oss-event.json
 ```
 
 # 其他替代方法

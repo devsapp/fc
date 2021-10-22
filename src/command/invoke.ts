@@ -28,15 +28,15 @@ export interface InvokeInputsArgs {
    */
   'invocation-type'?: string;
   /**
-   *  Event data (strings) passed to the function during invocation (default: "").Http function format refers to [https://github.com/devsapp/fc-remote-invoke#特别说明]
+   *  Event data (strings) passed to the function during invocation (default: "").Http function format refers to [https://github.com/devsapp/fc/blob/main/docs/Usage/invoke.md#invoke-http-parameter]
    */
   'event'?: string;
   /**
-   *  Event funtion: A file containing event data passed to the function during invoke. Http function: A file containing http request options sent to http trigger. Format refers to [https://github.com/devsapp/fc-remote-invoke#特别说明]
+   *  Event funtion: A file containing event data passed to the function during invoke. Http function: A file containing http request options sent to http trigger. Format refers to [https://github.com/devsapp/fc/blob/main/docs/Usage/invoke.md#invoke-http-parameter]
    */
   'event-file'?: string;
   /**
-   *  Read from standard input, to support script pipeline.Http function format refers to [https://github.com/devsapp/fc-remote-invoke#特别说明]
+   *  Read from standard input, to support script pipeline.Http function format refers to [https://github.com/devsapp/fc/blob/main/docs/Usage/invoke.md#invoke-http-parameter]
    */
   'event-stdin'?: string;
 }

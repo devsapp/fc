@@ -595,28 +595,289 @@ function:
 
 # 触发器相关权限配置
 
-## 基础配置
+## OSS 触发器
 
 ### yaml
 
 ```yaml
 triggers:
-    - name: httpTrigger
-      type: http
-      config:
-        authType: anonymous
-        methods:
-          - GET
-          - POST
+  - name: oss
+    sourceArn: acs:oss:acs:log:<region>:<account-id>:<buckctName>
+    type: oss
+    role: acs:ram::<account-id>:role/aliyunosseventnotificationrole
+    # qualifier: LATEST
+    config:
+      events:
+        - oss:ObjectCreated:*
+      filter:
+        key:
+          prefix: pppppppp
+          suffix: ''
+```
+
+### 子账号权限
+
+#### 最大权限
+
+`AliyunFCFullAccess`、`AliyunOSSFullAccess`
+
+#### 操作最小权限
+
+````
+{
+    "Version": "1",
+    "Statement": [
+        {
+            "Action": [
+                "fc:GetTrigger",
+                "fc:CreateTrigger",
+                "fc:UpdateTrigger",
+                "fc:DeleteTrigger"
+            ],
+            "Effect": "Allow",
+            "Resource": "acs:fc:<region>:<account-id>:services/*/functions/*/triggers/*"
+        },
+        {
+            "Action": "ram:PassRole",
+            "Effect": "Allow",
+            "Resource": "*"
+        },
+        {
+            "Action": [
+                "oss:ListBucket",
+                "oss:GetBucketEventNotification",
+                "oss:PutBucketEventNotification",
+                "oss:DeleteBucketEventNotification"
+            ],
+            "Effect": "Allow",
+            "Resource": "*"
+        }
+    ]
+}
+````
+
+
+### 触发器角色权限
+
+```
+{
+    "Version": "1",
+    "Statement": [
+        {
+            "Action": [
+                "fc:InvokeFunction"
+            ],
+            "Resource": "*",
+            "Effect": "Allow"
+        }
+    ]
+}
+```
+
+
+## CDN 触发器
+
+### yaml
+
+```yaml
+triggers:
+  - name: cdn
+    sourceArn: acs:cdn:*:<account-id>
+    type: cdn_events
+    role: <roleArn>
+    # qualifier: LATEST
+    config:
+      eventName: CachedObjectsBlocked
+      eventVersion: 1.0.0
+      notes: shshhs
+      filter:
+        domain:
+          - sss
+```
+
+### 子账号权限
+
+#### 最大权限
+
+`AliyunFCFullAccess`、`AliyunCDNFullAccess`
+
+#### 最小权限
+````
+{
+    "Version": "1",
+    "Statement": [
+        {
+            "Action": [
+                "fc:GetTrigger",
+                "fc:CreateTrigger",
+                "fc:UpdateTrigger",
+                "fc:DeleteTrigger"
+            ],
+            "Effect": "Allow",
+            "Resource": "acs:fc:<region>:<account-id>:services/*/functions/*/triggers/*"
+        },
+        {
+            "Action": "ram:PassRole",
+            "Effect": "Allow",
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "cdn:UpdateFCTrigger",
+                "cdn:DeleteFCTrigger",
+                "cdn:DescribeFCTrigger",
+                "cdn:AddFCTrigger"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+````
+
+### 触发器角色权限
+
+```
+{
+    "Version": "1",
+    "Statement": [
+        {
+            "Action": [
+                "fc:InvokeFunction"
+            ],
+            "Resource": "*",
+            "Effect": "Allow"
+        }
+    ]
+}
+```
+
+
+## Log 触发器
+
+### yaml
+
+```yaml
+triggers:
+  - name: log
+    sourceArn: acs:log:<region>:<account-id>:project/<projectName>
+    type: log
+    role: acs:ram::<account-id>:role/aliyunlogetlrole
+    # qualifier: LATEST
+    config:
+      sourceConfig:
+        logstore: log
+      jobConfig:
+        maxRetryTime: 3
+        triggerInterval: 60
+      functionParameter: {}
+      logConfig:
+        project: test-data-abc-ss
+        logstore: log2
+      enable: false
+```
+
+### 子账号权限
+
+#### 最大权限
+
+`AliyunFCFullAccess`、`AliyunLogFullAccess`
+
+#### 最小权限
+````
+{
+    "Version": "1",
+    "Statement": [
+        {
+            "Action": [
+                "fc:GetTrigger",
+                "fc:CreateTrigger",
+                "fc:UpdateTrigger",
+                "fc:DeleteTrigger"
+            ],
+            "Effect": "Allow",
+            "Resource": "acs:fc:<region>:<account-id>:services/*/functions/*/triggers/*"
+        },
+        {
+            "Action": "ram:PassRole",
+            "Effect": "Allow",
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "log:GetEtlJob",
+                "log:UpdateEtlJob",
+                "log:CreateEtlJob",
+                "log:DeleteEtlJob"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+````
+
+### 触发器角色权限
+
+```
+{
+    "Version": "1",
+    "Statement": [
+        {
+            "Action": [
+                "fc:InvokeFunction"
+            ],
+            "Resource": "*",
+            "Effect": "Allow"
+        },
+        {
+            "Action": [
+                "log:Get*",
+                "log:List*",
+                "log:PostProjectQuery",
+                "log:PutProjectQuery",
+                "log:DeleteProjectQuery",
+                "log:GetProjectQuery",
+                "log:PostLogStoreLogs",
+                "log:BatchPostLogStoreLogs",
+                "log:CreateConsumerGroup",
+                "log:UpdateConsumerGroup",
+                "log:DeleteConsumerGroup",
+                "log:ListConsumerGroup",
+                "log:ConsumerGroupUpdateCheckPoint",
+                "log:ConsumerGroupHeartBeat",
+                "log:GetConsumerGroupCheckPoint"
+            ],
+            "Resource": "*",
+            "Effect": "Allow"
+        }
+    ]
+}
+```
+
+
+## Tablestore 触发器配置
+
+### yaml
+
+```yaml
+triggers:
+  - name: ots
+    sourceArn: acs:ots:<region>:<account-id>:instance/<instance>/table/<table>
+    type: tablestore
+    role: >-
+      acs:ram::<account-id>:role/AliyunTableStoreStreamNotificationRole
+    # qualifier: 1 # LATEST
+    config: {}
 ```
 
 ### 子账号需要的函数权限
 
 #### 最大权限
 
-`AliyunFCFullAccess`
+`AliyunFCFullAccess`、`AliyunOTSFullAccess`
 
-#### 部署最小权限
+#### 最小权限
 
 ```json
 {
@@ -626,6 +887,163 @@ triggers:
             "Action": [
                 "fc:GetTrigger",
                 "fc:CreateTrigger",
+                "fc:UpdateTrigger",
+                "fc:DeleteTrigger"
+            ],
+            "Effect": "Allow",
+            "Resource": "acs:fc:<region>:<account-id>:services/*/functions/*/triggers/*"
+        },
+        {
+            "Action": "ram:PassRole",
+            "Effect": "Allow",
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ots:GetTrigger",
+                "ots:UpdateTrigger",
+                "ots:CreateTrigger",
+                "ots:DeleteTrigger"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+```
+
+### 触发器角色权限
+````
+{
+    "Version": "1",
+    "Statement": [
+        {
+            "Action": [
+                "ots:BatchGet*",
+                "ots:Describe*",
+                "ots:Get*",
+                "ots:List*"
+            ],
+            "Resource": "*",
+            "Effect": "Allow"
+        },
+        {
+            "Action": [
+                "fc:InvokeFunction"
+            ],
+            "Resource": "*",
+            "Effect": "Allow"
+        }
+    ]
+}
+````
+
+
+## MNS 触发器配置
+
+### yaml
+
+```yaml
+triggers:
+  - name: mns
+    sourceArn: acs:mns:<region>:<account-id>:/topics/test
+    type: mns_topic
+    role: acs:ram::<account-id>:role/aliyunmnsnotificationrole
+    # qualifier: LATEST
+    config:
+      filterTag: ss
+      notifyContentFormat: STREAM
+      notifyStrategy: BACKOFF_RETRY
+```
+
+### 子账号需要的函数权限
+
+#### 最大权限
+
+`AliyunFCFullAccess`、`AliyunMNSFullAccess`
+
+#### 最小权限
+
+```json
+{
+    "Version": "1",
+    "Statement": [
+        {
+            "Action": [
+                "fc:GetTrigger",
+                "fc:CreateTrigger",
+                "fc:UpdateTrigger",
+                "fc:DeleteTrigger"
+            ],
+            "Effect": "Allow",
+            "Resource": "acs:fc:<region>:<account-id>:services/*/functions/*/triggers/*"
+        },
+        {
+            "Action": "ram:PassRole",
+            "Effect": "Allow",
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "mns:Subscribe",
+                "mns:Unsubscribe"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+```
+
+### 触发器角色权限
+````
+{
+    "Version": "1",
+    "Statement": [
+        {
+            "Action": [
+                "fc:InvokeFunction"
+            ],
+            "Resource": "*",
+            "Effect": "Allow"
+        }
+    ]
+}
+````
+
+
+## Timer 触发器配置
+
+### yaml
+
+```yaml
+triggers:
+  - name: timer
+    type: timer
+    # qualifier: LATEST
+    config:
+    payload: '{"s": "ss"}'
+    cronExpression: '@every 100m'
+    enable: false
+```
+
+### 子账号需要的函数权限
+
+#### 最大权限
+
+`AliyunFCFullAccess`
+
+#### 最小权限
+
+```json
+{
+    "Version": "1",
+    "Statement": [
+        {
+            "Action": [
+                "fc:GetTrigger",
+                "fc:CreateTrigger",
+                "fc:DeleteTrigger",
                 "fc:UpdateTrigger"
             ],
             "Effect": "Allow",
@@ -635,19 +1053,47 @@ triggers:
 }
 ```
 
-#### 删除最小权限
+## Http 触发器配置
+
+### yaml
+
+```yaml
+triggers:
+  - name: httpTrigger
+    type: http
+    # qualifier: LATEST
+    config:
+      authType: anonymous
+      methods:
+        - GET
+```
+
+### 子账号需要的函数权限
+
+#### 最大权限
+
+`AliyunFCFullAccess`
+
+#### 最小权限
+
 ```json
 {
     "Version": "1",
     "Statement": [
         {
-            "Action": "fc:DeleteTrigger",
-            "Resource": "acs:fc:<region>:<account-id>:services/<serviceName>/functions/<functionName>/triggers/*",
-            "Effect": "Allow"
+            "Action": [
+                "fc:GetTrigger",
+                "fc:CreateTrigger",
+                "fc:DeleteTrigger",
+                "fc:UpdateTrigger"
+            ],
+            "Effect": "Allow",
+            "Resource": "acs:fc:<region>:<account-id>:services/<serviceName>/functions/<functionName>/triggers/<triggerName>"
         }
     ]
 }
 ```
+
 
 # 自定义域名相关权限配置
 
