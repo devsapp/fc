@@ -90,11 +90,3 @@ export async function componentMethodCaller(inputs: IInputs, componentName: stri
   logger.debug(`Inputs of component: ${componentName} is: ${JSON.stringify(inputs, null, '  ')}`);
   return await componentIns[methodName](inputs);
 }
-
-export function extract(regex: RegExp, endpoint: string) {
-  const matchs = endpoint.match(regex);
-  if (matchs) {
-    return matchs[1];
-  }
-  return null;
-}
