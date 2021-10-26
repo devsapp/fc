@@ -94,7 +94,7 @@ export default class Alias {
 
     const credentials: ICredentials = await getCredentials(inputs.credentials, inputs?.project?.access);
     logger.debug(`handler inputs props: ${JSON.stringify(endProps)}`);
-    await Client.setFcClient(endProps.region, credentials);
+    await Client.setFcClient(endProps.region, inputs.credentials, inputs?.project?.access);
 
     return {
       credentials,

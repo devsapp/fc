@@ -72,7 +72,7 @@ export default class OnDemand {
 
     const credentials: ICredentials = await getCredentials(inputs.credentials, inputs?.project?.access);
     logger.debug(`handler inputs props: ${JSON.stringify(endProps)}`);
-    await Client.setFcClient(endProps.region, credentials);
+    await Client.setFcClient(endProps.region, credentials, inputs?.project?.access);
 
     return {
       credentials,
@@ -117,7 +117,7 @@ export default class OnDemand {
       throw new Error('Not found service name');
     }
     logger.info(`Getting on-demand: ${serviceName}.${qualifier}/${functionName}`);
-    const { data } = await Client.fcClient.on_demand_get(serviceName, qualifier, functionName);
+    const { data } = await Client.fcClient.getOnDemandConfig(serviceName, qualifier, functionName);
     if (data) {
       return {
         serviceName,
@@ -139,7 +139,7 @@ export default class OnDemand {
       throw new Error('Not found service name');
     }
     logger.info(`Removing on-demand: ${serviceName}.${qualifier}/${functionName}`);
-    const { data } = await Client.fcClient.on_demand_delete(serviceName, qualifier, functionName);
+    const { data } = await Client.fcClient.deleteOnDemandConfig(serviceName, qualifier, functionName);
     return data;
   }
 
@@ -163,7 +163,7 @@ export default class OnDemand {
     };
 
     logger.info(`Updating on-demand: ${serviceName}.${qualifier}/${functionName}`);
-    const { data } = await Client.fcClient.on_demand_put(serviceName, qualifier, functionName, options);
+    const { data } = await Client.fcClient.putOnDemandConfig(serviceName, qualifier, functionName, options);
     return data;
   }
 
