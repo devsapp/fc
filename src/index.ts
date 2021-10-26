@@ -6,7 +6,6 @@ import { COMPONENT_HELP_INFO, LOCAL_HELP_INFO, NAS_HELP_INFO,
   NAS_SUB_COMMAND_HELP_INFO, LOCAL_INVOKE_HELP_INFO, LOCAL_START_HELP_INFO, BUILD_HELP_INFO } from './lib/help';
 import * as DEPLOY_HELP from './lib/help/deploy';
 import GenerateNasProps from './lib/transform-nas';
-import { ICredentials } from './lib/interface/profile';
 import { IInputs, IProperties } from './lib/interface/interface';
 import { isLogConfig, LogsProps } from './lib/interface/sls';
 import { FcInfoProps } from './lib/interface/component/fc-info';
@@ -652,17 +651,17 @@ export default class FcBaseComponent extends BaseComponent {
       super.help('ProxiedInputsArgs');
       return;
     }
-    const creds: ICredentials = await core.getCredential(inputs?.project?.access);
+    const { AccountID: accountID } = inputs?.credentials || {};
     const fcProxiedInvoke: FcProxiedInvoke = new FcProxiedInvoke(inputs);
     if (methodName === 'setup') {
-      await this.report('fc', 'proxied_setup', creds?.AccountID);
+      await this.report('fc', 'proxied_setup', accountID);
       if (argsData?.help) {
         super.help('ProxiedSetupInputsArgs');
         return;
       }
       return await proxied.setup(fcProxiedInvoke.makeInputs(methodName));
     } else if (methodName === 'invoke') {
-      await this.report('fc', 'proxied_invoke', creds?.AccountID);
+      await this.report('fc', 'proxied_invoke', accountID);
       if (argsData?.help) {
         super.help('ProxiedInvokeInputsArgs');
         return;
@@ -670,7 +669,7 @@ export default class FcBaseComponent extends BaseComponent {
       return await proxied.invoke(fcProxiedInvoke.makeInputs(methodName));
     } else if (methodName === 'clean') {
       // clean
-      await this.report('fc', 'proxied_clean', creds?.AccountID);
+      await this.report('fc', 'proxied_clean', accountID);
       if (argsData?.help) {
         super.help('ProxiedCleanInputsArgs');
         return;
@@ -678,7 +677,7 @@ export default class FcBaseComponent extends BaseComponent {
       return await proxied.clean(fcProxiedInvoke.makeInputs(methodName));
     } else {
       // cleanup
-      await this.report('fc', 'proxied_cleanup', creds?.AccountID);
+      await this.report('fc', 'proxied_cleanup', accountID);
       if (argsData?.help) {
         super.help('ProxiedCleanupInputsArgs');
         return;
@@ -723,24 +722,24 @@ export default class FcBaseComponent extends BaseComponent {
       super.help('RemoteInputsArgs');
       return;
     }
-    const creds: ICredentials = await core.getCredential(inputs?.project?.access);
+    const { AccountID: accountID } = inputs?.credentials || {};
     const fcRemoteDebug: FcRemoteDebug = new FcRemoteDebug(inputs);
     if (methodName === 'setup') {
-      await this.report('fc', 'remote_setup', creds?.AccountID);
+      await this.report('fc', 'remote_setup', accountID);
       if (argsData?.help) {
         super.help('RemoteSetupInputsArgs');
         return;
       }
       return await remote.setup(fcRemoteDebug.makeInputs(methodName));
     } else if (methodName === 'invoke') {
-      await this.report('fc', 'remote_invoke', creds?.AccountID);
+      await this.report('fc', 'remote_invoke', accountID);
       if (argsData?.help) {
         super.help('RemoteInvokeInputsArgs');
         return;
       }
       return await remote.invoke(fcRemoteDebug.makeInputs(methodName));
     } else if (methodName === 'cleanup') {
-      await this.report('fc', 'remote_cleanup', creds?.AccountID);
+      await this.report('fc', 'remote_cleanup', accountID);
       if (argsData?.help) {
         super.help('RemoteCleanupInputsArgs');
         return;
