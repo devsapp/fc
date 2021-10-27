@@ -28,7 +28,7 @@ export default class FcStress {
       args += ` --spawn-rate ${this.stressOpts?.spawnRate}`;
     }
     if (this.stressOpts?.runningTime) {
-      args += ` --run-time ${this.stressOpts?.spawnRate}`;
+      args += ` --run-time ${this.stressOpts?.runningTime}`;
     }
     if (this.isEventFunctionType()) {
       args += ` --service-name ${this.eventTypeOpts?.serviceName} --function-name ${this.eventTypeOpts?.functionName}`;

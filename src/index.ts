@@ -469,6 +469,9 @@ export default class FcBaseComponent extends BaseComponent {
       };
       this.logger.debug(`Using event options: \n${yaml.dump(eventTypeOpts)}`);
     } else if (stressOpts?.functionType === 'http') {
+      if (!argsData?.url) {
+        this.logger.error('Function type is http, please specify --url');
+      }
       httpTypeOpts = {
         url: argsData?.url,
         method: argsData?.method,
