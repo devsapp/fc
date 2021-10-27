@@ -45,6 +45,14 @@ services:
               Key:
                 Prefix: source/
                 Suffix: .png
+        - name: mnsTrigger
+          type: mns_topic
+          # role: acs:ram::xxx:role/fc-base-role
+          config:
+            topicName: test-topic
+            region: cn-hangzhou
+            notifyContentFormat: 'JSON'
+            notifyStrategy: 'BACKOFF_RETRY'
         - name: logTrigger
           type: log
           config:
