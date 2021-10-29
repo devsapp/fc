@@ -12,4 +12,3 @@ export declare function getFcNames(argsParse: any, inputsProps: any): {
 export declare function isHttpFunction(props: IProperties): boolean;
 export declare const tableShow: (data: any, showKey: any) => void;
 export declare function componentMethodCaller(inputs: IInputs, componentName: string, methodName: string, props?: any, args?: string, argsObj?: any): Promise<any>;
-export declare function extract(regex: RegExp, endpoint: string): string;
