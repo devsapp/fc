@@ -1,6 +1,28 @@
-# 阿里云函数计算（FC）组件
+![图片alt](https://serverless-article-picture.oss-cn-hangzhou.aliyuncs.com/1635756716877_20211101085157044368.png)
+<p align="center">
+  <a href="https://nodejs.org/en/">
+    <img src="https://img.shields.io/badge/node-%3E%3D%2010.8.0-brightgreen" alt="node.js version">
+  </a>
+  <a href="https://github.com/devsapp/fc/blob/master/LICENSE">
+    <img src="https://img.shields.io/badge/License-MIT-green" alt="license">
+  </a>
+  <a href="https://github.com/devsapp/fc/issues">
+    <img src="https://img.shields.io/github/issues/devsapp/fc" alt="issues">
+  </a>
+  </a>
+</p>
 
-[阿里云函数计算（FC）组件](https://github.com/devsapp/fc) 是一个用于支持阿里云 Serverless 应用全生命周期的工具，它通过资源配置文件 (s.yml) ，可以快速帮助用户便捷地开发、构建、测试以及部署应用到[阿里云函数计算平台](https://www.aliyun.com/product/fc?spm=5176.19720258.J_8058803260.115.e9392c4aHejRf3) 。
+<p align="center">
+  <span><b>函数计算全生命周期管理工具</b></span><br>
+</p>
+
+[**阿里云 函数计算（FC）组件**](https://github.com/devsapp/fc) 是基于 [Serverless Devs 开发者工具](https://github.com/Serverless-Devs/Serverless-Devs) 的 [阿里云函数计算产品](https://www.aliyun.com/product/fc?spm=5176.19720258.J_8058803260.66.e9392c4ap4mAqo) 全生命周期管理组件，通过该工具，开发者可以非常简单、轻松、快速的在阿里云 Serverless 产品上进行应用的创建、开发、部署、调试、运维等。
+
+![图片alt](https://serverless-article-picture.oss-cn-hangzhou.aliyuncs.com/1635757890439_20211101091132035959.png)
+
+
+
+是一个用于支持阿里云 Serverless 应用全生命周期的工具，它通过资源配置文件 (s.yml) ，可以快速帮助用户便捷地开发、构建、测试以及部署应用到[阿里云函数计算平台](https://www.aliyun.com/product/fc?spm=5176.19720258.J_8058803260.115.e9392c4aHejRf3) 。
 
 阿里云函数计算（FC）组件基于[Serverless Devs](https://www.serverless-devs.com/) 进行开发，主要支持两种使用形态:
 
@@ -12,7 +34,7 @@
 
 本文档将帮助您使用 阿里云函数计算（FC）组件 去开发函数计算应用。
 
-## 组件的优势
+# 组件的优势
 
 使用阿里云函数计算（FC）组件有如下几点优势：
 
@@ -24,11 +46,11 @@
 
 - 👁️ 可观测性支持：该组件不仅涵盖了 Serverless 应用的开发态，还能够监控其运行态，详情可参考[监控能力](docs/Usage/metrics.md)；同时也可以查看某些服务的执行日志，详情可参考[日志能力](docs/Usage/logs.md)；
 
-## 快速开始
+# 快速开始
 
 🔑 为了让您可以更简单体验阿里云函数计算（FC）组件，您可以参考[快速入门文档](./docs/Getting-started/Hello-world-application.md)
 
-## 文档目录
+# 文档目录
 
 - [入门相关](./docs/Getting-started/Getting-started.md)
   - [开发工具安装](./docs/Getting-started/Install-tutorial.md)
@@ -66,18 +88,27 @@
     - [通过 Gitee+Serverless Devs 快速实现函数代码更新与版本发布](http://www.serverless-devs.com/blog/gitee-gitee-go-serverless-devs-ci-cd)
     - [只更新代码，然后发布版本：基于 Serverless Devs 原子化操作阿里云函数计算](http://www.serverless-devs.com/blog/serverless-devs-update-fc-code)
 
----
 
-# More
+# 项目贡献
 
-## 讨论交流
+我们非常希望您可以和我们一起贡献这个项目。贡献内容包括不限于代码的维护、应用/组件的贡献、文档的完善等，更多详情可以参考[ 🏆 贡献指南](./CONTRIBUTING.md)。
 
-钉钉群号: `11721331`
+与此同时，我们也非常感谢所有[ 👬 参与贡献的小伙伴](https://github.com/devsapp/fc/graphs/contributors) ，为 Serverless Devs FC 组件项目贡献的努力和汗水。
 
-## 问题反馈
+# 开源许可
 
-如您在使用中遇到问题，可以在[这里反馈](https://github.com/devsapp/fc/issues)
+Serverless Devs FC 组件遵循 [MIT License](./LICENSE) 开源许可。
 
-## 开源许可
+位于`node_modules`和外部目录中的所有文件都是本软件使用的外部维护库，具有自己的许可证；我们建议您阅读它们，因为它们的条款可能与[MIT License](./LICENSE)的条款不同。
 
-The MIT License
+# 交流社区
+
+您如果有关于错误的反馈或者未来的期待，您可以在 [Serverless Devs repo Issues](https://github.com/serverless-devs/serverless-devs/issues) 或 [Fc repo Issues](https://github.com/devsapp/fc/issues) 中进行反馈和交流。如果您想要加入我们的讨论组或者了解 FC 组件的最新动态，您可以通过以下渠道进行：
+
+<p align="center">
+
+| <img src="https://serverless-article-picture.oss-cn-hangzhou.aliyuncs.com/1635407298906_20211028074819117230.png" width="200px" > | <img src="https://serverless-article-picture.oss-cn-hangzhou.aliyuncs.com/1635407044136_20211028074404326599.png" width="200px" > | <img src="https://serverless-article-picture.oss-cn-hangzhou.aliyuncs.com/1635407252200_20211028074732517533.png" width="200px" > |
+|--- | --- | --- |
+| <center>关注微信公众号：`serverless`</center> | <center>联系微信小助手：`xiaojiangwh`</center> | <center>加入钉钉交流群：`33947367`</center> | 
+
+</p>
