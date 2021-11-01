@@ -12,35 +12,14 @@
   </a>
 </p>
 
-[**阿里云 函数计算（FC）组件**](https://github.com/devsapp/fc) 是基于 [Serverless Devs 开发者工具](https://github.com/Serverless-Devs/Serverless-Devs) 的 [阿里云函数计算产品](https://www.aliyun.com/product/fc?spm=5176.19720258.J_8058803260.66.e9392c4ap4mAqo) 全生命周期管理组件，通过该工具，开发者可以非常简单、轻松、快速的在阿里云 Serverless 产品上进行应用的创建、开发、部署、调试、运维等。
+# 六大亮点
 
-![图片alt](https://serverless-article-picture.oss-cn-hangzhou.aliyuncs.com/1635757890439_20211101091132035959.png)
-
-
-
-是一个用于支持阿里云 Serverless 应用全生命周期的工具，它通过资源配置文件 (s.yml) ，可以快速帮助用户便捷地开发、构建、测试以及部署应用到[阿里云函数计算平台](https://www.aliyun.com/product/fc?spm=5176.19720258.J_8058803260.115.e9392c4aHejRf3) 。
-
-阿里云函数计算（FC）组件基于[Serverless Devs](https://www.serverless-devs.com/) 进行开发，主要支持两种使用形态:
-
-1. 通过 Yaml 文件进行资源描述。使用阿里云函数计算（FC）组件的 YAML 规范(`s.yaml`)定义 Serverless 资源。它包含了函数计算的服务、函数、触发器以及自定义域名等资源，阿里云函数计算（FC）组件的 YAML 规范详细信息可参考[FC 组件 YAML 规范](./docs/Others/yaml.md)。
-
-2. 通过交互式命令行进行相关能力管理。您能够利用阿里云函数计算（FC）组件命令行接口来完成 Serverless 应用的开发部署。该命令行接口能够帮助您校验 `s.yml`，构建函数，本地调试函数，部署函数至函数计算并对其进行观测。
-
-> 额外说明：如果您想要通过命令行对函数计算进行管理，例如查看服务列表、函数列表、触发器列表.....，您也可以参考我们的[fc-api 功能](https://github.com/devsapp/fc-api), 或者直接在 Serverless Devs 工具执行命令 `s cli fc-api -h` 获取帮助；
-
-本文档将帮助您使用 阿里云函数计算（FC）组件 去开发函数计算应用。
-
-# 组件的优势
-
-使用阿里云函数计算（FC）组件有如下几点优势：
-
-- 🌇 小而美的设计: 该组件支持部署、移除、调用、调试、构建、日志等十余项功能，为了保证组件使用的流畅性，所有的功能均是按需加载；
-
-- 😉 多样化部署能力: 该组件目前支持两种部署模式：`Pulumi` 以及 `SDK`。用户可以在这两种部署模式之间自由切换，详情可参考[部署模式](docs/Usage/deploy.md#函数部署的底座)；
-
-- 🖥️ 线上资源感知：该组件在进行部署时能够感知线上已有的函数计算资源，并由用户进行自由选择，详情可参考部署感知；
-
-- 👁️ 可观测性支持：该组件不仅涵盖了 Serverless 应用的开发态，还能够监控其运行态，详情可参考[监控能力](docs/Usage/metrics.md)；同时也可以查看某些服务的执行日志，详情可参考[日志能力](docs/Usage/logs.md)；
+- **函数全生命周期管理**：组件拥有项目的创建、开发、调试、部署、运维全生命周期管理能力；
+- **安全发布与快速集成**：通过其他形式对函数进行变更，该组件可以感知并提醒，让函数部署更安全；同时借助于 Serverless Devs 的集成性和被集成性，组件可以非常容易的与常见的 [CI/CD 平台工具](https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/zh/cicd.md) 等进行结合；
+- **可观测性的全面升级**：
+- **多种模式与灵活便捷**：
+- **多模调试的震撼体验**：
+- **开源建设与二次开发**：
 
 # 快速开始
 
@@ -83,6 +62,7 @@
     - [阿里云 Custom Container 的 CI/CD 最佳实践案例](http://www.serverless-devs.com/blog/aliyun-custom-container-ci-cd)
     - [通过 Gitee+Serverless Devs 快速实现函数代码更新与版本发布](http://www.serverless-devs.com/blog/gitee-gitee-go-serverless-devs-ci-cd)
     - [只更新代码，然后发布版本：基于 Serverless Devs 原子化操作阿里云函数计算](http://www.serverless-devs.com/blog/serverless-devs-update-fc-code)
+
 
 
 # 项目贡献
