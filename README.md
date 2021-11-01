@@ -12,10 +12,6 @@
   </a>
 </p>
 
-<p align="center">
-  <span><b>函数计算全生命周期管理工具</b></span><br>
-</p>
-
 [**阿里云 函数计算（FC）组件**](https://github.com/devsapp/fc) 是基于 [Serverless Devs 开发者工具](https://github.com/Serverless-Devs/Serverless-Devs) 的 [阿里云函数计算产品](https://www.aliyun.com/product/fc?spm=5176.19720258.J_8058803260.66.e9392c4ap4mAqo) 全生命周期管理组件，通过该工具，开发者可以非常简单、轻松、快速的在阿里云 Serverless 产品上进行应用的创建、开发、部署、调试、运维等。
 
 ![图片alt](https://serverless-article-picture.oss-cn-hangzhou.aliyuncs.com/1635757890439_20211101091132035959.png)
