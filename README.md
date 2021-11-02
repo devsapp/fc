@@ -17,8 +17,8 @@
 - **全生命周期管理**：组件拥有项目的创建、开发、调试、部署、运维全生命周期管理能力；
 - **安全发布**：通过其他形式对函数进行变更，组件可以感知并安全更新；
 - **快速集成**：借助于 Serverless Devs 的集成性和被集成性，可以与常见的 [CI/CD 平台工具](https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/zh/cicd.md) 等集成；
-- **可观测性**：拥有完善的可观测性，在客户端可以通过`metrics`以及`log`等命令，进行业务的数据指标、执行日志等多重维度观测；
-- **多模调试**：提出了多模调试方案，可以同时满足开发态、运维态的不同调试需求；包括本地运行、在线运行、本地调试、云端调试、端云联调等功能；
+- **可观测性**：拥有完善的可观测性，在客户端可以通过[指标查询 metrics](./docs/command/metrics.md) 以及[日志查询 logs](./docs/command/logs.md) 等命令，进行业务的数据指标、执行日志等多重维度观测；
+- **多模调试**：提出了多模调试方案，可以同时满足开发态、运维态的不同调试需求；包括[本地运行](./docs/command/local.md)、[在线运行](./docs/command/invoke.md)、[云端调试](./docs/command/remote.md)、[端云联调](./docs/command/proxied.md)等功能；
 
 # 快速开始
 
@@ -29,8 +29,9 @@
 
 > 您还可以通过[快速创建应用](./docs/quick_start_application.md)文档，了解包括[**Serverless：Hello World**](./docs/quick_start_application.md#serverlesshello-world)、[**人工智能：目标检测**](./docs/quick_start_application.md#人工智能目标检测)、[**传统框架：基于Django的博客项目**](./docs/quick_start_application.md#传统框架基于django的博客项目)等经典应用的快速体验过程；还可以通过[快速使用功能](./docs/quick_start_function.md)文档，进行包括[**部署**](./docs/quick_start_function.md#一键部署)、[**项目查看**](./docs/quick_start_function.md#一键部署)、[**可观测性**](./docs/quick_start_function.md#一键部署)等在内的常用功能入门。
 
+# 文档相关
 
-# 操作文档
+函数计算（FC）组件拥有比较多的功能，包括不限于使用比较频繁的[部署 deploy](./docs/command/deploy.md) 、[构建 build](./docs/command/build.md) 等功能，也包括可观测相关的[指标查询 metrics](./docs/command/metrics.md)、[日志查询 logs](./docs/command/logs.md) 等功能，全部支持的能力列表如下：
 
 | 构建&部署 | 可观测性 | 调用&调试 |  发布&配置  |  其他功能 |
 | --- | --- | --- |--- | --- |
@@ -38,54 +39,11 @@
 | [构建 build](./docs/command/build.md)     | [日志查询 logs](./docs/command/logs.md)       | [远程调用 invoke](./docs/command/invoke.md)    | [别名 alias](./docs/command/alias.md)         | [查看函数 info](./docs/command/info.md)  | 
 | [移除 remove](./docs/command/remove.md)   |                                              | [端云联调 proxied](./docs/command/proxied.md) | [预留 provision](./docs/command/provision.md)   | [资源同步 sync](./docs/command/sync.md) | 
 |                                          |                                              | [远程调试 remote](./docs/command/remote.md)    | [按量资源 ondemand](./docs/command/ondemand.md) | [压测 stress](./docs/command/stress.md) | 
-|                                          |                                              | [内存&并发度探测 eval](./docs/command/eval.md)  | [层 layer](./docs/command/layer.md) | [Fun项目迁移 fun2s](./docs/command/fun2s.md))                      | 
+|                                          |                                              | [内存&并发度探测 eval](./docs/command/eval.md)  | [层 layer](./docs/command/layer.md) | [Fun项目迁移 fun2s](./docs/command/fun2s.md)                     | 
 
+在使用函数计算（FC）组件时，还会涉及到资源描述文件的编写，关于函数计算（FC）组件的 Yaml 规范可以参考[函数计算（FC） Yaml 规范文档](./docs/yaml.md)。
 
-[迁移Funcraft：Fun2s](./Others/fun-fc.md)
-
-
-
-
-
-# 文档目录
-
-- [入门相关](./docs/Getting-started/Getting-started.md)
-  - [开发工具安装](./docs/Getting-started/Install-tutorial.md)
-  - [账号配置](./docs/Getting-started/Setting-up-credentials.md)
-  - [快速体验](./docs/Getting-started/Hello-world-application.md)
-  - [Yaml 规范](./docs/Others/yaml.md)
-- 指令使用方法
-  - [部署操作：Deploy](./docs/Usage/deploy.md)
-  - [构建操作：Build](./docs/Usage/build/build.md)
-  - [查看操作：Info](./docs/Usage/info.md)
-  - [远程调用操作：Invoke](./docs/Usage/invoke.md)
-  - [本地调用操作：Local](./docs/Usage/local.md)
-  - [查看日志操作：Logs](./docs/Usage/logs.md)
-  - [指标查询操作：Metrics](./docs/Usage/metrics.md)
-  - [硬盘挂载操作：Nas](./docs/Usage/nas.md)
-  - [移除操作：Remove](./docs/Usage/remove.md)
-  - [同步操作：Sync](./docs/Usage/sync.md)
-  - [版本操作：Version](./docs/Usage/version.md)
-  - [别名操作：Alias](./docs/Usage/alias.md)
-  - [预留操作：Provision](./docs/Usage/provision.md)
-  - [按量资源操作：OnDemand](./docs/Usage/onDemand.md)
-  - [层的操作：Layer](./docs/Usage/layer.md)
-  - [端云联调: Proxied](./docs/Usage/proxied.md)
-  - [压测操作: Stress](./docs/Usage/stress.md)
-  - [内存和并发度探测: Eval](./docs/Usage/eval.md)
-  - [远程调试: Remote](./docs/Usage/remote.md)
-- 权限相关
-  - [Yaml 字段相关配置权限](./docs/Others/authority/yaml.md)
-  - [命令使用相关权限](./docs/Others/authority/command.md)
-- 更多内容
-  - [从 Funcraft 迁移到 Serverless Devs](./docs/Others/fun-fc.md)
-  - CI/CD 相关
-    - [Github Action 与 Serverless Devs](./docs/Others/github-action.md)
-    - [阿里云 Custom Container 的 CI/CD 最佳实践案例](http://www.serverless-devs.com/blog/aliyun-custom-container-ci-cd)
-    - [通过 Gitee+Serverless Devs 快速实现函数代码更新与版本发布](http://www.serverless-devs.com/blog/gitee-gitee-go-serverless-devs-ci-cd)
-    - [只更新代码，然后发布版本：基于 Serverless Devs 原子化操作阿里云函数计算](http://www.serverless-devs.com/blog/serverless-devs-update-fc-code)
-
-
+> 如果您之前是 Funcraft 或者 Fcli 的用户，您可以参考[Serverless Devs 与 Funcraft、Fcli等工具的对比](./docs/vs_fun_fcli.md) 文档，以便获取这三个工具之间的区别，以及如何快速[从 Funcraft 迁移到 Serverless Devs 的方法](./docs/vs_fun_fcli.md#从-funcraft-迁移到-serverless-devs-的方法)、[从 Fcli 迁移到 Serverless Devs 的方法](./docs/vs_fun_fcli.md#从-fcli-迁移到-serverless-devs-的方法)等。
 
 # 项目贡献
 
