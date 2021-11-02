@@ -31,7 +31,7 @@
 
 # 文档相关
 
-函数计算（FC）组件拥有比较多的功能，包括不限于使用比较频繁的[部署 deploy](./docs/command/deploy.md) 、[构建 build](./docs/command/build.md) 等功能，也包括可观测相关的[指标查询 metrics](./docs/command/metrics.md)、[日志查询 logs](./docs/command/logs.md) 等功能，全部支持的能力列表如下：
+函数计算（FC）组件全部支持的能力列表如下：
 
 | 构建&部署 | 可观测性 | 调用&调试 |  发布&配置  |  其他功能 |
 | --- | --- | --- |--- | --- |
@@ -41,9 +41,9 @@
 |                                          |                                              | [远程调试 remote](./docs/command/remote.md)    | [按量资源 ondemand](./docs/command/ondemand.md) | [压测 stress](./docs/command/stress.md) | 
 |                                          |                                              | [内存&并发度探测 eval](./docs/command/eval.md)  | [层 layer](./docs/command/layer.md) | [Fun项目迁移 fun2s](./docs/command/fun2s.md)                     | 
 
-在使用函数计算（FC）组件时，还会涉及到资源描述文件的编写，关于函数计算（FC）组件的 Yaml 规范可以参考[函数计算（FC） Yaml 规范文档](./docs/yaml.md)。
+在使用函数计算（FC）组件时，还会涉及到资源描述文件的编写，关于函数计算（FC）组件的 Yaml 规范可以参考[**函数计算（FC） Yaml 规范文档**](./docs/yaml.md)。
 
-> 如果您之前是 Funcraft 或者 Fcli 的用户，您可以参考[Serverless Devs 与 Funcraft、Fcli等工具的对比](./docs/vs_fun_fcli.md) 文档，以便获取这三个工具之间的区别，以及如何快速[从 Funcraft 迁移到 Serverless Devs 的方法](./docs/vs_fun_fcli.md#从-funcraft-迁移到-serverless-devs-的方法)、[从 Fcli 迁移到 Serverless Devs 的方法](./docs/vs_fun_fcli.md#从-fcli-迁移到-serverless-devs-的方法)等。
+> 如果您之前是 Funcraft 或者 Fcli 的用户，您可以参考[**Serverless Devs 与 Funcraft、Fcli等工具的对比**](./docs/vs_fun_fcli.md) 文档，以便获取这三个工具之间的区别，以及如何快速[**从 Funcraft 迁移到 Serverless Devs 的方法**](./docs/vs_fun_fcli.md#从-funcraft-迁移到-serverless-devs-的方法)、[**从 Fcli 迁移到 Serverless Devs 的方法**](./docs/vs_fun_fcli.md#从-fcli-迁移到-serverless-devs-的方法)等。
 
 # 项目贡献
 
