@@ -374,7 +374,8 @@ export default class FcBaseComponent extends BaseComponent {
       throw new Error('Not supported command cp, please [s nas upload <option>]');
     }
 
-    if (comParse?.data?.help) {
+    // s nas command ls -lh /mnt/auto 会被解析为 --help
+    if (comParse?.data?.help && !args?.includes('ls -lh')) {
       core.help(NAS_SUB_COMMAND_HELP_INFO[commandName]);
       return;
     }
