@@ -2,6 +2,7 @@
 
 - [快速使用](#快速使用)
 - [高阶功能](#高阶功能)
+    - [部署时忽略某些文件](#部署时忽略某些文件)
     - [如何部署多个函数](#如何部署多个函数)
     - [函数部署的"底座"](#函数部署的底座)
         - [pulumi部署方案](#pulumi部署方案)
@@ -87,6 +88,24 @@ services:
 - 函数的代码是`./`目录下的，并且是nodejs10的运行时
 
 # 高阶功能
+
+## 部署时忽略某些文件
+
+在代码目录放置一个 .fcignore 文件，部署文件的时候可以排除掉 .funignore 内描述的文件或者文件夹。 例如：
+
+```
+# Logs
+logs/
+*.log
+ 
+# Dependency directories
+node_modules/
+!bb/node_modules
+```
+
+打包时会忽略 logs/ 目录 、*.log 文件。所有层级的 node_modules/ 目录会被忽略，但是 bb/node_modules 会被保留。
+
+.fcignore 遵从 .gitignore 的语法。
 
 ## 如何部署多个函数
 
