@@ -34,11 +34,11 @@
 
 | 构建&部署 | 可观测性 | 调用&调试 |  发布&配置  |  其他功能 |
 | --- | --- | --- |--- | --- |
-| [部署 deploy](./docs/command/deploy.md) | [指标查询](./docs/command/metrics.md) | [远程调用](./docs/command/invoke.md) | [版本](./docs/command/version.md) | [查看函数](./docs/command/info.md)  | 
-| [移除 remove](./docs/command/remove.md) | [日志查询](./docs/command/logs.md) | [本地调用](./docs/command/local.md) | [别名](./docs/command/alias.md) | [硬盘挂载](./docs/command/nas.md) | 
-| [构建 build](./docs/command/build.md) |  | [端云联调](./docs/command/proxied.md) | [预留](./docs/command/provision.md) | [资源同步](./docs/command/sync.md) | 
-|  |  | [远程调试](./docs/command/remote.md) | [按量资源](./docs/command/ondemand.md) | [压测](./docs/command/stress.md) | 
-|  |  |  | [层](./docs/command/layer.md) | [内存和并发度探测](./docs/command/eval.md) | 
+| [部署 deploy](./docs/command/deploy.md) | [指标查询 metrics](./docs/command/metrics.md) | [远程调用 invoke](./docs/command/invoke.md) | [版本 version](./docs/command/version.md) | [查看函数 info](./docs/command/info.md)  | 
+| [移除 remove](./docs/command/remove.md) | [日志查询 logs](./docs/command/logs.md) | [本地调用 local](./docs/command/local.md) | [别名 alias](./docs/command/alias.md) | [硬盘挂载 nas](./docs/command/nas.md) | 
+| [构建 build](./docs/command/build.md) |  | [端云联调 proxied](./docs/command/proxied.md) | [预留 provision](./docs/command/provision.md) | [资源同步 sync](./docs/command/sync.md) | 
+|  |  | [远程调试 remote](./docs/command/remote.md) | [按量资源 ondemand](./docs/command/ondemand.md) | [压测 stress](./docs/command/stress.md) | 
+|  |  |  | [层 layer](./docs/command/layer.md) | [内存&并发度探测 eval](./docs/command/eval.md) | 
 
 
 [迁移Funcraft：Fun2s](./Others/fun-fc.md)
