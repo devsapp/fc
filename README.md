@@ -27,10 +27,7 @@
 ❷ 初始化一个函数计算的 `Hello World` 项目：`s init devsapp/start-fc-http-python3`；
 ❸ 初始化完成之后，系统会提示是否部署项目，只需要输入`y`并按回车按钮即可完成项目的部署；
 
-> 您还可以通过[快速创建应用](./docs/quick_start_application.md)文档，了解包括[Serverless：Hello World](./docs/quick_start_application.md#serverlesshello-world)、[人工智能：目标检测](./docs/quick_start_application.md#人工智能目标检测)、[传统框架：基于Django的博客项目](./docs/quick_start_application.md#传统框架基于django的博客项目)等经典应用的快速体验过程；还可以通过[快速使用功能](./docs/quick_start_function.md)文档，进行包括[部署](./docs/quick_start_function.md#一键部署)、[项目查看](./docs/quick_start_function.md#一键部署)、[可观测性](./docs/quick_start_function.md#一键部署)等在内的常用功能入门。
-
-
-为了让您可以更简单体验阿里云函数计算（FC）组件，您可以参考[快速入门文档](./docs/Getting-started/Hello-world-application.md)
+> 您还可以通过[快速创建应用](./docs/quick_start_application.md)文档，了解包括[**Serverless：Hello World**](./docs/quick_start_application.md#serverlesshello-world)、[**人工智能：目标检测**](./docs/quick_start_application.md#人工智能目标检测)、[**传统框架：基于Django的博客项目**](./docs/quick_start_application.md#传统框架基于django的博客项目)等经典应用的快速体验过程；还可以通过[快速使用功能](./docs/quick_start_function.md)文档，进行包括[**部署**](./docs/quick_start_function.md#一键部署)、[**项目查看**](./docs/quick_start_function.md#一键部署)、[**可观测性**](./docs/quick_start_function.md#一键部署)等在内的常用功能入门。
 
 # 文档目录
 
