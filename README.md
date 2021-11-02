@@ -24,10 +24,28 @@
 
 🙋 三步即可上手 函数计算（FC）组件的使用：   
 ❶ [安装 Serverless Devs 开发者工具](https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/zh/install.md) ：`npm install -g @serverless-devs/s`；   
-❷ 初始化一个函数计算的 `Hello World` 项目：`s init devsapp/start-fc-http-python3`；
+❷ 初始化一个函数计算的 `Hello World` 项目：`s init devsapp/start-fc-http-python3`；      
 ❸ 初始化完成之后，系统会提示是否部署项目，只需要输入`y`并按回车按钮即可完成项目的部署；
 
 > 您还可以通过[快速创建应用](./docs/quick_start_application.md)文档，了解包括[**Serverless：Hello World**](./docs/quick_start_application.md#serverlesshello-world)、[**人工智能：目标检测**](./docs/quick_start_application.md#人工智能目标检测)、[**传统框架：基于Django的博客项目**](./docs/quick_start_application.md#传统框架基于django的博客项目)等经典应用的快速体验过程；还可以通过[快速使用功能](./docs/quick_start_function.md)文档，进行包括[**部署**](./docs/quick_start_function.md#一键部署)、[**项目查看**](./docs/quick_start_function.md#一键部署)、[**可观测性**](./docs/quick_start_function.md#一键部署)等在内的常用功能入门。
+
+
+# 操作文档
+
+| 构建&部署 | 可观测性 | 调用&调试 |  发布&配置  |  其他功能 |
+| --- | --- | --- |--- | --- |
+| [部署 deploy](./docs/command/deploy.md) | [指标查询](./docs/command/metrics.md) | [远程调用](./docs/command/invoke.md) | [版本](./docs/command/version.md) | [查看函数](./docs/command/info.md)  | 
+| [移除 remove](./docs/command/remove.md) | [日志查询](./docs/command/logs.md) | [本地调用](./docs/command/local.md) | [别名](./docs/command/alias.md) | [硬盘挂载](./docs/command/nas.md) | 
+| [构建 build](./docs/command/build.md) |  | [端云联调](./docs/command/proxied.md) | [预留](./docs/command/provision.md) | [资源同步](./docs/command/sync.md) | 
+|  |  | [远程调试](./docs/command/remote.md) | [按量资源](./docs/command/ondemand.md) | [压测](./docs/command/stress.md) | 
+|  |  |  | [层](./docs/command/layer.md) | [内存和并发度探测](./docs/command/eval.md) | 
+
+
+[迁移Funcraft：Fun2s](./Others/fun-fc.md)
+
+
+
+
 
 # 文档目录
 
