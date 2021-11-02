@@ -39,6 +39,25 @@ SubCommand List
   domain     Only deploy domain resources, you can get help through [s deploy domain -h] 
 ```
 
+Deploy 支持了一些子指令，更具体的信息请执行 `s deploy <sub-command> <options>` 查看。 
+````
+Usage
+
+  $ s deploy <sub-command> <options> 
+
+Options
+
+  --type string       Only deploy configuration or code Value: code, config              
+  --use-local         Deploy resource using local config                                 
+  -y, --assume-yes    Assume that the answer to any question which would be asked is yes 
+
+Global Options
+
+  -h, --help            Help for command          
+  -a, --access string   Specify key alias         
+  --debug               Output debug informations 
+````
+
 # 快速使用
 
 当我们下载好[Serverless Devs开发者工具](../Getting-started/Install-tutorial.md), 并完成[阿里云密钥配置](../Getting-started/Setting-up-credentials.md)之后，我们可以根据自身的需求进行资源的部署。
