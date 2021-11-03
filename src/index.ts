@@ -458,6 +458,7 @@ export default class FcBaseComponent extends BaseComponent {
       numUser: argsData['num-user'],
       spawnRate: argsData['spawn-rate'],
       runningTime: argsData['run-time'],
+      invocationType: argsData['invocation-type'],
     };
 
     let eventTypeOpts: EventTypeOption = null;

@@ -96,4 +96,8 @@ export interface StressStartInputsArgs {
    *  For --function-type event, contains the event passed to the function;\nFor --function-type http, contains the request body passed to the function
    */
   'payload-file': string;
+  /**
+   *  Invocation type: optional value "async"|"sync", default value "sync" (default: "sync")
+   */
+  'invocation-type'?: string;
 }
