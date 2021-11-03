@@ -212,8 +212,12 @@ describe('Integration::deploy', () => {
       expect(role).toEqual(`acs:ram::${fcClient.accountid}:role/aliyunfcdefaultrole`);
 
       logConfig = statefulAutoConfig.logConfig;
-      expect(logConfig.project).toEqual(generateProjectName(fcClient.accountid, REGION));
-      expect(logConfig.logstore).toEqual(generateLogstoreName(SERVICE_NAME, REGION, fcClient.accountid));
+      expect(logConfig).toMatchObject({
+        project: generateProjectName(fcClient.accountid, REGION),
+        logstore: generateLogstoreName(SERVICE_NAME, REGION, fcClient.accountid),
+        enableRequestMetrics: true,
+        enableInstanceMetrics: true,
+      });
 
 
       nasConfig = statefulAutoConfig.nasConfig;

@@ -1,2 +1,2 @@
-// @ts-ignore: .
-jest.setTimeout(5 * 60 * 1000);
+// @ts-ignore: 1 小时
+jest.setTimeout(60 * 60 * 1000);
