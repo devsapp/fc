@@ -1,0 +1,94 @@
+name: Serverless Devs Project CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  ci-ubuntu:
+    # runs-on: ${{ matrix.os }}
+    # strategy:
+    #   max-parallel: 1
+    #   fail-fast: false
+    #   matrix:
+    #     os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14
+          registry-url: https://registry.npmjs.org/
+      - name: NPM install
+        run: |
+          npm install
+      - name: NPM install s
+        run: |
+          npm install -g @serverless-devs/s
+      - name: NPM run lint
+        run: |
+          npm run fix
+          npm run lint
+      - name: NPM run test-integration
+        env:
+          AccountID: ${{secrets.ACCOUNTID}}
+          AccessKeyID: ${{secrets.ACCESSKEYID}}
+          AccessKeySecret: ${{secrets.ACCESSKEYSECRET}}
+        run: |
+          npm run test-integration
+
+  ci-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14
+          registry-url: https://registry.npmjs.org/
+      - name: NPM install
+        run: |
+          npm install
+      - name: NPM install s
+        run: |
+          npm install -g @serverless-devs/s
+      - name: NPM run lint
+        run: |
+          npm run fix
+          npm run lint
+      - name: NPM run test-integration
+        env:
+          AccountID: ${{secrets.ACCOUNTID}}
+          AccessKeyID: ${{secrets.ACCESSKEYID}}
+          AccessKeySecret: ${{secrets.ACCESSKEYSECRET}}
+        run: |
+          npm run test-integration
+
+  ci-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14
+          registry-url: https://registry.npmjs.org/
+      - name: NPM install
+        run: |
+          npm install
+      - name: NPM install s
+        run: |
+          npm install -g @serverless-devs/s
+      - name: NPM run lint
+        run: |
+          npm run fix
+          npm run lint
+      - name: NPM run test-integration
+        env:
+          AccountID: ${{secrets.ACCOUNTID}}
+          AccessKeyID: ${{secrets.ACCESSKEYID}}
+          AccessKeySecret: ${{secrets.ACCESSKEYSECRET}}
+        run: |
+          npm run test-integration
