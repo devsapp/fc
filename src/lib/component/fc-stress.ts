@@ -30,6 +30,9 @@ export default class FcStress {
     if (this.stressOpts?.runningTime) {
       args += ` --run-time ${this.stressOpts?.runningTime}`;
     }
+    if (this.stressOpts?.invocationType) {
+      args += ` --invocation-type ${this.stressOpts?.invocationType}`;
+    }
     if (this.isEventFunctionType()) {
       args += ` --service-name ${this.eventTypeOpts?.serviceName} --function-name ${this.eventTypeOpts?.functionName}`;
       if (this.eventTypeOpts?.qualifier) {
