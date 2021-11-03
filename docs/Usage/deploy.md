@@ -2,7 +2,9 @@
 
 - [快速使用](#快速使用)
 - [高阶功能](#高阶功能)
+    - [部署时忽略某些文件](#部署时忽略某些文件)
     - [如何部署多个函数](#如何部署多个函数)
+    - [代码包处理](#代码包处理)
     - [函数部署的"底座"](#函数部署的底座)
         - [pulumi部署方案](#pulumi部署方案)
         - [sdk部署方案](#sdk部署方案)
@@ -37,6 +39,25 @@ SubCommand List
   trigger    Only deploy trigger resources, you can get help through [s deploy trigger -h]   
   domain     Only deploy domain resources, you can get help through [s deploy domain -h] 
 ```
+
+Deploy 支持了一些子指令，更具体的信息请执行 `s deploy <sub-command> <options>` 查看。 
+````
+Usage
+
+  $ s deploy <sub-command> <options> 
+
+Options
+
+  --type string       Only deploy configuration or code Value: code, config              
+  --use-local         Deploy resource using local config                                 
+  -y, --assume-yes    Assume that the answer to any question which would be asked is yes 
+
+Global Options
+
+  -h, --help            Help for command          
+  -a, --access string   Specify key alias         
+  --debug               Output debug informations 
+````
 
 # 快速使用
 
@@ -88,80 +109,41 @@ services:
 
 # 高阶功能
 
+## 部署时忽略某些文件
+
+在代码目录放置一个 .fcignore 文件，部署文件的时候可以排除掉 .fcignore 描述的文件或者文件夹。 例如：
+
+```
+# Logs
+logs/
+*.log
+ 
+# Dependency directories
+node_modules/
+!bb/node_modules
+```
+
+打包时会忽略 logs/ 目录 、*.log 文件。所有层级的 node_modules/ 目录会被忽略，但是 bb/node_modules 会被保留。
+
+.fcignore 遵从 .gitignore 的语法。
+
 ## 如何部署多个函数
 
 如果我现在需要部署多个函数：
 
 - 函数1：
-    - 名称：http-trigger-function-a
+    - 名称：function-a
     - 代码：./a
 - 函数2：
-    - 名称：http-trigger-function-b
+    - 名称：function-b
     - 代码：./b
 
 此时，我可以将配置文件(`s.yaml`)写成：
 
 ```
 # s.yaml
-edition: 1.0.0          #  命令行YAML规范版本，遵循语义化版本（Semantic Versioning）规范
-name: fcDeployApp       #  项目名称
-
-services:
-  fc-deploy-test-function-a:
-    component: devsapp/fc  # 组件名称
-    props: #  组件的属性值
-      region: cn-hangzhou
-      service:
-        name: fc-deploy-service
-        description: 'demo for fc-deploy component'
-        internetAccess: true
-      function:
-        name: http-trigger-function-a
-        description: this is a test
-        runtime: nodejs10
-        codeUri: ./a
-        handler: index.handler
-        memorySize: 128
-        timeout: 60
-  fc-deploy-test-function-b:
-      component: devsapp/fc  # 组件名称
-      props: #  组件的属性值
-        region: cn-hangzhou
-        service:
-          name: fc-deploy-service
-          description: 'demo for fc-deploy component'
-          internetAccess: true
-        function:
-          name: http-trigger-function-b
-          description: this is a test
-          runtime: nodejs10
-          codeUri: ./b
-          handler: index.handler
-          memorySize: 128
-          timeout: 60
-```
-
-此时，我执行`s deploy`即可同时部署函数`http-trigger-function-a`和`http-trigger-function-b`。
-
-如果此时，我单独想要部署函数`http-trigger-function-b`，可以执行:
-
-```
-s http-trigger-function-b deploy
-```
-
-同理，如果想要单独部署`http-trigger-function-a`，可以执行：
-
-```
-s http-trigger-function-a deploy
-```
-
-上文由于函数`http-trigger-function-a`和`http-trigger-function-b`都在同一个服务下，而该服务的描述写了两次，不是非常合理，所以可以使用Serverless Devs的魔法变量能力改写上述的描述文档：
-
-
-```
-# s.yaml
-edition: 1.0.0          #  命令行YAML规范版本，遵循语义化版本（Semantic Versioning）规范
-name: fcDeployApp       #  项目名称
+edition: 1.0.0
+name: fcDeployApp
 
 vars:
   region: cn-hangzhou
@@ -172,12 +154,12 @@ vars:
 
 services:
   fc-deploy-test-function-a:
-    component: devsapp/fc  # 组件名称
-    props: #  组件的属性值
+    component: devsapp/fc
+    props:
       region: ${vars.region}
       service: ${vars.service}
       function:
-        name: http-trigger-function-a
+        name: function-a
         description: this is a test
         runtime: nodejs10
         codeUri: ./a
@@ -185,12 +167,12 @@ services:
         memorySize: 128
         timeout: 60
   fc-deploy-test-function-b:
-      component: devsapp/fc  # 组件名称
-      props: #  组件的属性值
+    component: devsapp/fc
+    props:
       region: ${vars.region}
       service: ${vars.service}
         function:
-          name: http-trigger-function-b
+          name: function-b
           description: this is a test
           runtime: nodejs10
           codeUri: ./b
@@ -198,6 +180,39 @@ services:
           memorySize: 128
           timeout: 60
 ```
+
+此时，我执行`s deploy`即可同时部署函数`function-a`和`function-b`。
+
+如果此时，我单独想要部署函数`function-b`，可以执行:
+
+```
+s fc-deploy-test-function-b deploy
+```
+
+同理，如果想要单独部署`function-a`，可以执行：
+
+```
+s fc-deploy-test-function-a deploy
+```
+
+## 代码包处理
+
+代码包的处理是一个比较复杂的的场景，就大小来说：
+- 如果代码包小于 50M，那么 deploy code 仅需要压缩上传代码修改函数
+- 如果代码包代码大于 50M并且小于 100M，deploy code 时就需要用户配置指定一个 OSS 的 Bucket，工具这时会做三个动作
+  1. 压缩代码包
+  2. 将这个代码包上传到配置的 OSS Bucket 中
+  3. 使用第二步的文件地址作为配置修改函数
+- 如果代码包代码100M，这时可以有几个选择
+  1. 如果是 node 或着 python，可以将依赖放到 layer 中
+  2. 如果对冷启动不敏感，可以使用 [Custom Container](https://help.aliyun.com/document_detail/179368.html#title-3j5-18t-n7i)
+  3. 使用[性能实例](https://help.aliyun.com/document_detail/179379.html#title-55k-dg6-iou) 最大可以到 100M
+  4. 将依赖和部分代码放到 NAS 中。优点：代码包理论上可以放到无限大；缺点：服务的版本别名无法对这部分代码进行管理，至今没有可视化部分，上传和下载都需要通过一些辅助手段来操作。
+- 有部分用户情况比较特殊，代码包的限制不是 100M，这时可以在自己的机器上指定临时环境变量`FC_CODE_SIZE_WITH_OSS`控制大小，例如 mac 机器设置 500M：`export FC_CODE_SIZE_WITH_OSS=524288000`
+
+
+> [大代码包部署的实践案例](https://github.com/awesome-fc/fc-faq/blob/main/docs/大代码包部署的实践案例.md)
+
 
 ## 函数部署的"底座"
 
