@@ -21,6 +21,7 @@ import {
   MNS_TRIGGER_CONFIG,
   HTTP_TRIGGER_NAME,
   HTTP_TRIGGER_CONFIG,
+  ROLE_NAME,
 } from './mock-data';
 import FcComponent from '../src/index';
 import {
@@ -37,7 +38,7 @@ import {
   transformMountpointFromRemoteToLocal,
   removeNas,
   removeSls,
-  removeVpc,
+  // removeVpc,
   removeRam,
   createMnsTopic,
   deleteMnsTopic,
@@ -63,13 +64,12 @@ describe('Integration::deploy', () => {
   });
 
   it('deploy service role', async () => {
-    const roleName = `fc-integration-test-${new Date().getTime()}-${Math.random().toString(36).substr(2)}`;
     const roleConfig = {
-      name: roleName,
+      name: ROLE_NAME,
       policies: [
         'AliyunOSSFullAccess',
         {
-          name: roleName,
+          name: ROLE_NAME,
           description: 'fc integration test',
           statement: [{
             Effect: 'Allow',
@@ -91,7 +91,7 @@ describe('Integration::deploy', () => {
       await new FcComponent(inputs).deploy(inputs);
 
       const { role } = (await fcClient.getService(SERVICE_NAME)).data;
-      expect(role).toMatch(new RegExp(`role/${roleName}`));
+      expect(role).toMatch(new RegExp(`role/${ROLE_NAME}`));
     } finally {
       await deleteFcResource('Integration::deploy/deploy service with http trigger', fcClient, { serviceName: SERVICE_NAME });
       try {
@@ -304,11 +304,11 @@ describe('Integration::deploy', () => {
       } catch (e) {
         console.log(e);
       }
-      try {
-        await removeVpc(ACCESS, MOCK_PROJECT_YAML_PATH, REGION, vpcConfig);
-      } catch (e) {
-        console.log(e);
-      }
+      // try {
+      //   await removeVpc(ACCESS, MOCK_PROJECT_YAML_PATH, REGION, vpcConfig);
+      // } catch (e) {
+      //   console.log(e);
+      // }
       try {
         await removeSls(REGION, logConfig);
       } catch (e) {
