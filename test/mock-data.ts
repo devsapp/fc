@@ -1,6 +1,6 @@
 import * as path from 'path';
 
-export const ACCESS = `access-${new Date().getTime()}-${Math.random().toString(36).substr(2)}`;
+export const ACCESS = `s-devs-ci-${new Date().getTime()}-${Math.random().toString(36).substr(2)}`;
 export const REGION = 'cn-hangzhou';
 export const MOCK_PROJECT_PATH: string = path.join(__dirname, 'mock-project');
 export const MOCK_PROJECT_YAML_PATH: string = path.join(MOCK_PROJECT_PATH, 's.yaml');
@@ -11,12 +11,10 @@ export const HTTP_TRIGGER_NAME = 'httpTrigger';
 export const OSS_TRIGGER_NAME = 'ossTrigger';
 export const MNS_TRIGGER_NAME = 'mnsTrigger';
 
-export const SERVICE_NAME = `test-service-${Math.random().toString(36).substr(2)}`;
-export const OSS_BUCKET_NAME = `fc-integration-test-${new Date().getTime()}-${Math.random().toString(36).substr(2)}`;
-export const MNS_TOPIC_NAME = `fc-integration-test-${new Date().getTime()}-${Math.random().toString(36).substr(2)}`;
-// export const SERVICE_NAME = `test-service-90909jiji`;
-// export const OSS_BUCKET_NAME = `fc-integration-test-90909jiji`;
-// export const MNS_TOPIC_NAME = `fc-integration-test-90909jiji`;
+export const SERVICE_NAME = `s-devs-ci-service-${new Date().getTime()}-${Math.random().toString(36).substr(2)}`;
+export const OSS_BUCKET_NAME = `s-devs-ci-bucket-${new Date().getTime()}-${Math.random().toString(36).substr(2)}`;
+export const MNS_TOPIC_NAME = `s-devs-ci-${new Date().getTime()}-${Math.random().toString(36).substr(2)}`;
+export const ROLE_NAME = `s-devs-ci-role-${new Date().getTime()}-${Math.random().toString(36).substr(2)}`;
 
 export const SERVICE_CONFIG = {
   name: SERVICE_NAME,

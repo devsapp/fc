@@ -121,15 +121,15 @@ export const transformMountpointFromRemoteToLocal = ({ serverAddr, mountDir }) =
 }
 
 export async function removeNas(access: string, yamlPath: string, region: string, serviceName: string, nasConfig) {
-  function extractFileSystemIdFromMountTargetDomain(mountTargetDomain: string): string {
-    let fileSystemId: string = mountTargetDomain.split('-')[0];
-    if (mountTargetDomain.includes('extreme')) {
-      fileSystemId = `extreme-${fileSystemId}`;
-    }
-    return fileSystemId;
-  }
+  // function extractFileSystemIdFromMountTargetDomain(mountTargetDomain: string): string {
+  //   let fileSystemId: string = mountTargetDomain.split('-')[0];
+  //   if (mountTargetDomain.includes('extreme')) {
+  //     fileSystemId = `extreme-${fileSystemId}`;
+  //   }
+  //   return fileSystemId;
+  // }
   
-  const fileSystemId: string = extractFileSystemIdFromMountTargetDomain(nasConfig.mountPoints[0].serverAddr);
+  // const fileSystemId: string = extractFileSystemIdFromMountTargetDomain(nasConfig.mountPoints[0].serverAddr);
   const inputs: any = {
     appName: 'app-nas',
     project: {
@@ -145,7 +145,7 @@ export async function removeNas(access: string, yamlPath: string, region: string
     props: {
       regionId: region,
       serviceName,
-      fileSystemId,
+      // fileSystemId,
     },
   };
   const nasComponent = await core.load('devsapp/nas');
