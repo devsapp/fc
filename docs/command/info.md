@@ -29,16 +29,16 @@ Document
 
 Options
 
-  --region string          Specify the fc region [cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1]    
-  --service-name string    Specify the fc service name  
-  --function-name string   Specify the fc function name   
-  --trigger-name string    Specify the fc trigger name   
+  --region [region]               Specify the fc region [cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1]    
+  --service-name [serviceName]    Specify the fc service name  
+  --function-name [functionName]  Specify the fc function name   
+  --trigger-name [triggerName]    Specify the fc trigger name   
 
 Global Options
 
-  -a, --access string   Specify key alias         
-  --debug string        Output debug informations 
-  -h, --help string     Help for command.         
+  -a, --access [aliasName]   Specify key alias         
+  --debug                    Output debug informations 
+  -h, --help                 Help for command.         
 
 Examples with Yaml
 

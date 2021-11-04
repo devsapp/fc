@@ -27,16 +27,16 @@ Document
 
 Options
 
-  --force string    Mandatory overwrite s file                                    
-  --region string   Specify the fc region [cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1]    
-  --source string   Specify Funcraft configuration path (default: template.[yaml|yml])  
-  --target string   Specify Serverless Devs configuration path (default: s.yaml)   
+  --force               Mandatory overwrite s file                                    
+  --region [region]     Specify the fc region [cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1]    
+  --source [yamlFile]   Specify Funcraft configuration path (default: template.[yaml|yml])  
+  --target [yamlFile]   Specify Serverless Devs configuration path (default: s.yaml)   
 
 Global Options
 
-  -a, --access string   Specify key alias         
-  --debug string        Output debug informations 
-  -h, --help string     Help for command.         
+  -a, --access [aliasName]   Specify key alias         
+  --debug                    Output debug informations 
+  -h, --help                 Help for command.         
 
 Examples with CLI
 
