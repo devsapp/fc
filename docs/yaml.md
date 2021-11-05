@@ -205,10 +205,10 @@ services:
 | 参数名 |  必填  |  类型  |  参数描述  |
 | --- |  ---  |  ---  |  ---  |
 | region | True | Enum | 地域 |
-| service | True | [Struct](#service字段) | 服务 |
-| function | True | [Struct](#function字段) | 函数 |
-| triggers | True | [Struct](#triggers字段) | 触发器 |
-| customDomains | True | [Struct](#customDomains字段) | 自定义域名 |
+| [service](#service字段) | True | [Struct](#service字段) | 服务 |
+| [function](#function字段) | True | [Struct](#function字段) | 函数 |
+| [triggers](#triggers字段) | True | [Struct](#triggers字段) | 触发器 |
+| [customDomains](#customDomains字段) | True | [Struct](#customDomains字段) | 自定义域名 |
 
 地区目前支持：`cn-beijing`, `cn-hangzhou`, `cn-shanghai`, `cn-qingdao`, `cn-zhangjiakou`, `cn-huhehaote`, `cn-shenzhen`, `cn-chengdu`, `cn-hongkong`, `ap-southeast-1`, `ap-southeast-2`, `ap-southeast-3`, `ap-southeast-5`, `ap-northeast-1`, `eu-central-1`, `eu-west-1`, `us-west-1`, `us-east-1`, `ap-south-1`
 
@@ -218,11 +218,74 @@ services:
 | name | True | String | service名称 |
 | description | False | String | Service的简短描述 |
 | internetAccess | False | Boolean | 设为true让function可以访问公网 |
-| tracingConfig | False | String | 链路追踪，可取值：Enable、Disable |
-| role | False | String[简单配置]/[Struct[详细配置]](#role) | 授予函数计算所需权限的RAM role, 使用场景包含 1. 把 function产生的 log 发送到用户的 logstore 中 2. 为function 在执行中访问其它云资源生成 token |
-| logConfig | False | Enum[简单配置]/[Struct[详细配置]](#logConfig) | log配置，function产生的log会写入这里配置的logstore |
-| vpcConfig | False | Enum[简单配置]/[Struct[详细配置]](#vpcConfig) | VPC配置, 配置后function可以访问指定VPC |
-| nasConfig | False | Enum[简单配置]/[Struct[详细配置]](#nasConfig) | NAS配置, 配置后function可以访问指定NAS |
+| [tracingConfig](#tracingConfig) | False | String | 链路追踪，可取值：Enable、Disable |
+| [role](#role) | False | String[简单配置]/[Struct[详细配置]](#role) | 授予函数计算所需权限的RAM role, 使用场景包含 1. 把 function产生的 log 发送到用户的 logstore 中 2. 为function 在执行中访问其它云资源生成 token |
+| [logConfig](#logConfig) | False | Enum[简单配置]/[Struct[详细配置]](#logConfig) | log配置，function产生的log会写入这里配置的logstore |
+| [vpcConfig](#vpcConfig) | False | Enum[简单配置]/[Struct[详细配置]](#vpcConfig) | VPC配置, 配置后function可以访问指定VPC |
+| [nasConfig](#nasConfig) | False | Enum[简单配置]/[Struct[详细配置]](#nasConfig) | NAS配置, 配置后function可以访问指定NAS |
+
+参考案例：
+
+```yaml
+service:
+    name: unit-deploy-service
+    description: 'demo for fc-deploy component'
+    internetAccess: true
+```
+
+
+### 权限配置相关
+
+#### 子账号需要的权限
+
+##### 最大权限
+系统策略：AliyunFCFullAccess
+
+##### 部署最小权限
+
+**自定义策略**
+
+⚠️ `fc:GetService` 的权限默认可以选填。
+
+```json
+{
+	"Version": "1",
+        "Statement": [
+        {
+            "Action": "fc:CreateService",
+            "Resource": "acs:fc:<region>:<account-id>:services/*",
+            "Effect": "Allow"
+        },
+        {
+            "Action": "fc:UpdateService",
+            "Resource": "acs:fc:<region>:<account-id>:services/<serviceName>",
+            "Effect": "Allow"
+        },
+        {
+            "Action": "fc:GetService",
+            "Resource": "acs:fc:<region>:<account-id>:services/<serviceName>",
+            "Effect": "Allow"
+        }
+    ]
+}
+```
+
+##### 删除最小权限
+
+**自定义策略**
+
+```json
+{
+    "Version": "1",
+    "Statement": [
+        {
+            "Action": "fc:DeleteService",
+            "Resource": "acs:fc:<region>:<account-id>:services/<serviceName>",
+            "Effect": "Allow"
+        }
+    ]
+}
+```
 
 ### role
 
@@ -233,9 +296,9 @@ services:
 | 参数名 |  必填  |  类型  |  参数描述  |
 | --- |  ---  |  ---  |  ---  |
 | name | True | String | 角色名 |
-| policies | True | [List<Struct>](#policies) | 策略列表 |
+| [policies](#policies) | True | [List<Struct>](#policies) | 策略列表 |
 
-role 的示例如下所示：
+参考案例：
 
 ```
 role:
@@ -250,6 +313,40 @@ role:
           - log:ListProject
         Resource:
           - acs:log:*:*:project/*
+```
+
+#### 权限配置相关
+
+##### 子账号需要权限
+
+###### 最大权限
+
+**系统策略**：`AliyunFCFullAccess`、`AliyunRAMFullAccess`
+
+###### 更细度的策略 **<**[**服务权限参考**](#子账号需要的权限)**>**
+
+```json
+{
+    "Statement": [
+        {
+          "Action": [
+            "ram:PassRole",
+            "ram:GetRole",
+            "ram:CreateRole",
+            "ram:ListPoliciesForRole",
+            "ram:AttachPolicyToRole",
+            "ram:GetPolicy",
+            "ram:CreatePolicy",
+            "ram:ListPolicyVersions",
+            "ram:CreatePolicyVersion",
+            "ram:DeletePolicyVersion"
+          ],
+          "Effect": "Allow",
+          "Resource": "*"
+        }
+    ],
+    "Version": "1"
+}
 ```
 
 #### policies
@@ -273,8 +370,6 @@ role:
 | Resource | True | String/List<String> | 策略的目标资源 |
 | Condition | False | Object | 策略的目标资源 |
 
-> 相关权限可以参考[权限文档](./authority/yaml.md#如果需要操作角色)
-
 ### logConfig
 
 当`logConfig`参数为简单配置是，可以是：`auto`
@@ -289,7 +384,109 @@ role:
 | enableInstanceMetrics | False | Boolean | InstanceMetrics开关，取值`true`/`false` |
 | logBeginRule | False | String | 日志是否切分，取值 `DefaultRegex`/`None` |
 
-> 相关权限可以参考[权限文档](./authority/yaml.md#存在日志配置的情况)
+参考案例：
+
+```yaml
+service:
+    name: unit-deploy-service
+    description: 'demo for fc-deploy component'
+    internetAccess: true
+        role: <role-arn> # role 为已配置好的，配置内容参考服务角色权限
+    # logConfig: auto
+    logConfig:
+        project: XXX
+        logstore: XXX
+```
+
+> logConfig 为 auto时
+> project 名字生成规则 {accountID}-{region}-logproject
+> logstore 名字生成规则 'fc-service-{serviceName}-logstore'.toLocaleLowerCase()
+
+
+#### 权限配置相关
+
+##### 子账号需要的权限
+
+###### 最大权限
+
+系统策略：`AliyunFCFullAccess`、`AliyunLogFullAccess`
+
+###### 部署最小权限 **<**[**服务权限参考**](#子账号需要的权限)**>**
+
+- 当 `logConfig` 不为 `auto` 
+
+**自定义策略**
+
+```json
+{
+    "Statement": [
+        {
+            "Action": "ram:PassRole",
+            "Effect": "Allow",
+            "Resource": "*"
+        }
+    ],
+    "Version": "1"
+}
+```
+
+- 当 `logConfg` 为 `auto`
+
+**自定义策略**
+
+```json
+{
+    "Version": "1",
+    "Statement": [
+      	{
+            "Action": "ram:PassRole",
+            "Effect": "Allow",
+            "Resource": "*"
+        },
+        {
+            "Action": [
+                "log:GetProject",
+                "log:CreateProject"
+            ],
+            "Resource": "acs:log:<region>:<account-id>:project/<project-name>",
+            "Effect": "Allow"
+        },
+        {
+            "Action": [
+                "log:CreateLogStore",
+                "log:GetIndex",
+                "log:GetLogStore",
+                "log:CreateIndex"
+            ],
+            "Resource": "acs:log:<region>:<account-id>:project/<project-name>/logstore/<logstore-name>",
+            "Effect": "Allow"
+        }
+    ]
+}
+```
+
+##### 服务角色权限
+###### 最大权限
+
+**系统策略**：`AliyunLogFullAccess`
+
+
+###### 最小权限
+
+**自定义策略**
+
+```json
+{
+    "Version": "1",
+    "Statement": [
+        {
+            "Action": "log:PostLogStoreLogs",
+            "Resource": "acs:log:<region>:<account-id>:project/<projectName>/logstore/<logstoreName>",
+            "Effect": "Allow"
+        }
+    ]
+}
+```
 
 ### vpcConfig
 
@@ -303,7 +500,87 @@ role:
 | vSwitchIds | False | List<String> | 交换机 ID 列表 |
 | vpcId | False | String | VPC ID |
 
-> 相关权限可以参考[权限文档](./authority/yaml.md#存在-VPC-配置)
+
+参考案例：
+
+```yaml
+service:
+    name: unit-deploy-service
+    description: 'demo for fc-deploy component'
+    internetAccess: true
+        role: <role-arn> # role 为已配置好的，配置内容参考服务角色权限
+    # vpcConfig: auto
+    vpcConfig:
+      vpcId: xxx
+      securityGroupId: xxx
+      vswitchIds:
+        - vsw-xxx
+```
+
+#### 权限配置相关
+
+##### 子账号需要的权限
+
+###### 最大权限
+
+**系统策略**：`AliyunFCFullAccess`、`AliyunVPCFullAccess`、`AliyunECSFullAccess`
+
+###### 部署最小权限 **<**[**服务权限参考**](#子账号需要的权限)**>**
+
+- 当 `vpcConfig` 不为 `auto`
+
+**自定义策略**
+```json
+{
+    "Statement": [
+        {
+            "Action": "ram:PassRole",
+            "Effect": "Allow",
+            "Resource": "*"
+        }
+    ],
+    "Version": "1"
+}
+```
+
+- 当 `vpcConfig` 为 `auto`
+
+**系统策略**：`AliyunVPCReadOnlyAccess`
+
+**自定义策略**
+
+```json
+{
+    "Statement": [
+        {
+            "Action": "ram:PassRole",
+            "Effect": "Allow",
+            "Resource": "*"
+        },
+        {
+            "Action": "fc:GetAccountSettings",
+            "Effect": "Allow",
+            "Resource": "acs:fc:<region>:<account-id>:account-settings"
+        },
+        {
+            "Action": [
+                "vpc:CreateVpc",
+                "vpc:CreateVSwitch",
+                "ecs:AuthorizeSecurityGroup",
+                "ecs:DescribeSecurityGroups",
+                "ecs:CreateSecurityGroup"
+            ],
+            "Effect": "Allow",
+            "Resource": "*"
+        }
+    ],
+    "Version": "1"
+}
+```
+
+##### 服务角色权限
+
+**系统策略**：`AliyunECSNetworkInterfaceManagementAccess`
 
 ### nasConfig
 
@@ -313,11 +590,124 @@ role:
 
 | 参数名 |  必填  |  类型  |  参数描述  |
 | --- |  ---  |  ---  |  ---  |
-| mountPoints | False | [List<Struct>[多目录配置]](#mountPoints) | 目录配置 |
+| [mountPoints](#mountPoints) | False | [List<Struct>[多目录配置]](#mountPoints) | 目录配置 |
 | userId | False | String | userID, 默认为10003 |
 | groupId | False | String | groupID, 默认为10003 |
 
-> 相关权限可以参考[权限文档](./authority/yaml.md#存在-NAS-配置)
+参考案例：
+
+```yaml
+service:
+    name: unit-deploy-service
+    description: 'demo for fc-deploy component'
+    internetAccess: true
+        role: <role-arn> # role 为已配置好的，配置内容参考服务角色权限
+    vpcConfig:
+      vpcId: xxx
+      securityGroupId: xxx
+      vswitchIds:
+        - vsw-xxx
+    nasConfig:
+      userId: 10003
+      groupId: 10003
+      mountPoints:
+        - serverAddr: xxx-xxx.cn-shenzhen.nas.aliyuncs.com
+          nasDir: /unit-deploy-service
+          fcDir: /mnt/auto
+```
+
+#### 权限配置相关
+
+##### 子账号需要的权限
+
+###### 最大权限
+
+**系统策略**：`AliyunFCFullAccess`、`AliyunVPCFullAccess`、`AliyunNasFullAccess`
+
+
+###### 部署最小权限
+
+- 当 `nasConfig` 不为 `auto`
+
+**自定义策略**
+
+```json
+{
+    "Statement": [
+        {
+            "Action": "ram:PassRole",
+            "Effect": "Allow",
+            "Resource": "*"
+        }
+    ],
+    "Version": "1"
+}
+```
+
+- 当 `nasConfig` 为 `auto`
+
+**系统策略**：`AliyunNasReadOnlyAccess`
+
+**自定义策略**
+
+```json
+{
+    "Statement": [
+        {
+            "Action": "fc:GetAccountSettings",
+            "Effect": "Allow",
+            "Resource": "acs:fc:<region>:<account-id>:account-settings"
+        },
+        {
+            "Action": [
+                "fc:UpdateService",
+                "fc:CreateService"
+            ],
+            "Effect": "Allow",
+            "Resource": "acs:fc:<region>:<account-id>:services/*"
+        },
+        {
+            "Action": [
+                "fc:InvokeFunction",
+                "fc:CreateFunction",
+                "fc:UpdateFunction"
+            ],
+            "Effect": "Allow",
+            "Resource": "acs:fc:<region>:<account-id>:services/*/functions/*"
+        },
+        {
+            "Action": [
+              "fc:UpdateTrigger",
+              "fc:CreateTrigger"
+            ],
+            "Effect": "Allow",
+            "Resource": "acs:fc:<region>:<account-id>:services/*/functions/*/triggers/*"
+        },
+        {
+            "Action": "ram:PassRole",
+            "Effect": "Allow",
+            "Resource": "*"
+        },
+        {
+            "Action": [
+                "nas:CreateMountTarget",
+                "nas:DescribeMountTargets",
+                "nas:DescribeFileSystems",
+                "nas:CreateFileSystem",
+                "vpc:DescribeVSwitchAttributes"
+            ],
+            "Effect": "Allow",
+            "Resource": "*"
+        }
+    ],
+    "Version": "1"
+}
+```
+
+##### 服务角色权限
+
+**系统策略**：`AliyunECSNetworkInterfaceManagementAccess`
+
 
 #### mountPoints
 
@@ -326,6 +716,39 @@ role:
 | serverAddr | False | String | NAS 服务器地址 |
 | nasDir | False | String | NAS目录 |
 | fcDir | False | String | 函数计算目录 |
+
+### tracingConfig
+
+链路追踪，可取值：Enable、Disable
+
+参考案例
+
+```yaml
+service:
+    name: unit-deploy-service
+    description: 'demo for fc-deploy component'
+    internetAccess: true
+    tracingConfig: Enable     
+```
+
+#### 权限配置相关
+
+##### 子账号需要的权限
+
+**系统策略**：`AliyunFCFullAccess`、`AliyunTracingAnalysisReadOnlyAccess`
+
+```yaml
+{
+    "Statement": [
+        {
+            "Action": "ram:PassRole",
+            "Effect": "Allow",
+            "Resource": "*"
+        }
+    ],
+    "Version": "1"
+}
+```
 
 
 ## function字段
@@ -338,19 +761,84 @@ role:
 | ossKey | False | String | 如果指定 oss 代码，所对应的对象，不能与codeUri同时出现  |
 | handler | False | String | function执行的入口，具体格式和语言相关 |
 | memorySize | False | Number | function的内存规格 |
-| runtime | True | String | 运行时 |
+| [runtime](#runtime) | True | String | 运行时 |
 | timeout | False | Number | function运行的超时时间 |
 | caPort | False | Number | CustomContainer/Runtime指定端口 |
-| customContainerConfig | False | [Struct](#customContainerConfig) | 自定义镜像配置 |
-| environmentVariables | False | [List<Struct>](#environmentVariables) | 环境变量 |
+| [customContainerConfig](#customContainerConfig) | False | [Struct](#customContainerConfig) | 自定义镜像配置 |
+| [environmentVariables](#environmentVariables) | False | [List<Struct>](#environmentVariables) | 环境变量 |
 | initializationTimeout | False | Number | 初始化方法超时时间 |
 | initializer | False | String | 初始化方法 |
 | instanceConcurrency | False | Number | 单实例多并发 |
 | instanceType | False | String | 函数实例类型，可选值为：e1（弹性实例）、c1（性能实例） |
-| instanceLifecycleConfig | False | [Struct](#instanceLifecycleConfig) | 扩展函数 |
-| asyncConfiguration | False | [Struct](asyncConfiguration) | 异步配置 |
+| [instanceLifecycleConfig](#instanceLifecycleConfig) | False | [Struct](#instanceLifecycleConfig) | 扩展函数 |
+| [asyncConfiguration](asyncConfiguration) | False | [Struct](asyncConfiguration) | 异步配置 |
+
+
+参考案例：
+
+```yaml
+function:
+    name: event-function
+    description: this is a test
+    runtime: nodejs12
+    codeUri: ./
+    handler: index.handler
+    memorySize: 128
+    timeout: 60
+```
+
+### 账号需要的函数权限
+
+#### 最大权限
+
+`AliyunFCFullAccess`
+
+#### 部署最小权限
+
+⚠️ `fc:GetFunctionAsyncInvokeConfig` 选填，不影响使用
+
+```json
+{
+    "Statement": [
+        {
+            "Action": [
+                "fc:GetFunction",
+                "fc:CreateFunction",
+                "fc:UpdateFunction"
+            ],
+            "Effect": "Allow",
+            "Resource": "acs:fc:<region>:<account-id>:services/<service-name>/functions/*"
+        }
+    ],
+    "Version": "1"
+}
+```
+
+
+#### 删除最小权限
+
+```json
+{
+		"Version": "1",
+    "Statement": [
+      	{
+            "Action": "fc:DeleteFunction",
+            "Resource": "acs:fc:<region>:<account-id>:services/<serviceName>/functions/<functionName>",
+            "Effect": "Allow"
+        }
+    ]
+}
+```
+
+
+### runtime
 
 runtime目前支持：`nodejs4.4`、`nodejs6`、`nodejs8`、`nodejs10`、`nodejs12`、`python2.7`、`python3`、`java8`、`java11`、`php7.2`、`dotnetcore2.1`、`custom`及`custom-container`
+
+当 runtime 为 custom-container 服务角色权限：
+
+**系统策略**：`AliyunContainerRegistryReadOnlyAccess`
+
 
 ### customContainerConfig
 | 参数名 |  必填  |  类型  |  参数描述  |
@@ -376,8 +864,8 @@ TempKey: tempValue
 
 | 参数名 |  必填  |  类型  |  参数描述  |
 | --- |  ---  |  ---  |  ---  |
-| preFreeze | False | [Struct](#prefreeze和prestop) |  PreFreeze 函数 |
-| preStop | False | [Struct](#prefreeze和prestop) |  PreStop 函数 |
+| [preFreeze](#prefreeze和prestop) | False | [Struct](#prefreeze和prestop) |  PreFreeze 函数 |
+| [preStop](#prefreeze和prestop) | False | [Struct](#prefreeze和prestop) |  PreStop 函数 |
 
 #### preFreeze和preStop
 
@@ -392,8 +880,77 @@ TempKey: tempValue
 | maxAsyncEventAgeInSeconds | False | Number |  消息最大存活时长，取值范围[1,2592000]。单位：秒 |
 | maxAsyncRetryAttempts | False | Number |  异步调用失败后的最大重试次数，默认值为3。取值范围[0,8] |
 | statefulInvocation | False | Boolean |  是否开启有状态异步调用 |
-| destination | False | [Struct](#destination) |  异步调用目标的配置结构体 |
+| [destination](#destination)  | False | [Struct](#destination) |  异步调用目标的配置结构体 |
 
+#### 权限配置相关
+
+##### 服务角色权限
+
+- 配置了 fc：`AliyunFCInvocationAccess`
+- 配置了 mns
+````
+{
+    Action: [
+    'mns:SendMessage',
+    'mns:PublishMessage',
+    ],
+    Resource: '*',
+    Effect: 'Allow',
+}
+````
+
+##### 子账号需要的权限
+
+###### 最大权限
+
+**系统策略**：`AliyunFCFullAccess`、`AliyunMNSReadOnlyAccess`【查看消息服务(MNS)的权限】、`AliyunEventBridgeReadOnlyAccess`【事件总线（EventBridge）的权限】、`AliyunMQReadOnlyAccess`【消息队列(MQ)的权限】、`AliyunFCInvocationAccess`【调用函数权限】
+
+###### 最小权限
+
+**系统策略**
+
+- 如果配置了mns相关 `AliyunMNSReadOnlyAccess`
+- 如果配置了EventBridge相关 `AliyunEventBridgeReadOnlyAccess`
+- 如果配置了MQ相关 `AliyunMQReadOnlyAccess`
+
+**自定义策略**
+
+```json
+{
+    "Version": "1",
+    "Statement": [
+        {
+            "Action": "fc:*Service",
+            "Resource": "*",
+            "Effect": "Allow"
+        },
+        {
+            "Action": [
+                "fc:GetFunction",
+                "fc:CreateFunction",
+                "fc:UpdateFunction"
+            ],
+            "Effect": "Allow",
+            "Resource": "acs:fc:<region>:<account-id>:services/unit-deploy-service/functions/*"
+        },
+        {
+            "Action": [
+                "fc:InvokeFunction",
+                "fc:GetFunctionAsyncInvokeConfig",
+                "fc:DeleteFunctionAsyncInvokeConfig",
+                "fc:PutFunctionAsyncInvokeConfig"
+            ],
+            "Effect": "Allow",
+            "Resource": "acs:fc:<region>:<account-id>:services/unit-deploy-service.*/functions/*"
+        },
+        {
+            "Action": "ram:PassRole",
+            "Effect": "Allow",
+            "Resource": "*"
+        }
+    ]
+}
+```
 
 #### destination
 | 参数名 |  必填  |  类型  |  参数描述  |
@@ -421,7 +978,85 @@ type目前支持：`http`, `timer`, `oss`, `log`, `mns_topic`, `cdn_events`, `ta
 | --- |  ---  |  ---  |  ---  |
 | bucketName | True | String | OSS 中目标 bucket 名称 |
 | events | True | List<String> | OSS 端触发函数执行的事件列表 |
-| filter | True | [Struct](#filter) | 触发条件 |
+| [filter](#filter) | True | [Struct](#filter) | 触发条件 |
+
+参考案例：
+
+```yaml
+triggers:
+  - name: oss
+    sourceArn: acs:oss:acs:log:<region>:<account-id>:<buckctName>
+    type: oss
+    role: acs:ram::<account-id>:role/aliyunosseventnotificationrole
+    # qualifier: LATEST
+    config:
+      events:
+        - oss:ObjectCreated:*
+      filter:
+        key:
+          prefix: pppppppp
+          suffix: ''
+```
+
+#### 权限配置相关
+##### 子账号权限
+
+###### 最大权限
+
+`AliyunFCFullAccess`、`AliyunOSSFullAccess`
+
+###### 操作最小权限
+
+````
+{
+    "Version": "1",
+    "Statement": [
+        {
+            "Action": [
+                "fc:GetTrigger",
+                "fc:CreateTrigger",
+                "fc:UpdateTrigger",
+                "fc:DeleteTrigger"
+            ],
+            "Effect": "Allow",
+            "Resource": "acs:fc:<region>:<account-id>:services/*/functions/*/triggers/*"
+        },
+        {
+            "Action": "ram:PassRole",
+            "Effect": "Allow",
+            "Resource": "*"
+        },
+        {
+            "Action": [
+                "oss:ListBucket",
+                "oss:GetBucketEventNotification",
+                "oss:PutBucketEventNotification",
+                "oss:DeleteBucketEventNotification"
+            ],
+            "Effect": "Allow",
+            "Resource": "*"
+        }
+    ]
+}
+````
+
+
+##### 触发器角色权限
+
+```
+{
+    "Version": "1",
+    "Statement": [
+        {
+            "Action": [
+                "fc:InvokeFunction"
+            ],
+            "Resource": "*",
+            "Effect": "Allow"
+        }
+    ]
+}
+```
 
 #### filter
 
@@ -436,17 +1071,119 @@ type目前支持：`http`, `timer`, `oss`, `log`, `mns_topic`, `cdn_events`, `ta
 | Prefix | False | String | 前缀 |
 | Suffix | False | String | 后缀 |
 
-
 ### Log触发器
 
 
 | 参数名 |  必填  |  类型  |  参数描述  |
 | --- |  ---  |  ---  |  ---  |
-| logConfig | True | [Struct](#logConfig-1) | 日志配置 |
-| jobConfig | True | [Struct](#jobConfig) | job配置 |
-| sourceConfig | True | [Struct](#sourceConfig) | source配置 |
-| functionParameter | True | [Struct](#functionParameter) | 该参数将作为函数Event的Parameter传入函数。默认值为空（{}） |
+| [logConfig](#logConfig-1) | True | [Struct](#logConfig-1) | 日志配置 |
+| [jobConfig](#jobConfig) | True | [Struct](#jobConfig) | job配置 |
+| [sourceConfig](#sourceConfig) | True | [Struct](#sourceConfig) | source配置 |
+| [functionParameter](#functionParameter) | True | [Struct](#functionParameter) | 该参数将作为函数Event的Parameter传入函数。默认值为空（{}） |
 | enable | True | Boolean | 触发器开关 |
+
+
+参考案例：
+
+```yaml
+triggers:
+  - name: log
+    sourceArn: acs:log:<region>:<account-id>:project/<projectName>
+    type: log
+    role: acs:ram::<account-id>:role/aliyunlogetlrole
+    # qualifier: LATEST
+    config:
+      sourceConfig:
+        logstore: log
+      jobConfig:
+        maxRetryTime: 3
+        triggerInterval: 60
+      functionParameter: {}
+      logConfig:
+        project: test-data-abc-ss
+        logstore: log2
+      enable: false
+```
+
+#### 权限配置相关
+##### 子账号权限
+
+###### 最大权限
+
+`AliyunFCFullAccess`、`AliyunLogFullAccess`
+
+###### 最小权限
+````
+{
+    "Version": "1",
+    "Statement": [
+        {
+            "Action": [
+                "fc:GetTrigger",
+                "fc:CreateTrigger",
+                "fc:UpdateTrigger",
+                "fc:DeleteTrigger"
+            ],
+            "Effect": "Allow",
+            "Resource": "acs:fc:<region>:<account-id>:services/*/functions/*/triggers/*"
+        },
+        {
+            "Action": "ram:PassRole",
+            "Effect": "Allow",
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "log:GetEtlJob",
+                "log:UpdateEtlJob",
+                "log:CreateEtlJob",
+                "log:DeleteEtlJob"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+````
+
+##### 触发器角色权限
+
+```
+{
+    "Version": "1",
+    "Statement": [
+        {
+            "Action": [
+                "fc:InvokeFunction"
+            ],
+            "Resource": "*",
+            "Effect": "Allow"
+        },
+        {
+            "Action": [
+                "log:Get*",
+                "log:List*",
+                "log:PostProjectQuery",
+                "log:PutProjectQuery",
+                "log:DeleteProjectQuery",
+                "log:GetProjectQuery",
+                "log:PostLogStoreLogs",
+                "log:BatchPostLogStoreLogs",
+                "log:CreateConsumerGroup",
+                "log:UpdateConsumerGroup",
+                "log:DeleteConsumerGroup",
+                "log:ListConsumerGroup",
+                "log:ConsumerGroupUpdateCheckPoint",
+                "log:ConsumerGroupHeartBeat",
+                "log:GetConsumerGroupCheckPoint"
+            ],
+            "Resource": "*",
+            "Effect": "Allow"
+        }
+    ]
+}
+```
+
 
 #### logConfig
 | 参数名 |  必填  |  类型  |  参数描述  |
@@ -482,12 +1219,90 @@ TempKey: tempValue
 | enable | True | Boolean | 是否启用该触发器 |
 | payload | False | String | 代表触发器事件本身的输入内容 |
 
+参考案例：
+
+```yaml
+triggers:
+  - name: timer
+    type: timer
+    # qualifier: LATEST
+    config:
+    payload: '{"s": "ss"}'
+    cronExpression: '@every 100m'
+    enable: false
+```
+#### 权限配置相关
+##### 子账号需要的函数权限
+
+###### 最大权限
+
+`AliyunFCFullAccess`
+
+###### 最小权限
+
+```json
+{
+    "Version": "1",
+    "Statement": [
+        {
+            "Action": [
+                "fc:GetTrigger",
+                "fc:CreateTrigger",
+                "fc:DeleteTrigger",
+                "fc:UpdateTrigger"
+            ],
+            "Effect": "Allow",
+            "Resource": "acs:fc:<region>:<account-id>:services/<serviceName>/functions/<functionName>/triggers/<triggerName>"
+        }
+    ]
+}
+```
+
 ### Http触发器
 
 | 参数名 |  必填  |  类型  |  参数描述  |
 | --- |  ---  |  ---  |  ---  |
 | authType | True | String | 鉴权类型，可选值：anonymous、function |
 | methods | True | List<String> | HTTP 触发器支持的访问方法，可选值：GET、POST、PUT、DELETE、HEAD |
+
+参考案例：
+
+```yaml
+triggers:
+  - name: httpTrigger
+    type: http
+    # qualifier: LATEST
+    config:
+      authType: anonymous
+      methods:
+        - GET
+```
+#### 权限配置相关
+##### 子账号需要的函数权限
+
+###### 最大权限
+
+`AliyunFCFullAccess`
+
+###### 最小权限
+
+```json
+{
+    "Version": "1",
+    "Statement": [
+        {
+            "Action": [
+                "fc:GetTrigger",
+                "fc:CreateTrigger",
+                "fc:DeleteTrigger",
+                "fc:UpdateTrigger"
+            ],
+            "Effect": "Allow",
+            "Resource": "acs:fc:<region>:<account-id>:services/<serviceName>/functions/<functionName>/triggers/<triggerName>"
+        }
+    ]
+}
+```
 
 ### MNS触发器
 
@@ -499,6 +1314,76 @@ TempKey: tempValue
 | notifyStrategy | False | String | 调用函数的重试策略，可选值：BACKOFF_RETRY, EXPONENTIAL_DECAY_RETRY |
 | filterTag | False | String | 描述了该订阅中消息过滤的标签（标签一致的消息才会被推送）,不超过 16 个字符的字符串，默认不进行消息过滤，即默认不填写该字段 |
 
+参考案例：
+
+```yaml
+triggers:
+  - name: mns
+    sourceArn: acs:mns:<region>:<account-id>:/topics/test
+    type: mns_topic
+    role: acs:ram::<account-id>:role/aliyunmnsnotificationrole
+    # qualifier: LATEST
+    config:
+      filterTag: ss
+      notifyContentFormat: STREAM
+      notifyStrategy: BACKOFF_RETRY
+```
+#### 权限配置相关
+##### 子账号需要的函数权限
+
+###### 最大权限
+
+`AliyunFCFullAccess`、`AliyunMNSFullAccess`
+
+###### 最小权限
+
+```json
+{
+    "Version": "1",
+    "Statement": [
+        {
+            "Action": [
+                "fc:GetTrigger",
+                "fc:CreateTrigger",
+                "fc:UpdateTrigger",
+                "fc:DeleteTrigger"
+            ],
+            "Effect": "Allow",
+            "Resource": "acs:fc:<region>:<account-id>:services/*/functions/*/triggers/*"
+        },
+        {
+            "Action": "ram:PassRole",
+            "Effect": "Allow",
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "mns:Subscribe",
+                "mns:Unsubscribe"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+```
+
+##### 触发器角色权限
+````
+{
+    "Version": "1",
+    "Statement": [
+        {
+            "Action": [
+                "fc:InvokeFunction"
+            ],
+            "Resource": "*",
+            "Effect": "Allow"
+        }
+    ]
+}
+````
+
 ### CDN 触发器
 
 | 参数名 |  必填  |  类型  |  参数描述  |
@@ -506,7 +1391,82 @@ TempKey: tempValue
 | eventName | True | String | 为 CDN 端触发函数执行的事件，一经创建不能更改 |
 | eventVersion | True | String | 为 CDN 端触发函数执行事件的版本，一经创建不能更改 |
 | notes | True | String | 备注信息 |
-| filter | True | [Struct](#filter-1) | 过滤器（至少需要一个过滤器） |
+| [filter](#filter-1) | True | [Struct](#filter-1) | 过滤器（至少需要一个过滤器） |
+
+参考案例：
+
+```yaml
+triggers:
+  - name: cdn
+    sourceArn: acs:cdn:*:<account-id>
+    type: cdn_events
+    role: <roleArn>
+    # qualifier: LATEST
+    config:
+      eventName: CachedObjectsBlocked
+      eventVersion: 1.0.0
+      notes: shshhs
+      filter:
+        domain:
+          - sss
+```
+#### 权限配置相关
+##### 子账号权限
+
+###### 最大权限
+
+`AliyunFCFullAccess`、`AliyunCDNFullAccess`
+
+###### 最小权限
+````
+{
+    "Version": "1",
+    "Statement": [
+        {
+            "Action": [
+                "fc:GetTrigger",
+                "fc:CreateTrigger",
+                "fc:UpdateTrigger",
+                "fc:DeleteTrigger"
+            ],
+            "Effect": "Allow",
+            "Resource": "acs:fc:<region>:<account-id>:services/*/functions/*/triggers/*"
+        },
+        {
+            "Action": "ram:PassRole",
+            "Effect": "Allow",
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "cdn:UpdateFCTrigger",
+                "cdn:DeleteFCTrigger",
+                "cdn:DescribeFCTrigger",
+                "cdn:AddFCTrigger"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+````
+
+##### 触发器角色权限
+
+```
+{
+    "Version": "1",
+    "Statement": [
+        {
+            "Action": [
+                "fc:InvokeFunction"
+            ],
+            "Resource": "*",
+            "Effect": "Allow"
+        }
+    ]
+}
+```
 
 #### filter
 
@@ -521,14 +1481,94 @@ TempKey: tempValue
 | instanceName | True | List<String> | 表格存储实例的名称 |
 | tableName | True | List<String> | 实例中的表名称 |
 
+参考案例：
+
+```yaml
+triggers:
+  - name: ots
+    sourceArn: acs:ots:<region>:<account-id>:instance/<instance>/table/<table>
+    type: tablestore
+    role: >-
+      acs:ram::<account-id>:role/AliyunTableStoreStreamNotificationRole
+    # qualifier: 1 # LATEST
+    config: {}
+```
+#### 权限配置相关
+##### 子账号需要的函数权限
+
+###### 最大权限
+
+`AliyunFCFullAccess`、`AliyunOTSFullAccess`
+
+###### 最小权限
+
+```json
+{
+    "Version": "1",
+    "Statement": [
+        {
+            "Action": [
+                "fc:GetTrigger",
+                "fc:CreateTrigger",
+                "fc:UpdateTrigger",
+                "fc:DeleteTrigger"
+            ],
+            "Effect": "Allow",
+            "Resource": "acs:fc:<region>:<account-id>:services/*/functions/*/triggers/*"
+        },
+        {
+            "Action": "ram:PassRole",
+            "Effect": "Allow",
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ots:GetTrigger",
+                "ots:UpdateTrigger",
+                "ots:CreateTrigger",
+                "ots:DeleteTrigger"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+```
+
+##### 触发器角色权限
+````
+{
+    "Version": "1",
+    "Statement": [
+        {
+            "Action": [
+                "ots:BatchGet*",
+                "ots:Describe*",
+                "ots:Get*",
+                "ots:List*"
+            ],
+            "Resource": "*",
+            "Effect": "Allow"
+        },
+        {
+            "Action": [
+                "fc:InvokeFunction"
+            ],
+            "Resource": "*",
+            "Effect": "Allow"
+        }
+    ]
+}
+````
+
 ## customDomains字段
 
 | 参数名 |  必填  |  类型  |  参数描述  |
 | --- |  ---  |  ---  |  ---  |
 | domainName | True | String | 域名，如果是auto取值，系统则会默认分配域名 |
 | protocol | True | String | 协议，取值：`HTTP`, `HTTPS`, `HTTP, HTTPS` |
-| routeConfigs | True | [List<Struct>](#certConfig) | 路由 |
-| certConfig | False | [Struct](#routeConfigs) | 域名证书 |
+| [routeConfigs](#certConfig) | True | [List<Struct>](#certConfig) | 路由 |
+| [certConfig](#routeConfigs) | False | [Struct](#routeConfigs) | 域名证书 |
 
 参考案例：
 
@@ -542,13 +1582,14 @@ customDomains:
           functionName: event-function
 ```
 
-### 子账号需要的权限
+### 权限配置相关
+#### 子账号需要的权限
 
-#### 最大权限
+##### 最大权限
 
 系统策略：`AliyunFCFullAccess`
 
-#### 最小权限
+##### 最小权限
 
 > 服务和函数权限较多的原因：`domainName` 为 `auto`，需要创建http函数作为一个辅助函数，使用完之后会进行删除
 
