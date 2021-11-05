@@ -43,7 +43,7 @@ Document
 
 Options
 
-  --type [code/config]    Only deploy configuration or code. Value: code, config             
+  --type [code/config]    Only deploy configuration or code, value: code/config                   
   --use-local             Deploy resource using local config               
   --use-remote            Deploy resource using remote config                                 
   -y, --assume-yes        Assume that the answer to any question which would be asked is yes 
@@ -194,7 +194,7 @@ Usage
 
 Options
 
-  --type [code/config]    Only deploy configuration or code Value: code, config              
+  --type [code/config]    Only deploy configuration or code, value: code/config              
   --use-local             Deploy resource using local config                                 
   -y, --assume-yes        Assume that the answer to any question which would be asked is yes 
 

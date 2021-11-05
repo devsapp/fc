@@ -31,15 +31,15 @@ Document
 
 Options
                
-  --region [region]               Specify the fc region [cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1]    
+  --region [region]               Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1  
   --service-name [serviceName]    Specify the fc service name  
   --function-name [functionName]  Specify the fc function name                                          
   --keyword [string]              Keyword query                                                                                                          
   --request-id [requestId]        Query according to requestId within the time interval                                                            
-  -s, --start-time [datetime]     Query log start time (Timestamp or time format，like 1611827290000 or 2021-11-11T11:11:12+00:00)                                                            
-  -e, --end-time [datetime]       Query log end time (Timestamp or time format，like 1611827290000 or 2021-11-11T11:11:12+00:00)        
+  -s, --start-time [datetime]     Query log start time (timestamp or time format，like 1611827290000 or 2021-11-11T11:11:12+00:00)                                                            
+  -e, --end-time [datetime]       Query log end time (timestamp or time format，like 1611827290000 or 2021-11-11T11:11:12+00:00)        
   -t, --tail                      Continuous log output mode                                                    
-  --type [success/fail]                   Log type query, value: success, fail                                                 
+  --type [success/fail]           Log type query, value: code/config/all, default: all                                             
 
 Global Options
 
