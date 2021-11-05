@@ -1,8 +1,5 @@
 # Yaml规范说明
 
-本文介绍了Yaml配置的相关字段含义。字段对应的权限配置可以参考[权限配置文档](./authority/yaml.md)
-
-**目录**
 - [Yaml完整配置](#Yaml完整配置)
 - [字段解析](#字段解析)
     - [service字段](#service字段)
@@ -323,7 +320,7 @@ role:
 
 **系统策略**：`AliyunFCFullAccess`、`AliyunRAMFullAccess`
 
-###### 更细度的策略 **<**[**服务权限参考**](#子账号需要的权限)**>**
+###### 更细度的策略
 
 ```json
 {
@@ -411,7 +408,7 @@ service:
 
 系统策略：`AliyunFCFullAccess`、`AliyunLogFullAccess`
 
-###### 部署最小权限 **<**[**服务权限参考**](#子账号需要的权限)**>**
+###### 部署最小权限
 
 - 当 `logConfig` 不为 `auto` 
 
@@ -849,8 +846,6 @@ runtime目前支持：`nodejs4.4`、`nodejs6`、`nodejs8`、`nodejs10`、`nodejs
 | accelerationType | False | String | 镜像加速开关，可选值：'Default'、'None'，前者表示开启，后者表示关闭 |
 | instanceID | False | String | 容器镜像服务企业版实例的ID。当容器镜像选择的是企业版实例时，您需要给容器镜像服务企业版添加实例ID，该实例的默认解析必须是服务所在的VPC网络地址。目前不支持PrivateZone产品定义域名解析 |
 
-
-> 相关权限可以参考[权限文档](./authority/yaml.md#Runtime-为-custom-container)
 
 ### environmentVariables
 
