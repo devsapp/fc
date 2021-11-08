@@ -49,12 +49,12 @@ Global Options
 
 Examples with Yaml
 
-  Query logs in the time interval   $ s logs -s 2021-06-07T02:54:00+08:00 -e 2021-06-07T02:54:59+08:00 
-  Get logs by tail mode             $ s logs -t                                                        
+  $ s logs -s 2021-06-07T02:54:00+08:00 -e 2021-06-07T02:54:59+08:00 
+  $ s logs -t                                                        
 
 Examples with CLI
 
-  Get logs by tail mode    $ s cli fc logs --region cn-hangzhou --service-name myService --function-name myFunction -t
+  $ s cli fc logs --region cn-hangzhou --service-name myService --function-name myFunction -t
 ```
 
 ### 参数解析
@@ -116,7 +116,7 @@ Examples with CLI
 ## 权限与策略说明
 
 - 最大权限：`AliyunFCReadOnlyAccess`、`AliyunLogReadOnlyAccess`
-- 最小权限：`AliyunFCReadOnlyAccess` 与玄关接口权限：
+- 最小权限：`AliyunFCReadOnlyAccess` 与相关接口权限：
     ```yaml
     {
         "Version": "1",
