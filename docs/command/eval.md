@@ -6,6 +6,9 @@
 - [eval start 命令](#eval-start-命令)
     - [参数解析](#参数解析)
     - [操作案例](#操作案例)
+- [eval clean 命令](#eval-clean-命令)
+    - [参数解析](#参数解析-1)
+    - [操作案例](#操作案例-1)
 - [权限与策略说明](#权限与策略说明)
 
 > 关于 `eval` 命令的常见问题和解决方法，可以参考[ FC 组件自动问答系统](http://qa.devsapp.cn/fc?type=eval ) 。
@@ -31,16 +34,18 @@ Document
 
 SubCommand List
 
-  start   Power tuning online functions; help command [s eval start -h]               
+  start   Power tuning online functions; help command [s eval start -h]         
+  clear   Clean the relevant resources; help command [s eval clean -h]               
 ```
 
 
 在该命令中，包括了一个子命令：
 - [start：线上函数探测](#eval-start-命令)
+- [clean：清理探测时创建的资源](#eval-clean-命令)
 
 ## eval start 命令
 
-`eval start` 命令是用户进行函数计算服务版本发布的命令。
+`eval start` 命令是用户开始进行线上函数探测的命令。
 
 当我们执行`eval start -h`/`eval start --help`命令时，可以获取帮助文档。例如执行`s cli fc eval start -h`：
 
@@ -53,7 +58,7 @@ Eval start
 
 Usage
 
-  s start <options>
+  s eval start <options>
                                
 Options
 
@@ -146,6 +151,82 @@ Examples with CLI
 ![图片alt](https://serverless-article-picture.oss-cn-hangzhou.aliyuncs.com/1636357746695_20211108074928902791.png)  
 
 关于该结果的解析如下：
+  
+## eval clean 命令
+
+`eval clean` 命令是清理因进行线上函数探测所创建资源的命令。
+
+当我们执行`eval clean -h`/`eval clean --help`命令时，可以获取帮助文档。例如执行`s cli fc eval clean -h`：
+
+```shell script
+$ s cli fc eval cleam -h
+
+Eval clean
+
+  Clean the relevant resources, including helper resources.                                                                    
+
+Usage
+
+  s eval clean <options>  
+                               
+Options
+
+  --region [region]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
+  --service-name [serviceName]        [C-Required] Specify the fc service name  
+  --function-name [functionName]      [C-Required] Specify the fc function name    
+  -y, --assume-yes                    [Optional] Assume that the answer to any question which would be asked is yes 
+
+Global Options
+
+  -h, --help                 [Optional] Help for command          
+  -a, --access [aliasName]   [Optional] Specify key alias         
+  --debug                    [Optional] Output debug informations 
+
+Options Help
+
+  Required: Required parameters in YAML mode and CLI mode
+  C-Required: Required parameters in CLI mode
+  Y-Required: Required parameters in Yaml mode
+  Optional: Non mandatory parameter
+  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
+
+Examples with Yaml
+
+  $ s eval clean                                                                                
+
+Examples with CLI
+
+  $ s cli fc eval clean --region myRegion --service-name xxx --function-name xxx -y 
+```
+
+### 参数解析
+
+| 参数全称 | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义 |
+|-----|-----|-----|-----|-----|
+| region | - | 选填 | 选填 | 探测的函数所处的地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
+| service-name | - | 选填 | 选填 | 探测的函数所处的服务名 |
+| function-name | - | 选填 | 选填 | 探测的函数名 |
+| assume-yes | y | 选填 | 选填 | 在交互时，默认选择`y` |
+| access | a | 选填 | 选填 | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
+| debug | - | 选填 | 选填 | 打开`debug`模式，将会输出更多日志信息 |
+| help | h | 选填 | 选填 | 查看帮助信息 |
+
+### 操作案例
+
+- **有资源描述文件（Yaml）时**，可以直接执行`s <ProjectName> eval clean`或者`s eval clean`：
+    ```text
+    $ s eval clean
+    
+    Resource cleanup succeeded.
+    ``` 
+  
+- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区以及服务名称，函数名等，例如：
+    ```text
+    $ s cli fc eval clean --region cn-hangzhou --service-name fc-deploy-service --function-name http-trigger-py36 
+    
+    Resource cleanup succeeded.
+    ```
+
   
 ## 权限与策略说明
 
