@@ -31,21 +31,29 @@ Document
 
 Options
                
-  --region [region]               Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1  
-  --service-name [serviceName]    Specify the fc service name  
-  --function-name [functionName]  Specify the fc function name                                          
-  --keyword [string]              Keyword query                                                                                                          
-  --request-id [requestId]        Query according to requestId within the time interval                                                            
-  -s, --start-time [datetime]     Query log start time (timestamp or time format，like 1611827290000 or 2021-11-11T11:11:12+00:00)                                                            
-  -e, --end-time [datetime]       Query log end time (timestamp or time format，like 1611827290000 or 2021-11-11T11:11:12+00:00)        
-  -t, --tail                      Continuous log output mode                                                    
-  --type [success/fail]           Log type query, value: code/config/all, default: all                                             
+  --region [region]               [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1  
+  --service-name [serviceName]    [C-Required] Specify the fc service name  
+  --function-name [functionName]  [C-Required] Specify the fc function name                                          
+  --keyword [string]              [Optional] Keyword query                                                                                                          
+  --request-id [requestId]        [Optional] Query according to requestId within the time interval                                                            
+  -s, --start-time [datetime]     [Optional] Query log start time (timestamp or time format，like 1611827290000 or 2021-11-11T11:11:12+00:00)                                                            
+  -e, --end-time [datetime]       [Optional] Query log end time (timestamp or time format，like 1611827290000 or 2021-11-11T11:11:12+00:00)        
+  -t, --tail                      [Optional] Continuous log output mode                                                    
+  --type [success/fail]           [Optional] Log type query, value: code/config/all, default: all                                             
 
 Global Options
 
-  -a, --access string   Specify key alias         
-  --debug string        Output debug informations 
-  -h, --help string     Help for command.         
+  -h, --help                 [Optional] Help for command          
+  -a, --access [aliasName]   [Optional] Specify key alias         
+  --debug                    [Optional] Output debug informations        
+
+Options Help
+
+  Required: Required parameters in YAML mode and CLI mode
+  C-Required: Required parameters in CLI mode
+  Y-Required: Required parameters in Yaml mode
+  Optional: Non mandatory parameter
+  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
 
 Examples with Yaml
 
@@ -61,9 +69,9 @@ Examples with CLI
 
 | 参数全称 | 参数缩写 | 是否必填 | 参数含义 |
 |-----|-----|-----|-----|
-| region | - | 选填 |查询的函数所处的服务，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| service-name | - | 选填 |查询的函数日志所处的服务 |
-| function-name | - | 选填 | 查询的函数日志对应的函数名 |
+| region | - | 选填 |地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
+| service-name | - | 选填 |服务名 |
+| function-name | - | 选填 | 函数名 |
 | keyword | - | 选填 | 查询的关键词 |
 | request-id | - | 选填 | 通过RequestId进行查询，UTC时间或者时间戳，例如`2021-06-07T02:54:59+08:00`，`1611827290000` |
 | start-time | s | 选填 | 查询的时间点起点，UTC时间或者时间戳，例如`2021-06-07T02:54:59+08:00`，`1611827290000` |

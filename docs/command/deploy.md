@@ -43,16 +43,24 @@ Document
 
 Options
 
-  --type [code/config]    Only deploy configuration or code, value: code/config                   
-  --use-local             Deploy resource using local config               
-  --use-remote            Deploy resource using remote config                                 
-  -y, --assume-yes        Assume that the answer to any question which would be asked is yes 
+  --type [code/config]    [Optional] Only deploy configuration or code, value: code/config                   
+  --use-local             [Optional] Deploy resource using local config               
+  --use-remote            [Optional] Deploy resource using remote config                                 
+  -y, --assume-yes        [Optional] Assume that the answer to any question which would be asked is yes 
 
 Global Options
 
-  -h, --help                 Help for command          
-  -a, --access [aliasName]   Specify key alias         
-  --debug                    Output debug informations 
+  -h, --help                 [Optional] Help for command          
+  -a, --access [aliasName]   [Optional] Specify key alias         
+  --debug                    [Optional] Output debug informations 
+
+Options Help
+
+  Required: Required parameters in YAML mode and CLI mode
+  C-Required: Required parameters in CLI mode
+  Y-Required: Required parameters in Yaml mode
+  Optional: Non mandatory parameter
+  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
 
 SubCommand 
   service    Only deploy service resources; help command [s deploy service -h]                                                        
@@ -136,14 +144,22 @@ Usage
 
 Options
 
-  --use-local         Deploy resource using local config                                 
-  -y, --assume-yes    Assume that the answer to any question which would be asked is yes 
+  --use-local         [Optional] Deploy resource using local config                                 
+  -y, --assume-yes    [Optional] Assume that the answer to any question which would be asked is yes 
 
 Global Options
 
   -h, --help                 Help for command          
   -a, --access [aliasName]   Specify key alias         
   --debug                    Output debug informations 
+
+Options Help
+
+  Required: Required parameters in YAML mode and CLI mode
+  C-Required: Required parameters in CLI mode
+  Y-Required: Required parameters in Yaml mode
+  Optional: Non mandatory parameter
+  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
 
 Examples with Yaml
 
@@ -194,15 +210,23 @@ Usage
 
 Options
 
-  --type [code/config]    Only deploy configuration or code, value: code/config              
-  --use-local             Deploy resource using local config                                 
-  -y, --assume-yes        Assume that the answer to any question which would be asked is yes 
+  --type [code/config]    [Optional] Only deploy configuration or code, value: code/config              
+  --use-local             [Optional] Deploy resource using local config                                 
+  -y, --assume-yes        [Optional] Assume that the answer to any question which would be asked is yes 
 
 Global Options
 
-  -h, --help                 Help for command          
-  -a, --access [aliasName]   Specify key alias         
-  --debug                    Output debug informations 
+  -h, --help                 [Optional] Help for command          
+  -a, --access [aliasName]   [Optional] Specify key alias         
+  --debug                    [Optional] Output debug informations 
+
+Options Help
+
+  Required: Required parameters in YAML mode and CLI mode
+  C-Required: Required parameters in CLI mode
+  Y-Required: Required parameters in Yaml mode
+  Optional: Non mandatory parameter
+  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
 
 Examples with Yaml
 
@@ -260,15 +284,23 @@ Usage
 
 Options
 
-  --trigger-name [triggerName]   Only deploy the specified trigger, multiple triggers can be specified using [--trigger-name name1 --trigger-name name2]                    
-  --use-local                    Deploy resource using local config                                            
-  -y, --assume-yes               Assume that the answer to any question which would be asked is yes            
+  --trigger-name [triggerName]   [Optional] Only deploy the specified trigger, multiple triggers can be specified using [--trigger-name name1 --trigger-name name2]                    
+  --use-local                    [Optional] Deploy resource using local config                                            
+  -y, --assume-yes               [Optional] Assume that the answer to any question which would be asked is yes            
 
 Global Options
 
-  -h, --help                 Help for command          
-  -a, --access [aliasName]   Specify key alias         
-  --debug                    Output debug informations 
+  -h, --help                 [Optional] Help for command          
+  -a, --access [aliasName]   [Optional] Specify key alias         
+  --debug                    [Optional] Output debug informations 
+
+Options Help
+
+  Required: Required parameters in YAML mode and CLI mode
+  C-Required: Required parameters in CLI mode
+  Y-Required: Required parameters in Yaml mode
+  Optional: Non mandatory parameter
+  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
 
 Examples with Yaml
 
@@ -347,15 +379,23 @@ Usage
 
 Options
 
-  --domain [domain]   Only deploy the specified domain, multiple domains can be specified using [--domain domain1 --domain domain2]   
-  --use-local         Deploy resource using local config                                 
-  -y, --assume-yes    Assume that the answer to any question which would be asked is yes 
+  --domain [domain]   [Optional] Only deploy the specified domain, multiple domains can be specified using [--domain domain1 --domain domain2]   
+  --use-local         [Optional] Deploy resource using local config                                 
+  -y, --assume-yes    [Optional] Assume that the answer to any question which would be asked is yes 
 
 Global Options
 
-  -h, --help                 Help for command          
-  -a, --access [aliasName]   Specify key alias         
-  --debug                    Output debug informations 
+  -h, --help                 [Optional] Help for command          
+  -a, --access [aliasName]   [Optional] Specify key alias         
+  --debug                    [Optional] Output debug informations 
+
+Options Help
+
+  Required: Required parameters in YAML mode and CLI mode
+  C-Required: Required parameters in CLI mode
+  Y-Required: Required parameters in Yaml mode
+  Optional: Non mandatory parameter
+  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
 
 Examples with Yaml
 

@@ -50,7 +50,7 @@ SubCommand List
 当我们执行`version list -h`/`version list --help`命令时，可以获取帮助文档。例如执行`s cli fc version list -h`：
 
 ```shell script
-$ s cli fc version list -h -h
+$ s cli fc version list -h
 
 Version list
 
@@ -59,18 +59,30 @@ Version list
 Usage
 
   s version list <options>  
+
+Document
+  
+  https://github.com/devsapp/fc/blob/main/docs/command/version.md
                                
 Options
 
-  --region [region]                   Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
-  --service-name [serviceName]        Specify the fc service name  
-  --table                             Table format output     
+  --region [region]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
+  --service-name [serviceName]        [C-Required] Specify the fc service name  
+  --table                             [Optional] Table format output     
 
 Global Options
 
-  -h, --help                 Help for command          
-  -a, --access [aliasName]   Specify key alias         
-  --debug                    Output debug informations 
+  -h, --help                 [Optional] Help for command          
+  -a, --access [aliasName]   [Optional] Specify key alias         
+  --debug                    [Optional] Output debug informations 
+
+Options Help
+
+  Required: Required parameters in YAML mode and CLI mode
+  C-Required: Required parameters in CLI mode
+  Y-Required: Required parameters in Yaml mode
+  Optional: Non mandatory parameter
+  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
 
 Examples with Yaml
 
@@ -85,8 +97,8 @@ Examples with CLI
 
 | 参数全称 | 参数缩写 | 是否必填 | 参数含义 |
 |-----|-----|-----|-----|
-| region | - | 选填 | 待处理的服务所在地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| service-name | - | 选填 |待处理的服务名称 |
+| region | - | 选填 | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
+| service-name | - | 选填 |服务名 |
 | table | - | 选填 | 是否以表格形式输出 |
 | access | a | 选填 | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
 | debug | - | 选填 | 打开`debug`模式，将会输出更多日志信息 |
@@ -125,7 +137,7 @@ Examples with CLI
 当我们执行`version publish -h`/`version publish --help`命令时，可以获取帮助文档。例如执行`s cli fc version publish -h`：
 
 ```shell script
-$ s cli fc version publish -h -h
+$ s cli fc version publish -h
 
 Version publish
 
@@ -134,18 +146,30 @@ Version publish
 Usage
 
   s version publish <options>  
-                               
+
+Document
+  
+  https://github.com/devsapp/fc/blob/main/docs/command/version.md
+                           
 Options
 
-  --region [region]                   Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
-  --service-name [serviceName]        Specify the fc service name  
-  --description [descriptionContent]  Specify the description     
+  --region [region]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
+  --service-name [serviceName]        [C-Required] Specify the fc service name  
+  --description [descriptionContent]  [Optional] Specify the description     
 
 Global Options
 
-  -h, --help                 Help for command          
-  -a, --access [aliasName]   Specify key alias         
-  --debug                    Output debug informations 
+  -h, --help                 [Optional] Help for command          
+  -a, --access [aliasName]   [Optional] Specify key alias         
+  --debug                    [Optional] Output debug informations 
+
+Options Help
+
+  Required: Required parameters in YAML mode and CLI mode
+  C-Required: Required parameters in CLI mode
+  Y-Required: Required parameters in Yaml mode
+  Optional: Non mandatory parameter
+  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
 
 Examples with Yaml
 
@@ -160,8 +184,8 @@ Examples with CLI
 
 | 参数全称 | 参数缩写 | 是否必填 | 参数含义 |
 |-----|-----|-----|-----|
-| region | - | 选填 |待处理的服务所在地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| service-name | - | 选填 |待处理的服务名 |
+| region | - | 选填 |地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
+| service-name | - | 选填 |服务名 |
 | description | - | 选填 | 版本描述 |
 | access | a | 选填 | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
 | debug | - | 选填 | 打开`debug`模式，将会输出更多日志信息 |
