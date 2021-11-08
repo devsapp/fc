@@ -277,44 +277,14 @@
 }
 ```
 
-## version 指令
-### 查看操作权限：list
-`AliyunFCReadOnlyAccess`
 
-### 发布版本：publish
-```yaml
-{
-    "Version": "1",
-    "Statement": [
-        {
-            "Action": "fc:PublishServiceVersion",
-            "Effect": "Allow",
-            "Resource": "acs:fc:<region>:<account-id>:services/<serviceName>/versions"
-        }
-    ]
-}
-```
 
 ## alias 指令
 ### 查看操作权限：list
 `AliyunFCReadOnlyAccess`
 
 ### 发布/修改：publish
-```yaml
-{
-    "Version": "1",
-    "Statement": [
-        {
-            "Action": [
-            	"fc:CreateAlias",
-              "fc:UpdateAlias"
-            ],
-            "Effect": "Allow",
-            "Resource": "acs:fc:<region>:<account-id>:services/<serviceName>/aliases/*"
-        }
-    ]
-}
-```
+
 
 ## provision 指令
 ### 查看操作权限：list get
