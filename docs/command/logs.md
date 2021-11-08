@@ -67,20 +67,20 @@ Examples with CLI
 
 ### 参数解析
 
-| 参数全称 | 参数缩写 | 是否必填 | 参数含义 |
-|-----|-----|-----|-----|
-| region | - | 选填 |地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| service-name | - | 选填 |服务名 |
-| function-name | - | 选填 | 函数名 |
-| keyword | - | 选填 | 查询的关键词 |
-| request-id | - | 选填 | 通过RequestId进行查询，UTC时间或者时间戳，例如`2021-06-07T02:54:59+08:00`，`1611827290000` |
-| start-time | s | 选填 | 查询的时间点起点，UTC时间或者时间戳，例如`2021-06-07T02:54:59+08:00`，`1611827290000` |
-| end-time | e | 选填 | 查询的时间点终点 |
-| tail | t | 选填 | 以`tail`模式进行日志输出 |
-| type | - | 选填 | 查询的日志型，成功或者失败,取值范围：`success, fail` |
-| access | a | 选填 | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug | - | 选填 | 打开`debug`模式，将会输出更多日志信息 |
-| help | h | 选填 | 查看帮助信息 |
+| 参数全称 | 参数缩写 | Yaml模式下必填 | Cli模式下必填  | 参数含义 |
+|-----|-----|-----|-----|-----|
+| region | - | 选填 |必填 |地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
+| service-name | - | 选填 |必填 |服务名 |
+| function-name | - | 选填 | 必填 |函数名 |
+| keyword | - | 选填 | 选填 |查询的关键词 |
+| request-id | - | 选填 | 选填 |通过RequestId进行查询，UTC时间或者时间戳，例如`2021-06-07T02:54:59+08:00`，`1611827290000` |
+| start-time | s | 选填 | 选填 |查询的时间点起点，UTC时间或者时间戳，例如`2021-06-07T02:54:59+08:00`，`1611827290000` |
+| end-time | e | 选填 | 选填 |查询的时间点终点 |
+| tail | t | 选填 | 选填 |以`tail`模式进行日志输出 |
+| type | - | 选填 | 选填 |查询的日志型，成功或者失败,取值范围：`success, fail` |
+| access | a | 选填 | 选填 |本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
+| debug | - | 选填 | 选填 |打开`debug`模式，将会输出更多日志信息 |
+| help | h | 选填 | 选填 |查看帮助信息 |
 
 ### 操作案例
 

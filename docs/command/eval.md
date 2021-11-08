@@ -104,26 +104,26 @@ Examples with CLI
 
 ### 参数解析
 
-| 参数全称 | 参数缩写 | 是否必填 | 参数含义 |
-|-----|-----|-----|-----|
-| region | - | 选填 |探测的函数所处的地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| service-name | - | 选填 |探测的函数所处的服务名 |
-| function-name | - | 选填 | 探测的函数名 |
-| function-type | - | 选填 | 函数类型，取值：event/http  |
-| concurrency-args | - | 选填 | |
-| eval-type | - | 选填 | |
-| memory | - | 选填 | |
-| memory-size | - | 选填 | |
-| method | - | 选填 | |
-| path | - | 选填 | |
-| payload | - | 选填 | |
-| payload-file | - | 选填 | |
-| query | - | 选填 | |
-| rt | - | 选填 | |
-| run-count | - | 选填 |  |
-| access | a | 选填 | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug | - | 选填 | 打开`debug`模式，将会输出更多日志信息 |
-| help | h | 选填 | 查看帮助信息 |
+| 参数全称 | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义 |
+|-----|-----|-----|-----|-----|
+| region | - | 选填 | 选填 | 探测的函数所处的地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
+| service-name | - | 选填 | 选填 | 探测的函数所处的服务名 |
+| function-name | - | 选填 | 选填 | 探测的函数名 |
+| function-type | - | 选填 | 选填 | 函数类型，取值：event/http  |
+| concurrency-args | - | 选填 |选填 |  |
+| eval-type | - | 选填 |选填 |  |
+| memory | - | 选填 |选填 |  |
+| memory-size | - | 选填 |选填 |  |
+| method | - | 选填 |选填 |  |
+| path | - | 选填 |选填 |  |
+| payload | - | 选填 |选填 |  |
+| payload-file | - | 选填 |选填 |  |
+| query | - | 选填 |选填 |  |
+| rt | - | 选填 |选填 |  |
+| run-count | - | 选填 |选填 |   |
+| access | a | 选填 | 选填 | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
+| debug | - | 选填 | 选填 | 打开`debug`模式，将会输出更多日志信息 |
+| help | h | 选填 | 选填 | 查看帮助信息 |
 
 ### 操作案例
 
@@ -145,6 +145,7 @@ Examples with CLI
 
 ![图片alt](https://serverless-article-picture.oss-cn-hangzhou.aliyuncs.com/1636357746695_20211108074928902791.png)  
 
+关于该结果的解析如下：
   
 ## 权限与策略说明
 
