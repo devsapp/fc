@@ -65,7 +65,6 @@ Options
   --region [region]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
   --service-name [serviceName]        [C-Required] Specify the fc service name  
   --function-name [functionName]      [C-Required] Specify the fc function name    
-  --function-type [event/http]        [C-Required] Type of the target function, value: event/http               
   --concurrency-args [args]           [Optional] Concurrency args of power tuning that can convert to concurrency list, only for --eval-type concurrency                                                   
   --eval-type [memory/concurrency]    [Optional] Type of the power tuning, value: memory/concurrency                                                              
   --memory [memory]                   [Optional] Function memory of power tuning, only for --eval-type concurrency             
@@ -114,7 +113,6 @@ Examples with CLI
 | region | - | 选填 | 选填 | 探测的函数所处的地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
 | service-name | - | 选填 | 选填 | 探测的函数所处的服务名 |
 | function-name | - | 选填 | 选填 | 探测的函数名 |
-| function-type | - | 选填 | 选填 | 函数类型，取值：event/http  |
 | concurrency-args | - | 选填 |选填 |  |
 | eval-type | - | 选填 |选填 |  |
 | memory | - | 选填 |选填 |  |

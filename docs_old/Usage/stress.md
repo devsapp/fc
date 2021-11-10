@@ -114,13 +114,6 @@ Stress 命令为我们提供了两个子命令：
 
 # 简介与原理
 
-![](https://img.alicdn.com/imgextra/i1/O1CN017QO1In1lNearCqdo1_!!6000000004807-2-tps-669-460.png)
-
-如上图所示，`stress start` 指令会根据 s.yml 文件配置，创建一个辅助函数，这个辅助函数的名称为 `_DEFAULT_FC_STRESS_COMPONENT_SERVICE`。
-
-辅助函数创建完成后，会继续调用该函数，压测参数放置在调用负载中。
-
-辅助函数被调用后就会基于 [Python Locust](https://docs.locust.io/en/stable/) 对目标函数发起压测试，并将压测结果返回给本地，本地收到结果后，会保存到 html 文件中用于可视化查看。
 
 # 快速使用
 

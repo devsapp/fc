@@ -3,6 +3,7 @@
 `stress` 命令是对 Event 函数以及 HTTP 发起压测的能力。
 
 - [命令解析](#命令解析)
+- [相关原理](#相关原理)
 - [stress start 命令](#stress-start-命令)
     - [参数解析](#参数解析)
     - [操作案例](#操作案例)
@@ -12,6 +13,17 @@
 - [权限与策略说明](#权限与策略说明)
 
 > 关于 `stress` 命令的常见问题和解决方法，可以参考[ FC 组件自动问答系统](http://qa.devsapp.cn/fc?type=stress ) 。
+
+## 相关原理
+
+![](https://img.alicdn.com/imgextra/i1/O1CN017QO1In1lNearCqdo1_!!6000000004807-2-tps-669-460.png)
+
+如上图所示，`stress start` 指令会根据 s.yml 文件配置，创建一个辅助函数，这个辅助函数的名称为 `_DEFAULT_FC_STRESS_COMPONENT_SERVICE`。
+
+辅助函数创建完成后，会继续调用该函数，压测参数放置在调用负载中。
+
+辅助函数被调用后就会基于 [Python Locust](https://docs.locust.io/en/stable/) 对目标函数发起压测试，并将压测结果返回给本地，本地收到结果后，会保存到 html 文件中用于可视化查看。
+
 
 ## 命令解析
 
@@ -64,8 +76,7 @@ Options
 
   --region [region]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
   --service-name [serviceName]        [C-Required] Specify the fc service name  
-  --function-name [functionName]      [C-Required] Specify the fc function name    
-  --function-type [event/http]        [C-Required] Type of the target function, value: event/http               
+  --function-name [functionName]      [C-Required] Specify the fc function name              
   --method [requestMethod]            [Optional] Target method, only for --function-type http                                  
   --payload [requestPayload]          [Optional] For --function-type event, represents the event passed to the function    
                                       For --function-type http, represents the request body passed to the function  
@@ -106,10 +117,9 @@ Examples with CLI
 
 | 参数全称 | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义 |
 |-----|-----|-----|-----|-----|
-| region | - | 选填 | 选填 | 探测的函数所处的地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| service-name | - | 选填 | 选填 | 探测的函数所处的服务名 |
-| function-name | - | 选填 | 选填 | 探测的函数名 |
-| function-type | - | 选填 | 选填 | 函数类型，取值：event/http  |
+| region | - | 选填 | 必填 | 探测的函数所处的地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
+| service-name | - | 选填 | 必填 | 探测的函数所处的服务名 |
+| function-name | - | 选填 | 必填 | 探测的函数名 |
 | method | - | 选填 |选填 |  |
 | payload | - | 选填 |选填 |  |
 | payload-file | - | 选填 |选填 |  |
@@ -126,23 +136,63 @@ Examples with CLI
 
 - **有资源描述文件（Yaml）时**，可以直接执行`s <ProjectName> stress start`或者`s stress start`：
     ```text
-    $ s stress start --payload 'hello'
+    $ s stress start
     
-    fc-deploy-test: http://memory-tuning.devsapp.cn/#gAAAAQACAAQ=;KVwPQGZmBkCkcB1AcT0KQA==;N/8EM4ZeeTMjDxI0Pj+ANA==
+    Html report flie: /Users/jiangyu/.s/cache/fc-stress/html/url#2021-11-10T15-48-10.html
+    Execute 'open /Users/jiangyu/.s/cache/fc-stress/html/url#2021-11-10T15-48-10.html' on macos for html report with browser.
+    fc-deploy-test: 
+      Average:     8
+      Error:       HTTPConnectionPool(host='undefined', port=80): Max retries exceeded with url: / (Caused by NewConnectionError(': Failed to establish a new connection: [Errno -2] Name or service not known',))
+      Fails:       20699
+      Failures/s:  690
+      Max:         55
+      Method:      undefined
+      Min:         1
+      Name:        /
+      Occurrences: 20699
+      RPS:         690
+      Requests:    20699
+      p50:         8
+      p60:         8
+      p70:         9
+      p90:         10
+      p95:         11
+      p99:         18
     ``` 
   
 - **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区以及服务名称，函数名等，例如：
     ```text
-    $ s cli fc eval start --region cn-hangzhou --service-name fc-deploy-service --function-name http-trigger-py36 --eval-type memory --run-count 50 --payload 'hello world' --memory-size 128,256,512,1024  --method get --path '/login' --query 'a=1&b=2'
+    $ s cli fc stress start --region cn-hangzhou --service-name fc-deploy-service --function-name http-trigger-py36
     
-    fc-deploy-test: http://memory-tuning.devsapp.cn/#gAAAAQACAAQ=;KVwPQGZmBkCkcB1AcT0KQA==;N/8EM4ZeeTMjDxI0Pj+ANA==
+    Html report flie: /Users/jiangyu/.s/cache/fc-stress/html/url#2021-11-10T15-48-10.html
+    Execute 'open /Users/jiangyu/.s/cache/fc-stress/html/url#2021-11-10T15-48-10.html' on macos for html report with browser.
+    fc-deploy-test: 
+      Average:     8
+      Error:       HTTPConnectionPool(host='undefined', port=80): Max retries exceeded with url: / (Caused by NewConnectionError(': Failed to establish a new connection: [Errno -2] Name or service not known',))
+      Fails:       20699
+      Failures/s:  690
+      Max:         55
+      Method:      undefined
+      Min:         1
+      Name:        /
+      Occurrences: 20699
+      RPS:         690
+      Requests:    20699
+      p50:         8
+      p60:         8
+      p70:         9
+      p90:         10
+      p95:         11
+      p99:         18
     ```
 
-通过浏览器打开地址，可以看到相关探测信息：
+根据返回信息的提醒，例如：` Execute 'open /Users/jiangyu/.s/cache/fc-stress/html/url#2021-11-10T15-48-10.html' on macos for html report with browser.`
 
-![图片alt](https://serverless-article-picture.oss-cn-hangzhou.aliyuncs.com/1636357746695_20211108074928902791.png)  
+执行命令，即可打开相对应的图表，可以看到相关压测信息：
 
-关于该结果的解析如下：
+![图片alt](https://serverless-article-picture.oss-cn-hangzhou.aliyuncs.com/1636530616197_20211110075023373607.png)
+![图片alt](https://serverless-article-picture.oss-cn-hangzhou.aliyuncs.com/1636530626182_20211110075035336150.png)
+
   
 ## stress clean 命令
 

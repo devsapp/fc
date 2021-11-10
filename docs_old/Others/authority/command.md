@@ -224,33 +224,6 @@
 }
 ```
 
-## logs 指令
-### 最大权限
-
-`AliyunFCReadOnlyAccess`、`AliyunLogReadOnlyAccess`
-
-### 最小权限
-
-`AliyunFCReadOnlyAccess`
-
-```yaml
-{
-    "Version": "1",
-    "Statement": [
-        {
-            "Action": "log:GetLogStoreLogs",
-            "Effect": "Allow",
-            "Resource": "acs:log:<region>:<account-id>:project/<project>/logstore/<logstore>"
-        }
-    ]
-}
-```
-
-## metrics 指令
-
-`AliyunLogFullAccess`、`AliyunCloudMonitorReadOnlyAccess`、`AliyunFCReadOnlyAccess`
-
-
 ## nas 指令
 
 参考 [nas 部署](./yaml.md#存在-NAS-配置)
@@ -276,14 +249,6 @@
     ]
 }
 ```
-
-
-
-## alias 指令
-### 查看操作权限：list
-`AliyunFCReadOnlyAccess`
-
-### 发布/修改：publish
 
 
 ## provision 指令
