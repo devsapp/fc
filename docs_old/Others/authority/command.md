@@ -203,26 +203,6 @@
 
 这一部分是本地相关操作，所以无需线上权限
 
-## invoke 指令
-
-### 最大权限
-
-`AliyunFCInvocationAccess` 或者 `AliyunFCFullAccess`
-
-### 最小权限
-
-```yaml
-{
-    "Version": "1",
-    "Statement": [
-        {
-            "Action": "fc:InvokeFunction",
-            "Effect": "Allow",
-            "Resource": "acs:fc:<region>:<account-id>:services/<serviceName>.<qualifier>/functions/<functionName>"
-        }
-    ]
-}
-```
 
 ## nas 指令
 

@@ -23,7 +23,6 @@ Info
 Usage
 
   s info <options>  
-  s cli fc info <options>  
                     
 Document
   
@@ -53,7 +52,6 @@ Options Help
 Examples with Yaml
 
   $ s info               
-  $ s <ProjectName> info 
 
 Examples with CLI
 

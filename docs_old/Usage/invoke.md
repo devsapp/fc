@@ -156,16 +156,3 @@ s cli fc-event oss
 ```
 s invoke --event-file event-template/oss-event.json
 ```
-
-# 其他替代方法
-
-
-> 类似操作：除了FC组件为我们提供invoke的命令，帮助我们快速触发线上的某些资源，使用者也可以使用[fc-api](https://github.com/devsapp/fc-api) 组件，进行相对应的。
-
-
-当然，除了阿里云函数计算（FC）组件可以进行资源详情的查询，也可以通过[fc-api](https://github.com/devsapp/fc-api) 组建进行相关信息的查询。
-
-例如:
-
-- 调用函数，可以参考帮助文档：`s cli fc-api invokeFunction -h`
-
