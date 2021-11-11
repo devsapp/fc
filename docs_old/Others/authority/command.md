@@ -118,20 +118,6 @@
 }
 ````
 
-### s remove alias
-系统策略：`AliyunFCReadOnlyAccess`
-```json
-{
-    "Version": "1",
-    "Statement": [
-        {
-            "Action": "fc:DeleteAlias",
-            "Effect": "Allow",
-            "Resource": "acs:fc:<region>:<account-id>:services/<serviceName>/aliases/<aliasName>"
-        }
-    ]
-}
-```
 
 ### s remove version
 系统策略：`AliyunFCReadOnlyAccess`
@@ -181,22 +167,9 @@
 ### s remove layer
 系统策略：`AliyunFCReadOnlyAccess`
 ````json
-{
-    "Version": "1",
-    "Statement": [
-        {
-            "Action": "fc:DeleteLayerVersion",
-            "Effect": "Allow",
-            "Resource": "acs:fc:<region>:<account-id>:layers/<layerName>/versions/*"
-        }
-    ]
-}
+
 ````
 
-
-## info、sync 指令
-
-系统策略：`AliyunFCReadOnlyAccess`
 
 
 ## build、local 指令
@@ -208,46 +181,7 @@
 
 参考 [nas 部署](./yaml.md#存在-NAS-配置)
 
-## layer 指令
 
-### 查看操作权限：list、versions、versionConfig
-
-`AliyunFCReadOnlyAccess`
-
-
-### 部署版本权限：publish
-
-```yaml
-{
-    "Version": "1",
-    "Statement": [
-        {
-            "Action": "fc:CreateLayerVersion",
-            "Effect": "Allow",
-            "Resource": "acs:fc:<region>:<account-id>:layers/<layerName>/versions/*"
-        }
-    ]
-}
-```
-
-
-## provision 指令
-### 查看操作权限：list get
-`AliyunFCReadOnlyAccess`
-
-### 操作权限：put
-```yaml
-{
-    "Version": "1",
-    "Statement": [
-        {
-            "Action": "fc:PutProvisionConfig",
-            "Effect": "Allow",
-            "Resource": "acs:fc:<region>:<account-id>:services/services/<serviceName>.<qualifier>/functions/<functionName>"
-        }
-    ]
-}
-```
 
 ## onDemand 指令
 ### 查看操作权限：list get

@@ -1,20 +1,18 @@
 # Fun2s 命令
 
-`fun2s` 命令是帮助 Funcraft 开发者将 Funcraft 所识别的 `template.yaml` 转换成 Serverless Devs 所识别的 `s.yaml`，是规范转换的命令。
+`fun2s` 命令是将 Funcraft 开发者工具所识别的 `template.yaml` 转换成 Serverless Devs 所识别的 `s.yaml`的命令。
 
 - [命令解析](#命令解析)
-    - [参数解析](#参数解析)
-    - [操作案例](#操作案例)
+  - [参数解析](#参数解析)
+  - [操作案例](#操作案例)
 
 > 关于 `fun2s` 命令的常见问题和解决方法，可以参考[ FC 组件自动问答系统](http://qa.devsapp.cn/fc?type=fun2s) 。
 
 ## 命令解析
 
-当我们执行`fun2s -h`/`fun2s --help`命令时，可以获取帮助文档。例如执行`s cli fc fun2s -h`：
+当执行命令`fun2s -h`/`fun2s --help`时，可以获取帮助文档：
 
 ```shell script
-$ s cli fc fun2s -h
-
 Fun2s
 
   Convert the Yaml specification of Funcraft to the Yaml specification of Serverless Devs.
@@ -30,14 +28,14 @@ Document
 Options
 
   --force               [Optional] Mandatory overwrite s file                                    
-  --region [region]     [Optional] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
-  --source [path]       [Optional] Specify Funcraft configuration path, default: template.yaml/template.yml
-  --target [path]       [Optional] Specify Serverless Devs configuration path, default: s.yaml
+  --region [string]     [Optional] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
+  --source [string]     [Optional] Specify Funcraft configuration path, default: template.yaml/template.yml
+  --target [string]     [Optional] Specify Serverless Devs configuration path, default: s.yaml
 
 Global Options
 
   -h, --help                 [Optional] Help for command          
-  -a, --access [aliasName]   [Optional] Specify key alias         
+  -a, --access [string]      [Optional] Specify key alias         
   --debug                    [Optional] Output debug informations        
 
 Options Help
@@ -55,19 +53,19 @@ Examples with CLI
 
 ### 参数解析
 
-| 参数全称 | 参数缩写 | Cli模式下必填  | 参数含义 |
-|-----|-----|-----|-----|
-| force | - | 选填 | 强行覆盖已存在/已指定的 Serverless Devs 资源描述文档 |
-| region | -  | 选填 | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| source | -  | 选填 | Funcraft的配置文档路径（默认是`template.yaml`/`template.yml`） |
-| target | -  | 选填 | 生成的 Serverless Devs 的配置文档路径（默认是`s.yaml`） |
-| access | a  | 选填 | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug | -  | 选填 | 打开`debug`模式，将会输出更多日志信息 |
-| help | h  | 选填 | 查看帮助信息 |
+| 参数全称 | 参数缩写 | Cli模式下必填 | 参数含义                                                     |
+| -------- | -------- | ------------- | ------------------------------------------------------------ |
+| force    | -        | 选填          | 强行覆盖已存在/已指定的 Serverless Devs 资源描述文档         |
+| region   | -        | 选填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
+| source   | -        | 选填          | Funcraft的配置文档路径（默认是`template.yaml`/`template.yml`） |
+| target   | -        | 选填          | 生成的 Serverless Devs 的配置文档路径（默认是`s.yaml`）      |
+| access   | a        | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
+| debug    | -        | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
+| help     | h        | 选填          | 查看帮助信息                                                 |
 
 ### 操作案例
 
-可以在`Funcraft`项目目录下，通过`fun2s`命令，实现规范转换，例如：
+可以在 Funcraft 项目目录下，通过`fun2s`命令，实现 Yaml 规范转换，例如：
 
 ```shell script
 s cli fc fun2s --region cn-shenzhen --target ./s.yml

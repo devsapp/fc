@@ -1,28 +1,26 @@
 # Version 命令
 
-`version` 命令是用户进行函数版本操作的命令，主要包括版本的查看和发布功能。
+`version` 命令是进行函数版本操作的命令；主要包括别名的查看、发布、删除等功能。
 
 - [命令解析](#命令解析)
 - [version list 命令](#version-list-命令)
-    - [参数解析](#参数解析)
-    - [操作案例](#操作案例)
+  - [参数解析](#参数解析)
+  - [操作案例](#操作案例)
 - [version publish 命令](#version-publish-命令)
-    - [参数解析](#参数解析-1)
-    - [操作案例](#操作案例-1)
+  - [参数解析](#参数解析-1)
+  - [操作案例](#操作案例-1)
 - [version delete 命令](#version-delete-命令)
-    - [参数解析](#参数解析-2)
-    - [操作案例](#操作案例-2)
+  - [参数解析](#参数解析-2)
+  - [操作案例](#操作案例-2)
 - [权限与策略说明](#权限与策略说明)
 
 > 关于 `version` 命令的常见问题和解决方法，可以参考[ FC 组件自动问答系统](http://qa.devsapp.cn/fc?type=version ) 。
 
 ## 命令解析
 
-当我们执行`version -h`/`version --help`命令时，可以获取帮助文档。例如执行`s cli fc version -h`：
+当执行命令`version -h`/`version --help`时，可以获取帮助文档：
 
 ```shell script
-$ s cli fc version -h
-
 Version
 
   Service version operation 
@@ -39,22 +37,23 @@ SubCommand List
 
   list      View the list of service versions; help command [s version list -h] 
   publish   Publish service version; help command [s version publish -h] 
+  delete    Delete service version; help command [s version delete -h] 
 ```
 
 
-在该命令中，包括了两个子命令：
+在该命令中，包括了三个子命令：
+
 - [list：查看版本列表](#version-list-命令)
 - [publish：发布版本](#version-publish-命令)
+- [delete：删除版本](#version-delete-命令)
 
 ## version list 命令
 
-`version list` 命令是用户进行函数计算服务版本列表查询的命令。
+`version list` 命令，是查看服务已发布的版本列表的命令。
 
-当我们执行`version list -h`/`version list --help`命令时，可以获取帮助文档。例如执行`s cli fc version list -h`：
+当执行命令`version list -h`/`version list --help`时，可以获取帮助文档：
 
 ```shell script
-$ s cli fc version list -h
-
 Version list
 
   View the list of service versions 
@@ -69,14 +68,14 @@ Document
                                
 Options
 
-  --region [region]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
-  --service-name [serviceName]        [C-Required] Specify the fc service name  
+  --region [string]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
+  --service-name [string]             [C-Required] Specify the fc service name  
   --table                             [Optional] Table format output     
 
 Global Options
 
   -h, --help                 [Optional] Help for command          
-  -a, --access [aliasName]   [Optional] Specify key alias         
+  -a, --access [string]      [Optional] Specify key alias         
   --debug                    [Optional] Output debug informations 
 
 Options Help
@@ -93,55 +92,54 @@ Examples with Yaml
 
 Examples with CLI
 
-  $ s cli fc version list --region cn-hangzhou --service-name name 
+  $ s cli fc version list --region cn-hangzhou --service-name serviceName 
 ```
 
 ### 参数解析
 
-| 参数全称 | 参数缩写 | Yaml模式下必填 | Cli模式下必填  | 参数含义 |
-|-----|-----|-----|-----|-----|
-| region | - | 选填 | 必填 | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| service-name | - | 选填 | 必填 | 服务名 |
-| table | - | 选填 | 选填 | 是否以表格形式输出 |
-| access | a | 选填 | 选填 | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug | - | 选填 |选填 |  打开`debug`模式，将会输出更多日志信息 |
-| help | h | 选填 | 选填 | 查看帮助信息 |
+| 参数全称     | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
+| ------------ | -------- | -------------- | ------------- | ------------------------------------------------------------ |
+| region       | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
+| service-name | -        | 选填           | 必填          | 服务名                                                       |
+| table        | -        | 选填           | 选填          | 是否以表格形式输出                                           |
+| access       | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
+| debug        | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
+| help         | h        | 选填           | 选填          | 查看帮助信息                                                 |
 
 ### 操作案例
 
-- **有资源描述文件（Yaml）时**，可以直接执行`s <ProjectName> version list`或者`s version list`：
-    ```text
-    $ s version list
-    
-    fc-deploy-test: 
-      - 
-        versionId:        1
-        description:      test publish version
-        createdTime:      2021-11-08T06:07:00Z
-        lastModifiedTime: 2021-11-08T06:07:00Z
-    ``` 
-- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区以及服务名称，例如：
-    ```text
-    $ s cli fc version list --region cn-hangzhou --service-name fc-deploy-service --table
-    
+- **有资源描述文件（Yaml）时**，可以直接执行`s version list`查看当前服务所发布的版本列表；
+- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区以及服务名称，例如`s cli fc version list --region cn-hangzhou --service-name fc-deploy-service`；
 
-      ┌───────────┬──────────────────────┬──────────────────────┬──────────────────────┐
-      │ versionId │     description      │     createdTime      │   lastModifiedTime   │
-      ├───────────┼──────────────────────┼──────────────────────┼──────────────────────┤
-      │ 1         │ test publish version │ 2021-11-08T06:07:00Z │ 2021-11-08T06:07:00Z │
-      └───────────┴──────────────────────┴──────────────────────┴──────────────────────┘
-    ```
-  
+上述命令的执行结果示例：
+
+```text
+fc-deploy-test: 
+  - 
+    versionId:        1
+    description:      test publish version
+    createdTime:      2021-11-08T06:07:00Z
+    lastModifiedTime: 2021-11-08T06:07:00Z
+```
+
+如果指定了`--table`参数，输出示例：
+
+```text
+  ┌───────────┬──────────────────────┬──────────────────────┬──────────────────────┐
+  │ versionId │     description      │     createdTime      │   lastModifiedTime   │
+  ├───────────┼──────────────────────┼──────────────────────┼──────────────────────┤
+  │ 1         │ test publish version │ 2021-11-08T06:07:00Z │ 2021-11-08T06:07:00Z │
+  └───────────┴──────────────────────┴──────────────────────┴──────────────────────┘
+```
+
 
 ## version publish 命令
 
-`version publish` 命令是用户进行函数计算服务版本发布的命令。
+`version publish` 命令，是用于发布版本的命令。
 
-当我们执行`version publish -h`/`version publish --help`命令时，可以获取帮助文档。例如执行`s cli fc version publish -h`：
+当执行命令`version publish -h`/`version publish --help`时，可以获取帮助文档：
 
 ```shell script
-$ s cli fc version publish -h
-
 Version publish
 
   Publish service version 
@@ -156,14 +154,14 @@ Document
                            
 Options
 
-  --region [region]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
-  --service-name [serviceName]        [C-Required] Specify the fc service name  
-  --description [descriptionContent]  [Optional] Specify the description     
+  --region [string]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
+  --service-name [string]             [C-Required] Specify the fc service name  
+  --description [string]              [Optional] Specify the description     
 
 Global Options
 
   -h, --help                 [Optional] Help for command          
-  -a, --access [aliasName]   [Optional] Specify key alias         
+  -a, --access [string]      [Optional] Specify key alias         
   --debug                    [Optional] Output debug informations 
 
 Options Help
@@ -185,47 +183,37 @@ Examples with CLI
 
 ### 参数解析
 
-| 参数全称 | 参数缩写 | Yaml模式下必填 | Cli模式下必填  | 参数含义 |
-|-----|-----|-----|-----|-----|
-| region | - | 选填 |必填 |地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| service-name | - | 选填 |必填 |服务名 |
-| description | - | 选填 | 选填 |版本描述 |
-| access | a | 选填 | 选填 |本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug | - | 选填 | 选填 |打开`debug`模式，将会输出更多日志信息 |
-| help | h | 选填 | 选填 |查看帮助信息 |
+| 参数全称     | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
+| ------------ | -------- | -------------- | ------------- | ------------------------------------------------------------ |
+| region       | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
+| service-name | -        | 选填           | 必填          | 服务名                                                       |
+| description  | -        | 选填           | 选填          | 版本描述                                                     |
+| access       | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
+| debug        | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
+| help         | h        | 选填           | 选填          | 查看帮助信息                                                 |
 
 ### 操作案例
 
-- **有资源描述文件（Yaml）时**，可以直接执行`s <ProjectName> version publish`或者`s version publish`：
-    ```text
-    $ s version publish --description "test publish version"
-    
-    fc-deploy-test: 
-      versionId:        1
-      description:      test publish version
-      createdTime:      2021-11-08T06:07:00Z
-      lastModifiedTime: 2021-11-08T06:07:00Z
-    ``` 
-- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区以及服务名称，例如：
-    ```text
-    $  s cli fc version publish --region cn-hangzhou --service-name fc-deploy-service --description "test publish version"
-    
-    fc-deploy-test: 
-      versionId:        1
-      description:      test publish version
-      createdTime:      2021-11-08T06:07:00Z
-      lastModifiedTime: 2021-11-08T06:07:00Z
-    ``` 
+- **有资源描述文件（Yaml）时**，可以直接执行`s version publish`进行版本的发布；
+- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区以及服务名称，例如`s cli fc version publish --region cn-hangzhou --service-name fc-deploy-service --description "test publish version"`；
+
+上述命令的执行结果示例：
+
+```text
+fc-deploy-test: 
+  versionId:        1
+  description:      test publish version
+  createdTime:      2021-11-08T06:07:00Z
+  lastModifiedTime: 2021-11-08T06:07:00Z
+```
 
 ## version delete 命令
 
-`version delete` 命令是用户进行函数计算服务版本删除的命令。
+`version delete` 命令，是用户删除指定已发布的版本命令。
 
-当我们执行`version delete -h`/`version delete --help`命令时，可以获取帮助文档。例如执行`s cli fc version delete -h`：
+当执行命令`version delete -h`/`version delete --help`时，可以获取帮助文档：
 
 ```shell script
-$ s cli fc version delete -h
-
 Version delete
 
   Delete service version 
@@ -240,14 +228,14 @@ Document
                            
 Options
 
-  --region [region]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
-  --service-name [serviceName]        [C-Required] Specify the fc service name  
-  --version-id [versionId]            [Required] The version Id                   
+  --region [string]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
+  --service-name [string]             [C-Required] Specify the fc service name  
+  --version-id [number]               [Required] The version Id                   
 
 Global Options
 
   -h, --help                 [Optional] Help for command          
-  -a, --access [aliasName]   [Optional] Specify key alias         
+  -a, --access [string]      [Optional] Specify key alias         
   --debug                    [Optional] Output debug informations 
 
 Options Help
@@ -260,52 +248,64 @@ Options Help
 
 Examples with Yaml
 
-  $ s version delete --version-id xxx 
+  $ s version delete --version-id 1
 
 Examples with CLI
 
-  $ s cli fc version publish --region cn-hangzhou --service-name name --version-id xxx 
+  $ s cli fc version publish --region cn-hangzhou --service-name serviceName --version-id 1
 ```
 
 ### 参数解析
 
-| 参数全称 | 参数缩写 | Yaml模式下必填 | Cli模式下必填  | 参数含义 |
-|-----|-----|-----|-----|-----|
-| region | - | 选填 |必填 |地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| service-name | - | 选填 |必填 |服务名 |
-| version-id | - | 必填 | 必填 |版本Id |
-| access | a | 选填 | 选填 |本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug | - | 选填 | 选填 |打开`debug`模式，将会输出更多日志信息 |
-| help | h | 选填 | 选填 |查看帮助信息 |
+| 参数全称     | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
+| ------------ | -------- | -------------- | ------------- | ------------------------------------------------------------ |
+| region       | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
+| service-name | -        | 选填           | 必填          | 服务名                                                       |
+| version-id   | -        | 必填           | 必填          | 版本Id                                                       |
+| access       | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
+| debug        | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
+| help         | h        | 选填           | 选填          | 查看帮助信息                                                 |
 
 ### 操作案例
 
-- **有资源描述文件（Yaml）时**，可以直接执行`s <ProjectName> version delete`或者`s version delete`：
-    ```text
-    $ s version delete --version-id 1
-    
-    VersionId [1] deleted successfully.
-    ``` 
-- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区以及服务名称，例如：
-    ```text
-    $  s cli fc version delete --region cn-hangzhou --service-name fc-deploy-service --version-id 1
-    
-    VersionId [1] deleted successfully.
-    ``` 
+- **有资源描述文件（Yaml）时**，可以直接执行`s version delete --version-id versionId`删除指定`versionId`的版本；
+- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区以及服务名称，例如`s cli fc version delete --region cn-hangzhou --service-name fc-deploy-service --version-id 1`；
+
+上述命令的执行结果示例：
+
+```text
+VersionId [1] deleted successfully.
+```
 
 ## 权限与策略说明
 
 - `version list` 命令所需要的权限策略： `AliyunFCReadOnlyAccess`
+
 - `version publish` 命令所需要的权限策略：
-    ```yaml
-    {
-        "Version": "1",
-        "Statement": [
-            {
-                "Action": "fc:PublishServiceVersion",
-                "Effect": "Allow",
-                "Resource": "acs:fc:<region>:<account-id>:services/<serviceName>/versions"
-            }
-        ]
-    }
-    ```
+
+  ```yaml
+  {
+      "Version": "1",
+      "Statement": [
+          {
+              "Action": "fc:PublishServiceVersion",
+              "Effect": "Allow",
+              "Resource": "acs:fc:<region>:<account-id>:services/<serviceName>/versions"
+          }
+      ]
+  }
+  ```
+- `version delete` 命令所需要的权限策略：
+
+  ```yaml
+  {
+      "Version": "1",
+      "Statement": [
+          {
+              "Action": "fc:DeleteServiceVersion",
+              "Effect": "Allow",
+              "Resource": "acs:fc:<region>:<account-id>:services/<serviceName>/versions"
+          }
+      ]
+  }
+  ```
