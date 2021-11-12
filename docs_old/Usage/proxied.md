@@ -185,30 +185,6 @@ Proxied 命令为我们提供了三个子命令：
 
 ## 原理
 
-![](https://img.alicdn.com/imgextra/i1/O1CN012jVmnP1mMZGWLZ1Wv_!!6000000004940-2-tps-1127-670.png)
-
-如上图所示， S 工具会根据你的函数的 yml 文件配置, 创建一个辅助 Service 和函数，这个辅助 Service 的配置跟您 s.yaml 中的 Service 的配置是相同的。
-
-1. 直接使用sdk(`s proxied invoke`命令) 或者触发器触发调用这个辅助函数(C)， 请求流量会打回到本地的调试实例（A）， 这个时候本地实例(本地函数执行环境容器)收到 event 和 context 是真实来自线上的
-
-2. 本地调试的实例(A)运行函数逻辑，可以直接访问:
-
-	- vpc 内网, 比如 rds 或者 kafka 内网地址等
-	
-	- 一些云服务的内网地址，如 oss 的 internal endpoint 等
-	
-	- 能直接访问 NAS
-
-> A, B , C 均是工具层面已经封装好， 对用户来说， 他只需要提供好， s.yaml 以及相应的代码即可， 其中 :
-> ​
->
-> - s 工具会利用 s.yaml 中 ServiceConfig ( 比如 vpc 配置和 nas 配置) 创建辅助 Service 和函数， 从而实现辅助函数(C)和被调试函数一样的网络访问能力
-> - 代码被挂载到 A 本地函数执行环境容器中
-> - 集成开发环境和本地函数执行环境容器之间的端口映射可以通过--debug-port 参数指定
-
-![](https://img.alicdn.com/imgextra/i4/O1CN01JPSuPl1Cnkc9wq6Pc_!!6000000000126-2-tps-3000-1628.png)
-
-如上图，在端云联调通道成功建立以后， 可以直接在本地直接完成对函数调试， 即使代码中直接使用了 rds vpc 内网地址和 NAS。 ​
 
 # 快速使用
 

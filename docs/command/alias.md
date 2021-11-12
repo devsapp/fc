@@ -353,11 +353,11 @@ Options Help
 
 Examples with Yaml
 
-  $ s version delete --alias-name aliasName 
+  $ s alias delete --alias-name aliasName 
 
 Examples with CLI
 
-  $ s cli fc version delete --region cn-hangzhou --service-name serviceName --alias-name aliasName 
+  $ s cli fc alias delete --region cn-hangzhou --service-name serviceName --alias-name aliasName 
 ```
 
 ### 参数解析

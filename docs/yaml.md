@@ -433,7 +433,34 @@ service:
 **自定义策略**
 
 ```json
-{    "Version": "1",    "Statement": [      	{            "Action": "ram:PassRole",            "Effect": "Allow",            "Resource": "*"        },        {            "Action": [                "log:GetProject",                "log:CreateProject"            ],            "Resource": "acs:log:<region>:<account-id>:project/<project-name>",            "Effect": "Allow"        },        {            "Action": [                "log:CreateLogStore",                "log:GetIndex",                "log:GetLogStore",                "log:CreateIndex"            ],            "Resource": "acs:log:<region>:<account-id>:project/<project-name>/logstore/<logstore-name>",            "Effect": "Allow"        }    ]}
+{
+    "Version":"1",
+    "Statement":[
+        {
+            "Action":"ram:PassRole",
+            "Effect":"Allow",
+            "Resource":"*"
+        },
+        {
+            "Action":[
+                "log:GetProject",
+                "log:CreateProject"
+            ],
+            "Resource":"acs:log:<region>:<account-id>:project/<project-name>",
+            "Effect":"Allow"
+        },
+        {
+            "Action":[
+                "log:CreateLogStore",
+                "log:GetIndex",
+                "log:GetLogStore",
+                "log:CreateIndex"
+            ],
+            "Resource":"acs:log:<region>:<account-id>:project/<project-name>/logstore/<logstore-name>",
+            "Effect":"Allow"
+        }
+    ]
+}
 ```
 
 ##### 服务角色权限
@@ -448,7 +475,16 @@ service:
 **自定义策略**
 
 ```json
-{    "Version": "1",    "Statement": [        {            "Action": "log:PostLogStoreLogs",            "Resource": "acs:log:<region>:<account-id>:project/<projectName>/logstore/<logstoreName>",            "Effect": "Allow"        }    ]}
+{
+    "Version":"1",
+    "Statement":[
+        {
+            "Action":"log:PostLogStoreLogs",
+            "Resource":"acs:log:<region>:<account-id>:project/<projectName>/logstore/<logstoreName>",
+            "Effect":"Allow"
+        }
+    ]
+}
 ```
 
 ### vpcConfig
@@ -467,7 +503,17 @@ service:
 参考案例：
 
 ```yaml
-service:    name: unit-deploy-service    description: 'demo for fc-deploy component'    internetAccess: true        role: <role-arn> # role 为已配置好的，配置内容参考服务角色权限    # vpcConfig: auto    vpcConfig:      vpcId: xxx      securityGroupId: xxx      vswitchIds:        - vsw-xxx
+service:    
+  name: unit-deploy-service    
+  description: 'demo for fc-deploy component'    
+  internetAccess: true        
+  role: <role-arn> # role 为已配置好的，配置内容参考服务角色权限    
+  # vpcConfig: auto    
+  vpcConfig:      
+    vpcId: xxx      
+    securityGroupId: xxx      
+    vswitchIds:        
+      - vsw-xxx
 ```
 
 #### 权限配置相关
@@ -485,7 +531,16 @@ service:    name: unit-deploy-service    description: 'demo for fc-deploy compon
 **自定义策略**
 
 ```json
-{    "Statement": [        {            "Action": "ram:PassRole",            "Effect": "Allow",            "Resource": "*"        }    ],    "Version": "1"}
+{
+    "Statement":[
+        {
+            "Action":"ram:PassRole",
+            "Effect":"Allow",
+            "Resource":"*"
+        }
+    ],
+    "Version":"1"
+}
 ```
 
 - 当 `vpcConfig` 为 `auto`
@@ -495,7 +550,32 @@ service:    name: unit-deploy-service    description: 'demo for fc-deploy compon
 **自定义策略**
 
 ```json
-{    "Statement": [        {            "Action": "ram:PassRole",            "Effect": "Allow",            "Resource": "*"        },        {            "Action": "fc:GetAccountSettings",            "Effect": "Allow",            "Resource": "acs:fc:<region>:<account-id>:account-settings"        },        {            "Action": [                "vpc:CreateVpc",                "vpc:CreateVSwitch",                "ecs:AuthorizeSecurityGroup",                "ecs:DescribeSecurityGroups",                "ecs:CreateSecurityGroup"            ],            "Effect": "Allow",            "Resource": "*"        }    ],    "Version": "1"}
+{
+    "Statement":[
+        {
+            "Action":"ram:PassRole",
+            "Effect":"Allow",
+            "Resource":"*"
+        },
+        {
+            "Action":"fc:GetAccountSettings",
+            "Effect":"Allow",
+            "Resource":"acs:fc:<region>:<account-id>:account-settings"
+        },
+        {
+            "Action":[
+                "vpc:CreateVpc",
+                "vpc:CreateVSwitch",
+                "ecs:AuthorizeSecurityGroup",
+                "ecs:DescribeSecurityGroups",
+                "ecs:CreateSecurityGroup"
+            ],
+            "Effect":"Allow",
+            "Resource":"*"
+        }
+    ],
+    "Version":"1"
+}
 ```
 
 ##### 服务角色权限
@@ -517,7 +597,23 @@ service:    name: unit-deploy-service    description: 'demo for fc-deploy compon
 参考案例：
 
 ```yaml
-service:    name: unit-deploy-service    description: 'demo for fc-deploy component'    internetAccess: true        role: <role-arn> # role 为已配置好的，配置内容参考服务角色权限    vpcConfig:      vpcId: xxx      securityGroupId: xxx      vswitchIds:        - vsw-xxx    nasConfig:      userId: 10003      groupId: 10003      mountPoints:        - serverAddr: xxx-xxx.cn-shenzhen.nas.aliyuncs.com          nasDir: /unit-deploy-service          fcDir: /mnt/auto
+service:    
+  name: unit-deploy-service    
+  description: 'demo for fc-deploy component'    
+  internetAccess: true        
+  role: <role-arn> # role 为已配置好的，配置内容参考服务角色权限    
+  vpcConfig:      
+    vpcId: xxx     
+    securityGroupId: xxx      
+    vswitchIds:        
+      - vsw-xxx    
+  nasConfig:      
+    userId: 10003      
+    groupId: 10003      
+    mountPoints:        
+      - serverAddr: xxx-xxx.cn-shenzhen.nas.aliyuncs.com          
+        nasDir: /unit-deploy-service          
+        fcDir: /mnt/auto
 ```
 
 #### 权限配置相关
@@ -536,7 +632,16 @@ service:    name: unit-deploy-service    description: 'demo for fc-deploy compon
 **自定义策略**
 
 ```json
-{    "Statement": [        {            "Action": "ram:PassRole",            "Effect": "Allow",            "Resource": "*"        }    ],    "Version": "1"}
+{
+    "Statement":[
+        {
+            "Action":"ram:PassRole",
+            "Effect":"Allow",
+            "Resource":"*"
+        }
+    ],
+    "Version":"1"
+}
 ```
 
 - 当 `nasConfig` 为 `auto`
@@ -546,7 +651,57 @@ service:    name: unit-deploy-service    description: 'demo for fc-deploy compon
 **自定义策略**
 
 ```json
-{    "Statement": [        {            "Action": "fc:GetAccountSettings",            "Effect": "Allow",            "Resource": "acs:fc:<region>:<account-id>:account-settings"        },        {            "Action": [                "fc:UpdateService",                "fc:CreateService"            ],            "Effect": "Allow",            "Resource": "acs:fc:<region>:<account-id>:services/*"        },        {            "Action": [                "fc:InvokeFunction",                "fc:CreateFunction",                "fc:UpdateFunction"            ],            "Effect": "Allow",            "Resource": "acs:fc:<region>:<account-id>:services/*/functions/*"        },        {            "Action": [              "fc:UpdateTrigger",              "fc:CreateTrigger"            ],            "Effect": "Allow",            "Resource": "acs:fc:<region>:<account-id>:services/*/functions/*/triggers/*"        },        {            "Action": "ram:PassRole",            "Effect": "Allow",            "Resource": "*"        },        {            "Action": [                "nas:CreateMountTarget",                "nas:DescribeMountTargets",                "nas:DescribeFileSystems",                "nas:CreateFileSystem",                "vpc:DescribeVSwitchAttributes"            ],            "Effect": "Allow",            "Resource": "*"        }    ],    "Version": "1"}
+{
+    "Statement":[
+        {
+            "Action":"fc:GetAccountSettings",
+            "Effect":"Allow",
+            "Resource":"acs:fc:<region>:<account-id>:account-settings"
+        },
+        {
+            "Action":[
+                "fc:UpdateService",
+                "fc:CreateService"
+            ],
+            "Effect":"Allow",
+            "Resource":"acs:fc:<region>:<account-id>:services/*"
+        },
+        {
+            "Action":[
+                "fc:InvokeFunction",
+                "fc:CreateFunction",
+                "fc:UpdateFunction"
+            ],
+            "Effect":"Allow",
+            "Resource":"acs:fc:<region>:<account-id>:services/*/functions/*"
+        },
+        {
+            "Action":[
+                "fc:UpdateTrigger",
+                "fc:CreateTrigger"
+            ],
+            "Effect":"Allow",
+            "Resource":"acs:fc:<region>:<account-id>:services/*/functions/*/triggers/*"
+        },
+        {
+            "Action":"ram:PassRole",
+            "Effect":"Allow",
+            "Resource":"*"
+        },
+        {
+            "Action":[
+                "nas:CreateMountTarget",
+                "nas:DescribeMountTargets",
+                "nas:DescribeFileSystems",
+                "nas:CreateFileSystem",
+                "vpc:DescribeVSwitchAttributes"
+            ],
+            "Effect":"Allow",
+            "Resource":"*"
+        }
+    ],
+    "Version":"1"
+}
 ```
 
 ##### 服务角色权限
@@ -569,7 +724,11 @@ service:    name: unit-deploy-service    description: 'demo for fc-deploy compon
 参考案例
 
 ```yaml
-service:    name: unit-deploy-service    description: 'demo for fc-deploy component'    internetAccess: true    tracingConfig: Enable     
+service:    
+  name: unit-deploy-service    
+  description: 'demo for fc-deploy component'    
+  internetAccess: true    
+  tracingConfig: Enable     
 ```
 
 #### 权限配置相关
@@ -579,7 +738,16 @@ service:    name: unit-deploy-service    description: 'demo for fc-deploy compon
 **系统策略**：`AliyunFCFullAccess`、`AliyunTracingAnalysisReadOnlyAccess`
 
 ```yaml
-{    "Statement": [        {            "Action": "ram:PassRole",            "Effect": "Allow",            "Resource": "*"        }    ],    "Version": "1"}
+{
+    "Statement":[
+        {
+            "Action":"ram:PassRole",
+            "Effect":"Allow",
+            "Resource":"*"
+        }
+    ],
+    "Version":"1"
+}
 ```
 
 
@@ -610,7 +778,14 @@ service:    name: unit-deploy-service    description: 'demo for fc-deploy compon
 参考案例：
 
 ```yaml
-function:    name: event-function    description: this is a test    runtime: nodejs12    codeUri: ./    handler: index.handler    memorySize: 128    timeout: 60
+function:    
+  name: event-function    
+  description: this is a test    
+  runtime: nodejs12    
+  codeUri: ./    
+  handler: index.handler    
+  memorySize: 128    
+  timeout: 60
 ```
 
 ### 账号需要的函数权限
@@ -624,14 +799,36 @@ function:    name: event-function    description: this is a test    runtime: nod
 ⚠️ `fc:GetFunctionAsyncInvokeConfig` 选填，不影响使用
 
 ```json
-{    "Statement": [        {            "Action": [                "fc:GetFunction",                "fc:CreateFunction",                "fc:UpdateFunction"            ],            "Effect": "Allow",            "Resource": "acs:fc:<region>:<account-id>:services/<service-name>/functions/*"        }    ],    "Version": "1"}
+{
+    "Statement":[
+        {
+            "Action":[
+                "fc:GetFunction",
+                "fc:CreateFunction",
+                "fc:UpdateFunction"
+            ],
+            "Effect":"Allow",
+            "Resource":"acs:fc:<region>:<account-id>:services/<service-name>/functions/*"
+        }
+    ],
+    "Version":"1"
+}
 ```
 
 
 #### 删除最小权限
 
 ```json
-{		"Version": "1",    "Statement": [      	{            "Action": "fc:DeleteFunction",            "Resource": "acs:fc:<region>:<account-id>:services/<serviceName>/functions/<functionName>",            "Effect": "Allow"        }    ]}
+{
+    "Version":"1",
+    "Statement":[
+        {
+            "Action":"fc:DeleteFunction",
+            "Resource":"acs:fc:<region>:<account-id>:services/<serviceName>/functions/<functionName>",
+            "Effect":"Allow"
+        }
+    ]
+}
 ```
 
 
@@ -694,7 +891,14 @@ TempKey: tempValue
 - 配置了 mns
 
 ````
-{    Action: [    'mns:SendMessage',    'mns:PublishMessage',    ],    Resource: '*',    Effect: 'Allow',}
+{
+    "Action":[
+        "mns:SendMessage",
+        "mns:PublishMessage"
+    ],
+    "Resource":"*",
+    "Effect":"Allow"
+}
 ````
 
 ##### 子账号需要的权限
@@ -714,7 +918,40 @@ TempKey: tempValue
 **自定义策略**
 
 ```json
-{    "Version": "1",    "Statement": [        {            "Action": "fc:*Service",            "Resource": "*",            "Effect": "Allow"        },        {            "Action": [                "fc:GetFunction",                "fc:CreateFunction",                "fc:UpdateFunction"            ],            "Effect": "Allow",            "Resource": "acs:fc:<region>:<account-id>:services/unit-deploy-service/functions/*"        },        {            "Action": [                "fc:InvokeFunction",                "fc:GetFunctionAsyncInvokeConfig",                "fc:DeleteFunctionAsyncInvokeConfig",                "fc:PutFunctionAsyncInvokeConfig"            ],            "Effect": "Allow",            "Resource": "acs:fc:<region>:<account-id>:services/unit-deploy-service.*/functions/*"        },        {            "Action": "ram:PassRole",            "Effect": "Allow",            "Resource": "*"        }    ]}
+{
+    "Version":"1",
+    "Statement":[
+        {
+            "Action":"fc:*Service",
+            "Resource":"*",
+            "Effect":"Allow"
+        },
+        {
+            "Action":[
+                "fc:GetFunction",
+                "fc:CreateFunction",
+                "fc:UpdateFunction"
+            ],
+            "Effect":"Allow",
+            "Resource":"acs:fc:<region>:<account-id>:services/unit-deploy-service/functions/*"
+        },
+        {
+            "Action":[
+                "fc:InvokeFunction",
+                "fc:GetFunctionAsyncInvokeConfig",
+                "fc:DeleteFunctionAsyncInvokeConfig",
+                "fc:PutFunctionAsyncInvokeConfig"
+            ],
+            "Effect":"Allow",
+            "Resource":"acs:fc:<region>:<account-id>:services/unit-deploy-service.*/functions/*"
+        },
+        {
+            "Action":"ram:PassRole",
+            "Effect":"Allow",
+            "Resource":"*"
+        }
+    ]
+}
 ```
 
 #### destination
@@ -749,7 +986,19 @@ type目前支持：`http`, `timer`, `oss`, `log`, `mns_topic`, `cdn_events`, `ta
 参考案例：
 
 ```yaml
-triggers:  - name: oss    sourceArn: acs:oss:acs:log:<region>:<account-id>:<buckctName>    type: oss    role: acs:ram::<account-id>:role/aliyunosseventnotificationrole    # qualifier: LATEST    config:      events:        - oss:ObjectCreated:*      filter:        key:          prefix: pppppppp          suffix: ''
+triggers:  
+  - name: oss    
+    sourceArn: acs:oss:acs:log:<region>:<account-id>:<buckctName>    
+    type: oss    
+    role: acs:ram::<account-id>:role/aliyunosseventnotificationrole    
+    # qualifier: LATEST    
+    config:      
+      events:        
+        - oss:ObjectCreated:*      
+      filter:       
+        Key:          
+          Prefix: pppppppp          
+          Suffix: ''
 ```
 
 #### 权限配置相关
@@ -762,15 +1011,55 @@ triggers:  - name: oss    sourceArn: acs:oss:acs:log:<region>:<account-id>:<buck
 
 ###### 操作最小权限
 
-````
-{    "Version": "1",    "Statement": [        {            "Action": [                "fc:GetTrigger",                "fc:CreateTrigger",                "fc:UpdateTrigger",                "fc:DeleteTrigger"            ],            "Effect": "Allow",            "Resource": "acs:fc:<region>:<account-id>:services/*/functions/*/triggers/*"        },        {            "Action": "ram:PassRole",            "Effect": "Allow",            "Resource": "*"        },        {            "Action": [                "oss:ListBucket",                "oss:GetBucketEventNotification",                "oss:PutBucketEventNotification",                "oss:DeleteBucketEventNotification"            ],            "Effect": "Allow",            "Resource": "*"        }    ]}
-````
+```json
+{
+    "Version":"1",
+    "Statement":[
+        {
+            "Action":[
+                "fc:GetTrigger",
+                "fc:CreateTrigger",
+                "fc:UpdateTrigger",
+                "fc:DeleteTrigger"
+            ],
+            "Effect":"Allow",
+            "Resource":"acs:fc:<region>:<account-id>:services/*/functions/*/triggers/*"
+        },
+        {
+            "Action":"ram:PassRole",
+            "Effect":"Allow",
+            "Resource":"*"
+        },
+        {
+            "Action":[
+                "oss:ListBucket",
+                "oss:GetBucketEventNotification",
+                "oss:PutBucketEventNotification",
+                "oss:DeleteBucketEventNotification"
+            ],
+            "Effect":"Allow",
+            "Resource":"*"
+        }
+    ]
+}
+```
 
 
 ##### 触发器角色权限
 
-```
-{    "Version": "1",    "Statement": [        {            "Action": [                "fc:InvokeFunction"            ],            "Resource": "*",            "Effect": "Allow"        }    ]}
+```json
+{
+    "Version":"1",
+    "Statement":[
+        {
+            "Action":[
+                "fc:InvokeFunction"
+            ],
+            "Resource":"*",
+            "Effect":"Allow"
+        }
+    ]
+}
 ```
 
 #### filter
@@ -801,7 +1090,23 @@ triggers:  - name: oss    sourceArn: acs:oss:acs:log:<region>:<account-id>:<buck
 参考案例：
 
 ```yaml
-triggers:  - name: log    sourceArn: acs:log:<region>:<account-id>:project/<projectName>    type: log    role: acs:ram::<account-id>:role/aliyunlogetlrole    # qualifier: LATEST    config:      sourceConfig:        logstore: log      jobConfig:        maxRetryTime: 3        triggerInterval: 60      functionParameter: {}      logConfig:        project: test-data-abc-ss        logstore: log2      enable: false
+triggers:  
+  - name: log    
+    sourceArn: acs:log:<region>:<account-id>:project/<projectName>    
+    type: log    
+    role: acs:ram::<account-id>:role/aliyunlogetlrole    
+    # qualifier: LATEST    
+    config:      
+      sourceConfig:        
+        logstore: log      
+      jobConfig:        
+        maxRetryTime: 3        
+        triggerInterval: 60      
+      functionParameter: {}      
+      logConfig:        
+        project: test-data-abc-ss        
+        logstore: log2      
+      enable: false
 ```
 
 #### 权限配置相关
@@ -814,14 +1119,75 @@ triggers:  - name: log    sourceArn: acs:log:<region>:<account-id>:project/<proj
 
 ###### 最小权限
 
-````
-{    "Version": "1",    "Statement": [        {            "Action": [                "fc:GetTrigger",                "fc:CreateTrigger",                "fc:UpdateTrigger",                "fc:DeleteTrigger"            ],            "Effect": "Allow",            "Resource": "acs:fc:<region>:<account-id>:services/*/functions/*/triggers/*"        },        {            "Action": "ram:PassRole",            "Effect": "Allow",            "Resource": "*"        },        {            "Effect": "Allow",            "Action": [                "log:GetEtlJob",                "log:UpdateEtlJob",                "log:CreateEtlJob",                "log:DeleteEtlJob"            ],            "Resource": "*"        }    ]}
-````
+```json
+{
+    "Version":"1",
+    "Statement":[
+        {
+            "Action":[
+                "fc:GetTrigger",
+                "fc:CreateTrigger",
+                "fc:UpdateTrigger",
+                "fc:DeleteTrigger"
+            ],
+            "Effect":"Allow",
+            "Resource":"acs:fc:<region>:<account-id>:services/*/functions/*/triggers/*"
+        },
+        {
+            "Action":"ram:PassRole",
+            "Effect":"Allow",
+            "Resource":"*"
+        },
+        {
+            "Effect":"Allow",
+            "Action":[
+                "log:GetEtlJob",
+                "log:UpdateEtlJob",
+                "log:CreateEtlJob",
+                "log:DeleteEtlJob"
+            ],
+            "Resource":"*"
+        }
+    ]
+}
+```
 
 ##### 触发器角色权限
 
-```
-{    "Version": "1",    "Statement": [        {            "Action": [                "fc:InvokeFunction"            ],            "Resource": "*",            "Effect": "Allow"        },        {            "Action": [                "log:Get*",                "log:List*",                "log:PostProjectQuery",                "log:PutProjectQuery",                "log:DeleteProjectQuery",                "log:GetProjectQuery",                "log:PostLogStoreLogs",                "log:BatchPostLogStoreLogs",                "log:CreateConsumerGroup",                "log:UpdateConsumerGroup",                "log:DeleteConsumerGroup",                "log:ListConsumerGroup",                "log:ConsumerGroupUpdateCheckPoint",                "log:ConsumerGroupHeartBeat",                "log:GetConsumerGroupCheckPoint"            ],            "Resource": "*",            "Effect": "Allow"        }    ]}
+```json
+{
+    "Version":"1",
+    "Statement":[
+        {
+            "Action":[
+                "fc:InvokeFunction"
+            ],
+            "Resource":"*",
+            "Effect":"Allow"
+        },
+        {
+            "Action":[
+                "log:Get*",
+                "log:List*",
+                "log:PostProjectQuery",
+                "log:PutProjectQuery",
+                "log:DeleteProjectQuery",
+                "log:GetProjectQuery",
+                "log:PostLogStoreLogs",
+                "log:BatchPostLogStoreLogs",
+                "log:CreateConsumerGroup",
+                "log:UpdateConsumerGroup",
+                "log:DeleteConsumerGroup",
+                "log:ListConsumerGroup",
+                "log:ConsumerGroupUpdateCheckPoint",
+                "log:ConsumerGroupHeartBeat",
+                "log:GetConsumerGroupCheckPoint"
+            ],
+            "Resource":"*",
+            "Effect":"Allow"
+        }
+    ]
+}
 ```
 
 
@@ -865,7 +1231,14 @@ TempKey: tempValue
 参考案例：
 
 ```yaml
-triggers:  - name: timer    type: timer    # qualifier: LATEST    config:    payload: '{"s": "ss"}'    cronExpression: '@every 100m'    enable: false
+triggers:  
+  - name: timer    
+    type: timer    
+    # qualifier: LATEST    
+    config:    
+      payload: '{"s": "ss"}'    
+      cronExpression: '@every 100m'    
+      enable: false
 ```
 
 #### 权限配置相关
@@ -879,7 +1252,21 @@ triggers:  - name: timer    type: timer    # qualifier: LATEST    config:    pay
 ###### 最小权限
 
 ```json
-{    "Version": "1",    "Statement": [        {            "Action": [                "fc:GetTrigger",                "fc:CreateTrigger",                "fc:DeleteTrigger",                "fc:UpdateTrigger"            ],            "Effect": "Allow",            "Resource": "acs:fc:<region>:<account-id>:services/<serviceName>/functions/<functionName>/triggers/<triggerName>"        }    ]}
+{
+    "Version":"1",
+    "Statement":[
+        {
+            "Action":[
+                "fc:GetTrigger",
+                "fc:CreateTrigger",
+                "fc:DeleteTrigger",
+                "fc:UpdateTrigger"
+            ],
+            "Effect":"Allow",
+            "Resource":"acs:fc:<region>:<account-id>:services/<serviceName>/functions/<functionName>/triggers/<triggerName>"
+        }
+    ]
+}
 ```
 
 ### Http触发器
@@ -892,7 +1279,14 @@ triggers:  - name: timer    type: timer    # qualifier: LATEST    config:    pay
 参考案例：
 
 ```yaml
-triggers:  - name: httpTrigger    type: http    # qualifier: LATEST    config:      authType: anonymous      methods:        - GET
+triggers:  
+  - name: httpTrigger    
+    type: http    
+    # qualifier: LATEST    
+    config:      
+      authType: anonymous      
+      methods:        
+        - GET
 ```
 
 #### 权限配置相关
@@ -906,7 +1300,21 @@ triggers:  - name: httpTrigger    type: http    # qualifier: LATEST    config:  
 ###### 最小权限
 
 ```json
-{    "Version": "1",    "Statement": [        {            "Action": [                "fc:GetTrigger",                "fc:CreateTrigger",                "fc:DeleteTrigger",                "fc:UpdateTrigger"            ],            "Effect": "Allow",            "Resource": "acs:fc:<region>:<account-id>:services/<serviceName>/functions/<functionName>/triggers/<triggerName>"        }    ]}
+{
+    "Version":"1",
+    "Statement":[
+        {
+            "Action":[
+                "fc:GetTrigger",
+                "fc:CreateTrigger",
+                "fc:DeleteTrigger",
+                "fc:UpdateTrigger"
+            ],
+            "Effect":"Allow",
+            "Resource":"acs:fc:<region>:<account-id>:services/<serviceName>/functions/<functionName>/triggers/<triggerName>"
+        }
+    ]
+}
 ```
 
 ### MNS触发器
@@ -922,7 +1330,16 @@ triggers:  - name: httpTrigger    type: http    # qualifier: LATEST    config:  
 参考案例：
 
 ```yaml
-triggers:  - name: mns    sourceArn: acs:mns:<region>:<account-id>:/topics/test    type: mns_topic    role: acs:ram::<account-id>:role/aliyunmnsnotificationrole    # qualifier: LATEST    config:      filterTag: ss      notifyContentFormat: STREAM      notifyStrategy: BACKOFF_RETRY
+triggers:  
+  - name: mns    
+    sourceArn: acs:mns:<region>:<account-id>:/topics/test    
+    type: mns_topic    
+    role: acs:ram::<account-id>:role/aliyunmnsnotificationrole    
+    # qualifier: LATEST    
+    config:      
+      filterTag: ss      
+      notifyContentFormat: STREAM      
+      notifyStrategy: BACKOFF_RETRY
 ```
 
 #### 权限配置相关
@@ -936,14 +1353,52 @@ triggers:  - name: mns    sourceArn: acs:mns:<region>:<account-id>:/topics/test 
 ###### 最小权限
 
 ```json
-{    "Version": "1",    "Statement": [        {            "Action": [                "fc:GetTrigger",                "fc:CreateTrigger",                "fc:UpdateTrigger",                "fc:DeleteTrigger"            ],            "Effect": "Allow",            "Resource": "acs:fc:<region>:<account-id>:services/*/functions/*/triggers/*"        },        {            "Action": "ram:PassRole",            "Effect": "Allow",            "Resource": "*"        },        {            "Effect": "Allow",            "Action": [                "mns:Subscribe",                "mns:Unsubscribe"            ],            "Resource": "*"        }    ]}
+{
+    "Version":"1",
+    "Statement":[
+        {
+            "Action":[
+                "fc:GetTrigger",
+                "fc:CreateTrigger",
+                "fc:UpdateTrigger",
+                "fc:DeleteTrigger"
+            ],
+            "Effect":"Allow",
+            "Resource":"acs:fc:<region>:<account-id>:services/*/functions/*/triggers/*"
+        },
+        {
+            "Action":"ram:PassRole",
+            "Effect":"Allow",
+            "Resource":"*"
+        },
+        {
+            "Effect":"Allow",
+            "Action":[
+                "mns:Subscribe",
+                "mns:Unsubscribe"
+            ],
+            "Resource":"*"
+        }
+    ]
+}
 ```
 
 ##### 触发器角色权限
 
-````
-{    "Version": "1",    "Statement": [        {            "Action": [                "fc:InvokeFunction"            ],            "Resource": "*",            "Effect": "Allow"        }    ]}
-````
+```json
+{
+    "Version":"1",
+    "Statement":[
+        {
+            "Action":[
+                "fc:InvokeFunction"
+            ],
+            "Resource":"*",
+            "Effect":"Allow"
+        }
+    ]
+}
+```
 
 ### CDN 触发器
 
@@ -957,7 +1412,19 @@ triggers:  - name: mns    sourceArn: acs:mns:<region>:<account-id>:/topics/test 
 参考案例：
 
 ```yaml
-triggers:  - name: cdn    sourceArn: acs:cdn:*:<account-id>    type: cdn_events    role: <roleArn>    # qualifier: LATEST    config:      eventName: CachedObjectsBlocked      eventVersion: 1.0.0      notes: shshhs      filter:        domain:          - sss
+triggers:  
+  - name: cdn    
+    sourceArn: acs:cdn:*:<account-id>    
+    type: cdn_events    
+    role: <roleArn>    
+    # qualifier: LATEST    
+    config:      
+      eventName: CachedObjectsBlocked      
+      eventVersion: 1.0.0      
+      notes: shshhs      
+      filter:        
+        domain:         
+          - sss
 ```
 
 #### 权限配置相关
@@ -970,14 +1437,54 @@ triggers:  - name: cdn    sourceArn: acs:cdn:*:<account-id>    type: cdn_events 
 
 ###### 最小权限
 
-````
-{    "Version": "1",    "Statement": [        {            "Action": [                "fc:GetTrigger",                "fc:CreateTrigger",                "fc:UpdateTrigger",                "fc:DeleteTrigger"            ],            "Effect": "Allow",            "Resource": "acs:fc:<region>:<account-id>:services/*/functions/*/triggers/*"        },        {            "Action": "ram:PassRole",            "Effect": "Allow",            "Resource": "*"        },        {            "Effect": "Allow",            "Action": [                "cdn:UpdateFCTrigger",                "cdn:DeleteFCTrigger",                "cdn:DescribeFCTrigger",                "cdn:AddFCTrigger"            ],            "Resource": "*"        }    ]}
-````
+```json
+{
+    "Version":"1",
+    "Statement":[
+        {
+            "Action":[
+                "fc:GetTrigger",
+                "fc:CreateTrigger",
+                "fc:UpdateTrigger",
+                "fc:DeleteTrigger"
+            ],
+            "Effect":"Allow",
+            "Resource":"acs:fc:<region>:<account-id>:services/*/functions/*/triggers/*"
+        },
+        {
+            "Action":"ram:PassRole",
+            "Effect":"Allow",
+            "Resource":"*"
+        },
+        {
+            "Effect":"Allow",
+            "Action":[
+                "cdn:UpdateFCTrigger",
+                "cdn:DeleteFCTrigger",
+                "cdn:DescribeFCTrigger",
+                "cdn:AddFCTrigger"
+            ],
+            "Resource":"*"
+        }
+    ]
+}
+```
 
 ##### 触发器角色权限
 
-```
-{    "Version": "1",    "Statement": [        {            "Action": [                "fc:InvokeFunction"            ],            "Resource": "*",            "Effect": "Allow"        }    ]}
+```json
+{
+    "Version":"1",
+    "Statement":[
+        {
+            "Action":[
+                "fc:InvokeFunction"
+            ],
+            "Resource":"*",
+            "Effect":"Allow"
+        }
+    ]
+}
 ```
 
 #### filter
@@ -996,7 +1503,14 @@ triggers:  - name: cdn    sourceArn: acs:cdn:*:<account-id>    type: cdn_events 
 参考案例：
 
 ```yaml
-triggers:  - name: ots    sourceArn: acs:ots:<region>:<account-id>:instance/<instance>/table/<table>    type: tablestore    role: >-      acs:ram::<account-id>:role/AliyunTableStoreStreamNotificationRole    # qualifier: 1 # LATEST    config: {}
+triggers:  
+  - name: ots    
+    sourceArn: acs:ots:<region>:<account-id>:instance/<instance>/table/<table>    
+    type: tablestore    
+    role: acs:ram::<account-id>:role/AliyunTableStoreStreamNotificationRole    
+    # qualifier: 1 
+    # LATEST    
+    config: {}
 ```
 
 #### 权限配置相关
@@ -1010,14 +1524,64 @@ triggers:  - name: ots    sourceArn: acs:ots:<region>:<account-id>:instance/<ins
 ###### 最小权限
 
 ```json
-{    "Version": "1",    "Statement": [        {            "Action": [                "fc:GetTrigger",                "fc:CreateTrigger",                "fc:UpdateTrigger",                "fc:DeleteTrigger"            ],            "Effect": "Allow",            "Resource": "acs:fc:<region>:<account-id>:services/*/functions/*/triggers/*"        },        {            "Action": "ram:PassRole",            "Effect": "Allow",            "Resource": "*"        },        {            "Effect": "Allow",            "Action": [                "ots:GetTrigger",                "ots:UpdateTrigger",                "ots:CreateTrigger",                "ots:DeleteTrigger"            ],            "Resource": "*"        }    ]}
+{
+    "Version":"1",
+    "Statement":[
+        {
+            "Action":[
+                "fc:GetTrigger",
+                "fc:CreateTrigger",
+                "fc:UpdateTrigger",
+                "fc:DeleteTrigger"
+            ],
+            "Effect":"Allow",
+            "Resource":"acs:fc:<region>:<account-id>:services/*/functions/*/triggers/*"
+        },
+        {
+            "Action":"ram:PassRole",
+            "Effect":"Allow",
+            "Resource":"*"
+        },
+        {
+            "Effect":"Allow",
+            "Action":[
+                "ots:GetTrigger",
+                "ots:UpdateTrigger",
+                "ots:CreateTrigger",
+                "ots:DeleteTrigger"
+            ],
+            "Resource":"*"
+        }
+    ]
+}
 ```
 
 ##### 触发器角色权限
 
-````
-{    "Version": "1",    "Statement": [        {            "Action": [                "ots:BatchGet*",                "ots:Describe*",                "ots:Get*",                "ots:List*"            ],            "Resource": "*",            "Effect": "Allow"        },        {            "Action": [                "fc:InvokeFunction"            ],            "Resource": "*",            "Effect": "Allow"        }    ]}
-````
+```json
+{
+    "Version":"1",
+    "Statement":[
+        {
+            "Action":[
+                "ots:BatchGet*",
+                "ots:Describe*",
+                "ots:Get*",
+                "ots:List*"
+            ],
+            "Resource":"*",
+            "Effect":"Allow"
+        },
+        {
+            "Action":[
+                "fc:InvokeFunction"
+            ],
+            "Resource":"*",
+            "Effect":"Allow"
+        }
+    ]
+}
+```
 
 ## customDomains字段
 
