@@ -241,10 +241,9 @@ export default class FcBaseComponent extends BaseComponent {
     }
     // 删除 methodName
     const fcLocalInvokeArgs: string = args ? args.replace(methodName, '').replace(/(^\s*)|(\s*$)/g, '') : '';
-    this.logger.debug(`Args of fc-info is: ${fcLocalInvokeArgs}`);
+    this.logger.debug(`Args of local method is: ${fcLocalInvokeArgs}`);
 
     inputs.argsObj.shift();
-    console.log(inputs.argsObj);
     const localRes: any = await this.componentMethodCaller(inputs, 'devsapp/fc-local-invoke', methodName, props, fcLocalInvokeArgs);
     tips.showNextTip(args, tips.showLocalNextTips);
 
