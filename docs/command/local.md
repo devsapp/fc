@@ -81,8 +81,7 @@ Options
   --server-port [number]              [Optional] The exposed port of http server, default value is the random port between 7000 and 8000
 Global Options
 
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]      [Optional] Specify key alias         
+  -h, --help                 [Optional] Help for command             
   --debug                    [Optional] Output debug informations 
 
 Options Help
@@ -112,7 +111,6 @@ Examples with Yaml
 | debugger-path | q        | 选填           |                                                              |
 | tmp-dir       | -        | 选填           |                                                              |
 | server-port   | -        | 选填           |                                                              |
-| access        | a        | 选填           | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
 | debug         | -        | 选填           | 打开`debug`模式，将会输出更多日志信息                        |
 | help          | h        | 选填           | 查看帮助信息                                                 |
 
@@ -161,7 +159,6 @@ Options
 Global Options
 
   -h, --help                 [Optional] Help for command          
-  -a, --access [string]      [Optional] Specify key alias         
   --debug                    [Optional] Output debug informations 
 
 Options Help
@@ -188,7 +185,6 @@ Examples with Yaml
 | debugger-path | y        | 选填           |                                                              |
 | tmp-dir       | -        | 选填           |                                                              |
 | server-port   | y        | 选填           |                                                              |
-| access        | a        | 选填           | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
 | debug         | -        | 选填           | 打开`debug`模式，将会输出更多日志信息                        |
 | help          | h        | 选填           | 查看帮助信息                                                 |
 

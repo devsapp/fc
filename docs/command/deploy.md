@@ -31,7 +31,7 @@
 ```shell script
 Deploy
 
-  Deploy local resources online.                                                                 
+  Deploy local resources online                                                                
 
 Usage
 

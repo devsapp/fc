@@ -15,6 +15,9 @@
 - [layer versions 命令](#layer-versions-命令)
   - [参数解析](#参数解析-3)
   - [操作案例](#操作案例-3)
+- [layer delete 命令](#layer-delete-命令)
+  - [参数解析](#参数解析-4)
+  - [操作案例](#操作案例-4)
 - [权限与策略说明](#权限与策略说明)
 
 > 关于 `layer` 命令的常见问题和解决方法，可以参考[ FC 组件自动问答系统](http://qa.devsapp.cn/fc?type=layer ) 。
@@ -146,7 +149,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/provision.md
+  https://github.com/devsapp/fc/blob/main/docs/command/layer.md
                            
 Options
 
@@ -383,9 +386,9 @@ fc-deploy-test:
 
 ## layer delete 命令
 
-`provision delete` 命令，是获取预留实例详情的命令。
+`layer delete` 命令，是删除指定层的命令。
 
-当执行命令`provision delete -h`/`provision delete --help`时，可以获取帮助文档：
+当执行命令`layer delete -h`/`layer delete --help`时，可以获取帮助文档：
 
 ```shell script
 Layer delete
@@ -470,7 +473,7 @@ Layer [demo] deleted successfully.
   }
   ```
 
-- `provision delete` 命令所需要的权限策略：
+- `layer delete` 命令所需要的权限策略：
 
   ```json
   {

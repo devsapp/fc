@@ -363,7 +363,7 @@ fc-deploy-test:
 
 ## provision delete 命令
 
-`provision delete` 命令，是获取预留实例详情的命令。
+`provision delete` 命令，是删除预留相关配置的命令。
 
 当执行命令`provision delete -h`/`provision delete --help`时，可以获取帮助文档：
 

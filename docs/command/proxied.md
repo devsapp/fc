@@ -19,6 +19,11 @@
     - [Intelli 断点调试案例](#intelli-断点调试案例)
 - [权限与策略说明](#权限与策略说明)
 
+> [端云联调](./proxied.md)能力与[云端调试](./remote.md)能力的区别：
+>
+> - 端云联调：本地除了一个通道服务容器，仍有一个函数计算容器，用来执行本地函数，远程的辅助函数只是单纯将远程流量发送到本地；
+> - 远程调试：本地只有一个通道服务容器，执行过程全部依赖于线上，远程函数将执行结果返回；
+
 > 关于 `proxied` 命令的常见问题和解决方法，可以参考[ FC 组件自动问答系统](http://qa.devsapp.cn/fc?type=proxied ) 。
 
 
@@ -54,6 +59,10 @@
 Proxied
 
   Local invoke with real net traffic via proxied service
+
+Usage
+
+  s proxied <sub-command> <options>
 
 Document
   
@@ -94,11 +103,11 @@ Document
                                
 Options
 
-  -c, --config [string]       [Optional] elect which IDE to use when debugging and output related debug config tips for the IDE. value: vscode/pycharm/idea                                            
-  --debug-args [string]       [Optional] Additional parameters that will be passed to the debugger                    
-  -d, --debug-port [number]   [Optional] Specify the sandboxed container starting in debug mode, and exposing this port on localhost                                                            
-  --debugger-path [string]    [Optional] The path of the debugger on the host                                 
-  --tmp-dir [string]          [Optional] The temp directory mounted to /tmp , default: './.s/tmp/invoke/serviceName/functionName/'   
+  -c, --config [vscode/pycharm/idea]       [Optional] elect which IDE to use when debugging and output related debug config tips for the IDE. value: vscode/pycharm/idea                                            
+  --debug-args [string]                    [Optional] Additional parameters that will be passed to the debugger                    
+  -d, --debug-port [number]                [Optional] Specify the sandboxed container starting in debug mode, and exposing this port on localhost                                                            
+  --debugger-path [string]                 [Optional] The path of the debugger on the host                                 
+  --tmp-dir [string]                       [Optional] The temp directory mounted to /tmp , default: './.s/tmp/invoke/serviceName/functionName/'   
                                  
 
 Global Options
@@ -136,44 +145,41 @@ Examples with Yaml
 
 ### 操作案例
 
-- **有资源描述文件（Yaml）时**，可以直接执行`s ondemand get --qualifier qualifier`进行指定的版本按量资源详情获取；
-- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区以及服务名称，例如`s cli fc ondemand get --region cn-hangzhou --service-name fc-deploy-service --qualifier qualifier`；
+**有资源描述文件（Yaml）时**，可以直接执行`s proxied setup `开启端云联调模式，示例输出：
 
-上述命令的执行结果示例：
-
-```text
-fc-deploy-test: 
-  serviceName:          fc-deploy-service
-  functionName:         http-trigger-py36
-  qualifier:            LATEST
-  resource:             services/fc-deploy-service.http-trigger-py36/functions/LATEST
-  maximumInstanceCount: 1
 ```
+✔ Make service SESSION-S-d1564 success.
+✔ Make function SESSION-S-d1564/python-event success.
+Proxied resource setup succeeded.
+> Next step tips: s proxied invoke
+```
+
+在开启端云联调之后，可以进行函数的触发，例如`s proxied invoke`，在使用过后，可以考虑清理相关辅助资源，例如`s proxied clean`。
 
 ## proxied invoke 命令
 
-`ondemand list` 命令，是进列举按量资源列表的命令。
+`proxied invoke` 命令，是进行端云联调函数触发/调用的命令。
 
-当执行命令`ondemand list -h`/`ondemand list --help`时，可以获取帮助文档：
+当执行命令`proxied invoke -h`/`proxied invoke --help`时，可以获取帮助文档：
 
 ```shell script
-OnDemand list
+Invoke
 
-  View the list of on-demand 
+  Invoke local function in the container, pre-action is [s proxied setup]
 
 Usage
 
-  s ondemand list <options>
+  s proxied invoke <options>  
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/ondemand.md
+  https://github.com/devsapp/fc/blob/main/docs/command/proxied.md
                                
 Options
 
-  --region [string]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
-  --service-name [string]       	  [C-Required] Specify the fc service name  
-  --table                             [Optional] Table format output     
+  -e, --event [string]                [Optional] Event data passed to the function during invocation (default: "")                                                 
+  -f, --event-file [string]           [Optional] A file containing event data passed to the function during invoke             
+  -s, --event-stdin [string]          [Optional] Read from standard input, to support script pipeline                    
 
 Global Options
 
@@ -191,50 +197,38 @@ Options Help
 
 Examples with Yaml
 
-  $ s ondemand list 
-
-Examples with CLI
-
-  $ s cli fc ondemand list --region cn-hangzhou --service-name serviceName
+  $ s proxied invoke 
+  $ s proxied invoke --event string
 ```
 
 ### 参数解析
 
-| 参数全称     | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
-| ------------ | -------- | -------------- | ------------- | ------------------------------------------------------------ |
-| region       | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| service-name | -        | 选填           | 必填          | 服务名                                                       |
-| table        | -        | 选填           | 选填          | 是否以表格形式输出                                           |
-| access       | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug        | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help         | h        | 选填           | 选填          | 查看帮助信息                                                 |
+| 参数全称    | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
+| ----------- | -------- | -------------- | ------------- | ------------------------------------------------------------ |
+| event       | e        | 选填           | 选填          |                                                              |
+| event-file  | f        | 选填           | 选填          |                                                              |
+| event-stdin | s        | 选填           | 选填          |                                                              |
+| access      | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
+| debug       | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
+| help        | h        | 选填           | 选填          | 查看帮助信息                                                 |
 
 ### 操作案例
 
-- **有资源描述文件（Yaml）时**，可以直接执行`s ondemand list`获取按量资源列表；
-- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区以及服务名称，例如`s cli fc ondemand list --region cn-hangzhou --service-name fc-deploy-service`
+**有资源描述文件（Yaml）时**，可以通过`s proxied invoke `对端云联调函数进行触发，例如` s proxied invoke -e '{}'`：
 
-上述命令的执行结果示例：
+```
+[2021-07-13T08:55:05.260] [INFO ] [S-CLI] - Start ...
+========= FC invoke Logs begin =========
+Not all function logs are available, please retry
+FC Invoke End RequestId: bb720e13-e57a-4040-a920-82621e275ff1
+Duration: 42.66 ms, Billed Duration: 43 ms, Memory Size: 512 MB, Max Memory Used: 40.85 MB
+========= FC invoke Logs end =========
 
-```text
-fc-deploy-test: 
-  - 
-    serviceName:          fc-deploy-service
-    qualifier:            http-trigger-py36
-    functionName:         LATEST
-    resource:             services/fc-deploy-service.http-trigger-py36/functions/LATEST
-    maximumInstanceCount: 1
+FC Invoke Result:
+hello world
 ```
 
-如果指定了`--table`参数，输出示例：
-
-```text
-  ┌───────────────────┬───────────────────┬──────────────┬──────────────────────┐
-  │    serviceName    │     qualifier     │ functionName │ maximumInstanceCount │
-  ├───────────────────┼───────────────────┼──────────────┼──────────────────────┤
-  │ fc-deploy-service │ http-trigger-py36 │ LATEST       │ 1                    │
-  └───────────────────┴───────────────────┴──────────────┴──────────────────────┘
-```
+> 对于事件函数，需要先明确具体的事件类型（例如 OSS 事件， CDN 事件等），然后创建临时触发器，并将函数计算侧的目标函数和服务修改成生成的辅助 service/function（ [proxied setup 命令操作过程](#操作案例)中输出的`SESSION-S-d1564/python-event`），然后进行通过触发器即可直接触发函数获得端云联调的能力，例如如果是 OSS 创建 object 的事件，可以向指定的 OSS 中上传文件即可实现线上触发器触发本地函数的能力，即端云联调的能力。测试完成之后，不要忘记将临时指向生成的辅助资源的触发器恢复到原有的服务与函数资源上。
 
 ## proxied clean/cleanup 命令
 
@@ -287,13 +281,128 @@ Resource cleanup succeeded.
 
 ### 三步完成端云联调
 
+端云联调可以通过三个非常简单的步骤快速实现：
 
+- 步骤1: 在已有的项目下，创建端云联调的辅助资源，开启端云联调模式：`s proxied setup`；
+- 步骤2: 在完成端云联调模式开启动作之后，通过`s proxied invoke`或者线上的事件进行函数的触发，调试；
+- 步骤3: 完成端云联调之后，通过`s proxied clean`命令，对对因端云联调而产生的辅助资源进行清理；
 
 ### 断点调试
 
+通过与常见的 IDE 进行结合，可以在常见的 IDE 上实现端云联调的断点调试。
+
 #### VSCode 断点调试案例
+
+- 步骤1: 在已有的项目下，开启调试模式的端云联调能力：`$ s proxied setup --config vscode --debug-port 3000`，命令执行完成功后， 本地的函数计算执行环境会阻塞等待调用(执行环境本质是一个 HTTP Server)；
+
+  此时若要进行断点调试，需要进行以下的操作在 VSCode 上进行相关的配置：Serverless Devs 开发者工具自动在工程目录下面生成 `.vscode/launch.json` 文件, 通过下图完成调试配置：
+
+  ![](https://img.alicdn.com/imgextra/i1/O1CN01kNeLy01Omd2Ge3Q6J_!!6000000001748-2-tps-341-233.png)
+
+  
+
+- 步骤2:  打开一个新的终端，通过`proxied invoke`进行触发（例如`s proxied invoke`，如果是事件函数也可以通过线上触发器进行触发，此时要注意将触发器临时指向辅助函数，详情参考[proxied invoke 命令操作过程](#操作案例-1)），回到 VSCode 界面，既可以进行断点调试了：
+
+  ![img](https://img.alicdn.com/imgextra/i4/O1CN01biJncZ1l3V9VNWOd8_!!6000000004763-2-tps-3542-2232.png)
+
+  调试完成后返回结果。
+
+  >  若要在调用的时候制定传入的 event 参数，可以使用 `--event`，例如`s proxied invoke -h`
+
+- 步骤3:  完成端云联调之后，通过`s proxied clean`命令，对对因端云联调而产生的辅助资源进行清理；
 
 #### Intelli 断点调试案例
 
+- 步骤1: 例如需要在 IDEA 下进行调试，可以在已有的项目下，开启调试模式的端云联调能力：`$ s proxied setup --config idea --debug-port 3000`，命令执行完成功后， 本地的函数计算执行环境会阻塞等待调用(执行环境本质是一个 HTTP Server)；
+
+  此时若要进行断点调试，需要进行以下的操作在 IDEA 上进行相关的配置：
+
+    1. 在菜单栏选择 Run… > Edit Configurations 。
+       ![img](https://img.alicdn.com/imgextra/i4/O1CN01CffYNv1UbX74nFI0d_!!6000000002536-2-tps-734-432.png)
+     2. 新建一个 Remote Debugging 。
+        ![img](https://img.alicdn.com/imgextra/i2/O1CN014nVPkX1voLpEUKiS9_!!6000000006219-2-tps-2216-1514.png)
+     3. 自定义调试器名称，并将端口配置为 3000 。
+        ![img](https://img.alicdn.com/imgextra/i2/O1CN014xCgf21lnl9h2QGTA_!!6000000004864-2-tps-2142-1620.png)
+     4. 上述配置完成后，在 IDEA 编辑器侧边栏为函数代码增加断点，点击"开始调试"按钮。
+        ![img](https://img.alicdn.com/imgextra/i1/O1CN01PPR4V61RM0qRiP16r_!!6000000002096-2-tps-3528-2166.png)
+
+- 步骤2:  打开一个新的终端，通过`proxied invoke`进行触发（例如`s proxied invoke`，如果是事件函数也可以通过线上触发器进行触发，此时要注意将触发器临时指向辅助函数，详情参考[proxied invoke 命令操作过程](#操作案例-1)），回到 IDEA 界面，既可以进行断点调试了：
+
+  ![img](https://img.alicdn.com/imgextra/i2/O1CN01gZdC9B20nxYxFvLTr_!!6000000006895-2-tps-3566-2232.png)
+
+  调试完成后返回结果。
+
+  >  若要在调用的时候制定传入的 event 参数，可以使用 `--event`，例如`s proxied invoke -h`
+
+- 步骤3:  完成端云联调之后，通过`s proxied clean`命令，对对因端云联调而产生的辅助资源进行清理；
+
 ## 权限与策略说明
 
+- `proxied setup`命令的权限，更多是和 要被端云联调的函数 Yaml 中所配置的参数有一定的关系，所以此处可以参考 [Yaml 规范文档](../yaml.md) 中关于不同字段与权限的配置。
+
+- 除了基础配置之外，`proxied `还需要以下策略作为支持：
+
+  ```
+  {
+      "Statement": [
+          {
+              "Effect": "Allow",
+              "Action": "tns:*",
+              "Resource": "*"
+          }
+      ],
+      "Version": "1"
+  }
+  ```
+
+- 如果使用`proxied invoke`命令，还需要对应的`invoke`权限，例如：
+
+  - 最大权限: `AliyunFCInvocationAccess` 或者 `AliyunFCFullAccess`
+
+  - 最小权限: 
+
+    ```yaml
+    {
+        "Version": "1",
+        "Statement": [
+            {
+                "Action": "fc:InvokeFunction",
+                "Effect": "Allow",
+                "Resource": "acs:fc:<region>:<account-id>:services/<serviceName>.<qualifier>/functions/<functionName>"
+            }
+        ]
+    }
+    ```
+
+- 如果涉及到函数等相关辅助资源的清理，还需要对应的`delete`权限，例如：
+
+  - 最大权限: `AliyunFCInvocationAccess` 或者 `AliyunFCFullAccess`
+
+  - 最小权限参考：
+
+    ````json
+    {
+        "Statement": [
+            {
+                "Action": [
+                    "fc:ListOnDemandConfigs",
+                    "fc:DeleteFunctionOnDemandConfig",
+                    "fc:ListProvisionConfigs",
+                    "fc:PutProvisionConfig",
+                    "fc:ListAliases",
+                    "fc:DeleteAlias",
+                    "fc:ListServiceVersions",
+                    "fc:DeleteServiceVersion",
+                    "fc:ListTriggers",
+                    "fc:DeleteTrigger",
+                    "fc:ListFunctions",
+                    "fc:DeleteFunction",
+                    "fc:DeleteService"
+                ],
+                "Effect": "Allow",
+                "Resource": "*"
+            }
+        ],
+        "Version": "1"
+    }
+    ````
