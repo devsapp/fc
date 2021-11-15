@@ -46,7 +46,7 @@
 ```shell script
 Remove
 
-  The ability to delete resources.                                                          
+  The ability to delete resources                                                       
 
 Usage
 

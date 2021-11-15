@@ -60,16 +60,17 @@ Usage
 Options
 
   --region [string]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
-  --service-name [string]        [C-Required] Specify the fc service name  
-  --function-name [string]      [C-Required] Specify the fc function name    
+  --service-name [string]             [C-Required] Specify the fc service name  
+  --function-name [string]            [C-Required] Specify the fc function name    
   --concurrency-args [string]         [Optional] Concurrency args of power tuning that can convert to concurrency list, only for --eval-type concurrency                                                   
   --eval-type [memory/concurrency]    [Optional] Type of the power tuning, value: memory/concurrency                                                              
   --memory [number]                   [Optional] Function memory of power tuning, only for --eval-type concurrency             
   --memory-size [string]              [Optional] Function MemorySize List of power tuning, only for --eval-type memory         
-  --method [string]                   [Optional] Target method, only for --function-type http                                  
-  --path [string]                       [Optional] Target path, only for --function-type http                                    
+  --method [string]                   [Optional] Target method, only for HTTP function                                 
+  --path [string]                     [Optional] Target path, only for HTTP function                                       
   --payload [string]                  [Optional] Represents the event/request_body passed to the function    
-  --payload-file [string]               [Optional] Contains the event passed to the function     --query [string]                    [Optional] arget query, only for --function-type http                                                                                
+  --payload-file [string]             [Optional] Contains the event passed to the function 
+  --query [string]                    [Optional] arget query, only for HTTP function                                                                                  
   --rt [number]                       [Optional] Max response time, only for --eval-type concurrency                           
   --run-count [number]                [Optional] Number of Invoke Function, only for --eval-type memory                        
 
@@ -163,10 +164,10 @@ Usage
                                
 Options
 
-  --region [string]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
-  --service-name [string]        [C-Required] Specify the fc service name  
-  --function-name [string]      [C-Required] Specify the fc function name    
-  -y, --assume-yes                    [Optional] Assume that the answer to any question which would be asked is yes 
+  --region [string]                  [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
+  --service-name [string]            [C-Required] Specify the fc service name  
+  --function-name [string]           [C-Required] Specify the fc function name    
+  -y, --assume-yes                   [Optional] Assume that the answer to any question which would be asked is yes 
 
 Global Options
 

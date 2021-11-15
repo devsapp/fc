@@ -77,7 +77,7 @@ Document
                                
 Options
 
-  --region [string]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1       
+  --region [string]             [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1       
   --code string                 [Required] Specify the code parameter               
   --compatible-runtime string   [Optional] Specify the compatibleRuntime parameter  
   --description string          [Optional] Specify the description parameter        
@@ -153,9 +153,9 @@ Document
                            
 Options
 
-  --region [string]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
-  --prefix [string]   [Optional] Specify the prefix parameter    
-  --table          [Optional] Table format output       
+  --region [string]        [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
+  --prefix [string]        [Optional] Specify the prefix parameter    
+  --table                  [Optional] Table format output       
 
 Global Options
 
@@ -235,9 +235,9 @@ Document
                            
 Options
     
-  --region [string]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
-  --layer-name [string]   [C-Required] Specify the layer name parameter    
-  --version-id [number]   [C-Required] Specify the version parameter                             
+  --region [string]           [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
+  --layer-name [string]       [C-Required] Specify the layer name parameter    
+  --version-id [number]       [C-Required] Specify the version parameter                             
 
 Global Options
 
@@ -323,9 +323,9 @@ Document
                            
 Options
     
-  --region [string]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
-  --layer-name [string]   [Required] Specify the layer name parameter   
-  --table        [Optional] Table format output                           
+  --region [string]          [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
+  --layer-name [string]      [Required] Specify the layer name parameter   
+  --table                    [Optional] Table format output                           
 
 Global Options
 
@@ -386,7 +386,7 @@ fc-deploy-test:
 
 ## layer delete 命令
 
-`layer delete` 命令，是删除指定层的命令。
+`layer delete` 命令，是删除指定层的命令，其整体形式与[remove layer](./remove.md#remove-layer-命令)一致（可以认为这是一个功能，不同指令下的同种表现）。
 
 当执行命令`layer delete -h`/`layer delete --help`时，可以获取帮助文档：
 
@@ -405,9 +405,9 @@ Document
                            
 Options
     
-  --region [string]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
-  --layer-name [string]  [Required] Delete all versions of the specified layer     
-  --version-id [number]  [Optional] Only delete the version of the specified layer                           
+  --region [string]            [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
+  --layer-name [string]        [Required] Delete all versions of the specified layer     
+  --version-id [number]        [Optional] Only delete the version of the specified layer                           
 
 Global Options
 

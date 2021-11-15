@@ -209,7 +209,7 @@ fc-deploy-test:
 
 ## version delete 命令
 
-`version delete` 命令，是用户删除指定已发布的版本命令。
+`version delete` 命令，是用户删除指定已发布的版本命令，其整体形式与[remove version](./remove.md#remove-version-命令)一致（可以认为这是一个功能，不同指令下的同种表现）。
 
 当执行命令`version delete -h`/`version delete --help`时，可以获取帮助文档：
 

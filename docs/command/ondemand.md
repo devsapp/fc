@@ -76,7 +76,7 @@ Options
   --region [string]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1
   --service-name [string]        	  [C-Required] Specify the fc service name  
   --function-name [string]        	  [C-Required] Specify the fc function name  
-  --qualifier [string]       Specify the qualifier parameter. Only supports LATEST and alias  
+  --qualifier [string]                [Optional] Specify the qualifier parameter. Only supports LATEST and alias  
 
 Global Options
 
@@ -239,8 +239,8 @@ Options
   --region [string]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
   --service-name [string]             [C-Required] Specify the fc service name  
   --function-name [string]            [C-Required] Specify the fc function name  
-  --qualifier [string]                      [Required] Specify the qualifier parameter. Only supports LATEST and alias  
-  --max [string]   [Required] Specify the maximumInstanceCount parameter  
+  --qualifier [string]                [Required] Specify the qualifier parameter. Only supports LATEST and alias  
+  --max [string]                      [Required] Specify the maximumInstanceCount parameter  
 
 Global Options
 
@@ -293,7 +293,7 @@ fc-deploy-test:
 
 ## ondemand delete 命令
 
-`ondemand delete` 命令，是删除指定函数按量资源的命令。
+`ondemand delete` 命令，是删除指定函数按量资源的命令，其整体形式与[remove ondemand](./remove.md#remove-ondemand-命令)一致（可以认为这是一个功能，不同指令下的同种表现）。
 
 当执行命令`ondemand delete -h`/`ondemand delete --help`时，可以获取帮助文档：
 

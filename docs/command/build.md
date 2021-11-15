@@ -27,7 +27,7 @@ Document
 
 Options
 
-	-f, --dockerfile [string]   [Optional] Specify the dockerfile path             
+  -f, --dockerfile [string]   [Optional] Specify the dockerfile path             
   -d, --use-docker            [Optional] Use docker container to build functions 
   -b, --use-buildkit          [Optional] Use buildkit to build functions         
 

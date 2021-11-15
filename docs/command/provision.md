@@ -363,7 +363,7 @@ fc-deploy-test:
 
 ## provision delete 命令
 
-`provision delete` 命令，是删除预留相关配置的命令。
+`provision delete` 命令，是删除预留相关配置的命令，其整体形式与[remove provision](./remove.md#remove-provision-命令)一致（可以认为这是一个功能，不同指令下的同种表现）。
 
 当执行命令`provision delete -h`/`provision delete --help`时，可以获取帮助文档：
 
