@@ -41,7 +41,7 @@ Options
 Global Options
 
   -h, --help                 [Optional] Help for command          
-  -a, --access [string]   [Optional] Specify key alias         
+  -a, --access [string]      [Optional] Specify key alias         
   --debug                    [Optional] Output debug informations    
 
 Options Help
