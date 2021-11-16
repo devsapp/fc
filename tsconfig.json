@@ -5,5 +5,5 @@
     "outDir": "dist",
     "resolveJsonModule": true
   },
-  "exclude": ["node_modules", "test/**.ts", "dist", "src/lib/utils/pulumi"]
+  "exclude": ["node_modules", "test/**.ts", "dist", "src/lib/utils/pulumi", "./jest.*.ts"]
 }
