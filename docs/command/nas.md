@@ -22,7 +22,7 @@
 > - 需要开通 [NAS 相关的服务](https://nasnext.console.aliyun.com/) ，开通 NAS 服务可能会产生相对应的费用；
 > - 对 NAS 操作时，需要注意函数计算挂载 NAS 的路径。例如 NAS 被挂载到了 `/mnt/auto` 目录上，那么在上传下载的时候，就需要指定 `/mnt/auto`，例如`s nas upload ./demo.yaml /mnt/auto/`。
 
-> 关于 `nas` 命令的常见问题和解决方法，可以参考[ FC 组件自动问答系统](http://qa.devsapp.cn/fc?type=nas ) 。
+> 关于 `nas` 命令的常见问题和解决方法，可以参考[ FC 组件自动问答系统](http://qa.devsapp.cn/ ) 。
 
 ## 命令解析
 

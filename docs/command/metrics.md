@@ -7,7 +7,7 @@
   - [操作案例](#操作案例)
 - [权限与策略说明](#权限与策略说明)
 
-> 关于 `metrics` 命令的常见问题和解决方法，可以参考[ FC 组件自动问答系统](http://qa.devsapp.cn/fc?type=metrics) 。
+> 关于 `metrics` 命令的常见问题和解决方法，可以参考[ FC 组件自动问答系统](http://qa.devsapp.cn/ ) 。
 
 ## 命令解析
 

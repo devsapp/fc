@@ -9,7 +9,7 @@
 
 > ⚠️ 注意：在使用该功能之前，需要先开通 SLS 日志服务，并且[函数本身已经配置了相关的日志项目](./../yaml.md##logConfig)。
 
-> 关于 `logs` 命令的常见问题和解决方法，可以参考[ FC 组件自动问答系统](http://qa.devsapp.cn/fc?type=logs) 。
+> 关于 `logs` 命令的常见问题和解决方法，可以参考[ FC 组件自动问答系统](http://qa.devsapp.cn/ ) 。
 
 ## 命令解析
 

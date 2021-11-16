@@ -19,7 +19,7 @@
 
 >  ⚠️ 注意：**预留资源会持续产生费用，如果不需要请及时释放资源**
 
-> 关于 `provision` 命令的常见问题和解决方法，可以参考[ FC 组件自动问答系统](http://qa.devsapp.cn/fc?type=provision ) 。
+> 关于 `provision` 命令的常见问题和解决方法，可以参考[ FC 组件自动问答系统](http://qa.devsapp.cn/ ) 。
 
 ## 命令解析
 
