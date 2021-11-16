@@ -1,3 +1,5 @@
+import _ from 'lodash';
+import os from 'os';
 import * as path from 'path';
 
 export const ACCESS = `s-devs-ci-${new Date().getTime()}-${Math.random().toString(36).substr(2)}`;
@@ -11,10 +13,10 @@ export const HTTP_TRIGGER_NAME = 'httpTrigger';
 export const OSS_TRIGGER_NAME = 'ossTrigger';
 export const MNS_TRIGGER_NAME = 'mnsTrigger';
 
-export const SERVICE_NAME = `s-devs-ci-service-${new Date().getTime()}-${Math.random().toString(36).substr(2)}`;
-export const OSS_BUCKET_NAME = `s-devs-ci-bucket-${new Date().getTime()}-${Math.random().toString(36).substr(2)}`;
-export const MNS_TOPIC_NAME = `s-devs-ci-${new Date().getTime()}-${Math.random().toString(36).substr(2)}`;
-export const ROLE_NAME = `s-devs-ci-role-${new Date().getTime()}-${Math.random().toString(36).substr(2)}`;
+export const SERVICE_NAME = `s-devs-ci-service-${os.platform()}-${new Date().getTime()}-${Math.random().toString(36).substr(2)}`;
+export const OSS_BUCKET_NAME = `s-devs-ci-bucket-${os.platform()}-${new Date().getTime()}-${Math.random().toString(36).substr(2)}`;
+export const MNS_TOPIC_NAME = `s-devs-ci-${os.platform()}-${new Date().getTime()}-${Math.random().toString(36).substr(2)}`;
+export const ROLE_NAME = `s-devs-ci-role-${os.platform()}-${new Date().getTime()}-${Math.random().toString(36).substr(2)}`;
 
 export const SERVICE_CONFIG = {
   name: SERVICE_NAME,
@@ -30,6 +32,16 @@ export const FUNCTION_CONFIG = {
   runtime: 'nodejs12',
   codeUri: path.join(MOCK_PROJECT_PATH, 'code'),
 }
+
+export const DOMAIN_CONFIG = _.cloneDeep([{
+  domainName: 'auto',
+  protocol: 'HTTP',
+  routeConfigs: [{
+    path: '/*',
+    serviceName: SERVICE_NAME,
+    functionName: FUNCTION_NAME,
+  }]
+}]);
 
 export const HTTP_TRIGGER_CONFIG = {
   name: HTTP_TRIGGER_NAME,
@@ -77,7 +89,7 @@ export const INPUTS: any = {
   path: {
     configPath: MOCK_PROJECT_YAML_PATH,
   },
-  args: '-y',
+  args: '-y --use-local',
   argsObj: undefined,
   props: {},
 };

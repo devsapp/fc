@@ -141,7 +141,6 @@ describe('Integration::deploy', () => {
     }
   });
 
-
   it('deploy service with http trigger', async () => {
     try {
       const inputs = _.cloneDeep(INPUTS);
