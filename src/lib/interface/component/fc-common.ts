@@ -3,6 +3,7 @@ export interface HttpTypeOption {
   method?: string;
   path?: string;
   query?: string;
+  headers?: string;
   body?: any;
   qualifier?: string;
 }
