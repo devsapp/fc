@@ -45,10 +45,6 @@ export interface EvalStartInputsArgs {
    */
   'function-name': string;
   /**
-   * [C-Required] Type of the target function, value: http/event
-   */
-  'function-type': string;
-  /**
    * [Optional] Concurrency args of power tuning that can convert to concurrency list, only for --eval-type concurrency
    */
   'concurrency-args': string;
@@ -80,6 +76,10 @@ export interface EvalStartInputsArgs {
    * [Optional] arget query, only for HTTP function
    */
   'query': string;
+   /**
+   * [Optional] arget headers, only for HTTP function
+   */
+  'headers': string;
   /**
    * [Optional] Max response time, only for --eval-type concurrency
    */

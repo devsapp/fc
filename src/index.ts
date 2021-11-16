@@ -805,10 +805,16 @@ export default class FcBaseComponent extends BaseComponent {
       super.help(EVAL_SUB_COMMAND_HELP_KEY[commandName]);
       return;
     }
+    let functionType = argsData['function-type'];
+    // yaml 模式
+    if (props?.service?.name && props?.function?.name) {
+      functionType = functionType || isHttpFunction(props) ? 'http' : 'event';
+    }
+
     const evalOpts: EvalOption = {
       serviceName: argsData['service-name'] || props?.service?.name,
       functionName: argsData['function-name'] || props?.function?.name,
-      functionType: argsData['function-type'] || (isHttpFunction(props) ? 'http' : 'event'),
+      functionType,
       evalType: argsData['eval-type'] || DEFAULT_EVAL_TYPE,
       memorySizeList: argsData['memory-size'],
       runCount: argsData['run-count'],
@@ -818,16 +824,15 @@ export default class FcBaseComponent extends BaseComponent {
     };
 
     let httpTypeOpts: HttpTypeOption = null;
-    if (evalOpts?.functionType === 'http') {
-      httpTypeOpts = {
-        url: argsData?.url,
-        method: argsData?.method,
-        path: argsData?.path,
-        query: argsData?.query,
-        body: argsData?.body,
-      };
-      this.logger.debug(`Using http options: \n${yaml.dump(httpTypeOpts)}`);
-    }
+    httpTypeOpts = {
+      url: argsData?.url,
+      method: argsData?.method,
+      path: argsData?.path,
+      query: argsData?.query,
+      body: argsData?.body,
+      headers: argsData?.headers,
+    };
+    this.logger.debug(`Using http options: \n${yaml.dump(httpTypeOpts)}`);
     const payloadOpts: PayloadOption = {
       payloadFile: argsData['payload-file'],
       payload: argsData?.payload,
