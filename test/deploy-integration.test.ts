@@ -141,7 +141,6 @@ describe('Integration::deploy', () => {
     }
   });
 
-
   it('deploy service with http trigger', async () => {
     try {
       const inputs = _.cloneDeep(INPUTS);
@@ -280,12 +279,12 @@ describe('Integration::deploy', () => {
 
       expect(serviceConfig3.role).toBe('');
       expect(serviceConfig3.tracingConfig.type).toBeNull();
-      expect(serviceConfig3.logConfig).toStrictEqual({
+      expect(serviceConfig3.logConfig).toMatchObject({
         project: '',
         logstore: '',
         enableRequestMetrics: false,
         enableInstanceMetrics: false,
-        logBeginRule: null,
+        // logBeginRule: null,
       });
       expect(serviceConfig3.vpcConfig).toStrictEqual({
         vpcId: '',

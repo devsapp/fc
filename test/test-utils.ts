@@ -31,7 +31,7 @@ export function getFcClient(region: string, timeout: number) {
   });
 }
 
-export async function deleteFcResource(msg: string, fcClient, { serviceName, functionName, triggerNames }: any) {
+export async function deleteFcResource(msg: string, fcClient, { serviceName, functionName, triggerNames, domainName }: any) {
   console.log('Start remove resource: ', msg);
   if (!isEmpty(triggerNames)) {
     for (const triggerName of triggerNames) {
@@ -55,13 +55,26 @@ export async function deleteFcResource(msg: string, fcClient, { serviceName, fun
     }
   }
 
-  try {
-    console.log('Start remove service: ', serviceName);
-    await fcClient.deleteService(serviceName);
-    console.log('Remove service successed');
-  } catch (e) {
-    console.error('Remove service faild: ', e);
+  if (serviceName) {
+    try {
+      console.log('Start remove service: ', serviceName);
+      await fcClient.deleteService(serviceName);
+      console.log('Remove service successed');
+    } catch (e) {
+      console.error('Remove service faild: ', e);
+    }
   }
+
+  if (domainName) {
+    try {
+      console.log('Remove domain successed');
+      await fcClient.deleteCustomDomain(domainName);
+      console.log('Remove domain successed');
+    } catch (ex) {
+      console.error('Remove domain faild: ', ex);
+    }
+  }
+
   console.log('end.');
 }
 
@@ -225,8 +238,9 @@ export async function createOssBucket(region, bucketName) {
       dataRedundancyType: 'LRS',
     }
     await ossClient.putBucket(bucketName, options);
+    console.log(`createOssBucket ${bucketName} success`);
   } catch (err) {
-    console.log(err);
+    throw err;
   }
 }
 
@@ -258,8 +272,9 @@ export async function createMnsTopic(region, mnsName) {
       vpc: false,
     });
     await mnsClient.createTopic(mnsName);
-  } catch(e) {
-    console.log(e);
+    console.log(`createMnsTopic ${mnsName} success`);
+  } catch(err) {
+    throw err;
   }
 }
 
