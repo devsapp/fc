@@ -38,4 +38,4 @@ jobs:
           AccessKeyID: ${{secrets.ACCESSKEYID}}
           AccessKeySecret: ${{secrets.ACCESSKEYSECRET}}
         run: |
-          npm run test-integration
+          npm run test-integration || npm run test-integration
