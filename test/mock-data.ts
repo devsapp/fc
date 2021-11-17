@@ -14,12 +14,17 @@ export const OSS_TRIGGER_NAME = 'ossTrigger';
 export const MNS_TRIGGER_NAME = 'mnsTrigger';
 
 export const SERVICE_NAME = `s-devs-ci-service-${os.platform()}-${new Date().getTime()}-${Math.random().toString(36).substr(2)}`;
+export const REMOVE_SERVICE_NAME = `s-devs-ci-service-remove-${os.platform()}-${new Date().getTime()}-${Math.random().toString(36).substr(2)}`;
 export const OSS_BUCKET_NAME = `s-devs-ci-bucket-${os.platform()}-${new Date().getTime()}-${Math.random().toString(36).substr(2)}`;
 export const MNS_TOPIC_NAME = `s-devs-ci-${os.platform()}-${new Date().getTime()}-${Math.random().toString(36).substr(2)}`;
 export const ROLE_NAME = `s-devs-ci-role-${os.platform()}-${new Date().getTime()}-${Math.random().toString(36).substr(2)}`;
 
 export const SERVICE_CONFIG = {
   name: SERVICE_NAME,
+  description: 'This is for fc test',
+};
+export const REMOVE_SERVICE_CONFIG = {
+  name: REMOVE_SERVICE_NAME,
   description: 'This is for fc test',
 };
 
