@@ -219,7 +219,7 @@ Usage
 Document
   
   https://github.com/devsapp/fc/blob/main/docs/command/remove.md
-                           
+
 Options
 
   --region [string]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
@@ -419,7 +419,7 @@ Custom domain [anycodes.cn] deleted successfully.
 
 ## remove version 命令
 
-`remove version` 命令，是用户删除指定已发布的版本命令，其整体形式与[alias delete](./alias.md#alias-delete-命令)一致（可以认为这是一个功能，不同指令下的同种表现）。
+`remove version` 命令，是用户删除指定已发布的版本命令。
 
 当执行命令`remove version -h`/`remove version --help`时，可以获取帮助文档：
 
@@ -491,7 +491,7 @@ VersionId [1] deleted successfully.
 
 ## remove alias 命令
 
-`remove alias` 命令，是删除指定函数别名的命令，其整体形式与[alias delete](./alias.md#alias-delete-命令)一致（可以认为这是一个功能，不同指令下的同种表现）。
+`remove alias` 命令，是删除指定函数别名的命令。
 
 当执行命令`remove alias -h`/`remove alias --help`时，可以获取帮助文档：
 
