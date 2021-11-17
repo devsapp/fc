@@ -27,6 +27,7 @@
     "f2elint": "^0.4.4",
     "husky": "^7.0.2",
     "jest": "^26.4.0",
+    "promise-retry": "^2.0.1",
     "rimraf": "^3.0.2",
     "ts-jest": "^26.2.0",
     "ts-loader": "^8.0.14",

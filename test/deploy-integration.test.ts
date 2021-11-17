@@ -1,4 +1,5 @@
 import * as core from '@serverless-devs/core';
+import promiseRetry from 'promise-retry';
 import _ from 'lodash';
 import path from 'path';
 import fse from 'fs-extra';
@@ -45,6 +46,13 @@ import {
 } from './test-utils';
 import { NasConfig } from '../src/lib/interface/nas';
 import { LogConfig } from '../src/lib/interface/sls';
+
+const retryOptions = {
+  retries: 2,
+  factor: 2,
+  minTimeout: 1 * 1000,
+  randomize: true,
+};
 
 describe('Integration::deploy', () => {
   let fcClient: any;
@@ -193,7 +201,14 @@ describe('Integration::deploy', () => {
       };
 
       const fcComponent = await new FcComponent(inputs);
-      await fcComponent.deploy(inputs);
+      await promiseRetry(async (retry: any, times: number) => {
+        try {
+          await fcComponent.deploy(inputs);
+        } catch (ex) {
+          console.log('deploy service with auto, retry ', times);
+          retry(ex);
+        }
+      }, retryOptions);
 
       const serviceConfig = (await fcClient.getService(SERVICE_NAME)).data;
 
@@ -251,7 +266,15 @@ describe('Integration::deploy', () => {
           },
         },
       };
-      await new FcComponent(inputs2).deploy(inputs2);
+
+      await promiseRetry(async (retry: any, times: number) => {
+        try {
+          await new FcComponent(inputs2).deploy(inputs2);
+        } catch (ex) {
+          console.log('update service, retry ', times);
+          retry(ex);
+        }
+      }, retryOptions);
 
       const serviceConfig2 = (await fcClient.getService(SERVICE_NAME)).data;
       expect(serviceConfig2).toMatchObject({
@@ -274,7 +297,14 @@ describe('Integration::deploy', () => {
           ...SERVICE_CONFIG,
         },
       };
-      await new FcComponent(inputs3).deploy(inputs3);
+      await promiseRetry(async (retry: any, times: number) => {
+        try {
+          await new FcComponent(inputs3).deploy(inputs3);
+        } catch (ex) {
+          console.log('update service2, retry ', times);
+          retry(ex);
+        }
+      }, retryOptions);
       const serviceConfig3 = (await fcClient.getService(SERVICE_NAME)).data;
 
       expect(serviceConfig3.role).toBe('');
