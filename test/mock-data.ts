@@ -3,7 +3,7 @@ import os from 'os';
 import * as path from 'path';
 
 export const ACCESS = `s-devs-ci-${new Date().getTime()}-${Math.random().toString(36).substr(2)}`;
-export const REGION = 'cn-hangzhou';
+export const REGION = 'cn-hongkong';
 export const MOCK_PROJECT_PATH: string = path.join(__dirname, 'mock-project');
 export const MOCK_PROJECT_YAML_PATH: string = path.join(MOCK_PROJECT_PATH, 's.yaml');
 export const DEFAULT_CLIENT_TIMEOUT = 600 * 1000;
