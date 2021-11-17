@@ -45,7 +45,7 @@ SubCommand List
   versions       Get layer versions; help command [s layer verisons -h] 
 ```
 
-在该命令中，包括了五个子命令：
+在该命令中，包括了四个子命令：
 
 - [publish：发布层](#layer-publish-命令)
 - [list：获取层列表](#layer-list-命令)

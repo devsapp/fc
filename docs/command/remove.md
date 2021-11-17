@@ -635,7 +635,7 @@ Proivision qualifier [release] deleted successfully.
 
 ## remove ondemand 命令
 
-`remove ondemand` 命令，是删除指定函数按量资源的命令，其整体形式与[ondemand delete](./ondemand.md#ondemand-delete-命令)一致（可以认为这是一个功能，不同指令下的同种表现）。
+`remove ondemand` 命令，是删除指定函数按量资源的命令。
 
 当执行命令`remove ondemand -h`/`remove ondemand --help`时，可以获取帮助文档：
 
