@@ -74,7 +74,7 @@ Options
 Global Options
 
   -h, --help                 [Optional] Help for command          
-  -a, --access [string]   [Optional] Specify key alias         
+  -a, --access [string]      [Optional] Specify key alias         
   --debug                    [Optional] Output debug informations 
 
 Options Help
@@ -87,13 +87,12 @@ Options Help
 
 Examples with Yaml
 
-  $ s eval start --eval-type memory --run-count 10  --payload-file ./payload.file  --memory-size 128,256,512,1024                                                                                                                       
-  $ s eval start --eval-type memory --run-count 50 --payload 'hello world' --memory-size 128,256,512,1024  --method get --path '/login' --query 'a=1&b=2'                                                                                    
+  $ s eval start --eval-type memory --run-count 10 --payload-file ./payload.file  --memory-size 128,256,512,1024                                                     $ s eval start --eval-type memory --run-count 50 --payload 'hello world' --memory-size 128,256,512,1024  --method get --path '/login' --query 'a=1&b=2'                                                                                    
 
 Examples with CLI
                                                                                                                               
-  $ s cli fc eval start --region cn-hangzhou --function-name myFunctionName --service-name myServiceName --eval-type memory --run-count 50 --payload 'hello world' --memory-size 128,256,512,1024  --method get --path '/login' --query 'a=1&b=2'                                                                                           
-  $ s cli fc eval start --region cn-hangzhou --function-name myFunctionName --service-name myServiceName --eval-type concurrency --memory 1536 --concurrency-args 2,30,5 --rt 250  --payload-file ./payload.file                                            
+  $ s cli fc eval start --region cn-hangzhou --function-name functionName --service-name serviceName --eval-type memory --run-count 50 --payload 'hello world' --memory-size 128,256,512,1024  --method get --path '/login' --query 'a=1&b=2'                                                                                     
+  $ s cli fc eval start --region cn-hangzhou --function-name functionName --service-name serviceName --eval-type concurrency --memory 1536 --concurrency-args 2,30,5 --rt 250  --payload-file ./payload.file                                            
 ```
 
 ### 参数解析
