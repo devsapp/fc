@@ -20,7 +20,7 @@ Api
 
 Usage
 
-  s api <api> <options>  
+  s cli api <api> <options>  
                             
 Document
   
@@ -56,13 +56,13 @@ Examples with Cli
 只需要在命令行，按照`api`指令的固定格式，进行功能拼接即可：
 
 ```shell script
-s cli api ListService
+s cli fc api ListService
 ```
 
 在 `ListService` 的接口文档中，还有四个可选参数，也可以通过`--<参数>`的形式传入，例如：
 
 ```shell script
-s cli api ListService --limit 20 --nextToken _FUN_NAS-classify --prefix _FUN_NAS
+s cli fc api ListService --limit 20 --nextToken _FUN_NAS-classify --prefix _FUN_NAS
 ```
 
 ## 权限与策略说明
