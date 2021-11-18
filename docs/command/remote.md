@@ -93,7 +93,7 @@ Options
 
   -c, --config [vscode/pycharm/idea]       [Optional] elect which IDE to use when debugging and output related debug config tips for the IDE. value: vscode/pycharm/idea                                                             
   -d, --debug-port [number]                [Optional] Specify the sandboxed container starting in debug mode, and exposing this port on localhost                                                                                           
-  --tmp-dir [string]                       [Optional] The temp directory mounted to /tmp , default: './.s/tmp/invoke/serviceName/functionName/'   
+  --tmp-dir [string]                       [Optional] The temp directory mounted to '/tmp' , default: './.s/tmp/invoke/serviceName/functionName/'   
                                  
 
 Global Options

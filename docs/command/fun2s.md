@@ -77,7 +77,7 @@ Tips for next step
 ======================
 * Deploy Function: s deploy -t ./s.yml
 * Invoke Event Function: s local invoke -t ./s.yml
-* Invoke Http Function: s local start -t ./s.yml
+* Invoke HTTP Function: s local start -t ./s.yml
 ```
 
 此时，就可以将原有的 Funcraft 规范的 `template.yaml` 转换成支持 Serverless Devs 规范的 `s.yaml`。

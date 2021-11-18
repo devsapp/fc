@@ -59,6 +59,7 @@ Options
   --region [string]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
   --service-name [string]             [C-Required] Specify the fc service name  
   --function-name [string]            [C-Required] Specify the fc function name    
+  --function-type [http/event]        [C-Required] Type of the target function, value: http/event
   --concurrency-args [string]         [Optional] Concurrency args of power tuning that can convert to concurrency list, only for --eval-type concurrency                                                   
   --eval-type [memory/concurrency]    [Optional] Type of the power tuning, value: memory/concurrency                                                              
   --memory [number]                   [Optional] Function memory of power tuning, only for --eval-type concurrency             
@@ -102,17 +103,18 @@ Examples with CLI
 | region           | -        | 选填           | 必填         | 探测的函数所处的地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
 | service-name     | -        | 选填           | 必填          | 探测的函数所处的服务名                                       |
 | function-name    | -        | 选填           | 必填          | 探测的函数名                                                 |
-| eval-type        | -        | 选填            | 选填         | 探测类型， 分为 memory 和 concurrency 两种, 默认是memory    |                                               
-| memory-size      | -        | 选填           | 选填          | 探测类型为 memory 需要的参数，示例  `128,256,512,1024` |
+| function-type    | -        | 选填           | 选填          | 函数类型，取值范围：`event, http`，默认通过线上函数配置进行判断，如果判断失败可以手动指定                                              |
+| eval-type        | -        | 选填            | 选填         | 探测类型， 取值范围：`memory, concurrency`，默认是memory    |                                               
+| memory-size      | -        | 选填           | 选填          | 探测类型为 memory 需要的参数，示例 `128,256,512,1024` |
 | run-count        | -        | 选填           | 选填          | 探测类型为 memory 需要的参数， 指定目标函数在不同内存规格下被分别调用的次数                                                          |
 | memory           | -        | 选填           | 选填          | 探测类型为 concurrency 需要的参数,  建议设置的较大内存， 比如 1.5G(约 1vCPU) 或者 3G(约 2vCPU)                                                        |
 | concurrency-args | -        | 选填           | 选填          | 探测类型为 concurrency 需要的参数, 指定目标函数被探测时的并发度参数范围和步长，例如该参数的配置信息为--concurrency-args 2,20,5，表示并发范围[2,20]，步长为5，即被探测的目标函数分别在2、7、12和17不同并发值下实现探测。                                                         |
 | rt               | -        | 选填           | 选填          | 探测类型为 concurrency 需要的参数，期望最大响应时间|
-| method           | -        | 选填           | 选填          | 针对被探测的函数是 Http 函数，取值为GET、POST、PUT、PATCH、DELETE、OPTIONS或HEAD。                                                         |
-| path             | -        | 选填           | 选填          | 针对被探测的函数是 Http 函数， http 请求的 path                                           |
-| payload          | -        | 选填           | 选填          | 如果被探测函数是 Http 函数时，是 http 请求的 body; 如果被探测函数是 event 函数时，是函数入参 event |
-| payload-file     | -        | 选填           | 选填          | 如果被探测函数是 Http 函数时，文件内容是 http 请求的 body; 如果被探测函数是 event 函数时，文件内容是函数入参 event |
-| query            | -        | 选填           | 选填          | 针对被探测的函数是 Http 函数， http 请求的 query                                                            |
+| method           | -        | 选填           | 选填          | 针对被探测的函数是 HTTP 函数，取值番位：`GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD`。                                                         |
+| path             | -        | 选填           | 选填          | 针对被探测的函数是 HTTP 函数， HTTP 请求的 `path`                                           |
+| payload          | -        | 选填           | 选填          | 如果被探测函数是 HTTP 函数时，是 HTTP 请求的 `body`; 如果被探测函数是 `event` 函数时，是函数入参 `event` |
+| payload-file     | -        | 选填           | 选填          | 如果被探测函数是 HTTP 函数时，文件内容是 HTTP 请求的 `body`; 如果被探测函数是 `event` 函数时，文件内容是函数入参 `event` |
+| query            | -        | 选填           | 选填          | 针对被探测的函数是 HTTP 函数， HTTP 请求的 `query`                                                            |
 | access           | a        | 选填           | 必填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
 | debug            | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
 | help             | h        | 选填           | 选填          | 查看帮助信息                                                 |

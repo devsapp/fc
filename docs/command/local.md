@@ -77,7 +77,7 @@ Options
   -d, --debug-port [number]           [Optional] Specify the local function container starting in debug mode, and exposing this port on localhost                                                   
   --debug-args [string]               [Optional] Additional parameters that will be passed to the debugger                     
   --debugger-path [string]            [Optional] The path of the debugger on the host                                          
-  --tmp-dir [string]                  [Optional] The temp directory mounted to /tmp , default: './.s/tmp/invoke/serviceName/functionName/'                                                            
+  --tmp-dir [string]                  [Optional] The temp directory mounted to '/tmp' , default: './.s/tmp/invoke/serviceName/functionName/'                                                            
   --server-port [number]              [Optional] The exposed port of http server, default value is the random port between 7000 and 8000
 Global Options
 
@@ -101,16 +101,16 @@ Examples with Yaml
 
 | 参数全称      | 参数缩写 | Yaml模式下必填 | 参数含义                                                     |
 | ------------- | -------- | -------------- | ------------------------------------------------------------ |
-| event         | e        | 选填           |传入 event 函数的 event 事件数据，可以通过 `s cli fc-event` 指令快速获取事件数据示例，详细操作参考[这里](https://github.com/devsapp/fc/blob/jiangyu-master/docs/command/invoke.md#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9%E3%80%82)|
-| event-file    | f        | 选填           |以文件形式传入 event 事件数据|
-| event-stdin   | s        | 选填           |以标准输入形式传入 event 事件数据|
-| mode          | m        | 选填           |调试模式选择，包括：<br> - normal: 默认模式，本地函数运行容器在函数执行完成后立刻退出<br>server: 本地函数运行容器一直存在，用户在其他终端发起的本地调用会复用该容器<br>api: 支持通过 sdk 调用本地函数|
-| config        | c        | 选填           |指定断点调试时使用的 IDE，可选：vscode, pycharm, intellij|
+| event         | e        | 选填           |传入 `event` 函数的 `event` 事件数据，可以通过 `s cli fc-event` 指令快速获取事件数据示例，详细操作参考[这里](https://github.com/devsapp/fc/blob/master/docs/command/invoke.md#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9%E3%80%82)|
+| event-file    | f        | 选填           |以文件形式传入 `event` 事件数据|
+| event-stdin   | s        | 选填           |以标准输入形式传入 `event` 事件数据|
+| mode          | m        | 选填           |调试模式选择，包括：<br> - `normal`: 默认模式，本地函数运行容器在函数执行完成后立刻退出<br>`server`: 本地函数运行容器一直存在，用户在其他终端发起的本地调用会复用该容器<br>`api`: 支持通过 sdk 调用本地函数|
+| config        | c        | 选填           |指定断点调试时使用的 IDE，取值范围：`vscode, pycharm, intellij`|
 | debug-port    | d        | 选填           |指定断点调试端口|
 | debug-args    | -        | 选填           |断点调试时传入的参数|
 | debugger-path | q        | 选填           |自定义断点调试器路径|
-| tmp-dir       | -        | 选填           |自定义函数运行环境中 /tmp 路径的本机挂载路径，默认为 ./.s/tmp/invoke/serviceName/functionName/|
-| server-port   | -        | 选填           |自定义本地监听 server 的端口，默认是在 7000 到 8000 间的随机端口|
+| tmp-dir       | -        | 选填           |自定义函数运行环境中 `/tmp` 路径的本机挂载路径，默认为 `./.s/tmp/invoke/serviceName/functionName`/|
+| server-port   | -        | 选填           |自定义本地监听 `server` 的端口，默认是在 7000 到 8000 间的随机端口|
 | debug         | -        | 选填           | 打开`debug`模式，将会输出更多日志信息                        |
 | help          | h        | 选填           | 查看帮助信息                                                 |
 
@@ -154,7 +154,7 @@ Options
   --custom                                [Optional] Access in the form of custom domain    
   --debug-args [string]                   [Optional] Additional parameters that will be passed to the debugger    
   --debug-path [string]                   [Optional] The path of the debugger on the host   
-  --tmp-dir [string]                      [Optional] The temp directory mounted to /tmp , default: './.s/tmp/invoke/serviceName/functionName/'                                                            
+  --tmp-dir [string]                      [Optional] The temp directory mounted to '/tmp' , default: './.s/tmp/invoke/serviceName/functionName/'                                                            
   --server-port [number]                  [Optional] The exposed port of http server, default value is the random port between 7000 and 8000
 Global Options
 
@@ -178,13 +178,13 @@ Examples with Yaml
 
 | 参数全称      | 参数缩写 | Yaml模式下必填 | 参数含义                                                     |
 | ------------- | -------- | -------------- | ------------------------------------------------------------ |
-| config        | c        | 选填           |指定断点调试时使用的 IDE，可选：vscode, pycharm, intellij|
+| config        | c        | 选填           |指定断点调试时使用的 IDE，可选：`vscode, pycharm, intellij`|
 | debug-port    | d        | 选填           |指定断点调试端口|
-| custom        | -        | 选填           |以自定义域名作为 http server 的访问 url|
+| custom        | -        | 选填           |以自定义域名作为 HTTP Server 的访问 url|
 | debug-args    | -        | 选填           |断点调试时传入的参数|
 | debugger-path | y        | 选填           |自定义断点调试器路径|
-| tmp-dir       | -        | 选填           |自定义函数运行环境中 /tmp 路径的本机挂载路径，默认为 ./.s/tmp/invoke/serviceName/functionName/|
-| server-port   | y        | 选填           |自定义本地监听 http server 的端口，默认是在 7000 到 8000 间的随机端口|
+| tmp-dir       | -        | 选填           |自定义函数运行环境中 `/tmp` 路径的本机挂载路径，默认为 `./.s/tmp/invoke/serviceName/functionName/`|
+| server-port   | y        | 选填           |自定义本地监听 HTTP Server 的端口，默认是在 7000 到 8000 间的随机端口|
 | debug         | -        | 选填           | 打开`debug`模式，将会输出更多日志信息                        |
 | help          | h        | 选填           | 查看帮助信息                                                 |
 
@@ -223,5 +223,5 @@ Examples with Yaml
 > - 自定义域名地址的基础路径匹配可以是任何形式，包括`/`
 >
 > 由于路径的不同，所以在代码开发和处理的时候，都会有所不同，如果使用某个 Web 框架（例如 Express、Django 等），匹配的首页地址为`/`，那么使用系统域名地址则可能会出现`404`，这个时候较为推荐使用自定义域名，获得更原生的体验。所以为了满足开发者在系统域名与自定义域名不同模式下的调试需要，本组件支持`--custom`参数进行自定义域名模式调试。
-> 如果既要使用 custom-runtime/custom-container 函数，又要使用系统域名，还要不处理系统基础路径，那么可以在发给函数的 http 请求中增加 header: `x-fc-invocation-target: 2016-08-15/proxy/$ServiceName/$functionName` 即可
+> 如果既要使用 custom-runtime/custom-container 函数，又要使用系统域名，还要不处理系统基础路径，那么可以在发给函数的 HTTP 请求中增加 header: `x-fc-invocation-target: 2016-08-15/proxy/$ServiceName/$functionName` 即可
 

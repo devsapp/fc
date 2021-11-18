@@ -75,12 +75,13 @@ Options
 
   --region [string]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
   --service-name [string]             [C-Required] Specify the fc service name  
-  --function-name [string]            [C-Required] Specify the fc function name              
+  --function-name [string]            [C-Required] Specify the fc function name
+  --function-type [http/event]        [C-Required] Type of the target function, value: http/event              
   --method [string]                   [Optional] Target method, only for --function-type http                                  
   --payload [string]                  [Optional] Represents the event/request_body passed to the function    
   --payload-file [string]             [Optional] Contains the event passed to the function    
   --num-user [number]                 [Optional] Number of the simulated users                                                 
-  -q, --qualifier [string]            [Optional] Qualifier of the target function, only for --function-type event                                                  
+  -q, --qualifier [string]            [Optional] Qualifier of the target function, only for event function                                                 
   --run-time [number]                 [Optional] Intervals for stress                                                                                                  
   --spawn-rate [number]               [Optional] Increasing number of users per second                                         
   -u, --url [string]                  [Optional] Target url
@@ -116,6 +117,7 @@ Examples with CLI
 | region        | -        | 选填           | 必填          | 探测的函数所处的地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
 | service-name  | -        | 选填           | 必填          |压测目标服务名|
 | function-name | -        | 选填           | 必填          |压测姆目标函数名|
+| function-type    | -        | 选填           | 选填          | 函数类型，取值范围：`event, http`，默认通过线上函数配置进行判断，如果判断失败可以手动指定                                              |
 | method        | -        | 选填           | 选填          |表示压测请求的方法，例如 GET、POST 等，仅对 http 函数压测时有效|
 | payload       | -        | 选填           | 选填          |压测 event 函数：调用目标函数时传入的 event 事件数据;<br>压测 http 函数：调用目标函数时传入的请求体数据|
 | payload-file  | -        | 选填           | 选填          |将 payload 参数内容以文件形式传入|
