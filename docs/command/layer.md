@@ -15,9 +15,7 @@
 - [layer versions 命令](#layer-versions-命令)
   - [参数解析](#参数解析-3)
   - [操作案例](#操作案例-3)
-- [layer delete 命令](#layer-delete-命令)
-  - [参数解析](#参数解析-4)
-  - [操作案例](#操作案例-4)
+- [remove layer 命令](./remove.md#remove-layer-命令)
 - [权限与策略说明](#权限与策略说明)
 
 > 关于 `layer` 命令的常见问题和解决方法，可以参考[ FC 组件自动问答系统](http://qa.devsapp.cn/ ) 。
@@ -45,16 +43,14 @@ SubCommand List
   list           Get layer list; help command [s layer list -h] 
   detail         Get layer versionConfig; help command [s layer detail -h] 
   versions       Get layer versions; help command [s layer verisons -h] 
-  delete         Detele layer version; help command [s layer delete -h] 
 ```
 
-在该命令中，包括了五个子命令：
+在该命令中，包括了四个子命令：
 
 - [publish：发布层](#layer-publish-命令)
 - [list：获取层列表](#layer-list-命令)
 - [detail：获取层详情](#layer-detail-命令)
 - [versions：获取层版本](#layer-versions-命令)
-- [delete：删除指定层](#layer-delete-命令)
 
 ## layer publish 命令
 
@@ -112,10 +108,10 @@ Examples with CLI
 | 参数全称           | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
 | ------------------ | -------- | -------------- | ------------- | ------------------------------------------------------------ |
 | region             | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| code               | -        | 选填           | 必填          | 层的代码                                                     |
+| code               | -        | 必填           | 必填          | 层的代码                                                     |
 | compatible-runtime | -        | 选填           | 选填          | 支持的`runtime`，默认值为`nodejs12,nodejs10,nodejs8,nodejs6,python3,python2.7` |
 | description        |          | 选填           | 选填          | 发布层的描述                                                 |
-| layer-name         |          | 选填           | 必填          | 层的名字                                                     |
+| layer-name         |          | 必填           | 必填          | 层的名字                                                     |
 | access             | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
 | debug              | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
 | help               | h        | 选填           | 选填          | 查看帮助信息                                                 |
@@ -186,7 +182,7 @@ Examples with CLI
 | -------- | -------- | -------------- | ------------- | ------------------------------------------------------------ |
 | region   | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
 | prefix   | -        | 选填           | 选填          |                                                              |
-| Table    | -        | 选填           | 选填          |                                                              |
+| table    | -        | 选填           | 选填          |                                                              |
 | access   | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
 | debug    | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
 | help     | h        | 选填           | 选填          | 查看帮助信息                                                 |
@@ -267,8 +263,8 @@ Examples with CLI
 | 参数全称   | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
 | ---------- | -------- | -------------- | ------------- | ------------------------------------------------------------ |
 | region     | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| layer-name | -        | 选填           | 必填          | 层名称                                                       |
-| version-id | -        | 选填           | 必填          | 层版本                                                       |
+| layer-name | -        | 必填           | 必填          | 层名称                                                       |
+| version-id | -        | 必填           | 必填          | 层版本                                                       |
 | access     | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
 | debug      | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
 | help       | h        | 选填           | 选填          | 查看帮助信息                                                 |
@@ -276,7 +272,7 @@ Examples with CLI
 ### 操作案例
 
 - **有资源描述文件（Yaml）时**，可以直接执行`s layer detail --layer-name layerName --version-id versionId`获取指定层和指定版本详情；
-- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区，例如`s layer versionConfig --layer-name demo --version-id 1 -h`；
+- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区，例如`s layer detail --layer-name demo --version-id 1 -h`；
 
 上述命令的执行结果示例：
 
@@ -343,11 +339,11 @@ Options Help
 
 Examples with Yaml
 
-  $ s layer version --layer-name layerName
+  $ s layer versions --layer-name layerName
 
 Examples with CLI
 
-  $ s cli fc layer version --region cn-hangzhou --layer-name layerName
+  $ s cli fc layer versions --region cn-hangzhou --layer-name layerName
 ```
 
 ### 参数解析
@@ -355,7 +351,7 @@ Examples with CLI
 | 参数全称   | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
 | ---------- | -------- | -------------- | ------------- | ------------------------------------------------------------ |
 | region     | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| layer-name | -        | 选填           | 必填          | 层名称                                                       |
+| layer-name | -        | 必填           | 必填          | 层名称                                                       |
 | table      | -        | 选填           | 必填          | 是否以表格形式输出                                           |
 | access     | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
 | debug      | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
@@ -363,8 +359,8 @@ Examples with CLI
 
 ### 操作案例
 
-- **有资源描述文件（Yaml）时**，可以直接执行`s layer version --layer-name layerName`获取指定层中的版本列表；
-- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区，例如`s cli fc layer version --layer-name layerName --region cn-hangzhou`；
+- **有资源描述文件（Yaml）时**，可以直接执行`s layer versions --layer-name layerName`获取指定层中的版本列表；
+- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区，例如`s cli fc layer versions --layer-name layerName --region cn-hangzhou`；
 
 上述命令的执行结果示例：
 
@@ -384,76 +380,6 @@ fc-deploy-test:
       - python2.7
 ```
 
-## layer delete 命令
-
-`layer delete` 命令，是删除指定层的命令，其整体形式与[remove layer](./remove.md#remove-layer-命令)一致（可以认为这是一个功能，不同指令下的同种表现）。
-
-当执行命令`layer delete -h`/`layer delete --help`时，可以获取帮助文档：
-
-```shell script
-Layer delete
-
-  Delete layer 
-
-Usage
-
-  s layer delete <options>
-                
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/command/layer.md
-                           
-Options
-    
-  --region [string]            [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
-  --layer-name [string]        [Required] Delete all versions of the specified layer     
-  --version-id [number]        [Optional] Only delete the version of the specified layer                           
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]      [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s layer delete --layer-name layerName
-
-Examples with CLI
-
-  $ s cli fc layer delete --region cn-hangzhou --layer-name layerName
-```
-
-### 参数解析
-
-| 参数全称   | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
-| ---------- | -------- | -------------- | ------------- | ------------------------------------------------------------ |
-| region     | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| layer-name | -        | 选填           | 必填          | 层名称                                                       |
-| version-id | -        | 选填           | 必填          | 层版本，如果指定--version，仅删除指定层的版本，如果指定--version，仅删除指定层的版本 |
-| access     | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug      | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help       | h        | 选填           | 选填          | 查看帮助信息                                                 |
-
-### 操作案例
-
-- **有资源描述文件（Yaml）时**，可以直接执行`s layer delete --layer-name layerName`删除层；
-- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区，例如`s cli fc layer delete --region cn-hangzhou --layer-name demo`；
-
-上述命令的执行结果示例：
-
-```text
-Layer [demo] deleted successfully.
-```
-
 ## 权限与策略说明
 
 - `layer list`、`layer version`与`layer detail` 命令所需要的权限策略： `AliyunFCReadOnlyAccess`
@@ -466,21 +392,6 @@ Layer [demo] deleted successfully.
       "Statement": [
           {
               "Action": "fc:CreateLayerVersion",
-              "Effect": "Allow",
-              "Resource": "acs:fc:<region>:<account-id>:layers/<layerName>/versions/*"
-          }
-      ]
-  }
-  ```
-
-- `layer delete` 命令所需要的权限策略：
-
-  ```json
-  {
-      "Version": "1",
-      "Statement": [
-          {
-              "Action": "fc:DeleteLayerVersion",
               "Effect": "Allow",
               "Resource": "acs:fc:<region>:<account-id>:layers/<layerName>/versions/*"
           }

@@ -12,9 +12,7 @@
 - [provision get 命令](#provision-get-命令)
   - [参数解析](#参数解析-2)
   - [操作案例](#操作案例-2)
-- [provision delete 命令](#provision-delete-命令)
-  - [参数解析](#参数解析-3)
-  - [操作案例](#操作案例-3)
+- [remove provision](./remove.md#remove-provision-命令)
 - [权限与策略说明](#权限与策略说明)
 
 >  ⚠️ 注意：**预留资源会持续产生费用，如果不需要请及时释放资源**
@@ -43,16 +41,14 @@ SubCommand List
   list      View the list of resource reservation; help command [s provision list -h] 
   put       Put resource reservation; help command [s provision put -h] 
   get       Get resource reservation; help command [s provision get -h] 
-  delete    Delete resource reservation; help command [s provision delete -h] 
 ```
 
 
-在该命令中，包括了四个子命令：
+在该命令中，包括了三个子命令：
 
 - [list：查看预留列表](#provision-list-命令)
 - [put：配置预留（配置规则，包括缩减到0，即删除预留）](#provision-put-命令)
 - [get：获取预留配置详情](#provision-get-命令)
-- [delete：删除指定预留配置](#provision-delete-命令)
 
 ## provision list 命令
 
@@ -209,8 +205,8 @@ Examples with CLI
 | region        | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
 | service-name  | -        | 选填           | 必填          | 服务名                                                       |
 | function-name | -        | 选填           | 必填          | 版本描述                                                     |
-| config        |          | 选填           | 选填          |                                                              |
-| qualifier     |          | 选填           | 选填          | 配置预留的版本，仅支持服务的 LATEST 和别名                   |
+| config        |          | 选填           | 选填          | 定时伸缩与弹性伸缩配置                |
+| qualifier     |          | 选填           | 必填          | 配置预留的版本，仅支持服务的 LATEST 和别名                   |
 | target        |          | 选填           | 选填          | 预留实例数量，target 如果大于0，配置函数预留，**预留资源会持续产生费用，如果不需要请及时释放资源**；target 如果等于0，释放预留资源；`--target`参数的权重大于`--config`中的`target`，即如果`config`的配置文件中和参数指定同时存在`target`配置，优先使用参数中的`target`配置 |
 | access        | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
 | debug         | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
@@ -263,23 +259,23 @@ fc-deploy-test:
 
 | 参数名             | 类型   | 是否必填 | 示例                 | 描述                                                         |
 | ------------------ | ------ | -------- | -------------------- | ------------------------------------------------------------ |
-| name               | string | 否       | demoScheduler        | 定时任务的名称。                                             |
-| startTime          | string | 否       | 2020-10-10T10:10:10Z | 定时伸缩的起始生效时间。                                     |
-| endTime            | string | 否       | 2020-12-10T10:10:10Z | 定时伸缩的结束生效时间。                                     |
-| target             | number | 否       | 10                   | 预留的目标资源个数。                                         |
-| scheduleExpression | string | 否       | cron(0 30 8 * * *)   | 定时信息，支持两种格式。<br>   - At expressions - "at(yyyy-mm-ddThh:mm:ss)"：只调度一次，使用UTC格式。<br/>   - Cron expressions - "cron(0 0 20 * * *)"：调度多次，使用标准crontab格式，如：每天20:00进行调度。 |
+| name               | string | 是       | demoScheduler        | 定时任务的名称。                                             |
+| startTime          | string | 是       | 2020-10-10T10:10:10Z | 定时伸缩的起始生效时间。                                     |
+| endTime            | string | 是       | 2020-12-10T10:10:10Z | 定时伸缩的结束生效时间。                                     |
+| target             | number | 是       | 10                   | 预留的目标资源个数。                                         |
+| scheduleExpression | string | 是       | cron(0 30 8 * * *)   | 定时信息，支持两种格式。<br>   - At expressions - "at(yyyy-mm-ddThh:mm:ss)"：只调度一次，使用UTC格式。<br/>   - Cron expressions - "cron(0 0 20 * * *)"：调度多次，使用标准crontab格式，如：每天20:00进行调度。 |
 
 其中`targetTrackingPolicies`参数的数据结构为：
 
 | 参数名       | 类型           | 是否必填 | 示例                              | 描述                     |
 | ------------ | -------------- | -------- | --------------------------------- | ------------------------ |
-| name         | string         | 否       | demoScheduler                     | 定时任务的名称。         |
-| startTime    | string         | 否       | 2020-10-10T10:10:10Z              | 定时伸缩的起始生效时间。 |
-| endTime      | string         | 否       | 2020-12-10T10:10:10Z              | 定时伸缩的结束生效时间。 |
-| metricType   | string         | 否       | ProvisionedConcurrencyUtilization | 追踪的指标类型。         |
-| metricTarget | number(double) | 否       | 0.6                               | 指标的追踪值。           |
-| minCapacity  | number         | 否       | 10                                | 缩容的最小值。           |
-| maxCapacity  | number         | 否       | 100                               | 扩容的最大值。           |
+| name         | string         | 是       | demoScheduler                     | 定时任务的名称。         |
+| startTime    | string         | 是       | 2020-10-10T10:10:10Z              | 定时伸缩的起始生效时间。 |
+| endTime      | string         | 是       | 2020-12-10T10:10:10Z              | 定时伸缩的结束生效时间。 |
+| metricType   | string         | 是       | ProvisionedConcurrencyUtilization | 追踪的指标类型。         |
+| metricTarget | number(double) | 是       | 0.6                               | 指标的追踪值。           |
+| minCapacity  | number         | 是       | 10                                | 缩容的最小值。           |
+| maxCapacity  | number         | 是       | 100                               | 扩容的最大值。           |
 
 ## provision get 命令
 
@@ -361,78 +357,6 @@ fc-deploy-test:
   targetTrackingPolicies: []
 ```
 
-## provision delete 命令
-
-`provision delete` 命令，是删除预留相关配置的命令，其整体形式与[remove provision](./remove.md#remove-provision-命令)一致（可以认为这是一个功能，不同指令下的同种表现）。
-
-当执行命令`provision delete -h`/`provision delete --help`时，可以获取帮助文档：
-
-```shell script
-Provision delete
-
-  Delete provision 
-
-Usage
-
-  s provision delete <options>
-                
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/command/provision.md
-                           
-Options
-    
-  --region [string]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
-  --service-name [string]             [C-Required] Specify the fc service name  
-  --function-name [string]            [C-Required] Specify the fc function name                         
-  --qualifier string                  [C-Required] Specify the qualifier parameter. Only supports LATEST and alias                           
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]      [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s provision delete --qualifier alias
-
-Examples with CLI
-
-  $ s cli fc provision delete --region cn-hangzhou --service-name serviceName --function-name functionName --qualifier alias   
-```
-
-### 参数解析
-
-| 参数全称      | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
-| ------------- | -------- | -------------- | ------------- | ------------------------------------------------------------ |
-| region        | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| service-name  | -        | 选填           | 必填          | 服务名                                                       |
-| function-name | -        | 选填           | 必填          | 版本描述                                                     |
-| qualifier     |          | 选填           | 选填          | 配置预留的版本，仅支持服务的 LATEST 和别名                   |
-| access        | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug         | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help          | h        | 选填           | 选填          | 查看帮助信息                                                 |
-
-### 操作案例
-
-- **有资源描述文件（Yaml）时**，可以直接执行`s provision delete --qualifier qualifier`获取预留实例详情；
-- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区以及服务名称，例如`s cli fc provision delete --region cn-hangzhou --service-name fc-deploy-service --qualifier release`；
-
-上述命令的执行结果示例：
-
-```text
-Proivision qualifier [release] deleted successfully.
-```
-
 ## 权限与策略说明
 
 - `provision list`与`provision get` 命令所需要的权限策略： `AliyunFCReadOnlyAccess`
@@ -451,20 +375,3 @@ Proivision qualifier [release] deleted successfully.
       ]
   }
   ```
-
-- `provision delete` 命令所需要的权限策略：
-
-  ```json
-  {
-      "Version": "1",
-      "Statement": [
-          {
-              "Action": "fc:PutProvisionConfig",
-              "Effect": "Allow",
-              "Resource": "acs:fc:<region>:<account-id>:services/services/<serviceName>.<qualifier>/functions/<functionName>"
-          }
-      ]
-  }
-  ```
-
-

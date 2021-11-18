@@ -9,9 +9,7 @@
 - [version publish 命令](#version-publish-命令)
   - [参数解析](#参数解析-1)
   - [操作案例](#操作案例-1)
-- [version delete 命令](#version-delete-命令)
-  - [参数解析](#参数解析-2)
-  - [操作案例](#操作案例-2)
+- [remove version 命令](./remove.md#remove-version-命令)
 - [权限与策略说明](#权限与策略说明)
 
 > 关于 `version` 命令的常见问题和解决方法，可以参考[ FC 组件自动问答系统](http://qa.devsapp.cn/ ) 。
@@ -37,15 +35,13 @@ SubCommand List
 
   list      View the list of service versions; help command [s version list -h] 
   publish   Publish service version; help command [s version publish -h] 
-  delete    Delete service version; help command [s version delete -h] 
 ```
 
 
-在该命令中，包括了三个子命令：
+在该命令中，包括了两个子命令：
 
 - [list：查看版本列表](#version-list-命令)
 - [publish：发布版本](#version-publish-命令)
-- [delete：删除版本](#version-delete-命令)
 
 ## version list 命令
 
@@ -207,76 +203,6 @@ fc-deploy-test:
   lastModifiedTime: 2021-11-08T06:07:00Z
 ```
 
-## version delete 命令
-
-`version delete` 命令，是用户删除指定已发布的版本命令，其整体形式与[remove version](./remove.md#remove-version-命令)一致（可以认为这是一个功能，不同指令下的同种表现）。
-
-当执行命令`version delete -h`/`version delete --help`时，可以获取帮助文档：
-
-```shell script
-Version delete
-
-  Delete service version 
-
-Usage
-
-  s version delete <options>  
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/command/version.md
-                           
-Options
-
-  --region [string]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
-  --service-name [string]             [C-Required] Specify the fc service name  
-  --version-id [number]               [Required] The version Id                   
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]      [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s version delete --version-id 1
-
-Examples with CLI
-
-  $ s cli fc version publish --region cn-hangzhou --service-name serviceName --version-id 1
-```
-
-### 参数解析
-
-| 参数全称     | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
-| ------------ | -------- | -------------- | ------------- | ------------------------------------------------------------ |
-| region       | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| service-name | -        | 选填           | 必填          | 服务名                                                       |
-| version-id   | -        | 必填           | 必填          | 版本Id                                                       |
-| access       | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug        | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help         | h        | 选填           | 选填          | 查看帮助信息                                                 |
-
-### 操作案例
-
-- **有资源描述文件（Yaml）时**，可以直接执行`s version delete --version-id versionId`删除指定`versionId`的版本；
-- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区以及服务名称，例如`s cli fc version delete --region cn-hangzhou --service-name fc-deploy-service --version-id 1`；
-
-上述命令的执行结果示例：
-
-```text
-VersionId [1] deleted successfully.
-```
-
 ## 权限与策略说明
 
 - `version list` 命令所需要的权限策略： `AliyunFCReadOnlyAccess`
@@ -289,20 +215,6 @@ VersionId [1] deleted successfully.
       "Statement": [
           {
               "Action": "fc:PublishServiceVersion",
-              "Effect": "Allow",
-              "Resource": "acs:fc:<region>:<account-id>:services/<serviceName>/versions"
-          }
-      ]
-  }
-  ```
-- `version delete` 命令所需要的权限策略：
-
-  ```yaml
-  {
-      "Version": "1",
-      "Statement": [
-          {
-              "Action": "fc:DeleteServiceVersion",
               "Effect": "Allow",
               "Resource": "acs:fc:<region>:<account-id>:services/<serviceName>/versions"
           }

@@ -34,11 +34,10 @@ Options
   --region [string]               [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1  
   --service-name [string]         [C-Required] Specify the fc service name  
   --function-name [string]        [C-Required] Specify the fc function name                                          
-  --keyword [string]              [Optional] Keyword query                                                                                                          
-  --request-id [string]           [Optional] Query according to requestId within the time interval                                                            
+  --search [string]               [Optional] Keyword query          
   -s, --start-time [datetime]     [Optional] Query log start time (timestamp or time format，like 1611827290000 or 2021-11-11T11:11:12+00:00)                                                            
   -e, --end-time [datetime]       [Optional] Query log end time (timestamp or time format，like 1611827290000 or 2021-11-11T11:11:12+00:00)        
-  -t, --tail                      [Optional] Continuous log output mode                                                    
+  --tail                          [Optional] Continuous log output mode                                                    
   --type [success/fail]           [Optional] Log type query, value: code/config/all, default: all                                             
 
 Global Options
@@ -58,6 +57,7 @@ Options Help
 Examples with Yaml
 
   $ s logs -s 2021-06-07T02:54:00+08:00 -e 2021-06-07T02:54:59+08:00 
+  $ s logs -s 2021-06-07T02:54:00+08:00 -e 2021-06-07T02:54:59+08:00 --search error
   $ s logs -t                                                        
 
 Examples with CLI
@@ -73,11 +73,10 @@ Examples with CLI
 | service-name  | -        | 选填           | 必填          | 服务名                                                       |
 | function-name | -        | 选填           | 必填          | 函数名                                                       |
 | keyword       | -        | 选填           | 选填          | 查询的关键词                                                 |
-| request-id    | -        | 选填           | 选填          | 通过RequestId进行查询                                        |
 | start-time    | s        | 选填           | 选填          | 查询的时间点起点，UTC时间或者时间戳，例如`2021-06-07T02:54:59+08:00`，`1611827290000` |
 | end-time      | e        | 选填           | 选填          | 查询的时间点终点，UTC时间或者时间戳，例如`2021-06-07T02:54:59+08:00`，`1611827290000` |
-| tail          | t        | 选填           | 选填          | 以`tail`模式进行日志输出                                     |
-| type          | -        | 选填           | 选填          | 查询的日志型，成功或者失败,取值范围：`success, fail`         |
+| tail          | -        | 选填           | 选填          | 以`tail`模式进行日志输出                                     |
+| type          | -        | 选填           | 选填          | 查询的日志类型，成功或者失败,取值范围：`success, fail`         |
 | access        | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
 | debug         | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
 | help          | h        | 选填           | 选填          | 查看帮助信息                                                 |
@@ -99,7 +98,7 @@ FC Invoke Start RequestId: de4812be-9137-4a33-9869-370cb61ac427
 FC Invoke End RequestId: de4812be-9137-4a33-9869-370cb61ac427
 ```
 
-如果需要以`tail`模式进行日志的查询，可以增加`-t`/`--tail`参数，例如`s logs -t`/`s logs --tail`；
+如果需要以`tail`模式进行日志的查询，可以增加`--tail`参数，例如`s logs --tail`；
 
 查询指定时间段的日志，可以通过增加`--start-time`和`--end-time`参数实现，例如`s logs -s 2021-11-04T15:40:00 -e 2021-11-04T15:45:00`；
 

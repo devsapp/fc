@@ -219,7 +219,7 @@ Usage
 Document
   
   https://github.com/devsapp/fc/blob/main/docs/command/remove.md
-                           
+
 Options
 
   --region [string]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
@@ -419,7 +419,7 @@ Custom domain [anycodes.cn] deleted successfully.
 
 ## remove version 命令
 
-`remove version` 命令，是用户删除指定已发布的版本命令，其整体形式与[alias delete](./alias.md#alias-delete-命令)一致（可以认为这是一个功能，不同指令下的同种表现）。
+`remove version` 命令，是用户删除指定已发布的版本命令。
 
 当执行命令`remove version -h`/`remove version --help`时，可以获取帮助文档：
 
@@ -491,7 +491,7 @@ VersionId [1] deleted successfully.
 
 ## remove alias 命令
 
-`remove alias` 命令，是删除指定函数别名的命令，其整体形式与[alias delete](./alias.md#alias-delete-命令)一致（可以认为这是一个功能，不同指令下的同种表现）。
+`remove alias` 命令，是删除指定函数别名的命令。
 
 当执行命令`remove alias -h`/`remove alias --help`时，可以获取帮助文档：
 
@@ -562,7 +562,7 @@ AliasName [pre] deleted successfully.
 
 ## remove provision 命令
 
-`remove provision` 命令，是删除预留相关配置的命令，其整体形式与[provision delete](./provision.md#provision-delete-命令)一致（可以认为这是一个功能，不同指令下的同种表现）。
+`remove provision` 命令，是删除预留相关配置的命令。
 
 当执行命令`remove provision -h`/`remove provision --help`时，可以获取帮助文档：
 
@@ -616,7 +616,7 @@ Examples with CLI
 | region        | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
 | service-name  | -        | 选填           | 必填          | 服务名                                                       |
 | function-name | -        | 选填           | 必填          | 版本描述                                                     |
-| qualifier     |          | 选填           | 选填          | 配置预留的版本，仅支持服务的 LATEST 和别名                   |
+| qualifier     |          | 选填           | 选填          | 配置预留的版本，仅支持服务的 LATEST 和别名。如果指定`qualifier`，则仅清除此`qualifier`下的预留资源；如果未指定，将清除此服务下所有版本的预留资源                   |
 | access        | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
 | debug         | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
 | help          | h        | 选填           | 选填          | 查看帮助信息                                                 |
@@ -635,7 +635,7 @@ Proivision qualifier [release] deleted successfully.
 
 ## remove ondemand 命令
 
-`remove ondemand` 命令，是删除指定函数按量资源的命令，其整体形式与[ondemand delete](./ondemand.md#ondemand-delete-命令)一致（可以认为这是一个功能，不同指令下的同种表现）。
+`remove ondemand` 命令，是删除指定函数按量资源的命令。
 
 当执行命令`remove ondemand -h`/`remove ondemand --help`时，可以获取帮助文档：
 
@@ -708,7 +708,7 @@ Ondemand [*] deleted successfully.
 
 ## remove layer 命令
 
-`remove layer` 命令，是删除指定层的命令，其整体形式与[layer delete](./layer.md#layer-delete-命令)一致（可以认为这是一个功能，不同指令下的同种表现）。
+`remove layer` 命令，是删除指定层版本的命令。
 
 当执行命令`remove layer -h`/`remove layer --help`时，可以获取帮助文档：
 
@@ -760,7 +760,7 @@ Examples with CLI
 | ---------- | -------- | -------------- | ------------- | ------------------------------------------------------------ |
 | region     | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
 | layer-name | -        | 选填           | 必填          | 层名称                                                       |
-| version-id | -        | 选填           | 必填          | 层版本，如果指定--version，仅删除指定层的版本，如果指定--version，仅删除指定层的版本 |
+| version-id | -        | 选填           | 选填          | 指定层版本。如果指定--version-id，仅删除指定指定层的版本；否则删除层的所有的版本 |
 | access     | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
 | debug      | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
 | help       | h        | 选填           | 选填          | 查看帮助信息                                                 |
