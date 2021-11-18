@@ -301,24 +301,7 @@ template.yml
 
 #### 最小权限
 
-- 当 `nasConfig` 不为 `auto`
-
-**自定义策略**
-
-```json
-{
-    "Statement":[
-        {
-            "Action":"ram:PassRole",
-            "Effect":"Allow",
-            "Resource":"*"
-        }
-    ],
-    "Version":"1"
-}
-```
-
-- 当 `nasConfig` 为 `auto`
+执行命令时，需要检测、部署、调用辅助函数，如果执行 `nas init` 时 `nasConfig` 为 `auto` 需要创建 nas 的相关资源，因此需要如下权限：
 
 **系统策略**：`AliyunNasReadOnlyAccess`
 
