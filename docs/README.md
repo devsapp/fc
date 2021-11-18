@@ -36,11 +36,12 @@
 | 构建&部署 | 可观测性 | 调用&调试 |  发布&配置  |  其他功能 |
 | --- | --- | --- |--- | --- |
 | [**部署 deploy**](./command/deploy.md)   | [指标查询 metrics](./command/metrics.md) | [**本地调用 local**](./command/local.md)      | [**版本 version**](./command/version.md)      | [**硬盘挂载 nas**](./command/nas.md) | 
-| [**构建 build**](./command/build.md)     | [日志查询 logs](./command/logs.md)       | [远程调用 invoke](./command/invoke.md)    | [**别名 alias**](./command/alias.md)         | [查看函数 info](./command/info.md)  | 
-| [移除 remove](./command/remove.md)   |                                              | [**端云联调 proxied**](./command/proxied.md) | [预留 provision](./command/provision.md)   | [**资源同步 sync**](./command/sync.md) | 
-|                                          |                                              | [远程调试 remote](./command/remote.md)    | [按量资源 ondemand](./command/ondemand.md) | [压测 stress](./command/stress.md) | 
-|                                          |                                              | [内存&并发度探测 eval](./command/eval.md)  | [层 layer](./command/layer.md) | [Fun项目迁移 fun2s](./command/fun2s.md)                     | 
-|                                          |                                              |   |  | [API调用 api](./command/api.md)                     | 
+| [**构建 build**](./command/build.md)     | [日志查询 logs](./command/logs.md)       | [远程调用 invoke](./command/invoke.md)    | [**别名 alias**](./command/alias.md)         | [计划变更 plan](./command/plan.md)  | 
+| [移除 remove](./command/remove.md)   |                                              | [**端云联调 proxied**](./command/proxied.md) | [预留 provision](./command/provision.md)   | [查看函数 info](./command/info.md) | 
+|                                          |                                              | [远程调试 remote](./command/remote.md)    | [按量资源 ondemand](./command/ondemand.md) | [**资源同步 sync**](./command/sync.md) | 
+|                                          |                                              | [内存&并发度探测 eval](./command/eval.md)  | [层 layer](./command/layer.md) |   [压测 stress](./command/stress.md)                   | 
+|                                          |                                              |   |  | [API调用 api](./command/api.md)                    
+|                                          |                                              |   |  | [Fun项目迁移 fun2s](./command/fun2s.md)  | 
 
 在使用函数计算（FC）组件时，还会涉及到资源描述文件的编写，关于函数计算（FC）组件的 Yaml 规范可以参考[**函数计算（FC） Yaml 规范文档**](./yaml.md)，除此之外，在使用本组件的时候，还会有一些[小 Tips ](./tips.md) 可供学习和了解，例如[如何部署大于50M的代码包](./tips.md#超过50M的代码包如何部署)，[如何部署多个函数](./tips.md#如何部署多个函数) ......
 
