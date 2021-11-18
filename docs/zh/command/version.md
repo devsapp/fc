@@ -9,7 +9,7 @@
 - [version publish 命令](#version-publish-命令)
   - [参数解析](#参数解析-1)
   - [操作案例](#操作案例-1)
-- [remove version 命令](./remove.md#remove-version-命令)
+- [remove version 命令](remove.md#remove-version-命令)
 - [权限与策略说明](#权限与策略说明)
 
 > 关于 `version` 命令的常见问题和解决方法，可以参考[ FC 组件自动问答系统](http://qa.devsapp.cn/ ) 。

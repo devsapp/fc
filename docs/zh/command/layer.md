@@ -15,7 +15,7 @@
 - [layer versions 命令](#layer-versions-命令)
   - [参数解析](#参数解析-3)
   - [操作案例](#操作案例-3)
-- [remove layer 命令](./remove.md#remove-layer-命令)
+- [remove layer 命令](remove.md#remove-layer-命令)
 - [权限与策略说明](#权限与策略说明)
 
 > 关于 `layer` 命令的常见问题和解决方法，可以参考[ FC 组件自动问答系统](http://qa.devsapp.cn/ ) 。

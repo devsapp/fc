@@ -57,9 +57,9 @@
 
 ### 从 Funcraft 迁移到 Serverless Devs 的方法
 
-- **【推荐】Yaml 格式切换**：这种方法是将 Funcarft 规范的资源描述文档（例如`template.yaml`文件），转换成符合 Serverless Devs 规范且使用 FC 组件的资源描述文档（例如`s.yaml`文件），可以参考[ fun2s 命令相关文档](./command/fun2s.md) ，进行一键转换；
-- **资源信息重新同步**：这种方法是将线上的函数资源，直接同步到本地，包括线上函数的代码和相关的配置（此时的配置是符合 Serverless Devs 规范且使用 FC 组件的资源描述文档，例如 `s.yaml`），可以参考[ sync 命令相关文档](./command/sync.md) ，进行快速同步；
+- **【推荐】Yaml 格式切换**：这种方法是将 Funcarft 规范的资源描述文档（例如`template.yaml`文件），转换成符合 Serverless Devs 规范且使用 FC 组件的资源描述文档（例如`s.yaml`文件），可以参考[ fun2s 命令相关文档](command/fun2s.md) ，进行一键转换；
+- **资源信息重新同步**：这种方法是将线上的函数资源，直接同步到本地，包括线上函数的代码和相关的配置（此时的配置是符合 Serverless Devs 规范且使用 FC 组件的资源描述文档，例如 `s.yaml`），可以参考[ sync 命令相关文档](command/sync.md) ，进行快速同步；
 
 ### 从 Fcli 迁移到 Serverless Devs 的方法
 
-从 Fcli 迁移到 Serverless Devs 的项目，通常是进行函数管理或者是与自动化脚本集成的需求，此时可以考虑使用[ API 相关能力](./command/api.md) 直接进行迁移，FC组件的[ API 能力](./command/api.md) 是直接操作函数计算 API 的功能；
+从 Fcli 迁移到 Serverless Devs 的项目，通常是进行函数管理或者是与自动化脚本集成的需求，此时可以考虑使用[ API 相关能力](command/api.md) 直接进行迁移，FC组件的[ API 能力](command/api.md) 是直接操作函数计算 API 的功能；

@@ -12,7 +12,7 @@
 - [provision get 命令](#provision-get-命令)
   - [参数解析](#参数解析-2)
   - [操作案例](#操作案例-2)
-- [remove provision](./remove.md#remove-provision-命令)
+- [remove provision](remove.md#remove-provision-命令)
 - [权限与策略说明](#权限与策略说明)
 
 >  ⚠️ 注意：**预留资源会持续产生费用，如果不需要请及时释放资源**
