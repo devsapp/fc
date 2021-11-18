@@ -139,8 +139,8 @@ fc-deploy-test:
     | -------- | -------- | -------------- | -------------- | -------- | ------------------------ | ------------------------------------ |
     | 存在     | 存在     | 与线上一致     | 与线上一致     | 无交互   | 线上服务与函数将会被更新 | 线上服务与函数不做任何操作           |
     | 存在     | 不存在   | 与线上一致     | -              | 无交互   | 线上服务与函数将会被更新 | 线上服务不做任何操作，函数将会被创建 |
-    | 不存在   | 不存在   | -              | -              | 无交互   | 线上服务与函数将会被更新 | 线上服务与函数将会被更新             |
-    | 不存在   | 不存在   | 与线上不一致   | 与线上不一致   | 有交互   | 线上服务与函数将会被更新 | 线上服务与函数不做任何操作           |
+    | 不存在   | 不存在   | -              | -              | 无交互   | 线上服务与函数将会被更新 | 线上服务与函数将会被创建             |
+    | 存在   | 存在   | 与线上不一致   | 与线上不一致   | 有交互   | 线上服务与函数将会被更新 | 线上服务与函数不做任何操作 |
 
     > 线上服务&线上函数：指的是已经部署过的服务和函数；
     >
@@ -174,7 +174,7 @@ fc-deploy-test:
 
 ## deploy service 命令
 
-`deploy service` 命令，是服务资源的命令。
+`deploy service` 命令，是部署服务资源的命令。
 
 当执行命令`deploy service -h`/`deploy service --help`时，可以获取帮助文档：
 
@@ -244,7 +244,7 @@ fc-deploy-test:
 
 ## deploy function 命令
 
-`deploy function` 命令，是服务资源的命令。
+`deploy function` 命令，是部署函数的命令。
 
 当执行命令`deploy function -h`/`deploy function --help`时，可以获取帮助文档：
 
@@ -325,7 +325,7 @@ fc-deploy-test:
 
 ## deploy trigger 命令
 
-`deploy trigger` 命令，是服务资源的命令。
+`deploy trigger` 命令，是部署函数触发器的命令。
 
 当执行命令`deploy trigger -h`/`deploy trigger --help`时，可以获取帮助文档：
 
@@ -376,7 +376,7 @@ Examples with Yaml
 
 | 参数全称     | 参数缩写 | Yaml模式下必填 | 参数含义                                                     |
 | ------------ | -------- | -------------- | ------------------------------------------------------------ |
-| trigger-name | -        | 选填           | 触发器名称                                                   |
+| trigger-name | -        | 选填           | 仅部署指定的触发器名称 |
 | use-local    | -        | 选填           | 使用本地配置进行部署                                         |
 | user-remote  | -        | 选填           |                                                              |
 | assume-yes   | y        | 选填           | 在交互时，默认选择`y`                                        |
@@ -413,7 +413,7 @@ $ s deploy trigger --trigger-name httpTrigger
 
 ## deploy domain 命令
 
-`deploy domain` 命令，是服务资源的命令。
+`deploy domain` 命令，是部署自定义域名的命令。
 
 当执行命令`deploy domain -h`/`deploy domain --help`时，可以获取帮助文档：
 
@@ -462,9 +462,9 @@ Examples with Yaml
 
 | 参数全称    | 参数缩写 | Yaml模式下必填 | 参数含义                                                     |
 | ----------- | -------- | -------------- | ------------------------------------------------------------ |
-| domain      | -        | 选填           | 域名                                                         |
-| use-local   | -        | 选填           | 使用本地配置进行部署                                         |
-| user-remote | -        | 选填           |                                                              |
+| domain      | -        | 选填           | 仅操作指定域名 |
+| use-local   | -        | 选填           | 使用本地配置进行部署 |
+| user-remote | -        | 选填           | 使用线上配置 |
 | assume-yes  | y        | 选填           | 在交互时，默认选择`y`                                        |
 | access      | a        | 选填           | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
 | debug       | -        | 选填           | 打开`debug`模式，将会输出更多日志信息                        |
@@ -489,7 +489,7 @@ fc-deploy-test:
 
 > 在进行服务资源部署时，可能会涉及到交互式操作，相关的描述参考[ deploy 命令 注意事项](#注意事项) 中的`在部署时可能会涉及到交互式操作`。
 
-单独部署某个指定的自定义域名，可以通过增加`--dimai`参数实现，参考命令：
+单独部署某个指定的自定义域名，可以通过增加`--domain`参数实现，参考命令：
 
 ```
 $ s deploy domain --domain http-trigger-py36.fc-deploy-service.1583208943291465.cn-hangzhou.fc.devsapp.net
