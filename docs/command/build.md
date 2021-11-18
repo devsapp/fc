@@ -54,9 +54,9 @@ Examples with Yaml
 
 | 参数全称     | 参数缩写 | Cli模式下必填 | 参数含义                              |
 | ------------ | -------- | ------------- | ------------------------------------- |
-| dockerfile   | f        | 选填          |                                       |
-| use-docker   | d        | 选填          |                                       |
-| use-buildkit | b        | 选填          |                                       |
+| dockerfile   | f        | 选填          | 指定构建自定义镜像的文件 |
+| use-docker   | d        | 选填          | 通过 docker 构建 |
+| use-buildkit | b        | 选填          | 通过 buildctl 构建 |
 | debug        | -        | 选填          | 打开`debug`模式，将会输出更多日志信息 |
 | help         | h        | 选填          | 查看帮助信息                          |
 

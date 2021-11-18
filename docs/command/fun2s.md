@@ -55,8 +55,8 @@ Examples with CLI
 
 | 参数全称 | 参数缩写 | Cli模式下必填 | 参数含义                                                     |
 | -------- | -------- | ------------- | ------------------------------------------------------------ |
-| force    | -        | 选填          | 强行覆盖已存在/已指定的 Serverless Devs 资源描述文档         |
-| region   | -        | 选填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
+| force    | -        | 选填          | 强行覆盖已存在/已指定的 Serverless Devs 资源描述文件 |
+| region   | -        | 选填          | 地区，默认读取 Funcraft 的配置。取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
 | source   | -        | 选填          | Funcraft的配置文档路径（默认是`template.yaml`/`template.yml`） |
 | target   | -        | 选填          | 生成的 Serverless Devs 的配置文档路径（默认是`s.yaml`）      |
 | access   | a        | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |

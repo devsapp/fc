@@ -12,9 +12,7 @@
 - [alias publish 命令](#alias-publish-命令)
   - [参数解析](#参数解析-2)
   - [操作案例](#操作案例-2)
-- [alias delete 命令](#alias-delete-命令)
-  - [参数解析](#参数解析-3)
-  - [操作案例](#操作案例-3)
+- [remove alias 命令](./remove.md#remove-alias-命令)
 - [权限与策略说明](#权限与策略说明)
 
 > 关于 `alias` 命令的常见问题和解决方法，可以参考[ FC 组件自动问答系统](http://qa.devsapp.cn/ ) 。
@@ -41,16 +39,14 @@ SubCommand List
   get       Get alias details; help command [s alias get -h]               
   list      View the list of alias; help command [s alias list -h] 
   publish   Publish alias; help command [s alias publish -h]  
-  delete    Delete alias; help command [s alias delete -h]  
 ```
 
 
-在该命令中，包括了四个子命令：
+在该命令中，包括了三个子命令：
 
 - [get：查看指定别名详情](#alias-get-命令)
 - [list：获取别名列表](#alias-list-命令)
 - [publish：发布/更新别名](#alias-publish-命令)
-- [delete：删除指定别名](#version-delete-命令)
 
 ## alias get 命令
 
@@ -276,9 +272,9 @@ Examples with CLI
 | service-name | -        | 选填           | 必填          | 服务名                                                       |
 | description  | -        | 选填           | 选填          | 别名描述                                                     |
 | alias-name   | -        | 必填           | 必填          | 别名                                                         |
-| gversion     | -        | 选填           | 选填          | 灰度版本Id                                                   |
+| gversion     | -        | 选填           | 选填          | 灰度版本Id。灰度版本权重填写时必填|
 | version-id   | -        | 必填           | 必填          | 版本Id                                                       |
-| weight       | -        | 选填           | 选填          | 灰度版本权重                                                 |
+| weight       | -        | 选填           | 选填          | 灰度版本权重。灰度版本Id填写时必填 |
 | access       | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
 | debug        | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
 | help         | h        | 选填           | 选填          | 查看帮助信息                                                 |
@@ -312,76 +308,6 @@ fc-deploy-test:
   lastModifiedTime:        2021-11-08T06:54:02Z
 ```
 
-## alias delete 命令
-
-`alias delete` 命令，是删除指定函数别名的命令。
-
-当执行命令`alias delete -h`/`alias delete --help`时，可以获取帮助文档：
-
-```shell script
-Alias delete
-
-  Delete alias 
-
-Usage
-
-  s alias delete <options> 
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/command/alias.md
-                               
-Options
-
-  --region [string]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
-  --service-name [string]        	  [C-Required] Specify the fc service name  
-  --alias-name [string]            	  [Required] Specify the fc alias name 
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]      [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/zh/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s alias delete --alias-name aliasName 
-
-Examples with CLI
-
-  $ s cli fc alias delete --region cn-hangzhou --service-name serviceName --alias-name aliasName 
-```
-
-### 参数解析
-
-| 参数全称     | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
-| ------------ | -------- | -------------- | ------------- | ------------------------------------------------------------ |
-| region       | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| service-name | -        | 选填           | 必填          | 服务名                                                       |
-| alias-name   | -        | 必填           | 必填          | 别名                                                         |
-| access       | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug        | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help         | h        | 选填           | 选填          | 查看帮助信息                                                 |
-
-### 操作案例
-
-- **有资源描述文件（Yaml）时**，可以直接执行`s alias delete --alias-name aliasName`删除指定别名；
-- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区以及服务名称，例如`s cli fc alias delete --region cn-hangzhou --service-name fc-deploy-service --alias-name pre`；
-
-上述命令的执行结果示例：
-
-```text
-AliasName [pre] deleted successfully.
-```
-
 ## 权限与策略说明
 
 - `alias list` 与 `alias get` 命令所需要的权限策略： `AliyunFCReadOnlyAccess`
@@ -396,23 +322,6 @@ AliasName [pre] deleted successfully.
               "Action": [
                   "fc:CreateAlias",
                   "fc:UpdateAlias"
-              ],
-              "Effect": "Allow",
-              "Resource": "acs:fc:<region>:<account-id>:services/<serviceName>/aliases/*"
-          }
-      ]
-  }
-  ```
-
-- `alias delete` 命令所需要的权限策略：
-
-  ```
-  {
-      "Version": "1",
-      "Statement": [
-          {
-              "Action": [
-                  "fc:DeleteAlias"
               ],
               "Effect": "Allow",
               "Resource": "acs:fc:<region>:<account-id>:services/<serviceName>/aliases/*"

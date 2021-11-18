@@ -1672,8 +1672,8 @@ customDomains:
 | 参数名      | 必填  | 类型   | 参数描述 |
 | ----------- | ----- | ------ | -------- |
 | certName    | False | String | 证书名称 |
-| privateKey  | False | String | 表示私钥 |
-| certificate | False | String | 表示证书 |
+| privateKey  | False | String | 表示私钥，仅支持 PEM 格式 |
+| certificate | False | String | 表示证书，仅支持 PEM 格式 |
 
 ### routeConfigs
 

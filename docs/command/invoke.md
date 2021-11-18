@@ -37,6 +37,7 @@ Options
                                    Http function: A file containing http request options sent to http trigger                                                                  
   -s, --event-stdin [string]      [Optional] Read from standard input, to support script pipeline                                                      
   --invocation-type [async/sync]  [Optional] Invocation type, value: async/sync, default: sync                                                                                                
+  --stateful-async-invocation-id  [Optional] Stateful asynchronous invocation, only takes effect when --invocation-type=async                           
 
 Global Options
 
@@ -76,6 +77,7 @@ Examples with CLI
 | event-file      | f        | 选填           | 选填          | 事件文件                                                     |
 | event-stdin     | s        | 选填           | 选填          | 事件输入                                                     |
 | invocation-type | -        | 选填           | 选填          | 调用类型，取值范围：`async, sync`，默认：`sync`              |
+| stateful-async-invocation-id | -        | 选填           | 选填          | 有状态的异步调用     |
 | access          | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
 | debug           | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
 | help            | h        | 选填           | 选填          | 查看帮助信息                                                 |
@@ -105,21 +107,14 @@ Hello world!
 
 在进行调用时，如果需要指定相对应的事件，例如oss的事件，cdn的事件......这些事件的格式，可以通过命令`s cli fc-event`获取：
 
-```
-┌────────────┬───────────────────────┬──────────┬───────────────────────────┐
-│    方法     │       方法说明         │ 入参示例   │      命令行调用示例         │
-├────────────┼───────────────────────┼──────────┼───────────────────────────┤
-│ cdn        │ CDN 触发器事件          │          │ s cli fc-event cdn        │
-├────────────┼───────────────────────┼──────────┼───────────────────────────┤
-│ mns        │ MNS 触发器事件          │          │ s cli fc-event mns        │
-├────────────┼───────────────────────┼──────────┼───────────────────────────┤
-│ oss        │ OSS 触发器事件          │          │ s cli fc-event oss        │
-├────────────┼───────────────────────┼──────────┼───────────────────────────┤
-│ sls        │ SLS 触发器事件          │          │ s cli fc-event sls        │
-├────────────┼───────────────────────┼──────────┼───────────────────────────┤
-│ tablestore │ TableStore 触发器事件   │          │ s cli fc-event tablestore │
-└────────────┴───────────────────────┴──────────┴───────────────────────────┘
-```
+| 方法 | 方法说明 | 入参示例 | 命令行调用示例 |
+| ---- | -------- | ------- |------ |
+| http | HTTP 触发器事件  |  | s cli fc-event http  |
+| cdn | CDN 触发器事件  |  | s cli fc-event cdn     |
+| mns | MNS 触发器事件  |  | s cli fc-event mns     |
+| oss | OSS 触发器事件  |  | s cli fc-event oss     |
+| sls | SLS 触发器事件  |  | s cli fc-event sls     |
+| tablestore | TableStore 触发器事件  |  | s cli fc-event tablestore     |
 
 例如：如果使用oss的事件，进行测试，此时可以执行：`s cli fc-event oss`，完成之后，可以看到系统提醒的相对路径信息：
 
