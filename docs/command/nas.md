@@ -225,7 +225,7 @@ Examples with Yaml
 
 | 参数全称 | 参数缩写 | Yaml模式下必填 | 参数含义                                                     |
 | -------- | -------- | -------------- | ------------------------------------------------------------ |
-| override | o        | 选填           |                                                              |
+| override | o        | 选填           | 覆盖现有文件 |
 | access   | a        | 选填           | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
 | debug    | -        | 选填           | 打开`debug`模式，将会输出更多日志信息                        |
 | help     | h        | 选填           | 查看帮助信息                                                 |

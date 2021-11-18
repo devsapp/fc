@@ -37,6 +37,7 @@ Options
                                    Http function: A file containing http request options sent to http trigger                                                                  
   -s, --event-stdin [string]      [Optional] Read from standard input, to support script pipeline                                                      
   --invocation-type [async/sync]  [Optional] Invocation type, value: async/sync, default: sync                                                                                                
+  --stateful-async-invocation-id  [Optional] Stateful asynchronous invocation, only takes effect when --invocation-type=async                           
 
 Global Options
 
