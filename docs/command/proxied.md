@@ -21,8 +21,8 @@
 
 > [端云联调](./proxied.md)能力与[云端调试](./remote.md)能力的区别：
 >
-> - 端云联调：本地除了一个通道服务容器，仍有一个函数计算容器，用来执行本地函数，远程的辅助函数只是单纯将远程流量发送到本地；
-> - 远程调试：本地只有一个通道服务容器，执行过程全部依赖于线上，远程函数将执行结果返回；
+> - 端云联调：函数在本地环境运行，函数流量经过线上环境；
+> - 远程调试：函数在线上环境运行，本地接收线上的运行结果；
 
 > 关于 `proxied` 命令的常见问题和解决方法，可以参考[ FC 组件自动问答系统](http://qa.devsapp.cn/ ) 。
 
@@ -36,7 +36,7 @@
 
 ![](https://img.alicdn.com/imgextra/i1/O1CN012jVmnP1mMZGWLZ1Wv_!!6000000004940-2-tps-1127-670.png)
 
-1. Serverless Devs 开发者工具会根据 Yaml  配置配置文件的内容, 创建一个辅助服务和辅助函数（这个辅助服务和 Yaml 中所声明的业务服务配置是一致的）；
+1. Serverless Devs 开发者工具会根据 Yaml  配置文件的内容, 创建一个辅助服务和辅助函数（这个辅助服务和 Yaml 中所声明的业务服务配置是一致的）；
 2. 通过对函数的触发器（包括通过 SDK/API，`s proxied invoke`命令，或者其他触发器）触发辅助函数（图中函数计算 C ），请求流量会回到本地的调试实例（图中本地环境 A ）， 这个时候本地实例(本地函数执行环境容器)收到 `event` 和 `context` 是真实来自线上的；
 3. 本地调试的实例(图中本地环境 A)运行函数逻辑，可以直接访问:
    - VPC 内网资源, 比如 RDS 、 Kafka 内网地址等；
@@ -49,7 +49,7 @@
 > - Serverless Devs 开发者工具会利用资源描述文件 `s.yaml` 中 `service` 配置 ( 例如  `vpcConfig`, `nasConfig` 等) 创建辅助资源（包括辅助服务和辅助函数）， 从而实现辅助函数(图中函数计算 C )和被调试函数一样的网络访问能力；
 > - 代码被挂载到 A 本地函数执行环境容器中；
 > - 集成开发环境和本地函数执行环境容器之间的端口映射可以通过`--debug-port `参数指定；
-> - 端云联调能力还可以非常便利的在 VSCode，Pycharm 以及 IDEA 等常用的 IDE 中使用；
+> - 端云联调的断点调试能力还可以在 vscode 以及 intellij 这些常用的 IDE 中使用；
 
 ## 命令解析
 
@@ -103,7 +103,7 @@ Document
                                
 Options
 
-  -c, --config [vscode/pycharm/idea]       [Optional] elect which IDE to use when debugging and output related debug config tips for the IDE. value: vscode/pycharm/idea                                            
+  -c, --config [vscode/intellij]       [Optional] elect which IDE to use when debugging and output related debug config tips for the IDE. value: vscode, intellij                                          
   --debug-args [string]                    [Optional] Additional parameters that will be passed to the debugger                    
   -d, --debug-port [number]                [Optional] Specify the sandboxed container starting in debug mode, and exposing this port on localhost                                                            
   --debugger-path [string]                 [Optional] The path of the debugger on the host                                 
@@ -134,11 +134,11 @@ Examples with Yaml
 
 | 参数全称      | 参数缩写 | Yaml模式下必填 | 参数含义                                                     |
 | ------------- | -------- | -------------- | ------------------------------------------------------------ |
-| config        | c        | 选填           |                                                              |
-| debug-args    | -        | 选填           |                                                              |
-| debug-port    | d        | 选填           |                                                              |
-| debugger-path | -        | 选填           |                                                              |
-| tmp-dir       | -        | 选填           |                                                              |
+| config        | c        | 选填           |指定断点调试使用的 IDE，可选：vscode, intellij|
+| debug-args    | -        | 选填           |断点调试时传入的参数|
+| debug-port    | d        | 选填           |断点调试器端口|
+| debugger-path | -        | 选填           |自定义断点调试器路径|
+| tmp-dir       | -        | 选填           |自定义函数运行环境中 /tmp 路径的本机挂载路径，默认为 ./.s/tmp/invoke/serviceName/functionName/|
 | access        | a        | 选填           | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
 | debug         | -        | 选填           | 打开`debug`模式，将会输出更多日志信息                        |
 | help          | h        | 选填           | 查看帮助信息                                                 |
@@ -205,9 +205,9 @@ Examples with Yaml
 
 | 参数全称    | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
 | ----------- | -------- | -------------- | ------------- | ------------------------------------------------------------ |
-| event       | e        | 选填           | 选填          |                                                              |
-| event-file  | f        | 选填           | 选填          |                                                              |
-| event-stdin | s        | 选填           | 选填          |                                                              |
+| event       | e        | 选填           | 选填          |event 函数：传入的 event 事件数据，可以通过命令`s cli fc-event`快速获取事件，详细操作可以参考[这里](https://github.com/devsapp/fc/blob/jiangyu-master/docs/command/invoke.md#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9);<br>http 函数：传入的请求参数，格式可以参考 [这里](https://github.com/devsapp/fc/blob/main/docs/Usage/invoke.md#invoke-http-parameter)|
+| event-file  | f        | 选填           | 选填          |将 event 参数内容以文件形式传入|
+| event-stdin | s        | 选填           | 选填          |将 event 参数内容以标准输入流形式传入|
 | access      | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
 | debug       | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
 | help        | h        | 选填           | 选填          | 查看帮助信息                                                 |
@@ -313,7 +313,7 @@ Resource cleanup succeeded.
 
 #### Intelli 断点调试案例
 
-- 步骤1: 例如需要在 IDEA 下进行调试，可以在已有的项目下，开启调试模式的端云联调能力：`$ s proxied setup --config idea --debug-port 3000`，命令执行完成功后， 本地的函数计算执行环境会阻塞等待调用(执行环境本质是一个 HTTP Server)；
+- 步骤1: 例如需要在 IDEA 下进行调试，可以在已有的项目下，开启调试模式的端云联调能力：`$ s proxied setup --config intellij --debug-port 3000`，命令执行完成功后， 本地的函数计算执行环境会阻塞等待调用(执行环境本质是一个 HTTP Server)；
 
   此时若要进行断点调试，需要进行以下的操作在 IDEA 上进行相关的配置：
 
