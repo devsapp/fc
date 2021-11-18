@@ -28,6 +28,7 @@ Commands:
   provision: 预留实例
   proxied: 端云连调
   fun2s: 将fun转化为s可读的配置
+  plan: 计划变更
 Service:
   函数计算:
     Authorities:
