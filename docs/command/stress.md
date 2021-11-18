@@ -20,11 +20,11 @@
 
 ![](https://img.alicdn.com/imgextra/i1/O1CN017QO1In1lNearCqdo1_!!6000000004807-2-tps-669-460.png)
 
-1. `stress start` 指令会根据 `s.yml` 配置，创建辅助函数（辅助函数默认名为： `_DEFAULT_FC_STRESS_COMPONENT_SERVICE`）。
+1. `stress start` 指令会根据组件内置配置，创建辅助函数（辅助函数的服务名和函数名均为： `_DEFAULT_FC_STRESS_COMPONENT_SERVICE`和）.
 
 2. 辅助函数创建完成后，将会调用目标函数，压测参数放置在调用负载中；辅助函数被调用后就会基于 [Python Locust](https://docs.locust.io/en/stable/) 对目标函数发起压测试；
 3. 完成测试之后，将压测结果返回给本地；
-4. 本地收到结果后，会保存并生成 html 报告文件；
+4. 本地收到结果后，会展示结果并并生成 html 报告文件；
 
 
 ## 命令解析
@@ -114,16 +114,16 @@ Examples with CLI
 | 参数全称      | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
 | ------------- | -------- | -------------- | ------------- | ------------------------------------------------------------ |
 | region        | -        | 选填           | 必填          | 探测的函数所处的地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| service-name  | -        | 选填           | 必填          |                                                              |
-| function-name | -        | 选填           | 必填          |                                                              |
-| method        | -        | 选填           | 选填          |                                                              |
-| payload       | -        | 选填           | 选填          |                                                              |
-| payload-file  | -        | 选填           | 选填          |                                                              |
-| num-user      | -        | 选填           | 选填          |                                                              |
-| qualifier     | q        | 选填           | 选填          |                                                              |
-| run-time      | -        | 选填           | 选填          |                                                              |
-| spawn-rate    | -        | 选填           | 选填          |                                                              |
-| url           | u        | 选填           | 选填          |                                                              |
+| service-name  | -        | 选填           | 必填          |压测目标服务名|
+| function-name | -        | 选填           | 必填          |压测姆目标函数名|
+| method        | -        | 选填           | 选填          |表示压测请求的方法，例如 GET、POST 等，仅对 http 函数压测时有效|
+| payload       | -        | 选填           | 选填          |压测 event 函数：调用目标函数时传入的 event 事件数据;<br>压测 http 函数：调用目标函数时传入的请求体数据|
+| payload-file  | -        | 选填           | 选填          |将 payload 参数内容以文件形式传入|
+| num-user      | -        | 选填           | 选填          |压测时模拟并发用户的目标数量|
+| qualifier     | q        | 选填           | 选填          |表示目标函数的版本信息，仅对 event 函数压测有效|
+| run-time      | -        | 选填           | 选填          |压测运行时间|
+| spawn-rate    | -        | 选填           | 选填          |每秒启动的模拟用户数|
+| url           | u        | 选填           | 选填          |压测目标 url，仅对 event 函数压测有效|
 | access        | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
 | debug         | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
 | help          | h        | 选填           | 选填          | 查看帮助信息                                                 |
@@ -131,7 +131,7 @@ Examples with CLI
 ### 操作案例
 
 - **有资源描述文件（Yaml）时**，可以直接执行`s stress start`开始目标函数压测；
-- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区以及服务名称，函数名等，例如`s cli fc stress start --region cn-hangzhou --service-name fc-deploy-service --function-name http-trigger-py36`
+- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区以及服务名称，函数名等，例如`s cli fc stress start --region cn-hangzhou --access myAccess --service-name fc-deploy-service --function-name http-trigger-py36 --function-type event`
 
 上述命令的执行结果示例：
 
@@ -166,7 +166,7 @@ fc-deploy-test:
 
 ## stress clean/cleanup 命令
 
-`stress clean/cleanup` 命令，是清理因进行线上函数压测所创建资源的命令。
+`stress clean/cleanup` 命令，用来清理发起压测的线上辅助资源以及本地的 html 压测报告。
 
 当执行命令`stress cleanup -h`/`stress cleanup --help`时，可以获取帮助文档：
 
@@ -236,3 +236,57 @@ Resource cleanup succeeded.
 
 ## 权限与策略说明
 
+- `stress start` 命令需要部署并调用辅助函数，因此需要如下权限：
+  - 最大权限：`AliyunFCFullAccess`
+  - 最小权限：
+  ```shell
+  {
+    "Version": "1",
+    "Statement": [
+      {
+        "Action": [
+          "fc:UpdateService",
+          "fc:CreateService",
+          "fc:GetService"
+        ],
+        "Resource": "acs:fc:<region>:<account-id>:services/_DEFAULT_FC_STRESS_COMPONENT_SERVICE",
+        "Effect": "Allow"
+      },
+      {
+        "Action": [
+            "fc:InvokeFunction",
+            "fc:UpdateFunction",
+            "fc:CreateFunction",
+            "fc:GetFunction"
+        ],
+        "Effect": "Allow",
+        "Resource": "acs:fc:<region>:<account-id>:services/_DEFAULT_FC_STRESS_COMPONENT_SERVICE.*/functions/*"
+      },
+      {
+            "Action": "ram:PassRole",
+            "Effect": "Allow",
+            "Resource": "*"
+      }
+    ]
+  }
+  ```
+- `stress clean` 命令需要删除辅助函数，因此需要如下权限：
+  - 最大权限：`AliyunFCFullAccess`
+  - 最小权限：
+  ```shell
+  {
+    "Version": "1",
+    "Statement": [
+      {
+        "Action": "fc:DeleteService",
+        "Resource": "acs:fc:<region>:<account-id>:services/_DEFAULT_FC_STRESS_COMPONENT_SERVICE",
+        "Effect": "Allow"
+      },
+      {
+        "Action": "fc:DeleteFunction",
+        "Resource": "acs:fc:<region>:<account-id>:services/<serviceName>/functions/*",
+        "Effect": "Allow"
+      }
+    ]
+  }
+  ```
