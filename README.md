@@ -39,9 +39,9 @@
 | [**构建 build**](docs/zh/command/build.md)     | [日志查询 logs](docs/zh/command/logs.md)       | [远程调用 invoke](docs/zh/command/invoke.md)    | [**别名 alias**](docs/zh/command/alias.md)         | [计划变更 plan](docs/zh/command/plan.md)  | 
 | [移除 remove](docs/zh/command/remove.md)   |                                              | [**端云联调 proxied**](docs/zh/command/proxied.md) | [预留 provision](docs/zh/command/provision.md)   | [查看函数 info](docs/zh/command/info.md)  | 
 |                                          |                                              | [远程调试 remote](docs/zh/command/remote.md)    | [按量资源 ondemand](docs/zh/command/ondemand.md) |[**资源同步 sync**](docs/zh/command/sync.md)  | 
-|                                          |                                              | [内存&并发度探测 eval](docs/zh/command/eval.md)  | [层 layer](docs/zh/command/layer.md) |                     | 
+|                                          |                                              | [内存&并发度探测 eval](docs/zh/command/eval.md)  | [层 layer](docs/zh/command/layer.md) |      [压测 stress](docs/zh/command/stress.md)               | 
 |                                          |                                              |   |  | [API调用 api](docs/zh/command/api.md)                     | 
-|                                          |                                              |   |  |  [压测 stress](docs/zh/command/stress.md)                   | 
+|                                          |                                              |   |  |  [Fun项目迁移 fun2s](docs/zh/command/fun2s.md)                   | 
 
 在使用函数计算（FC）组件时，还会涉及到资源描述文件的编写，关于函数计算（FC）组件的 Yaml 规范可以参考[**函数计算（FC） Yaml 规范文档**](docs/zh/yaml.md)，除此之外，在使用本组件的时候，还会有一些[小 Tips ](docs/zh/tips.md) 可供学习和了解，例如[如何部署大于50M的代码包](docs/zh/tips.md#超过50M的代码包如何部署)，[如何部署多个函数](docs/zh/tips.md#如何部署多个函数) ......
 
