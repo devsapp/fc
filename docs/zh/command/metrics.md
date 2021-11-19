@@ -81,6 +81,10 @@ Examples with CLI
 
 ![image](https://user-images.githubusercontent.com/21079031/120958920-419b2400-c78b-11eb-9f3c-8b49c1354a37.png)
 
+**需要开启请求级别指标，才能查看函数指标信息，否则图表不展示数据**
+**如何开通请求级别指标:** 
+**1.https://fcnext.console.aliyun.com/**
+**2.服务及函数中-找到自己region-对应的服务名称-在操作栏点击配置开启请求级别指标**
 
 ## 权限与策略说明
 
