@@ -177,6 +177,10 @@ Options Help
   Optional: Non mandatory parameter
   ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/zh/yaml_and_cli.md
 
+Event Format
+  
+  Quickly obtain the data structures of different events through the command [s cli fc-event -h]
+
 Examples with Yaml
 
   $ s remote invoke 
@@ -187,9 +191,9 @@ Examples with Yaml
 
 | 参数全称    | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
 | ----------- | -------- | -------------- | ------------- | ------------------------------------------------------------ |
-| event       | e        | 选填           | 选填          |                                                              |
-| event-file  | f        | 选填           | 选填          |                                                              |
-| event-stdin | s        | 选填           | 选填          |                                                              |
+| event         | e        | 选填      | 选填          |传入 `event` 函数的 `event` 事件数据，可以通过 `s cli fc-event` 指令快速获取事件数据示例，详细操作参考[这里](https://github.com/devsapp/fc/blob/main/docs/command/invoke.md#注意事项)|
+| event-file    | f        | 选填      | 选填          |以文件形式传入 `event` 事件数据|
+| event-stdin   | s        | 选填      | 选填          |以标准输入形式传入 `event` 事件数据|
 | access      | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
 | debug       | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
 | help        | h        | 选填           | 选填          | 查看帮助信息                                                 |

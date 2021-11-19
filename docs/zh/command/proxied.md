@@ -195,6 +195,10 @@ Options Help
   Optional: Non mandatory parameter
   ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/zh/yaml_and_cli.md
 
+Event Format
+  
+  Quickly obtain the data structures of different events through the command [s cli fc-event -h]
+
 Examples with Yaml
 
   $ s proxied invoke 
@@ -205,7 +209,7 @@ Examples with Yaml
 
 | 参数全称    | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
 | ----------- | -------- | -------------- | ------------- | ------------------------------------------------------------ |
-| event       | e        | 选填           | 选填          |`event` 函数：传入的 `event` 事件数据，可以通过命令`s cli fc-event`快速获取事件，详细操作可以参考[这里](https://github.com/devsapp/fc/blob/main/docs/command/invoke.md#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9);<br>http 函数：传入的请求参数，格式可以参考 [这里](https://github.com/devsapp/fc/blob/main/docs/Usage/invoke.md#invoke-http-parameter)|
+| event       | e        | 选填           | 选填          |`event` 函数：传入的 `event` 事件数据，可以通过命令`s cli fc-event`快速获取事件，详细操作可以参考[这里](https://github.com/devsapp/fc/blob/main/docs/command/invoke.md#注意事项) ;<br>http 函数：传入的请求参数，格式可以参考 [这里](https://github.com/devsapp/fc/blob/main/docs/Usage/invoke.md#invoke-http-parameter)|
 | event-file  | f        | 选填           | 选填          |将 `event` 参数内容以文件形式传入|
 | event-stdin | s        | 选填           | 选填          |将 `event` 参数内容以标准输入流形式传入|
 | access      | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |

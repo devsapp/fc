@@ -79,6 +79,7 @@ Options
   --debugger-path [string]            [Optional] The path of the debugger on the host                                          
   --tmp-dir [string]                  [Optional] The temp directory mounted to '/tmp' , default: './.s/tmp/invoke/serviceName/functionName/'                                                            
   --server-port [number]              [Optional] The exposed port of http server, default value is the random port between 7000 and 8000
+
 Global Options
 
   -h, --help                 [Optional] Help for command             
@@ -92,6 +93,11 @@ Options Help
   Optional: Non mandatory parameter
   ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
 
+Event Format
+  
+  Quickly obtain the data structures of different events through the command [s cli fc-event -h]
+
+
 Examples with Yaml
 
   $ s local invoke --event "hello world!"                                                                                          
@@ -101,7 +107,7 @@ Examples with Yaml
 
 | 参数全称      | 参数缩写 | Yaml模式下必填 | 参数含义                                                     |
 | ------------- | -------- | -------------- | ------------------------------------------------------------ |
-| event         | e        | 选填           |传入 `event` 函数的 `event` 事件数据，可以通过 `s cli fc-event` 指令快速获取事件数据示例，详细操作参考[这里](https://github.com/devsapp/fc/blob/main/docs/command/invoke.md#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9%E3%80%82)|
+| event         | e        | 选填           |传入 `event` 函数的 `event` 事件数据，可以通过 `s cli fc-event` 指令快速获取事件数据示例，详细操作参考[这里](https://github.com/devsapp/fc/blob/main/docs/command/invoke.md#注意事项)|
 | event-file    | f        | 选填           |以文件形式传入 `event` 事件数据|
 | event-stdin   | s        | 选填           |以标准输入形式传入 `event` 事件数据|
 | mode          | m        | 选填           |调试模式选择，包括：<br> - `normal`: 默认模式，本地函数运行容器在函数执行完成后立刻退出<br>`server`: 本地函数运行容器一直存在，用户在其他终端发起的本地调用会复用该容器<br>`api`: 支持通过 sdk 调用本地函数|
