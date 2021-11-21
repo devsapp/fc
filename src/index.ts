@@ -596,6 +596,7 @@ export default class FcBaseComponent extends BaseComponent {
     const LAYER_COMMAND = {
       publish: 'LayerPublishInputsArgs',
       list: 'LayerListInputsArgs',
+      detail: 'LayerVersionConfigInputsArgs',
       versionConfig: 'LayerVersionConfigInputsArgs',
       deleteVersion: 'LayerDeleteVerisonInputsArgs',
       versions: 'LayerVersionsInputsArgs',
