@@ -295,7 +295,7 @@ export default class FcBaseComponent extends BaseComponent {
       })).service || {};
 
       if (!isLogConfig(logConfig)) {
-        throw new Error('The service logConfig is not found online, please confirm whether logConfig is configured first, and then execute [s exec - deploy].');
+        throw new Error('The service logConfig is not found online, please confirm whether logConfig is configured first, and then execute [s deploy].');
       }
 
       logsPayload = {
@@ -307,7 +307,7 @@ export default class FcBaseComponent extends BaseComponent {
       };
     } catch (ex) {
       if (ex.code?.endsWith('NotFound')) {
-        throw new Error(`Online search failed, error message: ${ex.message}. Please execute [s exec -- deploy]`);
+        throw new Error(`Online search failed, error message: ${ex.message}. Please execute [s deploy]`);
       }
       throw ex;
     }

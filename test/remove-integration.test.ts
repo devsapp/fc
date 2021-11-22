@@ -33,7 +33,6 @@ describe('Integration::remove', () => {
     const { accountId, accessKeyId, accessKeySecret } = handlerCredentials();
     await setupIntegrationTestEnv(ACCESS, accountId, accessKeyId, accessKeySecret, MOCK_PROJECT_PATH, MOCK_PROJECT_YAML_PATH);
     fcClient = getFcClient(REGION, DEFAULT_CLIENT_TIMEOUT);
-    console.log(fcClient);
   });
 
   afterAll(async () => {
