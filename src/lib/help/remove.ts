@@ -39,8 +39,8 @@ export const REMOVE = [
         example: 'Ability to delete provision, you can get help through [s remove provision -h]',
       },
       {
-        desc: 'onDemand',
-        example: 'Ability to delete onDemand, you can get help through [s remove onDemand -h]',
+        desc: 'ondemand',
+        example: 'Ability to delete ondemand, you can get help through [s remove ondemand -h]',
       },
       {
         desc: 'layer',
@@ -391,12 +391,12 @@ export const REMOVE_PROVISION = [
 
 export const REMOVE_ONDEMAND = [
   {
-    header: 'Remove onDemand',
-    content: 'Remove the specified onDemand resource',
+    header: 'Remove ondemand',
+    content: 'Remove the specified ondemand resource',
   },
   {
     header: 'Usage',
-    content: '$ s remove onDemand <options>',
+    content: '$ s remove ondemand <options>',
   },
   {
     header: 'Options',
@@ -413,12 +413,12 @@ export const REMOVE_ONDEMAND = [
       },
       {
         name: 'qualifier',
-        description: 'If qualifier is specified, only all onDemand resources under this alias will be cleared; if not specified, all versions of onDemand resources under this service will be cleared',
+        description: 'If qualifier is specified, only all ondemand resources under this alias will be cleared; if not specified, all versions of ondemand resources under this service will be cleared',
         type: String,
       },
       {
         name: 'function-name',
-        description: 'Clear the onDemand configuration of the specified qualifier function',
+        description: 'Clear the ondemand configuration of the specified qualifier function',
         type: String,
       },
       {
@@ -436,9 +436,9 @@ export const REMOVE_ONDEMAND = [
   {
     header: 'Examples with Yaml',
     content: [
-      '$ s remove onDemand',
-      '$ s remove onDemand --qualifier xxx',
-      '$ s remove onDemand --qualifier xxx --function-name xxx',
+      '$ s remove ondemand',
+      '$ s remove ondemand --qualifier xxx',
+      '$ s remove ondemand --qualifier xxx --function-name xxx',
     ],
   },
 ];

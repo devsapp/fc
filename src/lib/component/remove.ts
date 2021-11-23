@@ -21,6 +21,7 @@ const COMMAND: string[] = [
   'version',
   'alias',
   'provision',
+  'ondemand',
   'onDemand',
   'layer',
 ];
@@ -60,7 +61,7 @@ interface EndProps {
 }
 interface IRemove {
   props: EndProps;
-  subCommand?: 'layer' | 'domain' | 'onDemand' | 'provision' | 'alias' | 'version' | 'service' | 'function' | 'trigger';
+  subCommand?: 'layer' | 'domain' | 'ondemand' | 'onDemand' | 'provision' | 'alias' | 'version' | 'service' | 'function' | 'trigger';
 }
 
 export default class Remove {
@@ -124,12 +125,12 @@ export default class Remove {
       throw new Error('not found functionName');
     }
 
-    const onDemand = new OnDemand();
+    const ondmand = new OnDemand();
     if (!_.isEmpty(qualifier)) {
-      return await onDemand.remove({ qualifier, serviceName, functionName });
+      return await ondmand.remove({ qualifier, serviceName, functionName });
     }
 
-    await onDemand.removeAll({ serviceName, qualifier, assumeYes });
+    await ondmand.removeAll({ serviceName, qualifier, assumeYes });
   }
 
   async removeProvision({ region, qualifier, serviceName, functionName, assumeYes }: RemoveOnDemandOrProvision) {
@@ -197,7 +198,7 @@ export default class Remove {
       throw new Error('not found serviceName');
     }
 
-    if (subCommand === 'onDemand') {
+    if (subCommand === 'onDemand' || subCommand === 'ondemand') {
       return await this.removeOnDemand({ region, qualifier, serviceName, functionName, assumeYes });
     }
 

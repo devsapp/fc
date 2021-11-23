@@ -567,7 +567,7 @@ export default class FcBaseComponent extends BaseComponent {
     return await provision[subCommand](props, table);
   }
 
-  async onDemand(inputs: IInputs): Promise<any> {
+  async ondemand(inputs: IInputs) {
     const {
       credentials,
       help,
@@ -578,7 +578,7 @@ export default class FcBaseComponent extends BaseComponent {
       errorMessage,
     } = await OnDemand.handlerInputs(inputs);
 
-    await this.report('fc', subCommand ? `onDemand ${subCommand}` : 'onDemand', credentials?.AccountID);
+    await this.report('fc', subCommand ? `ondemand ${subCommand}` : 'ondemand', credentials?.AccountID);
     if (help) {
       super.help(helpKey);
       if (errorMessage) {
@@ -587,8 +587,12 @@ export default class FcBaseComponent extends BaseComponent {
       return;
     }
 
-    const onDemand = new OnDemand();
-    return await onDemand[subCommand](props, table);
+    const ondemand = new OnDemand();
+    return await ondemand[subCommand](props, table);
+  }
+
+  async onDemand(inputs: IInputs): Promise<any> {
+    return await this.ondemand(inputs);
   }
 
   async layer(inputs: IInputs): Promise<any> {
