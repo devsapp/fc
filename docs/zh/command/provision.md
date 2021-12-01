@@ -72,8 +72,7 @@ Document
 Options
 
   --region [string]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
-  --service-name [string]             [C-Required] Specify the fc service name  
-  --function-name [string]            [C-Required] Specify the fc function name   
+  --service-name [string]             [C-Required] Specify the fc service name
   --qualifier string                  [C-Required] Specify the qualifier parameter. Only supports LATEST and alias
   --table                             [Optional] Table format output     
 
@@ -106,7 +105,6 @@ Examples with CLI
 | ------------- | -------- | -------------- | ------------- | ------------------------------------------------------------ |
 | region        | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
 | service-name  | -        | 选填           | 必填          | 服务名                                                       |
-| function-name | -        | 选填           | 必填          | 版本描述                                                     |
 | qualifier     |          | 选填           | 选填          | 配置预留的版本，仅支持服务的 LATEST 和别名                   |
 | table         |          | 选填           |               | 是否以表格形式输出                                           |
 | access        | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
@@ -230,7 +228,7 @@ fc-deploy-test:
 > 💡 删除预留：删除预留的方法，可以通过`s provision put`命令，进行删除，只需要将`target`调整为0即可。例如`s provision put --qualifier release --target 0`
 
 > ⚠️ `--target`参数的权重大于`--config`中的`target`，即如果`config`的配置文件中和参数指定同时存在`target`配置，优先使用参数中的`target`配置
-
+<a id="provision-config" href="#provision-config"></a>
 [阿里云函数计算配置预留拥有多种形式](https://help.aliyun.com/document_detail/138103.html)，单纯通过`target`参数进行控制的只是非常简单的配置，除此之外还支持定时伸缩与弹性伸缩配置方法，此时就需要对`--config`参数进行配置，`--config`参数识别的是一个 JSON 文件，基础格式如下：
 
 ```json

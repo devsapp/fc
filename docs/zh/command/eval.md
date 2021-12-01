@@ -18,7 +18,7 @@
 
 ```shell script
 Eval
-
+ 
   Power tuning online functions 
 
 Usage
@@ -88,7 +88,8 @@ Options Help
 
 Examples with Yaml
 
-  $ s eval start --eval-type memory --run-count 10 --payload-file ./payload.file  --memory-size 128,256,512,1024                                                     $ s eval start --eval-type memory --run-count 50 --payload 'hello world' --memory-size 128,256,512,1024  --method get --path '/login' --query 'a=1&b=2'                                                                                    
+  $ s eval start --eval-type memory --run-count 10 --payload-file ./payload.file  --memory-size 128,256,512,1024                                                     
+  $ s eval start --eval-type memory --run-count 50 --payload 'hello world' --memory-size 128,256,512,1024  --method get --path '/login' --query 'a=1&b=2'                                                                                    
 
 Examples with CLI
                                                                                                                               

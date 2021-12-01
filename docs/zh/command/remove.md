@@ -76,8 +76,8 @@ Options Help
   ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
 
 SubCommand 
-  service    Only remove service resources; help command [s remove service -h]                                                        
-  function   Only remove function resources; help command [s remove function -h]                                                       
+  service    Remove service resources; help command [s remove service -h]                                                        
+  function   Remove function resources; help command [s remove function -h]                                                       
   trigger    Only remove trigger resources; help command [s remove trigger -h]                                                        
   domain     Only remove domain resources; help command [s remove domain -h] 
   version    Only remove version resources; help command [s remove version -h] 
@@ -92,7 +92,7 @@ Examples with Yaml
 ```
 
 
-在该命令中，包括了四个子命令：
+在该命令中，包括了九个子命令：
 
 - [service：删除指定的服务](#remove-service-命令)
 - [function：删除指定的函数](#remove-function-命令)
@@ -573,7 +573,7 @@ Remove provision
 
 Usage
 
-  s Remove provision <options>
+  s remove provision <options>
                 
 Document
   
@@ -584,7 +584,7 @@ Options
   --region [string]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
   --service-name [string]             [C-Required] Specify the fc service name  
   --function-name [string]            [C-Required] Specify the fc function name                         
-  --qualifier string                  [C-Required] Specify the qualifier parameter. Only supports LATEST and alias                           
+  --qualifier string                  [Required] Specify the qualifier parameter. Only supports LATEST and alias                           
 
 Global Options
 

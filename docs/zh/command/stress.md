@@ -7,7 +7,7 @@
 - [stress start 命令](#stress-start-命令)
   - [参数解析](#参数解析)
   - [操作案例](#操作案例)
-- [stress clean/cleanup 命令](#stress-clean-cleanup-命令)
+- [stress clean/cleanup 命令](#stress-clean/cleanup-命令)
   - [参数解析](#参数解析-1)
   - [操作案例](#操作案例-1)
 - [权限与策略说明](#权限与策略说明)
@@ -54,7 +54,7 @@ SubCommand List
 在该命令中，包括了两个子命令：
 
 - [start：开始进行一键压测](#stress-start-命令)
-- [clean/cleanup：清理压测时创建的资源](#stress-clean-cleanup-命令)
+- [clean/cleanup：清理压测时创建的资源](#stress-clean/cleanup-命令)
 
 ## stress start 命令
 
@@ -126,6 +126,7 @@ Examples with CLI
 | run-time      | -        | 选填           | 选填          |压测运行时间|
 | spawn-rate    | -        | 选填           | 选填          |每秒启动的模拟用户数|
 | url           | u        | 选填           | 选填          |压测目标 url，仅对 event 函数压测有效|
+| invocation-type | -        | 选填           | 选填          | 调用类型：可选值 async、sync |
 | access        | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
 | debug         | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
 | help          | h        | 选填           | 选填          | 查看帮助信息                                                 |
