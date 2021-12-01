@@ -2,102 +2,119 @@ export function start() {}
 export function clean() {}
 
 /**
- * s stress <sub-command>\n
+ * s stress <sub-command> <options>
  * @pre_help
  * {"header":"Stress","content":"Stress test for the serverless application"}
+ * @pre_help
+ * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/command/stress.md"}
  * @after_help
- * {"header": "SubCommand List", "content": [{"name":"start","summary":"Start stress test, you can get help through [s stress start -h]"},{"name":"clean","summary":"Clean the relevant resources , you can get help through [s stress clean -h]"}]}
+ * {"header": "SubCommand List", "content": [{"name":"start","summary":"Start stress test; help command [s eval start -h]"},{"name":"clean","summary":"Clean the relevant resources; help command [s eval clean -h]"}]}
  */
-export interface StressInputsArgs {
-}
+export interface StressInputsArgs {}
 
 /**
- * s stress clean <options>\n
+ * Stress clean/cleanup\ns stress cleanup <options>
  * @pre_help
- * {"header":"Stress clean","content":"Clean the relevant resources, including local html report files and helper resources."}
+ * {"header":"Stress clean/cleanup","content":"Clean the relevant resources, including helper resources"}
+ * @pre_help
+ * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/command/stress.md"}
  * @after_help
  * {"ref":"GlobalParams"}
+ * @after_help
+ * {"ref":"GlobalDescribe"}
  * @example
- * {"header": "Examples with Yaml","content": ["$ s stress clean -y"]}
+ * {"header": "Examples with Yaml","content": ["$ s stress clean"]}
  * @example
- * {"header": "Examples with CLI","content": ["$ s cli fc stress clean --region myRegion --access myAccess -y"]}
+ * {"header": "Examples with CLI","content": ["$ s cli fc stress clean --region cn-hangzhou --service-name serviceName --function-name functionName -y"]}
  */
 export interface StressCleanInputsArgs {
   /**
-   *  Specify the region of alicloud
+   * [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1
    */
   region: string;
   /**
-   *  Assume that the answer to any question which would be asked is yes
+    * [C-Required] Specify the fc service name
+    */
+  'service-name': string;
+  /**
+    * [Optional] Specify the fc function name
+    */
+  'function-name': string;
+  /**
+   * [Optional] Assume that the answer to any question which would be asked is yes
    * @alias y
    */
   'assume-yes': boolean;
 }
 
 /**
- * s stress start <options>\n
+ * s stress start <options>
  * @pre_help
  * {"header":"Stress start","content":"Start stress test"}
+ * @pre_help
+ * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/command/stress.md"}
  * @after_help
  * {"ref":"GlobalParams"}
+ * @after_help
+ * {"ref":"GlobalDescribe"}
  * @example
- * {"header": "Examples with Yaml","content": ["$ s stress start --payload-file ./payload.file", "$ s stress start --num-user 6 --spawn-rate 10 --run-time 30 --url myUrl --method POST --payload \"hello world\""]}
+ * {"header": "Examples with Yaml","content": ["$ s stress start --payload-file ./payload.file", "$ s stress start --num-user 6 --spawn-rate 10 --run-time 30 --url myUrl --method post --payload \"hello world\""]}
  * @example
- * {"header": "Examples with CLI","content": ["$ s cli fc stress start --num-user 6 --spawn-rate 10 --run-time 30 --function-type event --service-name myService --function-name myFunction --qualifier myQualifier --payload \"hello world\" --region myRegion --access myAccess","$ s cli fc stress start --num-user 6 --spawn-rate 10 --run-time 30 --function-type http --url myUrl --method POST --payload \"hello world\" --region myRegion --access myAccess"]}
+ * {"header": "Examples with CLI","content": ["$ s cli fc stress start --num-user 6 --spawn-rate 10 --run-time 30 --function-type event --service-name serviceName --function-name functionName --qualifier LATEST --payload \"hello world\" --region cn-hangzhou"]}
  */
 export interface StressStartInputsArgs {
   /**
-   *  Specify the region of alicloud
+   * [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1
    */
   region: string;
   /**
-   *  Specify the alicloud fc service name
-   */
+    * [C-Required] Specify the fc service name
+    */
   'service-name': string;
   /**
-    *  Specify the alicloud fc function name
+    * [Optional] Specify the fc function name
     */
-  'function-name'?: string;
+  'function-name': string;
   /**
-    *  Qualifier of the target function, only for --function-type event
+   * [C-Required] Type of the target function, value: http/event
+   */
+  'function-type': string;
+  /**
+   * [Optional] Target method, only for --function-type http
+   */
+  'method': string;
+  /**
+   * [Optional] Represents the event/request_body passed to the function
+   */
+  'payload': string;
+  /**
+   * [Optional] Contains the event passed to the function
+   */
+  'payload-file': string;
+  /**
+   * [Optional] Number of the simulated users
+   */
+  'num-user': number;
+  /**
+    * [Optional] Qualifier of the target function, only for event function
     * @alias q
     */
   'qualifier'?: string;
   /**
-   *  Target url, only for --function-type http
+   * [Optional] Intervals for stress
+   */
+  'run-time': number;
+  /**
+   * [Optional] Increasing number of users per second
+   */
+  'spawn-rate': number;
+  /**
+   * [Optional] Target url
    * @alias u
    */
   'url': string;
   /**
-   *  Number of the simulated users
-   */
-  'num-user': number;
-  /**
-   *  Increasing number of users per second
-   */
-  'spawn-rate': number;
-  /**
-   *  Intervals for stress
-   */
-  'run-time': number;
-  /**
-   *  Type of the target function, including event and http
-   */
-  'function-type': string;
-  /**
-   *  Target method, only for --function-type http
-   */
-  'method': string;
-  /**
-   *  For --function-type event, represents the event passed to the function;\nFor --function-type http, represents the request body passed to the function
-   */
-  'payload': string;
-  /**
-   *  For --function-type event, contains the event passed to the function;\nFor --function-type http, contains the request body passed to the function
-   */
-  'payload-file': string;
-  /**
-   *  Invocation type: optional value "async"|"sync", default value "sync" (default: "sync")
+   * [Optional] Invocation type: optional value "async"|"sync", default value "sync" (default: "sync")
    */
   'invocation-type'?: string;
 }

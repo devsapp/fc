@@ -295,7 +295,7 @@ export default class FcBaseComponent extends BaseComponent {
       })).service || {};
 
       if (!isLogConfig(logConfig)) {
-        throw new Error('The service logConfig is not found online, please confirm whether logConfig is configured first, and then execute [s exec - deploy].');
+        throw new Error('The service logConfig is not found online, please confirm whether logConfig is configured first, and then execute [s deploy].');
       }
 
       logsPayload = {
@@ -307,7 +307,7 @@ export default class FcBaseComponent extends BaseComponent {
       };
     } catch (ex) {
       if (ex.code?.endsWith('NotFound')) {
-        throw new Error(`Online search failed, error message: ${ex.message}. Please execute [s exec -- deploy]`);
+        throw new Error(`Online search failed, error message: ${ex.message}. Please execute [s deploy]`);
       }
       throw ex;
     }
@@ -567,7 +567,7 @@ export default class FcBaseComponent extends BaseComponent {
     return await provision[subCommand](props, table);
   }
 
-  async onDemand(inputs: IInputs): Promise<any> {
+  async ondemand(inputs: IInputs) {
     const {
       credentials,
       help,
@@ -578,7 +578,7 @@ export default class FcBaseComponent extends BaseComponent {
       errorMessage,
     } = await OnDemand.handlerInputs(inputs);
 
-    await this.report('fc', subCommand ? `onDemand ${subCommand}` : 'onDemand', credentials?.AccountID);
+    await this.report('fc', subCommand ? `ondemand ${subCommand}` : 'ondemand', credentials?.AccountID);
     if (help) {
       super.help(helpKey);
       if (errorMessage) {
@@ -587,8 +587,12 @@ export default class FcBaseComponent extends BaseComponent {
       return;
     }
 
-    const onDemand = new OnDemand();
-    return await onDemand[subCommand](props, table);
+    const ondemand = new OnDemand();
+    return await ondemand[subCommand](props, table);
+  }
+
+  async onDemand(inputs: IInputs): Promise<any> {
+    return await this.ondemand(inputs);
   }
 
   async layer(inputs: IInputs): Promise<any> {
@@ -596,6 +600,7 @@ export default class FcBaseComponent extends BaseComponent {
     const LAYER_COMMAND = {
       publish: 'LayerPublishInputsArgs',
       list: 'LayerListInputsArgs',
+      detail: 'LayerVersionConfigInputsArgs',
       versionConfig: 'LayerVersionConfigInputsArgs',
       deleteVersion: 'LayerDeleteVerisonInputsArgs',
       versions: 'LayerVersionsInputsArgs',
