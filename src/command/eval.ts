@@ -27,9 +27,9 @@ export interface EvalInputsArgs {}
   * @after_help
   * {"ref":"GlobalDescribe"}
   * @example
-  * {"header": "Examples with Yaml","content": ["$ s eval start --eval-type memory --run-count 10 --payload-file ./payload.file  --memory-size 128,256,512,1024 ","$ s eval start --eval-type memory --run-count 50 --payload 'hello world' --memory-size 128,256,512,1024  --method get --path '/login' --query 'a=1&b=2'"]}
+  * {"header": "Examples with Yaml","content": ["$ s eval start --eval-type memory --run-count 10 --payload-file ./payload.file  --memory-size 128,256,512,1024 ","$ s eval start --eval-type concurrency --memory 1536 --concurrency-args 2,20,5 --rt 250 --method get --path '/login' --query 'a=1&b=2'", "$ s eval start --eval-type concurrencyPostman --memory 1536 --concurrency-args 2,20,5 --rt 250 --payload-file ./postman.json"]}
   * @example
-  * {"header": "Examples with CLI","content": ["s cli fc eval start --region cn-hangzhou --function-name functionName --service-name serviceName --eval-type memory --run-count 50 --payload 'hello world' --memory-size 128,256,512,1024  --method get --path '/login' --query 'a=1&b=2'", "$ s cli fc eval start --region cn-hangzhou --function-name functionName --service-name serviceName --eval-type concurrency --memory 1536 --concurrency-args 2,30,5 --rt 250  --payload-file ./payload.file"]}
+  * {"header": "Examples with CLI","content": ["$ s cli fc eval start --region cn-hangzhou --function-name functionName --service-name serviceName --eval-type memory --run-count 10 --payload 'hello world' --memory-size 128,256,512,1024 --access default", "$ s cli fc eval start --region cn-hangzhou --function-name functionName --service-name serviceName --eval-type concurrency --memory 1536 --concurrency-args 2,30,5 --rt 250  --method get --path '/login' --query 'a=1&b=2' --access default", "$ s cli fc eval start --region cn-hangzhou --function-name functionName --service-name serviceName --eval-type concurrencyPostman --memory 1536 --concurrency-args 2,20,5 --rt 250 --payload-file ./postman.json --access default"]}
   */
 export interface EvalStartInputsArgs {
   /**
@@ -41,15 +41,15 @@ export interface EvalStartInputsArgs {
    */
   'service-name': string;
   /**
-   * [Optional] Specify the fc function name
+   * [C-Required] Specify the fc function name
    */
   'function-name': string;
   /**
-   * [Optional] Concurrency args of power tuning that can convert to concurrency list, only for --eval-type concurrency
+   * [Optional] Concurrency args of power tuning that can convert to concurrency list, for --eval-type concurrency or concurrencyPostman
    */
   'concurrency-args': string;
   /**
-   * [Optional] Type of the power tuning, value: memory/concurrency
+   * [Optional] Type of the power tuning, value: memory/concurrency/concurrencyPostman
    */
   'eval-type': string;
   /**
@@ -65,23 +65,23 @@ export interface EvalStartInputsArgs {
    */
   'path': string;
   /**
-   * [Optional] Represents the event/request_body passed to the function
-   */
-  'payload': string;
-  /**
-   * [Optional] Contains the event passed to the function
-   */
-  'payload-file': string;
-  /**
-   * [Optional] arget query, only for HTTP function
+   * [Optional] Target query, only for HTTP function
    */
   'query': string;
-   /**
-   * [Optional] arget headers, only for HTTP function
+  /**
+   * [Optional] Target headers, only for HTTP function
    */
   'headers': string;
   /**
-   * [Optional] Max response time, only for --eval-type concurrency
+   * [Optional] Represents the event(Event function)/request_body(HTTP function) passed to the function
+   */
+  'payload': string;
+  /**
+   * [Optional] Represents the the event(Event function)/request_body(HTTP function)/postman-export-json-file which be readed from file to pass to the function
+   */
+  'payload-file': string;
+  /**
+   * [Optional] Max response time, only for --eval-type concurrency/concurrencyPostman
    */
   'rt': number;
   /**
@@ -89,7 +89,7 @@ export interface EvalStartInputsArgs {
    */
   'run-count': number;
   /**
-   * [Optional] Function memory of power tuning, only for --eval-type concurrency
+   * [Optional] Function memory of power tuning, only for --eval-type concurrency/concurrencyPostman
    */
   'memory': number;
 }

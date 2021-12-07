@@ -823,8 +823,7 @@ export default class FcBaseComponent extends BaseComponent {
       concurrencyArgs: argsData['concurrency-args'],
     };
 
-    let httpTypeOpts: HttpTypeOption = null;
-    httpTypeOpts = {
+    const httpTypeOpts: HttpTypeOption = {
       url: argsData?.url,
       method: argsData?.method,
       path: argsData?.path,

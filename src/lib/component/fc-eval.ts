@@ -56,6 +56,9 @@ export default class FcEval {
         args += ` --rt ${this.evalOpts?.rt}`;
       }
     }
+    if (this.evalOpts?.functionType) {
+      args += ` --function-type ${this.evalOpts?.functionType}`;
+    }
 
     if (this.evalOpts?.qualifier) {
       args += ` --qualifier ${this.evalOpts?.qualifier}`;
