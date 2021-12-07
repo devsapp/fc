@@ -21,7 +21,7 @@ export interface EvalInputsArgs {}
   * @after_help
   * {"ref":"GlobalParams"}
   * @example
-  * {"header": "Examples with CLI","content": ["$ s cli fc eval start --region cn-hangzhou --function-name myFunctionName --service-name myServiceName --function-type event --eval-type memory --run-count 10  --payload-file ./payload.file  --memory-size 128,256,512,1024 --access default","\n$ s cli fc start --region cn-hangzhou --function-name myFunctionName --service-name myServiceName --function-type http  --eval-type memory --run-count 50  --payload 'hello world'  --memory-size 128,256,512,1024 --method get --path '/login' --query 'a=1&b=2' --access default", "\n$ s cli fc start --region cn-hangzhou --function-name myFunctionName --service-name myServiceName --function-type event --eval-type concurrency --memory 1536 --concurrency-args 2,30,5 --rt 250  --payload-file ./payload.file  --access default","\n$ s cli fc start --region cn-hangzhou --function-name myFunctionName --service-name myServiceName --function-type http  --eval-type concurrency --memory 1536 --concurrency-args 2,20,5 --rt 250 --method get --path '/login' --query 'a=1&b=2' --access default"]}
+  * {"header": "Examples with CLI","content": ["$ s cli fc eval start --region cn-hangzhou --function-name myFunctionName --service-name myServiceName --eval-type memory --run-count 10  --payload-file ./payload.file  --memory-size 128,256,512,1024 --access default","\n$ s cli fc eval start --region cn-hangzhou --function-name myFunctionName --service-name myServiceName  --eval-type memory --run-count 50  --payload 'hello world'  --memory-size 128,256,512,1024 --method get --path '/login' --query 'a=1&b=2' --access default", "\n$ s cli fc eval start --region cn-hangzhou --function-name myFunctionName --service-name myServiceName --eval-type concurrency --memory 1536 --concurrency-args 2,30,5 --rt 250  --payload-file ./payload.file  --access default","\n$ s cli fc eval start --region cn-hangzhou --function-name myFunctionName --service-name myServiceName  --eval-type concurrency --memory 1536 --concurrency-args 2,20,5 --rt 250 --method get --path '/login' --query 'a=1&b=2' --access default","\n$ s cli fc eval start --region cn-hangzhou --function-name myFunctionName --service-name myServiceName  --eval-type concurrencyPostman --memory 1536 --concurrency-args 2,20,4 --rt 300 --payload-file ./postman.json --access default"]}
   */
 export interface EvalStartInputsArgs {
   /**
@@ -41,10 +41,6 @@ export interface EvalStartInputsArgs {
   *  Type of the power tuning, including memory and concurrency
   */
   'eval-type': string;
-  /**
-  *  Type of the target function, including event and http
-  */
-  'function-type': string;
   /**
   *  Number of Invoke Function, only for --eval-type memory
   */
@@ -66,23 +62,23 @@ export interface EvalStartInputsArgs {
   */
   'rt': number;
   /**
-  * Target method, only for --function-type http
+  * Target method, only for http function
   */
   'method': string;
   /**
-  *  Target path, only for --function-type http
+  *  Target path, only for http function
   */
   'path': string;
   /**
-  *  Target query, only for --function-type http
+  *  Target query, only for http function
   */
   'query': string;
   /**
-  *  For --function-type event, represents the event passed to the function;\nFor --function-type http, represents the request body passed to the function
+  *  For event function, represents the event passed to the function;\nFor http function, represents the request body passed to the function
   */
   'payload': string;
   /**
-  *  For --function-type event, contains the event passed to the function;\nFor --function-type http, contains the request body passed to the function
+  *  For event function, contains the event passed to the function;\nFor http function, contains the request body passed to the function
   * @alias f
   */
   'payload-file': string;

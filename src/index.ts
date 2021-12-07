@@ -800,10 +800,15 @@ export default class FcBaseComponent extends BaseComponent {
       super.help(EVAL_SUB_COMMAND_HELP_KEY[commandName]);
       return;
     }
+    let getFunctionType = argsData['function-type'];
+    // 如果是 yaml 模式, function type 由 yaml 得出， 否则交给 fc-eval 组件自己得出
+    if (props?.service?.name && props?.function?.name) {
+      getFunctionType = (isHttpFunction(props) ? 'http' : 'event');
+    }
     const evalOpts: EvalOption = {
       serviceName: argsData['service-name'] || props?.service?.name,
       functionName: argsData['function-name'] || props?.function?.name,
-      functionType: argsData['function-type'] || (isHttpFunction(props) ? 'http' : 'event'),
+      functionType: getFunctionType,
       evalType: argsData['eval-type'] || DEFAULT_EVAL_TYPE,
       memorySizeList: argsData['memory-size'],
       runCount: argsData['run-count'],
@@ -816,9 +821,9 @@ export default class FcBaseComponent extends BaseComponent {
     if (evalOpts?.functionType === 'http') {
       httpTypeOpts = {
         url: argsData?.url,
-        method: argsData?.method,
-        path: argsData?.path,
-        query: argsData?.query,
+        method: argsData?.method || 'GET',
+        path: argsData?.path || '/',
+        query: argsData?.query || '',
         body: argsData?.body,
       };
       this.logger.debug(`Using http options: \n${yaml.dump(httpTypeOpts)}`);
