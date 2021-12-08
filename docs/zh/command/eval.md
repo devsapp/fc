@@ -12,11 +12,16 @@
 
 > 注意: 这个命令只是针对开发上线前阶段的函数， 不要对生产函数执行探测操作
 
-- [命令解析](#命令解析)
-- [eval start 命令](#eval-start-命令)
-  - [参数解析](#参数解析)
-  - [操作案例](#操作案例)
-- [权限与策略说明](#权限与策略说明)
+- [Eval 命令](#eval-命令)
+  - [命令解析](#命令解析)
+  - [eval start 命令](#eval-start-命令)
+    - [参数解析](#参数解析)
+    - [操作案例](#操作案例)
+      - [内存探测模式](#内存探测模式)
+      - [并发度探测模式](#并发度探测模式)
+  - [权限与策略说明](#权限与策略说明)
+  - [补充](#补充)
+      - [示例](#示例)
 
 > 关于 `eval` 命令的常见问题和解决方法，可以参考[ FC 组件自动问答系统](http://qa.devsapp.cn/) 。
 
@@ -67,33 +72,21 @@ Usage
 
 Options
 
-  --concurrency-args string   [Optional] Concurrency args of power tuning that can convert to concurrency
-                              list, for --eval-type concurrency or concurrencyPostman
-  --eval-type string          [Optional] Type of the power tuning, value:
-                              memory/concurrency/concurrencyPostman
-  --function-name string      [C-Required] Specify the fc function name
-  --headers string            [Optional] arget headers, only for HTTP function
-  --memory number             [Optional] Function memory of power tuning, only for --eval-type
-                              concurrency/concurrencyPostman
-  --memory-size string        [Optional] Function MemorySize List of power tuning, only for --eval-type
-                              memory
-  --method string             [Optional] Target method, only for HTTP function
-  --path string               [Optional] Target path, only for HTTP function
-  --payload string            [Optional] Represents the event(Event function)/request_body(HTTP function)
-                              passed to the function
-  --payload-file string       [Optional] Represents the the event(Event function)/request_body(HTTP
-                              function)/postman-export-json-file which be readed from file to pass to the
-                              function
-  --query string              [Optional] arget query, only for HTTP function
-  --region string             [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-
-                              beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-
-                              shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-
-                              3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-
-                              1/ap-south-1
-  --rt number                 [Optional] Max response time, only for --eval-type
-                              concurrency/concurrencyPostman
-  --run-count number          [Optional] Number of Invoke Function, only for --eval-type memory
-  --service-name string       [C-Required] Specify the fc service name
+  --concurrency-args [string]   [Optional] Concurrency args of power tuning that can convert to concurrency list, for --eval-type concurrency or concurrencyPostman
+  --eval-type [string]          [Optional] Type of the power tuning, value: memory/concurrency/concurrencyPostman
+  --function-name [string]      [C-Required] Specify the fc function name
+  --headers [string]            [Optional] Target headers, only for HTTP function
+  --memory [number]             [Optional] Function memory of power tuning, only for --eval-type concurrency/concurrencyPostman
+  --memory-size [string]        [Optional] Function MemorySize List of power tuning, only for --eval-type memory
+  --method [string]             [Optional] Target method, only for HTTP function
+  --path [string]               [Optional] Target path, only for HTTP function
+  --payload [string]            [Optional] Represents the event(Event function)/request_body(HTTP function) passed to the function
+  --payload-file [string]       [Optional] Represents the the event(Event function)/request_body(HTTP function)/postman-export-json-file which be readed from file to pass to the function
+  --query [string]              [Optional] Target query, only for HTTP function
+  --region [string]             [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1
+  --rt [number]                 [Optional] Max response time, only for --eval-type concurrency/concurrencyPostman
+  --run-count [number]          [Optional] Number of Invoke Function, only for --eval-type memory
+  --service-name [string]       [C-Required] Specify the fc service name
 
 Global Options
 
@@ -111,32 +104,22 @@ Options Help
 
 Examples with Yaml
 
-  $ s eval start --eval-type memory --run-count 10 --payload-file
-  ./payload.file  --memory-size 128,256,512,1024
-  $ s eval start --eval-type concurrency --memory 1536 --concurrency-args
-  2,20,5 --rt 250 --method get --path '/login' --query 'a=1&b=2'
-  $ s eval start --eval-type concurrencyPostman --memory 1536
-  --concurrency-args 2,20,5 --rt 250 --payload-file ./postman.json
+  $ s eval start --eval-type memory --run-count 10 --payload-file ./payload.file  --memory-size 128,256,512,1024
+  $ s eval start --eval-type concurrency --memory 1536 --concurrency-args 2,20,5 --rt 250 --method get --path '/login' --query 'a=1&b=2'
+  $ s eval start --eval-type concurrencyPostman --memory 1536 --concurrency-args 2,20,5 --rt 250 --payload-file ./postman.json
 
 Examples with CLI
 
-  s cli fc eval start --region cn-hangzhou --function-name functionName
-  --service-name serviceName --eval-type memory --run-count 10 --payload 'hello
-  world' --memory-size 128,256,512,1024 --access default
-  $ s cli fc eval start --region cn-hangzhou --function-name functionName
-  --service-name serviceName --eval-type concurrency --memory 1536
-  --concurrency-args 2,30,5 --rt 250  --method get --path '/login' --query
-  'a=1&b=2' --access default
-  $ s cli fc eval start --region cn-hangzhou --function-name functionName
-  --service-name serviceName --eval-type concurrencyPostman --memory 1536
-  --concurrency-args 2,20,5 --rt 250 --payload-file ./postman.json --access
-  default
+  $ s cli fc eval start --region cn-hangzhou --function-name functionName --service-name serviceName --eval-type memory --run-count 10 --payload 'hello world' --memory-size 128,256,512,1024 --access default
+  $ s cli fc eval start --region cn-hangzhou --function-name functionName --service-name serviceName --eval-type concurrency --memory 1536 --concurrency-args 2,30,5 --rt 250  --method get --path '/login' --query 'a=1&b=2' --access default
+  $ s cli fc eval start --region cn-hangzhou --function-name functionName --service-name serviceName --eval-type concurrencyPostman --memory 1536 --concurrency-args 2,20,5 --rt 250 --payload-file ./postman.json --access default
 ```
 
 ### 参数解析
 
+
 | 参数全称         | 参数缩写 | Yaml 模式下必填 | Cli 模式下必填 | 参数含义                                                                                                                                                                                                                                                                                                                   |
-| ---------------- | -------- | --------------- | -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --- |
+| ---------------- | -------- | --------------- | -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | 
 | region           | -        | 选填            | 必填           | 探测的函数所处的地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
 | service-name     | -        | 选填            | 必填           | 探测的函数所处的服务名                                                                                                                                                                                                                                                                                                     |
 | function-name    | -        | 选填            | 必填           | 探测的函数名                                                                                                                                                                                                                                                                                                               |     |
@@ -151,7 +134,7 @@ Examples with CLI
 | payload          | -        | 选填            | 选填           | 如果被探测函数是 HTTP 函数时，是 HTTP 请求的 `body`; 如果被探测函数是 `event` 函数时，是函数入参 `event`                                                                                                                                                                                                                   |
 | payload-file     | -        | 选填            | 选填           | 1. 探测类型是 memory 或者 concurrency：如果被探测函数是 HTTP 函数时，文件内容是 HTTP 请求的 `body`; 如果被探测函数是 `event` 函数时，文件内容是函数入参 `event`<br> 2. 探测类型是 concurrencyPostman: 此参数是必需，对应 Postman 导出 json 文件， 格式有一定的要求，详情见本文最后的补充说明                               |
 | query            | -        | 选填            | 选填           | 针对被探测的函数是 HTTP 函数， HTTP 请求的 `query`                                                                                                                                                                                                                                                                         |
-| headers          | -        | 选填            | 选填           | 针对被探测的函数是 HTTP 函数， HTTP 请求头, 示例值 `'{"header_a":"val"}'`                                                                                                                                                                                                                                                  |
+| headers          | -        | 选填            | 选填           | 针对被探测的函数是 HTTP 函数， HTTP 请求头, 示例值:`{"header_a":"val"}`                                                                                                                                                                                                                                                    |
 | access           | a        | 选填            | 必填           | 本次请求使用的密钥，可以使用通过[config 命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息)  |
 | debug            | -        | 选填            | 选填           | 打开`debug`模式，将会输出更多日志信息                                                                                                                                                                                                                                                                                      |
 | help             | h        | 选填            | 选填           | 查看帮助信息                                                                                                                                                                                                                                                                                                               |
