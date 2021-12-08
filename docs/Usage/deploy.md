@@ -127,6 +127,47 @@ node_modules/
 
 .fcignore 遵从 .gitignore 的语法。
 
+## 敏感信息如何存储
+
+项目代码中涉及到数据库的连接信息，云账号的`AccessKeyID`, `AccessKeySecret`等敏感信息。禁止写死在代码中，提交到git仓库。否则会造成严重的安全风险。
+
+### 使用步骤
+1. 假设我的.env文件如下
+```
+AccessKeyID=xxxx
+AccessKeySecret=xxxxxxx
+```
+> 注意：务必在`.gitignore`中忽略`.env`文件
+2. 配置文件(`s.yaml`)可以将`.env`中变量作为环境变量传递到FC执行环境中：
+```
+# s.yaml
+edition: 1.0.0
+name: fcDeployApp
+
+services:
+  fc-deploy-test-function:
+    component: devsapp/fc
+    props:
+      region: cn-hangzhou
+      service: 
+        name: fc-deploy-service
+        internetAccess: true
+      function:
+        name: function-a
+        runtime: nodejs10
+        codeUri: ./code
+        handler: index.handler
+        memorySize: 128
+        timeout: 60
+        environmentVariables:
+          AccessKeyID: ${env.AccessKeyID}
+          AccessKeySecret: ${env.AccessKeySecret}
+```
+3. 在项目代码中读取环境变量
+- 本地测试可以通过类似[dotenv](https://www.npmjs.com/package/dotenv)库来读取`.env`环境变量
+
+- 在FC环境线上执行时候，会将环境变量直接注入到当前进程，Nodejs应用可以通过`process.env.AccessKeyID`直接获取环境变量。
+
 ## 如何部署多个函数
 
 如果我现在需要部署多个函数：
