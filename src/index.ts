@@ -32,6 +32,7 @@ import { EvalOption } from './lib/interface/component/fc-eval';
 
 Logger.setContent('FC');
 const SUPPORTED_LOCAL_METHOD: string[] = ['invoke', 'start'];
+const DEPLOY_SUPPORT_CONFIG_ARGS = ['code', 'config'];
 
 export default class FcBaseComponent extends BaseComponent {
   logger = Logger;
@@ -50,12 +51,17 @@ export default class FcBaseComponent extends BaseComponent {
     const subCommand = rawData[0] || 'all';
     this.logger.debug(`deploy subCommand: ${subCommand}`);
     if (!commandList.includes(subCommand)) {
+      this.logger.error(`Deploy ${subCommand} is not supported now.`);
       return core.help(DEPLOY_HELP.DEPLOY);
     }
 
     if (parsedData.help) {
       rawData[0] ? core.help(DEPLOY_HELP[`DEPLOY_${subCommand}`.toLocaleUpperCase()]) : core.help(DEPLOY_HELP.DEPLOY);
       return;
+    }
+    if (parsedData.type && !DEPLOY_SUPPORT_CONFIG_ARGS.includes(parsedData.type)) {
+      core.help(DEPLOY_HELP.DEPLOY);
+      throw new Error(`Type does not support ${parsedData.type}, only config and code are supported`);
     }
 
     const deployRes: any = await this.componentMethodCaller(inputs, 'devsapp/fc-deploy', 'deploy', props, args);
