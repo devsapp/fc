@@ -33,8 +33,7 @@ Options
   --service-name [string]         [C-Required] Specify the fc service name  
   --function-name [string]        [Optional] Specify the fc function name   
   -e, --event [string]            [Optional] Event data passed to the function during invocation (default: "")                                                         
-  -f, --event-file [string]       [Optional] Event funtion: A file containing event data passed to the function during invoke
-                                   HTTP function: A file containing http request options sent to http trigger                                                                  
+  -f, --event-file [string]       [Optional] Event funtion: A file containing event data passed to the function during invoke                                                                 
   -s, --event-stdin [string]      [Optional] Read from standard input, to support script pipeline                                                      
   --invocation-type [async/sync]  [Optional] Invocation type, value: async/sync, default: sync                                                                                                
   --stateful-async-invocation-id  [Optional] Stateful asynchronous invocation, only takes effect when --invocation-type=async                           

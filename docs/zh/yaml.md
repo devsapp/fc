@@ -13,6 +13,8 @@
     - [instanceLifecycleConfig](#instanceLifecycleConfig)
     - [asyncConfiguration](#asyncConfiguration)
     - [destination](#destination)
+    - [customDNS](#customDNS)
+    - [dnsOptions](#dnsOptions)
   - [triggers字段](#triggers字段)
     - [OSS触发器](#OSS触发器)
     - [Log触发器](#Log触发器)
@@ -104,6 +106,18 @@ services:
           maxAsyncEventAgeInSeconds: 456
           maxAsyncRetryAttempts: 3
           statefulInvocation: true
+        customDNS:
+          nameServers:
+            - 8.8.8.8
+            - 114.114.114.114
+          searches:
+            - default.svc.test.example
+            - svc.jqDgWvOo.test.example
+          dnsOptions:
+            - name: ndots
+              value: '6'
+            - name: edns
+              value: '7'
       triggers:
         - name: httpTrigger
           type: http
@@ -294,7 +308,7 @@ service:
 | 参数名                | 必填 | 类型                      | 参数描述 |
 | --------------------- | ---- | ------------------------- | -------- |
 | name                  | True | String                    | 角色名   |
-| [policies](#policies) | True | [List<Struct>](#policies) | 策略列表 |
+| [policies](#policies) | True | [List\<Struct>](#policies) | 策略列表 |
 
 参考案例：
 
@@ -355,7 +369,7 @@ role:
 | ----------- | ----- | -------------------------- | ------------ |
 | name        | True  | String                     | 策略名称     |
 | description | False | String                     | 策略描述     |
-| statement   | True  | [List<Struct>](#statement) | 策略内容列表 |
+| statement   | True  | [List\<Struct>](#statement) | 策略内容列表 |
 
 #### statement
 
@@ -364,8 +378,8 @@ role:
 | 参数名    | 必填  | 类型                | 参数描述                             |
 | --------- | ----- | ------------------- | ------------------------------------ |
 | Effect    | True  | String              | 策略效果，可选值有 'Allow' 和 'Deny' |
-| Action    | True  | List<String>        | 策略动作                             |
-| Resource  | True  | String/List<String> | 策略的目标资源                       |
+| Action    | True  | List\<String\>        | 策略动作                             |
+| Resource  | True  | String/List\<String\> | 策略的目标资源                       |
 | Condition | False | Object              | 策略的目标资源                       |
 
 ### logConfig
@@ -496,7 +510,7 @@ service:
 | 参数名          | 必填  | 类型         | 参数描述       |
 | --------------- | ----- | ------------ | -------------- |
 | securityGroupId | False | String       | 安全组ID       |
-| vSwitchIds      | False | List<String> | 交换机 ID 列表 |
+| vSwitchIds      | False | List\<String\> | 交换机 ID 列表 |
 | vpcId           | False | String       | VPC ID         |
 
 
@@ -590,7 +604,7 @@ service:
 
 | 参数名                      | 必填  | 类型                                     | 参数描述             |
 | --------------------------- | ----- | ---------------------------------------- | -------------------- |
-| [mountPoints](#mountPoints) | False | [List<Struct>[多目录配置]](#mountPoints) | 目录配置             |
+| [mountPoints](#mountPoints) | False | [List\<Struct>[多目录配置]](#mountPoints) | 目录配置             |
 | userId                      | False | String                                   | userID, 默认为10003  |
 | groupId                     | False | String                                   | groupID, 默认为10003 |
 
@@ -766,13 +780,15 @@ service:
 | timeout                                             | False | Number                                | function运行的超时时间                                 |
 | caPort                                              | False | Number                                | CustomContainer/Runtime指定端口                        |
 | [customContainerConfig](#customContainerConfig)     | False | [Struct](#customContainerConfig)      | 自定义镜像配置                                         |
-| [environmentVariables](#environmentVariables)       | False | [List<Struct>](#environmentVariables) | 环境变量                                               |
+| [environmentVariables](#environmentVariables)       | False | [Struct](#environmentVariables) | 环境变量                                               |
 | initializationTimeout                               | False | Number                                | 初始化方法超时时间                                     |
 | initializer                                         | False | String                                | 初始化方法                                             |
 | instanceConcurrency                                 | False | Number                                | 单实例多并发                                           |
 | instanceType                                        | False | String                                | 函数实例类型，可选值为：e1（弹性实例）、c1（性能实例） |
+| layer | False | List\<String\> | 函数绑定层，仅支持 Nodejs、Python；取值是层的 ARN |
 | [instanceLifecycleConfig](#instanceLifecycleConfig) | False | [Struct](#instanceLifecycleConfig)    | 扩展函数                                               |
-| [asyncConfiguration](asyncConfiguration)            | False | [Struct](asyncConfiguration)          | 异步配置                                               |
+| [asyncConfiguration](#asyncConfiguration)            | False | [Struct](#asyncConfiguration)          | 异步配置                                               |
+| [customDNS](#customDNS)            | False | [Struct](#customDNS)          | DNS 配置 |
 
 
 参考案例：
@@ -883,6 +899,23 @@ TempKey: tempValue
 | statefulInvocation          | False | Boolean                | 是否开启有状态异步调用                                 |
 | [destination](#destination) | False | [Struct](#destination) | 异步调用目标的配置结构体                               |
 
+
+### customDNS
+
+| 参数名 | 必填  | 类型 | 参数描述  |
+| --------------------------- | ----- | ---------------------- | ------------------------------------------------------ |
+| nameServers | False | List\<String\> | DNS 服务器的 IP 地址列表 |
+| searches | False | List\<String\> | DNS 搜索域列表 |
+| dnsOptions | False | [List\<Struct\>](#dnsOptions) | 对应 resolv.conf DNS 配置的 Options 项 |
+
+
+#### dnsOptions
+
+| 参数名 | 必填  | 类型 | 参数描述  |
+| --------------------------- | ----- | ---------------------- | ------------------------------------------------------ |
+| name | True | String | 对应 resolv.conf DNS 配置的 Options 项的键 |
+| value | True | String | 对应 resolv.conf DNS 配置的 Options 项的值 |
+
 #### 权限配置相关
 
 ##### 服务角色权限
@@ -980,7 +1013,7 @@ type目前支持：`http`, `timer`, `oss`, `log`, `mns_topic`, `cdn_events`, `ta
 | 参数名            | 必填 | 类型              | 参数描述                     |
 | ----------------- | ---- | ----------------- | ---------------------------- |
 | bucketName        | True | String            | OSS 中目标 bucket 名称       |
-| events            | True | List<String>      | OSS 端触发函数执行的事件列表 |
+| events            | True | List\<String\>      | OSS 端触发函数执行的事件列表 |
 | [filter](#filter) | True | [Struct](#filter) | 触发条件                     |
 
 参考案例：
@@ -1274,7 +1307,7 @@ triggers:
 | 参数名   | 必填 | 类型         | 参数描述                                                     |
 | -------- | ---- | ------------ | ------------------------------------------------------------ |
 | authType | True | String       | 鉴权类型，可选值：anonymous、function                        |
-| methods  | True | List<String> | HTTP 触发器支持的访问方法，可选值：GET、POST、PUT、DELETE、HEAD |
+| methods  | True | List\<String\> | HTTP 触发器支持的访问方法，可选值：GET、POST、PUT、DELETE、HEAD |
 
 参考案例：
 
@@ -1491,14 +1524,14 @@ triggers:
 
 | 参数名 | 必填 | 类型         | 参数描述         |
 | ------ | ---- | ------------ | ---------------- |
-| domain | True | List<String> | 过滤参数值的集合 |
+| domain | True | List\<String\> | 过滤参数值的集合 |
 
 ### Tablestore 触发器
 
 | 参数名       | 必填 | 类型         | 参数描述           |
 | ------------ | ---- | ------------ | ------------------ |
-| instanceName | True | List<String> | 表格存储实例的名称 |
-| tableName    | True | List<String> | 实例中的表名称     |
+| instanceName | True | List\<String\> | 表格存储实例的名称 |
+| tableName    | True | List\<String\> | 实例中的表名称     |
 
 参考案例：
 
@@ -1589,7 +1622,7 @@ triggers:
 | --------------------------- | ----- | --------------------------- | ------------------------------------------ |
 | domainName                  | True  | String                      | 域名，如果是auto取值，系统则会默认分配域名 |
 | protocol                    | True  | String                      | 协议，取值：`HTTP`, `HTTPS`, `HTTP, HTTPS` |
-| [routeConfigs](#certConfig) | True  | [List<Struct>](#certConfig) | 路由                                       |
+| [routeConfigs](#certConfig) | True  | [List\<Struct>](#certConfig) | 路由                                       |
 | [certConfig](#routeConfigs) | False | [Struct](#routeConfigs)     | 域名证书                                   |
 
 参考案例：

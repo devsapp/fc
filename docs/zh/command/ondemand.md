@@ -94,7 +94,7 @@ Examples with Yaml
 
 Examples with CLI
 
-  $ s cli fc onDemand get --region cn-hangzhou --service-name serviceName --function-name functionName --qualifier qualifier 
+  $ s cli fc ondemand get --region cn-hangzhou --service-name serviceName --function-name functionName --qualifier qualifier 
 ```
 
 ### 参数解析
@@ -254,11 +254,11 @@ Options Help
 
 Examples with Yaml
 
-  $ s ondemand put --qualifier pre --maximum-instance-count 1                                                       
+  $ s ondemand put --qualifier pre --max 1                                                       
 
 Examples with CLI
 
-  $ s cli fc onDemand put --region cn-hangzhou --service-name serviceName --function-name functionName --qualifier alias --max 1
+  $ s cli fc ondemand put --region cn-hangzhou --service-name serviceName --function-name functionName --qualifier alias --max 1
 ```
 
 ### 参数解析

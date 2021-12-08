@@ -145,7 +145,7 @@ Local Start
 
   Local invoke fc http function 
 
-Usage for
+Usage
 
   $ s local start <options> 
 
