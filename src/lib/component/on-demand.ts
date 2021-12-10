@@ -117,7 +117,7 @@ export default class OnDemand {
       throw new Error('Not found service name');
     }
     logger.info(`Getting on-demand: ${serviceName}.${qualifier}/${functionName}`);
-    const { data } = await Client.fcClient.getOnDemandConfig(serviceName, qualifier, functionName);
+    const { data } = await Client.fcClient.getOnDemandConfig(serviceName, functionName, qualifier);
     if (data) {
       return {
         serviceName,
@@ -139,7 +139,7 @@ export default class OnDemand {
       throw new Error('Not found service name');
     }
     logger.info(`Removing on-demand: ${serviceName}.${qualifier}/${functionName}`);
-    const { data } = await Client.fcClient.deleteOnDemandConfig(serviceName, qualifier, functionName);
+    const { data } = await Client.fcClient.deleteOnDemandConfig(serviceName, functionName, qualifier);
     return data;
   }
 
@@ -163,7 +163,7 @@ export default class OnDemand {
     };
 
     logger.info(`Updating on-demand: ${serviceName}.${qualifier}/${functionName}`);
-    const { data } = await Client.fcClient.putOnDemandConfig(serviceName, qualifier, functionName, options);
+    const { data } = await Client.fcClient.putOnDemandConfig(serviceName, functionName, qualifier, options);
     return data;
   }
 

@@ -3,7 +3,8 @@ import * as core from '@serverless-devs/core';
 import * as _ from 'lodash';
 import Logger from './common/logger';
 import { COMPONENT_HELP_INFO, LOCAL_HELP_INFO, NAS_HELP_INFO,
-  NAS_SUB_COMMAND_HELP_INFO, LOCAL_INVOKE_HELP_INFO, LOCAL_START_HELP_INFO, BUILD_HELP_INFO } from './lib/help';
+  NAS_SUB_COMMAND_HELP_INFO, LOCAL_INVOKE_HELP_INFO, LOCAL_START_HELP_INFO, BUILD_HELP_INFO,
+  PLAN_HELP } from './lib/help';
 import * as DEPLOY_HELP from './lib/help/deploy';
 import GenerateNasProps from './lib/transform-nas';
 import { IInputs, IProperties } from './lib/interface/interface';
@@ -18,6 +19,7 @@ import Version from './lib/component/version';
 import Alias from './lib/component/alias';
 import OnDemand from './lib/component/on-demand';
 import Remove from './lib/component/remove';
+import Plan from './lib/component/plan';
 import Provision from './lib/component/provision';
 import { PayloadOption, EventTypeOption, HttpTypeOption } from './lib/interface/component/fc-common';
 import { StressOption } from './lib/interface/component/fc-stress';
@@ -30,12 +32,22 @@ import * as remote from './command/remote';
 import FcEval from './lib/component/fc-eval';
 import { EvalOption } from './lib/interface/component/fc-eval';
 
-Logger.setContent('FC');
 const SUPPORTED_LOCAL_METHOD: string[] = ['invoke', 'start'];
 const DEPLOY_SUPPORT_CONFIG_ARGS = ['code', 'config'];
 
 export default class FcBaseComponent extends BaseComponent {
   logger = Logger;
+  async plan(inputs: IInputs) {
+    const { isHelp, errorMessage, planType } = Plan.handlerInputs(inputs);
+    if (errorMessage) {
+      throw new Error(errorMessage);
+    }
+    if (isHelp) {
+      return core.help(PLAN_HELP);
+    }
+    const palnRs = await this.componentMethodCaller(inputs, 'devsapp/fc-plan', 'plan', inputs.props, inputs.args);
+    return Plan.showPlan(palnRs, planType);
+  }
 
   async deploy(inputs: IInputs): Promise<any> {
     const { props, args } = this.handlerComponentInputs(inputs);

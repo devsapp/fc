@@ -1,6 +1,7 @@
 export * from './build';
 export * from './local';
 export * from './nas';
+export * from './plan';
 
 export const COMPONENT_HELP_INFO = [
   {
