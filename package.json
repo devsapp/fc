@@ -4,7 +4,7 @@
   "main": "./dist/index.js",
   "dependencies": {
     "@alicloud/fc2": "^2.3.0",
-    "@serverless-devs/core": "^0.0.*",
+    "@serverless-devs/core": "latest",
     "i18n": "^0.13.2",
     "inquirer": "^8.1.1",
     "js-yaml": "^4.0.0",
