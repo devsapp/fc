@@ -88,7 +88,7 @@ export default class Remove {
       logger.output(value.local, 2);
     } else if (value.plan) {
       logger.log(`Resources(${key}) to change (release => new):`);
-      logger.log(value.plan);
+      logger.log(value.plan.substring(2, value.plan.length - 1));
     } else if (value.diff) {
       logger.log(`Resources(${key}) to change (release => new):`);
       logger.log(value.diff);
