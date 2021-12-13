@@ -26,23 +26,27 @@ export interface InvokeInputsArgs {
    */
   'service-name': string;
   /**
-   * [Optional] Specify the fc function name
+   * [C-Required] Specify the fc function name
    */
   'function-name': string;
   /**
    * [Optional] Event data passed to the function during invocation (default: "")
+   * @alias e
    */
   'event'?: string;
   /**
    * [Optional] Event funtion: A file containing event data passed to the function during invoke
+   * @alias f
    */
   'event-file'?: string;
   /**
    * [Optional] Read from standard input, to support script pipeline
+   * @alias s
    */
   'event-stdin'?: string;
   /**
    * [Optional] Invocation type, value: async/sync, default: sync
+   * @typeLabel [async/sync]
    */
   'invocation-type'?: string;
   /**

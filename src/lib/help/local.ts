@@ -58,7 +58,7 @@ export const LOCAL_INVOKE_HELP_INFO = [
       },
       {
         name: 'mode',
-        typeLabel: '{underline <mode>}',
+        typeLabel: '{underline [api/server/normal]}',
         description: `[Optional] Invoke mode, including api, server and normal:
           - api: start api server for invokeFunction api invoking
           - server: start server container for invoking function in the other terminal repeatedly
@@ -68,6 +68,7 @@ export const LOCAL_INVOKE_HELP_INFO = [
       },
       {
         name: 'config',
+        typeLabel: '{underline [vscode/pycharm/idea]}',
         description: '[Optional] Select which IDE to use when debugging and output related debug config tips for the IDE. value: vscode/pycharm/idea',
         alias: 'c',
         type: String,

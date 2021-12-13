@@ -83,11 +83,12 @@ export default class BaseComponent {
         // type = `${type} <${typeDetail}> `;
         type = 'string';
       }
+      const typelabelTag = tagData.filter((item) => item.tag === 'typelabel')[0] || {};
       if (alias) {
-        return { name, typeLabel: type, description, alias, defaultOption };
+        return { name, typeLabel: typelabelTag.text || type, description, alias, defaultOption };
       }
 
-      return { name, typeLabel: type, description, defaultOption };
+      return { name, typeLabel: typelabelTag.text || type, description, defaultOption };
     });
     const finalPreHelpData = preHelpItem.map((item) => {
       if (item.text) {

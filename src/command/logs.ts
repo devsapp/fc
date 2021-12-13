@@ -10,9 +10,9 @@
  * @after_help
  * {"ref":"GlobalDescribe"}
  * @example
- * {"header": "Examples with Yaml","content": ["s logs -s 2021-06-07T02:54:00+08:00 -e 2021-06-07T02:54:59+08:00","s logs -s 2021-06-07T02:54:00+08:00 -e 2021-06-07T02:54:59+08:00 --search error","s logs -t"]}
+ * {"header": "Examples with Yaml","content": ["$ s logs -s 2021-06-07T02:54:00+08:00 -e 2021-06-07T02:54:59+08:00","$ s logs -s 2021-06-07T02:54:00+08:00 -e 2021-06-07T02:54:59+08:00 --search error","$ s logs -t"]}
  * @example
- * {"header": "Examples with CLI","content": ["s cli fc logs --region cn-hangzhou --service-name serviceName --function-name functionName -t"]}
+ * {"header": "Examples with CLI","content": ["$ s cli fc logs --region cn-hangzhou --service-name serviceName --function-name functionName -t"]}
  */
 export interface LogsInputsArgs {
   /**
