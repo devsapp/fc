@@ -157,6 +157,11 @@ export const LOCAL_START_HELP_INFO = [
         type: String,
       },
       {
+        name: 'custom-domain',
+        description: '[Optional] Access in the form of custom domain',
+        type: String,
+      },
+      {
         name: 'tmp-dir',
         description: "[Optional] The temp directory mounted to '/tmp' , default: './.s/tmp/invoke/serviceName/functionName/'",
         type: String,
