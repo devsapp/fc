@@ -20,6 +20,7 @@ export const PLAN_HELP = [
     optionList: [
       {
         name: 'type-plan',
+        typeLabel: '{underline [remove/deploy]}',
         description: '[Required] Expected instruction,value: remove/deploy(default: "deploy")',
         type: String,
       },

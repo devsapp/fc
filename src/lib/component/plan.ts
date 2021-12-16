@@ -50,7 +50,7 @@ export default class Remove {
   }
 
   static showPlan(planRs: any, planType) {
-    logger.debug(`planRs:: ${planRs}`);
+    logger.debug(`planRs:: ${JSON.stringify(planRs)}`);
     if (planType === 'deploy') {
       const { region } = planRs;
       delete planRs.region;
@@ -82,15 +82,17 @@ export default class Remove {
 
 
   private static showDeployItem(key, value) {
-    logger.log('\n');
     if (_.isEmpty(value.remote) || value.remote === 'remoteNull') {
-      logger.log(`Resources(${key}) to create:`);
+      logger.log(`${key}:`);
+      logger.debug(`Resources(${key}) to create:`);
       logger.output(value.local, 2);
     } else if (value.plan) {
-      logger.log(`Resources(${key}) to change (release => new):`);
-      logger.log(value.plan.substring(2, value.plan.length - 1));
+      logger.log(`${key}:`);
+      logger.debug(`Resources(${key}) to change (release => new):`);
+      logger.log(value.plan);
     } else if (value.diff) {
-      logger.log(`Resources(${key}) to change (release => new):`);
+      logger.log(`${key}:`);
+      logger.debug(`Resources(${key}) to change (release => new):`);
       logger.log(value.diff);
     }
   }
