@@ -4,6 +4,7 @@
 - [如何声明/部署多个函数](#如何声明部署多个函数)
 - [超过50M的代码包如何部署](#超过50M的代码包如何部署)
 - [关于`.fcignore`使用方法](#关于.fcignore使用方法)
+- [关于`.env`使用方法](#关于.env使用方法)
 - [工具中`.s`目录是做什么](#工具中.s目录是做什么)
 - [函数进行build操作之后如何处理build的产物](#函数进行build操作之后如何处理build的产物)
 - [Yaml是否支持全局变量/环境变量/引用外部文件](#Yaml是否支持全局变量环境变量引用外部文件)
@@ -150,6 +151,44 @@ node_modules/
 打包时会忽略 logs/ 目录 、*.log 文件。所有层级的 node_modules/ 目录会被忽略，但是 demo/node_modules 会被保留。
 
 **使用场景**：部署大代码包时，通过 nas 命令将项目中的依赖放到 NAS 中，然后通过.fcignore对上传到 nas 的文件忽略掉，再将项目部署到线上。
+
+## 关于`.env`使用方法
+项目代码中涉及到数据库的连接信息，云账号的`AccessKeyID`, `AccessKeySecret`等敏感信息，禁止写死在代码中，提交到git仓库。否则会造成严重的安全风险。
+
+### 使用步骤
+1. 假设我的.env文件如下
+```
+AccessKeyID=xxxx
+AccessKeySecret=xxxxxxx
+```
+> 注意：务必在`.gitignore`中忽略`.env`文件
+2. 配置文件(`s.yaml`)可以将`.env`中变量作为环境变量传递到FC执行环境中：
+```
+# s.yaml
+edition: 1.0.0
+name: fcDeployApp
+services:
+  fc-deploy-test-function:
+    component: devsapp/fc
+    props:
+      region: cn-hangzhou
+      service: 
+        name: fc-deploy-service
+        internetAccess: true
+      function:
+        name: function-a
+        runtime: nodejs10
+        codeUri: ./code
+        handler: index.handler
+        memorySize: 128
+        timeout: 60
+        environmentVariables:
+          AccessKeyID: ${env.AccessKeyID}
+          AccessKeySecret: ${env.AccessKeySecret}
+```
+3. 在项目代码中读取环境变量
+- 本地测试可以通过类似[dotenv](https://www.npmjs.com/package/dotenv)库来读取`.env`环境变量
+- 在FC环境线上执行时候，会将环境变量直接注入到当前进程，Nodejs应用可以通过`process.env.AccessKeyID`直接获取环境变量。
 
 ## 工具中`.s`目录是做什么
 
