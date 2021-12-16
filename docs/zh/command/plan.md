@@ -26,6 +26,14 @@ Document
   
   https://github.com/devsapp/fc/blob/main/docs/command/plan.md    
 
+Options
+
+  --type-plan [remove/deploy]   [Required] Expected instruction,value: remove/deploy(default: "deploy")               
+  --sub-command string          [Optional] Expected subcommand.                                                       
+                                If type-plan is deploy, optional value:service/function/trigger/domain                
+                                If type-plan is remove, optional                                                      
+                                value:service/function/trigger/domain/version/alias/provision/ondemand/onDemand/layer
+
 Global Options
 
   -h, --help                 [Optional] Help for command    
@@ -41,6 +49,8 @@ Examples with Cli
 
 | 参数全称   | 参数缩写 | Yaml模式下必填 | 参数含义                                                     |
 | ---------- | -------- | -------------- | ------------------------------------------------------------ |
+| type-plan | - | 必填 | 查看部署或者删除的变更，默认是查看部署 |
+| sub-command | - | 选填 | 查看哪些资源的变更。如果 type-plan 是 deploy 那么可选参数有 service/function/trigger/domain；如果 type-plan 是 remove 那么可选参数有 service/function/trigger/domain/version/alias/provision/ondemand/onDemand/layer |
 | access     | a        | 选填           | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
 | debug      | -        | 选填           | 打开`debug`模式，将会输出更多日志信息                        |
 | help       | h        | 选填           | 查看帮助信息                                                 |
