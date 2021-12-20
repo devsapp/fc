@@ -157,7 +157,7 @@ export default class FcBaseComponent extends BaseComponent {
       return;
     }
 
-    return await new Remove().remove({
+    await new Remove().remove({
       props,
       subCommand,
     }, this.handlerInputs(inputs));

@@ -260,7 +260,7 @@ export default class Remove {
         if (_.isEmpty(planItem.data)) {
           continue;
         }
-        logger.log(planItem.title || '');
+        logger.log(`${_.upperFirst(planItem.resources)}:`);
         console.log(Table(planItem.header, planItem.data).render());
       }
       const assumeYes = await promptForConfirmOrDetails('Are you sure you want to delete these resources?');
