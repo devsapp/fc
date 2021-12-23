@@ -15,8 +15,6 @@
 - [remove alias 命令](remove.md#remove-alias-命令)
 - [权限与策略说明](#权限与策略说明)
 
-> 关于 `alias` 命令的常见问题和解决方法，可以参考[ FC 组件自动问答系统](http://qa.devsapp.cn/ ) 。
-
 ## 命令解析
 
 当执行命令`alias -h`/`alias --help`时，可以获取帮助文档：
