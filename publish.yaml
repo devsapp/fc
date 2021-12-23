@@ -9,25 +9,32 @@ Tags:
   - 函数计算
 Category: 基础云产品
 Commands:
-  deploy: 部署资源
-  remove: 删除资源
-  local: 本地调试
-  remote: 远程调试
-  build: 构建函数
-  invoke: 远端调用
-  info: 获取线上资源配置
-  sync: 同步线上资源配置/代码到本地
-  logs: 实时获取线上函数的运行日志
-  metrics: 查看线上函数的监控指标
-  nas: 管理远端 NAS 文件系统中的文件
-  stress: 压测函数
-  layer: 层
-  alias: 服务别名
-  version: 服务版本
-  ondemand: 按量资源
-  provision: 预留实例
-  proxied: 端云连调
-  fun2s: 将fun转化为s可读的配置
+  Build&Deploy:
+    deploy: Deploy local resources online
+    build: Build the dependencies.
+    remove: The ability to delete resources
+  Observability:
+    metrics: Query function metrics information
+    logs: Query the function log. You need to open SLS log service
+  Invoke&Debug:
+    local: Run your serverless application locally for quick development & testing
+    invoke: Invoke/Trigger online functions
+    proxied: Local invoke via proxied service.
+    remote: Remote invoke via proxied service.
+  Publish&Config:
+    version: Service version operation
+    alias: Service alias operation
+    provision: provision reservation operation
+    ondemand: Resource on-demand operation
+    layer: Resource layer operation
+  Others:
+    nas: Manage nas, include upload,download and so on
+    plan: Perceived resource change
+    info: Query online resource details
+    sync: Synchronize online resources to offline resources
+    stress: Stress test for the serverless application
+    fc-api: Directly operate the FC API without yaml support
+    fun2s: Convert the Yaml specification of Funcraft to Serverless Devs
 Service:
   函数计算:
     Authorities:
