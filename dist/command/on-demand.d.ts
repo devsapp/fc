@@ -2,128 +2,112 @@ export declare function get(): void;
 export declare function put(): void;
 export declare function list(): void;
 /**
- * s onDemand <sub-command>\n
+ * s ondemand <sub-command> <options>
  * @pre_help
- * {"header":"OnDemand","content":"Resource on-demand operation"}
+ * {"header":"Ondemand","content":"Resource on-demand operation"}
+ * @pre_help
+ * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/command/ondemand.md"}
  * @after_help
- * {"header":"SubCommand List","content":[{"desc":"list","example":"View the list of resource on-demand, you can get help through [s onDemand list -h]"},{"desc":"put","example":"Put resource on-demand, you can get help through [s onDemand put -h]"},{"desc":"get","example":"Get resource on-demand, you can get help through [s onDemand get -h]"}]}
+ * {"header":"SubCommand List","content":[{"desc":"list","example":"View the list of resource on-demand; help command [s ondemand list -h] "},{"desc":"put","example":"Put resource on-demand; help command [s ondemand put -h]"},{"desc":"get","example":"Get resource on-demand; help command [s ondemand get -h]"}]}
  */
 export interface OnDemandInputsArgs {
 }
 /**
- * s onDemand get\n
+ * s ondemand get <options>
  * @pre_help
- * {"header":"OnDemand get","content":"Get on-demand configuration"}
+ * {"header":"Ondemand get","content":"Get on-demand configuration"}
+ * @pre_help
+ * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/command/ondemand.md"}
  * @after_help
  * {"ref":"GlobalParams"}
+ * @after_help
+ * {"ref":"GlobalDescribe"}
  * @example
- * {"header": "Examples with Yaml","content": ["$ s onDemand get --qualifier pre"]}
+ * {"header": "Examples with Yaml","content": ["$ s ondemand get --qualifier qualifier"]}
  * @example
- * {"header": "Examples with CLI","content": ["$ s cli fc onDemand get --region cn-hangzhou --service-name name --function-name name --qualifier alias"]}
+ * {"header": "Examples with CLI","content": ["$ s cli fc ondemand get --region cn-hangzhou --service-name serviceName --function-name functionName --qualifier qualifier"]}
  */
 export interface OnDemandGetInputsArgs {
     /**
-     *  Specify the region of alicloud
+     * [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1
      */
     region: string;
     /**
-      *  Specify the alicloud fc service name
+      * [C-Required] Specify the fc service name
       */
     'service-name': string;
     /**
-      *  Specify the alicloud fc function name
+      * [C-Required] Specify the fc function name
       */
     'function-name': string;
     /**
-      *  Specify the qualifier parameter. Only supports LATEST and alias
+      * [Optional] Specify the qualifier parameter. Only supports LATEST and alias
       */
     'qualifier': string;
 }
 /**
- * s onDemand list\n
+ * s ondemand list <options>
  * @pre_help
- * {"header":"OnDemand list","content":"View the list of on-demand"}
+ * {"header":"Ondemand list","content":"View the list of on-demand"}
+ * @pre_help
+ * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/command/ondemand.md"}
  * @after_help
  * {"ref":"GlobalParams"}
+ * @after_help
+ * {"ref":"GlobalDescribe"}
  * @example
- * {"header": "Examples with Yaml","content": ["$ s onDemand list"]}
+ * {"header": "Examples with Yaml","content": ["$ s ondemand list"]}
  * @example
- * {"header": "Examples with CLI","content": ["$ s cli fc onDemand list --region cn-hangzhou --service-name name"]}
+ * {"header": "Examples with CLI","content": ["$ s cli fc ondemand list --region cn-hangzhou --service-name serviceName"]}
  */
 export interface OnDemandListInputsArgs {
     /**
-     *  Specify the region of alicloud
+     * [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1
      */
     region: string;
     /**
-      *  Specify the alicloud fc service name
+      * [C-Required] Specify the fc service name
       */
     'service-name': string;
     /**
-     *  Table format output
+     * [Optional] Table format output
      */
     table: boolean;
 }
 /**
- * s onDemand delete\n
+ * s ondemand put <options>
  * @pre_help
- * {"header":"OnDemand delete","content":"Delete on-demand configuration"}
+ * {"header":"Ondemand put","content":"Set reserved configuration"}
+ * @pre_help
+ * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/command/ondemand.md"}
  * @after_help
  * {"ref":"GlobalParams"}
- * @example
- * {"header": "Examples with Yaml","content": ["$ s onDemand delete --qualifier pre"]}
- * @example
- * {"header": "Examples with CLI","content": ["$ s cli fc onDemand delete --region cn-hangzhou --service-name name --function-name name --qualifier alias"]}
- */
-export interface OnDemandDeleteInputsArgs {
-    /**
-     *  Specify the region of alicloud
-     */
-    region: string;
-    /**
-      *  Specify the alicloud fc service name
-      */
-    'service-name': string;
-    /**
-      *  Specify the alicloud fc function name
-      */
-    'function-name': string;
-    /**
-      *  Specify the qualifier parameter. Only supports LATEST and alias
-      */
-    'qualifier': string;
-}
-/**
- * s onDemand put\n
- * @pre_help
- * {"header":"OnDemand put","content":"Set reserved configuration"}
  * @after_help
- * {"ref":"GlobalParams"}
+ * {"ref":"GlobalDescribe"}
  * @example
- * {"header": "Examples with Yaml","content": ["$ s onDemand put --qualifier pre --maximum-instance-count 1"]}
+ * {"header": "Examples with Yaml","content": ["$ s ondemand put --qualifier pre --max 1"]}
  * @example
- * {"header": "Examples with CLI","content": ["$ s cli fc onDemand put --region cn-hangzhou --service-name name --function-name name --qualifier alias --max 1"]}
+ * {"header": "Examples with CLI","content": ["$ s cli fc ondemand put --region cn-hangzhou --service-name serviceName --function-name functionName --qualifier alias --max 1"]}
  */
 export interface OnDemandPutInputsArgs {
     /**
-     *  Specify the region of alicloud
+     * [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1
      */
     region: string;
     /**
-      *  Specify the alicloud fc service name
-      */
+     * [C-Required] Specify the fc service name
+     */
     'service-name': string;
     /**
-      *  Specify the alicloud fc function name
-      */
+     * [C-Required] Specify the fc function name
+     */
     'function-name': string;
     /**
-      *  Specify the qualifier parameter. Only supports LATEST and alias
-      */
+     * [Required] Specify the qualifier parameter. Only supports LATEST and alias
+     */
     'qualifier': string;
     /**
-      *  Specify the maximumInstanceCount parameter
-      * @alias -max
+      * [Required] Specify the maximumInstanceCount parameter
       */
-    'maximum-instance-count': string;
+    'max': string;
 }

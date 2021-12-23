@@ -1,103 +1,117 @@
+export declare function get(): void;
 export declare function list(): void;
 export declare function publish(): void;
-export declare function get(): void;
 /**
- * s alias <sub-command>\n
+ * s alias <sub-command> <options>
  * @pre_help
  * {"header":"Alias","content":"Service alias operation"}
+ * @pre_help
+ * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/command/alias.md"}
  * @after_help
- * {"header": "SubCommand List", "content": [{"desc":"get","example":"Get alias details, you can get help through [s alias get -h]"},{"desc":"list","example":"View the list of service alias, you can get help through [s alias list -h]"},{"desc":"publish","example":"Publish service alias, you can get help through [s alias publish -h]"}]}
+ * {"header": "SubCommand List", "content": [{"desc":"get","example":"Get alias details; help command [s alias get -h]"},{"desc":"list","example":"View the list of alias; help command [s alias list -h]"},{"desc":"publish","example":"Publish alias; help command [s alias publish -h]"}]}
  */
 export interface AliasInputsArgs {
 }
 /**
- * s alias get\n
+ * s alias get <options>
  * @pre_help
  * {"header":"Alias get","content":"Get alias details"}
+ * @pre_help
+ * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/command/alias.md"}
  * @after_help
  * {"ref":"GlobalParams"}
+ * @after_help
+ * {"ref":"GlobalDescribe"}
  * @example
- * {"header": "Examples with Yaml","content": ["$ s alias get --alias-name xxx"]}
+ * {"header": "Examples with Yaml","content": ["$ s alias get --alias-name aliasName"]}
  * @example
- * {"header": "Examples with CLI","content": ["$ s cli fc alias get --region cn-hangzhou --service-name name --alias-name xxx"]}
+ * {"header": "Examples with CLI","content": ["$ s cli fc alias get --region cn-hangzhou --service-name serviceName --alias-name aliasName"]}
  */
 export interface AliasGetInputsArgs {
     /**
-     *  Specify the region of alicloud
+     * [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1
      */
     region: string;
     /**
-      *  Specify the alicloud fc service name
-      */
+     * [C-Required] Specify the fc service name
+     */
     'service-name': string;
     /**
-      *  Specify the alias name parameter
-      */
+     *  [Required] Specify the fc alias name
+     */
     'alias-name': string;
 }
 /**
- * s alias list <options>\n
+ * s alias list <options>
  * @pre_help
  * {"header":"Alias list","content":"View the list of service alias"}
+ * @pre_help
+ * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/command/alias.md"}
  * @after_help
  * {"ref":"GlobalParams"}
+ * @after_help
+ * {"ref":"GlobalDescribe"}
  * @example
  * {"header": "Examples with Yaml","content": ["$ s alias list"]}
  * @example
- * {"header": "Examples with CLI","content": ["$ s cli fc alias list --region cn-hangzhou --service-name name"]}
+ * {"header": "Examples with CLI","content": ["$ s cli fc alias list --region cn-hangzhou --service-name serviceName"]}
  */
 export interface AliasListInputsArgs {
     /**
-     *  Specify the region of alicloud
+     * [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1
      */
     region: string;
     /**
-      *  Specify the alicloud fc service name
+      * [C-Required] Specify the fc service name
       */
     'service-name': string;
     /**
-      *  Table format output
+      * [Optional] Table format output
       */
     'table': boolean;
 }
 /**
- * s alias publish <options>\n
+ * s alias publish <options>
  * @pre_help
  * {"header":"Alias publish","content":"Publish service alias"}
+ * @pre_help
+ * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/command/alias.md"}
  * @after_help
  * {"ref":"GlobalParams"}
+ * @after_help
+ * {"ref":"GlobalDescribe"}
  * @example
- * {"header": "Examples with Yaml","content": ["$ s alias publish --alias-name pre --version-id 2","$ s alias publish --description xxx --alias-name pre --version-id 2 --gversion 3 --weight 20"]}
+ * {"header": "Examples with Yaml","content": ["$ s alias publish --alias-name aliasName --version-id 2","$ s alias publish --description description --alias-name aliasName --version-id 2 --gversion 3 --weight 20"]}
  * @example
- * {"header": "Examples with CLI","content": ["$ s cli fc alias publish --region cn-hangzhou --service-name name --alias-name pre --version-id 2"]}
+ * {"header": "Examples with CLI","content": ["$ s cli fc alias publish --region cn-hangzhou --service-name serviceName --alias-name aliasName --version-id 2"]}
  */
 export interface AliasPublishInputsArgs {
     /**
-     *  Specify the region of alicloud
+     * [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1
      */
     region: string;
     /**
-      *  Specify the alicloud fc service name
+      * [C-Required] Specify the fc service name
       */
     'service-name': string;
     /**
-      *  Specify the alicloud fc alias name
+      * [Required] Specify the fc alias name
       */
     'alias-name': string;
     /**
-      *  Specify the version parameter
+      * [Required] The version Id
       */
     'version-id': string;
     /**
-      *  Specify the description parameter
+      * [Optional] Specify the alias description
       */
     'description': string;
     /**
-      *  Specify the grayscale version id parameter
+      * [Optional] The grayscale version id
       */
     'gversion': string;
     /**
-      *  Specify the weight parameter
+      * [Optional] The weight for grayscale version
       */
     'weight': string;
 }
@@ -107,6 +121,8 @@ export interface AliasPublishInputsArgs {
  * {"header":"Alias remove","content":"Delete service alias"}
  * @after_help
  * {"ref":"GlobalParams"}
+ * @after_help
+ * {"ref":"GlobalDescribe"}
  * @example
  * {"header": "Examples with Yaml","content": ["$ s alias remove --alias-name xxx"]}
  * @example
@@ -114,16 +130,16 @@ export interface AliasPublishInputsArgs {
  */
 export interface AliasDeleteInputsArgs {
     /**
-     *  Specify the region of alicloud
+     * [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1
      */
     region: string;
     /**
-      *  Specify the alicloud fc service name
-      */
+     * [C-Required] Specify the fc service name
+     */
     'service-name': string;
     /**
-      *  Specify the alias name parameter
-      */
+     * [Required] Specify the fc alias name
+     */
     'alias-name': string;
 }
 /**
@@ -132,6 +148,8 @@ export interface AliasDeleteInputsArgs {
  * {"header":"Alias removeAll","content":"Delete service all alias"}
  * @after_help
  * {"ref":"GlobalParams"}
+ * @after_help
+ * {"ref":"GlobalDescribe"}
  * @example
  * {"header": "Examples with Yaml","content": ["$ s alias removeAll"]}
  * @example
@@ -139,11 +157,11 @@ export interface AliasDeleteInputsArgs {
  */
 export interface AliasDeleteAllInputsArgs {
     /**
-     *  Specify the region of alicloud
+     * [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1
      */
     region: string;
     /**
-      *  Specify the alicloud fc service name
-      */
+    * [C-Required] Specify the fc service name
+    */
     'service-name': string;
 }

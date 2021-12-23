@@ -9,5 +9,4 @@ export default class FcEval {
     constructor(access: string, region: string, evalOpts?: EvalOption, httpTypeOpts?: HttpTypeOption, payloadOpts?: PayloadOption);
     isJSONString(str: any): boolean;
     makeStartArgs(): string;
-    private isHttpFunctionType;
 }

@@ -1,4 +1,5 @@
 import { ICredentials } from '../interface/profile';
+export declare const COMMAND: string[];
 interface RemoveOnDemandOrProvision {
     region: string;
     serviceName: string;
@@ -31,7 +32,7 @@ interface EndProps {
 }
 interface IRemove {
     props: EndProps;
-    subCommand?: 'layer' | 'domain' | 'onDemand' | 'provision' | 'alias' | 'version' | 'service' | 'function' | 'trigger';
+    subCommand?: 'layer' | 'domain' | 'ondemand' | 'onDemand' | 'provision' | 'alias' | 'version' | 'service' | 'function' | 'trigger';
 }
 export default class Remove {
     static handlerInputs(inputs: any): Promise<{
@@ -64,6 +65,7 @@ export default class Remove {
     removeAlias({ region, serviceName, aliasName, assumeYes }: RemoveAlias): Promise<any>;
     removeVersion({ region, serviceName, versionId, assumeYes }: RemoveVersion): Promise<void>;
     remove({ props, subCommand }: IRemove, inputs: any): Promise<any>;
+    private removePlan;
     private genInputs;
 }
 export {};

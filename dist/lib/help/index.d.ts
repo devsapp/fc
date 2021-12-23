@@ -1,6 +1,7 @@
 export * from './build';
 export * from './local';
 export * from './nas';
+export * from './plan';
 export declare const COMPONENT_HELP_INFO: ({
     header: string;
     content: string;
