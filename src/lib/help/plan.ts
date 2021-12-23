@@ -7,7 +7,7 @@ export const PLAN_HELP = [
   },
   {
     header: 'Document',
-    content: '$ https://github.com/devsapp/fc/blob/main/docs/command/plan.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/command/plan.md',
   },
   {
     header: 'Usage',

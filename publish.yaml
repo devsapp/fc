@@ -24,7 +24,7 @@ Commands:
   layer: 层
   alias: 服务别名
   version: 服务版本
-  onDemand: 按量资源
+  ondemand: 按量资源
   provision: 预留实例
   proxied: 端云连调
   fun2s: 将fun转化为s可读的配置

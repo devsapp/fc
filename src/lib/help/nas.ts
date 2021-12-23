@@ -7,7 +7,7 @@ export const NAS_HELP_INFO = [
   },
   {
     header: 'Document',
-    content: '$ https://github.com/devsapp/fc/blob/main/docs/command/nas.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/command/nas.md',
   },
   {
     header: 'Usage',
@@ -43,7 +43,7 @@ const UPLOADHELP = [
   },
   {
     header: 'Document',
-    content: '$ https://github.com/devsapp/fc/blob/main/docs/command/nas.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/command/nas.md',
   },
   {
     header: 'Usage',
@@ -85,7 +85,7 @@ const DOWNLOADHELP = [
   },
   {
     header: 'Document',
-    content: '$ https://github.com/devsapp/fc/blob/main/docs/command/nas.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/command/nas.md',
   },
   {
     header: 'Usage',
@@ -126,7 +126,7 @@ const COMMANDHELP = [
   },
   {
     header: 'Document',
-    content: '$ https://github.com/devsapp/fc/blob/main/docs/command/nas.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/command/nas.md',
   },
   {
     header: 'Usage',
@@ -153,7 +153,7 @@ const INITHELP = [
   },
   {
     header: 'Document',
-    content: '$ https://github.com/devsapp/fc/blob/main/docs/command/nas.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/command/nas.md',
   },
   {
     header: 'Usage',

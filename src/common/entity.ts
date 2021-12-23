@@ -54,7 +54,7 @@ export const globalParams = {
 
 /**
  * @pre_help
- * {"header":"Options Help","content":[{"desc":"Required: Required parameters in YAML mode and CLI mode","example":""},{"desc":"C-Required: Required parameters in CLI mode","example":""},{"desc":"Optional: Non mandatory parameter","example":""},{"desc":"✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md","example":""}]}
+ * {"header":"Options Help","content":[{"desc":"Required: Required parameters in YAML mode and CLI mode","example":""},{"desc":"C-Required: Required parameters in CLI mode","example":""},{"desc":"Optional: Non mandatory parameter","example":""},{"desc":"✋ The difference between Yaml mode and CLI mode: http://ej6.net/yc","example":""}]}
  */
 export interface GlobalDescribe {}
 
@@ -65,6 +65,6 @@ export const globalDescribe = {
     { desc: 'C-Required: Required parameters in CLI mode' },
     { desc: 'Y-Required: Required parameters in Yaml mode' },
     { desc: 'Optional: Non mandatory parameter' },
-    { desc: '✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md' },
+    { desc: '✋ The difference between Yaml mode and CLI mode: http://ej6.net/yc' },
   ],
 };

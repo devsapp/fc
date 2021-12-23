@@ -7,7 +7,7 @@ export const BUILD_HELP_INFO = [
   },
   {
     header: 'Document',
-    content: '$ https://github.com/devsapp/fc/blob/main/docs/command/build.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/command/build.md',
   },
   {
     header: 'Usage',

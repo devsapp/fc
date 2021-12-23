@@ -252,7 +252,7 @@ export default class Remove {
     const planName = 'devsapp/fc-plan';
     const planInputs = this.genInputs(_.cloneDeep(inputs), planName, inputs.props, planArgs);
     const plan = await (await core.loadComponent(planName)).plan(planInputs);
-    logger.debug(JSON.stringify(plan));
+    logger.debug(`Plan remove res: ${JSON.stringify(plan)}`);
 
     if (!_.isEmpty(plan)) {
       for (const planItem of plan) {
