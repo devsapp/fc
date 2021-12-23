@@ -6,6 +6,7 @@ import { getCredentials, promptForConfirmOrDetails, tableShow } from '../utils';
 import _ from 'lodash';
 import { ICredentials } from '../interface/profile';
 
+const sleep = (time = 1000) => new Promise((r) => setTimeout(r, time));
 interface IProps {
   region?: string;
   serviceName?: string;
@@ -151,6 +152,18 @@ export default class Provision {
 
     logger.info(`Updating provision: ${serviceName}.${qualifier}/${functionName}`);
     const { data } = await Client.fcClient.putProvisionConfig(serviceName, functionName, qualifier, options);
+    if (options.target === 0) {
+      let retryBout = 0;
+      let notEffective = true;
+      try {
+        do {
+          await sleep();
+          retryBout += 1;
+          const provisionData = await this.get({ serviceName, qualifier, functionName });
+          notEffective = provisionData !== 0;
+        } while (retryBout < 20 && notEffective);
+      } catch (_ex) { /** */ }
+    }
     return data;
   }
 

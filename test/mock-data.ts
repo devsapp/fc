@@ -83,7 +83,7 @@ export const MNS_TRIGGER_CONFIG = {
   },
 };
 
-export const INPUTS: any = {
+export const INPUTS: any = _.cloneDeep({
   appName: 'fc-test',
   command: '',
   project: {
@@ -97,4 +97,4 @@ export const INPUTS: any = {
   args: '-y --use-local',
   argsObj: undefined,
   props: {},
-};
+});

@@ -1,6 +1,7 @@
 export * from './build';
 export * from './local';
 export * from './nas';
+export * from './plan';
 
 export const COMPONENT_HELP_INFO = [
   {
@@ -29,7 +30,7 @@ export const COMPONENT_HELP_INFO = [
       { name: 'layer', summary: 'Resource layer operation' },
       { name: 'alias', summary: 'Service alias operation' },
       { name: 'version', summary: 'Service version operation' },
-      { name: 'onDemand', summary: 'Resource OnDemand operation' },
+      { name: 'ondemand', summary: 'Resource OnDemand operation' },
       { name: 'remote', summary: 'Remote invoke via proxied service' },
       { name: 'proxied', summary: 'Local invoke via proxied service' },
       { name: 'eval', summary: 'Eval test for the serverless application' },
