@@ -5,7 +5,7 @@ export function put() {}
 /**
  * s provision <sub-command> <options>
  * @pre_help
- * {"header":"Provision","content":"esource reservation operation"}
+ * {"header":"Provision","content":"resource reservation operation"}
  * @pre_help
  * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/command/provision.md"}
  * @after_help
