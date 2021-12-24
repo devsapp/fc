@@ -21,7 +21,7 @@ Api
 
 Usage
 
-  s cli api <api> <options>  
+  s cli fc api <api> <options>  
                             
 Document
   
@@ -39,7 +39,7 @@ Global Options
 
 Examples with Cli
 
-  $ s cli api ListService              
+  $ s cli fc api ListService              
 ```
 
 ### 参数解析
