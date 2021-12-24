@@ -1,106 +1,89 @@
+import { globalParams, globalDescribe } from '../../common/entity';
+
+
+const options = [{
+  name: 'use-local',
+  description: '[Optional] Deploy resource using local config',
+  defaultOption: false,
+  type: Boolean,
+},
+{
+  name: 'use-remote',
+  description: '[Optional] Deploy resource using remote config',
+  defaultOption: false,
+  type: Boolean,
+},
+{
+  name: 'assume-yes',
+  description: '[Optional] Assume that the answer to any question which would be asked is yes',
+  alias: 'y',
+  defaultOption: false,
+  type: Boolean,
+}];
+
 export const DEPLOY = [
   {
     header: 'Deploy',
-    content: 'The ability to deploy resources\nExecuting `s deploy` is equivalent to `s deploy all`',
+    content: 'Deploy local resources online',
+  },
+  {
+    header: 'Document',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/command/deploy.md',
   },
   {
     header: 'Usage',
-    content: '$ s deploy <sub-command>',
-  },
-  {
-    header: 'SubCommand List',
     content: [
-      {
-        desc: 'all',
-        example: 'Deploy all resources, you can get help through [s deploy all -h]',
-      },
-      {
-        desc: 'service',
-        example: 'Only deploy service resources, you can get help through [s deploy service -h]',
-      },
-      {
-        desc: 'function',
-        example: 'Only deploy function resources, you can get help through [s deploy function -h]',
-      },
-      {
-        desc: 'trigger',
-        example: 'Only deploy trigger resources, you can get help through [s deploy trigger -h]',
-      },
-      {
-        desc: 'domain',
-        example: 'Only deploy domain resources, you can get help through [s deploy domain -h]',
-      },
+      '$ s deploy <options>',
+      '$ s deploy <sub-command> <options>',
     ],
-  },
-];
-
-const GLOBAL_OPTIONS = [
-  {
-    name: 'help',
-    description: 'Help for command',
-    alias: 'h',
-    type: Boolean,
-  },
-  {
-    name: 'access',
-    description: 'Specify key alias',
-    alias: 'a',
-    type: String,
-  },
-  {
-    name: 'debug',
-    description: 'Output debug informations',
-    type: Boolean,
-  },
-];
-
-export const DEPLOY_ALL = [
-  {
-    header: 'Deploy all',
-    content: 'Deploy all resources',
-  },
-  {
-    header: 'Usage',
-    content: '$ s deploy all <options>',
   },
   {
     header: 'Options',
     optionList: [
       {
         name: 'type',
-        description: 'Only deploy configuration or code. Value: code, config',
+        description: '[Optional] Only deploy configuration or code, value: code/config ',
+        defaultOption: false,
         type: String,
       },
-      {
-        name: 'use-local',
-        description: 'Deploy resource using local config',
-        type: Boolean,
-      },
-      {
-        name: 'assume-yes',
-        description: 'Assume that the answer to any question which would be asked is yes',
-        alias: 'y',
-        type: Boolean,
-      },
+      ...options,
     ],
   },
+  { ...globalParams },
+  { ...globalDescribe },
   {
-    header: 'Global Options',
-    optionList: GLOBAL_OPTIONS,
-  },
-  {
-    header: 'Examples with Yaml',
+    header: 'SubCommand List',
     content: [
-      '$ s deploy all',
-      '$ s deploy all --use-local',
+      {
+        desc: 'service',
+        example: 'Only deploy service resources; help command [s deploy service -h]',
+      },
+      {
+        desc: 'function',
+        example: 'Only deploy function resources; help command [s deploy function -h]',
+      },
+      {
+        desc: 'trigger',
+        example: 'Only deploy trigger resources; help command [s deploy trigger -h]',
+      },
+      {
+        desc: 'domain',
+        example: 'Only deploy domain resources; help command [s deploy domain -h]',
+      },
     ],
   },
 ];
 
+export const DEPLOY_ALL = DEPLOY;
+
 export const DEPLOY_SERVICE = [
   {
-    header: 'Deploy service',
+    header: 'Deploy Service',
     content: 'Only deploy service resources',
+  },
+  {
+    header: 'Document',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/command/deploy.md',
   },
   {
     header: 'Usage',
@@ -108,24 +91,10 @@ export const DEPLOY_SERVICE = [
   },
   {
     header: 'Options',
-    optionList: [
-      {
-        name: 'use-local',
-        description: 'Deploy resource using local config',
-        type: Boolean,
-      },
-      {
-        name: 'assume-yes',
-        description: 'Assume that the answer to any question which would be asked is yes',
-        alias: 'y',
-        type: Boolean,
-      },
-    ],
+    optionList: options,
   },
-  {
-    header: 'Global Options',
-    optionList: GLOBAL_OPTIONS,
-  },
+  { ...globalParams },
+  { ...globalDescribe },
   {
     header: 'Examples with Yaml',
     content: [
@@ -141,6 +110,10 @@ export const DEPLOY_FUNCTION = [
     content: 'Only deploy function resources',
   },
   {
+    header: 'Document',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/command/deploy.md',
+  },
+  {
     header: 'Usage',
     content: '$ s deploy function <options>',
   },
@@ -152,23 +125,11 @@ export const DEPLOY_FUNCTION = [
         description: 'Only deploy configuration or code Value: code, config',
         type: String,
       },
-      {
-        name: 'use-local',
-        description: 'Deploy resource using local config',
-        type: Boolean,
-      },
-      {
-        name: 'assume-yes',
-        description: 'Assume that the answer to any question which would be asked is yes',
-        alias: 'y',
-        type: Boolean,
-      },
+      ...options,
     ],
   },
-  {
-    header: 'Global Options',
-    optionList: GLOBAL_OPTIONS,
-  },
+  { ...globalParams },
+  { ...globalDescribe },
   {
     header: 'Examples with Yaml',
     content: [
@@ -184,6 +145,10 @@ export const DEPLOY_TRIGGER = [
     content: 'Only deploy trigger resources',
   },
   {
+    header: 'Document',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/command/deploy.md',
+  },
+  {
     header: 'Usage',
     content: '$ s deploy trigger <options>',
   },
@@ -192,31 +157,20 @@ export const DEPLOY_TRIGGER = [
     optionList: [
       {
         name: 'trigger-name',
-        description: 'Only deploy the specified trigger, multiple triggers can be specified using --trigger-name name1 --trigger-name name2',
-        type: Array,
+        description: '[Optional] Only deploy the specified trigger, multiple triggers can be specified using [--trigger-name name1 --trigger-name name2]',
+        type: String,
       },
-      {
-        name: 'use-local',
-        description: 'Deploy resource using local config',
-        type: Boolean,
-      },
-      {
-        name: 'assume-yes',
-        description: 'Assume that the answer to any question which would be asked is yes',
-        alias: 'y',
-        type: Boolean,
-      },
+      ...options,
     ],
   },
-  {
-    header: 'Global Options',
-    optionList: GLOBAL_OPTIONS,
-  },
+  { ...globalParams },
+  { ...globalDescribe },
   {
     header: 'Examples with Yaml',
     content: [
       '$ s deploy trigger',
       '$ s deploy trigger --use-local',
+      '$ s deploy trigger --trigger-name name1 --trigger-name name2',
     ],
   },
 ];
@@ -227,6 +181,10 @@ export const DEPLOY_DOMAIN = [
     content: 'Only deploy domain resources',
   },
   {
+    header: 'Document',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/command/deploy.md',
+  },
+  {
     header: 'Usage',
     content: '$ s deploy domain <options>',
   },
@@ -234,22 +192,15 @@ export const DEPLOY_DOMAIN = [
     header: 'Options',
     optionList: [
       {
-        name: 'use-local',
-        description: 'Deploy resource using local config',
-        type: Boolean,
+        name: 'domain',
+        description: '[Optional] Only deploy the specified domain, multiple domains can be specified using [--domain domain1 --domain domain2]',
+        type: String,
       },
-      {
-        name: 'assume-yes',
-        description: 'Assume that the answer to any question which would be asked is yes',
-        alias: 'y',
-        type: Boolean,
-      },
+      ...options,
     ],
   },
-  {
-    header: 'Global Options',
-    optionList: GLOBAL_OPTIONS,
-  },
+  { ...globalParams },
+  { ...globalDescribe },
   {
     header: 'Examples with Yaml',
     content: [

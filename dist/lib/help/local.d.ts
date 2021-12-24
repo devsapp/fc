@@ -16,10 +16,10 @@ export declare const LOCAL_INVOKE_HELP_INFO: ({
     header: string;
     optionList: ({
         name: string;
-        typeLabel: string;
         description: string;
         alias: string;
         type: StringConstructor;
+        typeLabel?: undefined;
     } | {
         name: string;
         description: string;
@@ -31,21 +31,33 @@ export declare const LOCAL_INVOKE_HELP_INFO: ({
         typeLabel: string;
         description: string;
         alias: string;
-        type: NumberConstructor;
+        type: StringConstructor;
     } | {
         name: string;
-        typeLabel: string;
+        description: string;
+        alias: string;
+        type: NumberConstructor;
+        typeLabel?: undefined;
+    } | {
+        name: string;
         description: string;
         type: StringConstructor;
         alias?: undefined;
+        typeLabel?: undefined;
     } | {
         name: string;
-        typeLabel: string;
         description: string;
         type: NumberConstructor;
         alias?: undefined;
+        typeLabel?: undefined;
     })[];
     content?: undefined;
+} | {
+    header: string;
+    content: {
+        desc: string;
+    }[];
+    optionList?: undefined;
 } | {
     header: string;
     content: string[];
@@ -59,25 +71,21 @@ export declare const LOCAL_START_HELP_INFO: ({
     header: string;
     optionList: ({
         name: string;
-        typeLabel: string;
         description: string;
         alias: string;
         type: StringConstructor;
     } | {
         name: string;
-        typeLabel: string;
         description: string;
         alias: string;
         type: NumberConstructor;
     } | {
         name: string;
-        typeLabel: string;
         description: string;
         type: StringConstructor;
         alias?: undefined;
     } | {
         name: string;
-        typeLabel: string;
         description: string;
         type: NumberConstructor;
         alias?: undefined;

@@ -1,12 +1,64 @@
 export declare const DEPLOY: ({
     header: string;
     content: string;
+    optionList?: undefined;
+} | {
+    header: string;
+    content: string[];
+    optionList?: undefined;
+} | {
+    header: string;
+    optionList: ({
+        name: string;
+        description: string;
+        defaultOption: boolean;
+        type: BooleanConstructor;
+        alias?: undefined;
+    } | {
+        name: string;
+        description: string;
+        alias: string;
+        defaultOption: boolean;
+        type: BooleanConstructor;
+    } | {
+        name: string;
+        description: string;
+        defaultOption: boolean;
+        type: StringConstructor;
+    })[];
+    content?: undefined;
+} | {
+    header: string;
+    optionList: ({
+        name: string;
+        description: string;
+        type: StringConstructor;
+        alias?: undefined;
+    } | {
+        name: string;
+        description: string;
+        alias: string;
+        type: BooleanConstructor;
+    } | {
+        name: string;
+        description: string;
+        alias: string;
+        type: StringConstructor;
+    })[];
+    content?: undefined;
+} | {
+    header: string;
+    content: {
+        desc: string;
+    }[];
+    optionList?: undefined;
 } | {
     header: string;
     content: {
         desc: string;
         example: string;
     }[];
+    optionList?: undefined;
 })[];
 export declare const DEPLOY_ALL: ({
     header: string;
@@ -14,45 +66,60 @@ export declare const DEPLOY_ALL: ({
     optionList?: undefined;
 } | {
     header: string;
-    optionList: ({
-        name: string;
-        description: string;
-        type: StringConstructor;
-        alias?: undefined;
-    } | {
-        name: string;
-        description: string;
-        type: BooleanConstructor;
-        alias?: undefined;
-    } | {
-        name: string;
-        description: string;
-        alias: string;
-        type: BooleanConstructor;
-    })[];
-    content?: undefined;
-} | {
-    header: string;
-    optionList: ({
-        name: string;
-        description: string;
-        alias: string;
-        type: BooleanConstructor;
-    } | {
-        name: string;
-        description: string;
-        alias: string;
-        type: StringConstructor;
-    } | {
-        name: string;
-        description: string;
-        type: BooleanConstructor;
-        alias?: undefined;
-    })[];
-    content?: undefined;
-} | {
-    header: string;
     content: string[];
+    optionList?: undefined;
+} | {
+    header: string;
+    optionList: ({
+        name: string;
+        description: string;
+        defaultOption: boolean;
+        type: BooleanConstructor;
+        alias?: undefined;
+    } | {
+        name: string;
+        description: string;
+        alias: string;
+        defaultOption: boolean;
+        type: BooleanConstructor;
+    } | {
+        name: string;
+        description: string;
+        defaultOption: boolean;
+        type: StringConstructor;
+    })[];
+    content?: undefined;
+} | {
+    header: string;
+    optionList: ({
+        name: string;
+        description: string;
+        type: StringConstructor;
+        alias?: undefined;
+    } | {
+        name: string;
+        description: string;
+        alias: string;
+        type: BooleanConstructor;
+    } | {
+        name: string;
+        description: string;
+        alias: string;
+        type: StringConstructor;
+    })[];
+    content?: undefined;
+} | {
+    header: string;
+    content: {
+        desc: string;
+    }[];
+    optionList?: undefined;
+} | {
+    header: string;
+    content: {
+        desc: string;
+        example: string;
+    }[];
     optionList?: undefined;
 })[];
 export declare const DEPLOY_SERVICE: ({
@@ -64,6 +131,27 @@ export declare const DEPLOY_SERVICE: ({
     optionList: ({
         name: string;
         description: string;
+        defaultOption: boolean;
+        type: BooleanConstructor;
+        alias?: undefined;
+    } | {
+        name: string;
+        description: string;
+        alias: string;
+        defaultOption: boolean;
+        type: BooleanConstructor;
+    })[];
+    content?: undefined;
+} | {
+    header: string;
+    optionList: ({
+        name: string;
+        description: string;
+        type: StringConstructor;
+        alias?: undefined;
+    } | {
+        name: string;
+        description: string;
         alias: string;
         type: BooleanConstructor;
     } | {
@@ -71,13 +159,14 @@ export declare const DEPLOY_SERVICE: ({
         description: string;
         alias: string;
         type: StringConstructor;
-    } | {
-        name: string;
-        description: string;
-        type: BooleanConstructor;
-        alias?: undefined;
     })[];
     content?: undefined;
+} | {
+    header: string;
+    content: {
+        desc: string;
+    }[];
+    optionList?: undefined;
 } | {
     header: string;
     content: string[];
@@ -92,18 +181,19 @@ export declare const DEPLOY_FUNCTION: ({
     optionList: ({
         name: string;
         description: string;
-        type: StringConstructor;
-        alias?: undefined;
-    } | {
-        name: string;
-        description: string;
+        defaultOption: boolean;
         type: BooleanConstructor;
         alias?: undefined;
     } | {
         name: string;
         description: string;
         alias: string;
+        defaultOption: boolean;
         type: BooleanConstructor;
+    } | {
+        name: string;
+        description: string;
+        type: StringConstructor;
     })[];
     content?: undefined;
 } | {
@@ -111,6 +201,11 @@ export declare const DEPLOY_FUNCTION: ({
     optionList: ({
         name: string;
         description: string;
+        type: StringConstructor;
+        alias?: undefined;
+    } | {
+        name: string;
+        description: string;
         alias: string;
         type: BooleanConstructor;
     } | {
@@ -118,13 +213,14 @@ export declare const DEPLOY_FUNCTION: ({
         description: string;
         alias: string;
         type: StringConstructor;
-    } | {
-        name: string;
-        description: string;
-        type: BooleanConstructor;
-        alias?: undefined;
     })[];
     content?: undefined;
+} | {
+    header: string;
+    content: {
+        desc: string;
+    }[];
+    optionList?: undefined;
 } | {
     header: string;
     content: string[];
@@ -139,23 +235,29 @@ export declare const DEPLOY_TRIGGER: ({
     optionList: ({
         name: string;
         description: string;
-        type: ArrayConstructor;
-        alias?: undefined;
-    } | {
-        name: string;
-        description: string;
+        defaultOption: boolean;
         type: BooleanConstructor;
         alias?: undefined;
     } | {
         name: string;
         description: string;
         alias: string;
+        defaultOption: boolean;
         type: BooleanConstructor;
+    } | {
+        name: string;
+        description: string;
+        type: StringConstructor;
     })[];
     content?: undefined;
 } | {
     header: string;
     optionList: ({
+        name: string;
+        description: string;
+        type: StringConstructor;
+        alias?: undefined;
+    } | {
         name: string;
         description: string;
         alias: string;
@@ -165,13 +267,14 @@ export declare const DEPLOY_TRIGGER: ({
         description: string;
         alias: string;
         type: StringConstructor;
-    } | {
-        name: string;
-        description: string;
-        type: BooleanConstructor;
-        alias?: undefined;
     })[];
     content?: undefined;
+} | {
+    header: string;
+    content: {
+        desc: string;
+    }[];
+    optionList?: undefined;
 } | {
     header: string;
     content: string[];
@@ -186,6 +289,31 @@ export declare const DEPLOY_DOMAIN: ({
     optionList: ({
         name: string;
         description: string;
+        defaultOption: boolean;
+        type: BooleanConstructor;
+        alias?: undefined;
+    } | {
+        name: string;
+        description: string;
+        alias: string;
+        defaultOption: boolean;
+        type: BooleanConstructor;
+    } | {
+        name: string;
+        description: string;
+        type: StringConstructor;
+    })[];
+    content?: undefined;
+} | {
+    header: string;
+    optionList: ({
+        name: string;
+        description: string;
+        type: StringConstructor;
+        alias?: undefined;
+    } | {
+        name: string;
+        description: string;
         alias: string;
         type: BooleanConstructor;
     } | {
@@ -193,13 +321,14 @@ export declare const DEPLOY_DOMAIN: ({
         description: string;
         alias: string;
         type: StringConstructor;
-    } | {
-        name: string;
-        description: string;
-        type: BooleanConstructor;
-        alias?: undefined;
     })[];
     content?: undefined;
+} | {
+    header: string;
+    content: {
+        desc: string;
+    }[];
+    optionList?: undefined;
 } | {
     header: string;
     content: string[];

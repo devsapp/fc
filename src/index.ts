@@ -3,7 +3,8 @@ import * as core from '@serverless-devs/core';
 import * as _ from 'lodash';
 import Logger from './common/logger';
 import { COMPONENT_HELP_INFO, LOCAL_HELP_INFO, NAS_HELP_INFO,
-  NAS_SUB_COMMAND_HELP_INFO, LOCAL_INVOKE_HELP_INFO, LOCAL_START_HELP_INFO, BUILD_HELP_INFO } from './lib/help';
+  NAS_SUB_COMMAND_HELP_INFO, LOCAL_INVOKE_HELP_INFO, LOCAL_START_HELP_INFO, BUILD_HELP_INFO,
+  PLAN_HELP } from './lib/help';
 import * as DEPLOY_HELP from './lib/help/deploy';
 import GenerateNasProps from './lib/transform-nas';
 import { IInputs, IProperties } from './lib/interface/interface';
@@ -18,6 +19,7 @@ import Version from './lib/component/version';
 import Alias from './lib/component/alias';
 import OnDemand from './lib/component/on-demand';
 import Remove from './lib/component/remove';
+import Plan from './lib/component/plan';
 import Provision from './lib/component/provision';
 import { PayloadOption, EventTypeOption, HttpTypeOption } from './lib/interface/component/fc-common';
 import { StressOption } from './lib/interface/component/fc-stress';
@@ -30,11 +32,22 @@ import * as remote from './command/remote';
 import FcEval from './lib/component/fc-eval';
 import { EvalOption } from './lib/interface/component/fc-eval';
 
-Logger.setContent('FC');
 const SUPPORTED_LOCAL_METHOD: string[] = ['invoke', 'start'];
+const DEPLOY_SUPPORT_CONFIG_ARGS = ['code', 'config'];
 
 export default class FcBaseComponent extends BaseComponent {
   logger = Logger;
+  async plan(inputs: IInputs) {
+    const { isHelp, errorMessage, planType } = Plan.handlerInputs(inputs);
+    if (errorMessage) {
+      throw new Error(errorMessage);
+    }
+    if (isHelp) {
+      return core.help(PLAN_HELP);
+    }
+    const palnRs = await this.componentMethodCaller(inputs, 'devsapp/fc-plan', 'plan', inputs.props, inputs.args);
+    return Plan.showPlan(palnRs, planType);
+  }
 
   async deploy(inputs: IInputs): Promise<any> {
     const { props, args } = this.handlerComponentInputs(inputs);
@@ -50,12 +63,17 @@ export default class FcBaseComponent extends BaseComponent {
     const subCommand = rawData[0] || 'all';
     this.logger.debug(`deploy subCommand: ${subCommand}`);
     if (!commandList.includes(subCommand)) {
+      this.logger.error(`Deploy ${subCommand} is not supported now.`);
       return core.help(DEPLOY_HELP.DEPLOY);
     }
 
     if (parsedData.help) {
       rawData[0] ? core.help(DEPLOY_HELP[`DEPLOY_${subCommand}`.toLocaleUpperCase()]) : core.help(DEPLOY_HELP.DEPLOY);
       return;
+    }
+    if (parsedData.type && !DEPLOY_SUPPORT_CONFIG_ARGS.includes(parsedData.type)) {
+      core.help(DEPLOY_HELP.DEPLOY);
+      throw new Error(`Type does not support ${parsedData.type}, only config and code are supported`);
     }
 
     const deployRes: any = await this.componentMethodCaller(inputs, 'devsapp/fc-deploy', 'deploy', props, args);
@@ -139,7 +157,7 @@ export default class FcBaseComponent extends BaseComponent {
       return;
     }
 
-    return await new Remove().remove({
+    await new Remove().remove({
       props,
       subCommand,
     }, this.handlerInputs(inputs));
@@ -295,7 +313,7 @@ export default class FcBaseComponent extends BaseComponent {
       })).service || {};
 
       if (!isLogConfig(logConfig)) {
-        throw new Error('The service logConfig is not found online, please confirm whether logConfig is configured first, and then execute [s exec - deploy].');
+        throw new Error('The service logConfig is not found online, please confirm whether logConfig is configured first, and then execute [s deploy].');
       }
 
       logsPayload = {
@@ -307,7 +325,7 @@ export default class FcBaseComponent extends BaseComponent {
       };
     } catch (ex) {
       if (ex.code?.endsWith('NotFound')) {
-        throw new Error(`Online search failed, error message: ${ex.message}. Please execute [s exec -- deploy]`);
+        throw new Error(`Online search failed, error message: ${ex.message}. Please execute [s deploy]`);
       }
       throw ex;
     }
@@ -567,7 +585,7 @@ export default class FcBaseComponent extends BaseComponent {
     return await provision[subCommand](props, table);
   }
 
-  async onDemand(inputs: IInputs): Promise<any> {
+  async ondemand(inputs: IInputs) {
     const {
       credentials,
       help,
@@ -578,7 +596,7 @@ export default class FcBaseComponent extends BaseComponent {
       errorMessage,
     } = await OnDemand.handlerInputs(inputs);
 
-    await this.report('fc', subCommand ? `onDemand ${subCommand}` : 'onDemand', credentials?.AccountID);
+    await this.report('fc', subCommand ? `ondemand ${subCommand}` : 'ondemand', credentials?.AccountID);
     if (help) {
       super.help(helpKey);
       if (errorMessage) {
@@ -587,8 +605,12 @@ export default class FcBaseComponent extends BaseComponent {
       return;
     }
 
-    const onDemand = new OnDemand();
-    return await onDemand[subCommand](props, table);
+    const ondemand = new OnDemand();
+    return await ondemand[subCommand](props, table);
+  }
+
+  async onDemand(inputs: IInputs): Promise<any> {
+    return await this.ondemand(inputs);
   }
 
   async layer(inputs: IInputs): Promise<any> {
@@ -596,6 +618,7 @@ export default class FcBaseComponent extends BaseComponent {
     const LAYER_COMMAND = {
       publish: 'LayerPublishInputsArgs',
       list: 'LayerListInputsArgs',
+      detail: 'LayerVersionConfigInputsArgs',
       versionConfig: 'LayerVersionConfigInputsArgs',
       deleteVersion: 'LayerDeleteVerisonInputsArgs',
       versions: 'LayerVersionsInputsArgs',
@@ -800,10 +823,16 @@ export default class FcBaseComponent extends BaseComponent {
       super.help(EVAL_SUB_COMMAND_HELP_KEY[commandName]);
       return;
     }
+    let functionType = argsData['function-type'];
+    // yaml 模式
+    if (props?.service?.name && props?.function?.name) {
+      functionType = functionType || isHttpFunction(props) ? 'http' : 'event';
+    }
+
     const evalOpts: EvalOption = {
       serviceName: argsData['service-name'] || props?.service?.name,
       functionName: argsData['function-name'] || props?.function?.name,
-      functionType: argsData['function-type'] || (isHttpFunction(props) ? 'http' : 'event'),
+      functionType,
       evalType: argsData['eval-type'] || DEFAULT_EVAL_TYPE,
       memorySizeList: argsData['memory-size'],
       runCount: argsData['run-count'],
@@ -812,17 +841,15 @@ export default class FcBaseComponent extends BaseComponent {
       concurrencyArgs: argsData['concurrency-args'],
     };
 
-    let httpTypeOpts: HttpTypeOption = null;
-    if (evalOpts?.functionType === 'http') {
-      httpTypeOpts = {
-        url: argsData?.url,
-        method: argsData?.method,
-        path: argsData?.path,
-        query: argsData?.query,
-        body: argsData?.body,
-      };
-      this.logger.debug(`Using http options: \n${yaml.dump(httpTypeOpts)}`);
-    }
+    const httpTypeOpts: HttpTypeOption = {
+      url: argsData?.url,
+      method: argsData?.method,
+      path: argsData?.path,
+      query: argsData?.query,
+      body: argsData?.body,
+      headers: argsData?.headers,
+    };
+    this.logger.debug(`Using http options: \n${yaml.dump(httpTypeOpts)}`);
     const payloadOpts: PayloadOption = {
       payloadFile: argsData['payload-file'],
       payload: argsData?.payload,

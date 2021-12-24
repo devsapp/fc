@@ -1,55 +1,63 @@
 export declare function publish(): void;
 export declare function list(): void;
-export declare function versionConfig(): void;
+export declare function detail(): void;
 export declare function versions(): void;
 /**
- * s layer <sub-command>\n
+ * s layer <sub-command> <options>
  * @pre_help
  * {"header":"Layer","content":"Resource layer operation"}
  * @after_help
- * {"header":"SubCommand List","content":[{"desc":"publish","example":"New layer version, you can get help through [s layer publish -h]"},{"desc":"list","example":"Get layer list, you can get help through [s layer list -h]"},{"desc":"versionConfig","example":"Get layer versionConfig, you can get help through [s layer versionConfig -h]"},{"desc":"versions","example":"Get layer versions, you can get help through [s layer versions -h]"}]}
+ * {"header":"SubCommand List","content":[{"desc":"publish","example":"New layer version; help command [s layer publish -h]"},{"desc":"list","example":"Get layer list; help command [s layer list -h]"},{"desc":"detail","example":"Get layer versionConfig; help command [s layer detail -h]"},{"desc":"versions","example":"Get layer versions; help command [s layer verisons -h]"}]}
  */
 export interface LayerInputsArgs {
 }
 /**
- * s layer publish <options>\n
+ * s layer publish <options>
  * @pre_help
  * {"header":"Layer publish","content":"New layer version"}
+ * @pre_help
+ * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/command/layer.md"}
  * @after_help
  * {"ref":"GlobalParams"}
+ * @after_help
+ * {"ref":"GlobalDescribe"}
  * @example
- * {"header":"Examples with Yaml","content":["$ s layer publish --layer-name testName --code ./src","$ s layer publish --layer-name testName --code ./src"]}
+ * {"header":"Examples with Yaml","content":["$ s layer publish --layer-name testName --code ./src"]}
  * @example
  * {"header":"Examples with CLI","content":["$ s cli fc layer publish --region cn-hangzhou --layer-name testName --code ./src --compatible-runtime nodejs12,nodejs10,python3"]}
  */
 export interface LayerPublishInputsArgs {
     /**
-     *  Specify the region of alicloud
+     * [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1
      */
     region: string;
     /**
-     *  Specify the layer name parameter
+     * [Optional] Specify the layer name parameter
      */
-    'layer-name': string;
+    'layer-name'?: string;
     /**
-     *  Specify the description parameter
+     * [Optional] Specify the description parameter
      */
-    'description': string;
+    'description'?: string;
     /**
-     *  Specify the code parameter
+     * [Required] Specify the code parameter
      */
     'code': string;
     /**
-     *  Specify the compatibleRuntime parameter
+     * [Optional] Specify the compatibleRuntime parameter
      */
-    'compatible-runtime': string;
+    'compatible-runtime'?: string;
 }
 /**
- * s layer list\n
+ * s layer list <options>
  * @pre_help
  * {"header":"Layer list","content":"Get layer list"}
+ * @pre_help
+ * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/command/layer.md"}
  * @after_help
  * {"ref":"GlobalParams"}
+ * @after_help
+ * {"ref":"GlobalDescribe"}
  * @example
  * {"header":"Examples with Yaml","content":["$ s layer list"]}
  * @example
@@ -57,40 +65,44 @@ export interface LayerPublishInputsArgs {
  */
 export interface LayerListInputsArgs {
     /**
-     *  Specify the region of alicloud
+     * [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1
      */
     region: string;
     /**
-     *  Specify the prefix parameter
+     * [Optional] Specify the prefix parameter
      */
     'prefix': string;
     /**
-     *  Table format output
+     * [Optional] Table format output
      */
     'table': boolean;
 }
 /**
- * s layer versionConfig <options>\n
+ * s layer detail <options>
  * @pre_help
  * {"header":"Layer versionConfig","content":"Get layer version config"}
+ * @pre_help
+ * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/command/layer.md"}
  * @after_help
  * {"ref":"GlobalParams"}
+ * @after_help
+ * {"ref":"GlobalDescribe"}
  * @example
- * {"header":"Examples with Yaml","content":["$ s layer versionConfig --layer-name name --version-id 1"]}
+ * {"header":"Examples with Yaml","content":["$ s layer detail --layer-name layerName --version-id 1"]}
  * @example
- * {"header":"Examples with CLI","content":["$ s cli fc layer versionConfig --region cn-hangzhou --layer-name name --version-id 1"]}
+ * {"header":"Examples with CLI","content":["$ s cli fc layer detail --region cn-hangzhou --layer-name layerName --version-id 1"]}
  */
 export interface LayerVersionConfigInputsArgs {
     /**
-     *  Specify the region of alicloud
+     * [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1
      */
     region: string;
     /**
-     *  Specify the layer name parameter
+     * [C-Required] Specify the layer name parameter
      */
     'layer-name': string;
     /**
-     *  Specify the version parameter
+     * [C-Required] Specify the version parameter
      */
     'version-id': number;
 }
@@ -120,27 +132,31 @@ export interface LayerDeleteVerisonInputsArgs {
     'version-id': number;
 }
 /**
- * s layer versions\n
+ * s layer versions <options>
  * @pre_help
  * {"header":"Layer versions","content":"Get layer versions"}
+ * @pre_help
+ * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/command/layer.md"}
  * @after_help
  * {"ref":"GlobalParams"}
+ * @after_help
+ * {"ref":"GlobalDescribe"}
  * @example
- * {"header":"Examples with Yaml","content":["$ s layer versions --layer-name name"]}
+ * {"header":"Examples with Yaml","content":["$ s layer versions --layer-name layerName"]}
  * @example
- * {"header":"Examples with CLI","content":["$ s cli fc layer versions --region cn-hangzhou --layer-name name"]}
+ * {"header":"Examples with CLI","content":["$ s cli fc layer versions --region cn-hangzhou --layer-name layerName"]}
  */
 export interface LayerVersionsInputsArgs {
     /**
-     *  Specify the region of alicloud
+     * [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1
      */
     region: string;
     /**
-     *  Specify the layer name parameter
+     * [Required] Specify the layer name parameter
      */
     'layer-name': string;
     /**
-     *  Table format output
+     * [Optional] Table format output
      */
     'table': boolean;
 }

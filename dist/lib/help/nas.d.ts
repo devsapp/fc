@@ -21,23 +21,49 @@ export declare const NAS_SUB_COMMAND_HELP_INFO: {
         optionList?: undefined;
     } | {
         header: string;
-        optionList: {
+        optionList: ({
+            name: string;
+            description: string;
+            defaultOption: boolean;
+            type: BooleanConstructor;
+            alias?: undefined;
+        } | {
             name: string;
             description: string;
             alias: string;
             defaultOption: boolean;
             type: BooleanConstructor;
-        }[];
+        })[];
         content?: undefined;
     } | {
         header: string;
-        optionList: {
+        optionList: ({
+            name: string;
+            description: string;
+            type: StringConstructor;
+            alias?: undefined;
+        } | {
             name: string;
             description: string;
             alias: string;
             type: BooleanConstructor;
-        }[];
+        } | {
+            name: string;
+            description: string;
+            alias: string;
+            type: StringConstructor;
+        })[];
         content?: undefined;
+    } | {
+        header: string;
+        content: {
+            desc: string;
+        }[];
+        optionList?: undefined;
+    } | {
+        header: string;
+        content: string[];
+        optionList?: undefined;
     })[];
     upload: ({
         header: string;
@@ -61,56 +87,93 @@ export declare const NAS_SUB_COMMAND_HELP_INFO: {
         content?: undefined;
     } | {
         header: string;
-        optionList: {
+        optionList: ({
+            name: string;
+            description: string;
+            type: StringConstructor;
+            alias?: undefined;
+        } | {
             name: string;
             description: string;
             alias: string;
             type: BooleanConstructor;
-        }[];
+        } | {
+            name: string;
+            description: string;
+            alias: string;
+            type: StringConstructor;
+        })[];
         content?: undefined;
+    } | {
+        header: string;
+        content: {
+            desc: string;
+        }[];
+        optionList?: undefined;
+    } | {
+        header: string;
+        content: string[];
+        optionList?: undefined;
     })[];
     command: ({
         header: string;
         content: string;
-        optionList?: undefined;
     } | {
         header: string;
         content: {
             example: string;
         }[];
-        optionList?: undefined;
     } | {
         header: string;
-        optionList: {
+        optionList: ({
+            name: string;
+            description: string;
+            type: StringConstructor;
+            alias?: undefined;
+        } | {
             name: string;
             description: string;
             alias: string;
             type: BooleanConstructor;
-        }[];
+        } | {
+            name: string;
+            description: string;
+            alias: string;
+            type: StringConstructor;
+        })[];
         content?: undefined;
+    } | {
+        header: string;
+        content: {
+            desc: string;
+        }[];
     })[];
-    remove: any[];
     init: ({
         header: string;
         content: string;
-        optionList?: undefined;
     } | {
         header: string;
         content: {
             example: string;
         }[];
-        optionList?: undefined;
     } | {
         header: string;
-        optionList: {
+        optionList: ({
+            name: string;
+            description: string;
+            type: StringConstructor;
+            alias?: undefined;
+        } | {
             name: string;
             description: string;
             alias: string;
             type: BooleanConstructor;
-        }[];
+        } | {
+            name: string;
+            description: string;
+            alias: string;
+            type: StringConstructor;
+        })[];
         content?: undefined;
     })[];
-    ls: any[];
-    cp: any[];
-    rm: any[];
 };

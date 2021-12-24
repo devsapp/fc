@@ -1,42 +1,46 @@
 /**
- * s sync <options>\n
+ * s sync <options>
  * @pre_help
  * {"header":"Sync","content":"Synchronize online resources to offline resources"}
+ * @pre_help
+ * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/command/sync.md"}
  * @after_help
  * {"ref":"GlobalParams"}
+ * @after_help
+ * {"ref":"GlobalDescribe"}
  * @example
- * {"header": "Examples with Yaml","content": ["$ s sync", "$ s <ProjectName> sync", "$ s sync --region cn-hangzhou --service-name myService", "$ s sync  --region cn-hangzhou --service-name myService"]}
+ * {"header": "Examples with Yaml","content": ["$ s sync"]}
  * @example
- * {"header": "Examples with CLI","content": ["$ s cli fc sync --region cn-shanghai --service-name myService --type config"]}
+ * {"header": "Examples with CLI","content": ["$ s cli fc sync --region cn-shanghai --service-name serviceName --type config"]}
  */
 export interface SyncInputsArgs {
     /**
-     *  Specify the region of alicloud.
+     * [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1
      */
     region: string;
     /**
-     *  Specify the alicloud fc service name.
+     * [C-Required] Specify the fc service name
      */
     'service-name': string;
     /**
-     *  Specify the alicloud fc function name.
+     * [Optional] Specify the fc function name
      */
     'function-name'?: string;
     /**
-     *  Specify the alicloud fc trigger name, you can set names by using multiple trigger-name option, eg: --trigger-name triggerA --trigger-name triggerB.
+     * [Optional] Specify the fc trigger name, multiple triggers can be specified using [--trigger-name name1 --trigger-name
      */
     'trigger-name'?: string;
     /**
-     *  Mandatory overwrite code file
-     *  @alias f
+     * [Optional] Mandatory overwrite code file
+     * @alias f
      */
     'force'?: boolean;
     /**
-     *  Specify storage directory(default: current dir)
+     * [Optional] Specify storage directory, default: current dir
      */
     'target-dir'?: string;
     /**
-     *  Operation type, code/config/all(default: all)
+     * [Optional] Operation type, value: code/config
      */
-    'type'?: 'code' | 'config' | 'all';
+    'type'?: 'code' | 'config';
 }

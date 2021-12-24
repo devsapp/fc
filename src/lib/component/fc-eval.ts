@@ -34,7 +34,10 @@ export default class FcEval {
   }
 
   makeStartArgs(): string {
-    let args = `--region ${this.region} --access ${this.access} --function-type ${this.evalOpts?.functionType} --eval-type ${this.evalOpts?.evalType}`;
+    let args = `--region ${this.region} --access ${this.access} --eval-type ${this.evalOpts?.evalType}`;
+    if (this.evalOpts?.functionType) {
+      args += ` --function-type ${this.evalOpts?.functionType}`;
+    }
     if (this.evalOpts.evalType === 'memory') {
       if (this.evalOpts?.memorySizeList) {
         args += ` --memory-size ${this.evalOpts?.memorySizeList}`;
@@ -53,16 +56,29 @@ export default class FcEval {
         args += ` --rt ${this.evalOpts?.rt}`;
       }
     }
+    if (this.evalOpts?.functionType) {
+      args += ` --function-type ${this.evalOpts?.functionType}`;
+    }
 
     if (this.evalOpts?.qualifier) {
       args += ` --qualifier ${this.evalOpts?.qualifier}`;
     }
-
     args += ` --service-name ${this.evalOpts?.serviceName} --function-name ${this.evalOpts?.functionName}`;
-    if (this.isHttpFunctionType()) {
-      args += ` --method ${this.httpTypeOpts?.method} --path ${this.httpTypeOpts?.path} --query ${this.httpTypeOpts?.query}`;
-    }
 
+    if (this.httpTypeOpts?.method) {
+      args += ` --method ${this.httpTypeOpts?.method}`;
+    }
+    if (this.httpTypeOpts?.path) {
+      args += ` --path ${this.httpTypeOpts?.path}`;
+    }
+    if (this.httpTypeOpts?.query) {
+      args += ` --query ${this.httpTypeOpts?.query}`;
+    }
+    if (this.httpTypeOpts?.headers) {
+      const headers = this.httpTypeOpts?.headers;
+      const jsonObj = JSON.parse(headers);
+      args += ` --headers ${JSON.stringify(jsonObj)}`;
+    }
     if (this.payloadOpts?.payload) {
       const payload = this.payloadOpts?.payload;
       if (this.isJSONString(payload)) {
@@ -76,9 +92,5 @@ export default class FcEval {
       args += ` --payload-file ${this.payloadOpts?.payloadFile}`;
     }
     return args;
-  }
-
-  private isHttpFunctionType() {
-    return this.evalOpts?.functionType === 'http';
   }
 }

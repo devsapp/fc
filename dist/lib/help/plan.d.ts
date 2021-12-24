@@ -1,4 +1,4 @@
-export declare const BUILD_HELP_INFO: ({
+export declare const PLAN_HELP: ({
     header: string;
     content: string;
     optionList?: undefined;
@@ -12,22 +12,14 @@ export declare const BUILD_HELP_INFO: ({
     header: string;
     optionList: ({
         name: string;
+        typeLabel: string;
         description: string;
-        alias: string;
-        defaultOption: boolean;
         type: StringConstructor;
     } | {
         name: string;
         description: string;
-        alias: string;
-        defaultOption: boolean;
-        type: BooleanConstructor;
-    } | {
-        name: string;
-        description: string;
-        defaultOption: boolean;
-        type: BooleanConstructor;
-        alias?: undefined;
+        type: StringConstructor;
+        typeLabel?: undefined;
     })[];
     content?: undefined;
 } | {
