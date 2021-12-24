@@ -32,19 +32,17 @@
     "ts-jest": "^26.2.0",
     "ts-loader": "^8.0.14",
     "ts-node": "^9.1.1",
-    "typedoc": "^0.22.*",
     "typescript": "^4.4.3"
   },
   "scripts": {
     "start": "npm run dev",
     "dev": "npm run prebuild && npx tsc -w -p tsconfig.json",
-    "prebuild": "rm -rf node_modules && rm -rf doc && rm -rf package-lock.json && npm i && rimraf dist",
-    "build": "npm run lint && npm run fix && npm run doc && ncc build src/index.ts -m -e @serverless-devs/core -o dist",
+    "prebuild": "rm -rf node_modules && rm -rf package-lock.json && npm i && rimraf dist",
+    "build": "npm run lint && npm run fix && ncc build src/index.ts -m -e @serverless-devs/core -o dist",
     "test-integration": "jest --testNamePattern ^Integration::",
     "lint": "f2elint scan",
     "fix": "f2elint fix",
-    "typecheck": "npx tsc -p tsconfig.json --noEmit",
-    "doc": "npx typedoc --entryPointStrategy expand ./src --json doc/doc.json --out doc"
+    "typecheck": "npx tsc -p tsconfig.json --noEmit"
   },
   "husky": {
     "hooks": {
