@@ -8035,7 +8035,7 @@
 					"sources": [
 						{
 							"fileName": "common/logger.ts",
-							"line": 4,
+							"line": 7,
 							"character": 13
 						}
 					],
@@ -8054,7 +8054,7 @@
 					"sources": [
 						{
 							"fileName": "common/logger.ts",
-							"line": 6,
+							"line": 9,
 							"character": 6
 						}
 					],
@@ -8078,7 +8078,7 @@
 			"sources": [
 				{
 					"fileName": "common/logger.ts",
-					"line": 2,
+					"line": 1,
 					"character": 0
 				}
 			]
