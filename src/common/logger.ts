@@ -30,7 +30,7 @@ if (typeof logger.task !== 'function') {
       );
     }
   }
-  const msg = getCommand() ? `Please retry again with ${getCommand()}.` : 'Please retry again.';
+  const msg = getCommand() ? `Please retry again with '${getCommand()}'.` : 'Please retry again.';
   logger.log(`\nWARNING\n======================\n* Oops! some problem happen, ${msg}`, 'yellow');
   process.exit(1);
 }
