@@ -9,19 +9,19 @@ Tags:
   - 函数计算
 Category: 基础云产品
 Commands:
-  Build&Deploy:
+  Build & Deploy:
     deploy: Deploy local resources online
     build: Build the dependencies.
     remove: The ability to delete resources
   Observability:
     metrics: Query function metrics information
     logs: Query the function log. You need to open SLS log service
-  Invoke&Debug:
+  Invoke & Debug:
     local: Run your serverless application locally for quick development & testing
     invoke: Invoke/Trigger online functions
     proxied: Local invoke via proxied service.
     remote: Remote invoke via proxied service.
-  Publish&Config:
+  Publish & Config:
     version: Service version operation
     alias: Service alias operation
     provision: provision reservation operation
