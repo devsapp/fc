@@ -1,4 +1,11 @@
-import { globalParams, globalDescribe } from '../../common/entity';
+import {
+  globalParams,
+  globalDescribe,
+  assumeYesDescribe,
+  regionDescribe,
+  serviceNameDescribe,
+  functionNameDescribe,
+} from './constant';
 
 export const REMOVE = [
   {
@@ -18,15 +25,7 @@ export const REMOVE = [
   },
   {
     header: 'Options',
-    optionList: [
-      {
-        name: 'assume-yes',
-        description: '[Optional] Assume that the answer to any question which would be asked is yes',
-        alias: 'y',
-        defaultOption: false,
-        type: Boolean,
-      },
-    ],
+    optionList: [assumeYesDescribe],
   },
   { ...globalParams },
   { ...globalDescribe },
@@ -93,22 +92,9 @@ export const REMOVE_SERVICE = [
   {
     header: 'Options',
     optionList: [
-      {
-        name: 'region',
-        description: '[C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1',
-        type: String,
-      },
-      {
-        name: 'service-name',
-        description: '[C-Required] Specify the fc service name',
-        type: String,
-      },
-      {
-        name: 'assume-yes',
-        alias: 'y',
-        description: '[Optional] Assume that the answer to any question which would be asked is yes',
-        type: Boolean,
-      },
+      regionDescribe,
+      serviceNameDescribe,
+      assumeYesDescribe,
     ],
   },
   { ...globalParams },
@@ -139,27 +125,10 @@ export const REMOVE_FUNCTION = [
   {
     header: 'Options',
     optionList: [
-      {
-        name: 'region',
-        description: '[C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1',
-        type: String,
-      },
-      {
-        name: 'service-name',
-        description: '[C-Required] Specify the fc service name',
-        type: String,
-      },
-      {
-        name: 'function-name',
-        description: '[C-Required] Specify the fc function name',
-        type: String,
-      },
-      {
-        name: 'assume-yes',
-        alias: 'y',
-        description: '[Optional] Assume that the answer to any question which would be asked is yes',
-        type: Boolean,
-      },
+      regionDescribe,
+      serviceNameDescribe,
+      functionNameDescribe,
+      assumeYesDescribe,
     ],
   },
   { ...globalParams },
@@ -190,32 +159,15 @@ export const REMOVE_TRIGGER = [
   {
     header: 'Options',
     optionList: [
-      {
-        name: 'region',
-        description: '[C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1',
-        type: String,
-      },
-      {
-        name: 'service-name',
-        description: '[C-Required] Specify the fc service name',
-        type: String,
-      },
-      {
-        name: 'function-name',
-        description: '[C-Required] Specify the fc function name',
-        type: String,
-      },
+      regionDescribe,
+      serviceNameDescribe,
+      functionNameDescribe,
       {
         name: 'trigger-name',
         description: '[C-Required] Specify the fc trigger name',
         type: String,
       },
-      {
-        name: 'assume-yes',
-        alias: 'y',
-        description: '[Optional] Assume that the answer to any question which would be asked is yes',
-        type: Boolean,
-      },
+      assumeYesDescribe,
     ],
   },
   { ...globalParams },
@@ -246,22 +198,13 @@ export const REMOVE_DOMAIN = [
   {
     header: 'Options',
     optionList: [
-      {
-        name: 'region',
-        description: '[C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1',
-        type: String,
-      },
+      regionDescribe,
       {
         name: 'domain',
         description: '[C-Required] Specify the fc custom domain',
         type: String,
       },
-      {
-        name: 'assume-yes',
-        alias: 'y',
-        description: '[Optional] Assume that the answer to any question which would be asked is yes',
-        type: Boolean,
-      },
+      assumeYesDescribe,
     ],
   },
   { ...globalParams },
@@ -292,21 +235,14 @@ export const REMOVE_VERSION = [
   {
     header: 'Options',
     optionList: [
-      {
-        name: 'region',
-        description: '[C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1',
-        type: String,
-      },
-      {
-        name: 'service-name',
-        description: '[C-Required] Specify the fc service name',
-        type: String,
-      },
+      regionDescribe,
+      serviceNameDescribe,
       {
         name: 'version-id',
         description: '[Required] The version Id',
         type: String,
       },
+      assumeYesDescribe,
     ],
   },
   { ...globalParams },
@@ -337,21 +273,14 @@ export const REMOVE_ALIAS = [
   {
     header: 'Options',
     optionList: [
-      {
-        name: 'region',
-        description: '[C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1',
-        type: String,
-      },
-      {
-        name: 'service-name',
-        description: '[C-Required] Specify the fc service name',
-        type: String,
-      },
+      regionDescribe,
+      serviceNameDescribe,
       {
         name: 'alias-name',
         description: '[Required] Specify the fc alias name',
         type: String,
       },
+      assumeYesDescribe,
     ],
   },
   { ...globalParams },
@@ -382,26 +311,15 @@ export const REMOVE_PROVISION = [
   {
     header: 'Options',
     optionList: [
-      {
-        name: 'region',
-        description: '[C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1',
-        type: String,
-      },
-      {
-        name: 'service-name',
-        description: '[C-Required] Specify the fc service name',
-        type: String,
-      },
+      regionDescribe,
+      serviceNameDescribe,
       {
         name: 'qualifier',
         description: '[Required] Specify the qualifier parameter. Only supports LATEST and alias',
         type: String,
       },
-      {
-        name: 'function-name',
-        description: '[C-Required] Specify the fc function name',
-        type: String,
-      },
+      functionNameDescribe,
+      assumeYesDescribe,
     ],
   },
   { ...globalParams },
@@ -432,26 +350,15 @@ export const REMOVE_ONDEMAND = [
   {
     header: 'Options',
     optionList: [
-      {
-        name: 'region',
-        description: '[C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1',
-        type: String,
-      },
-      {
-        name: 'service-name',
-        description: '[C-Required] Specify the fc service name',
-        type: String,
-      },
-      {
-        name: 'function-name',
-        description: '[C-Required] Specify the fc function name',
-        type: String,
-      },
+      regionDescribe,
+      serviceNameDescribe,
+      functionNameDescribe,
       {
         name: 'qualifier',
         description: '[Required] If qualifier is specified, only all onDemand resources under this alias will be cleared; if not specified, all versions of onDemand resources under this service will be cleared',
         type: String,
       },
+      assumeYesDescribe,
     ],
   },
   { ...globalParams },
@@ -482,11 +389,7 @@ export const REMOVE_LAYER = [
   {
     header: 'Options',
     optionList: [
-      {
-        name: 'region',
-        description: '[C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1',
-        type: String,
-      },
+      regionDescribe,
       {
         name: 'layer-name',
         description: '[Required] Delete all versions of the specified layer',
@@ -497,6 +400,7 @@ export const REMOVE_LAYER = [
         description: '[Optional] Only delete the version of the specified layer',
         type: String,
       },
+      assumeYesDescribe,
     ],
   },
   { ...globalParams },

@@ -1,4 +1,4 @@
-import { globalParams, globalDescribe } from '../../common/entity';
+import { globalParams, globalDescribe } from './constant';
 
 export const BUILD_HELP_INFO = [
   {

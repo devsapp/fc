@@ -1,4 +1,4 @@
-import { globalParams, globalDescribe } from '../../common/entity';
+import { globalParams, globalDescribe, eventFormat } from './constant';
 
 export const LOCAL_HELP_INFO = [
   {
@@ -103,10 +103,7 @@ export const LOCAL_INVOKE_HELP_INFO = [
   },
   { ...globalParams },
   { ...globalDescribe },
-  {
-    header: 'Event Format',
-    content: ['Quickly obtain the data structures of different events through the command [s cli fc-event -h]'],
-  },
+  eventFormat,
   {
     header: 'Examples with Yaml',
     content: ['$ s local invoke --event "hello world!"'],
