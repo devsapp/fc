@@ -282,7 +282,7 @@ fc-deploy-test:
   description:       
   code: 
     repositoryType: null
-    location:       https://fc-hz-yunqi-func-code.oss-cn-hangzhou-internal.aliyuncs.com/1583208943291465%2Fdemo%2Fdecddf35-8705-4f80-9baa-2c4a9ffc512b?Expires=1636621101&OSSAccessKeyId=LTAI3M5yUnxf5yiu&Signature=cZZHNSpeewLXVoFd2%2FdFuLBe4cc%3D
+    location:       https://fc-hz-yunqi-func-code.oss-cn-hangzhou-internal.aliyuncs.com/1583208943291465%2Fdemo%2Fdecddf35-8705-4f80-9baa-2c4a9ffc512b?Expires=1636621101&OSSAccessKeyId=&Signature=cZZHNSpeewLXVoFd2%2FdFuLBe4cc%3D
   codesize:          550
   codeChecksum:      17221560529872498506
   createTime:        2021-11-11T08:46:38Z
