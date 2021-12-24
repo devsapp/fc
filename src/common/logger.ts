@@ -30,10 +30,11 @@ if (typeof logger.task !== 'function') {
       );
     }
   }
-  const msg = getCommand()
-    ? `oops! some problem happen, please retry again with ${getCommand()}.`
-    : 'oops! some problem happen, please retry again.';
-  console.log(msg);
+  const msg = getCommand() ? `Please retry again with ${getCommand()}.` : 'Please retry again.';
+  logger.log(
+    `\nTips for next step\n======================\n* Oops! some problem happen, ${msg}`,
+    'yellow',
+  );
   process.exit(1);
 }
 
