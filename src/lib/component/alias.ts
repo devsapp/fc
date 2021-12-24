@@ -1,5 +1,6 @@
 /* eslint-disable no-await-in-loop */
 import * as core from '@serverless-devs/core';
+import * as HELP from '../help/alias';
 import { ICredentials } from '../interface/profile';
 import _ from 'lodash';
 import Version from './version';
@@ -33,13 +34,10 @@ interface Publish {
   weight?: number;
 }
 
-const ALIAS_COMMAND: string[] = ['list', 'get', 'publish', 'remove', 'removeAll'];
 const ALIAS_COMMAND_HELP_KEY: {[key: string]: string} = {
-  list: 'AliasListInputsArgs',
-  get: 'AliasGetInputsArgs',
-  publish: 'AliasPublishInputsArgs',
-  remove: 'AliasDeleteInputsArgs',
-  removeAll: 'AliasDeleteAllInputsArgs',
+  list: 'ALIAS_LIST',
+  get: 'ALIAS_GET',
+  publish: 'ALIAS_PUBLISH',
 };
 
 export default class Alias {
@@ -55,21 +53,23 @@ export default class Alias {
     const parsedData = parsedArgs?.data || {};
     const rawData = parsedData._ || [];
     if (!rawData.length) {
-      return { help: true, helpKey: 'AliasInputsArgs' };
+      core.help(HELP.ALIAS);
+      return { help: true };
     }
 
     const subCommand = rawData[0];
     logger.debug(`version subCommand: ${subCommand}`);
-    if (!ALIAS_COMMAND.includes(subCommand)) {
+    if (!Object.keys(ALIAS_COMMAND_HELP_KEY).includes(subCommand)) {
+      core.help(HELP.ALIAS);
       return {
         help: true,
-        helpKey: 'AliasInputsArgs',
         errorMessage: `Does not support ${subCommand} command`,
       };
     }
 
     if (parsedData.help) {
-      return { help: true, subCommand, helpKey: ALIAS_COMMAND_HELP_KEY[subCommand] };
+      core.help(HELP[ALIAS_COMMAND_HELP_KEY[subCommand]]);
+      return { help: true, subCommand };
     }
 
     const props = inputs.props || {};
@@ -86,10 +86,10 @@ export default class Alias {
     };
 
     if (!endProps.region) {
-      throw new Error('Not found region');
+      throw new Error('Not found region, Please specify with --region');
     }
     if (!endProps.serviceName) {
-      throw new Error('Not found service name');
+      throw new Error('Not found service name, Please specify with --service-name');
     }
 
     const credentials: ICredentials = await getCredentials(inputs.credentials, inputs?.project?.access);

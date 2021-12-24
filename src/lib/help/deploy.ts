@@ -1,25 +1,33 @@
-import { globalParams, globalDescribe } from '../../common/entity';
+import {
+  globalParams,
+  globalDescribe,
+  assumeYesDescribe,
+} from './constant';
 
-
-const options = [{
+const useLocal = {
   name: 'use-local',
   description: '[Optional] Deploy resource using local config',
   defaultOption: false,
   type: Boolean,
-},
-{
+};
+const useRemote = {
   name: 'use-remote',
   description: '[Optional] Deploy resource using remote config',
   defaultOption: false,
   type: Boolean,
-},
-{
-  name: 'assume-yes',
-  description: '[Optional] Assume that the answer to any question which would be asked is yes',
-  alias: 'y',
+};
+const deployType = {
+  name: 'type',
+  description: '[Optional] Only deploy configuration or code, value: code/config ',
   defaultOption: false,
-  type: Boolean,
-}];
+  type: String,
+};
+
+const options = [
+  useLocal,
+  useRemote,
+  assumeYesDescribe,
+];
 
 export const DEPLOY = [
   {
@@ -40,13 +48,10 @@ export const DEPLOY = [
   {
     header: 'Options',
     optionList: [
-      {
-        name: 'type',
-        description: '[Optional] Only deploy configuration or code, value: code/config ',
-        defaultOption: false,
-        type: String,
-      },
-      ...options,
+      deployType,
+      useLocal,
+      useRemote,
+      assumeYesDescribe,
     ],
   },
   { ...globalParams },
@@ -120,11 +125,7 @@ export const DEPLOY_FUNCTION = [
   {
     header: 'Options',
     optionList: [
-      {
-        name: 'type',
-        description: 'Only deploy configuration or code Value: code, config',
-        type: String,
-      },
+      deployType,
       ...options,
     ],
   },
