@@ -94,6 +94,6 @@ export const VERSION_PUBLISH = [
   },
   {
     header: 'Examples with CLI',
-    content: ['$ s cli fc version publish --region cn-hangzhou --service-name name --description xxx'],
+    content: ['$ s cli fc version publish --region cn-hangzhou --service-name serviceName --description xxx'],
   },
 ];
