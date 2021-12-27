@@ -1,5 +1,6 @@
 import * as core from '@serverless-devs/core';
 import logger from '../../common/logger';
+import * as HELP from '../help/on-demand';
 import Client from '../client';
 import { getCredentials, promptForConfirmOrDetails, tableShow } from '../utils';
 import _ from 'lodash';
@@ -19,10 +20,9 @@ interface IProps {
 }
 const ONDEMAND_COMMADN = ['list', 'get', 'put', 'remove'];
 const ONDEMAND_COMMADN_HELP_KEY = {
-  list: 'OnDemandListInputsArgs',
-  get: 'OnDemandGetInputsArgs',
-  put: 'OnDemandPutInputsArgs',
-  remove: 'OnDemandDeleteInputsArgs',
+  list: HELP.ON_DEMAND_LIST,
+  get: HELP.ON_DEMAND_GET,
+  put: HELP.ON_DEMAND_PUT,
 };
 const TABLE = [
   'serviceName',
@@ -45,16 +45,19 @@ export default class OnDemand {
     const parsedData = parsedArgs?.data || {};
     const rawData = parsedData._ || [];
     if (!rawData.length) {
-      return { help: true, helpKey: 'OnDemandInputsArgs' };
+      core.help(HELP.ON_DEMAND);
+      return { help: true };
     }
 
     const subCommand = rawData[0];
     logger.debug(`ondemand subCommand: ${subCommand}`);
     if (!ONDEMAND_COMMADN.includes(subCommand)) {
-      return { help: true, helpKey: 'OnDemandInputsArgs', errorMessage: `Does not support ${subCommand} command` };
+      core.help(HELP.ON_DEMAND);
+      return { help: true, errorMessage: `Does not support ${subCommand} command` };
     }
     if (parsedData.help) {
-      return { help: true, subCommand, helpKey: ONDEMAND_COMMADN_HELP_KEY[subCommand] };
+      core.help(ONDEMAND_COMMADN_HELP_KEY[subCommand]);
+      return { help: true, subCommand };
     }
 
     const props = inputs.props || {};

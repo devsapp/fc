@@ -283,7 +283,7 @@ export default class Remove {
       },
       appName,
       props,
-      args: `${args || ''} ${appendArgs || ''}`,
+      args: `${args || ''} ${appendArgs || ''}`.trim(),
       path: curPath,
     };
   }

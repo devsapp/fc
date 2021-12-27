@@ -1,9 +1,9 @@
-import { globalParams, globalDescribe } from '../../common/entity';
+import { globalParams, globalDescribe } from './constant';
 
 export const BUILD_HELP_INFO = [
   {
     header: 'Build',
-    content: 'Build the dependencies.',
+    content: 'Build the dependencies',
   },
   {
     header: 'Document',
@@ -48,8 +48,8 @@ export const BUILD_HELP_INFO = [
   },
   {
     header: 'Others',
-    content: "You can override the default docker image version by setting up the 'FC_DOCKER_VERSION' environment variable.\r\n" +
-      "For example: export 'FC_DOCKER_VERSION=latest'.\r\n" +
-      'For all available versions, see https://github.com/aliyun/fc-docker or https://hub.docker.com/u/aliyunfc .',
+    content: "You can override the default docker image version by setting up the 'FC_DOCKER_VERSION' environment variable\r\n" +
+      "For example: export 'FC_DOCKER_VERSION=latest'\r\n" +
+      'For all available versions, see https://github.com/aliyun/fc-docker or https://hub.docker.com/u/aliyunfc',
   },
 ];

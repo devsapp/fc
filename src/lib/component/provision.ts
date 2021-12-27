@@ -2,6 +2,7 @@ import * as core from '@serverless-devs/core';
 import fs from 'fs';
 import logger from '../../common/logger';
 import Client from '../client';
+import * as HELP from '../help/provision';
 import { getCredentials, promptForConfirmOrDetails, tableShow } from '../utils';
 import _ from 'lodash';
 import { ICredentials } from '../interface/profile';
@@ -20,11 +21,10 @@ interface ListProvision { serviceName?: string; qualifier?: string }
 interface RemoveAllProvision { serviceName: string; qualifier?: string; assumeYes?: boolean }
 interface PutProvision { serviceName: string; qualifier: string; functionName: string; target?: number; config?: string }
 
-const PROVISION_COMMADN: string[] = ['list', 'get', 'put'];
 const PROVISION_COMMADN_HELP_KEY = {
-  list: 'ProvisionListInputsArgs',
-  get: 'ProvisionGetInputsArgs',
-  put: 'ProvisionPutInputsArgs',
+  list: HELP.PROVISION_LIST,
+  get: HELP.PROVISION_GET,
+  put: HELP.PROVISION_PUT,
 };
 const TABLE = [
   { value: 'serviceName', width: '10%' },
@@ -58,16 +58,19 @@ export default class Provision {
     const parsedData = parsedArgs?.data || {};
     const rawData = parsedData._ || [];
     if (!rawData.length) {
-      return { help: true, helpKey: 'ProvisionInputsArgs' };
+      core.help(HELP.PROVISION);
+      return { help: true };
     }
 
     const subCommand = rawData[0];
     logger.debug(`provision subCommand: ${subCommand}`);
-    if (!PROVISION_COMMADN.includes(subCommand)) {
-      return { help: true, helpKey: 'ProvisionInputsArgs', errorMessage: `Does not support ${subCommand} command` };
+    if (!Object.keys(PROVISION_COMMADN_HELP_KEY).includes(subCommand)) {
+      core.help(HELP.PROVISION);
+      return { help: true, errorMessage: `Does not support ${subCommand} command` };
     }
     if (parsedData.help) {
-      return { help: true, subCommand, helpKey: PROVISION_COMMADN_HELP_KEY[subCommand] };
+      core.help(PROVISION_COMMADN_HELP_KEY[subCommand]);
+      return { help: true, subCommand };
     }
 
     const props = inputs.props || {};
