@@ -36,7 +36,6 @@ interface Publish {
 export default class Alias {
     static handlerInputs(inputs: any): Promise<{
         help: boolean;
-        helpKey: string;
         errorMessage?: undefined;
         subCommand?: undefined;
         credentials?: undefined;
@@ -44,7 +43,6 @@ export default class Alias {
         table?: undefined;
     } | {
         help: boolean;
-        helpKey: string;
         errorMessage: string;
         subCommand?: undefined;
         credentials?: undefined;
@@ -53,7 +51,6 @@ export default class Alias {
     } | {
         help: boolean;
         subCommand: any;
-        helpKey: string;
         errorMessage?: undefined;
         credentials?: undefined;
         props?: undefined;
@@ -64,7 +61,6 @@ export default class Alias {
         props: IProps;
         table: any;
         help?: undefined;
-        helpKey?: undefined;
         errorMessage?: undefined;
     }>;
     region: string;

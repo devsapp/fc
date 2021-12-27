@@ -21,7 +21,6 @@ interface RemoveAll {
 export default class Version {
     static handlerInputs(inputs: any): Promise<{
         help: boolean;
-        helpKey: string;
         errorMessage?: undefined;
         subCommand?: undefined;
         credentials?: undefined;
@@ -29,7 +28,6 @@ export default class Version {
         table?: undefined;
     } | {
         help: boolean;
-        helpKey: string;
         errorMessage: string;
         subCommand?: undefined;
         credentials?: undefined;
@@ -37,7 +35,6 @@ export default class Version {
         table?: undefined;
     } | {
         help: boolean;
-        helpKey: any;
         subCommand: any;
         errorMessage?: undefined;
         credentials?: undefined;
@@ -49,7 +46,6 @@ export default class Version {
         props: IProps;
         table: any;
         help?: undefined;
-        helpKey?: undefined;
         errorMessage?: undefined;
     }>;
     list({ serviceName }: {

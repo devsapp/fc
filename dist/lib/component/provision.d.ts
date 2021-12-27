@@ -31,7 +31,6 @@ interface PutProvision {
 export default class Provision {
     static handlerInputs(inputs: any): Promise<{
         help: boolean;
-        helpKey: string;
         errorMessage?: undefined;
         subCommand?: undefined;
         credentials?: undefined;
@@ -39,7 +38,6 @@ export default class Provision {
         table?: undefined;
     } | {
         help: boolean;
-        helpKey: string;
         errorMessage: string;
         subCommand?: undefined;
         credentials?: undefined;
@@ -48,7 +46,6 @@ export default class Provision {
     } | {
         help: boolean;
         subCommand: any;
-        helpKey: any;
         errorMessage?: undefined;
         credentials?: undefined;
         props?: undefined;
@@ -59,7 +56,6 @@ export default class Provision {
         props: IProps;
         table: any;
         help?: undefined;
-        helpKey?: undefined;
         errorMessage?: undefined;
     }>;
     get({ serviceName, qualifier, functionName }: GetProvision): Promise<any>;

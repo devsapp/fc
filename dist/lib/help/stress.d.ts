@@ -1,5 +1,125 @@
-export declare function start(): void;
-export declare function clean(): void;
+export declare const STRESS: ({
+    header: string;
+    content: string;
+} | {
+    header: string;
+    content: {
+        desc: string;
+        example: string;
+    }[];
+})[];
+export declare const STRESS_START: ({
+    header: string;
+    content: string;
+    optionList?: undefined;
+} | {
+    header: string;
+    optionList: ({
+        name: string;
+        description: string;
+        defaultOption: boolean;
+        type: BooleanConstructor;
+    } | {
+        name: string;
+        description: string;
+        type: StringConstructor;
+    } | {
+        name: string;
+        description: string;
+        typeLabel: string;
+        type: StringConstructor;
+        alias?: undefined;
+    } | {
+        name: string;
+        description: string;
+        type: NumberConstructor;
+        typeLabel?: undefined;
+        alias?: undefined;
+    } | {
+        name: string;
+        alias: string;
+        description: string;
+        type: NumberConstructor;
+        typeLabel?: undefined;
+    })[];
+    content?: undefined;
+} | {
+    header: string;
+    optionList: ({
+        name: string;
+        description: string;
+        type: StringConstructor;
+        alias?: undefined;
+    } | {
+        name: string;
+        description: string;
+        alias: string;
+        type: BooleanConstructor;
+    } | {
+        name: string;
+        description: string;
+        alias: string;
+        type: StringConstructor;
+    })[];
+    content?: undefined;
+} | {
+    header: string;
+    content: {
+        desc: string;
+    }[];
+    optionList?: undefined;
+} | {
+    header: string;
+    content: string[];
+    optionList?: undefined;
+})[];
+export declare const STRESS_CLEAN: ({
+    header: string;
+    content: string;
+    optionList?: undefined;
+} | {
+    header: string;
+    optionList: ({
+        name: string;
+        description: string;
+        defaultOption: boolean;
+        type: BooleanConstructor;
+    } | {
+        name: string;
+        description: string;
+        type: StringConstructor;
+    })[];
+    content?: undefined;
+} | {
+    header: string;
+    optionList: ({
+        name: string;
+        description: string;
+        type: StringConstructor;
+        alias?: undefined;
+    } | {
+        name: string;
+        description: string;
+        alias: string;
+        type: BooleanConstructor;
+    } | {
+        name: string;
+        description: string;
+        alias: string;
+        type: StringConstructor;
+    })[];
+    content?: undefined;
+} | {
+    header: string;
+    content: {
+        desc: string;
+    }[];
+    optionList?: undefined;
+} | {
+    header: string;
+    content: string[];
+    optionList?: undefined;
+})[];
 /**
  * s stress <sub-command> <options>
  * @pre_help

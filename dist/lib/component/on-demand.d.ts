@@ -33,7 +33,6 @@ interface IProps {
 export default class OnDemand {
     static handlerInputs(inputs: any): Promise<{
         help: boolean;
-        helpKey: string;
         errorMessage?: undefined;
         subCommand?: undefined;
         credentials?: undefined;
@@ -41,7 +40,6 @@ export default class OnDemand {
         table?: undefined;
     } | {
         help: boolean;
-        helpKey: string;
         errorMessage: string;
         subCommand?: undefined;
         credentials?: undefined;
@@ -50,7 +48,6 @@ export default class OnDemand {
     } | {
         help: boolean;
         subCommand: any;
-        helpKey: any;
         errorMessage?: undefined;
         credentials?: undefined;
         props?: undefined;
@@ -61,7 +58,6 @@ export default class OnDemand {
         props: IProps;
         table: any;
         help?: undefined;
-        helpKey?: undefined;
         errorMessage?: undefined;
     }>;
     list({ serviceName }: ListOnDemand, table?: any): Promise<any>;

@@ -1,29 +1,21 @@
 export * from './build';
+export * from './deploy';
 export * from './local';
 export * from './nas';
 export * from './plan';
-export declare const COMPONENT_HELP_INFO: ({
-    header: string;
-    content: string;
-    optionList?: undefined;
-} | {
-    header: string;
-    content: {
-        name: string;
-        summary: string;
-    }[];
-    optionList?: undefined;
-} | {
-    header: string;
-    optionList: {
-        name: string;
-        description: string;
-        alias: string;
-        type: BooleanConstructor;
-    }[];
-    content?: undefined;
-} | {
-    header: string;
-    content: string[];
-    optionList?: undefined;
-})[];
+export * from './remove';
+export * from './alias';
+export * from './eval';
+export * from './fun2s';
+export * from './info';
+export * from './invoke';
+export * from './layer';
+export * from './logs';
+export * from './metrics';
+export * from './on-demand';
+export * from './provision';
+export * from './sync';
+export * from './version';
+export * from './remote';
+export * from './proxied';
+export * from './stress';

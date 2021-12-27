@@ -1,6 +1,5 @@
 import { IInputs } from './lib/interface/interface';
-import BaseComponent from './common/base';
-export default class FcBaseComponent extends BaseComponent {
+export default class FcBaseComponent {
     logger: any;
     plan(inputs: IInputs): Promise<any>;
     deploy(inputs: IInputs): Promise<any>;
@@ -24,7 +23,6 @@ export default class FcBaseComponent extends BaseComponent {
     fun2s(inputs: IInputs): Promise<any>;
     remote(inputs: IInputs): Promise<any>;
     eval(inputs: IInputs): Promise<any>;
-    help(): Promise<void>;
     private isHelp;
     private handlerInputs;
     private report;
