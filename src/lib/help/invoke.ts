@@ -33,6 +33,11 @@ export const INVOKE = [
         type: String,
       },
       {
+        name: 'timeout',
+        description: '[Optional] Configure client timeout',
+        type: Number,
+      },
+      {
         name: 'event-file',
         description: '[Optional] Event funtion: A file containing event data passed to the function during invoke',
         alias: 'f',
