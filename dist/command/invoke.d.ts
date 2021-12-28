@@ -3,7 +3,7 @@
  * @pre_help
  * {"header":"Invoke","content":"Invoke/trigger online functions"}
  * @pre_help
- * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/command/invoke.md"}
+ * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/zh/command/invoke.md"}
  * @after_help
  * {"ref":"GlobalParams"}
  * @after_help

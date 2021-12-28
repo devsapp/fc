@@ -8,7 +8,7 @@ export function publish() {}
  * @pre_help
  * {"header":"Alias","content":"Service alias operation"}
  * @pre_help
- * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/command/alias.md"}
+ * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/zh/command/alias.md"}
  * @after_help
  * {"header": "SubCommand List", "content": [{"desc":"get","example":"Get alias details; help command [s alias get -h]"},{"desc":"list","example":"View the list of alias; help command [s alias list -h]"},{"desc":"publish","example":"Publish alias; help command [s alias publish -h]"}]}
  */
@@ -20,7 +20,7 @@ export interface AliasInputsArgs {}
  * @pre_help
  * {"header":"Alias get","content":"Get alias details"}
  * @pre_help
- * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/command/alias.md"}
+ * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/zh/command/alias.md"}
  * @after_help
  * {"ref":"GlobalParams"}
  * @after_help
@@ -50,7 +50,7 @@ export interface AliasGetInputsArgs {
  * @pre_help
  * {"header":"Alias list","content":"View the list of service alias"}
  * @pre_help
- * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/command/alias.md"}
+ * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/zh/command/alias.md"}
  * @after_help
  * {"ref":"GlobalParams"}
  * @after_help
@@ -80,7 +80,7 @@ export interface AliasListInputsArgs {
  * @pre_help
  * {"header":"Alias publish","content":"Publish service alias"}
  * @pre_help
- * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/command/alias.md"}
+ * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/zh/command/alias.md"}
  * @after_help
  * {"ref":"GlobalParams"}
  * @after_help

@@ -69,17 +69,17 @@ export interface RemoteSetupInputsArgs {
  */
 export interface RemoteInvokeInputsArgs {
   /**
-   *  Event data (strings) passed to the function during invocation (default: "").Http function format refers to [https://github.com/devsapp/fc/blob/main/docs/Usage/invoke.md#invoke-http-parameter]
+   *  Event data (strings) passed to the function during invocation (default: "").Http function format refers to [https://github.com/devsapp/fc/blob/main/docs/zh/Usage/invoke.md#invoke-http-parameter]
    *  @alias e
    */
   event: string;
   /**
-   *  Event funtion: A file containing event data passed to the function during invoke. Http function: A file containing http request options sent to https strigger. Format refers to [https://github.com/devsapp/fc/blob/main/docs/Usage/invoke.md#invoke-http-parameter]
+   *  Event funtion: A file containing event data passed to the function during invoke. Http function: A file containing http request options sent to https strigger. Format refers to [https://github.com/devsapp/fc/blob/main/docs/zh/Usage/invoke.md#invoke-http-parameter]
    *  @alias f
    */
   'event-file': string;
   /**
-   *   Read from standard input, to support script pipeline.Http function format refers to [https://github.com/devsapp/fc/blob/main/docs/Usage/invoke.md#invoke-http-parameter]
+   *   Read from standard input, to support script pipeline.Http function format refers to [https://github.com/devsapp/fc/blob/main/docs/zh/Usage/invoke.md#invoke-http-parameter]
    *   @alias s
    */
   'event-stdin': string;

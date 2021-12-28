@@ -4,7 +4,7 @@
  * @pre_help
  * {"header":"Fun2s","content":"Convert the Yaml specification of Funcraft to the Yaml specification of Serverless Devs."}
  * @pre_help
- * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/command/fun2s.md"}
+ * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/zh/command/fun2s.md"}
  * @after_help
  * {"ref":"GlobalParams"}
  * @after_help

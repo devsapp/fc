@@ -29,9 +29,9 @@ Usage
 Options
     
   --invocation-type string   Invocation type: optional value "async"|"sync", default value "sync" (default: "sync")                       
-  --event string             Event data (strings) passed to the function during invocation (default: "").Http function format refers to [https://github.com/devsapp/fc/blob/main/docs/Usage/invoke.md#invoke-http-parameter] 
-  --event-file string        Event funtion: A file containing event data passed to the function during invoke. Http function: A file containing http request options sent to http trigger. Format refers to [https://github.com/devsapp/fc/blob/main/docs/Usage/invoke.md#invoke-http-parameter]
-  --event-stdin              Read from standard input, to support script pipeline.Http function format refers to [https://github.com/devsapp/fc/blob/main/docs/Usage/invoke.md#invoke-http-parameter]                       
+  --event string             Event data (strings) passed to the function during invocation (default: "").Http function format refers to [https://github.com/devsapp/fc/blob/main/docs/zh/Usage/invoke.md#invoke-http-parameter] 
+  --event-file string        Event funtion: A file containing event data passed to the function during invoke. Http function: A file containing http request options sent to http trigger. Format refers to [https://github.com/devsapp/fc/blob/main/docs/zh/Usage/invoke.md#invoke-http-parameter]
+  --event-stdin              Read from standard input, to support script pipeline.Http function format refers to [https://github.com/devsapp/fc/blob/main/docs/zh/Usage/invoke.md#invoke-http-parameter]                       
   --region string                 Specify region in cli mode               
   --service-name string           Specify service name in cli mode     
   --function-name string          Specify function name in cli mode

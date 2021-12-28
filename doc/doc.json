@@ -235,7 +235,7 @@
 							},
 							{
 								"tag": "pre_help",
-								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/command/alias.md\"}"
+								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/zh/command/alias.md\"}"
 							},
 							{
 								"tag": "after_help",
@@ -354,7 +354,7 @@
 							},
 							{
 								"tag": "pre_help",
-								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/command/alias.md\"}"
+								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/zh/command/alias.md\"}"
 							},
 							{
 								"tag": "after_help",
@@ -385,7 +385,7 @@
 							},
 							{
 								"tag": "pre_help",
-								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/command/alias.md\"}"
+								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/zh/command/alias.md\"}"
 							},
 							{
 								"tag": "after_help",
@@ -504,7 +504,7 @@
 							},
 							{
 								"tag": "pre_help",
-								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/command/alias.md\"}"
+								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/zh/command/alias.md\"}"
 							},
 							{
 								"tag": "after_help",
@@ -831,7 +831,7 @@
 							},
 							{
 								"tag": "pre_help",
-								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/command/eval.md\"}"
+								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/zh/command/eval.md\"}"
 							},
 							{
 								"tag": "after_help",
@@ -862,7 +862,7 @@
 							},
 							{
 								"tag": "pre_help",
-								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/command/eval.md\"}"
+								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/zh/command/eval.md\"}"
 							},
 							{
 								"tag": "after_help",
@@ -1325,7 +1325,7 @@
 							},
 							{
 								"tag": "pre_help",
-								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/command/fun2s.md\"}"
+								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/zh/command/fun2s.md\"}"
 							},
 							{
 								"tag": "after_help",
@@ -1495,7 +1495,7 @@
 							},
 							{
 								"tag": "pre_help",
-								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/command/info.md\"}"
+								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/zh/command/info.md\"}"
 							},
 							{
 								"tag": "after_help",
@@ -1663,7 +1663,7 @@
 							},
 							{
 								"tag": "pre_help",
-								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/command/invoke.md\"}"
+								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/zh/command/invoke.md\"}"
 							},
 							{
 								"tag": "after_help",
@@ -2210,7 +2210,7 @@
 							},
 							{
 								"tag": "pre_help",
-								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/command/layer.md\"}"
+								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/zh/command/layer.md\"}"
 							},
 							{
 								"tag": "after_help",
@@ -2329,7 +2329,7 @@
 							},
 							{
 								"tag": "pre_help",
-								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/command/layer.md\"}"
+								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/zh/command/layer.md\"}"
 							},
 							{
 								"tag": "after_help",
@@ -2498,7 +2498,7 @@
 							},
 							{
 								"tag": "pre_help",
-								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/command/layer.md\"}"
+								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/zh/command/layer.md\"}"
 							},
 							{
 								"tag": "after_help",
@@ -2617,7 +2617,7 @@
 							},
 							{
 								"tag": "pre_help",
-								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/command/layer.md\"}"
+								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/zh/command/layer.md\"}"
 							},
 							{
 								"tag": "after_help",
@@ -2885,7 +2885,7 @@
 							},
 							{
 								"tag": "pre_help",
-								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/command/logs.md\"}"
+								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/zh/command/logs.md\"}"
 							},
 							{
 								"tag": "after_help",
@@ -3196,7 +3196,7 @@
 							},
 							{
 								"tag": "pre_help",
-								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/command/metrics.md\"}"
+								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/zh/command/metrics.md\"}"
 							},
 							{
 								"tag": "after_help",
@@ -3340,7 +3340,7 @@
 							},
 							{
 								"tag": "pre_help",
-								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/command/ondemand.md\"}"
+								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/zh/command/ondemand.md\"}"
 							},
 							{
 								"tag": "after_help",
@@ -3481,7 +3481,7 @@
 							},
 							{
 								"tag": "pre_help",
-								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/command/ondemand.md\"}"
+								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/zh/command/ondemand.md\"}"
 							},
 							{
 								"tag": "after_help",
@@ -3512,7 +3512,7 @@
 							},
 							{
 								"tag": "pre_help",
-								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/command/ondemand.md\"}"
+								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/zh/command/ondemand.md\"}"
 							},
 							{
 								"tag": "after_help",
@@ -3631,7 +3631,7 @@
 							},
 							{
 								"tag": "pre_help",
-								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/command/ondemand.md\"}"
+								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/zh/command/ondemand.md\"}"
 							},
 							{
 								"tag": "after_help",
@@ -3912,7 +3912,7 @@
 							},
 							{
 								"tag": "pre_help",
-								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/command/provision.md\"}"
+								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/zh/command/provision.md\"}"
 							},
 							{
 								"tag": "after_help",
@@ -4053,7 +4053,7 @@
 							},
 							{
 								"tag": "pre_help",
-								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/command/provision.md\"}"
+								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/zh/command/provision.md\"}"
 							},
 							{
 								"tag": "after_help",
@@ -4084,7 +4084,7 @@
 							},
 							{
 								"tag": "pre_help",
-								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/command/provision.md\"}"
+								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/zh/command/provision.md\"}"
 							},
 							{
 								"tag": "after_help",
@@ -4225,7 +4225,7 @@
 							},
 							{
 								"tag": "pre_help",
-								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/command/provision.md\"}"
+								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/zh/command/provision.md\"}"
 							},
 							{
 								"tag": "after_help",
@@ -4657,7 +4657,7 @@
 							"kindString": "Property",
 							"flags": {},
 							"comment": {
-								"shortText": " Event data (strings) passed to the function during invocation (default: \"\").Http function format refers to [https://github.com/devsapp/fc/blob/main/docs/Usage/invoke.md#invoke-http-parameter]",
+								"shortText": " Event data (strings) passed to the function during invocation (default: \"\").Http function format refers to [https://github.com/devsapp/fc/blob/main/docs/zh/Usage/invoke.md#invoke-http-parameter]",
 								"tags": [
 									{
 										"tag": "alias",
@@ -4684,7 +4684,7 @@
 							"kindString": "Property",
 							"flags": {},
 							"comment": {
-								"shortText": " Event funtion: A file containing event data passed to the function during invoke. Http function: A file containing http request options sent to http trigger. Format refers to [https://github.com/devsapp/fc/blob/main/docs/Usage/invoke.md#invoke-http-parameter]",
+								"shortText": " Event funtion: A file containing event data passed to the function during invoke. Http function: A file containing http request options sent to http trigger. Format refers to [https://github.com/devsapp/fc/blob/main/docs/zh/Usage/invoke.md#invoke-http-parameter]",
 								"tags": [
 									{
 										"tag": "alias",
@@ -4711,7 +4711,7 @@
 							"kindString": "Property",
 							"flags": {},
 							"comment": {
-								"shortText": "  Read from standard input, to support script pipeline.Http function format refers to [https://github.com/devsapp/fc/blob/main/docs/Usage/invoke.md#invoke-http-parameter]",
+								"shortText": "  Read from standard input, to support script pipeline.Http function format refers to [https://github.com/devsapp/fc/blob/main/docs/zh/Usage/invoke.md#invoke-http-parameter]",
 								"tags": [
 									{
 										"tag": "alias",
@@ -5254,7 +5254,7 @@
 							"kindString": "Property",
 							"flags": {},
 							"comment": {
-								"shortText": " Event data (strings) passed to the function during invocation (default: \"\").Http function format refers to [https://github.com/devsapp/fc/blob/main/docs/Usage/invoke.md#invoke-http-parameter]",
+								"shortText": " Event data (strings) passed to the function during invocation (default: \"\").Http function format refers to [https://github.com/devsapp/fc/blob/main/docs/zh/Usage/invoke.md#invoke-http-parameter]",
 								"tags": [
 									{
 										"tag": "alias",
@@ -5281,7 +5281,7 @@
 							"kindString": "Property",
 							"flags": {},
 							"comment": {
-								"shortText": " Event funtion: A file containing event data passed to the function during invoke. Http function: A file containing http request options sent to https strigger. Format refers to [https://github.com/devsapp/fc/blob/main/docs/Usage/invoke.md#invoke-http-parameter]",
+								"shortText": " Event funtion: A file containing event data passed to the function during invoke. Http function: A file containing http request options sent to https strigger. Format refers to [https://github.com/devsapp/fc/blob/main/docs/zh/Usage/invoke.md#invoke-http-parameter]",
 								"tags": [
 									{
 										"tag": "alias",
@@ -5308,7 +5308,7 @@
 							"kindString": "Property",
 							"flags": {},
 							"comment": {
-								"shortText": "  Read from standard input, to support script pipeline.Http function format refers to [https://github.com/devsapp/fc/blob/main/docs/Usage/invoke.md#invoke-http-parameter]",
+								"shortText": "  Read from standard input, to support script pipeline.Http function format refers to [https://github.com/devsapp/fc/blob/main/docs/zh/Usage/invoke.md#invoke-http-parameter]",
 								"tags": [
 									{
 										"tag": "alias",
@@ -5664,7 +5664,7 @@
 							},
 							{
 								"tag": "pre_help",
-								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/command/stress.md\"}"
+								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/zh/command/stress.md\"}"
 							},
 							{
 								"tag": "after_help",
@@ -5811,7 +5811,7 @@
 							},
 							{
 								"tag": "pre_help",
-								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/command/stress.md\"}"
+								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/zh/command/stress.md\"}"
 							},
 							{
 								"tag": "after_help",
@@ -5842,7 +5842,7 @@
 							},
 							{
 								"tag": "pre_help",
-								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/command/stress.md\"}"
+								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/zh/command/stress.md\"}"
 							},
 							{
 								"tag": "after_help",
@@ -6286,7 +6286,7 @@
 							},
 							{
 								"tag": "pre_help",
-								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/command/sync.md\"}"
+								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/zh/command/sync.md\"}"
 							},
 							{
 								"tag": "after_help",
@@ -6743,7 +6743,7 @@
 							},
 							{
 								"tag": "pre_help",
-								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/command/version.md\"}"
+								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/zh/command/version.md\"}"
 							},
 							{
 								"tag": "after_help",
@@ -6774,7 +6774,7 @@
 							},
 							{
 								"tag": "pre_help",
-								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/command/version.md\"}"
+								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/zh/command/version.md\"}"
 							},
 							{
 								"tag": "after_help",
@@ -6893,7 +6893,7 @@
 							},
 							{
 								"tag": "pre_help",
-								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/command/version.md\"}"
+								"text": "\n{\"header\":\"Document\",\"content\":\"https://github.com/devsapp/fc/blob/main/docs/zh/command/version.md\"}"
 							},
 							{
 								"tag": "after_help",

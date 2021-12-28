@@ -3,7 +3,7 @@
  * @pre_help
  * {"header":"Metrics","content":"Query function metrics information"}
  * @pre_help
- * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/command/metrics.md"}
+ * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/zh/command/metrics.md"}
  * @after_help
  * {"ref":"GlobalParams"}
  * @after_help

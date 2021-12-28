@@ -4,7 +4,7 @@
  * @pre_help
  * {"header":"Info","content":"Query online resource details"}
  * @pre_help
- * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/command/info.md"}
+ * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/zh/command/info.md"}
  * @after_help
  * {"ref":"GlobalParams"}
  * @after_help

@@ -110,9 +110,9 @@ remote 命令为我们提供了三个子命令：
                                  invoke#特别说明]                                                                  
       -f, --event-file string    Event funtion: A file containing event data passed to the function during     
                                  invoke. Http function: A file containing http request options sent to https   
-                                 strigger. Format refers to [https://github.com/devsapp/fc/blob/main/docs/Usage/invoke.md#invoke-http-parameter] 
+                                 strigger. Format refers to [https://github.com/devsapp/fc/blob/main/docs/zh/Usage/invoke.md#invoke-http-parameter] 
       -s, --event-stdin string   Read from standard input, to support script pipeline.Http function format     
-                                 refers to [https://github.com/devsapp/fc/blob/main/docs/Usage/invoke.md#invoke-http-parameter]                  
+                                 refers to [https://github.com/devsapp/fc/blob/main/docs/zh/Usage/invoke.md#invoke-http-parameter]                  
     
     Global Options
     
@@ -161,7 +161,7 @@ remote 命令为我们提供了三个子命令：
 
 ![远程调试原理](https://img.alicdn.com/imgextra/i1/O1CN014tTtzF1K4sjIU4CoM_!!6000000001111-2-tps-1219-590.png)
 
-与 [端云联调](https://github.com/devsapp/fc/blob/main/docs/Usage/proxied.md) 类似，远程调试致力于解决用户调试过程中**本地流量与真实线上流量不一致**的问题。
+与 [端云联调](https://github.com/devsapp/fc/blob/main/docs/zh/Usage/proxied.md) 类似，远程调试致力于解决用户调试过程中**本地流量与真实线上流量不一致**的问题。
 
 在远程调试中，用户通过 `setup` 指令搭建本地与远程的容器通道，并在远程新建一个与本地配置完全相同的函数。之后，通过通道服务，用户可以直接获取线上的 VPC 内网资源，比如 NAS，OSS 等等。用户还可以通过容器直接进入远程的函数计算环境，进行更加细致地调试。
 

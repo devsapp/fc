@@ -6,7 +6,7 @@ export declare function list(): void;
  * @pre_help
  * {"header":"Ondemand","content":"Resource on-demand operation"}
  * @pre_help
- * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/command/ondemand.md"}
+ * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/zh/command/ondemand.md"}
  * @after_help
  * {"header":"SubCommand List","content":[{"desc":"list","example":"View the list of resource on-demand; help command [s ondemand list -h] "},{"desc":"put","example":"Put resource on-demand; help command [s ondemand put -h]"},{"desc":"get","example":"Get resource on-demand; help command [s ondemand get -h]"}]}
  */
@@ -17,7 +17,7 @@ export interface OnDemandInputsArgs {
  * @pre_help
  * {"header":"Ondemand get","content":"Get on-demand configuration"}
  * @pre_help
- * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/command/ondemand.md"}
+ * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/zh/command/ondemand.md"}
  * @after_help
  * {"ref":"GlobalParams"}
  * @after_help
@@ -50,7 +50,7 @@ export interface OnDemandGetInputsArgs {
  * @pre_help
  * {"header":"Ondemand list","content":"View the list of on-demand"}
  * @pre_help
- * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/command/ondemand.md"}
+ * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/zh/command/ondemand.md"}
  * @after_help
  * {"ref":"GlobalParams"}
  * @after_help
@@ -79,7 +79,7 @@ export interface OnDemandListInputsArgs {
  * @pre_help
  * {"header":"Ondemand put","content":"Set reserved configuration"}
  * @pre_help
- * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/command/ondemand.md"}
+ * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/zh/command/ondemand.md"}
  * @after_help
  * {"ref":"GlobalParams"}
  * @after_help

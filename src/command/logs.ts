@@ -4,7 +4,7 @@
  * @pre_help
  * {"header":"Logs","content":"Query the function log. You need to open SLS log service"}
  * @pre_help
- * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/command/logs.md"}
+ * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/zh/command/logs.md"}
  * @after_help
  * {"ref":"GlobalParams"}
  * @after_help

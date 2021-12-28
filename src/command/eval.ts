@@ -10,7 +10,7 @@ export async function start(inputs: IInputs): Promise<any> {
   * @pre_help
   * {"header":"Eval","content":"Power tuning online functions"}
   * @pre_help
-  * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/command/eval.md"}
+  * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/zh/command/eval.md"}
   * @after_help
   * {"header": "SubCommand List", "content": [{"name":"start","summary":"Power tuning online functions; help command [s eval start -h]"}]}
   */
@@ -21,7 +21,7 @@ export interface EvalInputsArgs {}
   * @pre_help
   * {"header":"Eval start","content":"Power tuning start"}
   * @pre_help
-  * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/command/eval.md"}
+  * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/zh/command/eval.md"}
   * @after_help
   * {"ref":"GlobalParams"}
   * @after_help

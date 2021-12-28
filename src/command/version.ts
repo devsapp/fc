@@ -6,7 +6,7 @@ export function publish() {}
  * @pre_help
  * {"header":"Version","content":"Service version operation"}
  * @pre_help
- * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/command/version.md"}
+ * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/zh/command/version.md"}
  * @after_help
  * {"header": "SubCommand List", "content": [{"desc":"list","example":"View the list of service versions; help command [s version list -h]"},{"desc":"publish","example":"Publish service version; help command [s version publish -h]"}]}
  */
@@ -17,7 +17,7 @@ export interface VersionInputsArgs {}
  * @pre_help
  * {"header":"Version list","content":"View the list of service versions"}
  * @pre_help
- * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/command/version.md"}
+ * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/zh/command/version.md"}
  * @after_help
  * {"ref":"GlobalParams"}
  * @after_help
@@ -47,7 +47,7 @@ export interface VersionListInputsArgs {
  * @pre_help
  * {"header":"Version publish","content":"Publish service version"}
  * @pre_help
- * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/command/version.md"}
+ * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/zh/command/version.md"}
  * @after_help
  * {"ref":"GlobalParams"}
  * @after_help

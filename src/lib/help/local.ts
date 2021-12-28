@@ -7,7 +7,7 @@ export const LOCAL_HELP_INFO = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/command/local.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/local.md',
   },
   {
     header: 'Usage',
@@ -29,7 +29,7 @@ export const LOCAL_INVOKE_HELP_INFO = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/command/local.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/local.md',
   },
   {
     header: 'Usage',
@@ -120,7 +120,7 @@ export const LOCAL_START_HELP_INFO = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/command/local.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/local.md',
   },
   {
     header: 'Usage',

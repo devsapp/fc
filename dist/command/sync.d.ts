@@ -3,7 +3,7 @@
  * @pre_help
  * {"header":"Sync","content":"Synchronize online resources to offline resources"}
  * @pre_help
- * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/command/sync.md"}
+ * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/zh/command/sync.md"}
  * @after_help
  * {"ref":"GlobalParams"}
  * @after_help

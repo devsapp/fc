@@ -20,7 +20,7 @@ export interface LayerInputsArgs {}
  * @pre_help
  * {"header":"Layer publish","content":"New layer version"}
  * @pre_help
- * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/command/layer.md"}
+ * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/zh/command/layer.md"}
  * @after_help
  * {"ref":"GlobalParams"}
  * @after_help
@@ -58,7 +58,7 @@ export interface LayerPublishInputsArgs {
  * @pre_help
  * {"header":"Layer list","content":"Get layer list"}
  * @pre_help
- * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/command/layer.md"}
+ * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/zh/command/layer.md"}
  * @after_help
  * {"ref":"GlobalParams"}
  * @after_help
@@ -88,7 +88,7 @@ export interface LayerListInputsArgs {
  * @pre_help
  * {"header":"Layer versionConfig","content":"Get layer version config"}
  * @pre_help
- * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/command/layer.md"}
+ * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/zh/command/layer.md"}
  * @after_help
  * {"ref":"GlobalParams"}
  * @after_help
@@ -144,7 +144,7 @@ export interface LayerDeleteVerisonInputsArgs {
  * @pre_help
  * {"header":"Layer versions","content":"Get layer versions"}
  * @pre_help
- * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/command/layer.md"}
+ * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/zh/command/layer.md"}
  * @after_help
  * {"ref":"GlobalParams"}
  * @after_help

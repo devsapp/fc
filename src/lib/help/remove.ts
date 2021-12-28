@@ -7,7 +7,7 @@ export const REMOVE = [
   },
   {
     header: 'Document',
-    content: '$  https://github.com/devsapp/fc/blob/main/docs/command/remove.md',
+    content: '$  https://github.com/devsapp/fc/blob/main/docs/zh/command/remove.md',
   },
   {
     header: 'Usage',
@@ -84,7 +84,7 @@ export const REMOVE_SERVICE = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/command/remove.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/remove.md',
   },
   {
     header: 'Usage',
@@ -130,7 +130,7 @@ export const REMOVE_FUNCTION = [
   },
   {
     header: 'Document',
-    content: '$  https://github.com/devsapp/fc/blob/main/docs/command/remove.md',
+    content: '$  https://github.com/devsapp/fc/blob/main/docs/zh/command/remove.md',
   },
   {
     header: 'Usage',
@@ -181,7 +181,7 @@ export const REMOVE_TRIGGER = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/command/remove.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/remove.md',
   },
   {
     header: 'Usage',
@@ -237,7 +237,7 @@ export const REMOVE_DOMAIN = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/command/remove.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/remove.md',
   },
   {
     header: 'Usage',
@@ -283,7 +283,7 @@ export const REMOVE_VERSION = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/command/remove.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/remove.md',
   },
   {
     header: 'Usage',
@@ -328,7 +328,7 @@ export const REMOVE_ALIAS = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/command/remove.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/remove.md',
   },
   {
     header: 'Usage',
@@ -373,7 +373,7 @@ export const REMOVE_PROVISION = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/command/remove.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/remove.md',
   },
   {
     header: 'Usage',
@@ -423,7 +423,7 @@ export const REMOVE_ONDEMAND = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/command/remove.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/remove.md',
   },
   {
     header: 'Usage',
@@ -473,7 +473,7 @@ export const REMOVE_LAYER = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/command/remove.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/remove.md',
   },
   {
     header: 'Usage',
