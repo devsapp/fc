@@ -32,6 +32,7 @@ import FcProxiedInvoke from './lib/component/fc-proxied-invoke';
 import FcRemoteDebug from './lib/component/fc-remote-debug';
 import FcEval from './lib/component/fc-eval';
 import { EvalOption } from './lib/interface/component/fc-eval';
+import { FcInvokeProps } from './lib/interface/component/fc-remote-invoke';
 
 const SUPPORTED_LOCAL_METHOD: string[] = ['invoke', 'start'];
 const DEPLOY_SUPPORT_CONFIG_ARGS = ['code', 'config'];
@@ -275,10 +276,12 @@ export default class FcBaseComponent {
       core.help(INVOKE);
       return;
     }
-    const invokePayload: FcSyncProps = {
+    const invokePayload: FcInvokeProps = {
       region: props?.region,
       serviceName: props?.service?.name,
       functionName: props?.function?.name,
+      timeout: props?.function?.timeout,
+      runtime: props?.function?.runtime,
     };
 
     await this.componentMethodCaller(inputs, 'devsapp/fc-remote-invoke', 'invoke', invokePayload, args);

@@ -30,6 +30,7 @@ Options
   --region [string]               [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
   --service-name [string]         [C-Required] Specify the fc service name  
   --function-name [string]        [Optional] Specify the fc function name   
+  --timeout [number]              [Optional] Configure client timeout
   -e, --event [string]            [Optional] Event data passed to the function during invocation (default: "")                                                         
   -f, --event-file [string]       [Optional] Event funtion: A file containing event data passed to the function during invoke                                                                 
   -s, --event-stdin [string]      [Optional] Read from standard input, to support script pipeline                                                      
@@ -70,6 +71,7 @@ Examples with CLI
 | region          | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
 | service-name    | -        | 选填           | 必填          | 服务名                                                       |
 | function-name   | -        | 选填           | 必填          | 函数名                                                       |
+| timeout           | -      | 选填           | 选填          | 客户端调用时间 [时间设置原理](https://github.com/devsapp/fc/issues/480) |
 | event           | e        | 选填           | 选填          | 事件                                                         |
 | event-file      | f        | 选填           | 选填          | 事件文件                                                     |
 | event-stdin     | s        | 选填           | 选填          | 事件输入                                                     |
