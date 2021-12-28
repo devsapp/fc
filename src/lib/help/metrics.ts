@@ -14,7 +14,7 @@ export const METRICS = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/command/metrics.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/metrics.md',
   },
   {
     header: 'Usage',

@@ -54,7 +54,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/remove.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/remove.md
 
 Options
                               
@@ -147,7 +147,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/remove.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/remove.md
                            
 Options
 
@@ -217,7 +217,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/remove.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/remove.md
 
 Options
 
@@ -289,7 +289,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/remove.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/remove.md
                            
 Options
 
@@ -363,7 +363,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/remove.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/remove.md
                            
 Options
 
@@ -433,7 +433,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/remove.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/remove.md
                            
 Options
 
@@ -505,7 +505,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/remove.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/remove.md
                                
 Options
 
@@ -576,7 +576,7 @@ Usage
                 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/remove.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/remove.md
                            
 Options
     
@@ -649,7 +649,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/remove.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/remove.md
                                
 Options
 
@@ -722,7 +722,7 @@ Usage
                 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/remove.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/remove.md
                            
 Options
     

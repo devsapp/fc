@@ -11,7 +11,7 @@ export const REMOTE = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/command/remote.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/remote.md',
   },
   {
     header: 'Usage',
@@ -43,7 +43,7 @@ export const REMOTE_SETUP = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/command/remote.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/remote.md',
   },
   {
     header: 'Usage',
@@ -90,7 +90,7 @@ export const REMOTE_INVOKE = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/command/remote.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/remote.md',
   },
   {
     header: 'Usage',
@@ -138,7 +138,7 @@ export const REMOTE_CLEANUP = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/command/remote.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/remote.md',
   },
   {
     header: 'Usage',

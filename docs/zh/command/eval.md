@@ -39,7 +39,7 @@ Usage
 
 Document
 
-  https://github.com/devsapp/fc/blob/main/docs/command/eval.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/eval.md
 
 SubCommand List
 
@@ -63,7 +63,7 @@ Eval start
 
 Document
 
-  https://github.com/devsapp/fc/blob/main/docs/command/eval.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/eval.md
 
 Usage
 

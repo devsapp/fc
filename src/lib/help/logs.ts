@@ -14,7 +14,7 @@ export const LOGS = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/command/logs.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/logs.md',
   },
   {
     header: 'Usage',

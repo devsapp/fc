@@ -13,7 +13,7 @@ export const VERSION_HELP = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/command/version.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/version.md',
   },
   {
     header: 'Usage',
@@ -35,7 +35,7 @@ export const VERSION_LIST = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/command/version.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/version.md',
   },
   {
     header: 'Usage',
@@ -68,7 +68,7 @@ export const VERSION_PUBLISH = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/command/version.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/version.md',
   },
   {
     header: 'Usage',

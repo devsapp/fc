@@ -38,7 +38,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/deploy.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/deploy.md
 
 Options
 
@@ -189,7 +189,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/deploy.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/deploy.md
 
 Options
 
@@ -261,7 +261,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/deploy.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/deploy.md
 
 Options
 
@@ -342,7 +342,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/deploy.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/deploy.md
 
 Options
 
@@ -430,7 +430,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/deploy.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/deploy.md
 
 Options
 

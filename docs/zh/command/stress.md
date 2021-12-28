@@ -41,7 +41,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/stress.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/stress.md
 
 SubCommand List
 

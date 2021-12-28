@@ -20,7 +20,7 @@ export const ON_DEMAND = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/command/ondemand.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/ondemand.md',
   },
   {
     header: 'Usage',
@@ -43,7 +43,7 @@ export const ON_DEMAND_LIST = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/command/ondemand.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/ondemand.md',
   },
   {
     header: 'Usage',
@@ -76,7 +76,7 @@ export const ON_DEMAND_PUT = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/command/ondemand.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/ondemand.md',
   },
   {
     header: 'Usage',
@@ -115,7 +115,7 @@ export const ON_DEMAND_GET = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/command/ondemand.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/ondemand.md',
   },
   {
     header: 'Usage',

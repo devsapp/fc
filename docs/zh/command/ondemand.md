@@ -30,7 +30,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/ondemand.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/ondemand.md
 
 SubCommand List
 
@@ -63,7 +63,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/ondemand.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/ondemand.md
                                
 Options
 
@@ -140,7 +140,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/ondemand.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/ondemand.md
                                
 Options
 
@@ -226,7 +226,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/ondemand.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/ondemand.md
                                
 Options
 
