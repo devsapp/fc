@@ -37,7 +37,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/nas.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/nas.md
 
 SubCommand List
 
@@ -72,7 +72,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/nas.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/nas.md
                               
 Global Options
 
@@ -125,7 +125,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/nas.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/nas.md
                                
 Options
 
@@ -194,7 +194,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/nas.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/nas.md
                                
 Options
 
@@ -257,7 +257,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/nas.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/nas.md
                                
 Global Options
 

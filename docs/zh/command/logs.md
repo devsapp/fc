@@ -26,7 +26,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/logs.md                
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/logs.md                
 
 Options
                

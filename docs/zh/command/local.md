@@ -29,7 +29,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/local.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/local.md
 
 SubCommand List
 
@@ -62,7 +62,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/local.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/local.md
                                
 Options
   -e, --event [string]                [Optional] Event data passed to the function during invocation (default: "")                                                 
@@ -106,7 +106,7 @@ Examples with Yaml
 
 | 参数全称      | 参数缩写 | Yaml模式下必填 | 参数含义                                                     |
 | ------------- | -------- | -------------- | ------------------------------------------------------------ |
-| event         | e        | 选填           |传入 `event` 函数的 `event` 事件数据，可以通过 `s cli fc-event` 指令快速获取事件数据示例，详细操作参考[这里](https://github.com/devsapp/fc/blob/main/docs/command/invoke.md#注意事项)|
+| event         | e        | 选填           |传入 `event` 函数的 `event` 事件数据，可以通过 `s cli fc-event` 指令快速获取事件数据示例，详细操作参考[这里](https://github.com/devsapp/fc/blob/main/docs/zh/command/invoke.md#注意事项)|
 | event-file    | f        | 选填           |以文件形式传入 `event` 事件数据|
 | event-stdin   | s        | 选填           |以标准输入形式传入 `event` 事件数据|
 | mode          | m        | 选填           |调试模式选择，包括：<br> - `normal`: 默认模式，本地函数运行容器在函数执行完成后立刻退出<br>`server`: 本地函数运行容器一直存在，用户在其他终端发起的本地调用会复用该容器<br>`api`: 支持通过 sdk 调用本地函数|
@@ -150,7 +150,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/local.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/local.md
                                
 Options
 

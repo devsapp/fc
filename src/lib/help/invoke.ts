@@ -14,7 +14,7 @@ export const INVOKE = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/command/invoke.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/invoke.md',
   },
   {
     header: 'Usage',

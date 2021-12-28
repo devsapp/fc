@@ -25,7 +25,7 @@ Usage
                             
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/api.md    
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/api.md    
 
 API Document 
 

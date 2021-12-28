@@ -12,7 +12,7 @@ export const SYNC = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/command/sync.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/sync.md',
   },
   {
     header: 'Usage',

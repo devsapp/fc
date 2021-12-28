@@ -20,7 +20,7 @@ export const PROVISION = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/command/provision.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/provision.md',
   },
   {
     header: 'Usage',
@@ -43,7 +43,7 @@ export const PROVISION_LIST = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/command/provision.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/provision.md',
   },
   {
     header: 'Usage',
@@ -77,7 +77,7 @@ export const PROVISION_PUT = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/command/provision.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/provision.md',
   },
   {
     header: 'Usage',
@@ -123,7 +123,7 @@ export const PROVISION_GET = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/command/provision.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/provision.md',
   },
   {
     header: 'Usage',
@@ -155,7 +155,7 @@ export const PROVISION_GET = [
  * @pre_help
  * {"header":"Provision","content":"resource reservation operation"}
  * @pre_help
- * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/command/provision.md"}
+ * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/zh/command/provision.md"}
  * @after_help
  * {"header":"SubCommand List","content":[{"desc":"list","example":"View the list of resource reservation; help command [s provision list -h]"},{"desc":"put","example":"Put resource reservation; help command [s provision put -h]"},{"desc":"get","example":"Get resource reservation; help command [s provision get -h]"}]}
  */
@@ -167,7 +167,7 @@ export interface ProvisionInputsArgs {}
  * @pre_help
  * {"header":"Provision get","content":"Get provision configuration"}
  * @pre_help
- * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/command/provision.md"}
+ * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/zh/command/provision.md"}
  * @after_help
  * {"ref":"GlobalParams"}
  * @after_help
@@ -201,7 +201,7 @@ export interface ProvisionGetInputsArgs {
  * @pre_help
  * {"header":"Provision put","content":"Set reserved configuration"}
  * @pre_help
- * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/command/provision.md"}
+ * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/zh/command/provision.md"}
  * @after_help
  * {"ref":"GlobalParams"}
  * @after_help
@@ -243,7 +243,7 @@ export interface ProvisionPutInputsArgs {
  * @pre_help
  * {"header":"Provision list","content":"View the list of provision"}
  * @pre_help
- * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/command/provision.md"}
+ * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/zh/command/provision.md"}
  * @after_help
  * {"ref":"GlobalParams"}
  * @after_help

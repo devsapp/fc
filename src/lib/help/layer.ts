@@ -39,7 +39,7 @@ export const LAYER_PUBLISH = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/command/layer.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/layer.md',
   },
   {
     header: 'Usage',
@@ -86,7 +86,7 @@ export const LAYER_LIST = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/command/layer.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/layer.md',
   },
   {
     header: 'Usage',
@@ -123,7 +123,7 @@ export const LAYER_DETAIL = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/command/layer.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/layer.md',
   },
   {
     header: 'Usage',
@@ -160,7 +160,7 @@ export const LAYER_VERSIONS = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/command/layer.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/layer.md',
   },
   {
     header: 'Usage',

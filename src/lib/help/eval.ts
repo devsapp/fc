@@ -13,7 +13,7 @@ export const EVAL = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/command/eval.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/eval.md',
   },
   {
     header: 'Usage',
@@ -34,7 +34,7 @@ export const EVAL_START = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/command/eval.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/eval.md',
   },
   {
     header: 'Usage',

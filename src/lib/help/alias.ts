@@ -19,7 +19,7 @@ export const ALIAS = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/command/alias.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/alias.md',
   },
   {
     header: 'Usage',
@@ -42,7 +42,7 @@ export const ALIAS_GET = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/command/alias.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/alias.md',
   },
   {
     header: 'Usage',
@@ -75,7 +75,7 @@ export const ALIAS_LIST = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/command/alias.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/alias.md',
   },
   {
     header: 'Usage',
@@ -108,7 +108,7 @@ export const ALIAS_PUBLISH = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/command/alias.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/alias.md',
   },
   {
     header: 'Usage',

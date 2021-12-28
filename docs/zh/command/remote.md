@@ -52,7 +52,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/remote.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/remote.md
 
 SubCommand List
 
@@ -85,7 +85,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/remote.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/remote.md
                                
 Options
 
@@ -153,7 +153,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/remote.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/remote.md
                                
 Options
 
@@ -189,7 +189,7 @@ Examples with Yaml
 
 | 参数全称    | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
 | ----------- | -------- | -------------- | ------------- | ------------------------------------------------------------ |
-| event         | e        | 选填      | 选填          |传入 `event` 函数的 `event` 事件数据，可以通过 `s cli fc-event` 指令快速获取事件数据示例，详细操作参考[这里](https://github.com/devsapp/fc/blob/main/docs/command/invoke.md#注意事项)|
+| event         | e        | 选填      | 选填          |传入 `event` 函数的 `event` 事件数据，可以通过 `s cli fc-event` 指令快速获取事件数据示例，详细操作参考[这里](https://github.com/devsapp/fc/blob/main/docs/zh/command/invoke.md#注意事项)|
 | event-file    | f        | 选填      | 选填          |以文件形式传入 `event` 事件数据|
 | event-stdin   | s        | 选填      | 选填          |以标准输入形式传入 `event` 事件数据|
 | access      | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
@@ -230,7 +230,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/remote.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/remote.md
 
 Global Options
 

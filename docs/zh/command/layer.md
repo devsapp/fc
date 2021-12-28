@@ -34,7 +34,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/layer.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/layer.md
 
 SubCommand List
 
@@ -68,7 +68,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/layer.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/layer.md
                                
 Options
 
@@ -144,7 +144,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/layer.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/layer.md
                            
 Options
 
@@ -226,7 +226,7 @@ Usage
                 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/layer.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/layer.md
                            
 Options
     
@@ -314,7 +314,7 @@ Usage
                 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/layer.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/layer.md
                            
 Options
     

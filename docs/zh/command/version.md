@@ -27,7 +27,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/version.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/version.md
 
 SubCommand List
 
@@ -58,7 +58,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/version.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/version.md
                                
 Options
 
@@ -144,7 +144,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/version.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/version.md
                            
 Options
 

@@ -23,7 +23,7 @@ Usage
                                           
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/invoke.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/invoke.md
 
 Options
 

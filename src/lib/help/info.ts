@@ -12,7 +12,7 @@ export const INFO = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/command/info.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/info.md',
   },
   {
     header: 'Usage',

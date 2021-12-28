@@ -32,7 +32,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/provision.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/provision.md
 
 SubCommand List
 
@@ -65,7 +65,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/provision.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/provision.md
                                
 Options
 
@@ -159,7 +159,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/provision.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/provision.md
                            
 Options
 
@@ -290,7 +290,7 @@ Usage
                 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/provision.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/provision.md
                            
 Options
     

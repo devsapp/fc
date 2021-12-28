@@ -22,7 +22,7 @@ Usage
                             
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/fun2s.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/fun2s.md
 
 Options
 

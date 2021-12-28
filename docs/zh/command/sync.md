@@ -22,7 +22,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/sync.md                  
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/sync.md                  
 
 Options
  

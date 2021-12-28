@@ -22,7 +22,7 @@ Usage
                             
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/build.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/build.md
 
 Options
 

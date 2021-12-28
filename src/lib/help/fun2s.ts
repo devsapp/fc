@@ -11,7 +11,7 @@ export const FUN_TO_S = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/command/fun2s.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/fun2s.md',
   },
   {
     header: 'Usage',

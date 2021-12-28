@@ -30,7 +30,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/alias.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/alias.md
 
 SubCommand List
 
@@ -63,7 +63,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/alias.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/alias.md
                                
 Options
 
@@ -139,7 +139,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/alias.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/alias.md
                                
 Options
 
@@ -226,7 +226,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/command/alias.md
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/alias.md
                                
 Options
 

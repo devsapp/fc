@@ -14,7 +14,7 @@ export const STRESS = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/command/stress.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/stress.md',
   },
   {
     header: 'Usage',
@@ -42,7 +42,7 @@ export const STRESS_START = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/command/stress.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/stress.md',
   },
   {
     header: 'Usage',
@@ -127,7 +127,7 @@ export const STRESS_CLEAN = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/command/stress.md',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/stress.md',
   },
   {
     header: 'Usage',
@@ -163,7 +163,7 @@ export const STRESS_CLEAN = [
  * @pre_help
  * {"header":"Stress","content":"Stress test for the serverless application"}
  * @pre_help
- * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/command/stress.md"}
+ * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/zh/command/stress.md"}
  * @after_help
  * {"header": "SubCommand List", "content": [{"name":"start","summary":"Start stress test; help command [s eval start -h]"},{"name":"clean","summary":"Clean the relevant resources; help command [s eval clean -h]"}]}
  */
@@ -174,7 +174,7 @@ export interface StressInputsArgs {}
  * @pre_help
  * {"header":"Stress clean/cleanup","content":"Clean the relevant resources, including helper resources"}
  * @pre_help
- * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/command/stress.md"}
+ * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/zh/command/stress.md"}
  * @after_help
  * {"ref":"GlobalParams"}
  * @after_help
@@ -209,7 +209,7 @@ export interface StressCleanInputsArgs {
  * @pre_help
  * {"header":"Stress start","content":"Start stress test"}
  * @pre_help
- * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/command/stress.md"}
+ * {"header":"Document","content":"https://github.com/devsapp/fc/blob/main/docs/zh/command/stress.md"}
  * @after_help
  * {"ref":"GlobalParams"}
  * @after_help
