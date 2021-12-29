@@ -8,6 +8,7 @@
 - [工具中`.s`目录是做什么](#工具中s目录是做什么)
 - [函数进行build操作之后如何处理build的产物](#函数进行build操作之后如何处理build的产物)
 - [Yaml是否支持全局变量/环境变量/引用外部文件](#Yaml是否支持全局变量环境变量引用外部文件)
+- [通过环境变量配置组件](#通过环境变量配置组件)
 - [项目实践案例](#项目实践案例)
 
 ## Serverless Devs和FC组件的关系
@@ -230,6 +231,16 @@ Serverless Devs的Yaml规范本身支持全局变量、环境变量以及外部�
 - 获取Yaml中其他项目的结果变量：${projectName.output.*}
 
 > 详情可以参考：[Serverless Devs Yaml规范文档](https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/zh/yaml.md)
+
+## 通过环境变量配置组件
+
+组件更新比较滞后，这时可以通过环境变量配置控制组件：
+
+`FC_DOCKER_VERSION`: build或者local的 docker 版本版控制。例如 export FC_DOCKER_VERSION=1.9.21
+`FC_CODE_SIZE_WITH_OSS`: 弹性实例函数通过 OSS 方式配置部署代码包最大限制，默认 100M。export FC_CODE_SIZE_WITH_OSS=104857600
+`MAX_CODE_SIZE_WITH_OSS_OF_C1`: 性能实例函数通过 OSS 方式配置部署代码包最大限制，默认 500M。export FC_CODE_SIZE_WITH_OSS=524288000
+`FC_CODE_SIZE_WITH_CODEURI`: 部署代码包通过 SDK 方式最大限制，默认 50M。export FC_CODE_SIZE_WITH_CODEURI=52428800
+`NAS_CHUNK_SIZE`: nas upload/download 切片大小，默认是 4M。export NAS_CHUNK_SIZE=4
 
 ## 项目实践案例
 
