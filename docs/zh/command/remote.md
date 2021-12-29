@@ -9,7 +9,7 @@
 - [remote invoke 命令](#remote-invoke-命令)
   - [参数解析](#参数解析-1)
   - [操作案例](#操作案例-1)
-- [remote clean/cleanup 命令](#remote-clean-cleanup-命令)
+- [remote cleanup 命令](#remote-clean-cleanup-命令)
   - [参数解析](#参数解析-2)
   - [操作案例](#操作案例-2)
 - [权限与策略说明](#权限与策略说明)
@@ -58,7 +58,7 @@ SubCommand List
 
   setup            Setup the real remote service for debugging; [s remote setup -h]               
   invoke           Invoke remote function; help command [s remote invoke -h] 
-  clean/cleanup    Clean the related resource and environment; help command [s remote remote -h]  
+  cleanup          Clean the related resource and environment; help command [s remote cleanup -h]  
 ```
 
 
@@ -134,7 +134,7 @@ Remote resource setup succeeded.
 > Next step tips: s remote invoke
 ```
 
-在开启远程调试之后，可以进行函数的触发，例如`s remote invoke`，在使用过后，可以考虑清理相关辅助资源，例如`s remote clean`。
+在开启远程调试之后，可以进行函数的触发，例如`s remote invoke`，在使用过后，可以考虑清理相关辅助资源，例如`s remote cleanup`。
 
 ## remote invoke 命令
 
@@ -212,21 +212,20 @@ FC remote Result:
 hello world
 ```
 
-## remote clean/cleanup 命令
+## remote cleanup 命令
 
-`remote clean/cleanup` 命令，是对因远程调试而生成的辅助资源进行清理的命令。
+`remote cleanup` 命令，是对因远程调试而生成的辅助资源进行清理的命令。
 
-当执行命令`remote cleanup -h`/`remote cleanup --help`时，可以获取帮助文档：
+当执行命令`remote cleanup --help`时，可以获取帮助文档：
 
 ```shell script
-Remote clean/cleanup
+Remote cleanup
 
   Clean the helper resource and the local container
 
 Usage
 
-  s remote cleanup <options>
-  s remote clean <options>
+  s remote cleanup [options]
 
 Document
   
@@ -253,7 +252,7 @@ Examples with Yaml
 
 ### 操作案例
 
-**有资源描述文件（Yaml）时**，可以直接执行`s remote clean `/`s remote cleanup`对因远程调试而产生的辅助资源进行清理，示例输出：
+**有资源描述文件（Yaml）时**，可以直接执行`s remote cleanup`对因远程调试而产生的辅助资源进行清理，示例输出：
 
 ```
 Resource cleanup succeeded.
@@ -267,7 +266,7 @@ Resource cleanup succeeded.
 
 - 步骤1: 在已有的项目下，创建远程调试的辅助资源，开启远程调试模式：`s remote setup`；
 - 步骤2: 在完成远程调试模式开启动作之后，通过`s remote invoke`或者线上的事件进行函数的触发，调试；
-- 步骤3: 完成远程调试之后，通过`s remote clean`命令，对对因远程调试而产生的辅助资源进行清理；
+- 步骤3: 完成远程调试之后，通过`s remote cleanup`命令，对对因远程调试而产生的辅助资源进行清理；
 
 ### 断点调试
 
@@ -291,7 +290,7 @@ Resource cleanup succeeded.
 
   >  若要在调用的时候制定传入的 event 参数，可以使用 `--event`，例如`s remote invoke -h`
 
-- 步骤3:  完成远程调试之后，通过`s remote clean`命令，对对因远程调试而产生的辅助资源进行清理；
+- 步骤3:  完成远程调试之后，通过`s remote cleanup`命令，对对因远程调试而产生的辅助资源进行清理；
 
 #### Intelli 断点调试案例
 
@@ -316,7 +315,7 @@ Resource cleanup succeeded.
 
   >  若要在调用的时候制定传入的 event 参数，可以使用 `--event`，例如`s remote invoke -h`
 
-- 步骤3:  完成远程调试之后，通过`s remote clean`命令，对对因远程调试而产生的辅助资源进行清理；
+- 步骤3:  完成远程调试之后，通过`s remote cleanup`命令，对对因远程调试而产生的辅助资源进行清理；
 
 ### 远程登录
 

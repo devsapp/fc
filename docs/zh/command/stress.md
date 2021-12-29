@@ -7,7 +7,7 @@
 - [stress start 命令](#stress-start-命令)
   - [参数解析](#参数解析)
   - [操作案例](#操作案例)
-- [stress clean/cleanup 命令](#stress-clean/cleanup-命令)
+- [stress clean 命令](#stress-clean-命令)
   - [参数解析](#参数解析-1)
   - [操作案例](#操作案例-1)
 - [权限与策略说明](#权限与策略说明)
@@ -45,15 +45,15 @@ Document
 
 SubCommand List
 
-  start   Start stress test; help command [s eval start -h]         
-  clear   Clean the relevant resources; help command [s eval clean -h]               
+  start   Start stress test; help command [s stress start -h]         
+  clean   Clean the relevant resources; help command [s stress clean -h]               
 ```
 
 
 在该命令中，包括了两个子命令：
 
 - [start：开始进行一键压测](#stress-start-命令)
-- [clean/cleanup：清理压测时创建的资源](#stress-clean/cleanup-命令)
+- [clean：清理压测时创建的资源](#stress-clean-命令)
 
 ## stress start 命令
 
@@ -166,21 +166,20 @@ fc-deploy-test:
 ![图片alt](https://serverless-article-picture.oss-cn-hangzhou.aliyuncs.com/1636530626182_20211110075035336150.png)
 
 
-## stress clean/cleanup 命令
+## stress clean 命令
 
-`stress clean/cleanup` 命令，用来清理发起压测的线上辅助资源以及本地的 html 压测报告。
+`stress clean` 命令，用来清理发起压测的线上辅助资源以及本地的 html 压测报告。
 
-当执行命令`stress cleanup -h`/`stress cleanup --help`时，可以获取帮助文档：
+当执行命令`stress clean -h`时，可以获取帮助文档：
 
 ```shell script
-Stress clean/cleanup
+Stress clean
 
   Clean the relevant resources, including helper resources.                                                                    
 
 Usage
 
-  s stress clean <options>  
-  s stress cleanup <options>  
+  s stress clean <options>
                                
 Options
 

@@ -9,7 +9,7 @@
 - [proxied invoke 命令](#proxied-invoke-命令)
   - [参数解析](#参数解析-1)
   - [操作案例](#操作案例-1)
-- [proxied clean/cleanup 命令](#proxied-clean-cleanup-命令)
+- [proxied cleanup 命令](#proxied-clean-cleanup-命令)
   - [参数解析](#参数解析-2)
   - [操作案例](#操作案例-2)
 - [最佳实践](#最佳实践)
@@ -70,7 +70,7 @@ SubCommand List
 
   setup            Setup the preconditions; [s proxied setup -h]               
   invoke           Invoke local function; help command [s proxied invoke -h] 
-  clean/cleanup    Clean the related resource and environment; help command [s proxied cleanup -h]  
+  cleanup    Clean the related resource and environment; help command [s proxied cleanup -h]  
 ```
 
 
@@ -152,7 +152,7 @@ Proxied resource setup succeeded.
 > Next step tips: s proxied invoke
 ```
 
-在开启端云联调之后，可以进行函数的触发，例如`s proxied invoke`，在使用过后，可以考虑清理相关辅助资源，例如`s proxied clean`。
+在开启端云联调之后，可以进行函数的触发，例如`s proxied invoke`，在使用过后，可以考虑清理相关辅助资源，例如`s proxied cleanup`。
 
 ## proxied invoke 命令
 
@@ -232,21 +232,20 @@ hello world
 
 > 对于事件函数，需要先明确具体的事件类型（例如 OSS 事件， CDN 事件等），然后创建临时触发器，并将函数计算侧的目标函数和服务修改成生成的辅助 service/function（ [proxied setup 命令操作过程](#操作案例)中输出的`SESSION-S-d1564/python-event`），然后进行通过触发器即可直接触发函数获得端云联调的能力，例如如果是 OSS 创建 object 的事件，可以向指定的 OSS 中上传文件即可实现线上触发器触发本地函数的能力，即端云联调的能力。测试完成之后，不要忘记将临时指向生成的辅助资源的触发器恢复到原有的服务与函数资源上。
 
-## proxied clean/cleanup 命令
+## proxied cleanup 命令
 
-`proxied clean/cleanup` 命令，是对因端云联调而生成的辅助资源进行清理的命令。
+`proxied cleanup` 命令，是对因端云联调而生成的辅助资源进行清理的命令。
 
 当执行命令`proxied cleanup -h`/`proxied cleanup --help`时，可以获取帮助文档：
 
 ```shell script
-Proxied clean/cleanup
+Proxied cleanup
 
   Clean the helper resource and the local container
 
 Usage
 
-  s proxied cleanup <options>
-  s proxied clean <options>
+  s proxied cleanup [options]
 
 Document
   
@@ -287,7 +286,7 @@ Resource cleanup succeeded.
 
 - 步骤1: 在已有的项目下，创建端云联调的辅助资源，开启端云联调模式：`s proxied setup`；
 - 步骤2: 在完成端云联调模式开启动作之后，通过`s proxied invoke`或者线上的事件进行函数的触发，调试；
-- 步骤3: 完成端云联调之后，通过`s proxied clean`命令，对对因端云联调而产生的辅助资源进行清理；
+- 步骤3: 完成端云联调之后，通过`s proxied cleanup`命令，对对因端云联调而产生的辅助资源进行清理；
 
 ### 断点调试
 
@@ -311,7 +310,7 @@ Resource cleanup succeeded.
 
   >  若要在调用的时候制定传入的 event 参数，可以使用 `--event`，例如`s proxied invoke -h`
 
-- 步骤3:  完成端云联调之后，通过`s proxied clean`命令，对对因端云联调而产生的辅助资源进行清理；
+- 步骤3:  完成端云联调之后，通过`s proxied cleanup`命令，对对因端云联调而产生的辅助资源进行清理；
 
 #### Intelli 断点调试案例
 
@@ -336,7 +335,7 @@ Resource cleanup succeeded.
 
   >  若要在调用的时候制定传入的 event 参数，可以使用 `--event`，例如`s proxied invoke -h`
 
-- 步骤3:  完成端云联调之后，通过`s proxied clean`命令，对对因端云联调而产生的辅助资源进行清理；
+- 步骤3:  完成端云联调之后，通过`s proxied cleanup`命令，对对因端云联调而产生的辅助资源进行清理；
 
 ## 权限与策略说明
 
