@@ -43,21 +43,20 @@ export const LOGS = [
         type: String,
       },
       {
-        name: 'end-time',
-        description: '[Optional] Query log end time (timestamp or time format，like 1611827290000 or 2021-11-11T11:11:12+00:00)',
-        alias: 'e',
-        type: String,
-      },
-      {
         name: 'start-time',
         description: '[Optional] Query log start time (timestamp or time format，like 1611827290000 or 2021-11-11T11:11:12+00:00)',
         alias: 's',
         type: String,
       },
       {
+        name: 'end-time',
+        description: '[Optional] Query log end time (timestamp or time format，like 1611827290000 or 2021-11-11T11:11:12+00:00)',
+        alias: 'e',
+        type: String,
+      },
+      {
         name: 'tail',
         description: '[Optional] Continuous log output mode',
-        alias: 's',
         type: Boolean,
       },
     ],
@@ -69,11 +68,11 @@ export const LOGS = [
     content: [
       '$ s logs -s 2021-06-07T02:54:00+08:00 -e 2021-06-07T02:54:59+08:00 ',
       '$ s logs -s 2021-06-07T02:54:00+08:00 -e 2021-06-07T02:54:59+08:00 --search error',
-      '$ s logs -t',
+      '$ s logs --tail',
     ],
   },
   {
     header: 'Examples with CLI',
-    content: ['$ s cli fc logs --region cn-hangzhou --service-name serviceName --function-name functionName -t'],
+    content: ['$ s cli fc logs --region cn-hangzhou --service-name serviceName --function-name functionName --tail'],
   },
 ];

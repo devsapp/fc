@@ -235,7 +235,8 @@ Options
   --description [string]              [Optional] Specify the alias description     
   --alias-name [string]            	  [Required] Specify the fc alias name                   
   --gversion [number]              	  [Optional] The grayscale version id  
-  --version-id [number]            	  [Required] The version Id               
+  --version-id [number]            	  [Optional] The version Id               
+  --version-latest [boolean]          [Optional] Binding the latest service version          
   --weight [number]                   [Optional] The weight for grayscale version 
 
 Global Options
@@ -255,6 +256,7 @@ Options Help
 Examples with Yaml
 
   $ s alias publish --alias-name aliasName --version-id 2                             
+  $ s alias publish --alias-name aliasName --version-latest                         
   $ s alias publish --description description --alias-name aliasName --version-id 2 --gversion 3 --weight 20                                                      
 
 Examples with CLI
@@ -271,7 +273,8 @@ Examples with CLI
 | description  | -        | 选填           | 选填          | 别名描述                                                     |
 | alias-name   | -        | 必填           | 必填          | 别名                                                         |
 | gversion     | -        | 选填           | 选填          | 灰度版本Id。灰度版本权重填写时必填|
-| version-id   | -        | 必填           | 必填          | 版本Id                                                       |
+| version-id   | -        | 选填           | 选填          | 版本Id。如果指定 version-id 和 version-latest，则会出现交互选择指定哪个版本 |
+| version-latest | -      | 选填           | 选填          | 绑定当前服务最新的版本，优先级低于 version-id |
 | weight       | -        | 选填           | 选填          | 灰度版本权重。灰度版本Id填写时必填 |
 | access       | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
 | debug        | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
@@ -305,6 +308,12 @@ fc-deploy-test:
   createdTime:             2021-11-08T06:51:36Z
   lastModifiedTime:        2021-11-08T06:54:02Z
 ```
+
+### Publish 主版本获取逻辑
+
+- 指定 version-id：直接使用指定的 version-id
+- 未指定 version-id，但是指定了 version-latest：获取版本列表，取下标0的版本号（版本列表默认倒序，下标0就是最大的版本号）
+- 未指定 version-id 和 version-latest：获取版本列表，如果仅有一个版本直接使用此版本号；如果是多个版本，那么会产生交互让用户选择
 
 ## 权限与策略说明
 
