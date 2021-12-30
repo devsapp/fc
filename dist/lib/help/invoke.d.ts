@@ -21,6 +21,12 @@ export declare const INVOKE: ({
     } | {
         name: string;
         description: string;
+        type: NumberConstructor;
+        alias?: undefined;
+        typeLabel?: undefined;
+    } | {
+        name: string;
+        description: string;
         alias: string;
         type: BooleanConstructor;
         typeLabel?: undefined;

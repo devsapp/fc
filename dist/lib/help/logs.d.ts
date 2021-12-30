@@ -28,9 +28,28 @@ export declare const LOGS: ({
     } | {
         name: string;
         description: string;
-        alias: string;
         type: BooleanConstructor;
         typeLabel?: undefined;
+        alias?: undefined;
+    })[];
+    content?: undefined;
+} | {
+    header: string;
+    optionList: ({
+        name: string;
+        description: string;
+        type: StringConstructor;
+        alias?: undefined;
+    } | {
+        name: string;
+        description: string;
+        alias: string;
+        type: BooleanConstructor;
+    } | {
+        name: string;
+        description: string;
+        alias: string;
+        type: StringConstructor;
     })[];
     content?: undefined;
 } | {
