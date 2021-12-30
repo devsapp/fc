@@ -126,6 +126,11 @@ export const ALIAS_PUBLISH = [
         type: String,
       },
       {
+        name: 'version-latest',
+        description: '[Optional] Binding the latest service version',
+        type: String,
+      },
+      {
         name: 'description',
         description: '[Optional] Specify the alias description',
         type: String,
@@ -148,6 +153,7 @@ export const ALIAS_PUBLISH = [
     header: 'Examples with Yaml',
     content: [
       '$ s alias publish --alias-name aliasName --version-id 2',
+      '$ s alias publish --alias-name aliasName --version-latest',
       '$ s alias publish --description description --alias-name aliasName --version-id 2 --gversion 3 --weight 20'],
   },
   {

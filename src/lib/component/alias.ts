@@ -14,6 +14,7 @@ interface IProps {
   serviceName: string;
   description?: string;
   versionId?: string;
+  versionLatest?: boolean;
   aliasName?: string;
   gversion?: string;
   weight?: number;
@@ -29,6 +30,7 @@ interface Publish {
   serviceName: string;
   aliasName: string;
   versionId: string;
+  versionLatest?: boolean;
   description?: string;
   gversion?: string;
   weight?: number;
@@ -45,7 +47,7 @@ export default class Alias {
     logger.debug(`inputs.props: ${JSON.stringify(inputs.props)}`);
 
     const parsedArgs: {[key: string]: any} = core.commandParse(inputs, {
-      boolean: ['help', 'table', 'y'],
+      boolean: ['help', 'table', 'y', 'version-latest'],
       string: ['region', 'service-name', 'description', 'alias-name', 'id', 'gversion'],
       number: ['weight'],
       alias: { help: 'h', 'version-id': 'id', 'assume-yes': 'y' },
@@ -79,6 +81,7 @@ export default class Alias {
       serviceName: parsedData['service-name'] || props.service?.name,
       description: parsedData.description,
       versionId: parsedData.id,
+      versionLatest: parsedData['version-latest'],
       assumeYes: parsedData.y,
       aliasName: parsedData['alias-name'],
       gversion: parsedData.gversion,
@@ -116,7 +119,7 @@ export default class Alias {
     return false;
   }
 
-  async publish({ serviceName, description, aliasName, versionId, gversion, weight }: Publish) {
+  async publish({ serviceName, description, aliasName, versionId, versionLatest, gversion, weight }: Publish) {
     const hasWeight = typeof weight === 'number';
     if (hasWeight && !gversion) {
       throw new Error('weight exists, gversion is required');
@@ -132,15 +135,16 @@ export default class Alias {
       parames.additionalVersionWeight = { [gversion]: weight / 100 };
     }
 
-    if (!/^[_a-zA-Z][-_a-zA-Z0-9]*$/.test(aliasName)) {
+    if (!(aliasName && /^[_a-zA-Z][-_a-zA-Z0-9]*$/.test(aliasName))) {
       throw new Error(`AliasName doesn't match expected format (allowed: ^[_a-zA-Z][-_a-zA-Z0-9]*$, actual: '${aliasName}')`);
     }
+
     if (!versionId) {
       const versionClient = new Version();
       const versionList = await versionClient.list({ serviceName });
       if (versionList.length === 0) {
         throw new Error('Not found version.Please use [s version publish --description xxx] to publish the version');
-      } else if (versionList.length === 1) {
+      } else if (versionList.length === 1 || versionLatest) {
         versionId = versionList[0].versionId;
       } else {
         const answers: any = await inquirer.prompt([{
