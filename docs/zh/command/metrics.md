@@ -72,7 +72,7 @@ Examples with CLI
 上述命令的执行结果示例：
 
 ```text
-[2021-06-07T12:20:06.661] [INFO ] [FC-METRICS] - 请用浏览器访问Uri地址进行查看: http://localhost:3000
+[2021-06-07T12:20:06.661] [INFO ] [FC-METRICS] - Please open with browser: http://localhost:3000
 ```
 
  此时，通过浏览器打开地址，可以看到函数指标信息：
