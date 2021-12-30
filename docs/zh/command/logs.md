@@ -57,11 +57,11 @@ Examples with Yaml
 
   $ s logs -s 2021-06-07T02:54:00+08:00 -e 2021-06-07T02:54:59+08:00 
   $ s logs -s 2021-06-07T02:54:00+08:00 -e 2021-06-07T02:54:59+08:00 --search error
-  $ s logs -t                                                        
+  $ s logs --tail                                                        
 
 Examples with CLI
 
-  $ s cli fc logs --region cn-hangzhou --service-name serviceName --function-name functionName -t
+  $ s cli fc logs --region cn-hangzhou --service-name serviceName --function-name functionName --tail
 ```
 
 ### 参数解析
