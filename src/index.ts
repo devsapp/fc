@@ -33,6 +33,9 @@ import FcRemoteDebug from './lib/component/fc-remote-debug';
 import FcEval from './lib/component/fc-eval';
 import { EvalOption } from './lib/interface/component/fc-eval';
 import { FcInvokeProps } from './lib/interface/component/fc-remote-invoke';
+import path from 'path';
+import os from 'os';
+import fs from 'fs';
 
 const SUPPORTED_LOCAL_METHOD: string[] = ['invoke', 'start'];
 const DEPLOY_SUPPORT_CONFIG_ARGS = ['code', 'config'];
@@ -926,9 +929,30 @@ https://gitee.com/devsapp/fc/blob/main/docs/zh/command/nas.md#nas-upload-命令\
     await this.report(componentName, methodName, inputs?.credentials?.AccountID);
     componentInputs.props = props;
     componentInputs.args = args;
+    await this.updateCore();
     // const componentIns: any = await core.load(`devsapp/${componentName}`);
     const componentIns: any = await core.load(`${componentName}`);
     this.logger.debug(`Inputs of component: ${componentName} is: ${JSON.stringify(componentInputs, null, '  ')}`);
     return await componentIns[methodName](componentInputs);
   }
+
+  private async updateCore() {
+    if(_.isEmpty(core.tableLayout)){
+      try {
+        const homePath = _.isFunction(core.getRootHome) ? core.getRootHome() : os.homedir();
+        const corePath = path.join(homePath, 'cache', 'core');
+        const lockPath = path.resolve(corePath, '.s.lock');
+        const result = await core.request('https://registry.devsapp.cn/simple/devsapp/core/releases/latest');
+        const version = result.tag_name;
+        const url = `https://registry.devsapp.cn/simple/devsapp/core/zipball/${version}`;
+        const filename = `core@${version}.zip`;
+        await core.downloadRequest(url, corePath, { filename, extract: true, strip: 1 });
+        fs.writeFileSync(lockPath, JSON.stringify({ version }, null, 2));
+      } catch (error) {
+        // TODO: 异常提示
+        process.exit(1)
+      }
+    }
+  }
+
 }
