@@ -187,9 +187,9 @@ Examples with Yaml
 | debug-port    | d        | 选填           | 指定断点调试端口 |
 | custom-domain | -        | 选填           | 以自定义域名作为 HTTP Server 的访问 url |
 | debug-args    | -        | 选填           | 断点调试时传入的参数 |
-| debugger-path | y        | 选填           | 自定义断点调试器路径 |
+| debugger-path | -        | 选填           | 自定义断点调试器路径 |
 | tmp-dir       | -        | 选填           | 自定义函数运行环境中 `/tmp` 路径的本机挂载路径，默认为 `./.s/tmp/invoke/serviceName/functionName/` |
-| server-port   | y        | 选填           | 自定义本地监听 HTTP Server 的端口，默认是在 7000 到 8000 间的随机端口 |
+| server-port   | -        | 选填           | 自定义本地监听 HTTP Server 的端口，默认是在 7000 到 8000 间的随机端口 |
 | debug         | -        | 选填           | 打开`debug`模式，将会输出更多日志信息                        |
 | help          | h        | 选填           | 查看帮助信息                                                 |
 
