@@ -7,11 +7,9 @@ export default class Client {
   static async setFcClient(region: string, credentials, access: string) {
     const fcCore = await core.loadComponent('devsapp/fc-core');
     const fcClient = await fcCore.makeFcClient({
-      project: { access },
+      access,
       credentials,
-      props: {
-        region,
-      },
+      region
     });
     /**
      * 获取所有的数据
