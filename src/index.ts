@@ -937,7 +937,7 @@ https://gitee.com/devsapp/fc/blob/main/docs/zh/command/nas.md#nas-upload-命令\
   }
 
   private async updateCore() {
-    if (!_.isFunction(core.tableLayout)) {
+    if (!_.isFunction(core.popCore)) {
       try {
         const homePath = _.isFunction(core.getRootHome) ? core.getRootHome() : os.homedir();
         const corePath = path.join(homePath, 'cache', 'core');
