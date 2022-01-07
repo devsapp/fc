@@ -391,7 +391,7 @@ role:
 | Effect    | True  | String              | 策略效果，可选值有 'Allow' 和 'Deny' |
 | Action    | True  | List\<String\>        | 策略动作                             |
 | Resource  | True  | String/List\<String\> | 策略的目标资源                       |
-| Condition | False | Object              | 策略的目标资源                       |
+| Condition | False | Object              | 策略的条件限制                       |
 
 ### logConfig
 
