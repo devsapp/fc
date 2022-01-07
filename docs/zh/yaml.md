@@ -118,6 +118,13 @@ services:
               value: '6'
             - name: edns
               value: '7'
+        customRuntimeConfig:
+            command:
+                - /code/node_modules/ts-node/dist/bin.js
+                - server.ts
+            args:
+                - '--args1'
+                - args1
       triggers:
         - name: httpTrigger
           type: http
@@ -793,6 +800,7 @@ service:
 | [instanceLifecycleConfig](#instanceLifecycleConfig) | False | [Struct](#instanceLifecycleConfig)    | 扩展函数                                               |
 | [asyncConfiguration](#asyncConfiguration)            | False | [Struct](#asyncConfiguration)          | 异步配置                                               |
 | [customDNS](#customDNS)            | False | [Struct](#customDNS)          | DNS 配置 |
+| [customRuntimeConfig](#customRuntimeConfig)            | False | [Struct](#customRuntimeConfig)          | 自定义运行时启动配置  |
 
 
 参考案例：
@@ -911,6 +919,13 @@ TempKey: tempValue
 | nameServers | False | List\<String\> | DNS 服务器的 IP 地址列表 |
 | searches | False | List\<String\> | DNS 搜索域列表 |
 | dnsOptions | False | [List\<Struct\>](#dnsOptions) | 对应 resolv.conf DNS 配置的 Options 项 |
+
+### customRuntimeConfig
+
+| 参数名 | 必填  | 类型 | 参数描述  |
+| --------------------------- | ----- | ---------------------- | ------------------------------------------------------ |
+| command | True | List\<String\> | 启动指令，示例值: ["/code/myserver"] |
+| args | False | String | 启动参数，示例值: ["-arg1", "value1"] |
 
 
 #### dnsOptions
