@@ -190,6 +190,11 @@ export default class FcBaseComponent {
           triggerNames: property?.triggers.map((t) => t.name),
         });
       }
+      if (!_.isEmpty(property?.customDomains)) {
+        Object.assign(res, {
+          customDomains: property?.customDomains.map((t) => t.domainName),
+        });
+      }
       return res;
     };
     return await this.componentMethodCaller(inputs, 'devsapp/fc-info', 'info', propsGenerator(props), args);
