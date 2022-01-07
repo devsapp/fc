@@ -9,7 +9,7 @@ export default class Client {
     const fcClient = await fcCore.makeFcClient({
       access,
       credentials,
-      region
+      region,
     });
     /**
      * 获取所有的数据

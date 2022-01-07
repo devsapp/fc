@@ -954,7 +954,7 @@ https://gitee.com/devsapp/fc/blob/main/docs/zh/command/nas.md#nas-upload-命令\
         await core.downloadRequest(url, corePath, { filename, extract: true, strip: 1 });
         fs.writeFileSync(lockPath, JSON.stringify({ version }, null, 2));
       } catch (error) {
-        this.logger.log('\nWARNING\n======================\n* Exception happened! Please execute \'s clean --cache\' and try again', 'yellow');
+        this.logger.log("\nWARNING\n======================\n* Exception happened! Please execute 's clean --cache' and try again", 'yellow');
         process.exit(1);
       }
     }
