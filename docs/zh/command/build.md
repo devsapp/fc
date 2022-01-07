@@ -111,7 +111,7 @@ Build succeeded.
 
 > 💡 在使用`build`命令时，可以通过环境变量 `FC_DOCKER_VERSION` 控制镜像的版本，例如 export FC_DOCKER_VERSION=latest（所有可用版本可查看 https://github.com/aliyun/fc-docker 或者 https://hub.docker.com/u/aliyunfc ）
 
-> 💡 在代码包的场景中， 除了各自语言的库以外， 其实还有更加复杂的情况，例如，在函数计算的 Node.js Runtime 上部署 puppeteer 应用， puppeteer 库还需要安装底层的 so 库， 此时还需要 [apt-get.list](https://github.com/devsapp/start-puppeteer/blob/master/src/nodejs12/src/apt-get.list) 的支持,  具体如下图所示：
+> 💡 在代码包的场景中， 除了各自语言的库以外， 其实还有更加复杂的情况，例如，在函数计算的 Node.js Runtime 上部署 puppeteer 应用， puppeteer 库还需要安装底层的 so 库， 此时还需要 [apt-get.list](https://github.com/devsapp/start-puppeteer/blob/master/puppeteer-nodejs/src/src/apt-get.list) 的支持,  具体如下图所示：
 >
 > ![](https://img.alicdn.com/imgextra/i2/O1CN01IOxwXQ1EiNBT7jFtJ_!!6000000000385-2-tps-1684-964.png)
 >
