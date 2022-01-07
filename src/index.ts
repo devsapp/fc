@@ -942,7 +942,7 @@ https://gitee.com/devsapp/fc/blob/main/docs/zh/command/nas.md#nas-upload-命令\
   }
 
   private async updateCore() {
-    if(!_.isFunction(core.tableLayout)){
+    if (!_.isFunction(core.popCore)) {
       try {
         const homePath = _.isFunction(core.getRootHome) ? core.getRootHome() : os.homedir();
         const corePath = path.join(homePath, 'cache', 'core');
@@ -954,10 +954,9 @@ https://gitee.com/devsapp/fc/blob/main/docs/zh/command/nas.md#nas-upload-命令\
         await core.downloadRequest(url, corePath, { filename, extract: true, strip: 1 });
         fs.writeFileSync(lockPath, JSON.stringify({ version }, null, 2));
       } catch (error) {
-        this.logger.log(`\nWARNING\n======================\n* Exception happened! Please execute 's clean --cache' and try again`, 'yellow');
-        process.exit(1)
+        this.logger.log("\nWARNING\n======================\n* Exception happened! Please execute 's clean --cache' and try again", 'yellow');
+        process.exit(1);
       }
     }
   }
-
 }
