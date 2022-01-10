@@ -127,7 +127,8 @@ export default class Instance {
 
       const recommend = `s cli fc instance exec ${paramCommend} ${tty ? '-t ' : ''}ls`;
       const stdinCommend = `s cli fc instance exec ${paramCommend} -it`;
-      throw new Error(`Did not find the instruction to execute, you can try to execute:\n  1. ${recommend}\n  2. ${stdinCommend}`);
+      const fcCore = await core.loadComponent('devsapp/fc-core');
+      throw new fcCore.CatchableError(`Did not find the instruction to execute, you can try to execute:\n  1. ${recommend}\n  2. ${stdinCommend}`);
     }
 
     const options = {
@@ -173,6 +174,7 @@ export default class Instance {
       stderr: 'true',
       command: _.isEmpty(command) ? ['/bin/bash'] : command,
     };
+    logger.warn('Enter `exit` to open the link on the server side to exit (recommended), or execute `control + ]` to force the client to exit');
     // eslint-disable-next-line no-async-promise-executor
     await new Promise(async (_resolve, reject) => {
       const hooks = {
