@@ -110,7 +110,7 @@ export const INSTANCE_EXEC = [
   {
     header: 'Examples with Yaml',
     content: [
-      '$ s instance exec --instance-id instance-id ls',
+      '$ s instance exec --instance-id instanceId ls',
       '$ s instance exec --instance-id instanceId -it "/bin/bash ls"',
     ],
   },

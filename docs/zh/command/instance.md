@@ -61,7 +61,50 @@ SubCommand List
 
 上述命令的执行结果示例：
 ```text
+Instance list
 
+  View the list of function instance 
+
+Document
+
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/instance.md 
+
+Usage
+
+  $ s instance list <options> 
+
+Options
+
+  --region                 [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-         
+                           beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-    
+                           shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-   
+                           3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-     
+                           1/ap-south-1                                                                  
+  --service-name string    [C-Required] Specify the fc service name                                      
+  --function-name string   [C-Required] Specify the fc function name                                     
+
+Global Options
+
+  --debug string          [Optional] Output debug informations   
+  -h, --help              [Optional] Help for command            
+  -t, --template string   [Optional] Specify the template file   
+  -a, --access string     [Optional] Specify key alias           
+
+Options Help
+
+  Required: Required parameters in YAML mode and CLI mode            
+  C-Required: Required parameters in CLI mode                        
+  Y-Required: Required parameters in Yaml mode                       
+  Optional: Non mandatory parameter                                  
+  ✋ The difference between Yaml mode and CLI mode: http://ej6.net/yc 
+
+Examples with Yaml
+
+  $ s instance list 
+
+Examples with CLI
+
+  $ s cli fc instance list --region cn-hangzhou --service-name serviceName --function-name functionName
 ```
 
 
@@ -72,7 +115,55 @@ SubCommand List
 当执行命令`instance exec -h`/`instance exec --help`时，可以获取帮助文档：
 
 ````
+Instance exec
 
+  Execute instructions in the container 
+
+Document
+
+  https://github.com/devsapp/fc/blob/main/docs/zh/command/instance.md 
+
+Usage
+
+  $ s instance exec <options> 
+
+Options
+
+  --region                 [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-         
+                           beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-    
+                           shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-   
+                           3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-     
+                           1/ap-south-1                                                                  
+  --service-name string    [C-Required] Specify the fc service name                                      
+  --function-name string   [C-Required] Specify the fc function name                                     
+  --qualifier string       [Optional] Specify the qualifier parameter. Only supports LATEST and alias    
+  --instance-id string     [Required] Specifies the function instanceId                                  
+  -i, --stdin              [Optional] Open standard input                                                
+  -t, --tty                [Required] Allocate a terminal device                                         
+
+Global Options
+
+  --debug string          [Optional] Output debug informations   
+  -h, --help              [Optional] Help for command            
+  -t, --template string   [Optional] Specify the template file   
+  -a, --access string     [Optional] Specify key alias           
+
+Options Help
+
+  Required: Required parameters in YAML mode and CLI mode            
+  C-Required: Required parameters in CLI mode                        
+  Y-Required: Required parameters in Yaml mode                       
+  Optional: Non mandatory parameter                                  
+  ✋ The difference between Yaml mode and CLI mode: http://ej6.net/yc 
+
+Examples with Yaml
+
+  $ s instance exec --instance-id instanceId ls                
+  $ s instance exec --instance-id instanceId -it "/bin/bash ls" 
+
+Examples with CLI
+
+  $ s cli fc instance exec --region cn-hangzhou --service-name serviceName --function-name functionName --instance-id instanceId ls
 ````
 
 ### 参数解析
@@ -95,7 +186,7 @@ SubCommand List
 1. 先执行 `s instance list` 获取函数的实例列表，从中选择需要操作的实例ID
 2. 执行命令
 ````
-$ s instance exec --instance-id instance-id ls
+$ s instance exec --instance-id instanceId ls
 
 $ s instance exec --instance-id instanceId -it "/bin/bash ls"
 ````
