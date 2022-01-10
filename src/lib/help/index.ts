@@ -19,3 +19,4 @@ export * from './version';
 export * from './remote';
 export * from './proxied';
 export * from './stress';
+export * from './instance';
