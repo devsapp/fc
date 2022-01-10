@@ -122,7 +122,7 @@ export const ALIAS_PUBLISH = [
       {
         name: 'version-latest',
         description: '[Optional] Binding the latest service version',
-        type: String,
+        type: Boolean,
       },
       {
         name: 'description',
