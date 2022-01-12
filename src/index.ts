@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 import Logger from './common/logger';
 import { LOCAL_HELP_INFO, NAS_HELP_INFO,
   NAS_SUB_COMMAND_HELP_INFO, LOCAL_INVOKE_HELP_INFO, LOCAL_START_HELP_INFO, BUILD_HELP_INFO,
-  PLAN_HELP, EVAL, FUN_TO_S, INFO, INVOKE, LOGS, METRICS, SYNC, REMOTE, REMOTE_SETUP,
+  PLAN_HELP, EVAL, EVAL_START, FUN_TO_S, INFO, INVOKE, LOGS, METRICS, SYNC, REMOTE, REMOTE_SETUP,
   REMOTE_INVOKE, REMOTE_CLEANUP, PROXIED, PROXIED_SETUP, PROXIED_INVOKE, PROXIED_CLEANUP,
   STRESS, STRESS_START, STRESS_CLEAN,
 } from './lib/help';
@@ -781,9 +781,6 @@ https://gitee.com/devsapp/fc/blob/main/docs/zh/command/nas.md#nas-upload-命令\
   async eval(inputs: IInputs): Promise<any> {
     const { props, project } = this.handlerComponentInputs(inputs);
     const SUPPORTED_METHOD: string[] = ['start'];
-    const EVAL_SUB_COMMAND_HELP_KEY = {
-      start: 'EVAL_START',
-    };
     const DEFAULT_EVAL_TYPE = 'memory';
 
     const apts = {
@@ -823,7 +820,7 @@ https://gitee.com/devsapp/fc/blob/main/docs/zh/command/nas.md#nas-upload-命令\
     }
 
     if (argsData?.help) {
-      core.help(EVAL_SUB_COMMAND_HELP_KEY[commandName]);
+      core.help(EVAL_START);
       return;
     }
     let functionType = argsData['function-type'];
