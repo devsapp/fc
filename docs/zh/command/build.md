@@ -29,6 +29,7 @@ Options
   -f, --dockerfile [string]   [Optional] Specify the dockerfile path             
   -d, --use-docker            [Optional] Use docker container to build functions 
   -b, --use-buildkit          [Optional] Use buildkit to build functions         
+  --clean-useless-image       [Optional] Remove invalid lower version images    
 
 Global Options
 
@@ -55,7 +56,8 @@ Examples with Yaml
 | ------------ | -------- | ------------- | ------------------------------------- |
 | dockerfile   | f        | 选填          | 指定构建自定义镜像的文件 |
 | use-docker   | d        | 选填          | 通过 docker 构建 |
-| use-buildkit | b        | 选填          | 通过 buildctl 构建 |
+| use-buildkit | -        | 选填          | 通过 buildctl 构建 |
+| clean-useless-image | - | 选填 | 删除无效的 fc 低版本镜像 |
 | debug        | -        | 选填          | 打开`debug`模式，将会输出更多日志信息 |
 | help         | h        | 选填          | 查看帮助信息                          |
 

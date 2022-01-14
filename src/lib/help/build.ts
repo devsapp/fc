@@ -38,6 +38,12 @@ export const BUILD_HELP_INFO = [
         defaultOption: false,
         type: Boolean,
       },
+      {
+        name: 'clean-useless-image',
+        description: '[Optional] Remove invalid lower version images',
+        defaultOption: false,
+        type: Boolean,
+      },
     ],
   },
   { ...globalParams },

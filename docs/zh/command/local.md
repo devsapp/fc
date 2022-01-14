@@ -116,6 +116,7 @@ Examples with Yaml
 | debugger-path | q        | 选填           |自定义断点调试器路径|
 | tmp-dir       | -        | 选填           |自定义函数运行环境中 `/tmp` 路径的本机挂载路径，默认为 `./.s/tmp/invoke/serviceName/functionName`/|
 | server-port   | -        | 选填           |自定义本地监听 `server` 的端口，默认是在 7000 到 8000 间的随机端口|
+| clean-useless-image | - | 选填 | 删除无效的 fc 低版本镜像 |
 | debug         | -        | 选填           | 打开`debug`模式，将会输出更多日志信息                        |
 | help          | h        | 选填           | 查看帮助信息                                                 |
 
@@ -190,6 +191,7 @@ Examples with Yaml
 | debugger-path | -        | 选填           | 自定义断点调试器路径 |
 | tmp-dir       | -        | 选填           | 自定义函数运行环境中 `/tmp` 路径的本机挂载路径，默认为 `./.s/tmp/invoke/serviceName/functionName/` |
 | server-port   | -        | 选填           | 自定义本地监听 HTTP Server 的端口，默认是在 7000 到 8000 间的随机端口 |
+| clean-useless-image | - | 选填 | 删除无效的 fc 低版本镜像 |
 | debug         | -        | 选填           | 打开`debug`模式，将会输出更多日志信息                        |
 | help          | h        | 选填           | 查看帮助信息                                                 |
 
