@@ -1,7 +1,6 @@
 import { EvalOption } from '../interface/component/fc-eval';
 import { HttpTypeOption, PayloadOption } from '../interface/component/fc-common';
 
-
 export default class FcEval {
   private readonly httpTypeOpts?: HttpTypeOption;
   private readonly evalOpts?: EvalOption;
@@ -9,7 +8,13 @@ export default class FcEval {
   private readonly region: string;
   private readonly access: string;
 
-  constructor(access: string, region: string, evalOpts?: EvalOption, httpTypeOpts?: HttpTypeOption, payloadOpts?: PayloadOption) {
+  constructor(
+    access: string,
+    region: string,
+    evalOpts?: EvalOption,
+    httpTypeOpts?: HttpTypeOption,
+    payloadOpts?: PayloadOption,
+  ) {
     this.access = access;
     this.region = region;
     this.evalOpts = evalOpts;

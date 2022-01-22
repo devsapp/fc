@@ -7,7 +7,6 @@ import {
 } from './constant';
 
 export const METRICS = [
-
   {
     header: 'Metrics',
     content: 'Query function metrics information ',
@@ -22,11 +21,7 @@ export const METRICS = [
   },
   {
     header: 'Options',
-    optionList: [
-      regionDescribe,
-      serviceNameDescribe,
-      functionNameDescribe,
-    ],
+    optionList: [regionDescribe, serviceNameDescribe, functionNameDescribe],
   },
   { ...globalParams },
   { ...globalDescribe },
@@ -36,6 +31,8 @@ export const METRICS = [
   },
   {
     header: 'Examples with CLI',
-    content: ['$ s cli fc metrics --region cn-hangzhou --service-name serviceName --function-name functionName'],
+    content: [
+      '$ s cli fc metrics --region cn-hangzhou --service-name serviceName --function-name functionName',
+    ],
   },
 ];

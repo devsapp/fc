@@ -29,7 +29,10 @@ export const ON_DEMAND = [
   {
     header: 'SubCommand List',
     content: [
-      { desc: 'list', example: 'View the list of resource on-demand; help command [s ondemand list -h]' },
+      {
+        desc: 'list',
+        example: 'View the list of resource on-demand; help command [s ondemand list -h]',
+      },
       { desc: 'put', example: 'Put resource on-demand; help command [s ondemand put -h]' },
       { desc: 'get', example: 'Get resource on-demand; help command [s ondemand get -h]' },
     ],
@@ -51,11 +54,7 @@ export const ON_DEMAND_LIST = [
   },
   {
     header: 'Options',
-    optionList: [
-      regionDescribe,
-      serviceNameDescribe,
-      showTableDescribe,
-    ],
+    optionList: [regionDescribe, serviceNameDescribe, showTableDescribe],
   },
   { ...globalParams },
   { ...globalDescribe },
@@ -104,7 +103,9 @@ export const ON_DEMAND_PUT = [
   },
   {
     header: 'Examples with CLI',
-    content: ['$ s cli fc ondemand put --region cn-hangzhou --service-name serviceName --function-name functionName --qualifier alias --max 1'],
+    content: [
+      '$ s cli fc ondemand put --region cn-hangzhou --service-name serviceName --function-name functionName --qualifier alias --max 1',
+    ],
   },
 ];
 
@@ -123,12 +124,7 @@ export const ON_DEMAND_GET = [
   },
   {
     header: 'Options',
-    optionList: [
-      regionDescribe,
-      serviceNameDescribe,
-      functionNameDescribe,
-      qualifier,
-    ],
+    optionList: [regionDescribe, serviceNameDescribe, functionNameDescribe, qualifier],
   },
   { ...globalParams },
   { ...globalDescribe },
@@ -138,6 +134,8 @@ export const ON_DEMAND_GET = [
   },
   {
     header: 'Examples with CLI',
-    content: ['$ s cli fc ondemand get --region cn-hangzhou --service-name serviceName --function-name functionName --qualifier qualifier'],
+    content: [
+      '$ s cli fc ondemand get --region cn-hangzhou --service-name serviceName --function-name functionName --qualifier qualifier',
+    ],
   },
 ];

@@ -11,9 +11,7 @@ export const PLAN_HELP = [
   },
   {
     header: 'Usage',
-    content: [
-      { example: '$ s plan <option>' },
-    ],
+    content: [{ example: '$ s plan <option>' }],
   },
   {
     header: 'Options',

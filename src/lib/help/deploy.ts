@@ -1,8 +1,4 @@
-import {
-  globalParams,
-  globalDescribe,
-  assumeYesDescribe,
-} from './constant';
+import { globalParams, globalDescribe, assumeYesDescribe } from './constant';
 
 const useLocal = {
   name: 'use-local',
@@ -23,11 +19,7 @@ const deployType = {
   type: String,
 };
 
-const options = [
-  useLocal,
-  useRemote,
-  assumeYesDescribe,
-];
+const options = [useLocal, useRemote, assumeYesDescribe];
 
 export const DEPLOY = [
   {
@@ -40,19 +32,11 @@ export const DEPLOY = [
   },
   {
     header: 'Usage',
-    content: [
-      '$ s deploy <options>',
-      '$ s deploy <sub-command> <options>',
-    ],
+    content: ['$ s deploy <options>', '$ s deploy <sub-command> <options>'],
   },
   {
     header: 'Options',
-    optionList: [
-      deployType,
-      useLocal,
-      useRemote,
-      assumeYesDescribe,
-    ],
+    optionList: [deployType, useLocal, useRemote, assumeYesDescribe],
   },
   { ...globalParams },
   { ...globalDescribe },
@@ -102,10 +86,7 @@ export const DEPLOY_SERVICE = [
   { ...globalDescribe },
   {
     header: 'Examples with Yaml',
-    content: [
-      '$ s deploy service',
-      '$ s deploy service --use-local',
-    ],
+    content: ['$ s deploy service', '$ s deploy service --use-local'],
   },
 ];
 
@@ -124,19 +105,13 @@ export const DEPLOY_FUNCTION = [
   },
   {
     header: 'Options',
-    optionList: [
-      deployType,
-      ...options,
-    ],
+    optionList: [deployType, ...options],
   },
   { ...globalParams },
   { ...globalDescribe },
   {
     header: 'Examples with Yaml',
-    content: [
-      '$ s deploy function',
-      '$ s deploy function --use-local',
-    ],
+    content: ['$ s deploy function', '$ s deploy function --use-local'],
   },
 ];
 
@@ -158,7 +133,8 @@ export const DEPLOY_TRIGGER = [
     optionList: [
       {
         name: 'trigger-name',
-        description: '[Optional] Only deploy the specified trigger, multiple triggers can be specified using [--trigger-name name1 --trigger-name name2]',
+        description:
+          '[Optional] Only deploy the specified trigger, multiple triggers can be specified using [--trigger-name name1 --trigger-name name2]',
         type: String,
       },
       ...options,
@@ -194,7 +170,8 @@ export const DEPLOY_DOMAIN = [
     optionList: [
       {
         name: 'domain',
-        description: '[Optional] Only deploy the specified domain, multiple domains can be specified using [--domain domain1 --domain domain2]',
+        description:
+          '[Optional] Only deploy the specified domain, multiple domains can be specified using [--domain domain1 --domain domain2]',
         type: String,
       },
       ...options,
@@ -204,8 +181,6 @@ export const DEPLOY_DOMAIN = [
   { ...globalDescribe },
   {
     header: 'Examples with Yaml',
-    content: [
-      '$ s deploy domain',
-    ],
+    content: ['$ s deploy domain'],
   },
 ];

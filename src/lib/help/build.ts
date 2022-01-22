@@ -11,9 +11,7 @@ export const BUILD_HELP_INFO = [
   },
   {
     header: 'Usage',
-    content: [
-      { example: '$ s build <option>' },
-    ],
+    content: [{ example: '$ s build <option>' }],
   },
   {
     header: 'Options',
@@ -48,7 +46,8 @@ export const BUILD_HELP_INFO = [
   },
   {
     header: 'Others',
-    content: "You can override the default docker image version by setting up the 'FC_DOCKER_VERSION' environment variable\r\n" +
+    content:
+      "You can override the default docker image version by setting up the 'FC_DOCKER_VERSION' environment variable\r\n" +
       "For example: export 'FC_DOCKER_VERSION=latest'\r\n" +
       'For all available versions, see https://github.com/aliyun/fc-docker or https://hub.docker.com/u/aliyunfc',
   },

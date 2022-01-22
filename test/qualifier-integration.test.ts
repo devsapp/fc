@@ -33,7 +33,14 @@ describe('Integration::qualifier', () => {
 
   beforeAll(async () => {
     const { accountId, accessKeyId, accessKeySecret } = handlerCredentials();
-    await setupIntegrationTestEnv(ACCESS, accountId, accessKeyId, accessKeySecret, MOCK_PROJECT_PATH, MOCK_PROJECT_YAML_PATH);
+    await setupIntegrationTestEnv(
+      ACCESS,
+      accountId,
+      accessKeyId,
+      accessKeySecret,
+      MOCK_PROJECT_PATH,
+      MOCK_PROJECT_YAML_PATH,
+    );
     fcClient = getFcClient(REGION, DEFAULT_CLIENT_TIMEOUT);
     await fcClient.createService(ALIAS_NAME);
   });

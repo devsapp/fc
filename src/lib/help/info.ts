@@ -1,9 +1,4 @@
-import {
-  globalParams,
-  globalDescribe,
-  regionDescribe,
-  serviceNameDescribe,
-} from './constant';
+import { globalParams, globalDescribe, regionDescribe, serviceNameDescribe } from './constant';
 
 export const INFO = [
   {
@@ -30,7 +25,8 @@ export const INFO = [
       },
       {
         name: 'trigger-name',
-        description: '[Optional] Specify the fc trigger name, multiple triggers can be specified using [--trigger-name name1 --trigger-name',
+        description:
+          '[Optional] Specify the fc trigger name, multiple triggers can be specified using [--trigger-name name1 --trigger-name',
         type: String,
       },
     ],

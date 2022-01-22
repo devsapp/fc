@@ -1,13 +1,10 @@
-import {
-  globalParams,
-  globalDescribe,
-  regionDescribe,
-} from './constant';
+import { globalParams, globalDescribe, regionDescribe } from './constant';
 
 export const FUN_TO_S = [
   {
     header: 'Fun2s',
-    content: 'Convert the Yaml specification of Funcraft to the Yaml specification of Serverless Devs',
+    content:
+      'Convert the Yaml specification of Funcraft to the Yaml specification of Serverless Devs',
   },
   {
     header: 'Document',
@@ -23,7 +20,8 @@ export const FUN_TO_S = [
       regionDescribe,
       {
         name: 'source',
-        description: '[Optional] Specify Funcraft configuration path, default: template.yaml/template.yml',
+        description:
+          '[Optional] Specify Funcraft configuration path, default: template.yaml/template.yml',
         type: String,
       },
       {

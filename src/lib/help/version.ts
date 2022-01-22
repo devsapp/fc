@@ -22,7 +22,10 @@ export const VERSION_HELP = [
   {
     header: 'SubCommand List',
     content: [
-      { desc: 'list', example: 'View the list of service versions; help command [s version list -h]' },
+      {
+        desc: 'list',
+        example: 'View the list of service versions; help command [s version list -h]',
+      },
       { desc: 'publish', example: 'Publish service version; help command [s version publish -h]' },
     ],
   },
@@ -43,11 +46,7 @@ export const VERSION_LIST = [
   },
   {
     header: 'Options',
-    optionList: [
-      regionDescribe,
-      serviceNameDescribe,
-      showTableDescribe,
-    ],
+    optionList: [regionDescribe, serviceNameDescribe, showTableDescribe],
   },
   { ...globalParams },
   { ...globalDescribe },
@@ -94,6 +93,8 @@ export const VERSION_PUBLISH = [
   },
   {
     header: 'Examples with CLI',
-    content: ['$ s cli fc version publish --region cn-hangzhou --service-name serviceName --description xxx'],
+    content: [
+      '$ s cli fc version publish --region cn-hangzhou --service-name serviceName --description xxx',
+    ],
   },
 ];

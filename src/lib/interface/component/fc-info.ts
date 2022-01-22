@@ -1,4 +1,3 @@
-
 export interface FcInfoProps {
   region: string;
   serviceName: string;

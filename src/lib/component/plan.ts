@@ -3,12 +3,11 @@ import Table from 'tty-table';
 import _ from 'lodash';
 import logger from '../../common/logger';
 
-
 export default class Remove {
   static handlerInputs(inputs) {
     logger.debug(`inputs.props: ${JSON.stringify(inputs.props)}`);
 
-    const parsedArgs: {[key: string]: any} = core.commandParse(inputs, {
+    const parsedArgs: { [key: string]: any } = core.commandParse(inputs, {
       boolean: ['help'],
       string: ['plan-type', 'sub-command'],
       alias: { help: 'h' },
@@ -24,7 +23,9 @@ export default class Remove {
     if (planType === 'deploy') {
       const deployCommandList = ['service', 'function', 'trigger', 'domain'];
       if (!_.isEmpty(subCommand) && !deployCommandList.includes(subCommand)) {
-        return { errorMessage: `Does not support ${subCommand} command.When plan-type is ${planType}, --sub-command supports not specified or ${deployCommandList.toString()}` };
+        return {
+          errorMessage: `Does not support ${subCommand} command.When plan-type is ${planType}, --sub-command supports not specified or ${deployCommandList.toString()}`,
+        };
       }
     } else if (planType === 'remove') {
       const removeCommandList = [
@@ -40,7 +41,9 @@ export default class Remove {
         'layer',
       ];
       if (!removeCommandList.includes(subCommand)) {
-        return { errorMessage: `Does not support ${subCommand} command.When plan-type is ${planType}, --sub-command supports not specified or ${removeCommandList.toString()}` };
+        return {
+          errorMessage: `Does not support ${subCommand} command.When plan-type is ${planType}, --sub-command supports not specified or ${removeCommandList.toString()}`,
+        };
       }
     } else {
       return { errorMessage: `--plan-type only supports deploy and remove, not ${planType}` };
@@ -79,7 +82,6 @@ export default class Remove {
 
     logger.log('\n\n');
   }
-
 
   private static showDeployItem(key, value) {
     if (_.isEmpty(value.remote) || value.remote === 'remoteNull') {

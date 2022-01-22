@@ -67,12 +67,14 @@ export const STRESS_START = [
       },
       {
         name: 'payload',
-        description: '[Optional] Represents the event(Event function)/request_body(HTTP function) passed to the function',
+        description:
+          '[Optional] Represents the event(Event function)/request_body(HTTP function) passed to the function',
         type: String,
       },
       {
         name: 'payload-file',
-        description: '[Optional] Represents the the event(Event function)/request_body(HTTP function)/postman-export-json-file which be readed from file to pass to the function',
+        description:
+          '[Optional] Represents the the event(Event function)/request_body(HTTP function)/postman-export-json-file which be readed from file to pass to the function',
         type: String,
       },
       {
@@ -135,20 +137,13 @@ export const STRESS_CLEAN = [
   },
   {
     header: 'Options',
-    optionList: [
-      regionDescribe,
-      serviceNameDescribe,
-      functionNameDescribe,
-      assumeYesDescribe,
-    ],
+    optionList: [regionDescribe, serviceNameDescribe, functionNameDescribe, assumeYesDescribe],
   },
   { ...globalParams },
   { ...globalDescribe },
   {
     header: 'Examples with Yaml',
-    content: [
-      '$ s stress clean',
-    ],
+    content: ['$ s stress clean'],
   },
   {
     header: 'Examples with CLI',
@@ -190,12 +185,12 @@ export interface StressCleanInputsArgs {
    */
   region: string;
   /**
-    * [C-Required] Specify the fc service name
-    */
+   * [C-Required] Specify the fc service name
+   */
   'service-name': string;
   /**
-    * [Optional] Specify the fc function name
-    */
+   * [Optional] Specify the fc function name
+   */
   'function-name': string;
   /**
    * [Optional] Assume that the answer to any question which would be asked is yes
@@ -225,12 +220,12 @@ export interface StressStartInputsArgs {
    */
   region: string;
   /**
-    * [C-Required] Specify the fc service name
-    */
+   * [C-Required] Specify the fc service name
+   */
   'service-name': string;
   /**
-    * [Optional] Specify the fc function name
-    */
+   * [Optional] Specify the fc function name
+   */
   'function-name': string;
   /**
    * [C-Required] Type of the target function, value: http/event
@@ -239,11 +234,11 @@ export interface StressStartInputsArgs {
   /**
    * [Optional] Target method, only for --function-type http
    */
-  'method': string;
+  method: string;
   /**
    * [Optional] Represents the event/request_body passed to the function
    */
-  'payload': string;
+  payload: string;
   /**
    * [Optional] Contains the event passed to the function
    */
@@ -253,10 +248,10 @@ export interface StressStartInputsArgs {
    */
   'num-user': number;
   /**
-    * [Optional] Qualifier of the target function, only for event function
-    * @alias q
-    */
-  'qualifier'?: string;
+   * [Optional] Qualifier of the target function, only for event function
+   * @alias q
+   */
+  qualifier?: string;
   /**
    * [Optional] Intervals for stress
    */
@@ -269,7 +264,7 @@ export interface StressStartInputsArgs {
    * [Optional] Target url
    * @alias u
    */
-  'url': string;
+  url: string;
   /**
    * [Optional] Invocation type: optional value "async"|"sync", default value "sync" (default: "sync")
    */

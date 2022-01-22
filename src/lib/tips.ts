@@ -5,18 +5,24 @@ export function showBuildNextTips() {
   const httpInvokeTip = 's local start';
   const deployTip = 's deploy';
 
-  Logger.log(`\nTips for next step
+  Logger.log(
+    `\nTips for next step
 ======================
 * Invoke Event Function: ${eventInvokeTip}
 * Invoke Http Function: ${httpInvokeTip}
-* Deploy Resources: ${deployTip}`, 'yellow');
+* Deploy Resources: ${deployTip}`,
+    'yellow',
+  );
 }
 
 export function showLocalNextTips() {
   const deployTip = 's deploy';
-  Logger.log(`\nTips for next step
+  Logger.log(
+    `\nTips for next step
 ======================
-* Deploy Resources: ${deployTip}`, 'yellow');
+* Deploy Resources: ${deployTip}`,
+    'yellow',
+  );
 }
 
 export function showDeployNextTips() {
@@ -29,7 +35,8 @@ export function showDeployNextTips() {
   const metrics = 's metrics';
   const logs = 's logs';
 
-  Logger.log(`\nTips for next step
+  Logger.log(
+    `\nTips for next step
 ======================
 * Display information of the deployed resource: ${infoTip}
 * Display metrics: ${metrics}
@@ -38,21 +45,30 @@ export function showDeployNextTips() {
 * Remove Service: ${removeServiceTip}
 * Remove Function: ${removeFunctionTip}
 * Remove Trigger: ${removeTriggerTip}
-* Remove CustomDomain: ${removeDomainTip}`, 'yellow');
+* Remove CustomDomain: ${removeDomainTip}`,
+    'yellow',
+  );
 }
 
 export function showNasNextTips() {
   const invokeTip = 's invoke';
 
-  Logger.log(`\nTips for next step
+  Logger.log(
+    `\nTips for next step
 ======================
-* Invoke remote function: ${invokeTip}`, 'yellow');
+* Invoke remote function: ${invokeTip}`,
+    'yellow',
+  );
 }
 
 export function showNextTip(args: string, showMethod: Function): void {
-  const parsedArgs: {[key: string]: any} = commandParse({ args }, {
-    boolean: ['help'],
-    alias: { help: 'h' } });
+  const parsedArgs: { [key: string]: any } = commandParse(
+    { args },
+    {
+      boolean: ['help'],
+      alias: { help: 'h' },
+    },
+  );
   const argsData: any = parsedArgs?.data || {};
   if (!argsData?.help) {
     showMethod();

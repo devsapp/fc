@@ -1,9 +1,4 @@
-
-import {
-  globalParams,
-  globalDescribe,
-  eventFormat,
-} from './constant';
+import { globalParams, globalDescribe, eventFormat } from './constant';
 
 export const PROXIED = [
   {
@@ -55,20 +50,23 @@ export const PROXIED_SETUP = [
     optionList: [
       {
         name: 'config',
-        description: '[Optional] elect which IDE to use when debugging and output related debug config tips for the IDE. value: vscode, intellij',
+        description:
+          '[Optional] elect which IDE to use when debugging and output related debug config tips for the IDE. value: vscode, intellij',
         alias: 'c',
         typeLabel: '{underline [vscode/intellij]}',
         type: String,
       },
       {
         name: 'debug-port',
-        description: '[Optional] Specify the sandboxed container starting in debug mode, and exposing this port on localhost',
+        description:
+          '[Optional] Specify the sandboxed container starting in debug mode, and exposing this port on localhost',
         alias: 'd',
         type: Number,
       },
       {
         name: 'tmp-dir',
-        description: "[Optional] The temp directory mounted to '/tmp' , default: './.s/tmp/invoke/serviceName/functionName/' ",
+        description:
+          "[Optional] The temp directory mounted to '/tmp' , default: './.s/tmp/invoke/serviceName/functionName/' ",
         type: String,
       },
       {
@@ -87,10 +85,7 @@ export const PROXIED_SETUP = [
   { ...globalDescribe },
   {
     header: 'Examples with Yaml',
-    content: [
-      '$ s proxied setup',
-      '$ s proxied setup --config vscode --debug-port 3000',
-    ],
+    content: ['$ s proxied setup', '$ s proxied setup --config vscode --debug-port 3000'],
   },
 ];
 
@@ -118,7 +113,8 @@ export const PROXIED_INVOKE = [
       },
       {
         name: 'event-file',
-        description: '[Optional] Event funtion: A file containing event data passed to the function during invoke',
+        description:
+          '[Optional] Event funtion: A file containing event data passed to the function during invoke',
         alias: 'f',
         type: String,
       },
@@ -135,10 +131,7 @@ export const PROXIED_INVOKE = [
   eventFormat,
   {
     header: 'Examples with Yaml',
-    content: [
-      '$ s proxied setup',
-      '$ s proxied invoke --event string',
-    ],
+    content: ['$ s proxied setup', '$ s proxied invoke --event string'],
   },
 ];
 

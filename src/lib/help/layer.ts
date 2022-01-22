@@ -1,10 +1,4 @@
-import {
-  globalParams,
-  globalDescribe,
-  regionDescribe,
-  showTableDescribe,
-} from './constant';
-
+import { globalParams, globalDescribe, regionDescribe, showTableDescribe } from './constant';
 
 const layerName = {
   name: 'layer-name',
@@ -75,7 +69,9 @@ export const LAYER_PUBLISH = [
   },
   {
     header: 'Examples with CLI',
-    content: ['$ s cli fc layer publish --region cn-hangzhou --layer-name testName --code ./src --compatible-runtime nodejs12,nodejs10,python3'],
+    content: [
+      '$ s cli fc layer publish --region cn-hangzhou --layer-name testName --code ./src --compatible-runtime nodejs12,nodejs10,python3',
+    ],
   },
 ];
 
@@ -168,11 +164,7 @@ export const LAYER_VERSIONS = [
   },
   {
     header: 'Options',
-    optionList: [
-      regionDescribe,
-      layerName,
-      showTableDescribe,
-    ],
+    optionList: [regionDescribe, layerName, showTableDescribe],
   },
   { ...globalParams },
   { ...globalDescribe },

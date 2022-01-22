@@ -48,17 +48,20 @@ export const EVAL_START = [
       functionNameDescribe,
       {
         name: 'concurrency-args',
-        description: '[Optional] Concurrency args of power tuning that can convert to concurrency list, for --eval-type concurrency or concurrencyPostman',
+        description:
+          '[Optional] Concurrency args of power tuning that can convert to concurrency list, for --eval-type concurrency or concurrencyPostman',
         type: String,
       },
       {
         name: 'eval-type',
-        description: '[Optional] Type of the power tuning, value: memory/concurrency/concurrencyPostman',
+        description:
+          '[Optional] Type of the power tuning, value: memory/concurrency/concurrencyPostman',
         type: String,
       },
       {
         name: 'memory-size',
-        description: '[Optional] Function MemorySize List of power tuning, only for --eval-type memory',
+        description:
+          '[Optional] Function MemorySize List of power tuning, only for --eval-type memory',
         type: String,
       },
       {
@@ -83,17 +86,20 @@ export const EVAL_START = [
       },
       {
         name: 'payload',
-        description: '[Optional] Represents the event(Event function)/request_body(HTTP function) passed to the function',
+        description:
+          '[Optional] Represents the event(Event function)/request_body(HTTP function) passed to the function',
         type: String,
       },
       {
         name: 'payload-file',
-        description: '[Optional] Represents the the event(Event function)/request_body(HTTP function)/postman-export-json-file which be readed from file to pass to the function',
+        description:
+          '[Optional] Represents the the event(Event function)/request_body(HTTP function)/postman-export-json-file which be readed from file to pass to the function',
         type: String,
       },
       {
         name: 'rt',
-        description: '[Optional] Max response time, only for --eval-type concurrency/concurrencyPostman',
+        description:
+          '[Optional] Max response time, only for --eval-type concurrency/concurrencyPostman',
         type: Number,
       },
       {
@@ -103,7 +109,8 @@ export const EVAL_START = [
       },
       {
         name: 'memory',
-        description: '[Optional] Function memory of power tuning, only for --eval-type concurrency/concurrencyPostman',
+        description:
+          '[Optional] Function memory of power tuning, only for --eval-type concurrency/concurrencyPostman',
         type: Number,
       },
     ],

@@ -39,7 +39,8 @@ export const INVOKE = [
       },
       {
         name: 'event-file',
-        description: '[Optional] Event funtion: A file containing event data passed to the function during invoke',
+        description:
+          '[Optional] Event funtion: A file containing event data passed to the function during invoke',
         alias: 'f',
         type: String,
       },
@@ -57,7 +58,8 @@ export const INVOKE = [
       },
       {
         name: 'stateful-async-invocation-id',
-        description: '[Optional] Stateful asynchronous invocation, only takes effect when --invocation-type=async',
+        description:
+          '[Optional] Stateful asynchronous invocation, only takes effect when --invocation-type=async',
         type: String,
       },
     ],
@@ -71,6 +73,8 @@ export const INVOKE = [
   },
   {
     header: 'Examples with CLI',
-    content: ['$ s cli fc invoke --region cn-hangzhou --service-name serviceName --function-name functionName --event evnetString'],
+    content: [
+      '$ s cli fc invoke --region cn-hangzhou --service-name serviceName --function-name functionName --event evnetString',
+    ],
   },
 ];

@@ -15,12 +15,14 @@ export async function getCredentials(credentials: ICredentials, access: string) 
 }
 
 export async function promptForConfirmOrDetails(message: string): Promise<boolean> {
-  const answers: any = await inquirer.prompt([{
-    type: 'list',
-    name: 'prompt',
-    message,
-    choices: ['yes', 'no'],
-  }]);
+  const answers: any = await inquirer.prompt([
+    {
+      type: 'list',
+      name: 'prompt',
+      message,
+      choices: ['yes', 'no'],
+    },
+  ]);
 
   return answers.prompt === 'yes';
 }
@@ -51,9 +53,13 @@ export function getFcNames(argsParse, inputsProps) {
 
 export function isHttpFunction(props: IProperties): boolean {
   const triggers: TriggerConfig[] = props?.triggers;
-  if (_.isEmpty(triggers)) { return false; }
+  if (_.isEmpty(triggers)) {
+    return false;
+  }
   for (const trigger of triggers) {
-    if (trigger.type === 'http') { return true; }
+    if (trigger.type === 'http') {
+      return true;
+    }
   }
   return false;
 }
@@ -74,15 +80,26 @@ export const tableShow = (data, showKey) => {
     width: 'auto',
     formatter: (value) => value,
   };
-  const header = showKey.map((value) => (_.isString(value) ? ({
-    ...header_option,
-    value,
-  }) : ({ ...header_option, ...value })));
+  const header = showKey.map((value) =>
+    _.isString(value)
+      ? {
+          ...header_option,
+          value,
+        }
+      : { ...header_option, ...value },
+  );
 
   console.log(Table(header, data, options).render());
 };
 
-export async function componentMethodCaller(inputs: IInputs, componentName: string, methodName: string, props?: any, args?: string, argsObj?: any): Promise<any> {
+export async function componentMethodCaller(
+  inputs: IInputs,
+  componentName: string,
+  methodName: string,
+  props?: any,
+  args?: string,
+  argsObj?: any,
+): Promise<any> {
   inputs.props = props || inputs?.props;
   inputs.args = args || inputs?.args;
   inputs.argsObj = argsObj || inputs?.argsObj;

@@ -50,11 +50,7 @@ export const ALIAS_GET = [
   },
   {
     header: 'Options',
-    optionList: [
-      regionDescribe,
-      serviceNameDescribe,
-      aliasNameDescribe,
-    ],
+    optionList: [regionDescribe, serviceNameDescribe, aliasNameDescribe],
   },
   { ...globalParams },
   { ...globalDescribe },
@@ -64,7 +60,9 @@ export const ALIAS_GET = [
   },
   {
     header: 'Examples with CLI',
-    content: ['$ s cli fc alias get --region cn-hangzhou --service-name serviceName --alias-name aliasName'],
+    content: [
+      '$ s cli fc alias get --region cn-hangzhou --service-name serviceName --alias-name aliasName',
+    ],
   },
 ];
 
@@ -83,11 +81,7 @@ export const ALIAS_LIST = [
   },
   {
     header: 'Options',
-    optionList: [
-      regionDescribe,
-      serviceNameDescribe,
-      showTableDescribe,
-    ],
+    optionList: [regionDescribe, serviceNameDescribe, showTableDescribe],
   },
   { ...globalParams },
   { ...globalDescribe },
@@ -154,10 +148,13 @@ export const ALIAS_PUBLISH = [
     content: [
       '$ s alias publish --alias-name aliasName --version-id 2',
       '$ s alias publish --alias-name aliasName --version-latest',
-      '$ s alias publish --description description --alias-name aliasName --version-id 2 --gversion 3 --weight 20'],
+      '$ s alias publish --description description --alias-name aliasName --version-id 2 --gversion 3 --weight 20',
+    ],
   },
   {
     header: 'Examples with CLI',
-    content: ['$ s cli fc alias publish --region cn-hangzhou --service-name serviceName --alias-name aliasName --version-id 2'],
+    content: [
+      '$ s cli fc alias publish --region cn-hangzhou --service-name serviceName --alias-name aliasName --version-id 2',
+    ],
   },
 ];

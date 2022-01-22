@@ -62,14 +62,24 @@ interface EndProps {
 }
 interface IRemove {
   props: EndProps;
-  subCommand?: 'layer' | 'domain' | 'ondemand' | 'onDemand' | 'provision' | 'alias' | 'version' | 'service' | 'function' | 'trigger';
+  subCommand?:
+    | 'layer'
+    | 'domain'
+    | 'ondemand'
+    | 'onDemand'
+    | 'provision'
+    | 'alias'
+    | 'version'
+    | 'service'
+    | 'function'
+    | 'trigger';
 }
 
 export default class Remove {
   static async handlerInputs(inputs) {
     logger.debug(`inputs.props: ${JSON.stringify(inputs.props)}`);
 
-    const parsedArgs: {[key: string]: any} = core.commandParse(inputs, {
+    const parsedArgs: { [key: string]: any } = core.commandParse(inputs, {
       boolean: ['help'],
       alias: { help: 'h' },
     });
@@ -85,7 +95,9 @@ export default class Remove {
     }
 
     if (parsedData.help) {
-      rawData[0] ? core.help(HELP[`remove_${subCommand}`.toLocaleUpperCase()]) : core.help(HELP.REMOVE);
+      rawData[0]
+        ? core.help(HELP[`remove_${subCommand}`.toLocaleUpperCase()])
+        : core.help(HELP.REMOVE);
       return { help: true, subCommand };
     }
 
@@ -107,7 +119,10 @@ export default class Remove {
       throw new Error('Not found region');
     }
 
-    const credentials: ICredentials = await getCredentials(inputs.credentials, inputs?.project?.access);
+    const credentials: ICredentials = await getCredentials(
+      inputs.credentials,
+      inputs?.project?.access,
+    );
     logger.debug(`handler inputs props: ${JSON.stringify(endProps)}`);
     await Client.setFcClient(endProps.region, credentials, inputs?.project?.access);
 
@@ -120,7 +135,13 @@ export default class Remove {
     };
   }
 
-  async removeOnDemand({ region, qualifier, serviceName, functionName, assumeYes }: RemoveOnDemandOrProvision) {
+  async removeOnDemand({
+    region,
+    qualifier,
+    serviceName,
+    functionName,
+    assumeYes,
+  }: RemoveOnDemandOrProvision) {
     logger.debug(`region is ${region}`);
     if (!_.isEmpty(qualifier) && _.isEmpty(functionName)) {
       throw new Error('not found functionName');
@@ -134,7 +155,13 @@ export default class Remove {
     await ondmand.removeAll({ serviceName, qualifier, assumeYes });
   }
 
-  async removeProvision({ region, qualifier, serviceName, functionName, assumeYes }: RemoveOnDemandOrProvision) {
+  async removeProvision({
+    region,
+    qualifier,
+    serviceName,
+    functionName,
+    assumeYes,
+  }: RemoveOnDemandOrProvision) {
     logger.debug(`region is ${region}`);
     if (!_.isEmpty(qualifier) && _.isEmpty(functionName)) {
       throw new Error('not found functionName');
@@ -169,15 +196,7 @@ export default class Remove {
   }
 
   async remove({ props, subCommand }: IRemove, inputs) {
-    const {
-      region,
-      onlyLocal,
-      serviceName,
-      functionName,
-      qualifier,
-      versionId,
-      aliasName,
-    } = props;
+    const { region, onlyLocal, serviceName, functionName, qualifier, versionId, aliasName } = props;
     let { assumeYes } = props;
     let planArgs = '';
 
@@ -221,7 +240,13 @@ export default class Remove {
     }
 
     if (subCommand === 'provision') {
-      return await this.removeProvision({ region, qualifier, serviceName, functionName, assumeYes });
+      return await this.removeProvision({
+        region,
+        qualifier,
+        serviceName,
+        functionName,
+        assumeYes,
+      });
     }
 
     if (subCommand === 'alias') {
@@ -263,18 +288,19 @@ export default class Remove {
         logger.log(`${_.upperFirst(planItem.resources)}:`);
         console.log(Table(planItem.header, planItem.data).render());
       }
-      const assumeYes = await promptForConfirmOrDetails('Are you sure you want to delete these resources?');
+      const assumeYes = await promptForConfirmOrDetails(
+        'Are you sure you want to delete these resources?',
+      );
       return assumeYes ? 'assumeYes' : 'quit';
     }
   }
 
-  private genInputs({
-    appName,
-    projectName,
-    access,
-    args,
-    curPath,
-  }, componentName, props, appendArgs?) {
+  private genInputs(
+    { appName, projectName, access, args, curPath },
+    componentName,
+    props,
+    appendArgs?,
+  ) {
     return {
       project: {
         component: componentName,
@@ -288,4 +314,3 @@ export default class Remove {
     };
   }
 }
-

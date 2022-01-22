@@ -52,10 +52,10 @@ export const assumeYesDescribe = {
   type: Boolean,
 };
 
-
 export const regionDescribe = {
   name: 'region',
-  description: '[C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1',
+  description:
+    '[C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1',
   defaultOption: false,
   type: Boolean,
 };
@@ -72,8 +72,8 @@ export const functionNameDescribe = {
   type: String,
 };
 
-
 export const eventFormat = {
   header: 'Event Format',
-  content: 'Quickly obtain the data structures of different events through the command [s cli fc-event -h]',
+  content:
+    'Quickly obtain the data structures of different events through the command [s cli fc-event -h]',
 };

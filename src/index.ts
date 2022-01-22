@@ -2,11 +2,33 @@
 import * as core from '@serverless-devs/core';
 import * as _ from 'lodash';
 import Logger from './common/logger';
-import { LOCAL_HELP_INFO, NAS_HELP_INFO,
-  NAS_SUB_COMMAND_HELP_INFO, LOCAL_INVOKE_HELP_INFO, LOCAL_START_HELP_INFO, BUILD_HELP_INFO,
-  PLAN_HELP, EVAL, EVAL_START, FUN_TO_S, INFO, INVOKE, LOGS, METRICS, SYNC, REMOTE, REMOTE_SETUP,
-  REMOTE_INVOKE, REMOTE_CLEANUP, PROXIED, PROXIED_SETUP, PROXIED_INVOKE, PROXIED_CLEANUP,
-  STRESS, STRESS_START, STRESS_CLEAN,
+import {
+  LOCAL_HELP_INFO,
+  NAS_HELP_INFO,
+  NAS_SUB_COMMAND_HELP_INFO,
+  LOCAL_INVOKE_HELP_INFO,
+  LOCAL_START_HELP_INFO,
+  BUILD_HELP_INFO,
+  PLAN_HELP,
+  EVAL,
+  EVAL_START,
+  FUN_TO_S,
+  INFO,
+  INVOKE,
+  LOGS,
+  METRICS,
+  SYNC,
+  REMOTE,
+  REMOTE_SETUP,
+  REMOTE_INVOKE,
+  REMOTE_CLEANUP,
+  PROXIED,
+  PROXIED_SETUP,
+  PROXIED_INVOKE,
+  PROXIED_CLEANUP,
+  STRESS,
+  STRESS_START,
+  STRESS_CLEAN,
 } from './lib/help';
 import * as DEPLOY_HELP from './lib/help/deploy';
 import * as LAYER_HELP from './lib/help/layer';
@@ -25,7 +47,11 @@ import OnDemand from './lib/component/on-demand';
 import Remove from './lib/component/remove';
 import Plan from './lib/component/plan';
 import Provision from './lib/component/provision';
-import { PayloadOption, EventTypeOption, HttpTypeOption } from './lib/interface/component/fc-common';
+import {
+  PayloadOption,
+  EventTypeOption,
+  HttpTypeOption,
+} from './lib/interface/component/fc-common';
 import { StressOption } from './lib/interface/component/fc-stress';
 import * as yaml from 'js-yaml';
 import FcProxiedInvoke from './lib/component/fc-proxied-invoke';
@@ -50,13 +76,19 @@ export default class FcBaseComponent {
     if (isHelp) {
       return core.help(PLAN_HELP);
     }
-    const palnRs = await this.componentMethodCaller(inputs, 'devsapp/fc-plan', 'plan', inputs.props, inputs.args);
+    const palnRs = await this.componentMethodCaller(
+      inputs,
+      'devsapp/fc-plan',
+      'plan',
+      inputs.props,
+      inputs.args,
+    );
     return Plan.showPlan(palnRs, planType);
   }
 
   async deploy(inputs: IInputs): Promise<any> {
     const { props, args } = this.handlerComponentInputs(inputs);
-    const parsedArgs: {[key: string]: any} = core.commandParse(inputs, {
+    const parsedArgs: { [key: string]: any } = core.commandParse(inputs, {
       boolean: ['help'],
       alias: { help: 'h' },
     });
@@ -73,15 +105,25 @@ export default class FcBaseComponent {
     }
 
     if (parsedData.help) {
-      rawData[0] ? core.help(DEPLOY_HELP[`DEPLOY_${subCommand}`.toLocaleUpperCase()]) : core.help(DEPLOY_HELP.DEPLOY);
+      rawData[0]
+        ? core.help(DEPLOY_HELP[`DEPLOY_${subCommand}`.toLocaleUpperCase()])
+        : core.help(DEPLOY_HELP.DEPLOY);
       return;
     }
     if (parsedData.type && !DEPLOY_SUPPORT_CONFIG_ARGS.includes(parsedData.type)) {
       core.help(DEPLOY_HELP.DEPLOY);
-      throw new Error(`Type does not support ${parsedData.type}, only config and code are supported`);
+      throw new Error(
+        `Type does not support ${parsedData.type}, only config and code are supported`,
+      );
     }
 
-    const deployRes: any = await this.componentMethodCaller(inputs, 'devsapp/fc-deploy', 'deploy', props, args);
+    const deployRes: any = await this.componentMethodCaller(
+      inputs,
+      'devsapp/fc-deploy',
+      'deploy',
+      props,
+      args,
+    );
     tips.showNextTip(args, tips.showDeployNextTips);
 
     console.log('\n\n');
@@ -146,13 +188,9 @@ export default class FcBaseComponent {
   }
 
   async remove(inputs: IInputs): Promise<any> {
-    const {
-      credentials,
-      help,
-      props,
-      subCommand,
-      errorMessage,
-    } = await Remove.handlerInputs(inputs);
+    const { credentials, help, props, subCommand, errorMessage } = await Remove.handlerInputs(
+      inputs,
+    );
 
     await this.report('fc', subCommand ? `remove ${subCommand}` : 'remove', credentials?.AccountID);
     if (errorMessage) {
@@ -162,10 +200,13 @@ export default class FcBaseComponent {
       return;
     }
 
-    await new Remove().remove({
-      props,
-      subCommand,
-    }, this.handlerInputs(inputs));
+    await new Remove().remove(
+      {
+        props,
+        subCommand,
+      },
+      this.handlerInputs(inputs),
+    );
   }
 
   async info(inputs: IInputs): Promise<any> {
@@ -175,7 +216,9 @@ export default class FcBaseComponent {
       return;
     }
     const propsGenerator = (property: any) => {
-      if (_.isEmpty(property)) { return null; }
+      if (_.isEmpty(property)) {
+        return null;
+      }
       const res: FcInfoProps = {
         region: property?.region,
         serviceName: property?.service?.name,
@@ -197,7 +240,13 @@ export default class FcBaseComponent {
       }
       return res;
     };
-    return await this.componentMethodCaller(inputs, 'devsapp/fc-info', 'info', propsGenerator(props), args);
+    return await this.componentMethodCaller(
+      inputs,
+      'devsapp/fc-info',
+      'info',
+      propsGenerator(props),
+      args,
+    );
   }
 
   async sync(inputs: IInputs): Promise<any> {
@@ -225,9 +274,13 @@ export default class FcBaseComponent {
 
   async build(inputs: IInputs): Promise<any> {
     const { props, args, argsObj } = this.handlerComponentInputs(inputs);
-    const parsedArgs: {[key: string]: any} = core.commandParse({ args, argsObj }, {
-      boolean: ['help'],
-      alias: { help: 'h' } });
+    const parsedArgs: { [key: string]: any } = core.commandParse(
+      { args, argsObj },
+      {
+        boolean: ['help'],
+        alias: { help: 'h' },
+      },
+    );
 
     if (parsedArgs?.data?.help) {
       core.help(BUILD_HELP_INFO);
@@ -239,9 +292,13 @@ export default class FcBaseComponent {
 
   async local(inputs: IInputs): Promise<any> {
     const { props, args, argsObj } = this.handlerComponentInputs(inputs);
-    const parsedArgs: {[key: string]: any} = core.commandParse({ args, argsObj }, {
-      boolean: ['help'],
-      alias: { help: 'h' } });
+    const parsedArgs: { [key: string]: any } = core.commandParse(
+      { args, argsObj },
+      {
+        boolean: ['help'],
+        alias: { help: 'h' },
+      },
+    );
     const argsData: any = parsedArgs?.data || {};
     const nonOptionsArgs = parsedArgs.data?._;
     if (argsData?.help && nonOptionsArgs.length === 0) {
@@ -256,7 +313,9 @@ export default class FcBaseComponent {
     }
     const methodName: string = nonOptionsArgs[0];
     if (!SUPPORTED_LOCAL_METHOD.includes(methodName)) {
-      this.logger.error(`Unsupported subcommand ${methodName} for local method, only start and invoke are supported.`);
+      this.logger.error(
+        `Unsupported subcommand ${methodName} for local method, only start and invoke are supported.`,
+      );
       return;
     }
     if (argsData?.help && methodName === 'start') {
@@ -268,11 +327,19 @@ export default class FcBaseComponent {
       return;
     }
     // 删除 methodName
-    const fcLocalInvokeArgs: string = args ? args.replace(methodName, '').replace(/(^\s*)|(\s*$)/g, '') : '';
+    const fcLocalInvokeArgs: string = args
+      ? args.replace(methodName, '').replace(/(^\s*)|(\s*$)/g, '')
+      : '';
     this.logger.debug(`Args of local method is: ${fcLocalInvokeArgs}`);
 
     inputs.argsObj.shift();
-    const localRes: any = await this.componentMethodCaller(inputs, 'devsapp/fc-local-invoke', methodName, props, fcLocalInvokeArgs);
+    const localRes: any = await this.componentMethodCaller(
+      inputs,
+      'devsapp/fc-local-invoke',
+      methodName,
+      props,
+      fcLocalInvokeArgs,
+    );
     tips.showNextTip(args, tips.showLocalNextTips);
 
     return localRes;
@@ -292,40 +359,56 @@ export default class FcBaseComponent {
       runtime: props?.function?.runtime,
     };
 
-    await this.componentMethodCaller(inputs, 'devsapp/fc-remote-invoke', 'invoke', invokePayload, args);
+    await this.componentMethodCaller(
+      inputs,
+      'devsapp/fc-remote-invoke',
+      'invoke',
+      invokePayload,
+      args,
+    );
   }
 
   async logs(inputs: IInputs): Promise<any> {
     const { props, args, argsObj } = this.handlerComponentInputs(inputs);
 
-    const comParse: any = core.commandParse({ args, argsObj }, {
-      boolean: ['help'],
-      string: ['region', 'service-name', 'function-name'],
-      alias: { help: 'h' },
-    })?.data;
+    const comParse: any = core.commandParse(
+      { args, argsObj },
+      {
+        boolean: ['help'],
+        string: ['region', 'service-name', 'function-name'],
+        alias: { help: 'h' },
+      },
+    )?.data;
     if (comParse?.help) {
       core.help(LOGS);
       return;
     }
 
     const { region, serviceName, functionName } = getFcNames(comParse, props);
-    this.logger.debug(`[logs] region: ${region}, serviceName: ${serviceName}, functionName: ${functionName}`);
+    this.logger.debug(
+      `[logs] region: ${region}, serviceName: ${serviceName}, functionName: ${functionName}`,
+    );
 
     let logsPayload: LogsProps;
     try {
-      const { logConfig } = (await this.info({
-        ...inputs,
-        props: {
-          region,
-          service: { name: serviceName },
-          // @ts-ignore
-          function: { name: functionName },
-        },
-        args: '',
-      })).service || {};
+      const { logConfig } =
+        (
+          await this.info({
+            ...inputs,
+            props: {
+              region,
+              service: { name: serviceName },
+              // @ts-ignore
+              function: { name: functionName },
+            },
+            args: '',
+          })
+        ).service || {};
 
       if (!isLogConfig(logConfig)) {
-        throw new Error('The service logConfig is not found online, please confirm whether logConfig is configured first, and then execute [s deploy].');
+        throw new Error(
+          'The service logConfig is not found online, please confirm whether logConfig is configured first, and then execute [s deploy].',
+        );
       }
 
       logsPayload = {
@@ -337,7 +420,9 @@ export default class FcBaseComponent {
       };
     } catch (ex) {
       if (ex.code?.endsWith('NotFound')) {
-        throw new Error(`Online search failed, error message: ${ex.message}. Please execute [s deploy]`);
+        throw new Error(
+          `Online search failed, error message: ${ex.message}. Please execute [s deploy]`,
+        );
       }
       throw ex;
     }
@@ -348,11 +433,14 @@ export default class FcBaseComponent {
   async metrics(inputs: IInputs): Promise<any> {
     const { props, args, argsObj } = this.handlerComponentInputs(inputs);
 
-    const comParse: any = core.commandParse({ args, argsObj }, {
-      boolean: ['help'],
-      string: ['region', 'service-name', 'function-name'],
-      alias: { help: 'h' },
-    })?.data;
+    const comParse: any = core.commandParse(
+      { args, argsObj },
+      {
+        boolean: ['help'],
+        string: ['region', 'service-name', 'function-name'],
+        alias: { help: 'h' },
+      },
+    )?.data;
 
     if (comParse?.help) {
       core.help(METRICS);
@@ -402,7 +490,8 @@ export default class FcBaseComponent {
 
     // warning: 2021.12.24 交互修改警告，过段时间可以删除
     if (commandName === 'upload') {
-      this.logger.warn(`The nas upload interaction has changed. For specific information, please refer to:
+      this.logger
+        .warn(`The nas upload interaction has changed. For specific information, please refer to:
 https://github.com/devsapp/fc/blob/main/docs/zh/zh/command/nas.md#nas-upload-命令
 https://gitee.com/devsapp/fc/blob/main/docs/zh/command/nas.md#nas-upload-命令\n`);
     }
@@ -418,18 +507,49 @@ https://gitee.com/devsapp/fc/blob/main/docs/zh/command/nas.md#nas-upload-命令\
     delete componentInputs.argsObj;
 
     if (commandName === 'init' && isAutoConfig(nasConfig)) {
-      return await this.componentMethodCaller(componentInputs, 'devsapp/fc-deploy', 'deployAutoNas', props, assumeYes ? '--assume-yes' : null);
+      return await this.componentMethodCaller(
+        componentInputs,
+        'devsapp/fc-deploy',
+        'deployAutoNas',
+        props,
+        assumeYes ? '--assume-yes' : null,
+      );
     } else if (commandName === 'init') {
       this.logger.info('Ensuring nas dir');
-      const payload = await GenerateNasProps.toNasAbility(props?.region, vpcConfig, name, role, nasConfig);
-      await this.componentMethodCaller(componentInputs, 'devsapp/nas', 'ensureNasDir', payload.payload);
+      const payload = await GenerateNasProps.toNasAbility(
+        props?.region,
+        vpcConfig,
+        name,
+        role,
+        nasConfig,
+      );
+      await this.componentMethodCaller(
+        componentInputs,
+        'devsapp/nas',
+        'ensureNasDir',
+        payload.payload,
+      );
       return;
     }
 
-    const payload = await GenerateNasProps.generateNasProps(props, project?.access, inputs.credentials);
+    const payload = await GenerateNasProps.generateNasProps(
+      props,
+      project?.access,
+      inputs.credentials,
+    );
 
-    this.logger.debug(`transform nas payload: ${JSON.stringify(payload.payload)}, args: ${transformArgs}, command: ${commandName}`);
-    await this.componentMethodCaller(componentInputs, 'devsapp/nas', commandName, payload.payload, transformArgs);
+    this.logger.debug(
+      `transform nas payload: ${JSON.stringify(
+        payload.payload,
+      )}, args: ${transformArgs}, command: ${commandName}`,
+    );
+    await this.componentMethodCaller(
+      componentInputs,
+      'devsapp/nas',
+      commandName,
+      payload.payload,
+      transformArgs,
+    );
 
     tips.showNasNextTips();
   }
@@ -513,7 +633,14 @@ https://gitee.com/devsapp/fc/blob/main/docs/zh/command/nas.md#nas-upload-命令\
       payloadFile: argsData['payload-file'],
       payload: argsData?.payload,
     };
-    const fcStress: FcStress = new FcStress(project?.access, props?.region || argsData?.region, stressOpts, httpTypeOpts, eventTypeOpts, payloadOpts);
+    const fcStress: FcStress = new FcStress(
+      project?.access,
+      props?.region || argsData?.region,
+      stressOpts,
+      httpTypeOpts,
+      eventTypeOpts,
+      payloadOpts,
+    );
     let fcStressArgs: string;
     if (commandName === 'start') {
       if (stressOpts?.functionType === 'http' && !argsData?.url) {
@@ -525,20 +652,24 @@ https://gitee.com/devsapp/fc/blob/main/docs/zh/command/nas.md#nas-upload-命令\
     }
     this.logger.debug(`Input args of fc-stress component is: ${fcStressArgs}`);
     delete inputs.argsObj;
-    return await this.componentMethodCaller(inputs, 'devsapp/fc-stress', commandName, null, fcStressArgs);
+    return await this.componentMethodCaller(
+      inputs,
+      'devsapp/fc-stress',
+      commandName,
+      null,
+      fcStressArgs,
+    );
   }
 
   async version(inputs: IInputs): Promise<any> {
-    const {
-      credentials,
-      help,
-      props,
-      subCommand,
-      table,
-      errorMessage,
-    } = await Version.handlerInputs(inputs);
+    const { credentials, help, props, subCommand, table, errorMessage } =
+      await Version.handlerInputs(inputs);
 
-    await this.report('fc', subCommand ? `version ${subCommand}` : 'version', credentials?.AccountID);
+    await this.report(
+      'fc',
+      subCommand ? `version ${subCommand}` : 'version',
+      credentials?.AccountID,
+    );
     if (help) {
       if (errorMessage) throw new Error(errorMessage);
       return;
@@ -549,14 +680,9 @@ https://gitee.com/devsapp/fc/blob/main/docs/zh/command/nas.md#nas-upload-命令\
   }
 
   async alias(inputs: IInputs): Promise<any> {
-    const {
-      credentials,
-      help,
-      props,
-      subCommand,
-      table,
-      errorMessage,
-    } = await Alias.handlerInputs(inputs);
+    const { credentials, help, props, subCommand, table, errorMessage } = await Alias.handlerInputs(
+      inputs,
+    );
 
     await this.report('fc', subCommand ? `alias ${subCommand}` : 'alias', credentials?.AccountID);
     if (help) {
@@ -569,16 +695,14 @@ https://gitee.com/devsapp/fc/blob/main/docs/zh/command/nas.md#nas-upload-命令\
   }
 
   async provision(inputs: IInputs): Promise<any> {
-    const {
-      credentials,
-      help,
-      props,
-      subCommand,
-      table,
-      errorMessage,
-    } = await Provision.handlerInputs(inputs);
+    const { credentials, help, props, subCommand, table, errorMessage } =
+      await Provision.handlerInputs(inputs);
 
-    await this.report('fc', subCommand ? `provision ${subCommand}` : 'provision', credentials?.AccountID);
+    await this.report(
+      'fc',
+      subCommand ? `provision ${subCommand}` : 'provision',
+      credentials?.AccountID,
+    );
     if (help) {
       if (errorMessage) throw new Error(errorMessage);
       return;
@@ -589,16 +713,14 @@ https://gitee.com/devsapp/fc/blob/main/docs/zh/command/nas.md#nas-upload-命令\
   }
 
   async ondemand(inputs: IInputs) {
-    const {
-      credentials,
-      help,
-      props,
-      subCommand,
-      table,
-      errorMessage,
-    } = await OnDemand.handlerInputs(inputs);
+    const { credentials, help, props, subCommand, table, errorMessage } =
+      await OnDemand.handlerInputs(inputs);
 
-    await this.report('fc', subCommand ? `ondemand ${subCommand}` : 'ondemand', credentials?.AccountID);
+    await this.report(
+      'fc',
+      subCommand ? `ondemand ${subCommand}` : 'ondemand',
+      credentials?.AccountID,
+    );
     if (help) {
       if (errorMessage) throw new Error(errorMessage);
       return;
@@ -625,10 +747,13 @@ https://gitee.com/devsapp/fc/blob/main/docs/zh/command/nas.md#nas-upload-命令\
       versions: LAYER_HELP.LAYER_VERSIONS,
     };
 
-    const comParse: any = core.commandParse({ args, argsObj }, {
-      boolean: ['help'],
-      alias: { help: 'h' },
-    });
+    const comParse: any = core.commandParse(
+      { args, argsObj },
+      {
+        boolean: ['help'],
+        alias: { help: 'h' },
+      },
+    );
     const argsData: any = comParse?.data || {};
     const nonOptionsArgs = argsData?._ || [];
     this.logger.debug(`nonOptionsArgs is ${JSON.stringify(nonOptionsArgs)}`);
@@ -653,7 +778,13 @@ https://gitee.com/devsapp/fc/blob/main/docs/zh/command/nas.md#nas-upload-命令\
       return;
     }
 
-    return await this.componentMethodCaller(inputs, 'devsapp/fc-layer', commandName, { region: props?.region }, args);
+    return await this.componentMethodCaller(
+      inputs,
+      'devsapp/fc-layer',
+      commandName,
+      { region: props?.region },
+      args,
+    );
   }
 
   async proxied(inputs: IInputs): Promise<any> {
@@ -854,8 +985,13 @@ https://gitee.com/devsapp/fc/blob/main/docs/zh/command/nas.md#nas-upload-命令\
       payloadFile: argsData['payload-file'],
       payload: argsData?.payload,
     };
-    const fcEval: FcEval = new FcEval(project?.access, props?.region || argsData?.region,
-      evalOpts, httpTypeOpts, payloadOpts);
+    const fcEval: FcEval = new FcEval(
+      project?.access,
+      props?.region || argsData?.region,
+      evalOpts,
+      httpTypeOpts,
+      payloadOpts,
+    );
     let fcEvalArgs: string;
     if (commandName === 'start') {
       fcEvalArgs = fcEval.makeStartArgs();
@@ -865,15 +1001,24 @@ https://gitee.com/devsapp/fc/blob/main/docs/zh/command/nas.md#nas-upload-命令\
     }
     this.logger.debug(`Input args of fc-eval component is: ${fcEvalArgs}`);
     delete inputs.argsObj;
-    return await this.componentMethodCaller(inputs, 'devsapp/fc-eval', commandName, null, fcEvalArgs);
+    return await this.componentMethodCaller(
+      inputs,
+      'devsapp/fc-eval',
+      commandName,
+      null,
+      fcEvalArgs,
+    );
   }
 
   // 解析入参
   private isHelp(args: string) {
-    const comParse: any = core.commandParse({ args }, {
-      boolean: ['help'],
-      alias: { help: 'h' },
-    });
+    const comParse: any = core.commandParse(
+      { args },
+      {
+        boolean: ['help'],
+        alias: { help: 'h' },
+      },
+    );
     return comParse?.data?.help;
   }
   private handlerInputs(inputs: IInputs): any {
@@ -903,15 +1048,8 @@ https://gitee.com/devsapp/fc/blob/main/docs/zh/command/nas.md#nas-upload-命令\
     });
   }
   private handlerComponentInputs(inputs: IInputs, componentName?: string): any {
-    const {
-      appName,
-      projectName,
-      access,
-      props,
-      args,
-      argsObj,
-      curPath,
-    } = this.handlerInputs(inputs);
+    const { appName, projectName, access, props, args, argsObj, curPath } =
+      this.handlerInputs(inputs);
     return {
       project: {
         component: componentName,
@@ -926,7 +1064,13 @@ https://gitee.com/devsapp/fc/blob/main/docs/zh/command/nas.md#nas-upload-命令\
     };
   }
 
-  private async componentMethodCaller(inputs: IInputs, componentName: string, methodName: string, props?: any, args?: string): Promise<any> {
+  private async componentMethodCaller(
+    inputs: IInputs,
+    componentName: string,
+    methodName: string,
+    props?: any,
+    args?: string,
+  ): Promise<any> {
     const componentInputs: any = this.handlerComponentInputs(inputs, componentName);
     await this.report(componentName, methodName, inputs?.credentials?.AccountID);
     componentInputs.props = props;
@@ -934,7 +1078,9 @@ https://gitee.com/devsapp/fc/blob/main/docs/zh/command/nas.md#nas-upload-命令\
     await this.updateCore();
     // const componentIns: any = await core.load(`devsapp/${componentName}`);
     const componentIns: any = await core.load(`${componentName}`);
-    this.logger.debug(`Inputs of component: ${componentName} is: ${JSON.stringify(componentInputs, null, '  ')}`);
+    this.logger.debug(
+      `Inputs of component: ${componentName} is: ${JSON.stringify(componentInputs, null, '  ')}`,
+    );
     return await componentIns[methodName](componentInputs);
   }
 
@@ -944,14 +1090,19 @@ https://gitee.com/devsapp/fc/blob/main/docs/zh/command/nas.md#nas-upload-命令\
         const homePath = _.isFunction(core.getRootHome) ? core.getRootHome() : os.homedir();
         const corePath = path.join(homePath, 'cache', 'core');
         const lockPath = path.resolve(corePath, '.s.lock');
-        const result = await core.request('https://registry.devsapp.cn/simple/devsapp/core/releases/latest');
+        const result = await core.request(
+          'https://registry.devsapp.cn/simple/devsapp/core/releases/latest',
+        );
         const version = result.tag_name;
         const url = `https://registry.devsapp.cn/simple/devsapp/core/zipball/${version}`;
         const filename = `core@${version}.zip`;
         await core.downloadRequest(url, corePath, { filename, extract: true, strip: 1 });
         fs.writeFileSync(lockPath, JSON.stringify({ version }, null, 2));
       } catch (error) {
-        this.logger.log("\nWARNING\n======================\n* Exception happened! Please execute 's clean --cache' and try again", 'yellow');
+        this.logger.log(
+          "\nWARNING\n======================\n* Exception happened! Please execute 's clean --cache' and try again",
+          'yellow',
+        );
         process.exit(1);
       }
     }

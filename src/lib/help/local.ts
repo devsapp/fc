@@ -16,7 +16,10 @@ export const LOCAL_HELP_INFO = [
   {
     header: 'SubCommand List',
     content: [
-      { name: 'invoke', summary: 'Local start fc event function; help command [s local invoke -h]' },
+      {
+        name: 'invoke',
+        summary: 'Local start fc event function; help command [s local invoke -h]',
+      },
       { name: 'start', summary: 'Local invoke fc http function; help command [s local start -h]' },
     ],
   },
@@ -69,13 +72,15 @@ export const LOCAL_INVOKE_HELP_INFO = [
       {
         name: 'config',
         typeLabel: '{underline [vscode/pycharm/idea]}',
-        description: '[Optional] Select which IDE to use when debugging and output related debug config tips for the IDE. value: vscode/pycharm/idea',
+        description:
+          '[Optional] Select which IDE to use when debugging and output related debug config tips for the IDE. value: vscode/pycharm/idea',
         alias: 'c',
         type: String,
       },
       {
         name: 'debug-port',
-        description: '[Optional] Specify the local function container starting in debug mode, and exposing this port on localhost',
+        description:
+          '[Optional] Specify the local function container starting in debug mode, and exposing this port on localhost',
         alias: 'd',
         type: Number,
       },
@@ -91,12 +96,14 @@ export const LOCAL_INVOKE_HELP_INFO = [
       },
       {
         name: 'tmp-dir',
-        description: "[Optional] The temp directory mounted to '/tmp' , default: './.s/tmp/invoke/serviceName/functionName/'",
+        description:
+          "[Optional] The temp directory mounted to '/tmp' , default: './.s/tmp/invoke/serviceName/functionName/'",
         type: String,
       },
       {
         name: 'server-port',
-        description: '[Optional] The exposed port of http server, default value is the random port between 7000 and 8000',
+        description:
+          '[Optional] The exposed port of http server, default value is the random port between 7000 and 8000',
         type: Number,
       },
     ],
@@ -128,13 +135,15 @@ export const LOCAL_START_HELP_INFO = [
     optionList: [
       {
         name: 'config',
-        description: '[Optional] Select which IDE to use when debugging and output related debug config tips for the IDE. value: vscode/pycharm/idea',
+        description:
+          '[Optional] Select which IDE to use when debugging and output related debug config tips for the IDE. value: vscode/pycharm/idea',
         alias: 'c',
         type: String,
       },
       {
         name: 'debug-port',
-        description: '[Optional] Specify the sandboxed container starting in debug mode, and exposing this port on localhost',
+        description:
+          '[Optional] Specify the sandboxed container starting in debug mode, and exposing this port on localhost',
         alias: 'd',
         type: Number,
       },
@@ -160,12 +169,14 @@ export const LOCAL_START_HELP_INFO = [
       },
       {
         name: 'tmp-dir',
-        description: "[Optional] The temp directory mounted to '/tmp' , default: './.s/tmp/invoke/serviceName/functionName/'",
+        description:
+          "[Optional] The temp directory mounted to '/tmp' , default: './.s/tmp/invoke/serviceName/functionName/'",
         type: String,
       },
       {
         name: 'server-port',
-        description: '[Optional] The exposed port of http server, default value is the random port between 7000 and 8000',
+        description:
+          '[Optional] The exposed port of http server, default value is the random port between 7000 and 8000',
         type: Number,
       },
     ],
@@ -188,4 +199,3 @@ export const LOCAL_START_HELP_INFO = [
     ],
   },
 ];
-

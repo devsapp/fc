@@ -14,9 +14,18 @@ interface IProps {
   versionId?: string;
   assumeYes?: boolean;
 }
-interface Publish { serviceName: string; description?: string }
-interface Remove { serviceName: string; versionId: string }
-interface RemoveAll { serviceName: string; assumeYes?: boolean }
+interface Publish {
+  serviceName: string;
+  description?: string;
+}
+interface Remove {
+  serviceName: string;
+  versionId: string;
+}
+interface RemoveAll {
+  serviceName: string;
+  assumeYes?: boolean;
+}
 
 const VERSION_COMMAND: string[] = ['list', 'publish', 'remove', 'removeAll'];
 const VERSION_COMMAND_HELP_KEY = {
@@ -28,7 +37,7 @@ export default class Version {
   static async handlerInputs(inputs) {
     logger.debug(`inputs.props: ${JSON.stringify(inputs.props)}`);
 
-    const parsedArgs: {[key: string]: any} = core.commandParse(inputs, {
+    const parsedArgs: { [key: string]: any } = core.commandParse(inputs, {
       boolean: ['help', 'table', 'y'],
       string: ['region', 'service-name', 'description', 'id'],
       alias: { help: 'h', 'version-id': 'id', 'assume-yes': 'y' },
@@ -73,7 +82,10 @@ export default class Version {
       throw new Error('Not found service name');
     }
 
-    const credentials: ICredentials = await getCredentials(inputs.credentials, inputs?.project?.access);
+    const credentials: ICredentials = await getCredentials(
+      inputs.credentials,
+      inputs?.project?.access,
+    );
     logger.debug(`handler inputs props: ${JSON.stringify(endProps)}`);
     await Client.setFcClient(endProps.region, credentials, inputs?.project?.access);
 
@@ -87,7 +99,10 @@ export default class Version {
 
   async list({ serviceName }: { serviceName: string }, table?: boolean) {
     logger.info(`Getting listVersions: ${serviceName}`);
-    const data = await Client.fcClient.get_all_list_data(`/services/${serviceName}/versions`, 'versions');
+    const data = await Client.fcClient.get_all_list_data(
+      `/services/${serviceName}/versions`,
+      'versions',
+    );
     if (table) {
       tableShow(data, ['versionId', 'description', 'createdTime', 'lastModifiedTime']);
     } else {

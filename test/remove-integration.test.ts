@@ -31,7 +31,14 @@ describe('Integration::remove', () => {
 
   beforeAll(async () => {
     const { accountId, accessKeyId, accessKeySecret } = handlerCredentials();
-    await setupIntegrationTestEnv(ACCESS, accountId, accessKeyId, accessKeySecret, MOCK_PROJECT_PATH, MOCK_PROJECT_YAML_PATH);
+    await setupIntegrationTestEnv(
+      ACCESS,
+      accountId,
+      accessKeyId,
+      accessKeySecret,
+      MOCK_PROJECT_PATH,
+      MOCK_PROJECT_YAML_PATH,
+    );
     fcClient = getFcClient(REGION, DEFAULT_CLIENT_TIMEOUT);
   });
 
@@ -56,15 +63,18 @@ describe('Integration::remove', () => {
     try {
       const deployRs = await new FcComponent(_.cloneDeep(inputs)).deploy(_.cloneDeep(inputs));
       domainName = deployRs?.url?.custom_domain?.[0]?.domain?.slice(7);
-  
+
       inputs.args = '-y';
       await new FcComponent(_.cloneDeep(inputs)).remove(_.cloneDeep(inputs));
       inputs.args = 'domain -y';
       await new FcComponent(_.cloneDeep(inputs)).remove(_.cloneDeep(inputs));
-  
-      const regex = new RegExp("^" + "GET /services/" + SERVICE_NAME + " failed with 404." + ".*", "g");
+
+      const regex = new RegExp(
+        '^' + 'GET /services/' + SERVICE_NAME + ' failed with 404.' + '.*',
+        'g',
+      );
       await expect(fcClient.getService(SERVICE_NAME)).rejects.toThrowError(regex);
-      
+
       const { data: domainlistRs = {} } = await fcClient.listCustomDomains();
       const { customDomains = [] } = domainlistRs;
       expect(customDomains.map(({ domainName }) => domainName)).not.toMatchObject([domainName]);

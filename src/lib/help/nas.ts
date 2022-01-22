@@ -47,9 +47,7 @@ const UPLOADHELP = [
   },
   {
     header: 'Usage',
-    content: [
-      { example: '$ s nas upload <options> <local> <remote>' },
-    ],
+    content: [{ example: '$ s nas upload <options> <local> <remote>' }],
   },
   {
     header: 'Options',
@@ -89,9 +87,7 @@ const DOWNLOADHELP = [
   },
   {
     header: 'Usage',
-    content: [
-      { example: '$ s nas download <options> <remote> <local>' },
-    ],
+    content: [{ example: '$ s nas download <options> <remote> <local>' }],
   },
   {
     header: 'Options',
@@ -130,9 +126,7 @@ const COMMANDHELP = [
   },
   {
     header: 'Usage',
-    content: [
-      { example: '$ s nas command <command>' },
-    ],
+    content: [{ example: '$ s nas command <command>' }],
   },
   { ...globalParams },
   { ...globalDescribe },
@@ -157,9 +151,7 @@ const INITHELP = [
   },
   {
     header: 'Usage',
-    content: [
-      { example: '$ s nas init' },
-    ],
+    content: [{ example: '$ s nas init' }],
   },
   { ...globalParams },
   {

@@ -6,7 +6,6 @@ import {
   functionNameDescribe,
 } from './constant';
 
-
 export const LOGS = [
   {
     header: 'Logs',
@@ -39,18 +38,21 @@ export const LOGS = [
       },
       {
         name: 'search',
-        description: '[Optional] Keyword query,Document: https://help.aliyun.com/document_detail/29060.html',
+        description:
+          '[Optional] Keyword query,Document: https://help.aliyun.com/document_detail/29060.html',
         type: String,
       },
       {
         name: 'start-time',
-        description: '[Optional] Query log start time (timestamp or time format，like 1611827290000 or 2021-11-11T11:11:12+00:00)',
+        description:
+          '[Optional] Query log start time (timestamp or time format，like 1611827290000 or 2021-11-11T11:11:12+00:00)',
         alias: 's',
         type: String,
       },
       {
         name: 'end-time',
-        description: '[Optional] Query log end time (timestamp or time format，like 1611827290000 or 2021-11-11T11:11:12+00:00)',
+        description:
+          '[Optional] Query log end time (timestamp or time format，like 1611827290000 or 2021-11-11T11:11:12+00:00)',
         alias: 'e',
         type: String,
       },
@@ -73,6 +75,8 @@ export const LOGS = [
   },
   {
     header: 'Examples with CLI',
-    content: ['$ s cli fc logs --region cn-hangzhou --service-name serviceName --function-name functionName --tail'],
+    content: [
+      '$ s cli fc logs --region cn-hangzhou --service-name serviceName --function-name functionName --tail',
+    ],
   },
 ];

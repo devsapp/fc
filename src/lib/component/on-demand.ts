@@ -6,11 +6,30 @@ import { getCredentials, promptForConfirmOrDetails, tableShow } from '../utils';
 import _ from 'lodash';
 import { ICredentials } from '../interface/profile';
 
-interface GetOnDemand { serviceName: string; qualifier: string; functionName: string }
-interface ListOnDemand { serviceName: string }
-interface RemoveOnDemand { serviceName: string; qualifier: string; functionName: string }
-interface RemoveAllOnDemand { serviceName: string; qualifier?: string; assumeYes?: boolean }
-interface PutOnDemand { serviceName: string; qualifier: string; functionName: string; maximumInstanceCount: number }
+interface GetOnDemand {
+  serviceName: string;
+  qualifier: string;
+  functionName: string;
+}
+interface ListOnDemand {
+  serviceName: string;
+}
+interface RemoveOnDemand {
+  serviceName: string;
+  qualifier: string;
+  functionName: string;
+}
+interface RemoveAllOnDemand {
+  serviceName: string;
+  qualifier?: string;
+  assumeYes?: boolean;
+}
+interface PutOnDemand {
+  serviceName: string;
+  qualifier: string;
+  functionName: string;
+  maximumInstanceCount: number;
+}
 interface IProps {
   region?: string;
   serviceName?: string;
@@ -24,18 +43,13 @@ const ONDEMAND_COMMADN_HELP_KEY = {
   get: HELP.ON_DEMAND_GET,
   put: HELP.ON_DEMAND_PUT,
 };
-const TABLE = [
-  'serviceName',
-  'qualifier',
-  'functionName',
-  'maximumInstanceCount',
-];
+const TABLE = ['serviceName', 'qualifier', 'functionName', 'maximumInstanceCount'];
 
 export default class OnDemand {
   static async handlerInputs(inputs) {
     logger.debug(`inputs.props: ${JSON.stringify(inputs.props)}`);
 
-    const parsedArgs: {[key: string]: any} = core.commandParse(inputs, {
+    const parsedArgs: { [key: string]: any } = core.commandParse(inputs, {
       boolean: ['help', 'table'],
       string: ['region', 'service-name', 'qualifier', 'function-name'],
       number: ['maximum-instance-count'],
@@ -73,7 +87,10 @@ export default class OnDemand {
       maximumInstanceCount: parsedData['maximum-instance-count'],
     };
 
-    const credentials: ICredentials = await getCredentials(inputs.credentials, inputs?.project?.access);
+    const credentials: ICredentials = await getCredentials(
+      inputs.credentials,
+      inputs?.project?.access,
+    );
     logger.debug(`handler inputs props: ${JSON.stringify(endProps)}`);
     await Client.setFcClient(endProps.region, credentials, inputs?.project?.access);
 
@@ -88,9 +105,13 @@ export default class OnDemand {
   async list({ serviceName }: ListOnDemand, table?) {
     logger.info(`Getting list on-demand: ${serviceName}`);
 
-    const onDemandConfigs = (await Client.fcClient.get_all_list_data('/on-demand-configs', 'configs', {
-      prefix: serviceName ? `services/${serviceName}` : '',
-    }));
+    const onDemandConfigs = await Client.fcClient.get_all_list_data(
+      '/on-demand-configs',
+      'configs',
+      {
+        prefix: serviceName ? `services/${serviceName}` : '',
+      },
+    );
 
     const data = onDemandConfigs?.map((item) => {
       const [, service, , functionName] = item.resource.split('/');
@@ -142,7 +163,11 @@ export default class OnDemand {
       throw new Error('Not found service name');
     }
     logger.info(`Removing on-demand: ${serviceName}.${qualifier}/${functionName}`);
-    const { data } = await Client.fcClient.deleteOnDemandConfig(serviceName, functionName, qualifier);
+    const { data } = await Client.fcClient.deleteOnDemandConfig(
+      serviceName,
+      functionName,
+      qualifier,
+    );
     return data;
   }
 
@@ -166,7 +191,12 @@ export default class OnDemand {
     };
 
     logger.info(`Updating on-demand: ${serviceName}.${qualifier}/${functionName}`);
-    const { data } = await Client.fcClient.putOnDemandConfig(serviceName, functionName, qualifier, options);
+    const { data } = await Client.fcClient.putOnDemandConfig(
+      serviceName,
+      functionName,
+      qualifier,
+      options,
+    );
     return data;
   }
 

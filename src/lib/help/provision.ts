@@ -29,7 +29,10 @@ export const PROVISION = [
   {
     header: 'SubCommand List',
     content: [
-      { desc: 'list', example: 'View the list of resource reservation; help command [s provision list -h]' },
+      {
+        desc: 'list',
+        example: 'View the list of resource reservation; help command [s provision list -h]',
+      },
       { desc: 'put', example: 'Put resource reservation; help command [s provision put -h]' },
       { desc: 'get', example: 'Get resource reservation; help command [s provision get -h]' },
     ],
@@ -51,12 +54,7 @@ export const PROVISION_LIST = [
   },
   {
     header: 'Options',
-    optionList: [
-      regionDescribe,
-      serviceNameDescribe,
-      qualifier,
-      showTableDescribe,
-    ],
+    optionList: [regionDescribe, serviceNameDescribe, qualifier, showTableDescribe],
   },
   { ...globalParams },
   { ...globalDescribe },
@@ -96,7 +94,8 @@ export const PROVISION_PUT = [
       },
       {
         name: 'config',
-        description: '[Optional] Specify the configuration path parameter,Config format refers to [https://github.com/devsapp/fc/blob/jiangyu-docs/docs/zh/command/provision.md#provision-config]',
+        description:
+          '[Optional] Specify the configuration path parameter,Config format refers to [https://github.com/devsapp/fc/blob/jiangyu-docs/docs/zh/command/provision.md#provision-config]',
         type: String,
       },
     ],
@@ -112,7 +111,9 @@ export const PROVISION_PUT = [
   },
   {
     header: 'Examples with CLI',
-    content: ['$ s cli fc provision put --region cn-hangzhou --service-name serviceName --function-name functionName --qualifier alias --target 1'],
+    content: [
+      '$ s cli fc provision put --region cn-hangzhou --service-name serviceName --function-name functionName --qualifier alias --target 1',
+    ],
   },
 ];
 
@@ -131,12 +132,7 @@ export const PROVISION_GET = [
   },
   {
     header: 'Options',
-    optionList: [
-      regionDescribe,
-      serviceNameDescribe,
-      functionNameDescribe,
-      qualifier,
-    ],
+    optionList: [regionDescribe, serviceNameDescribe, functionNameDescribe, qualifier],
   },
   { ...globalParams },
   { ...globalDescribe },
@@ -146,7 +142,9 @@ export const PROVISION_GET = [
   },
   {
     header: 'Examples with CLI',
-    content: ['$ s cli fc provision get --region cn-hangzhou --service-name serviceName --function-name functionName --qualifier alias'],
+    content: [
+      '$ s cli fc provision get --region cn-hangzhou --service-name serviceName --function-name functionName --qualifier alias',
+    ],
   },
 ];
 
@@ -160,7 +158,6 @@ export const PROVISION_GET = [
  * {"header":"SubCommand List","content":[{"desc":"list","example":"View the list of resource reservation; help command [s provision list -h]"},{"desc":"put","example":"Put resource reservation; help command [s provision put -h]"},{"desc":"get","example":"Get resource reservation; help command [s provision get -h]"}]}
  */
 export interface ProvisionInputsArgs {}
-
 
 /**
  * s provision get <options>
@@ -183,17 +180,17 @@ export interface ProvisionGetInputsArgs {
    */
   region: string;
   /**
-    * [C-Required] Specify the fc service name
-    */
+   * [C-Required] Specify the fc service name
+   */
   'service-name': string;
   /**
-    * [C-Required] Specify the fc function name
-    */
+   * [C-Required] Specify the fc function name
+   */
   'function-name': string;
   /**
-    * [Required] Specify the qualifier parameter. Only supports LATEST and alias
-    */
-  'qualifier': string;
+   * [Required] Specify the qualifier parameter. Only supports LATEST and alias
+   */
+  qualifier: string;
 }
 
 /**
@@ -217,25 +214,25 @@ export interface ProvisionPutInputsArgs {
    */
   region: string;
   /**
-    * [C-Required] Specify the fc service name
-    */
+   * [C-Required] Specify the fc service name
+   */
   'service-name': string;
   /**
    * [C-Required] Specify the fc function name
    */
   'function-name': string;
   /**
-    * [Required] Specify the qualifier parameter. Only supports LATEST and alias
-    */
-  'qualifier': string;
+   * [Required] Specify the qualifier parameter. Only supports LATEST and alias
+   */
+  qualifier: string;
   /**
-    * [Optional] Specify the provision target parameter
-    */
-  'target': number;
+   * [Optional] Specify the provision target parameter
+   */
+  target: number;
   /**
-    * [Optional] Specify the configuration path parameter,Config format refers to [https://github.com/devsapp/fc/blob/jiangyu-docs/docs/zh/command/provision.md#provision-config]
-    */
-  'config': string;
+   * [Optional] Specify the configuration path parameter,Config format refers to [https://github.com/devsapp/fc/blob/jiangyu-docs/docs/zh/command/provision.md#provision-config]
+   */
+  config: string;
 }
 
 /**
@@ -259,13 +256,13 @@ export interface ProvisionListInputsArgs {
    */
   region: string;
   /**
-    * [C-Required] Specify the fc service name
-    */
+   * [C-Required] Specify the fc service name
+   */
   'service-name': string;
   /**
-    * [C-Required] Specify the qualifier parameter. Only supports LATEST and alias
-    */
-  'qualifier': string;
+   * [C-Required] Specify the qualifier parameter. Only supports LATEST and alias
+   */
+  qualifier: string;
   /**
    * [Optional] Table format output
    */

@@ -18,10 +18,7 @@ export const REMOVE = [
   },
   {
     header: 'Usage',
-    content: [
-      '$ s remove <options>',
-      '$ s remove <sub-command> <options>',
-    ],
+    content: ['$ s remove <options>', '$ s remove <sub-command> <options>'],
   },
   {
     header: 'Options',
@@ -91,11 +88,7 @@ export const REMOVE_SERVICE = [
   },
   {
     header: 'Options',
-    optionList: [
-      regionDescribe,
-      serviceNameDescribe,
-      assumeYesDescribe,
-    ],
+    optionList: [regionDescribe, serviceNameDescribe, assumeYesDescribe],
   },
   { ...globalParams },
   { ...globalDescribe },
@@ -124,12 +117,7 @@ export const REMOVE_FUNCTION = [
   },
   {
     header: 'Options',
-    optionList: [
-      regionDescribe,
-      serviceNameDescribe,
-      functionNameDescribe,
-      assumeYesDescribe,
-    ],
+    optionList: [regionDescribe, serviceNameDescribe, functionNameDescribe, assumeYesDescribe],
   },
   { ...globalParams },
   { ...globalDescribe },
@@ -139,7 +127,9 @@ export const REMOVE_FUNCTION = [
   },
   {
     header: 'Examples with CLI',
-    content: ['$ s cli fc remove function --region cn-hangzhou --service-name serviceName --function-name functionName'],
+    content: [
+      '$ s cli fc remove function --region cn-hangzhou --service-name serviceName --function-name functionName',
+    ],
   },
 ];
 
@@ -178,7 +168,9 @@ export const REMOVE_TRIGGER = [
   },
   {
     header: 'Examples with Yaml',
-    content: ['$ s cli fc remove trigger --region cn-hangzhou --service-name serviceName --function-name functionName --trigger-name triggerName'],
+    content: [
+      '$ s cli fc remove trigger --region cn-hangzhou --service-name serviceName --function-name functionName --trigger-name triggerName',
+    ],
   },
 ];
 
@@ -253,7 +245,9 @@ export const REMOVE_VERSION = [
   },
   {
     header: 'Examples with CLI',
-    content: ['$ s cli fc remove version --region cn-hangzhou --service-name serviceName --version-id 1'],
+    content: [
+      '$ s cli fc remove version --region cn-hangzhou --service-name serviceName --version-id 1',
+    ],
   },
 ];
 
@@ -291,7 +285,9 @@ export const REMOVE_ALIAS = [
   },
   {
     header: 'Examples with CLI',
-    content: ['$ s cli fc remove alias --region cn-hangzhou --service-name serviceName --alias-name aliasName'],
+    content: [
+      '$ s cli fc remove alias --region cn-hangzhou --service-name serviceName --alias-name aliasName',
+    ],
   },
 ];
 
@@ -330,7 +326,9 @@ export const REMOVE_PROVISION = [
   },
   {
     header: 'Examples with CLI',
-    content: ['$ s cli fc remove provision --region cn-hangzhou --service-name serviceName --function-name functionName --qualifier alias'],
+    content: [
+      '$ s cli fc remove provision --region cn-hangzhou --service-name serviceName --function-name functionName --qualifier alias',
+    ],
   },
 ];
 
@@ -355,7 +353,8 @@ export const REMOVE_ONDEMAND = [
       functionNameDescribe,
       {
         name: 'qualifier',
-        description: '[Required] If qualifier is specified, only all onDemand resources under this alias will be cleared; if not specified, all versions of onDemand resources under this service will be cleared',
+        description:
+          '[Required] If qualifier is specified, only all onDemand resources under this alias will be cleared; if not specified, all versions of onDemand resources under this service will be cleared',
         type: String,
       },
       assumeYesDescribe,
