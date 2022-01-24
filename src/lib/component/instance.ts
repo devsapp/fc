@@ -17,9 +17,9 @@ export default class Instance {
     logger.debug(`inputs.props: ${JSON.stringify(inputs.props)}`);
 
     const parsedArgs: {[key: string]: any} = core.commandParse(inputs, {
-      boolean: ['help'],
-      string: ['region', 'service-name', 'function-name'],
-      alias: { help: 'h' },
+      boolean: ['help', 'stdin', 'tty'],
+      string: ['region', 'service-name', 'function-name', 'qualifier'],
+      alias: { help: 'h', stdin: 'i', tty: 't' },
     });
     logger.debug(`Instance parsedArgs: \n${JSON.stringify(parsedArgs, null, 2)}`);
     const {
@@ -55,7 +55,7 @@ export default class Instance {
       serviceName: parsedData['service-name'] || props.service?.name,
       functionName: parsedData['function-name'] || props.function?.name,
       qualifier: parsedData.qualifier,
-      instanceId: parsedData['instance-id'],
+      instanceId: '',
       stdin: parsedData.i || parsedData.stdin,
       tty: parsedData.t || parsedData.tty,
     };
@@ -74,9 +74,31 @@ export default class Instance {
     if (_.isEmpty(functionName) || !_.isString(functionName)) {
       throw new fcCore.CatchableError('No functionName is found, you can specify the parameter with --function-name');
     }
-    if (subCommand === 'exec' && (_.isEmpty(endProps.instanceId) || !_.isString(endProps.instanceId))) {
-      const command = `s cli fc instance list --region ${region} --service-name ${serviceName} --function-name ${functionName}`;
-      throw new fcCore.CatchableError(`No instanceId is found, you can specify the parameter with --instance-id.\nYou can get the instance list through ${command}`);
+    if (subCommand === 'exec') {
+      if (rawData[0] === 'exec') {
+        rawData.shift(); // 清除执行指令 exec
+      }
+
+      // 获取实例ID，eg:
+      //   s instance exec c-****-1658cb3903eb4644b0ee ls    
+      //   s instance exec -i c-****-1658cb3903eb4644b0ee ls    
+      //   s instance exec -it c-****-1658cb3903eb4644b0ee ls    
+      //   s instance exec --tty c-****-1658cb3903eb4644b0ee ls    
+      //   s instance exec -i --tty c-****-1658cb3903eb4644b0ee ls
+      let instanceId;
+      if (rawData[0] && !rawData[0].startsWith('-')) {
+        instanceId = rawData.shift();
+      } else if (rawData[1] && !rawData[1].startsWith('-')) {
+        instanceId = rawData.splice(1,1)[0];
+      } else if (rawData[2] && !rawData[2].startsWith('-')) {
+        instanceId = rawData.splice(2,1)[0];
+      } else {
+        const command = `s cli fc instance list --region ${region} --service-name ${serviceName} --function-name ${functionName}`;
+        throw new fcCore.CatchableError(`No instanceId is found`, `
+· You can get the instance list through '$ ${command}'
+· You can get help by executing 's cli fc instance exec -h'`);
+      }
+      endProps.instanceId = instanceId;
     }
 
     const credentials: ICredentials = await getCredentials(inputs.credentials, inputs?.project?.access);
@@ -138,24 +160,32 @@ export default class Instance {
       stderr: 'true',
       command: command || [],
     };
-    logger.debug(`command-exec command:\n${JSON.stringify(options, null, 2)}`);
+    logger.info(`command-exec command:\n${JSON.stringify(options, null, 2)}`);
     logger.debug('----------------------------------------');
 
-    const hooks = {
-      onStdout: (msg) => logger.log(`${msg}`),
-      onStderr: (msg) => logger.log(`${msg}`, 'red'),
-      onClose: () => logger.log('\nws close'),
-      onError: (e) => logger.log(`${e.message}`),
-    };
+    await new Promise(async (resolve) => {
+      const hooks = {
+        onStdout: (msg) => logger.log(`${msg}`),
+        onStderr: (msg) => logger.log(`${msg}`, 'red'),
+        onClose: () => {
+          logger.log('\nws close');
+          resolve('');
+        },
+        onError: (e) => {
+          logger.log(`${e.message}`);
+          resolve('');
+        },
+      };
 
-    await Client.fcClient.instanceExec(
-      serviceName,
-      functionName,
-      qualifier,
-      instanceId,
-      options,
-      hooks,
-    );
+      await Client.fcClient.instanceExec(
+        serviceName,
+        functionName,
+        qualifier,
+        instanceId,
+        options,
+        hooks,
+      );
+    });
   }
 
   private async stdinExec({
@@ -174,7 +204,8 @@ export default class Instance {
       stderr: 'true',
       command: _.isEmpty(command) ? ['/bin/bash'] : command,
     };
-    logger.warn('Enter `exit` to open the link on the server side to exit (recommended), or execute `control + ]` to force the client to exit');
+
+    logger.debug('Enter `exit` to open the link on the server side to exit (recommended), or execute `control + ]` to force the client to exit', 'yellow');
     // eslint-disable-next-line no-async-promise-executor
     await new Promise(async (_resolve, reject) => {
       const hooks = {
@@ -216,9 +247,6 @@ export default class Instance {
   }
 
   private handlerCommand(rawData) {
-    if (rawData[0] === 'exec') {
-      rawData.shift(); // 清除执行指令 exec
-    }
     let nextFilter = false;
     const command = [];
     const EXEC_PARAM_BOOL = ['-it', '-t', '-i', '--tty', '--stdin'];

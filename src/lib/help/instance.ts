@@ -23,8 +23,8 @@ export const INSTANCE = [
   {
     header: 'SubCommand List',
     content: [
-      { desc: 'list', example: 'View the list of function instance; help command [s instance list -h]' },
-      { desc: 'exec', example: 'Execute instructions in the container; help command [s instance exec -h]' },
+      { desc: 'list', example: 'View the list of active function instance; help command [s instance list -h]' },
+      { desc: 'exec', example: 'Execute a command in a instance; help command [s instance exec -h]' },
     ],
   },
 ];
@@ -32,7 +32,7 @@ export const INSTANCE = [
 export const INSTANCE_LIST = [
   {
     header: 'Instance list',
-    content: 'View the list of function instance',
+    content: 'View the list of active function instance',
   },
   {
     header: 'Document',
@@ -65,7 +65,7 @@ export const INSTANCE_LIST = [
 export const INSTANCE_EXEC = [
   {
     header: 'Instance exec',
-    content: 'Execute instructions in the container',
+    content: 'Execute a command in a instance',
   },
   {
     header: 'Document',
@@ -73,7 +73,7 @@ export const INSTANCE_EXEC = [
   },
   {
     header: 'Usage',
-    content: '$ s instance exec <options>',
+    content: '$ s instance exec <instanceId> <options>',
   },
   {
     header: 'Options',
@@ -84,11 +84,6 @@ export const INSTANCE_EXEC = [
       {
         name: 'qualifier',
         description: '[Optional] Specify the qualifier parameter. Only supports LATEST and alias',
-        type: String,
-      },
-      {
-        name: 'instance-id',
-        description: '[Required] Specifies the function instanceId',
         type: String,
       },
       {
@@ -108,14 +103,21 @@ export const INSTANCE_EXEC = [
   { ...globalParams },
   { ...globalDescribe },
   {
+    header: 'Notice',
+    content: 'The abbreviation for --tty -t cannot be used alone, because -t is a system parameter of serverless-devs',
+  },
+  {
     header: 'Examples with Yaml',
     content: [
-      '$ s instance exec --instance-id instanceId ls',
-      '$ s instance exec --instance-id instanceId -it "/bin/bash ls"',
+      '$ s instance exec c-*******-*******b4644b0ee ls',
+      '$ s instance exec -it c-*******-*******b4644b0ee /bin/bash',
     ],
   },
   {
     header: 'Examples with CLI',
-    content: ['$ s cli fc instance exec --region cn-hangzhou --service-name serviceName --function-name functionName --instance-id instanceId ls'],
+    content: [
+      '$ s cli fc instance exec --region cn-hangzhou --service-name serviceName --function-name functionName c-*******-*******b4644b0ee ls',
+      '$ s cli fc instance exec --region cn-hangzhou --service-name serviceName --function-name functionName -i --tty c-*******-*******b4644b0ee /bin/bash',
+    ],
   },
 ];
