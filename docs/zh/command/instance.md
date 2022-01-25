@@ -4,11 +4,12 @@
 
 - [命令解析](#命令解析)
 - [instance list 命令](#instance-list-命令)
+  - [参数解析](#参数解析)
+  - [操作案例](#操作案例)
+- [instance exec 命令](#instance-exec-命令)
   - [参数解析](#参数解析-1)
   - [操作案例](#操作案例-1)
-- [instance exec 命令](#instance-publish-命令)
-  - [参数解析](#参数解析-2)
-  - [操作案例](#操作案例-2)
+- [场景案例](#场景案例)
 
 ## 命令解析
 
@@ -83,6 +84,7 @@ Examples with CLI
 ````
 
 ### 参数解析
+
 | 参数全称     | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
 | ------------ | -------- | -------------- | ------------- | ------------------------------------------------------------ |
 | region       | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
@@ -167,6 +169,7 @@ Examples with CLI
 ````
 
 ### 参数解析
+
 | 参数全称     | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
 | ------------ | -------- | -------------- | ------------- | ------------------------------------------------------------ |
 | region       | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
@@ -192,9 +195,9 @@ $ s instance exec --instance-id instanceId -it /bin/bash
 
 如果是使用终端模式可以输入 `exit` 服务端端开链接退出（推荐），或者执行 `control + ]` 强制客户端推出。
 
-### 场景案例
+## 场景案例
 
-#### 排查线上问题
+### 排查线上问题
 
 在一些日常的场景下，实例命令行操作会带来更符合用户习惯、更高效便捷的排查问题方式。
 
