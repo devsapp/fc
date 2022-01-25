@@ -144,7 +144,7 @@ fc-deploy-test:
 
 ## provision put 命令
 
-`provision put` 命令，是用于发布版本的命令。
+`provision put` 命令用于配置预留。
 
 当执行命令`provision put -h`/`provision put --help`时，可以获取帮助文档：
 
