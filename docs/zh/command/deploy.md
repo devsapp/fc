@@ -298,6 +298,7 @@ Examples with Yaml
 | type        | -        | 选填           | 部署类型，可以选择`code, config`                           |
 | use-local   | -        | 选填           | 使用本地配置进行部署                                         |
 | user-remote | -        | 选填           |                                                              |
+| skip-push | -        | 选填           |  跳过自动推送镜像   |
 | assume-yes  | y        | 选填           | 在交互时，默认选择`y`                                        |
 | access      | a        | 选填           | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
 | debug       | -        | 选填           | 打开`debug`模式，将会输出更多日志信息                        |

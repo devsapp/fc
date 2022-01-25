@@ -12,6 +12,12 @@ const useRemote = {
   defaultOption: false,
   type: Boolean,
 };
+const skipPush = {
+  name: 'skip-push',
+  description: '[Optional] Skip automatic push mirroring',
+  defaultOption: false,
+  type: Boolean,
+};
 const deployType = {
   name: 'type',
   description: '[Optional] Only deploy configuration or code, value: code/config ',
@@ -36,7 +42,13 @@ export const DEPLOY = [
   },
   {
     header: 'Options',
-    optionList: [deployType, useLocal, useRemote, assumeYesDescribe],
+    optionList: [
+      deployType,
+      useLocal,
+      useRemote,
+      assumeYesDescribe,
+      skipPush,
+    ],
   },
   { ...globalParams },
   { ...globalDescribe },
@@ -105,7 +117,11 @@ export const DEPLOY_FUNCTION = [
   },
   {
     header: 'Options',
-    optionList: [deployType, ...options],
+    optionList: [
+      deployType,
+      ...options,
+      skipPush,
+    ],
   },
   { ...globalParams },
   { ...globalDescribe },

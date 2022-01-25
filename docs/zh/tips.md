@@ -2,7 +2,6 @@
 
 - [Serverless Devs和FC组件的关系](#serverless-devs和FC组件的关系)
 - [如何声明/部署多个函数](#如何声明部署多个函数)
-- [超过50M的代码包如何部署](#超过50M的代码包如何部署)
 - [关于`.fcignore`使用方法](#关于fcignore使用方法)
 - [关于`.env`使用方法](#关于env使用方法)
 - [工具中`.s`目录是做什么](#工具中s目录是做什么)
@@ -78,63 +77,6 @@ services:
 
 例如上面的 Yaml 中，全局变量`vars`定义了一个`service`，`project1`和`project2`同时通过魔法变量`${vars.service}`引用了这个`service`，然后分别对应了不同的函数`py-event-function-1`和`py-event-function-2`.
 
-
-## 超过50M的代码包如何部署
-
-函数计算的接口本身默认只支持 50M 的代码包，如果想要部署超过 50M 的代码包，可以考虑：
-
-1. (50M, 100M] 范围内的代码包，可以：
-
-   - 指定 `s.yml` 中的 `ossBucket` 字段(需要是已存在的 Bucket 并且需要和服务同地域)，此时通过工具进行部署时，工具会把代码压缩上传到这个指定的 Bucket，然后通过OSS的配置方式部署函数；
-   - 手动将代码压缩上传到对象存储，然后在 `s.yaml` 中指定 `ossBucket` 和 `ossKey` 字段，此时部署函数时，工具会直接通过OSS的配置方式部署函数；
-
-   > 以50M-100M代码包的使用举例：
-   >
-   > - 指定一个**在同地域且在当前帐号中已经存在的存储桶**，表现是，工具会把指定的`codeUri`内容打包上传到这个`bucket`中，然后进行业务的部署，这个时候是工具自动上传：
-   >
-   >   ```
-   >   edition: 1.0.0          #  命令行YAML规范版本，遵循语义化版本（Semantic Versioning）规范
-   >   name: framework         #  项目名称
-   >   access: "default"       #  秘钥别名
-   >   
-   >   services:
-   >     framework: # 业务名
-   >       component: fc  # 组件名称
-   >       props: # 组件的属性值
-   >         region: cn-beijing
-   >         service:
-   >           name: web-framework
-   >         function:
-   >           name: fastapi
-   >           ossBucket: mybucket
-   >           codeUri: './code'
-   >   ```
-   >
-   > - 同时指定了 `ossBucket` 和 `ossKey` 字段，需要开发者手动把代码打包好上传到这个指定的 `ossBucket` ，并明确 `ossKey` 的正确性，此部署函数时，工具不会做上传等操作，会直接拉这个 `ossBucket` 下的指定 `ossKey` 进行业务部署：
-   >
-   >   ```
-   >   edition: 1.0.0          #  命令行YAML规范版本，遵循语义化版本（Semantic Versioning）规范
-   >   name: framework         #  项目名称
-   >   access: "default"       #  秘钥别名
-   >   
-   >   services:
-   >     framework: # 业务名
-   >       component: fc  # 组件名称
-   >       props: # 组件的属性值
-   >         region: cn-beijing
-   >         service:
-   >           name: web-framework
-   >         function:
-   >           name: fastapi
-   >           ossBucket: mybucket
-   >           ossKey: /demo.zip
-   >   ```
-
-2. 大于 100M 的代码包，可以：
-
-   - 将 `nasConfig` 配置为 `auto`，然后基于 nas 指令将大文件（可能是训练集/依赖包）传输到 NAS 指定位置，然后配置相应的环境变量到 `s.yml` 中的函数配置中；
-   - 将非 custom-container 的函数转换成 custom-container，这需要对代码进行一定的改造，并新增 dockerfile，然后创建这个函数（此方式冷启动时间相对其他 runtime 会有一点点的延长）；
-
 ## 关于`.fcignore`使用方法
 
 在代码目录放置一个 .fcignore 文件，部署文件的时候可以排除掉 .fcignore 描述的文件或者文件夹。 例如：
@@ -202,16 +144,16 @@ services:
 
 一般情况下，build之后的产物有以下几种情况：
 
-1. Container情况，build之后是镜像地址，可以直接进行deploy操作，此时工具会自动push镜像到线上，并且进行项目的部署；
+1. Container情况，build之后是镜像地址，可以直接进行deploy操作，此时工具会自动push镜像到阿里云容器镜像服务，并且进行项目的部署；
 
 2. 非Container情况下（以Python、Nodejs等语言为例）：
 
-   - 用户代码包不大，直接部署：此时，可以考虑直接进行deploy操作，但是需要注意的是，不能在`.fcignore`文件中填写`.s`目录，在部署过程中会提醒是否添加对应的环境变脸，可以选择`y`进行添加，以确保build后的产物生效；
+   - 用户代码包不大，直接部署：此时，可以考虑直接进行deploy操作，但是需要注意的是，不能在`.fcignore`文件中填写`.s`目录，在部署过程中会提醒是否添加对应的环境变量，可以选择`y`进行添加，以确保build后的产物生效；
 
-   - 用户代码包比较大，需要上传NAS：如果代码包比较大，需要上传到NAS，则需要在`.fcignore`文件中增加`.s`目录，以忽略产物内容；然后在Yaml中，要确保服务下已经配置`nasConfig`参数，在部署过程中会提醒是否添加对应的环境变脸，可以选择`y`进行添加，以确保build后的产物生效；部署操作完成之后，可以进行`.s`目录下的产物上传，例如，我的服务名是`ai-cv-image-prediction`，函数名是`server`，则此时我的产物/依赖路径为`./.s/build/artifacts/ai-cv-image-prediction/server/ `，所以我可以直接进行上传：
+   - 用户代码包比较大，需要上传NAS：如果代码包比较大，需要上传到NAS，则需要在`.fcignore`文件中增加`.s`目录，以忽略build的产物内容；需要在Yaml中`service`下配置`nasConfig`参数，部署过程中需要选择添加环境变量，确保build后的产物生效；项目部署操作完成之后上传`.s`目录下的产物，假如此时服务名称是`ai-cv-image-prediction`，函数名称是`server`，则build的产物（或者依赖）路径为`./.s/build/artifacts/ai-cv-image-prediction/server/ `，所以需要执行下面这条指令进行上传：
 
      ```
-     s nas upload -r -n ./.s/build/artifacts/ai-cv-image-prediction/server/.s/python /mnt/auto/.s/python
+     s nas upload -r ./.s/build/artifacts/ai-cv-image-prediction/server/.s/python /mnt/auto/.s/python
      ```
 
      此时需要额外注意，我们上传的`/mnt/auto/.s/python`目录可能不存在，所以需要在上传之前，进行目录创建：
@@ -237,10 +179,10 @@ Serverless Devs的Yaml规范本身支持全局变量、环境变量以及外部�
 组件更新比较滞后，这时可以通过环境变量配置控制组件：
 
 `FC_DOCKER_VERSION`: build或者local的 docker 版本版控制。例如 export FC_DOCKER_VERSION=1.9.21
-`FC_CODE_SIZE_WITH_OSS`: 弹性实例函数通过 OSS 方式配置部署代码包最大限制，默认 100M。export FC_CODE_SIZE_WITH_OSS=104857600
-`MAX_CODE_SIZE_WITH_OSS_OF_C1`: 性能实例函数通过 OSS 方式配置部署代码包最大限制，默认 500M。export FC_CODE_SIZE_WITH_OSS=524288000
-`FC_CODE_SIZE_WITH_CODEURI`: 部署代码包通过 SDK 方式最大限制，默认 50M。export FC_CODE_SIZE_WITH_CODEURI=52428800
-`NAS_CHUNK_SIZE`: nas upload/download 切片大小，默认是 4M。export NAS_CHUNK_SIZE=4
+
+`NAS_CHUNK_SIZE`: nas upload/download 切片大小，默认是 4M。例如 export NAS_CHUNK_SIZE=4
+
+`FC_INSTANCE_EXEC_TIMEOUT`: 实例登陆空闲超时时间，默认10分钟。例如 export FC_INSTANCE_EXEC_TIMEOUT=600
 
 ## 项目实践案例
 

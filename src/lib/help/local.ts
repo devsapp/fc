@@ -113,7 +113,7 @@ export const LOCAL_INVOKE_HELP_INFO = [
   eventFormat,
   {
     header: 'Examples with Yaml',
-    content: ['$ s local invoke --event "hello world!"'],
+    content: ['$ s local invoke --event "hello world"'],
   },
 ];
 

@@ -37,6 +37,7 @@ import { IInputs, IProperties } from './lib/interface/interface';
 import { isLogConfig, LogsProps } from './lib/interface/sls';
 import { FcInfoProps } from './lib/interface/component/fc-info';
 import { FcSyncProps } from './lib/interface/component/fc-sync';
+import Instance from './lib/component/instance';
 import { FcMetricsProps } from './lib/interface/component/fc-metrics';
 import { getFcNames, isAutoConfig, isHttpFunction } from './lib/utils';
 import * as tips from './lib/tips';
@@ -68,6 +69,28 @@ const DEPLOY_SUPPORT_CONFIG_ARGS = ['code', 'config'];
 
 export default class FcBaseComponent {
   logger = Logger;
+
+  async instance(inputs) {
+    const {
+      credentials,
+      help,
+      subCommand,
+      props,
+    } = await Instance.handlerInputs(inputs);
+
+    await this.report('fc', subCommand ? `version ${subCommand}` : 'version', credentials?.AccountID);
+    if (help) {
+      return;
+    }
+
+    const instance = new Instance();
+    if (subCommand === 'list') {
+      return await instance.list(props);
+    } else if (subCommand === 'exec') {
+      return await instance.exec(props);
+    }
+  }
+
   async plan(inputs: IInputs) {
     const { isHelp, errorMessage, planType } = Plan.handlerInputs(inputs);
     if (errorMessage) {
