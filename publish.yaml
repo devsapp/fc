@@ -28,6 +28,7 @@ Commands:
   provision: 预留实例
   proxied: 端云连调
   fun2s: 将fun转化为s可读的配置
+  instance: 实例操作【公测中】
 #   Build & Deploy:
 #     deploy: Deploy local resources online
 #     build: Build the dependencies.
