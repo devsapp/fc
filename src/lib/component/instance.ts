@@ -11,6 +11,8 @@ const INSTANCE_COMMAND_HELP_KEY = {
   exec: HELP.INSTANCE_EXEC,
 };
 
+const idleTimeout = Number.parseInt(process.env.FC_INSTANCE_EXEC_TIMEOUT || '600', 10);
+
 
 export default class Instance {
   static async handlerInputs(inputs) {
@@ -154,6 +156,7 @@ export default class Instance {
     }
 
     const options = {
+      idleTimeout,
       stdin: 'false',
       tty: tty ? 'true' : 'false',
       stdout: 'true',
@@ -198,6 +201,7 @@ export default class Instance {
   }) {
     const command = this.handlerCommand(rawData);
     const options = {
+      idleTimeout,
       stdin: 'true',
       tty: tty ? 'true' : 'false',
       stdout: 'true',
