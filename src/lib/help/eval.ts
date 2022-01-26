@@ -49,13 +49,13 @@ export const EVAL_START = [
       {
         name: 'concurrency-args',
         description:
-          '[Optional] Concurrency args of power tuning that can convert to concurrency list, for --eval-type concurrency or concurrencyPostman',
+          '[Optional] Concurrency args of power tuning that can convert to concurrency list, for --eval-type concurrency',
         type: String,
       },
       {
         name: 'eval-type',
         description:
-          '[Optional] Type of the power tuning, value: memory/concurrency/concurrencyPostman',
+          '[Optional] Type of the power tuning, value: memory/concurrency',
         type: String,
       },
       {
@@ -93,13 +93,13 @@ export const EVAL_START = [
       {
         name: 'payload-file',
         description:
-          '[Optional] Represents the the event(Event function)/request_body(HTTP function)/postman-export-json-file which be readed from file to pass to the function',
+          '[Optional] Represents the the event(Event function)/request_body(HTTP function)',
         type: String,
       },
       {
         name: 'rt',
         description:
-          '[Optional] Max response time, only for --eval-type concurrency/concurrencyPostman',
+          '[Optional] Max response time, only for --eval-type concurrency',
         type: Number,
       },
       {
@@ -110,7 +110,7 @@ export const EVAL_START = [
       {
         name: 'memory',
         description:
-          '[Optional] Function memory of power tuning, only for --eval-type concurrency/concurrencyPostman',
+          '[Optional] Function memory of power tuning, only for --eval-type concurrency',
         type: Number,
       },
     ],
@@ -122,7 +122,6 @@ export const EVAL_START = [
     content: [
       '$ s eval start --eval-type memory --run-count 10 --payload-file ./payload.file  --memory-size 128,256,512,1024',
       "$ s eval start --eval-type concurrency --memory 1536 --concurrency-args 2,20,5 --rt 250 --method get --path '/login' --query 'a=1&b=2'",
-      '$ s eval start --eval-type concurrencyPostman --memory 1536 --concurrency-args 2,20,5 --rt 250 --payload-file ./postman.json ',
     ],
   },
   {
@@ -130,7 +129,6 @@ export const EVAL_START = [
     content: [
       "$ s cli fc eval start --region cn-hangzhou --function-name functionName --service-name serviceName --eval-type memory --run-count 10 --payload 'hello world' --memory-size 128,256,512,1024 --access default",
       "$ s cli fc eval start --region cn-hangzhou --function-name functionName --service-name serviceName --eval-type concurrency --memory 1536 --concurrency-args 2,30,5 --rt 250  --method get --path '/login' --query 'a=1&b=2' --access default",
-      '$ s cli fc eval start --region cn-hangzhou --function-name functionName --service-name serviceName --eval-type concurrencyPostman --memory 1536 --concurrency-args 2,20,5 --rt 250 --payload-file ./postman.json --access default',
     ],
   },
 ];
