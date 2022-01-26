@@ -74,7 +74,7 @@ export const STRESS_START = [
       {
         name: 'payload-file',
         description:
-          '[Optional] Represents the the event(Event function)/request_body(HTTP function)/postman-export-json-file which be readed from file to pass to the function',
+          '[Optional] Represents the the event(Event function)/request_body(HTTP function)',
         type: String,
       },
       {
