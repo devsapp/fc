@@ -9,17 +9,22 @@ package-lock.json
 .editorconfig
 .gitignore
 .signore
+jest.config.ts
+jest.setup.ts
+tsconfig.*
 
 .github
 .idea
 .vscode
 .DS_Store
 .git
+*.md
 
 README.md
-./examples
-./test
-./Makefile
-./f2elint.config.js
-./commitlint.config.js
-./docs
+examples
+test
+Makefile
+f2elint.config.js
+commitlint.config.js
+docs
+src
