@@ -163,7 +163,7 @@ export default class Instance {
       stderr: 'true',
       command: command || [],
     };
-    logger.info(`command-exec command:\n${JSON.stringify(options, null, 2)}`);
+    logger.debug(`command-exec command:\n${JSON.stringify(options, null, 2)}`);
     logger.debug('----------------------------------------');
 
     await new Promise(async (resolve) => {
@@ -211,14 +211,15 @@ export default class Instance {
 
     logger.debug('Enter `exit` to open the link on the server side to exit (recommended), or execute `control + ]` to force the client to exit', 'yellow');
     // eslint-disable-next-line no-async-promise-executor
-    await new Promise(async (_resolve, reject) => {
+    await new Promise(async (resolve) => {
       const hooks = {
         onStdout: (msg) => process.stdout.write(msg.toString()),
         onStderr: (msg) => process.stderr.write(msg.toString()),
         onClose: () => process.exit(0),
         onError: (e) => {
+          process.stderr.write(e.toString())
           process.stdin.setRawMode(false);
-          reject(e.message);
+          resolve(e);
         },
       };
       logger.debug(`command-exec command:\n${JSON.stringify(options, null, 2)}`);
