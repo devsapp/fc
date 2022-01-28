@@ -5,4 +5,3 @@ export interface StressOption {
   functionType: string;
   invocationType?: string;
 }
-

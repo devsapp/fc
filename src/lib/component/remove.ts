@@ -2,6 +2,7 @@
 /* eslint-disable no-await-in-loop */
 
 import * as core from '@serverless-devs/core';
+import Table from 'tty-table';
 import { ICredentials } from '../interface/profile';
 import Client from '../client';
 import logger from '../../common/logger';
@@ -11,9 +12,9 @@ import Alias from './alias';
 import Version from './version';
 import * as HELP from '../help/remove';
 import _ from 'lodash';
-import { getCredentials } from '../utils';
+import { getCredentials, promptForConfirmOrDetails } from '../utils';
 
-const COMMAND: string[] = [
+export const COMMAND: string[] = [
   'service',
   'function',
   'trigger',
@@ -21,6 +22,7 @@ const COMMAND: string[] = [
   'version',
   'alias',
   'provision',
+  'ondemand',
   'onDemand',
   'layer',
 ];
@@ -60,14 +62,24 @@ interface EndProps {
 }
 interface IRemove {
   props: EndProps;
-  subCommand?: 'layer' | 'domain' | 'onDemand' | 'provision' | 'alias' | 'version' | 'service' | 'function' | 'trigger';
+  subCommand?:
+    | 'layer'
+    | 'domain'
+    | 'ondemand'
+    | 'onDemand'
+    | 'provision'
+    | 'alias'
+    | 'version'
+    | 'service'
+    | 'function'
+    | 'trigger';
 }
 
 export default class Remove {
   static async handlerInputs(inputs) {
     logger.debug(`inputs.props: ${JSON.stringify(inputs.props)}`);
 
-    const parsedArgs: {[key: string]: any} = core.commandParse(inputs, {
+    const parsedArgs: { [key: string]: any } = core.commandParse(inputs, {
       boolean: ['help'],
       alias: { help: 'h' },
     });
@@ -83,7 +95,9 @@ export default class Remove {
     }
 
     if (parsedData.help) {
-      rawData[0] ? core.help(HELP[`remove_${subCommand}`.toLocaleUpperCase()]) : core.help(HELP.REMOVE);
+      rawData[0]
+        ? core.help(HELP[`remove_${subCommand}`.toLocaleUpperCase()])
+        : core.help(HELP.REMOVE);
       return { help: true, subCommand };
     }
 
@@ -105,7 +119,10 @@ export default class Remove {
       throw new Error('Not found region');
     }
 
-    const credentials: ICredentials = await getCredentials(inputs.credentials, inputs?.project?.access);
+    const credentials: ICredentials = await getCredentials(
+      inputs.credentials,
+      inputs?.project?.access,
+    );
     logger.debug(`handler inputs props: ${JSON.stringify(endProps)}`);
     await Client.setFcClient(endProps.region, credentials, inputs?.project?.access);
 
@@ -118,21 +135,33 @@ export default class Remove {
     };
   }
 
-  async removeOnDemand({ region, qualifier, serviceName, functionName, assumeYes }: RemoveOnDemandOrProvision) {
+  async removeOnDemand({
+    region,
+    qualifier,
+    serviceName,
+    functionName,
+    assumeYes,
+  }: RemoveOnDemandOrProvision) {
     logger.debug(`region is ${region}`);
     if (!_.isEmpty(qualifier) && _.isEmpty(functionName)) {
       throw new Error('not found functionName');
     }
 
-    const onDemand = new OnDemand();
+    const ondmand = new OnDemand();
     if (!_.isEmpty(qualifier)) {
-      return await onDemand.remove({ qualifier, serviceName, functionName });
+      return await ondmand.remove({ qualifier, serviceName, functionName });
     }
 
-    await onDemand.removeAll({ serviceName, qualifier, assumeYes });
+    await ondmand.removeAll({ serviceName, qualifier, assumeYes });
   }
 
-  async removeProvision({ region, qualifier, serviceName, functionName, assumeYes }: RemoveOnDemandOrProvision) {
+  async removeProvision({
+    region,
+    qualifier,
+    serviceName,
+    functionName,
+    assumeYes,
+  }: RemoveOnDemandOrProvision) {
     logger.debug(`region is ${region}`);
     if (!_.isEmpty(qualifier) && _.isEmpty(functionName)) {
       throw new Error('not found functionName');
@@ -167,20 +196,29 @@ export default class Remove {
   }
 
   async remove({ props, subCommand }: IRemove, inputs) {
-    const {
-      region,
-      assumeYes,
-      onlyLocal,
-      serviceName,
-      functionName,
-      qualifier,
-      versionId,
-      aliasName,
-    } = props;
+    const { region, onlyLocal, serviceName, functionName, qualifier, versionId, aliasName } = props;
+    let { assumeYes } = props;
+    let planArgs = '';
+
+    if (assumeYes !== true) {
+      try {
+        const removeStatus = await this.removePlan(subCommand, inputs);
+        if (removeStatus === 'quit') {
+          return;
+        }
+        if (removeStatus === 'assumeYes') {
+          assumeYes = true;
+          planArgs += '--assume-yes';
+        }
+      } catch (ex) {
+        // 异常：不作处理兜底
+        logger.debug(`error: ${ex.message}`);
+      }
+    }
 
     if (subCommand === 'layer') {
       const componentName = 'devsapp/fc-layer';
-      const componentInputs = this.genInputs(inputs, componentName, props);
+      const componentInputs = this.genInputs(inputs, componentName, props, planArgs);
       if (versionId) {
         return (await core.loadComponent(componentName)).deleteVersion(componentInputs);
       }
@@ -189,7 +227,7 @@ export default class Remove {
 
     if (subCommand === 'domain') {
       const componentName = 'devsapp/fc-deploy';
-      const componentInputs = this.genInputs(inputs, componentName, inputs.props);
+      const componentInputs = this.genInputs(inputs, componentName, inputs.props, planArgs);
       return (await core.loadComponent(componentName)).remove(componentInputs);
     }
 
@@ -197,12 +235,18 @@ export default class Remove {
       throw new Error('not found serviceName');
     }
 
-    if (subCommand === 'onDemand') {
+    if (subCommand === 'onDemand' || subCommand === 'ondemand') {
       return await this.removeOnDemand({ region, qualifier, serviceName, functionName, assumeYes });
     }
 
     if (subCommand === 'provision') {
-      return await this.removeProvision({ region, qualifier, serviceName, functionName, assumeYes });
+      return await this.removeProvision({
+        region,
+        qualifier,
+        serviceName,
+        functionName,
+        assumeYes,
+      });
     }
 
     if (subCommand === 'alias') {
@@ -221,17 +265,42 @@ export default class Remove {
     }
 
     const componentName = 'devsapp/fc-deploy';
-    const componentInputs = this.genInputs(inputs, componentName, inputs.props);
+    const componentInputs = this.genInputs(inputs, componentName, inputs.props, planArgs);
     return (await core.loadComponent(componentName)).remove(componentInputs);
   }
 
-  private genInputs({
-    appName,
-    projectName,
-    access,
-    args,
-    curPath,
-  }, componentName, props) {
+  // 没有子资源：能够被删除，不作处理。 返回undefined
+  // 存在子资源选择 no：一定不能被删除，需要退出程序。 返回quit
+  // 存在子资源选择 yes：需要强制删除所有资源，需要向下传递 assumeYes。  返回assumeYes
+  private async removePlan(subCommand, inputs) {
+    const planArgs = `--plan-type remove --sub-command ${subCommand || 'service'}`;
+    const planName = 'devsapp/fc-plan';
+    const planInputs = this.genInputs(_.cloneDeep(inputs), planName, inputs.props, planArgs);
+    const plan = await (await core.loadComponent(planName)).plan(planInputs);
+    logger.debug(`Plan remove res: ${JSON.stringify(plan)}`);
+
+    if (!_.isEmpty(plan)) {
+      for (const planItem of plan) {
+        logger.debug(JSON.stringify(planItem));
+        if (_.isEmpty(planItem.data)) {
+          continue;
+        }
+        logger.log(`${_.upperFirst(planItem.resources)}:`);
+        console.log(Table(planItem.header, planItem.data).render());
+      }
+      const assumeYes = await promptForConfirmOrDetails(
+        'Are you sure you want to delete these resources?',
+      );
+      return assumeYes ? 'assumeYes' : 'quit';
+    }
+  }
+
+  private genInputs(
+    { appName, projectName, access, args, curPath },
+    componentName,
+    props,
+    appendArgs?,
+  ) {
     return {
       project: {
         component: componentName,
@@ -240,9 +309,8 @@ export default class Remove {
       },
       appName,
       props,
-      args,
+      args: `${args || ''} ${appendArgs || ''}`.trim(),
       path: curPath,
     };
   }
 }
-

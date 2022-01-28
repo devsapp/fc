@@ -1,15 +1,35 @@
 import * as core from '@serverless-devs/core';
 import logger from '../../common/logger';
+import * as HELP from '../help/on-demand';
 import Client from '../client';
 import { getCredentials, promptForConfirmOrDetails, tableShow } from '../utils';
 import _ from 'lodash';
 import { ICredentials } from '../interface/profile';
 
-interface GetOnDemand { serviceName: string; qualifier: string; functionName: string }
-interface ListOnDemand { serviceName: string }
-interface RemoveOnDemand { serviceName: string; qualifier: string; functionName: string }
-interface RemoveAllOnDemand { serviceName: string; qualifier?: string; assumeYes?: boolean }
-interface PutOnDemand { serviceName: string; qualifier: string; functionName: string; maximumInstanceCount: number }
+interface GetOnDemand {
+  serviceName: string;
+  qualifier: string;
+  functionName: string;
+}
+interface ListOnDemand {
+  serviceName: string;
+}
+interface RemoveOnDemand {
+  serviceName: string;
+  qualifier: string;
+  functionName: string;
+}
+interface RemoveAllOnDemand {
+  serviceName: string;
+  qualifier?: string;
+  assumeYes?: boolean;
+}
+interface PutOnDemand {
+  serviceName: string;
+  qualifier: string;
+  functionName: string;
+  maximumInstanceCount: number;
+}
 interface IProps {
   region?: string;
   serviceName?: string;
@@ -19,23 +39,17 @@ interface IProps {
 }
 const ONDEMAND_COMMADN = ['list', 'get', 'put', 'remove'];
 const ONDEMAND_COMMADN_HELP_KEY = {
-  list: 'OnDemandListInputsArgs',
-  get: 'OnDemandGetInputsArgs',
-  put: 'OnDemandPutInputsArgs',
-  remove: 'OnDemandDeleteInputsArgs',
+  list: HELP.ON_DEMAND_LIST,
+  get: HELP.ON_DEMAND_GET,
+  put: HELP.ON_DEMAND_PUT,
 };
-const TABLE = [
-  'serviceName',
-  'qualifier',
-  'functionName',
-  'maximumInstanceCount',
-];
+const TABLE = ['serviceName', 'qualifier', 'functionName', 'maximumInstanceCount'];
 
 export default class OnDemand {
   static async handlerInputs(inputs) {
     logger.debug(`inputs.props: ${JSON.stringify(inputs.props)}`);
 
-    const parsedArgs: {[key: string]: any} = core.commandParse(inputs, {
+    const parsedArgs: { [key: string]: any } = core.commandParse(inputs, {
       boolean: ['help', 'table'],
       string: ['region', 'service-name', 'qualifier', 'function-name'],
       number: ['maximum-instance-count'],
@@ -45,16 +59,19 @@ export default class OnDemand {
     const parsedData = parsedArgs?.data || {};
     const rawData = parsedData._ || [];
     if (!rawData.length) {
-      return { help: true, helpKey: 'OnDemandInputsArgs' };
+      core.help(HELP.ON_DEMAND);
+      return { help: true };
     }
 
     const subCommand = rawData[0];
-    logger.debug(`onDemand subCommand: ${subCommand}`);
+    logger.debug(`ondemand subCommand: ${subCommand}`);
     if (!ONDEMAND_COMMADN.includes(subCommand)) {
-      return { help: true, helpKey: 'OnDemandInputsArgs', errorMessage: `Does not support ${subCommand} command` };
+      core.help(HELP.ON_DEMAND);
+      return { help: true, errorMessage: `Does not support ${subCommand} command` };
     }
     if (parsedData.help) {
-      return { help: true, subCommand, helpKey: ONDEMAND_COMMADN_HELP_KEY[subCommand] };
+      core.help(ONDEMAND_COMMADN_HELP_KEY[subCommand]);
+      return { help: true, subCommand };
     }
 
     const props = inputs.props || {};
@@ -70,7 +87,10 @@ export default class OnDemand {
       maximumInstanceCount: parsedData['maximum-instance-count'],
     };
 
-    const credentials: ICredentials = await getCredentials(inputs.credentials, inputs?.project?.access);
+    const credentials: ICredentials = await getCredentials(
+      inputs.credentials,
+      inputs?.project?.access,
+    );
     logger.debug(`handler inputs props: ${JSON.stringify(endProps)}`);
     await Client.setFcClient(endProps.region, credentials, inputs?.project?.access);
 
@@ -85,9 +105,13 @@ export default class OnDemand {
   async list({ serviceName }: ListOnDemand, table?) {
     logger.info(`Getting list on-demand: ${serviceName}`);
 
-    const onDemandConfigs = (await Client.fcClient.get_all_list_data('/on-demand-configs', 'configs', {
-      prefix: serviceName ? `services/${serviceName}` : '',
-    }));
+    const onDemandConfigs = await Client.fcClient.get_all_list_data(
+      '/on-demand-configs',
+      'configs',
+      {
+        prefix: serviceName ? `services/${serviceName}` : '',
+      },
+    );
 
     const data = onDemandConfigs?.map((item) => {
       const [, service, , functionName] = item.resource.split('/');
@@ -117,7 +141,7 @@ export default class OnDemand {
       throw new Error('Not found service name');
     }
     logger.info(`Getting on-demand: ${serviceName}.${qualifier}/${functionName}`);
-    const { data } = await Client.fcClient.getOnDemandConfig(serviceName, qualifier, functionName);
+    const { data } = await Client.fcClient.getOnDemandConfig(serviceName, functionName, qualifier);
     if (data) {
       return {
         serviceName,
@@ -139,7 +163,11 @@ export default class OnDemand {
       throw new Error('Not found service name');
     }
     logger.info(`Removing on-demand: ${serviceName}.${qualifier}/${functionName}`);
-    const { data } = await Client.fcClient.deleteOnDemandConfig(serviceName, qualifier, functionName);
+    const { data } = await Client.fcClient.deleteOnDemandConfig(
+      serviceName,
+      functionName,
+      qualifier,
+    );
     return data;
   }
 
@@ -163,7 +191,12 @@ export default class OnDemand {
     };
 
     logger.info(`Updating on-demand: ${serviceName}.${qualifier}/${functionName}`);
-    const { data } = await Client.fcClient.putOnDemandConfig(serviceName, qualifier, functionName, options);
+    const { data } = await Client.fcClient.putOnDemandConfig(
+      serviceName,
+      functionName,
+      qualifier,
+      options,
+    );
     return data;
   }
 
@@ -176,7 +209,7 @@ export default class OnDemand {
       }
 
       tableShow(onDemandList, TABLE);
-      const meg = `On-demand configuration exists under service ${serviceName}, whether to delete all On-demand resources.To delete only a single configuration, execute [s remove onDemand --qualifier xxx --function-name xxx]`;
+      const meg = `On-demand configuration exists under service ${serviceName}, whether to delete all On-demand resources.To delete only a single configuration, execute [s remove ondemand --qualifier xxx --function-name xxx]`;
       if (await promptForConfirmOrDetails(meg)) {
         return await this.forDelete(onDemandList);
       }

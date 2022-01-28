@@ -12,11 +12,11 @@ import { isEmpty } from 'lodash';
 import os from 'os';
 
 export function handlerCredentials() {
-  dotenv.config({path: path.join(__dirname, '.env')});
+  dotenv.config({ path: path.join(__dirname, '.env') });
 
   const accountId: string = process.env.AccountID;
   const accessKeyId: string = process.env.AccessKeyID;
-  const accessKeySecret: string =  process.env.AccessKeySecret;
+  const accessKeySecret: string = process.env.AccessKeySecret;
 
   return { accountId, accessKeyId, accessKeySecret };
 }
@@ -31,7 +31,11 @@ export function getFcClient(region: string, timeout: number) {
   });
 }
 
-export async function deleteFcResource(msg: string, fcClient, { serviceName, functionName, triggerNames, domainName }: any) {
+export async function deleteFcResource(
+  msg: string,
+  fcClient,
+  { serviceName, functionName, triggerNames, domainName }: any,
+) {
   console.log('Start remove resource: ', msg);
   if (!isEmpty(triggerNames)) {
     for (const triggerName of triggerNames) {
@@ -78,12 +82,22 @@ export async function deleteFcResource(msg: string, fcClient, { serviceName, fun
   console.log('end.');
 }
 
-export async function setupIntegrationTestEnv(access: string, accoundId: string, accessKeyId: string, accessKetSecret: string, cwd: string, templateFile: string) {
-  await core.setKnownCredential({
-    AccountID: accoundId,
-    AccessKeyID: accessKeyId,
-    AccessKeySecret: accessKetSecret,
-  }, access);
+export async function setupIntegrationTestEnv(
+  access: string,
+  accoundId: string,
+  accessKeyId: string,
+  accessKetSecret: string,
+  cwd: string,
+  templateFile: string,
+) {
+  await core.setKnownCredential(
+    {
+      AccountID: accoundId,
+      AccessKeyID: accessKeyId,
+      AccessKeySecret: accessKetSecret,
+    },
+    access,
+  );
   process.chdir(cwd);
   process.env.templateFile = templateFile;
 }
@@ -93,7 +107,10 @@ export async function cleanupIntegrationTestEnv(access: string, cwd: string) {
   const accessFileInfo = yaml.load(fse.readFileSync(accessFile, 'utf8') || '{}');
   if (accessFileInfo[access]) {
     delete accessFileInfo[access];
-    fse.writeFileSync(accessFile, Object.keys(accessFileInfo).length > 0 ? yaml.dump(accessFileInfo) : '');
+    fse.writeFileSync(
+      accessFile,
+      Object.keys(accessFileInfo).length > 0 ? yaml.dump(accessFileInfo) : '',
+    );
   }
   await fse.remove(path.join(cwd, '.s'));
 }
@@ -115,7 +132,7 @@ export const generateProjectName = (accountID, region: string) => {
 
 export const generateLogstoreName = (serviceName: string, region: string, accountID: string) => {
   // -20 是因为要抛去生成名称的前缀（fc-service-）和后缀（-logstore）
-  if (serviceName.length > (64 - 20)) {
+  if (serviceName.length > 64 - 20) {
     return generateResourceName(serviceName, region, accountID);
   }
 
@@ -131,9 +148,15 @@ export const transformMountpointFromRemoteToLocal = ({ serverAddr, mountDir }) =
     nasDir: serverAddr.substr(subscript + 1),
     fcDir: mountDir,
   };
-}
+};
 
-export async function removeNas(access: string, yamlPath: string, region: string, serviceName: string, nasConfig) {
+export async function removeNas(
+  access: string,
+  yamlPath: string,
+  region: string,
+  serviceName: string,
+  nasConfig,
+) {
   // function extractFileSystemIdFromMountTargetDomain(mountTargetDomain: string): string {
   //   let fileSystemId: string = mountTargetDomain.split('-')[0];
   //   if (mountTargetDomain.includes('extreme')) {
@@ -141,7 +164,7 @@ export async function removeNas(access: string, yamlPath: string, region: string
   //   }
   //   return fileSystemId;
   // }
-  
+
   // const fileSystemId: string = extractFileSystemIdFromMountTargetDomain(nasConfig.mountPoints[0].serverAddr);
   const inputs: any = {
     appName: 'app-nas',
@@ -236,7 +259,7 @@ export async function createOssBucket(region, bucketName) {
       storageClass: 'Standard',
       acl: 'private',
       dataRedundancyType: 'LRS',
-    }
+    };
     await ossClient.putBucket(bucketName, options);
     console.log(`createOssBucket ${bucketName} success`);
   } catch (err) {
@@ -273,7 +296,7 @@ export async function createMnsTopic(region, mnsName) {
     });
     await mnsClient.createTopic(mnsName);
     console.log(`createMnsTopic ${mnsName} success`);
-  } catch(err) {
+  } catch (err) {
     throw err;
   }
 }
@@ -291,7 +314,7 @@ export async function deleteMnsTopic(region, mnsName) {
       vpc: false,
     });
     await mnsClient.delete(`/topics/${mnsName}`, 'Topic', '');
-  } catch(e) {
+  } catch (e) {
     console.log(e);
   }
 }

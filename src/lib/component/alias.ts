@@ -1,5 +1,6 @@
 /* eslint-disable no-await-in-loop */
 import * as core from '@serverless-devs/core';
+import * as HELP from '../help/alias';
 import { ICredentials } from '../interface/profile';
 import _ from 'lodash';
 import Version from './version';
@@ -13,41 +14,52 @@ interface IProps {
   serviceName: string;
   description?: string;
   versionId?: string;
+  versionLatest?: boolean;
   aliasName?: string;
   gversion?: string;
   weight?: number;
   assumeYes?: boolean;
 }
 
-interface FindAlias { serviceName: string; aliasName: string }
-interface GetAlias { serviceName: string; aliasName: string }
-interface RemoveAlias { serviceName: string; aliasName: string }
-interface RemoveAliasAll { serviceName: string; assumeYes?: boolean }
+interface FindAlias {
+  serviceName: string;
+  aliasName: string;
+}
+interface GetAlias {
+  serviceName: string;
+  aliasName: string;
+}
+interface RemoveAlias {
+  serviceName: string;
+  aliasName: string;
+}
+interface RemoveAliasAll {
+  serviceName: string;
+  assumeYes?: boolean;
+}
 
 interface Publish {
   serviceName: string;
   aliasName: string;
   versionId: string;
+  versionLatest?: boolean;
   description?: string;
   gversion?: string;
   weight?: number;
 }
 
-const ALIAS_COMMAND: string[] = ['list', 'get', 'publish', 'remove', 'removeAll'];
-const ALIAS_COMMAND_HELP_KEY: {[key: string]: string} = {
-  list: 'AliasListInputsArgs',
-  get: 'AliasGetInputsArgs',
-  publish: 'AliasPublishInputsArgs',
-  remove: 'AliasDeleteInputsArgs',
-  removeAll: 'AliasDeleteAllInputsArgs',
+const ALIAS_COMMAND_HELP_KEY: { [key: string]: string } = {
+  list: 'ALIAS_LIST',
+  get: 'ALIAS_GET',
+  publish: 'ALIAS_PUBLISH',
 };
 
 export default class Alias {
   static async handlerInputs(inputs) {
     logger.debug(`inputs.props: ${JSON.stringify(inputs.props)}`);
 
-    const parsedArgs: {[key: string]: any} = core.commandParse(inputs, {
-      boolean: ['help', 'table', 'y'],
+    const parsedArgs: { [key: string]: any } = core.commandParse(inputs, {
+      boolean: ['help', 'table', 'y', 'version-latest'],
       string: ['region', 'service-name', 'description', 'alias-name', 'id', 'gversion'],
       number: ['weight'],
       alias: { help: 'h', 'version-id': 'id', 'assume-yes': 'y' },
@@ -55,21 +67,23 @@ export default class Alias {
     const parsedData = parsedArgs?.data || {};
     const rawData = parsedData._ || [];
     if (!rawData.length) {
-      return { help: true, helpKey: 'AliasInputsArgs' };
+      core.help(HELP.ALIAS);
+      return { help: true };
     }
 
     const subCommand = rawData[0];
     logger.debug(`version subCommand: ${subCommand}`);
-    if (!ALIAS_COMMAND.includes(subCommand)) {
+    if (!Object.keys(ALIAS_COMMAND_HELP_KEY).includes(subCommand)) {
+      core.help(HELP.ALIAS);
       return {
         help: true,
-        helpKey: 'AliasInputsArgs',
         errorMessage: `Does not support ${subCommand} command`,
       };
     }
 
     if (parsedData.help) {
-      return { help: true, subCommand, helpKey: ALIAS_COMMAND_HELP_KEY[subCommand] };
+      core.help(HELP[ALIAS_COMMAND_HELP_KEY[subCommand]]);
+      return { help: true, subCommand };
     }
 
     const props = inputs.props || {};
@@ -79,6 +93,7 @@ export default class Alias {
       serviceName: parsedData['service-name'] || props.service?.name,
       description: parsedData.description,
       versionId: parsedData.id,
+      versionLatest: parsedData['version-latest'],
       assumeYes: parsedData.y,
       aliasName: parsedData['alias-name'],
       gversion: parsedData.gversion,
@@ -86,13 +101,16 @@ export default class Alias {
     };
 
     if (!endProps.region) {
-      throw new Error('Not found region');
+      throw new Error('Not found region, Please specify with --region');
     }
     if (!endProps.serviceName) {
-      throw new Error('Not found service name');
+      throw new Error('Not found service name, Please specify with --service-name');
     }
 
-    const credentials: ICredentials = await getCredentials(inputs.credentials, inputs?.project?.access);
+    const credentials: ICredentials = await getCredentials(
+      inputs.credentials,
+      inputs?.project?.access,
+    );
     logger.debug(`handler inputs props: ${JSON.stringify(endProps)}`);
     await Client.setFcClient(endProps.region, inputs.credentials, inputs?.project?.access);
 
@@ -116,7 +134,15 @@ export default class Alias {
     return false;
   }
 
-  async publish({ serviceName, description, aliasName, versionId, gversion, weight }: Publish) {
+  async publish({
+    serviceName,
+    description,
+    aliasName,
+    versionId,
+    versionLatest,
+    gversion,
+    weight,
+  }: Publish) {
     const hasWeight = typeof weight === 'number';
     if (hasWeight && !gversion) {
       throw new Error('weight exists, gversion is required');
@@ -132,23 +158,31 @@ export default class Alias {
       parames.additionalVersionWeight = { [gversion]: weight / 100 };
     }
 
-    if (!/^[_a-zA-Z][-_a-zA-Z0-9]*$/.test(aliasName)) {
-      throw new Error(`AliasName doesn't match expected format (allowed: ^[_a-zA-Z][-_a-zA-Z0-9]*$, actual: '${aliasName}')`);
+    if (!(aliasName && /^[_a-zA-Z][-_a-zA-Z0-9]*$/.test(aliasName))) {
+      throw new Error(
+        `AliasName doesn't match expected format (allowed: ^[_a-zA-Z][-_a-zA-Z0-9]*$, actual: '${aliasName}')`,
+      );
     }
+
     if (!versionId) {
       const versionClient = new Version();
       const versionList = await versionClient.list({ serviceName });
       if (versionList.length === 0) {
-        throw new Error('Not found version.Please use [s version publish --description xxx] to publish the version');
-      } else if (versionList.length === 1) {
+        throw new Error(
+          'Not found version.Please use [s version publish --description xxx] to publish the version',
+        );
+      } else if (versionList.length === 1 || versionLatest) {
         versionId = versionList[0].versionId;
       } else {
-        const answers: any = await inquirer.prompt([{
-          type: 'list',
-          name: 'versionId',
-          message: 'Please select the version pointed to by the alias, and display the latest 20 versions. If you want to see more, please execute [s version list --table]',
-          choices: versionList.slice(0, 20).map((item) => item.versionId),
-        }]);
+        const answers: any = await inquirer.prompt([
+          {
+            type: 'list',
+            name: 'versionId',
+            message:
+              'Please select the version pointed to by the alias, and display the latest 20 versions. If you want to see more, please execute [s version list --table]',
+            choices: versionList.slice(0, 20).map((item) => item.versionId),
+          },
+        ]);
         versionId = answers.versionId;
       }
     }
@@ -163,7 +197,10 @@ export default class Alias {
 
   async list({ serviceName }: { serviceName: string }, table?: boolean) {
     logger.info(`Getting listAliases: ${serviceName}`);
-    const data = await Client.fcClient.get_all_list_data(`/services/${serviceName}/aliases`, 'aliases');
+    const data = await Client.fcClient.get_all_list_data(
+      `/services/${serviceName}/aliases`,
+      'aliases',
+    );
     if (table) {
       this.showAlias(data);
     } else {
@@ -196,13 +233,13 @@ export default class Alias {
     }
   }
 
-  private async forDataDelete(serviceName: string, data: Array<{[key: string]: any}>) {
+  private async forDataDelete(serviceName: string, data: Array<{ [key: string]: any }>) {
     for (const { aliasName } of data) {
       await this.remove({ serviceName, aliasName });
     }
   }
 
-  private showAlias(data: Array<{[key: string]: any}>) {
+  private showAlias(data: Array<{ [key: string]: any }>) {
     const showWeight = {
       value: 'additionalVersionWeight',
       formatter: (value) => {
@@ -213,15 +250,36 @@ export default class Alias {
         return '';
       },
     };
-    tableShow(data, ['aliasName', 'versionId', 'description', 'createdTime', 'lastModifiedTime', showWeight]);
+    tableShow(data, [
+      'aliasName',
+      'versionId',
+      'description',
+      'createdTime',
+      'lastModifiedTime',
+      showWeight,
+    ]);
   }
 
-  private async updateAlias({ aliasName, serviceName, versionId, parames }: {[key: string]: any}) {
+  private async updateAlias({
+    aliasName,
+    serviceName,
+    versionId,
+    parames,
+  }: {
+    [key: string]: any;
+  }) {
     logger.info(`Updating alias: ${aliasName}`);
     await Client.fcClient.updateAlias(serviceName, aliasName, versionId, parames);
   }
 
-  private async createAlias({ aliasName, serviceName, versionId, parames }: {[key: string]: any}) {
+  private async createAlias({
+    aliasName,
+    serviceName,
+    versionId,
+    parames,
+  }: {
+    [key: string]: any;
+  }) {
     logger.info(`Creating alias: ${aliasName}`);
     await Client.fcClient.createAlias(serviceName, aliasName, versionId, parames);
   }

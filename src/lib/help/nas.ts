@@ -1,30 +1,36 @@
+import { globalParams, globalDescribe } from './constant';
+
 export const NAS_HELP_INFO = [
   {
     header: 'Nas',
-    content: 'Upload and download files for NAS service.',
+    content: 'Upload and download files for NAS service',
+  },
+  {
+    header: 'Document',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/nas.md',
   },
   {
     header: 'Usage',
-    content: '$ s nas <sub-command>',
+    content: '$ s nas <sub-command> <options>',
   },
   {
-    header: 'SubCommand',
+    header: 'SubCommand List',
     content: [
       {
+        desc: 'init',
+        example: 'Init nas resource; help command [s nas init -h]',
+      },
+      {
         desc: 'download',
-        example: 'Download resources, you can get help through [s nas download -h]',
+        example: 'Download resources; help command [s nas download -h]',
       },
       {
         desc: 'upload',
-        example: 'Upload resources, you can get help through [s nas upload -h]',
+        example: 'Upload resources; help command [s nas upload -h]',
       },
       {
         desc: 'command',
-        example: 'Execute relevant instructions, you can get help through [s nas command -h]',
-      },
-      {
-        desc: 'init',
-        example: 'init nas resource, you can get help through [s nas init -h]',
+        example: 'Execute relevant instructions; help command [s nas command -h]',
       },
     ],
   },
@@ -32,146 +38,104 @@ export const NAS_HELP_INFO = [
 
 const UPLOADHELP = [
   {
-    header: 'nas Upload',
-    content: 'Upload resources.',
+    header: 'Nas Upload',
+    content: 'Upload resources',
+  },
+  {
+    header: 'Document',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/nas.md',
   },
   {
     header: 'Usage',
-    content: [
-      { example: '$ s nas upload <options> <src_path> <fc_dir>' },
-    ],
+    content: [{ example: '$ s nas upload <options> <local> <remote>' }],
   },
   {
     header: 'Options',
     optionList: [
       {
         name: 'recursive',
-        description: 'Iterate to copy folder content',
+        description: '[Optional] Iterate to copy folder content',
         alias: 'r',
         defaultOption: false,
         type: Boolean,
       },
       {
-        name: 'no-clobber',
-        description: 'Do not override existing files',
-        alias: 'n',
+        name: 'override',
+        description: '[Optional] Override existing files',
+        alias: 'o',
         defaultOption: false,
         type: Boolean,
       },
     ],
   },
-  {
-    header: 'Global Options',
-    optionList: [
-      {
-        name: 'help',
-        description: 'Upload help for command',
-        alias: 'h',
-        type: Boolean,
-      },
-    ],
-  },
+  { ...globalParams },
+  { ...globalDescribe },
   {
     header: 'Examples with Yaml',
-    content: [
-      {
-        example: '$ s nas upload /home/usr/demo.file /mnt/auto',
-      },
-      {
-        example: '$ s nas upload /home/usr/demo.file nas:///mnt/auto',
-      },
-    ],
+    content: ['$ s nas upload /home/usr/demo.file /mnt/auto/'],
   },
 ];
 
 const DOWNLOADHELP = [
   {
     header: 'Nas Download',
-    content: 'Download resources.',
+    content: 'Download resources',
+  },
+  {
+    header: 'Document',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/nas.md',
   },
   {
     header: 'Usage',
-    content: [
-      { example: '$ s nas download <options> <fc_dir> <src_path>' },
-    ],
+    content: [{ example: '$ s nas download <options> <remote> <local>' }],
   },
   {
     header: 'Options',
     optionList: [
       {
-        name: 'recursive',
-        description: 'Iterate to copy folder content',
-        alias: 'r',
+        name: 'no-unzip',
+        description: '[Optional] Do not unzip the folder',
         defaultOption: false,
         type: Boolean,
       },
       {
-        name: 'no-clobber',
-        description: 'Do not override existing files',
-        alias: 'n',
+        name: 'override',
+        description: '[Optional] Override existing files',
+        alias: 'o',
         defaultOption: false,
         type: Boolean,
       },
     ],
   },
-  {
-    header: 'Global Options',
-    optionList: [
-      {
-        name: 'help',
-        description: 'Download help for command',
-        alias: 'h',
-        type: Boolean,
-      },
-    ],
-  },
+  { ...globalParams },
+  { ...globalDescribe },
   {
     header: 'Examples with Yaml',
-    content: [
-      {
-        example: '$ s nas download /mnt/auto /home/usr/demo',
-      },
-      {
-        example: '$ s nas download nas:///mnt/auto /home/usr/demo',
-      },
-    ],
+    content: ['$ s nas download /mnt/auto /home/usr/demo.file'],
   },
 ];
 
 const COMMANDHELP = [
   {
-    header: 'nas Command',
-    content: 'Operation instruction.',
+    header: 'Nas Command',
+    content: 'Operation instruction',
+  },
+  {
+    header: 'Document',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/nas.md',
   },
   {
     header: 'Usage',
-    content: [
-      { example: '$ s nas command <option>' },
-    ],
+    content: [{ example: '$ s nas command <command>' }],
   },
-  {
-    header: 'Global Options',
-    optionList: [
-      {
-        name: 'help',
-        description: 'Download help for command',
-        alias: 'h',
-        type: Boolean,
-      },
-    ],
-  },
+  { ...globalParams },
+  { ...globalDescribe },
   {
     header: 'Examples',
     content: [
-      {
-        example: '$ s nas command ls /mnt/auto',
-      },
-      {
-        example: '$ s nas command rm /mnt/auto/a.txt',
-      },
-      {
-        example: '$ s nas command mkdir /mnt/auto/dir',
-      },
+      { example: '$ s nas command ls -al /mnt/auto' },
+      { example: '$ s nas command mkdir /mnt/auto/demoDir' },
+      { example: '$ s nas command rm -rf /mnt/auto/demoDir' },
     ],
   },
 ];
@@ -179,25 +143,17 @@ const COMMANDHELP = [
 const INITHELP = [
   {
     header: 'Nas Init',
-    content: 'Init nas resources.',
+    content: 'Init nas resources',
+  },
+  {
+    header: 'Document',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/nas.md',
   },
   {
     header: 'Usage',
-    content: [
-      { example: '$ s nas init' },
-    ],
+    content: [{ example: '$ s nas init' }],
   },
-  {
-    header: 'Global Options',
-    optionList: [
-      {
-        name: 'help',
-        description: 'Download help for command',
-        alias: 'h',
-        type: Boolean,
-      },
-    ],
-  },
+  { ...globalParams },
   {
     header: 'Examples with Yaml',
     content: [
@@ -212,10 +168,5 @@ export const NAS_SUB_COMMAND_HELP_INFO = {
   download: DOWNLOADHELP,
   upload: UPLOADHELP,
   command: COMMANDHELP,
-  // fc 组件不推的几个指令，但是支持
-  remove: [],
   init: INITHELP,
-  ls: [],
-  cp: [],
-  rm: [],
 };

@@ -1,5 +1,6 @@
 /* eslint-disable no-await-in-loop */
 import * as core from '@serverless-devs/core';
+import * as HELP from '../help/version';
 import { ICredentials } from '../interface/profile';
 import Client from '../client';
 import logger from '../../common/logger';
@@ -13,23 +14,30 @@ interface IProps {
   versionId?: string;
   assumeYes?: boolean;
 }
-interface Publish { serviceName: string; description?: string }
-interface Remove { serviceName: string; versionId: string }
-interface RemoveAll { serviceName: string; assumeYes?: boolean }
+interface Publish {
+  serviceName: string;
+  description?: string;
+}
+interface Remove {
+  serviceName: string;
+  versionId: string;
+}
+interface RemoveAll {
+  serviceName: string;
+  assumeYes?: boolean;
+}
 
 const VERSION_COMMAND: string[] = ['list', 'publish', 'remove', 'removeAll'];
 const VERSION_COMMAND_HELP_KEY = {
-  list: 'VersionListInputsArgs',
-  publish: 'VersionPublishInputsArgs',
-  remove: 'VersionDeleteInputsArgs',
-  removeAll: 'VersionDeleteAllInputsArgs',
+  list: HELP.VERSION_LIST,
+  publish: HELP.VERSION_PUBLISH,
 };
 
 export default class Version {
   static async handlerInputs(inputs) {
     logger.debug(`inputs.props: ${JSON.stringify(inputs.props)}`);
 
-    const parsedArgs: {[key: string]: any} = core.commandParse(inputs, {
+    const parsedArgs: { [key: string]: any } = core.commandParse(inputs, {
       boolean: ['help', 'table', 'y'],
       string: ['region', 'service-name', 'description', 'id'],
       alias: { help: 'h', 'version-id': 'id', 'assume-yes': 'y' },
@@ -38,21 +46,23 @@ export default class Version {
     const parsedData = parsedArgs?.data || {};
     const rawData = parsedData._ || [];
     if (!rawData.length) {
-      return { help: true, helpKey: 'VersionInputsArgs' };
+      core.help(HELP.VERSION_HELP);
+      return { help: true };
     }
 
     const subCommand = rawData[0];
     logger.debug(`version subCommand: ${subCommand}`);
     if (!VERSION_COMMAND.includes(subCommand)) {
+      core.help(HELP.VERSION_HELP);
       return {
         help: true,
-        helpKey: 'VersionInputsArgs',
         errorMessage: `Does not support ${subCommand} command`,
       };
     }
 
     if (parsedData.help) {
-      return { help: true, helpKey: VERSION_COMMAND_HELP_KEY[subCommand], subCommand };
+      core.help(VERSION_COMMAND_HELP_KEY[subCommand]);
+      return { help: true, subCommand };
     }
 
     const props = inputs.props || {};
@@ -72,7 +82,10 @@ export default class Version {
       throw new Error('Not found service name');
     }
 
-    const credentials: ICredentials = await getCredentials(inputs.credentials, inputs?.project?.access);
+    const credentials: ICredentials = await getCredentials(
+      inputs.credentials,
+      inputs?.project?.access,
+    );
     logger.debug(`handler inputs props: ${JSON.stringify(endProps)}`);
     await Client.setFcClient(endProps.region, credentials, inputs?.project?.access);
 
@@ -86,7 +99,10 @@ export default class Version {
 
   async list({ serviceName }: { serviceName: string }, table?: boolean) {
     logger.info(`Getting listVersions: ${serviceName}`);
-    const data = await Client.fcClient.get_all_list_data(`/services/${serviceName}/versions`, 'versions');
+    const data = await Client.fcClient.get_all_list_data(
+      `/services/${serviceName}/versions`,
+      'versions',
+    );
     if (table) {
       tableShow(data, ['versionId', 'description', 'createdTime', 'lastModifiedTime']);
     } else {

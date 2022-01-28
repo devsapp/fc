@@ -1,18 +1,15 @@
-import * as core from '@serverless-devs/core';
 import _ from 'lodash';
-
+import * as core from '@serverless-devs/core';
 
 export default class Client {
   static fcClient: any;
 
   static async setFcClient(region: string, credentials, access: string) {
-    const fcCommon = await core.loadComponent('devsapp/fc-common');
-    const fcClient = await fcCommon.makeFcClient({
-      project: { access },
+    const fcCore = await core.loadComponent('devsapp/fc-core');
+    const fcClient = await fcCore.makeFcClient({
+      access,
       credentials,
-      props: {
-        region,
-      },
+      region,
     });
     /**
      * 获取所有的数据

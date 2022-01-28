@@ -1,7 +1,6 @@
 import { HttpTypeOption, EventTypeOption, PayloadOption } from '../interface/component/fc-common';
 import { StressOption } from '../interface/component/fc-stress';
 
-
 export default class FcStress {
   private readonly httpTypeOpts?: HttpTypeOption;
   private readonly eventTypeOpts?: EventTypeOption;
@@ -10,7 +9,14 @@ export default class FcStress {
   private readonly region: string;
   private readonly access: string;
 
-  constructor(access: string, region: string, stressOpts?: StressOption, httpTypeOpts?: HttpTypeOption, eventTypeOpts?: EventTypeOption, payloadOpts?: PayloadOption) {
+  constructor(
+    access: string,
+    region: string,
+    stressOpts?: StressOption,
+    httpTypeOpts?: HttpTypeOption,
+    eventTypeOpts?: EventTypeOption,
+    payloadOpts?: PayloadOption,
+  ) {
     this.access = access;
     this.region = region;
     this.stressOpts = stressOpts;

@@ -59,7 +59,14 @@ describe('Integration::deploy', () => {
 
   beforeAll(async () => {
     const { accountId, accessKeyId, accessKeySecret } = handlerCredentials();
-    await setupIntegrationTestEnv(ACCESS, accountId, accessKeyId, accessKeySecret, MOCK_PROJECT_PATH, MOCK_PROJECT_YAML_PATH);
+    await setupIntegrationTestEnv(
+      ACCESS,
+      accountId,
+      accessKeyId,
+      accessKeySecret,
+      MOCK_PROJECT_PATH,
+      MOCK_PROJECT_YAML_PATH,
+    );
     fcClient = getFcClient(REGION, DEFAULT_CLIENT_TIMEOUT);
   });
 
@@ -79,13 +86,15 @@ describe('Integration::deploy', () => {
         {
           name: ROLE_NAME,
           description: 'fc integration test',
-          statement: [{
-            Effect: 'Allow',
-            Action: 'log:ListProject',
-            Resource: '*',
-          }]
-        }
-      ]
+          statement: [
+            {
+              Effect: 'Allow',
+              Action: 'log:ListProject',
+              Resource: '*',
+            },
+          ],
+        },
+      ],
     };
     try {
       const inputs = _.cloneDeep(INPUTS);
@@ -101,15 +110,17 @@ describe('Integration::deploy', () => {
       const { role } = (await fcClient.getService(SERVICE_NAME)).data;
       expect(role).toMatch(new RegExp(`role/${ROLE_NAME}`));
     } finally {
-      await deleteFcResource('Integration::deploy/deploy service with http trigger', fcClient, { serviceName: SERVICE_NAME });
+      await deleteFcResource('Integration::deploy/deploy service with http trigger', fcClient, {
+        serviceName: SERVICE_NAME,
+      });
       try {
         await removeRam(ACCESS, MOCK_PROJECT_YAML_PATH, roleConfig);
-      } catch(e) {
+      } catch (e) {
         console.log('remove ram error');
       }
     }
   });
-  
+
   it('deploy service with mns/oss trigger', async () => {
     try {
       await createOssBucket(REGION, OSS_BUCKET_NAME);
@@ -143,7 +154,11 @@ describe('Integration::deploy', () => {
         functionName: FUNCTION_NAME,
         triggerNames: [OSS_TRIGGER_NAME, MNS_TRIGGER_NAME],
       };
-      await deleteFcResource('Integration::deploy/deploy service with trigger', fcClient, resourceName);
+      await deleteFcResource(
+        'Integration::deploy/deploy service with trigger',
+        fcClient,
+        resourceName,
+      );
       await removeBucket(REGION, OSS_BUCKET_NAME);
       await deleteMnsTopic(REGION, MNS_TOPIC_NAME);
     }
@@ -177,11 +192,15 @@ describe('Integration::deploy', () => {
         functionName: FUNCTION_NAME,
         triggerNames: [HTTP_TRIGGER_NAME],
       };
-      await deleteFcResource('Integration::deploy/deploy service with http trigger', fcClient, resourceName);
+      await deleteFcResource(
+        'Integration::deploy/deploy service with http trigger',
+        fcClient,
+        resourceName,
+      );
     }
   });
 
-  it('deploy service with auto,and update service', async() => {
+  it('deploy service with auto,and update service', async () => {
     let nasConfig: any;
     let vpcConfig: any;
     let resolvedNasConfig: NasConfig;
@@ -233,14 +252,14 @@ describe('Integration::deploy', () => {
         enableInstanceMetrics: true,
       });
 
-
       nasConfig = statefulAutoConfig.nasConfig;
       resolvedNasConfig = {
         userId: nasConfig.userId,
         groupId: nasConfig.groupId,
-        mountPoints: nasConfig.mountPoints.map((item) => transformMountpointFromRemoteToLocal(item)),
+        mountPoints: nasConfig.mountPoints.map((item) =>
+          transformMountpointFromRemoteToLocal(item),
+        ),
       };
-
 
       vpcConfig = statefulAutoConfig.vpcConfig;
       delete vpcConfig.role;
@@ -343,7 +362,9 @@ describe('Integration::deploy', () => {
       } catch (e) {
         console.log(e);
       }
-      await deleteFcResource('Integration::deploy/deploy service with auto', fcClient, { serviceName: SERVICE_NAME });
+      await deleteFcResource('Integration::deploy/deploy service with auto', fcClient, {
+        serviceName: SERVICE_NAME,
+      });
     }
   });
 });
