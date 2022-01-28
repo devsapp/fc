@@ -422,7 +422,7 @@ Resource cleanup succeeded.
 ## 实战场景举例
 以阿里云函数计算一个真实的企业客户为例：小王是一个业务驱动型的公司的开发， 公司为了提高业务迭代效率， 技术架构向全面云原生化演进， 减少基本设施的管理和运维， 架构大致如下：
 
-![](https://img.alicdn.com/imgextra/i1/O1CN012AtvSr1ZhYRbKqZWZ_!!6000000003226-2-tps-1508-1378.png)
+![](https://img.alicdn.com/imgextra/i3/O1CN01ZAtDC01N2zzCELeEF_!!6000000001513-2-tps-1374-1240.png)
 
 小王将迭代最频繁的对外的前后端分离的项目都一键迁移到函数计算的 Custom Runtime，在其中 SpringBoot 的项目需要能使用各种 VPC 内网地址访问下游服务（比如注册中心或者其他微服务接口）， 这个时候Serverless Devs 提供的端云联调 就可以派上用场了， 只需要在 s.yaml (s.yaml 中定义了函数的 VPC 配置) 所在目录下执行：
 
