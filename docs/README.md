@@ -38,7 +38,7 @@
 | [**部署 deploy**](zh/command/deploy.md)   | [指标查询 metrics](zh/command/metrics.md) | [**本地调用 local**](zh/command/local.md)      | [**版本 version**](zh/command/version.md)      | [**硬盘挂载 nas**](zh/command/nas.md) | 
 | [**构建 build**](zh/command/build.md)     | [日志查询 logs](zh/command/logs.md)       | [函数触发 invoke](zh/command/invoke.md)    | [**别名 alias**](zh/command/alias.md)         | [Fun项目迁移 fun2s](zh/command/fun2s.md)  | 
 | [移除 remove](zh/command/remove.md)   |                                              | [**端云联调 proxied**](zh/command/proxied.md) | [预留 provision](zh/command/provision.md)   | [查看函数 info](zh/command/info.md) | 
-| [计划变更 plan](zh/command/plan.md)                                         |                                              | [远程调试 remote](zh/command/remote.md)    | [按量资源 ondemand](zh/command/ondemand.md) | [**资源同步 sync**](zh/command/sync.md) | 
+| [计划变更 plan](zh/command/plan.md)                                         |                                              | [实例登录 instance](zh/command/instance.md)    | [按量资源 ondemand](zh/command/ondemand.md) | [**资源同步 sync**](zh/command/sync.md) | 
 |                                          |                                              | [内存&并发度探测 eval](zh/command/eval.md)  | [层 layer](zh/command/layer.md) |   [压测 stress](zh/command/stress.md)                   | 
 |                                          |                                              |   |  | [API调用 api【支持中】](zh/command/api.md)                    
 
