@@ -6,12 +6,12 @@ export interface TriggerConfig {
   role?: string;
   sourceArn?: string;
   config:
-    | OssTriggerConfig
-    | LogTriggerConfig
-    | TimerTriggerConfig
-    | HttpTriggerConfig
-    | MnsTriggerConfig
-    | CdnTriggerConfig;
+  | OssTriggerConfig
+  | LogTriggerConfig
+  | TimerTriggerConfig
+  | HttpTriggerConfig
+  | MnsTriggerConfig
+  | CdnTriggerConfig;
 }
 
 export interface CdnTriggerConfig {

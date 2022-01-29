@@ -38,7 +38,7 @@ export default class Instance {
     logger.debug(`version subCommand: ${subCommand}`);
 
     const fcCore = await core.loadComponent('devsapp/fc-core');
-        
+
     if (!Object.keys(INSTANCE_COMMAND_HELP_KEY).includes(subCommand)) {
       core.help(HELP.INSTANCE);
       throw new fcCore.CatchableError(`Does not support ${subCommand} command`);
@@ -82,21 +82,21 @@ export default class Instance {
       }
 
       // 获取实例ID，eg:
-      //   s instance exec c-****-1658cb3903eb4644b0ee ls    
-      //   s instance exec -i c-****-1658cb3903eb4644b0ee ls    
-      //   s instance exec -it c-****-1658cb3903eb4644b0ee ls    
-      //   s instance exec --tty c-****-1658cb3903eb4644b0ee ls    
+      //   s instance exec c-****-1658cb3903eb4644b0ee ls
+      //   s instance exec -i c-****-1658cb3903eb4644b0ee ls
+      //   s instance exec -it c-****-1658cb3903eb4644b0ee ls
+      //   s instance exec --tty c-****-1658cb3903eb4644b0ee ls
       //   s instance exec -i --tty c-****-1658cb3903eb4644b0ee ls
       let instanceId;
       if (rawData[0] && !rawData[0].startsWith('-')) {
         instanceId = rawData.shift();
       } else if (rawData[1] && !rawData[1].startsWith('-')) {
-        instanceId = rawData.splice(1,1)[0];
+        instanceId = rawData.splice(1, 1)[0];
       } else if (rawData[2] && !rawData[2].startsWith('-')) {
-        instanceId = rawData.splice(2,1)[0];
+        instanceId = rawData.splice(2, 1)[0];
       } else {
         const command = `s cli fc instance list --region ${region} --service-name ${serviceName} --function-name ${functionName}`;
-        throw new fcCore.CatchableError(`No instanceId is found`, `
+        throw new fcCore.CatchableError('No instanceId is found', `
 · You can get the instance list through '$ ${command}'
 · You can get help by executing 's cli fc instance exec -h'`);
       }
@@ -217,7 +217,7 @@ export default class Instance {
         onStderr: (msg) => process.stderr.write(msg.toString()),
         onClose: () => process.exit(0),
         onError: (e) => {
-          process.stderr.write(e.toString())
+          process.stderr.write(e.toString());
           process.stdin.setRawMode(false);
           resolve(e);
         },

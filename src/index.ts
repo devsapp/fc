@@ -29,6 +29,7 @@ import {
   STRESS,
   STRESS_START,
   STRESS_CLEAN,
+  ENV_HELP_INFO,
 } from './lib/help';
 import * as DEPLOY_HELP from './lib/help/deploy';
 import * as LAYER_HELP from './lib/help/layer';
@@ -1030,6 +1031,29 @@ https://gitee.com/devsapp/fc/blob/main/docs/zh/command/nas.md#nas-upload-命令\
       commandName,
       null,
       fcEvalArgs,
+    );
+  }
+
+  async env(inputs: IInputs): Promise<any> {
+    const { props, args, argsObj } = this.handlerComponentInputs(inputs);
+    const parsedArgs: { [key: string]: any } = core.commandParse(
+      { args, argsObj },
+      {
+        boolean: ['help'],
+        alias: { help: 'h' },
+      },
+    );
+
+    if (parsedArgs?.data?.help) {
+      core.help(ENV_HELP_INFO);
+      return;
+    }
+    return await this.componentMethodCaller(
+      inputs,
+      'devsapp/infrastructure-as-template',
+      'env',
+      props,
+      args,
     );
   }
 

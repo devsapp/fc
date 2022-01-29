@@ -1,0 +1,25 @@
+edition: 1.0.0        #  命令行YAML规范版本，遵循语义化版本（Semantic Versioning）规范
+name: component-test   #  项目名称
+access: "default"  #  秘钥别名
+
+services:
+  srv-test: #  服务名称
+    component: ${path(../..)}  # 这里引入的是相对路径，正式配置替换成你自己的component名称即可
+    props:
+      #region: cn-beijing
+      service:
+        name: ${environment.name}
+        description: demo for fc-deploy component
+        internetAccess: true
+        logConfig:
+          project: ${environment.outputs.slsProject}
+          logstore: ${environment.outputs.slsLogStore}
+      function:
+        name: multi-envs
+        codeUri: ./
+        runtime: nodejs12
+        handler: index.handler
+        memorySize: 128
+        timeout: 60
+        instanceConcurrency: 1
+        instanceType: e1
