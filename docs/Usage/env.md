@@ -34,7 +34,7 @@
 # 快速使用
 ## 创建环境
 ```
-s env init --name fc-env-testing
+s env init --filename fc-env-testing.yaml
 ```
 执行成功后，会在本地.s目录下创建`env/fc-env-testing.yaml`描述文件，您可以查看并编辑该文件
 ```yaml
@@ -61,19 +61,44 @@ s env deploy --name fc-env-testing
 ```
 执行指令后，Serverless Devs会进行环境基础设施的部署，此时环境的所有信息都是持久化的，您不用担心本地配置文件删除后无法恢复的问题
 
-## 删除环境
-```
-s env remove --name fc-env-testing
-```
-执行指令后，Serverless Devs会分析环境是否已经部署了服务，当没有任何引用关系时，会进行环境基础设施的销毁。
-
 ## 指定环境部署服务
 ```
 s deploy --env fc-env-testing
 ```
 * 执行指令后，Serverless Devs会先判断环境是否已经部署，如果环境状态是ready的则会将`s.yaml`中的服务部署到该环境上；
 否则会先部署环境，再部署`s.yaml`中的服务
-* 当指定环境部署时，会使用环境的output信息覆盖服务的配置，比如`s.yaml`中指定了nasConfig并且环境也创建了NAS资源，则会使用环境提供的NAS资源
+* 当指定环境部署时，您可以使用环境的信息覆盖服务的配置：
+  * 如果要使用环境提供的SLS资源，可以在`s.yaml`中如下指定logConfig：
+    ```yaml
+    logConfig:
+      project: ${environment.outputs.slsProject}
+      logstore: ${environment.outputs.slsLogStore}
+    ```
+  * 如果要使用环境提供的NAS资源，可以在`s.yaml`中如下指定vpcConfig和nasConfig：
+    ```yaml
+    vpcConfig:
+      vpcId: ${environment.outputs.vpcId}
+      securityGroupId: ${environment.outputs.securityGroupId}
+      vswitchIds:
+      - ${environment.outputs.vswitchId}
+    nasConfig:
+      userId: 10003
+      groupId: 10003
+      mountPoints:
+      - serverAddr: ${environment.outputs.nasMountTargetId}
+        nasDir: /fc-deploy-service
+        fcDir: /mnt/auto
+    ```
+  * 在实际场景中，FC的服务概念往往和一个环境相关联，通常在创建服务时服务名要带上环境的后缀，比如**service-prod**。当指定环境部署时，您完全可以在`s.yaml`中如下设置，让您的服务和环境自动关联：
+    ```yaml
+      service:
+        name: ${environment.name}
+    ```
+    ```yaml
+      service:
+        name: my-fc-${environment.name}
+    ```
+  * 当指定了环境时，您无需在props中指定region，组件会自动保证将服务部署到环境所在的region。当`s.yaml`中的region和环境所在region不匹配时，会自动替换成环境所在region
 
 ### 使用差异化配置
 当您将服务部署到指定的环境上时，如果希望在该环境下使用差异化的配置(比如测试环境的函数内存为1024，生产环境的内存为2048)，可以通过`--overlays`参数
@@ -187,7 +212,7 @@ jobs:
 * 研发人员在使用平台过程中，仅需关注代码、数据、配置等程序相关内容：
   * 当需要访问数据库时，向平台索要数据连接串；
   * 当需进行日志采集时，仅需采集路径提交给平台，由平台操作日志服务完成日志采集配置挂载；
-  * 当需要使用持久化存储是，仅需将本地挂载路径提交给平台，由平台操作存储服务完成文件目录挂载；
+  * 当需要使用持久化存储时，仅需将本地挂载路径提交给平台，由平台操作存储服务完成文件目录挂载；
   * 当需要访问K8s集群时，向平台索要K8s访问凭证；
 
 因此，随着职责边界的不同，必然存在的天然的关注点分离，比较有效的做法是将各个环境进行模板化，比如：
@@ -275,7 +300,7 @@ services:
     component: devsapp/infrastructure-as-template 
     props:
       service:
-        name: service-demo
+        name: ${environment.name} #使用环境名作为服务名
         description: demo service
         internetAccess: true
       function:
@@ -287,16 +312,8 @@ services:
         timeout: 60
     actions: # 自定义执行逻辑
       pre-deploy: # 在deploy之前运行
-        - run: echo 'add your unit test command here'  # 要运行的命令行
-          path: ./code # 命令行运行的路径
-      post-deploy: # 在deploy之后运行
-        - run: echo 'add your publish command here'
-          path: ./code
-```
-
-#### 构建代码
-```
-s build
+        - run: s build  # 要运行的命令行
+          path: . # 命令行运行的路径
 ```
 
 #### 创建测试环境

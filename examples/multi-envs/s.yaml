@@ -8,7 +8,7 @@ services:
     props:
       #region: cn-beijing
       service:
-        name: ${environment.name}
+        name: my-service-${environment.name}
         description: demo for fc-deploy component
         internetAccess: true
         logConfig:
