@@ -18,7 +18,7 @@
 - **安全发布**：通过其他形式对函数进行变更，组件可以感知并安全更新；
 - **快速集成**：借助于 Serverless Devs 的集成性和被集成性，可以与常见的 [CI/CD 平台工具](https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/zh/cicd.md) 等集成；
 - **可观测性**：拥有完善的可观测性，在客户端可以通过[指标查询 metrics](docs/zh/command/metrics.md) 以及[日志查询 logs](docs/zh/command/logs.md) 等命令，进行业务的数据指标、执行日志等多重维度观测；
-- **多模调试**：提出了多模调试方案，可以同时满足开发态、运维态的不同调试需求；包括[本地运行](docs/zh/command/local.md)、[在线运行](docs/zh/command/invoke.md)、[云端调试](docs/zh/command/remote.md)、[端云联调](docs/zh/command/proxied.md)等功能；
+- **多模调试**：提出了多模调试方案，可以同时满足开发态、运维态的不同调试需求；包括[本地运行](docs/zh/command/local.md)、[在线运行](docs/zh/command/invoke.md)、[端云联调](docs/zh/command/proxied.md)等功能；
 
 # 快速开始
 
@@ -42,7 +42,7 @@
 |                                          |                                              | [内存&并发度探测 eval](docs/zh/command/eval.md)  | [层 layer](docs/zh/command/layer.md) |      [压测 stress](docs/zh/command/stress.md)               | 
 |                                          |                                              |   |  | [API调用 api](docs/zh/command/api.md)                     | 
 
-在使用函数计算（FC）组件时，还会涉及到资源描述文件的编写，关于函数计算（FC）组件的 Yaml 规范可以参考[**函数计算（FC） Yaml 规范文档**](docs/zh/yaml.md)，除此之外，在使用本组件的时候，还会有一些[小 Tips ](docs/zh/tips.md) 可供学习和了解，例如[如何部署大于50M的代码包](docs/zh/tips.md#超过50M的代码包如何部署)，[如何部署多个函数](docs/zh/tips.md#如何声明部署多个函数) ......
+在使用函数计算（FC）组件时，还会涉及到资源描述文件的编写，关于函数计算（FC）组件的 Yaml 规范可以参考[**函数计算（FC） Yaml 规范文档**](docs/zh/yaml.md)，除此之外，在使用本组件的时候，还会有一些[小 Tips ](docs/zh/tips.md) 可供学习和了解，例如 [如何部署多个函数](docs/zh/tips.md#如何声明部署多个函数) ......
 
 > 如果您之前是 Funcraft 或者 Fcli 的用户，您可以参考[**Serverless Devs 与 Funcraft、Fcli等工具的对比**](docs/zh/vs_fun_fcli.md) 文档，以便获取这三个工具之间的区别，以及如何快速[**从 Funcraft 迁移到 Serverless Devs 的方法**](docs/zh/vs_fun_fcli.md#从-funcraft-迁移到-serverless-devs-的方法)、[**从 Fcli 迁移到 Serverless Devs 的方法**](docs/zh/vs_fun_fcli.md#从-fcli-迁移到-serverless-devs-的方法)等。
 
