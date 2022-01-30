@@ -1,9 +1,0 @@
-name: fc-testing
-region: cn-zhangjiakou
-template: serverless-devs.com/alicloud-fc/environment
-roleArn: acs:ram::1835799444022432:role/serverlessdevsinfra-fc
-props:
-  namePrefix: ''
-  createLog: true
-  createBucket: false
-  createNas: true
