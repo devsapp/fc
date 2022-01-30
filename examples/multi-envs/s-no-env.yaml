@@ -6,26 +6,11 @@ services:
   srv-test: #  服务名称
     component: ${path(../..)}  # 这里引入的是相对路径，正式配置替换成你自己的component名称即可
     props:
-      #      region: cn-zhangjiakou
+      region: cn-beijing
       service:
-        name: my-svc-${environment.name}
+        name: my-service-fc-prod
         description: demo for fc-deploy component
         internetAccess: true
-        vpcConfig:
-          vpcId: ${environment.outputs.vpcId}
-          securityGroupId: ${environment.outputs.securityGroupId}
-          vswitchIds:
-            - ${environment.outputs.vswitchId}
-        logConfig:
-          project: ${environment.outputs.slsProject}
-          logstore: ${environment.outputs.slsLogStore}
-        nasConfig:
-          userId: 10003
-          groupId: 10003
-          mountPoints:
-            - serverAddr: ${environment.outputs.nasMountTargetId}
-              nasDir: /fc-deploy-service
-              fcDir: /mnt/auto
       function:
         name: multi-envs
         codeUri: ./
