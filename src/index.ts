@@ -182,9 +182,12 @@ export default class FcBaseComponent {
       }
     }
     if (deployRes.systemDomain) {
-      result.url = {
-        system_url: deployRes.systemDomain,
-      };
+      // https://github.com/devsapp/fc/issues/383
+      if (['custom', 'custom-container'].includes(props.function?.runtime) && !deployRes.customDomains) {
+        result.url = {
+          system_url: deployRes.systemDomain,
+        };
+      }
     }
     if (deployRes.customDomains) {
       result.url = result.url || {};
