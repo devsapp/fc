@@ -12,6 +12,12 @@
   </a>
 </p>
 
+
+<p align="center">
+  <span><b><a href="./README.md">中文</a> ｜ <a href="./README_en.md">English</a></b></span><br>
+</p>
+
+
 # 五大亮点
 
 - **全生命周期管理**：组件拥有项目的创建、开发、调试、部署、运维全生命周期管理能力；

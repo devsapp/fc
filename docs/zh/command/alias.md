@@ -12,6 +12,7 @@
 - [alias publish 命令](#alias-publish-命令)
   - [参数解析](#参数解析-2)
   - [操作案例](#操作案例-2)
+  - [Publish 主版本获取逻辑](#Publish-主版本获取逻辑)
 - [remove alias 命令](remove.md#remove-alias-命令)
 - [权限与策略说明](#权限与策略说明)
 
