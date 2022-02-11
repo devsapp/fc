@@ -5,13 +5,13 @@ The `alias` commands are used to perform operations on the aliases of functions.
 - [Command description](#Command-description)
 - [alias get command](#alias-get-command)
   - [Parameter description](#Parameter-description)
-  - [Example](#Example)
+  - [Examples](#Examples)
 - [alias list command](#alias-list-command)
   - [Parameter description](#Parameter-description-1)
-  - [Example](#Example-1)
+  - [Examples](#Examples-1)
 - [alias publish command](#alias-publish-command)
   - [Parameter description](#Parameter-description-2)
-  - [Example](#Example-2)
+  - [Examples](#Examples-2)
   - [Logic of the master version number](#Logic-of-the-master-version-number)
 - [remove alias command](remove.md#remove-alias-command)
 - [Permissions and policies](#Permissions-and-policies)
@@ -31,7 +31,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/alias.md
+  https://github.com/devsapp/fc/blob/main/docs/en/command/alias.md
 
 SubCommand List
 
@@ -64,7 +64,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/alias.md
+  https://github.com/devsapp/fc/blob/main/docs/en/command/alias.md
                                
 Options
 
@@ -84,7 +84,7 @@ Options Help
   C-Required: Required parameters in CLI mode
   Y-Required: Required parameters in Yaml mode
   Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/zh/yaml_and_cli.md
+  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/en/yaml_and_cli.md
 
 Examples with Yaml
 
@@ -102,11 +102,11 @@ Examples with CLI
 | region       | -            | No                      | Yes                    | The region. Valid  values: cn-hangzhou,  cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou,  cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1,  ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1,  eu-west-1, us-west-1, us-east-1, and ap-south-1. |
 | service-name | -            | No                      | Yes                    | The name of the  service.                                    |
 | alias-name   | -            | Yes                     | Yes                    | The name of the alias.                                       |
-| access       | a            | No                      | No                     | The AccessKey pair  that is used in the request. You can use the AccessKey pair that is  configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) or by using [environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息). |
+| access       | a            | No                      | No                     | The AccessKey pair  that is used in the request. You can use the AccessKey pair that is  configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-命令) or by using [environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#通过环境变量配置密钥信息). |
 | debug        | -            | No                      | No                     | The debug mode. If  you enable the dedug mode, more logs are returned. |
 | help         | h            | No                      | No                     | Views the help  information.                                 |
 
-### Example
+### Examples
 
 - **If the YAML description file of resources exist**, you can run the `s alias get --alias-name aliasName` command to obtain the details of the specified alias.
 - **If the YAML description file of resources do not exist (In CLI mode)**, you need to specify the region and the name of the service in the alias get command. Example: `s cli fc alias get --region cn-hangzhou --service-name fc-deploy-service --alias-name pre`.
@@ -140,7 +140,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/alias.md
+  https://github.com/devsapp/fc/blob/main/docs/en/command/alias.md
                                
 Options
 
@@ -160,7 +160,7 @@ Options Help
   C-Required: Required parameters in CLI mode
   Y-Required: Required parameters in Yaml mode
   Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/zh/yaml_and_cli.md
+  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/en/yaml_and_cli.md
 
 Examples with Yaml
 
@@ -178,12 +178,12 @@ Examples with CLI
 | region       | -            | No                    | Yes                  | The region. Valid values: `cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, and ap-south-1`. |
 | service-name | -            | No                    | Yes                  | The name of the service.                                     |
 | table        | -            | No                    | No                   | Specifies whether the details of the aliases are returned in a table. |
-| access       | a            | No                    | No                   | The AccessKey pair that is used in this request. You can use the AccessKey pair that is configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-command) or [the AccessKey pair that is configured by using environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#Configure the AccessKey pair by using environment variables). |
+| access       | a            | No                    | No                   | The AccessKey pair that is used in this request. You can use the AccessKey pair that is configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command) or [the AccessKey pair that is configured by using environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure the AccessKey pair by using environment variables). |
 | debug        | -            | No                    | No                   | The `debug` mode. If you enable the debug mode, more logs are returned. |
 | help         | h            | No                    | No                   | Views the help information.                                  |
 
 
-### Example
+### Examples
  
 - **If the YAML description file of resources exist**, you can run the `s alias list` command to obtain the details of aliases in a table.
 - **If the YAML description file of resources do not exist (In CLI mode)**, you need to specify the region and the name of the service in the alias list command. Example: `s cli fc alias list --region cn-hangzhou --service-name fc-deploy-service`.
@@ -228,7 +228,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/alias.md
+  https://github.com/devsapp/fc/blob/main/docs/en/command/alias.md
                                
 Options
 
@@ -253,7 +253,7 @@ Options Help
   C-Required: Required parameters in CLI mode
   Y-Required: Required parameters in Yaml mode
   Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/zh/yaml_and_cli.md
+  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/en/yaml_and_cli.md
 
 Examples with Yaml
 
@@ -278,11 +278,11 @@ Examples with CLI
 | version-id  | -    | No      | No     | The ID of the version. If the version-id and version-latest parameters are specified, you need to select a version number in interactive mode. | 
 | version-latest | -   | No      | No     | Specifies the latest version of the service. The version-id parameter takes precedence over the version-latest parameter. |
 | weight    | -    | No      | No     | The weight of the canary release version. This parameter is required when the gversion parameter is specified. |
-| access    | a    | No      | No     | The AccessKey pair that is used in the request. You can use the AccessKey pair that is configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-command) or [the AccessKey pair that is configured by using [environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#Configure the AccessKey pair by using environment variables). |
+| access    | a    | No      | No     | The AccessKey pair that is used in the request. You can use the AccessKey pair that is configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command) or [the AccessKey pair that is configured by using [environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure the AccessKey pair by using environment variables). |
 | debug    | -    | No      | No     | The `debug` mode. If you enable the debug mode, more logs are returned.            |
 | help     | h    | No      | No     | Views the help information.                         |
 
-### Example
+### Examples
 
 - **If the YAML description file of resources exist**, you can run the `s alias publish` command to publish or update the version.
 - **If the YAML description file of resources do not exist**, specify the region and the name of the service in the alias publish command. Example: ` s cli fc alias publish --region cn-hangzhou --service-name fc-deploy-service --alias-name pre --version-id 1`.

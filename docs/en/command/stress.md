@@ -1,37 +1,36 @@
-# Stress 命令
+# Stress commands
 
-`stress` 命令是对函数进行压测的命令。
+The `stress` commands are used to perform a stress testing on a function. 
 
-- [命令解析](#命令解析)
-- [相关原理](#相关原理)
-- [stress start 命令](#stress-start-命令)
-  - [参数解析](#参数解析)
-  - [操作案例](#操作案例)
-- [stress clean 命令](#stress-clean-命令)
-  - [参数解析](#参数解析-1)
-  - [操作案例](#操作案例-1)
-- [权限与策略说明](#权限与策略说明)
+- [Related principles](#Related-principles)
+- [ommand description](#ommand-description)
+- [stress start commands](#stress-start-commands)
+  - [Parameter description](#Parameter-description)
+  - [Examples](#Examples)
+- [stress clean commands](#stress-clean-commands)
+  - [Parameter description](#Parameter-description-1)
+  - [Examples](#Examples-1)
+- [Permissions and policies](#Permissions-and-policies)
 
 
-## 相关原理
+## Related principles
 
-`stress `命令的原理是通过创建辅助函数，对目标函数进行压测，架构简图如下所示：
+The `stress` commands create a helper function to perform a stress testing on a function. The following figure shows the workflow:
 
 ![](https://img.alicdn.com/imgextra/i1/O1CN017QO1In1lNearCqdo1_!!6000000004807-2-tps-669-460.png)
 
-1. `stress start` 指令会根据 FC 组件内置配置，创建辅助函数（辅助函数的服务名和函数名均为： `_DEFAULT_FC_STRESS_COMPONENT_SERVICE`）
+1. The `stress start` command creates a helper function based on the built-in configuration of the component. Both the name of the helper function and the name of the service to which the helper function belongs are `_DEFAULT_FC_STRESS_COMPONENT_SERVICE`.
 
-2. 辅助函数创建完成后，辅助函数被调用后就会基于 [Python Locust](https://docs.locust.io/en/stable/) 对目标函数发起压测试
->  Locust 需要的压测参数通过调用辅助函数时的 Payload  传递
+2. You can invoke the created helper function. Parameters for stress testing are included in the payload parameter. The helper function performs stress testing on the desired function based on [Python Locust](https://docs.locust.io/en/stable/).
 
-3. 完成测试之后，将压测结果返回给本地客户端
+3. After the stress testing, the results of stress testing are returned to the local environment.
 
-4. 本地客户端收到结果后，会展示压测结果， 并生成 html 报告文件
+4. After the local environment receives the results, the local environment displays the results and generates an HTML report.
 
 
-## 命令解析
+## Command description
 
-当执行命令`stress -h`/`stress --help`时，可以获取帮助文档：
+You can run the `stress -h` or `stress --help` command to obtain the help documentation:
 
 ```shell script
 Stress
@@ -44,7 +43,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/stress.md
+  https://github.com/devsapp/fc/blob/main/docs/en/command/stress.md
 
 SubCommand List
 
@@ -53,16 +52,16 @@ SubCommand List
 ```
 
 
-在该命令中，包括了两个子命令：
+The stress commands include the following subcommands:
+ 
+- [start: starts stress testing.](#stress-start-command)
+- [clean: cleans resources that are created during stress testing.](#stress-clean-command) 
 
-- [start：开始进行一键压测](#stress-start-命令)
-- [clean：清理压测时创建的资源](#stress-clean-命令)
+## stress start command
 
-## stress start 命令
-
-`stress start`: 对部署在函数计算上的函数进行压测的命令。
-
-当执行命令`stress start -h`/`stress start --help`时，可以获取帮助文档：
+The `stress start` command is used to perform stress testing on functions in Function Compute. 
+ 
+You can run the `stress start -h` or `stress start --help` command to obtain the help documentation:
 
 ```shell script
 Stress start
@@ -100,7 +99,7 @@ Options Help
   C-Required: Required parameters in CLI mode
   Y-Required: Required parameters in Yaml mode
   Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
+  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
 
 Examples with Yaml
 
@@ -112,33 +111,35 @@ Examples with CLI
   $ s cli fc stress start --num-user 6 --spawn-rate 10 --run-time 30 --function-type event --service-name serviceName --function-name functionName --qualifier LATEST --payload "hello world" --region cn-hangzhou                                                                    
 ```
 
-### 参数解析
+### Parameter description
 
-| 参数全称      | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
-| ------------- | -------- | -------------- | ------------- | ------------------------------------------------------------ |
-| region        | -        | 选填           | 必填          | 被压测的函数所处的地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| service-name  | -        | 选填           | 必填          |被压测的目标服务名|
-| function-name | -        | 选填           | 必填          |被压测的目标函数名|
-| function-type    | -        | 选填           | 选填          | 被压测的函数类型，取值范围：`event, http`，默认通过线上函数配置进行判断，如果判断失败可以手动指定                                              |
-| method        | -        | 选填           | 选填          |表示压测请求的方法，例如 GET、POST 等，仅对 function-type 为 http 的函数压测时有效|
-| payload       | -        | 选填           | 选填          |压测 event 函数：调用目标函数时传入的 event 事件数据;<br>压测 http 函数：调用目标函数时传入的请求体数据|
-| payload-file  | -        | 选填           | 选填          |将 payload 参数内容以文件形式传入|
-| num-user      | -        | 选填           | 选填          |压测时模拟并发用户的目标数量|
-| qualifier     | q        | 选填           | 选填          |表示目标函数的版本信息，仅对 event 函数压测有效|
-| run-time      | -        | 选填           | 选填          |压测时长|
-| spawn-rate    | -        | 选填           | 选填          |每秒新增模拟用户数|
-| url           | u        | 选填           | 选填          |被压测目标函数的 url，仅对 function-type 为 http 的函数压测有效|
-| invocation-type | -      | 选填         | 选填        | 调用类型：可选值 async、sync |
-| access        | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过 [config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug         | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help          | h        | 选填           | 选填          | 查看帮助信息                                                 |
+| Parameter       | Abbreviation | Required   in YAML mode | Required   in CLI mode | Description                                                  |
+| --------------- | ------------ | ----------------------- | ---------------------- | ------------------------------------------------------------ |
+| region          | -            | No                      | Yes                    | The region in which  the function that you want to perform stress testing is located. Valid  values: cn-hangzhou,  cn-beijing, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote,  cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2,  ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1,  us-west-1, us-east-1, and ap-south-1. |
+| service-name    | -            | No                      | Yes                    | The name of the  service to which the function that you want to perform stress testing  belongs. |
+| function-name   | -            | No                      | Yes                    | The name of the  function on which you want to perform stress testing. |
+| function-type   | -            | No                      | No                     | The type of the  function. Valid values: event  and http. By default, the type of the function  is determined by the function configurations that are configured in Function  Compute. If the type fails to be determined, you can specify a type. |
+| method          | -            | No                      | No                     | The request method of  the HTTP request, such as GET and POST. This parameter takes effect only on  stress testing for functions that are triggered by HTTP requests. |
+| payload         | -            | No                      | No                     | If you perform stress  testing on the function that is triggered by events, this parameter specifies  the event data that is passed in when you invoke the function. If you perform  stress testing on the function that is triggered by HTTP requests, this parameter  specifies the request body that is passed in when you invoke the function. |
+| payload-file    | -            | No                      | No                     | Passes in the value of  the payload parameter as a file.     |
+| num-user        | -            | No                      | No                     | The number of  simulated concurrent users during stress testing. |
+| qualifier       | q            | No                      | No                     | The version  information about the function on which you want to perform stress testing.  This parameter takes effect only when you perform stress testing on the  function that is triggered by events. |
+| run-time        | -            | No                      | No                     | The running duration  of stress testing.                     |
+| spawn-rate      | -            | No                      | No                     | The number of new  simulated users per second.               |
+| url             | u            | No                      | No                     | The URL of the  function on which the stress testing is performed. This parameter takes  effect only when you perform stress testing on the function that is triggered  by events. |
+| invocation-type | -            | No                      | No                     | The type of function  invocation. Valid values: async and sync. |
+| access          | a            | No                      | No                     | The AccessKey pair  that is used in the request. You can use the AccessKey pair that is  configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-命令) and the AccessKey pair that is [configured by using environment   variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#通过环境变量配置密钥信息). |
+| debug           | -            | No                      | No                     | The debug mode. If  you enable the debug mode, more log information is returned. |
+| help            | h            | No                      | No                     | Views the help  documentation.                               |
 
-### 操作案例
 
-- **有资源描述文件（Yaml）时**，可以直接执行`s stress start`开始对目标函数进行压测；
-- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定被压测目标函数的具体信息: 服务所在地区、服务名称以及函数名等，例如`s cli fc stress start --region cn-hangzhou --access myAccess --service-name fc-deploy-service --function-name http-trigger-py36 --function-type event`
 
-上述命令的执行结果示例：
+### Examples
+
+- **If a resource description file in YAML exists**, you can run the `s stress start` command to perform stress testing on the desired function.
+- **For the CLI mode in which no resource description file in YAML exists**, you need to specify the information such as the region in which the service is located, the service name, and the function name. Example: `s cli fc stress start --region cn-hangzhou --access myAccess --service-name fc-deploy-service --function-name http-trigger-py36 --function-type event`.
+
+The following example shows the output of the preceding command:
 
 ```text
 Html report flie: /Users/jiangyu/.s/cache/fc-stress/html/url#2021-11-10T15-48-10.html
@@ -163,17 +164,17 @@ fc-deploy-test:
   p99:         18
 ```
 
-根据返回信息（例如：` Execute 'open /Users/jiangyu/.s/cache/fc-stress/html/url#2021-11-10T15-48-10.html' on macos for html report with browser.`）可打开相对应的压测报告：
+You can check the stress testing report based on the returned information. Example: `Execute 'open /Users/jiangyu/.s/cache/fc-stress/html/url#2021-11-10T15-48-10.html' on macos for html report with browser`.
 
 ![图片alt](https://serverless-article-picture.oss-cn-hangzhou.aliyuncs.com/1636530616197_20211110075023373607.png)
 ![图片alt](https://serverless-article-picture.oss-cn-hangzhou.aliyuncs.com/1636530626182_20211110075035336150.png)
 
 
-## stress clean 命令
+## stress clean command
 
-`stress clean` 命令，用来清理发起压测的辅助资源(即一个辅助的service/function)以及本地的 html 压测报告。
+The `stress clean` command is used to clean up the resources that are used for stress testing and local HTML stress testing reports. 
 
-当执行命令`stress clean -h`时，可以获取帮助文档：
+You can run the `stress clean -h` command to obtain the help documentation.
 
 ```shell script
 Stress clean
@@ -203,7 +204,7 @@ Options Help
   C-Required: Required parameters in CLI mode
   Y-Required: Required parameters in Yaml mode
   Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
+  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
 
 Examples with Yaml
 
@@ -214,35 +215,35 @@ Examples with CLI
   $ s cli fc stress clean --region cn-hangzhou --service-name serviceName --function-name functionName -y 
 ```
 
-### 参数解析
+### Parameter description
+ 
+| Parameter    | Abbreviation | Required   in YAML mode | Required   in CLI mode | Description                                                  |
+| ------------ | ------------ | ----------------------- | ---------------------- | ------------------------------------------------------------ |
+| region | - | No | No | The region in which the function on which you want to perform stress testing is located. Valid values: `cn-hangzhou, cn-beijing, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, and ap-south-1`. | 
+| service-name | - | No | No | | 
+| function-name | - | No | No | | 
+| assume-yes | y | No | No | By default, `y` is selected. | 
+| access | a | No | No | The AccessKey pair that is used in the request. You can use the AccessKey pair that is configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add- command) and the [AccessKey pair that is configured by using environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md# Configure the AccessKey pair by using environment variables). | 
+| debug | - | No | No | The debug mode. If you enable the `debug` mode, more log information is returned. | 
+| help | h | No | No | Views the help information. | 
 
-| 参数全称      | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
-| ------------- | -------- | -------------- | ------------- | ------------------------------------------------------------ |
-| region        | -        | 选填           | 选填          | 被压测的函数所处的地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| service-name  | -        | 选填           | 选填          |                                                              |
-| function-name | -        | 选填           | 选填          |                                                              |
-| assume-yes    | y        | 选填           | 选填          | 在交互时，默认选择`y`                                        |
-| access        | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug         | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help          | h        | 选填           | 选填          | 查看帮助信息                                                 |
-
-### 操作案例
-
-- **有资源描述文件（Yaml）时**，可以直接执行`s stress clean`对压测创建的辅助资源进行清理；
-- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定被压测目标函数的具体信息: 服务所在地区、服务名称以及函数名等，例如`s cli fc stress clean --region cn-hangzhou --service-name fc-deploy-service --function-name http-trigger-py36 `；
-
-上述命令的执行结果示例：
+### Examples
+ 
+- **If a resource description file in YAML exists**, you can run the `s stress clean` command to clean up the helper function created for the stress testing.
+- **For the CLI mode in which no resource description file in YAML exists,** you need to specify the information such as the region in which the service is located, the service name, and the function name. Example: `s cli fc stress clean --region cn-hangzhou --service-name fc-deploy-service --function-name http-trigger-py36 `. 
+ 
+The following example shows the output of the preceding command:
 
 ```text
 Resource cleanup succeeded.
 ```
 
 
-## 权限与策略说明
+## Permissions and policies
 
-- `stress start` 命令需要部署并调用辅助函数，因此需要如下权限：
-  - 最大权限：`AliyunFCFullAccess`
-  - 最小权限：
+- The `stress start` command is used to deploy and invoke a helper function. The following permissions are required:
+  - Highest level of permissions：`AliyunFCFullAccess`
+  - Lowest level of permissions：
   ```shell
   {
     "Version": "1",
@@ -274,9 +275,9 @@ Resource cleanup succeeded.
     ]
   }
   ```
-- `stress clean` 命令需要删除辅助函数，因此需要如下权限：
-  - 最大权限：`AliyunFCFullAccess`
-  - 最小权限：
+-  The `stress clean` command is used to delete the helper function. The following permissions are required:
+  - Highest level of permissions：`AliyunFCFullAccess`
+  - Lowest level of permissions：
   ```shell
   {
     "Version": "1",

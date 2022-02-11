@@ -1,27 +1,27 @@
-# Layer 命令
+# Layer commands
 
-`layer` 命令是进行层操作的命令。
+The `layer` commands are used to perform layer operations. 
 
-- [命令解析](#命令解析)
-- [layer publish 命令](#layer-publish-命令)
-  - [参数解析](#参数解析)
-  - [操作案例](#操作案例)
-- [layer list 命令](#layer-list-命令)
-  - [参数解析](#参数解析-1)
-  - [操作案例](#操作案例-1)
-- [layer detail 命令](#layer-detail-命令)
-  - [参数解析](#参数解析-2)
-  - [操作案例](#操作案例-2)
-- [layer versions 命令](#layer-versions-命令)
-  - [参数解析](#参数解析-3)
-  - [操作案例](#操作案例-3)
-- [remove layer 命令](remove.md#remove-layer-命令)
-- [权限与策略说明](#权限与策略说明)
+- [Command description](#Command description)
+- [layer publish command](#layer-publish-command)
+  - [Parameters description](#Parametersdescription)
+  - [Examples](#examples)
+- [layer list command](#layer-list-command)
+  - [Parameters description](#Parametersdescription-1)
+  - [examples](#examples-1)
+- [layer detail command](#layer-detail-command)
+  - [Parameters description](#Parametersdescription-2)
+  - [Examples](#examples-2)
+- [layer versions command](#layer-versions-command)
+  - [Parameters description](#Parametersdescription-3)
+  - [Examples](#examples-3)
+- [remove layer command](remove.md#remove-layer-command)
+- [Permissions and policies](#Permissions-and-policies)
 
 
-## 命令解析
+## Command description
 
-当执行命令`layer -h`/`layer --help`时，可以获取帮助文档：
+You can run the `layer -h` or `layer --help` command to obtain the help document.
 
 ```shell script
 Layer
@@ -34,7 +34,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/layer.md
+  https://github.com/devsapp/fc/blob/main/docs/en/command/layer.md
 
 SubCommand List
 
@@ -44,18 +44,18 @@ SubCommand List
   versions       Get layer versions; help command [s layer verisons -h] 
 ```
 
-在该命令中，包括了四个子命令：
+Four commands are included: 
+ 
+- [publish: publishes a layer](#layer-publish-command)
+- [list: obtains the list of layers](#layer-list-command)
+- [detail: obtains layer details](#layer-detail-command)
+- [versions: obtains layer versions](#layer-versions-command) 
 
-- [publish：发布层](#layer-publish-命令)
-- [list：获取层列表](#layer-list-命令)
-- [detail：获取层详情](#layer-detail-命令)
-- [versions：获取层版本](#layer-versions-命令)
+## layer publish command
 
-## layer publish 命令
-
-`layer publish` 命令，是用于层发布的命令。
-
-当执行命令`layer publish -h`/`layer publish --help`时，可以获取帮助文档：
+The `layer publish` command is a used to publish a layer. 
+ 
+You can run the `layer publish -h` or `layer publish --help` command to obtain the help document.
 
 ```shell script
 Layer publish
@@ -68,7 +68,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/layer.md
+  https://github.com/devsapp/fc/blob/main/docs/en/command/layer.md
                                
 Options
 
@@ -91,7 +91,7 @@ Options Help
   C-Required: Required parameters in CLI mode
   Y-Required: Required parameters in Yaml mode
   Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
+  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
 
 Examples with Yaml
 
@@ -102,36 +102,39 @@ Examples with CLI
   $ s cli fc layer publish --region cn-hangzhou --layer-name testName --code ./src --compatible-runtime nodejs12,nodejs10,python3 
 ```
 
-### 参数解析
+### Parameters description
 
-| 参数全称           | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
-| ------------------ | -------- | -------------- | ------------- | ------------------------------------------------------------ |
-| region             | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| code               | -        | 必填           | 必填          | 层的代码                                                     |
-| compatible-runtime | -        | 选填           | 选填          | 支持的`runtime`，默认值为`nodejs12,nodejs10,nodejs8,nodejs6,python3,python2.7` |
-| description        |          | 选填           | 选填          | 发布层的描述                                                 |
-| layer-name         |          | 必填           | 必填          | 层的名字                                                     |
-| access             | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug              | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help               | h        | 选填           | 选填          | 查看帮助信息                                                 |
 
-### 操作案例
 
-- **有资源描述文件（Yaml）时**，可以直接执行`s layer publish`进行层的发布，例如` s layer publish --layer-name demo --code ./code`；
-- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区，例如`s cli fc layer publish --region cn-hangzhou --layer-name demo --code ./code` ；
+| Full   parameter   | Short   form | Required   in YAML mode | Required   in CLI mode | Description                                                  |
+| ------------------ | ------------ | ----------------------- | ---------------------- | ------------------------------------------------------------ |
+| region             | -            | Optional                | Required               | The region. Valid  values: cn-hangzhou,  cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou,  cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1,  ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1,  eu-west-1, us-west-1, us-east-1, and ap-south-1 |
+| code               | -            | Required                | Required               | The code of the layer.                                       |
+| compatible-runtime | -            | Optional                | Optional               | Supported runtime.  Default value: nodejs12,nodejs10,nodejs8,nodejs6,python3,python2.7 |
+| description        |              | Optional                | Optional               | The description of the  layer.                               |
+| layer-name         |              | Required                | Required               | The name of the layer.                                       |
+| access             | a            | Optional                | Optional               | The key used in this  request. You can use the key configured by running the [config](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-命令) command or [the key configured to the   environment variable](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#通过环境变量配置密钥信息). |
+| debug              | -            | Optional                | Optional               | Enables debug mode to  obtain more logs.                     |
+| help               | h            | Optional                | Optional               | Obtains the help  document.                                  |
 
-上述命令的执行结果示例：
+
+### Examples
+
+- **If the YAML file is available**, you can directly run the `s layer publish` command to publish a layer. Example: `s layer publish --layer-name demo --code ./code`.
+- **If the YAML file is unavailable**, you must specify the region where the service is deployed in the command. Example: `s cli fc layer publish --region cn-hangzhou --layer-name demo --code ./code`.
+
+The output of the preceding command:
 
 ```text
 fc-deploy-test: 544c887879c38e5d0afcaf8b4f8f348e#demo#1
 ```
 
 
-## layer list 命令
+## layer list command
 
-`layer list` 命令，是用于获取层列表的命令。
+The `layer list` command is used to obtain the list of layers. 
 
-当执行命令`layer list -h`/`layer list --help`时，可以获取帮助文档：
+You can run the `layer list -h` or `layer list--help` command to obtain the help document.
 
 ```shell script
 Layer list
@@ -144,7 +147,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/layer.md
+  https://github.com/devsapp/fc/blob/main/docs/en/command/layer.md
                            
 Options
 
@@ -164,7 +167,7 @@ Options Help
   C-Required: Required parameters in CLI mode
   Y-Required: Required parameters in Yaml mode
   Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
+  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
 
 Examples with Yaml
 
@@ -175,23 +178,23 @@ Examples with CLI
   $ s cli fc layer list --region cn-hangzhou       
 ```
 
-### 参数解析
+### Parameters description
 
-| 参数全称 | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
+| Full parameter | Short form | Required in YAML mode | Required in CLI mode | Description                           |
 | -------- | -------- | -------------- | ------------- | ------------------------------------------------------------ |
-| region   | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| prefix   | -        | 选填           | 选填          |                                                              |
-| table    | -        | 选填           | 选填          |                                                              |
-| access   | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug    | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help     | h        | 选填           | 选填          | 查看帮助信息                                                 |
+| region  | -    | Optional      | Required     | The region. Valid values: cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, and ap-south-1` |
+| prefix  | -    | Optional      | Optional     |                               |
+| table  | -    | Optional      | Optional     |                               |
+| access  | a    | Optional      | Optional     | The key used in this request. You can use the key configured by running the config command (https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add) or the key configured to the environment variable (https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Use environment variables to configure keys). |
+| debug  | -    | Optional      | Optional     | Enables debug mode to obtain more logs.             |
+| help   | h    | Optional      | Optional     | Obtains the help document.                         |
 
-### 操作案例
+### Examples
 
-- **有资源描述文件（Yaml）时**，可以直接执行`s layer list`获取层列表；
-- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区，例如`s cli fc layer list --region cn-hangzhou`；
-
-上述命令的执行结果示例：
+- **If the YAML file is available**, you can directly run the `s layer list` command to view the list of layers.
+- **If the YAML file is unavailable**, you must specify the region where the service is deployed in the command. Example: `s cli fc layer list --region cn-hangzhou`. 
+ 
+ The output of the preceding command: 
 
 ```text
 fc-deploy-test: 
@@ -209,11 +212,11 @@ fc-deploy-test:
       - python2.7
 ```
 
-## layer detail 命令
+## layer detail command
 
-`layer detail` 命令，是用户获取指定层和版本详情的命令。
+The `layer detail` command is used to obtain details of a specified layer and its versions. 
 
-当执行命令`layer detail -h`/`layer detail --help`时，可以获取帮助文档：
+You can run the `layer detail -h` or `layer detail --help` command to obtain the help document.
 
 ```shell script
 Layer detail
@@ -226,7 +229,7 @@ Usage
                 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/layer.md
+  https://github.com/devsapp/fc/blob/main/docs/en/command/layer.md
                            
 Options
     
@@ -246,7 +249,7 @@ Options Help
   C-Required: Required parameters in CLI mode
   Y-Required: Required parameters in Yaml mode
   Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
+  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
 
 Examples with Yaml
 
@@ -257,23 +260,23 @@ Examples with CLI
   $ s cli fc layer detail --region cn-hangzhou --layer-name layerName --version-id 1 
 ```
 
-### 参数解析
+### Parameters description
 
-| 参数全称   | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
+| Full parameter  | Short form | Required in YAML mode | Required in CLI mode | Description                           |
 | ---------- | -------- | -------------- | ------------- | ------------------------------------------------------------ |
-| region     | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| layer-name | -        | 必填           | 必填          | 层名称                                                       |
-| version-id | -        | 必填           | 必填          | 层版本                                                       |
-| access     | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug      | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help       | h        | 选填           | 选填          | 查看帮助信息                                                 |
-
+| region   | -    | Optional      | Required     | The region. Valid values: `cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
+| layer-name | -     | Required      | Required     | The name of the layer.                            |
+| version-id | -    | Required      | Required     | The version of the layer.                            |
+| access   | a    | Optional     | Optional     | The key used in this request. You can use the key configured by running the config command (https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add) or the key configured to the environment variable (https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Use environment variables to configure keys). |
+| debug   | -    | Optional      | Optional     | Enables debug mode to obtain more logs.            |
+| help    | h    | Optional      | Optional     | Obtains the help document.                         |
+ 
 ### 操作案例
 
-- **有资源描述文件（Yaml）时**，可以直接执行`s layer detail --layer-name layerName --version-id versionId`获取指定层和指定版本详情；
-- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区，例如`s layer detail --layer-name demo --version-id 1 -h`；
-
-上述命令的执行结果示例：
+- **If the YAML file is available**, you can directly run the `s layer detail --layer-name layerName --version-id versionId` command to view details about the specified layer and the specified version.
+- **If the YAML file is unavailable**, you must specify the region where the service is deployed in the command. Example: `s layer detail --layer-name demo --version-id 1 -h`. 
+ 
+The output of the preceding command: 
 
 ```text
 fc-deploy-test: 
@@ -297,11 +300,11 @@ fc-deploy-test:
   arn:               544c887879c38e5d0afcaf8b4f8f348e#demo#1
 ```
 
-## layer versions 命令
+## layer versions command
 
-`layer versions` 命令，是获取指定层版本列表的命令。
+The `layer versions` command is used to obtain the versions of a specified layer. 
 
-当执行命令`layer version -h`/`layer versions --help`时，可以获取帮助文档：
+You can run the `layer version -h` or `layer versions --help` command to obtain the help document.
 
 ```shell script
 Layer versions
@@ -314,7 +317,7 @@ Usage
                 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/layer.md
+  https://github.com/devsapp/fc/blob/main/docs/en/command/layer.md
                            
 Options
     
@@ -334,7 +337,7 @@ Options Help
   C-Required: Required parameters in CLI mode
   Y-Required: Required parameters in Yaml mode
   Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
+  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
 
 Examples with Yaml
 
@@ -345,23 +348,23 @@ Examples with CLI
   $ s cli fc layer versions --region cn-hangzhou --layer-name layerName
 ```
 
-### 参数解析
+### Parameters description
 
-| 参数全称   | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
+| Full parameter  | Short form | Required in YAML mode | Required in CLI mode | Description                           |
 | ---------- | -------- | -------------- | ------------- | ------------------------------------------------------------ |
-| region     | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| layer-name | -        | 必填           | 必填          | 层名称                                                       |
-| table      | -        | 选填           | 必填          | 是否以表格形式输出                                           |
-| access     | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug      | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help       | h        | 选填           | 选填          | 查看帮助信息                                                 |
-
+| region   | -    | Optional      | Required     | The region. Valid values: cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, and ap-south-1 |
+| layer-name | -    | Required      | Required     | The name of the layer.                            |
+| table   | -    | Optional      | Required     | Specifies whether to display outputs in a table.                      |
+| access   | a    | Optional      | Optional     | The key used in this request. You can use the key configured by running the config command (https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add) or the key configured to the environment variable (https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Use environment variables to configure keys). |
+| debug   | -    | Optional     | Optional     | Enables debug mode to obtain more logs.            |
+| help    | h    | Optional      | Optional     | Obtains the help document.                         |
+ 
 ### 操作案例
 
-- **有资源描述文件（Yaml）时**，可以直接执行`s layer versions --layer-name layerName`获取指定层中的版本列表；
-- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区，例如`s cli fc layer versions --layer-name layerName --region cn-hangzhou`；
-
-上述命令的执行结果示例：
+- **If the YAML file is available**, you can directly run the `s layer versions --layer-name layerName` command to view the list of versions of the specified layer. 
+- **If the YAML file is unavailable**, you must specify the region where the service is deployed in the command. Example: `s cli fc layer versions --layer-name layerName --region cn-hangzhou`. 
+ 
+The output of the preceding command: 
 
 ```text
 fc-deploy-test: 
@@ -379,11 +382,11 @@ fc-deploy-test:
       - python2.7
 ```
 
-## 权限与策略说明
+## Permissions and policies
 
-- `layer list`、`layer version`与`layer detail` 命令所需要的权限策略： `AliyunFCReadOnlyAccess`
+- Required permissions for the `layer list`, `layer version`, and `layer detail` commands: `AliyunFCReadOnlyAccess`.
 
-- `layer publish` 命令所需要的权限策略：
+- Required permissions for the `layer publish` command:
 
   ```yaml
   {

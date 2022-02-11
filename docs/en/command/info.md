@@ -1,15 +1,15 @@
-# Info 命令
+# Info commands
 
-`info` 命令是查看函数线上资源详情的命令。
+The `info` command is used to view the online resource information about a function. 
 
-- [命令解析](#命令解析)
-  - [参数解析](#参数解析)
-  - [操作案例](#操作案例)
-- [权限与策略说明](#权限与策略说明)
+- [Command description](#Command-description)
+  - [Parameter description](#Parameter-description)
+  - [Examples](#Examples)
+- [Permissions and policies](#Permissions-and-policies)
 
-## 命令解析
+## Command description
 
-当执行命令`info -h`/`info --help`命令时，可以获取帮助文档：
+You can run the `info -h` or `info --help` command to obtain the help documentation:
 
 ```shell script
 Info
@@ -22,7 +22,7 @@ Usage
                     
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/info.md
+  https://github.com/devsapp/fc/blob/main/docs/en/command/info.md
 
 Options
 
@@ -43,7 +43,7 @@ Options Help
   C-Required: Required parameters in CLI mode
   Y-Required: Required parameters in Yaml mode
   Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
+  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
 
 Examples with Yaml
 
@@ -55,24 +55,24 @@ Examples with CLI
   $ s cli fc info --region region --service-name serviceName --function-name functionName --trigger-name triggerName  
 ```
 
-### 参数解析
-
-| 参数全称      | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
+### Parameter description 
+ 
+| Parameter   | Abbreviation | Required in YAML mode | Required in CLI mode | Description                           |
 | ------------- | -------- | -------------- | ------------- | ------------------------------------------------------------ |
-| region        | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| service-name  | -        | 选填           | 必填          | 服务名                                                       |
-| function-name | -        | 选填           | 选填          | 函数名                                                       |
-| trigger-name | -        | 选填           | 选填          | 触发器名                                                       |
-| access        | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug         | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help          | h        | 选填           | 选填          | 查看帮助信息                                                 |
+| region    | -    | No      | Yes     | The region of the service. Valid values: `cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, and ap-south-1`. |
+| service-name | -    | No      | Yes     | The name of the service.                            |
+| function-name | -    | No      | No     | The name of the function.                            |
+| trigger-name | -    | No      | No     | The name of the trigger.                            |
+| access    | a    | No      | No     | The AccessKey pair that is used in the request. You can use the AccessKey pair that is configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command), or the AccessKey pair that is configured by using [environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure the AccessKey pair by using environment variables). |
+| debug     | -    | No      | No     | The debug mode. If you enable the `debug` mode, more log information is returned.            |
+| help     | h    | No      | No     | The help documentation.                         |
 
-### 操作案例
+### Examples
+ 
+- **If the resource description file (YAML) exists**, you can run the `s info` command to view the details of your desired function.
+- **If the resource description file (YAML) does not exist (only CLI mode available)**, you need to specify the desired service name and desired function name in the command based on your business requirements. Example: `s cli fc info --region cn-hangzhou --service-name fc-deploy-service --function-name http-trigger-py36`.
 
-- **有资源描述文件（Yaml）时**，可以直接执行`s info`获取函数详情；
-- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要根据需求，指定服务名，函数名等信息，例如`s cli fc info --region cn-hangzhou --service-name fc-deploy-service --function-name http-trigger-py36`；
-
-上述命令的执行结果示例：
+Sample output: 
 
 ```text
 fc-deploy-test:
@@ -106,7 +106,7 @@ fc-deploy-test:
             - GET
 ```
 
-如果需要只查询服务详情，只需要指定`--service-name`即可，例如执行命令`s cli fc info --region cn-hangzhou --service-name fc-deploy-service`的示例输出为：
+如To query only the details of a service, you need to only specify `--service-name`. For example, if you run the `s cli fc info --region cn-hangzhou --service-name fc-deploy-service` command, the following sample output is returned:
 
 ```
 region: cn-hangzhou
@@ -120,6 +120,6 @@ service:
     project: 1583208943291465-cn-hangzhou-logproject
 ```
 
-## 权限与策略说明
+## Permissions and policies
 
-使用该命令时，推荐配置系统策略：`AliyunFCReadOnlyAccess`
+When you use the command, we recommend that you configure the system policy `AliyunFCReadOnlyAccess`.

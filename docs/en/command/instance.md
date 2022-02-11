@@ -5,10 +5,10 @@ The `instance` command supports logging into active instances; including viewing
 - [Command description](#Command-description)
 - [instance list command](#instance-list-command)
   - [Parameter description](#Parameter-description)
-  - [Example](#Example)
+  - [Examples](#Examples)
 - [instance exec command](#instance-exec-command)
   - [Parameter description](#Parameter-description-1)
-  - [Example](#Example-1)
+  - [Examples](#Examples-1)
 - [Scene case](#scene-case)
 
 ## Command description
@@ -91,11 +91,11 @@ Examples with CLI
 | service-name | - | optional | required | service name |
 | function-name | - | optional | required | function name |
 | qualifier | - | optional | optional | version or alias, default is `LATEST` |
-| access | a | Optional | Optional | The key used in this request can be used via the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh /command/config.md#config-add-command) configured key information, and [key information configured to environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master /docs/zh/command/config.md#Configure key information through environment variables) |
+| access | a | Optional | Optional | The key used in this request can be used via the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh /command/config.md#config-add-command) configured key information, and [key information configured to environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master /docs/en/command/config.md#Configure key information through environment variables) |
 | debug | - | optional | optional | open `debug` mode, will output more log information |
 | help | h | Optional | Optional | View help information |
 
-### Example
+### Examples
 
 - **When there is a resource description file (Yaml)**, you can directly execute `s instance list` to get the alias list;
 - **Pure command line form (when there is no resource description Yaml file)**, you need to specify the service region and service name, such as `s cli fc instance list --region cn-hangzhou --service-name fc-deploy- service --function-name test-instance`
@@ -178,15 +178,16 @@ Examples with CLI
 | qualifier | - | optional | optional | version or alias, default is `LATEST` |
 | stdin | i | optional | optional | open stdin |
 | tty | t | optional | optional | assign a terminal device |
-| access | a | Optional | Optional | The key used in this request can be used via the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh /command/config.md#config-add-command) configured key information, and [key information configured to environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master /docs/zh/command/config.md#Configure key information through environment variables) |
+| access | a | Optional | Optional | The key used in this request can be used via the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh /command/config.md#config-add-command) configured key information, and [key information configured to environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master /docs/en/command/config.md#Configure key information through environment variables) |
 | debug | - | optional | optional | open `debug` mode, will output more log information |
 | help | h | Optional | Optional | View help information |
 
-### Example
+### Examples
 
 - **When there is a resource description file (Yaml)**
 1. First execute `s instance list` to get the instance list of the function, and select the instance ID that needs to be operated.
 2. Execute the command
+
 ````
 $ s instance exec --instance-id instanceId ls
 

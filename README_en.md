@@ -27,10 +27,12 @@
 
 🙋 To use the FC component, perform the following steps:    
 ❶ [Run the following command to install Serverless Devs](https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/en/install.md): `npm install -g @serverless-devs/s`  
+> After installation, you also need to configure the key. Please refer to [Secret Configuration Document](./en/config.md)
+
 ❷ Run the following command to initialize the `Hello World` project of Function Compute: `s init devsapp/start-fc-http-python3` 
 ❸ Determine whether to deploy the project. To deploy the project, enter `y` and press Enter.     
 
-> The [Create an application](en/quick_start_application.md) topic introduces the following projects: [**Serverless: Hello World**](docs/en/quick_start_application.md#serverlesshello-world)[**Artificial intelligence: object detection**](docs/en/quick_start_application.md#人工智能目标检测), [**Traditional framework: Django-based blog project**](docs/en/quick_start_application.md#传统框架基于django的博客项目). The [Quick start](docs/en/quick_start_function.md) topic introduces the following features: [**deploy operation**](docs/en/quick_start_function.md#一键部署), [**Calls**](docs/en/quick_start_function.md#一键部署), and [**Observability**](docs/en/quick_start_function.md#一键部署). 
+> The [Create an application](en/quick_start_application.md) topic introduces the following projects: [**Serverless: Hello World**](docs/en/quick_start_application.md#serverlesshello-world)[**Artificial intelligence: object detection**](docs/en/quick_start_application.md#AITarget-Detection), [**Traditional framework: Django-based blog project**](docs/en/quick_start_application.md#Traditional-framework-based-on-django-blog-project). The [Quick start](docs/en/quick_start_function.md) topic introduces the following features: [**deploy operation**](docs/en/quick_start_function.md#deploy-operation), [**Invoke**](docs/en/quick_start_function.md#Invoke), and [**Observability**](docs/en/quick_start_function.md#Observability). 
  
 # Commands
 
@@ -48,9 +50,9 @@ The following table lists the commands that are supported by the FC component:
 |                                    |                                  |                                      |                                      | [api   (to be supported)](docs/en/command/api.md) |
 
 
-When you use the FC component, you must edit resource description files. For more information about the YAML specifications of the FC component, see [**YAML specifications**](docs/en/yaml.md). You also need to read some tips on the FC component, such as [Declaration and deployment of multiple functions](docs/en/tips.md#如何声明部署多个函数). For more information, see [Common tips](en/tips.md).
+When you use the FC component, you must edit resource description files. For more information about the YAML specifications of the FC component, see [**YAML specifications**](docs/en/yaml.md). You also need to read some tips on the FC component, such as [Declaration and deployment of multiple functions](docs/en/tips.md#Declaration-and-deployment-of-multiple-functions). For more information, see [Common tips](en/tips.md).
 
-> If you are using Funcraft or Function Compute command line interface (fcli), you can view the differences among Funcraft, fcli, and Serverless Devs from [**Compare among Serverless Devs, fcli, and Funcraft**](docs/en/vs_fun_fcli.md). To migrate resources from Funcraft or fcli to Serverless Devs, see [**Migrate resources from Funcraft to Serverless Devs**](docs/en/vs_fun_fcli.md#从-funcraft-迁移到-serverless-devs-的方法) and [**Migrate resources from fcli to Serverless Devs**](docs/en/vs_fun_fcli.md#从-fcli-迁移到-serverless-devs-的方法) 
+> If you are using Funcraft or Function Compute command line interface (fcli), you can view the differences among Funcraft, fcli, and Serverless Devs from [**Compare among Serverless Devs, fcli, and Funcraft**](docs/en/vs_fun_fcli.md). To migrate resources from Funcraft or fcli to Serverless Devs, see [**Migrate resources from Funcraft to Serverless Devs**](docs/en/vs_fun_fcli.mdMigrate-resources-from-Funcraft-to-Serverless-Dev) and [**Migrate resources from fcli to Serverless Devs**](docs/en/vs_fun_fcli.mdMigrate-resources-from-fcli-to-Serverless-Devs) 
 
 # Contribution
 

@@ -1,23 +1,23 @@
-# Ondemand 命令
+# Ondemand commands
 
-`ondemand` 命令是对函数计算按量资源操作的命令。
+You can use the `ondemand` command to manage on-demand resources of Function Compute. 
 
-- [命令解析](#命令解析)
-- [ondemand get 命令](#ondemand-get-命令)
-  - [参数解析](#参数解析)
-  - [操作案例](#操作案例)
-- [ondemand list 命令](#ondemand-list-命令)
-  - [参数解析](#参数解析-1)
-  - [操作案例](#操作案例-1)
-- [ondemand put 命令](#ondemand-put-命令)
-  - [参数解析](#参数解析-2)
-  - [操作案例](#操作案例-2)
-- [remove ondemand 命令](remove.md#remove-ondemand-命令)
-- [权限与策略说明](#权限与策略说明)
+- [Command description](#Command-description)
+- [ondemand get command](#ondemand-get-command)
+  - [Parameters decription](#Parameters-decription)
+  - [Examples](#Examples)
+- [ondemand list command](#ondemand-list-command)
+  - [Parameters decription](#Parameters-decription-1)
+  - [Examples](#Examples-1)
+- [ondemand put command](#ondemand-put-command)
+  - [Parameters decription](#Parameters-decription-2)
+  - [Examples](#Examples-2)
+- [remove ondemand command](remove.md#remove-ondemand-command)
+- [Permissions and policies](#Permissions-and-policies)
 
-## 命令解析
+## Command description
 
-当执行命令`ondemand -h`/`ondemand --help`时，可以获取帮助文档：
+You can run the `ondemand -`h or `ondemand --help` command to query the following help information:
 
 ```shell script
 OnDemand
@@ -30,7 +30,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/ondemand.md
+  https://github.com/devsapp/fc/blob/main/docs/en/command/ondemand.md
 
 SubCommand List
 
@@ -39,18 +39,17 @@ SubCommand List
   put       Put resource on-demand; help command [s ondemand put -h]
 ```
 
+The ondemand command consists of three subcommands:
+ 
+- [get: Queries the details of on-demand resources.](#ondemand-get-command)
+- [list: Queries the lists of on-demand resources.](#ondemand-list-command)
+- [put: Publishes or updates configurations of on-demand resources.](#ondemand-put-command)
 
-在该命令中，包括了三个子命令：
+## ondemand get command
 
-- [get：查看按量资源详情](#ondemand-get-命令)
-- [list：获取按量资源列表](#ondemand-list-命令)
-- [put：发布/更新按量资源](#ondemand-put-命令)
-
-## ondemand get 命令
-
-`ondemand get` 命令，是获取服务指定按量资源详情的命令。
-
-当执行命令`ondemand get -h`/`ondemand get --help`时，可以获取帮助文档：
+The `ondemand get` command is used to query the details of specified on-demand resources. 
+ 
+You can run the `ondemand get -h` or `ondemand get --help`command to query the following help information:
 
 ```shell script
 Ondemand get
@@ -63,7 +62,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/ondemand.md
+  https://github.com/devsapp/fc/blob/main/docs/en/command/ondemand.md
                                
 Options
 
@@ -84,7 +83,7 @@ Options Help
   C-Required: Required parameters in CLI mode
   Y-Required: Required parameters in Yaml mode
   Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/zh/yaml_and_cli.md
+  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/en/yaml_and_cli.md
 
 Examples with Yaml
 
@@ -95,24 +94,26 @@ Examples with CLI
   $ s cli fc ondemand get --region cn-hangzhou --service-name serviceName --function-name functionName --qualifier qualifier 
 ```
 
-### 参数解析
+### Parameters decription
 
-| 参数全称      | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
-| ------------- | -------- | -------------- | ------------- | ------------------------------------------------------------ |
-| region        | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| service-name  | -        | 选填           | 必填          | 服务名                                                       |
-| function-name | -        | 选填           | 必填          | 函数名                                                       |
-| qualifier     | -        | 必填           | 必填          | 版本，支持LATEST和别名                                       |
-| access        | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug         | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help          | h        | 选填           | 选填          | 查看帮助信息                                                 |
+| Full   name   | Abbreviation | Required   in YAML mode | Required   in CLI mode | Description                                                  |
+| ------------- | ------------ | ----------------------- | ---------------------- | ------------------------------------------------------------ |
+| region        | -            | No                      | Yes                    | The  region. Valid values: cn-hangzhou,  cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou,  cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1,  ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1,  eu-west-1, us-west-1, us-east-1, and ap-south-1. |
+| service-name  | -            | No                      | Yes                    | The  name of the service.                                    |
+| function-name | -            | No                      | Yes                    | The  name of the function.                                   |
+| qualifier     | -            | Yes                     | Yes                    | The  version. You can specify LATEST or an alias.            |
+| access        | a            | No                      | No                     | The  key that is used in the request. You can use a key that is configured by  using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-命令), or [a key that is configured in   environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#通过环境变量配置密钥信息). |
+| debug         | -            | No                      | No                     | Enables  the debug mode to output more log information.      |
+| help          | h            | No                      | No                     | Views  the help information.                                 |
 
-### 操作案例
 
-- **有资源描述文件（Yaml）时**，可以直接执行`s ondemand get --qualifier qualifier`进行指定的版本按量资源详情获取；
-- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区以及服务名称，例如`s cli fc ondemand get --region cn-hangzhou --service-name fc-deploy-service --qualifier qualifier`；
+### Examples
 
-上述命令的执行结果示例：
+- **If a YAML resource description file exists,** you can run the `s ondemand get --qualifier qualifier` command to obtain the details of on-demand resources based on a specified version.
+
+- **If no YAML file exists and you use the command-line interface (CLI) mode**, you must specify the region and name of the service. Example: `s cli fc ondemand get --region cn-hangzhou --service-name fc-deploy-service --qualifier qualifier`;
+
+Sample output:
 
 ```text
 fc-deploy-test: 
@@ -123,11 +124,11 @@ fc-deploy-test:
   maximumInstanceCount: 1
 ```
 
-## ondemand list 命令
+## ondemand list command
 
-`ondemand list` 命令，是列举按量资源列表的命令。
+The `ondemand list` command is used to query the lists of on-demand resources. 
 
-当执行命令`ondemand list -h`/`ondemand list --help`时，可以获取帮助文档：
+You can run the `ondemand list -h` or `ondemand list --help` command to query the following help information:
 
 ```shell script
 OnDemand list
@@ -140,7 +141,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/ondemand.md
+  https://github.com/devsapp/fc/blob/main/docs/en/command/ondemand.md
                                
 Options
 
@@ -160,7 +161,7 @@ Options Help
   C-Required: Required parameters in CLI mode
   Y-Required: Required parameters in Yaml mode
   Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/zh/yaml_and_cli.md
+  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/en/yaml_and_cli.md
 
 Examples with Yaml
 
@@ -171,23 +172,23 @@ Examples with CLI
   $ s cli fc ondemand list --region cn-hangzhou --service-name serviceName
 ```
 
-### 参数解析
-
-| 参数全称     | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
+### Parameters description
+ 
+| Full name   | Abbreviation | Required in YAML mode | Required in CLI mode | Description                           |
 | ------------ | -------- | -------------- | ------------- | ------------------------------------------------------------ |
-| region       | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| service-name | -        | 选填           | 必填          | 服务名                                                       |
-| table        | -        | 选填           | 选填          | 是否以表格形式输出                                           |
-| access       | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug        | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help         | h        | 选填           | 选填          | 查看帮助信息                                                 |
+| region    | -    | No      | Yes     | The region. Valid values: `cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, and ap-south-1`.|
+| service-name | -    | No      | Yes     | The name of the service.                            |
+| table    | -    | No      | No     | Exports the query results in a table.                      |
+| access    | a    | No      | No     | The key that is used in the request. You can use a key that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add), or [a key that is configured in environment variables.](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure keys by using environment variables) |
+| debug    | -    | No      | No     | Enables the debug mode to output more log information.            |
+| help     | h    | No      | No     | Views the help information.                         |
+ 
+### Examples
 
-### 操作案例
+- **If a YAML resource description file exists**, you can run the `s ondemand list` command to query the lists of on-demand resources.
+- **If no YAML file exists and you use the CLI mode**, you must specify the region and name of the service. Example: `s cli fc ondemand list --region cn-hangzhou --service-name fc-deploy-service`
 
-- **有资源描述文件（Yaml）时**，可以直接执行`s ondemand list`获取按量资源列表；
-- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区以及服务名称，例如`s cli fc ondemand list --region cn-hangzhou --service-name fc-deploy-service`
-
-上述命令的执行结果示例：
+Sample output:
 
 ```text
 fc-deploy-test: 
@@ -199,7 +200,7 @@ fc-deploy-test:
     maximumInstanceCount: 1
 ```
 
-如果指定了`--table`参数，输出示例：
+Sample output if you specify the `--table` parameter:
 
 ```text
   ┌───────────────────┬───────────────────┬──────────────┬──────────────────────┐
@@ -209,11 +210,11 @@ fc-deploy-test:
   └───────────────────┴───────────────────┴──────────────┴──────────────────────┘
 ```
 
-## ondemand put 命令
+## ondemand put command
 
-`ondemand put` 命令，是对别名进行发布和更新的命令。
+The `ondemand put` command is used to publish or update an alias. 
 
-当执行命令`ondemand put -h`/`ondemand put --help`时，可以获取帮助文档：
+You can run the `ondemand put -h` or `ondemand put --help` command to query the following help information:
 
 ```shell script
 Ondemand put
@@ -226,7 +227,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/ondemand.md
+  https://github.com/devsapp/fc/blob/main/docs/en/command/ondemand.md
                                
 Options
 
@@ -248,7 +249,7 @@ Options Help
   C-Required: Required parameters in CLI mode
   Y-Required: Required parameters in Yaml mode
   Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/zh/yaml_and_cli.md
+  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/en/yaml_and_cli.md
 
 Examples with Yaml
 
@@ -259,25 +260,26 @@ Examples with CLI
   $ s cli fc ondemand put --region cn-hangzhou --service-name serviceName --function-name functionName --qualifier alias --max 1
 ```
 
-### 参数解析
-
-| 参数全称      | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
+### Parameters description
+ 
+| Full name   | Abbreviation | Required in YAML mode | Required in CLI mode | Description                           |
 | ------------- | -------- | -------------- | ------------- | ------------------------------------------------------------ |
-| region        | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| service-name  | -        | 选填           | 必填          | 服务名                                                       |
-| function-name | -        | 选填           | 选填          | 函数名                                                       |
-| qualifier     | -        | 必填           | 必填          | 版本，支持LATEST和别名                                       |
-| max           | -        | 必填           | 必填          | 最大实例数量                                                 |
-| access        | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug         | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help          | h        | 选填           | 选填          | 查看帮助信息                                                 |
-
-### 操作案例
-
-- **有资源描述文件（Yaml）时**，可以直接执行`s ondemand put --qualifier qualifier` 进行按量资源配置；
-- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区以及服务名称、函数名，例如` s cli fc ondemand put --qualifier LATEST --max 1`；
-
-上述命令的执行结果示例：
+| region    | -    | No      | Yes     | The region. Valid values: `cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, and ap-south-1`.|
+| service-name | -    | No      | Yes     | The name of the service.                            |
+| function-name | -    | No      | No     | The name of the function.                            |
+| qualifier   | -    | Yes      | Yes     | The version. You can specify LATEST or an alias.                    |
+| max      | -    | Yes      | Yes     | The maximum number of instances.                         |
+| access    | a    | No      | No     | The key that is used in the request. You can use a key that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add), or [a key that is configured in environment variables.](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure keys in environment variables) |
+| debug     | -    | No      | No     | Enables th debug mode to output more log information.            |
+| help     | h    | No      | No     | Views the help information.                         |
+ 
+###  Examples
+ 
+- **If a YAML resource description file exists**, you can run the `s ondemand put --qualifier qualifier` command to configure on-demand resources.
+- **If no YAML file exists and you use the CLI mode**, you must specify the service name, the service region, and the function name. Example: ` s cli fc ondemand put --qualifier LATEST --max 1`.
+ 
+Sample output:
+ 
 
 ```text
 fc-deploy-test: 
@@ -285,11 +287,11 @@ fc-deploy-test:
   maximumInstanceCount: 1
 ```
 
-## 权限与策略说明
+## Permissions and policies
 
-- `ondemand list` 与 `ondemand get` 命令所需要的权限策略： `AliyunFCReadOnlyAccess`
+- The `AliyunFCReadOnlyAccess` permission policy is required to run the `ondemand list` or `ondemand get` command.
 
-- `ondemand put` 命令所需要的权限策略：
+- The following permission policy is required to run the `ondemand put` command:
 
   ```yaml
   {

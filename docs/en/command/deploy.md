@@ -1,30 +1,30 @@
-# Deploy 命令
+# Deploy commands
 
-`deploy` 命令是对函数资源进行部署的命令，即将本地在  [`Yaml` 文件](../yaml.md) 中声明的资源部署到线上。
+The `deploy` command is used to deploy function resources. You can use this command to deploy on-premises resources that are specified in a [YAML file](../yaml.md) to an online environment. 
+ 
+  - [Command description](#Command description)
+    - [Parameters description](#Parameters-description)
+    - [Examples](#Examples)
+    - [Precautions](#Precautions)
+  - [deploy service command](#deploy-service-command)
+    - [Parameters description](#Parameters-description-1)
+    - [Examples](#Examples-1)
+  - [deploy function command](#deploy-function-command)
+    - [Parameters description](#Parameters-description-2)
+    - [Examples](#Examples-2)
+  - [deploy trigger command](#deploy-trigger-command)
+    - [Parameters description](#Parameters-description-3)
+    - [Examples](#Examples-3)
+  - [deploy domain command](#deploy-domain-command)
+    - [Parameters description](#Parameters-description-4)
+    - [Examples](#Examples-4)
+  - [Permissions and policies](#Permissions and policies)
 
-  - [命令解析](#命令解析)
-    - [参数解析](#参数解析)
-    - [操作案例](#操作案例)
-    - [注意事项](#注意事项)
-  - [deploy service 命令](#deploy-service-命令)
-    - [参数解析](#参数解析-1)
-    - [操作案例](#操作案例-1)
-  - [deploy function 命令](#deploy-function-命令)
-    - [参数解析](#参数解析-2)
-    - [操作案例](#操作案例-2)
-  - [deploy trigger 命令](#deploy-trigger-命令)
-    - [参数解析](#参数解析-3)
-    - [操作案例](#操作案例-3)
-  - [deploy domain 命令](#deploy-domain-命令)
-    - [参数解析](#参数解析-4)
-    - [操作案例](#操作案例-4)
-  - [权限与策略说明](#权限与策略说明)
+> For more information about [how to deploy multiple functions](../tips.md#Declaration-and-deployment-of-multiple-functions), see [Tips](../tips.md). 
 
-> 关于 [如何部署多个函数](../tips.md#如何部署多个函数) 等问题，请参考 [Tips 文档](../tips.md) 。
+## Command description
 
-## 命令解析
-
-当执行命令`deploy -h`/`deploy --help`时，可以获取帮助文档：
+You can run the `deploy -h` or `deploy --help` command to query the following help information:
 
 ```shell script
 Deploy
@@ -38,7 +38,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/deploy.md
+  https://github.com/devsapp/fc/blob/main/docs/en/command/deploy.md
 
 Options
 
@@ -59,7 +59,7 @@ Options Help
   C-Required: Required parameters in CLI mode
   Y-Required: Required parameters in Yaml mode
   Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
+  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
 
 SubCommand 
   service    Only deploy service resources; help command [s deploy service -h]                                                        
@@ -76,31 +76,30 @@ Examples with Yaml
 ```
 
 
-在该命令中，包括了四个子命令：
+The deploy command consists of the following subcommands:
+ 
+- [service: deploys only services](#deploy-service-command)
+- [function: deploys only functions](#deploy-function-command)
+- [trigger: deploys only triggers](#deploy-trigger-command)
+- [domain: deploys only domains](#deploy-domain-command)
+ 
 
-- [service：只部署服务部分](#deploy-service-命令)
-- [function：只部署函数部分](#deploy-function-命令)
-- [trigger：只部署触发器部分](#deploy-trigger-命令)
-- [domain：只部署域名部分](#deploy-domain-命令)
+### Parameters description
 
-
-### 参数解析
-
-| 参数全称   | 参数缩写 | Yaml模式下必填 | 参数含义                                                     |
-| ---------- | -------- | -------------- | ------------------------------------------------------------ |
-| type       | -        | 选填           | 部署类型，可以选择`code, config`                           |
-| use-local  | -        | 选填           | 优先使用本地配置进行部署                                     |
-| use-remote | -        | 选填           | 优先使用线上配置进行部署                                     |
-| assume-yes | y        | 选填           | 在交互时，默认选择`y`                                        |
-| access     | a        | 选填           | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug      | -        | 选填           | 打开`debug`模式，将会输出更多日志信息                        |
-| help       | h        | 选填           | 查看帮助信息                                                 |
-
-### 操作案例
-
-**有资源描述文件（Yaml）时**，可以直接执行`s deploy `进行资源部署，部署完成的输出示例：
-
-
+ | Full name  | Abbreviation | Required in YAML mode | Description                           |
+ | ---------- | -------- | -------------- | ------------------------------------------------------------ |
+ | type    | -    | No      | The deployment type. Valid values:code and config.              |
+ | use-local | -    | No      | Preferentially uses on-premises configurations to deploy resources.                   |
+ | use-remote | -    | No     | Preferentially uses online configurations to deploy resources.                   |
+ | assume-yes | y    | No      | Selects yes by default for additional operations                    |
+ | access   | a    | No      | The key that is used in the request. You can use a key that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add), or a [key that is configured in environment variables.](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure keys by using environment variables) |
+ | debug   | -    | No      | Enables the debug mode to output more log information.            |
+ | help    | h    | No      | Views help information.                         |
+ 
+### Examples
+ 
+**If a YAML resource description file exists**, you can run the `s deploy ` command to deploy resources. Sample output:
+ 
 ```text
 fc-deploy-test: 
   region:   cn-hangzhou
@@ -123,60 +122,59 @@ fc-deploy-test:
       name: httpTrigger
 ```
 
-### 注意事项
+### Precautions
 
-在进行资源部署时，会涉及到一定的特殊情况，可以参考以下描述：
+Take note of the following information about specific deployment scenarios:
 
-- **只需要部署/更新代码**，可以增加`--type code`参数；只需要部署/更新配置，可以增加`--type config`参数；
+- **Only need to deploy/update code**, you can add `--type code` parameter; only need to deploy/update configuration, you can add `--type config` parameter;
 
-- **在部署时可能会涉及到交互式操作**：
+- **Interactive operations may be involved when deploying**:
 
-  - 当检测到线上的资源与本地所记录的上次部署的资源不一致时，会提醒是否使用线上资源还是使用线下资源；如果不想出现该交互式操作，可以在执行命令时增加`--use-local`/`--use-remote`参数，此时会优先使用本地配置/线上配置，例如：
+   - When it is detected that the online resources are inconsistent with the last deployed resources recorded locally, it will remind you whether to use online resources or offline resources; if you do not want this interactive operation, you can add `- when executing the command -use-local`/`--use-remote` parameter, in this case, the local configuration/online configuration will be used first, for example:
+       
+    | Whether online services   exist | Whether online functions   exist | Recorded on-premises   services | Recorded on-premises   functions | On-premises services to   deploy | On-premises functions to   deploy | Direct deployment             | use-local                                  | use-remote                                                   |
+    | ------------------------------- | -------------------------------- | ------------------------------- | -------------------------------- | -------------------------------- | --------------------------------- | ----------------------------- | ------------------------------------------ | ------------------------------------------------------------ |
+    | Yes                             | Yes                              | Same as online services         | Same as online functions         | -                                | -                                 | No additional operation       | Online services and functions  are updated | Online services and functions  remain unchanged              |
+    | Yes                             | No                               | Same as online services         | -                                | -                                | -                                 | No additional operation       | Online services and functions  are updated | Online services remain  unchanged, and online functions are created |
+    | No                              | No                               | -                               | -                                | -                                | -                                 | No additional operation       | Online services and functions  are updated | Online services and functions  are created                   |
+    | Yes                             | Yes                              | Different from online  services | Different from online  functions | Same as online services          | Same as online functions          | No additional operation       | Online services and functions  are updated | Online services and functions  remain unchanged              |
+    | Yes                             | Yes                              | Different from online  services | Different from online  functions | Different from online  services  | Different from online  functions  | Additional operation required | Online services and functions  are updated | Online services and functions  remain unchanged              |
 
-    | 线上服务 | 线上函数 | 本地记录的服务 | 本地记录的函数 | 本地要部署服务 | 本地要部署函数 | 直接部署 | `use-local`              | `use-remote`                     |
-    | -------- | -------- | -------------- | -------------- | -------- |  -------- |  -------- | ------------------------ | ------------------------------------ |
-    | 存在     | 存在     | 与线上一致     | 与线上一致     |     -     |      -     | 无交互   | 线上服务与函数将会被更新 | 线上服务与函数不做任何操作           |
-    | 存在     | 不存在   | 与线上一致     | -              |     -     |    -     | 无交互   | 线上服务与函数将会被更新 | 线上服务不做任何操作，函数将会被创建 |
-    | 不存在   | 不存在   | -              | -              |  -              |  -              | 无交互   | 线上服务与函数将会被更新 | 线上服务与函数将会被创建             |
-    | 存在   | 存在   | 与线上不一致   | 与线上不一致   | 与线上一致   | 与线上一致   | 无交互   | 线上服务与函数将会被更新 | 线上服务与函数不做任何操作 |
-    | 存在   | 存在   | 与线上不一致   | 与线上不一致   | 与线上不一致   | 与线上不一致   | 有交互   | 线上服务与函数将会被更新 | 线上服务与函数不做任何操作 |
-
-
-    > 线上服务&线上函数：指的是已经部署过的服务和函数；
+    > Online services & online functions: refers to services and functions that have been deployed;
     >
-    > 本地记录的服务&本地记录的函数：指的是上次在本地执行部署时，所记录的状态，如果是第一次执行，则无状态被记录；
+    > Locally recorded service & locally recorded function: refers to the state recorded when the deployment was performed locally last time, if it is the first time, no state is recorded;
 
-    **功能设计初衷**：由于某些业务在部署/更新时，涉及到团队多人操作，如果默认本地配置强制覆盖线上配置，可能导致通过其他途径/客户端进行更新的内容失效，为了更加安全、规范的更新函数资源，所以引入了线上配置异常感知的能力。
+    **Original intention of function design**: Since some services involve multiple team operations during deployment/update, if the default local configuration forcibly overrides the online configuration, it may cause the content to be updated through other channels/clients to become invalid. In order to More secure and standardized update function resources, so the ability to configure abnormal awareness online is introduced.
 
-    > 在进行部署时，交互的形式示例如下：
+    > When deploying, an example of the form of interaction is as follows:
     >
-    > ```
+    > ````
     > Local Last Deploy status => Online status
-    > 
+    >
     > description: "this is a test" => "this is a test console"
-    > 
+    >
     > ? Remote function: http-trigger-py36 is inconsistent with the config you deployed last time, deploy it with local config or remote
     > config? (Use arrow keys)
-    > ❯ use local 
-    > use remote 
-    > ```
+    > ❯ use local
+    > use remote
+    > ````
     >
-    > 此时表示，本地上次部署之后，到本地部署之间，线上的函数资源被通过其他的途径修改过，修改的内容是`description`，上次部署时的内容是`this is a test`，现在线上的配置是`this is a test console`，如果选择：
+    > At this time, it means that after the last local deployment and between the local deployment, the online function resources have been modified by other means. The modified content is `description`, and the content of the last deployment is `this is a test` `, the online configuration is now `this is a test console`, if you choose:
     >
-    > - `use local`：将会默认使用本地最新的配置，进行覆盖线上的配置的；
-    > - `use remote`：将不会对这一部分做更新操作；
+    > - `use local`: The latest local configuration will be used by default to override the online configuration;
+    > - `use remote`: this part will not be updated;
 
-  - 当部署时，检测到一些额外的配置需要添加到流程中时，会提醒是否要添加配置等；例如，Python语言的项目，在部署之前进行了`s build`操作，在部署的时候涉及到将部分依赖路径放入环境变量中，以助于依赖的生效；如果此时不想出现交互式操作，可以增加`-y`/`--assume-yes`参数；
+  - When deploying, when it detects that some additional configuration needs to be added to the process, it will remind you whether to add the configuration, etc.; for example, the Python language project, the `s build` operation is performed before deployment, and the deployment involves Put some dependency paths into environment variables to help dependencies take effect; if you do not want interactive operations at this time, you can add `-y`/`--assume-yes` parameters;
 
-  > 在CI/CD工具/平台进行项目部署时，为了避免交互式操作带来的影响，可以按需考虑使用`--use-local`/`use-remote`和`-y`/`--assume-yes`参数组合，例如在明确优先使用本地配置，且默认同意所有额外操作时，可以通过`s deploy --use-local -y`进行资源部署。
+  > When deploying projects on CI/CD tools/platforms, in order to avoid the impact of interactive operations, you can consider using `--use-local`/`use-remote` and `-y`/`-- The assume-yes` parameter combination, for example, when the local configuration is explicitly preferred and all additional operations are agreed by default, resource deployment can be performed through `s deploy --use-local -y`.
 
-  > ⚠️ 注意：在进行函数部署时，如果域名配置为`auto`，系统会默认分配测试域名，该域名仅供测试使用，不对其稳定性等做保证，Serverless Devs FC 组件在日后有权对该域名进行回收等处理，如是线上业务，生产需求业务，强烈建议绑定自己的自定义域名。
+  > ⚠️ Note: When deploying a function, if the domain name is configured as `auto`, the system will assign a test domain name by default. This domain name is only for testing, and its stability is not guaranteed. The Serverless Devs FC component has the right to Domain name recycling and other processing, such as online business, production demand business, it is strongly recommended to bind your own custom domain name.
 
-## deploy service 命令
+## deploy service command
 
-`deploy service` 命令，是部署服务资源的命令。
+The `deploy service` command is a command to deploy service resources.
 
-当执行命令`deploy service -h`/`deploy service --help`时，可以获取帮助文档：
+When executing the command `deploy service -h`/`deploy service --help`, you can get help documentation:
 
 ```shell script
 Deploy service
@@ -189,7 +187,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/deploy.md
+  https://github.com/devsapp/fc/blob/main/docs/en/command/deploy.md
 
 Options
 
@@ -209,7 +207,7 @@ Options Help
   C-Required: Required parameters in CLI mode
   Y-Required: Required parameters in Yaml mode
   Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
+  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
 
 Examples with Yaml
 
@@ -218,21 +216,21 @@ Examples with Yaml
 
 ```
 
-### 参数解析
-
-| 参数全称    | 参数缩写 | Yaml模式下必填 | 参数含义                                                     |
+### Parameters description
+ 
+| Full name  | Abbreviation | Required in YAML mode | Description                           |
 | ----------- | -------- | -------------- | ------------------------------------------------------------ |
-| use-local   | -        | 选填           | 优先使用本地配置进行部署                                     |
-| user-remote | -        | 选填           | 优先使用线上配置进行部署                                     |
-| assume-yes  | y        | 选填           | 在交互时，默认选择`y`                                        |
-| access      | a        | 选填           | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug       | -        | 选填           | 打开`debug`模式，将会输出更多日志信息                        |
-| help        | h        | 选填           | 查看帮助信息                                                 |
-
-### 操作案例
-
-**有资源描述文件（Yaml）时**，可以直接执行`s deploy service `进行服务的部署，部署完成的输出示例：
-
+| use-local  | -    | No      | Preferentially uses on-premises configurations to deploy resources.                   |
+| user-remote | -    | No      | Preferentially uses online configurations to deploy resources.                   |
+| assume-yes | y    | No      | Selects yes by default for additional operations.                    |
+| access   | a    | No      | The key that is used in the request. You can use a key that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add), or a [key that is configured in environment variables.](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure keys by using environment variables) |
+| debug    | -    | No      | Enables the debug mode to output more log information.            |
+| help    | h    | No      | Views help information.                         |
+ 
+### Examples
+ 
+**If a YAML resource description file exists**, you can run the `s deploy service ` command to deploy services. Sample output:
+ 
 ```text
 fc-deploy-test: 
   region:  cn-hangzhou
@@ -240,13 +238,13 @@ fc-deploy-test:
     name: fc-deploy-service
 ```
 
-> 在进行服务资源部署时，可能会涉及到交互式操作，相关的描述参考[ deploy 命令 注意事项](#注意事项) 中的`在部署时可能会涉及到交互式操作`。
+> When you deploy services, additional operations may be required. For more information, see the Additional operations may be required when you deploy resources section in [Precautions](#Precautions). 
 
-## deploy function 命令
+## deploy function commands
 
-`deploy function` 命令，是部署函数的命令。
+The `deploy function` command is the command to deploy the function.
 
-当执行命令`deploy function -h`/`deploy function --help`时，可以获取帮助文档：
+When executing the command `deploy function -h`/`deploy function --help`, you can get help documentation:
 
 ```shell script
 $ s cli fc deploy function -h
@@ -261,7 +259,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/deploy.md
+  https://github.com/devsapp/fc/blob/main/docs/en/command/deploy.md
 
 Options
 
@@ -282,7 +280,7 @@ Options Help
   C-Required: Required parameters in CLI mode
   Y-Required: Required parameters in Yaml mode
   Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
+  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
 
 Examples with Yaml
 
@@ -291,23 +289,22 @@ Examples with Yaml
 
 ```
 
-### 参数解析
-
-| 参数全称    | 参数缩写 | Yaml模式下必填 | 参数含义                                                     |
+### Parameters description
+ 
+| Full name  | Abbreviation | Required in YAML mode | Description                           |
 | ----------- | -------- | -------------- | ------------------------------------------------------------ |
-| type        | -        | 选填           | 部署类型，可以选择`code, config`                           |
-| use-local   | -        | 选填           | 使用本地配置进行部署                                         |
-| user-remote | -        | 选填           |                                                              |
-| skip-push | -        | 选填           |  跳过自动推送镜像   |
-| assume-yes  | y        | 选填           | 在交互时，默认选择`y`                                        |
-| access      | a        | 选填           | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug       | -        | 选填           | 打开`debug`模式，将会输出更多日志信息                        |
-| help        | h        | 选填           | 查看帮助信息                                                 |
-
-### 操作案例
-
-**有资源描述文件（Yaml）时**，可以直接执行`s deploy function `进行函数的部署，部署完成的输出示例：
-
+| type    | -    | No      | The deployment type. Valid values: code and config.              |
+| use-local  | -    | No      | Uses on-premises configurations to deploy resources.                     |
+| user-remote | -    | No      |                               |
+| assume-yes | y    | No      | Selects yes by default for additional operations.                    |
+| access   | a    | No      | The key that is used in the request. You can use a key that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add), or a [key that is configured in environment variables.](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure keys by using environment variables) |
+| debug    | -     | No      | Enables the debug mode to output more log information.            |
+| help    | h    | No      | Views help information.                         |
+ 
+### Examples
+ 
+**If a YAML resource description file exists**, you can run the `s deploy function ` command to deploy functions. Sample output:
+ 
 ```text
 fc-deploy-test: 
   region:   cn-hangzhou
@@ -321,14 +318,14 @@ fc-deploy-test:
     timeout:    60
 ```
 
-> 在进行函数资源部署时，可能会涉及到交互式操作，相关的描述参考[ deploy 命令 注意事项](#注意事项) 。
+> When you deploy functions, additional operations may be required. For more information, see [Precautions](#Precautions). 
 
 
-## deploy trigger 命令
+## deploy trigger command
 
-`deploy trigger` 命令，是部署函数触发器的命令。
+The `deploy trigger` command is the command to deploy the function trigger.
 
-当执行命令`deploy trigger -h`/`deploy trigger --help`时，可以获取帮助文档：
+When executing the command `deploy trigger -h`/`deploy trigger --help`, you can get help documentation:
 
 ```shell script
 $ s cli fc deploy trigger -h
@@ -343,7 +340,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/deploy.md
+  https://github.com/devsapp/fc/blob/main/docs/en/command/deploy.md
 
 Options
 
@@ -364,7 +361,7 @@ Options Help
   C-Required: Required parameters in CLI mode
   Y-Required: Required parameters in Yaml mode
   Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
+  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
 
 Examples with Yaml
 
@@ -373,22 +370,22 @@ Examples with Yaml
   $ s deploy trigger --trigger-name name1 --trigger-name name2
 ```
 
-### 参数解析
-
-| 参数全称     | 参数缩写 | Yaml模式下必填 | 参数含义                                                     |
+### Parameters
+ 
+| Full name   | Abbreviation | Required in YAML mode | Parameter                           |
 | ------------ | -------- | -------------- | ------------------------------------------------------------ |
-| trigger-name | -        | 选填           | 仅部署指定的触发器名称 |
-| use-local    | -        | 选填           | 使用本地配置进行部署                                         |
-| user-remote  | -        | 选填           |                                                              |
-| assume-yes   | y        | 选填           | 在交互时，默认选择`y`                                        |
-| access       | a        | 选填           | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug        | -        | 选填           | 打开`debug`模式，将会输出更多日志信息                        |
-| help         | h        | 选填           | 查看帮助信息                                                 |
-
-### 操作案例
-
-**有资源描述文件（Yaml）时**，可以直接执行`s deploy trigger `进行触发器的部署，部署完成的输出示例：
-
+| trigger-name | -    | No      | The names of the triggers that you want to deploy. |
+| use-local  | -    | No      | Uses on-premises configurations to deploy resources.                     |
+| user-remote | -    | No      |                               |
+| assume-yes  | y    | No      | Selects yes by default for additional operations.                     |
+| access    | a    | No      | The key that is used in the request. You can use a key that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add), or a [key that is configured in environment variables.](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure keys by using environment variables) |
+| debug    | -    | No      | Enables the debug mode to output more log information.            |
+| help     | h    | No      | Views help information.                         |
+ 
+### Examples
+ 
+**If a YAML resource description file exists**, you can run the `s deploy trigger ` command to deploy triggers. Sample output: 
+ 
 ```text
 fc-deploy-test: 
   region:   cn-hangzhou
@@ -404,19 +401,19 @@ fc-deploy-test:
       name: httpTrigger
 ```
 
-> 在进行服务资源部署时，可能会涉及到交互式操作，相关的描述参考[ deploy 命令 注意事项](#注意事项) 中的`在部署时可能会涉及到交互式操作`。
+> When you deploy services, additional operations may be required. For more information, see the Additional operations may be required when you deploy resources section in [Precautions](#Precautions). 
 
-单独部署某个指定的触发器，可以通过增加`--trigger-name`参数实现，参考命令：
+You can use the --trigger-name parameter to deploy a specified trigger. Example:
 
 ```
 $ s deploy trigger --trigger-name httpTrigger
 ```
 
-## deploy domain 命令
+## deploy domain command
 
-`deploy domain` 命令，是部署自定义域名的命令。
+The `deploy domain` command is a command to deploy a custom domain name.
 
-当执行命令`deploy domain -h`/`deploy domain --help`时，可以获取帮助文档：
+When executing the command `deploy domain -h`/`deploy domain --help`, you can get help documentation:
 
 ```shell script
 $ s cli fc deploy domain -h
@@ -431,7 +428,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/deploy.md
+  https://github.com/devsapp/fc/blob/main/docs/en/command/deploy.md
 
 Options
 
@@ -452,29 +449,29 @@ Options Help
   C-Required: Required parameters in CLI mode
   Y-Required: Required parameters in Yaml mode
   Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
+  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
 
 Examples with Yaml
 
   $ s deploy domain 
 ```
 
-### 参数解析
-
-| 参数全称    | 参数缩写 | Yaml模式下必填 | 参数含义                                                     |
+### Parameters description
+ 
+| Full name  | Abbreviation | Required in YAML mode | Description                           |
 | ----------- | -------- | -------------- | ------------------------------------------------------------ |
-| domain      | -        | 选填           | 仅操作指定域名 |
-| use-local   | -        | 选填           | 使用本地配置进行部署 |
-| user-remote | -        | 选填           | 使用线上配置 |
-| assume-yes  | y        | 选填           | 在交互时，默认选择`y`                                        |
-| access      | a        | 选填           | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug       | -        | 选填           | 打开`debug`模式，将会输出更多日志信息                        |
-| help        | h        | 选填           | 查看帮助信息                                                 |
-
-### 操作案例
-
-**有资源描述文件（Yaml）时**，可以直接执行`s deploy domain `进行自定义域名的部署，部署完成的输出示例：
-
+| domain   | -    | No      | The domain names that you want to deploy. |
+| use-local  | -    | No      | Uses on-premises configurations to deploy resources. |
+| user-remote | -    | No      | Uses online configurations to deploy resources. |
+| assume-yes | y    | No      | Selects yes by default for additional operations.                    |
+| access   | a    | No      | The key that is used in the request. You can use a key that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add), or a [key that is configured in environment variables.](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure keys by using environment variables) |
+| debug    | -    | No      | Enables the debug mode to output more log information.            |
+| help    | h    | No      | Views help information.                         |
+ 
+### Examples
+ 
+ **If a YAML resource description file exists**, you can run the `s deploy domain ` command to deploy custom domain names. Sample output:
+ 
 ```text
 fc-deploy-test: 
   region:   cn-hangzhou
@@ -488,14 +485,14 @@ fc-deploy-test:
         domain: http://http-trigger-py36.fc-deploy-service.1583208943291465.cn-hangzhou.fc.devsapp.net
 ```
 
-> 在进行服务资源部署时，可能会涉及到交互式操作，相关的描述参考[ deploy 命令 注意事项](#注意事项) 中的`在部署时可能会涉及到交互式操作`。
+> When you deploy services, additional operations may be required. For more information, see the Additional operations may be required when you deploy resources section in [Precautions](#Precautions). 
 
-单独部署某个指定的自定义域名，可以通过增加`--domain`参数实现，参考命令：
+If you want to deploy a specified custom domain name, you can add the `--domain` parameter to your command. Example:
 
 ```
 $ s deploy domain --domain http-trigger-py36.fc-deploy-service.1583208943291465.cn-hangzhou.fc.devsapp.net
 ```
 
-## 权限与策略说明
+## Permissions and policies
 
-`deploy`命令的权限，更多是和 Yaml 中所配置的参数有一定的关系，所以此处可以参考 [Yaml 规范文档](../yaml.md) 中关于不同字段与权限的配置。
+The permissions of the deploy command are related to the parameters that are configured in a YAML file. For more information about the configurations of fields and permissions in a YAML file, see [YAML specifications](../yaml.md). 

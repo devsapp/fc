@@ -1,30 +1,30 @@
-# Nas 命令
+# Nas commands
 
-`nas` 命令是对硬盘挂载（NAS）产品操作的接口，包括上传文件、下载文件、执行自定义命令等能力。
+The `nas` commands are used to perform operations on Apsara File Storage NAS (NAS), including uploading files, downloading files, and running custom commands. 
 
-- [命令解析](#命令解析)
-- [nas init 命令](#nas-init-命令)
-  - [参数解析](#参数解析)
-  - [操作案例](#操作案例)
-- [nas upload 命令](#nas-upload-命令)
-  - [参数解析](#参数解析-1)
-  - [操作案例](#操作案例-1)
-- [nas download 命令](#nas-download-命令)
-  - [参数解析](#参数解析-2)
-  - [操作案例](#操作案例-2)
-- [nas command 命令](#nas-command-命令)
-  - [参数解析](#参数解析-3)
-  - [操作案例](#操作案例-3)
-- [权限与策略说明](#权限与策略说明)
+- [Command description](#Command-description)
+- [nas init command](#nas-init-command)
+  - [Parameter description](#Parameter-description)
+  - [Examples](#Examples)
+- [nas upload command](#nas-upload-command)
+  - [Parameter description](#Parameter-description-1)
+  - [Examples](#Examples-1)
+- [nas download command](#nas-download-command)
+  - [Parameter description](#Parameter-description-2)
+  - [Examples](#Examples-2)
+- [nas command command](#nas-command-command)
+  - [Parameter description](#Parameter-description-3)
+  - [Examples](#Examples-3)
+- [Permissions and policies](#Permissions-and-policies)
 
-> 💡Tips：`nas` 相关的命令都是建立在函数计算挂载 NAS 服务的的前提下，所以在使用该命令时需要注意以下几点：
+> 💡Tips: To run the `nas` commands, the NAS service must be attached to Function Compute. You must take note of the following items before you use the nas commands:
 >
-> - 需要开通 [NAS 相关的服务](https://nasnext.console.aliyun.com/) ，开通 NAS 服务可能会产生相对应的费用；
-> - 对 NAS 操作时，需要注意函数计算挂载 NAS 的路径。例如 NAS 被挂载到了 `/mnt/auto` 目录上，那么在上传下载的时候，就需要指定 `/mnt/auto`，例如`s nas upload ./demo.yaml /mnt/auto/`
+> - The [NAS service](https://nasnext.console.aliyun.com/) is activated. Fees may incur if you activate the NAS service.
+> -  When you perform operations on NAS, you must take note of the directory to which NAS is attached in Function Compute. For example, if NAS is attached to the `/mnt/auto` directory, you must specify the directory `/mnt/auto` when you upload and download files. Example: `s nas upload ./demo.yaml /mnt/auto/`.
 
-## 命令解析
+## Command description
 
-当执行命令`nas -h`/`nas --help`时，可以获取帮助文档：
+You can run the `nas -h` or `nas --help` command to obtain the help documentation:
 
 ```shell script
 Nas
@@ -37,7 +37,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/nas.md
+  https://github.com/devsapp/fc/blob/main/docs/en/command/nas.md
 
 SubCommand List
 
@@ -48,18 +48,19 @@ SubCommand List
 ```
 
 
-在该命令中，包括了四个子命令：
+The nas commands include the following subcommands:
+ 
+- [init: initializes NAS.](#nas-init-command)
+- [upload: queries aliases.](#nas-upload-command)
+- [download: publishes or updates aliases.](#nas-download-command)
+- [command: runs Linux commands in Function Compute.](#nas-command-command) 
+ 
 
-- [init：初始化 NAS 的命令](#nas-init-命令)
-- [upload：获取别名列表](#nas-upload-命令)
-- [download：发布/更新别名](#nas-download-命令)
-- [command：在 FC 中执行 linux 指令](#nas-command-命令)
+## nas init command
 
-## nas init 命令
-
-`nas init` 命令，是初始化 NAS 的命令；通常在完成 `s.yaml`/`s.yml` 文档编写之后，在没有进行项目部署时，NAS 可能处于未被创建的过程，此时可以通过 `nas init` 命令初始化 NAS 相关内容，从而可以直接使用 NAS 相关能力。
-
-当执行命令`nas init -h`/`nas init --help`时，可以获取帮助文档：
+The `nas init` command is used to initialize NAS. After you run the `s.yaml` or `s.yml` command to write a document, NAS resources may not be created before the project is deployed. In this case, you can run the `nas init` command to initialize NAS. This way, you can use NAS. 
+ 
+You can run the `nas init -h` or `nas init --help` command to obtain the help documentation:
 
 ```shell script
 Nas Init
@@ -72,7 +73,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/nas.md
+  https://github.com/devsapp/fc/blob/main/docs/en/command/nas.md
                               
 Global Options
 
@@ -85,18 +86,20 @@ Examples with Yaml
   $ s nas init
 ```
 
-### 参数解析
+### Parameter description
 
-| 参数全称 | 参数缩写 | Yaml模式下必填 | 参数含义                                                     |
-| -------- | -------- | -------------- | ------------------------------------------------------------ |
-| access   | a        | 选填           | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug    | -        | 选填           | 打开`debug`模式，将会输出更多日志信息                        |
-| help     | h        | 选填           | 查看帮助信息                                                 |
 
-### 操作案例
 
-**有资源描述文件（Yaml）时**，可以直接执行`s nas init `进行 NAS 相关内容初始化，初始化完成的输出示例：
+| Parameter | Abbreviation | Required   in YAML mode | Description                                                  |
+| --------- | ------------ | ----------------------- | ------------------------------------------------------------ |
+| access    | a            | No                      | The AccessKey pair  that is used in the request. You can use the AccessKey pair that is  configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-命令) and [the AccessKey pair that is   configured by using environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#通过环境变量配置密钥信息). |
+| debug     | -            | No                      | The debug mode. If  you enable the debug mode, more log information is returned. |
+| help      | h            | No                      | Views the help  information.                                 |
 
+
+### Examples
+
+**If a resource description file in YAML exists**, you can run the `s nas init` to initialize NAS. The following example shows the output of the command:
 ```text
 fc-deploy-test: 
   userId:      10003
@@ -108,11 +111,11 @@ fc-deploy-test:
       fcDir:      /mnt/auto
 ```
 
-## nas upload 命令
+## nas upload upload
 
-`nas upload` 命令，是将本地文件上传到 NAS 系统中的命令。
+The `nas upload` command is used to upload local files to NAS. 
 
-当执行命令`nas upload -h`/`nas upload --help`时，可以获取帮助文档：
+You can run the `nas upload -h` or `nas upload --help` command to view the help documentation:
 
 ```shell script
 Nas Upload
@@ -125,7 +128,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/nas.md
+  https://github.com/devsapp/fc/blob/main/docs/en/command/nas.md
                                
 Options
 
@@ -144,44 +147,44 @@ Options Help
   C-Required: Required parameters in CLI mode
   Y-Required: Required parameters in Yaml mode
   Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/zh/yaml_and_cli.md
+  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/en/yaml_and_cli.md
 
 Examples with Yaml
 
   $ s nas upload /home/usr/demo.file /mnt/auto
 ```
 
-### 参数解析
-
-| 参数全称  | 参数缩写 | Yaml模式下必填 | 参数含义                                                     |
-| --------- | -------- | -------------- | ------------------------------------------------------------ |
-| recursive | r        | 选填           |                                                              |
-| override  | o        | 选填           |                                                              |
-| access    | a        | 选填           | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug     | -        | 选填           | 打开`debug`模式，将会输出更多日志信息                        |
-| help      | h        | 选填           | 查看帮助信息                                                 |
-
-### 操作案例
-
-**有资源描述文件（Yaml）时**，可以直接执行`s nas upload `进行文件内容的上传，例如可以通过命令`s nas upload ./template.yml /mnt/auto`上传本地文件`./template.yml`到远端 NAS 挂载到函数计算的目录 `/mnt/auto` 中：
-
+### Parameter description
+ 
+| Parameter | Abbreviation | Required in YAML mode | Description | 
+| --------- | -------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | 
+| recursive | r | No |                               |
+| override | o | No |                               |
+| access | a | No | The AccessKey pair that is used in the request. You can use the AccessKey pair that is configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command) and the [AccessKey pair that is configured by using environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md# Configure the AccessKey pair by using environment variables). |
+| debug | - | No | The debug mode. If you enable the `debug` mode, more log information is returned. |
+| help | h | No | Views the help information. | 
+ 
+### Examples
+ 
+**If a resource description file in YAML exists**, you can run the `s nas upload` command to upload files. For example, you can run the `s nas upload ./template.yml to /mnt/auto` command to upload the local file `./template.yml` to the directory `/mnt/auto` to which NAS is attached in Function Compute.
+ 
 ```text
 File [./template.yml] uploaded successfully.
 ```
 
-如果需要上传文件夹，可以通过增加`--recursive`/`-r`参数实现，例如`s nas upload ./code /mnt/auto -r `：
+If you need to upload a folder, you can add the `--recursive` or `-r` parameter to the command. Example: `s nas upload ./code /mnt/auto -r`.
 
 ```
 Dir [./code] uploaded successfully.
 ```
 
-> ⚠️ 注意：在使用的时候，如果遇到文件已存在，需要按需通过`--override`/`-o`参数进行强制覆盖。
+> ⚠️ Note: If the file that you want to upload already exists, you need to add the `--override` or `-o` parameter to the command to overwrite the existing file. 
 
-## nas download 命令
+## nas download command
 
-`nas download` 命令，是将挂在在函数计算的 NAS 系统中的文件下载到本地。
+The `nas download` command is used to download files that are stored in NAS, which is attached to Function Compute. 
 
-当执行命令`nas download -h`/`nas download --help`时，可以获取帮助文档：
+You can run the `nas download -h` or `nas download --help` command to obtain the help documentation:
 
 ```shell script
 Nas Download
@@ -194,7 +197,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/nas.md
+  https://github.com/devsapp/fc/blob/main/docs/en/command/nas.md
                                
 Options
 
@@ -213,38 +216,38 @@ Options Help
   C-Required: Required parameters in CLI mode
   Y-Required: Required parameters in Yaml mode
   Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/zh/yaml_and_cli.md
+  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/en/yaml_and_cli.md
 
 Examples with Yaml
 
   $ s nas download /mnt/auto /home/usr/demo.file
 ```
 
-### 参数解析
-
-| 参数全称 | 参数缩写 | Yaml模式下必填 | 参数含义                                                     |
-| -------- | -------- | -------------- | ------------------------------------------------------------ |
-| override | o        | 选填           | 覆盖现有文件 |
-| no-unzip | -        | 选填           | 不解压文件夹 |
-| access   | a        | 选填           | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug    | -        | 选填           | 打开`debug`模式，将会输出更多日志信息                        |
-| help     | h        | 选填           | 查看帮助信息                                                 |
-
-### 操作案例
-
-**有资源描述文件（Yaml）时**，可以直接执行`s nas download `进行文件内容的下载，例如可以通过命令`s nas download /mnt/auto/template.yml ./`将远端 NAS 挂载到函数计算的目录 `/mnt/auto` 中文件`./template.yml`下载到本地目录`./`中：
-
+### Parameter Description
+ 
+| Parameter | Abbreviation | Required in YAML mode | Description | 
+| -------- | -------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| override | o    | No      | Specifies that the existing file is overwritten. |
+| no-unzip | - | No | Specifies that the folder is not decompressed. |
+| access | a | No | The AccessKey pair that is used in the request. You can use the AccessKey pair that is configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add- command) and the [AccessKey pair that is configured by using environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md# Configure the AccessKey pair by using environment variables). | 
+| debug | - | No | The debug mode. If you enable the `debug` mode, more log information is returned. | 
+| help | h | No | Views the help information. | 
+ 
+### Examples 
+ 
+**If a resource description file in YAML exists**, you can run the `s nas download` command to download a file. For example, you can run the `s nas download /mnt/auto/template.yml ./` command to download the file `./template.yml` that is stored in the directory `/mnt/auto` to which NAS is attached in Function Compute to the local directory `./`.
+ 
 ```text
 File [/mnt/auto/template.yml] download successfully.
 ```
 
-> ⚠️ 注意：在使用的时候，如果遇到文件已存在，需要按需通过`--override`/`-o`参数进行强制覆盖。
+> ⚠️ Note: If the file that you want to upload already exists, you need to add the `--override` or `-o` parameter to the command to overwrite the existing file. 
 
-## nas command 命令
+## nas command command
 
-`nas command` 命令，是在实例中执行特定指令的命令；例如通过 `nas command` 命令，在已经挂在 NAS 产品的函数实例中创建文件/文件夹/删除文件/文件夹等。
+The `nas command` command is used to run the specified commands in an instance. For example, you can run the `nas command` command to create a file or folder, or delete a file or folder in a function instance to which NAS is attached. 
 
-当执行命令`nas command -h`/`nas command --help`时，可以获取帮助文档：
+You can run the `nas command -h` or `nas command --help` command to obtain the help documentation:
 
 ```shell script
 Nas Command
@@ -257,7 +260,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/nas.md
+  https://github.com/devsapp/fc/blob/main/docs/en/command/nas.md
                                
 Global Options
 
@@ -272,40 +275,40 @@ Examples with Yaml
   $ s nas command mkdir /mnt/auto/demoDir
 ```
 
-### 参数解析
-
-| 参数全称 | 参数缩写 | Yaml模式下必填 | 参数含义                                                     |
-| -------- | -------- | -------------- | ------------------------------------------------------------ |
-| access   | a        | 选填           | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug    | -        | 选填           | 打开`debug`模式，将会输出更多日志信息                        |
-| help     | h        | 选填           | 查看帮助信息                                                 |
-
-### 操作案例
-
-**有资源描述文件（Yaml）时**，可以直接执行`s nas command `在函数计算实例中进行命令的执行，例如可以通过命令`s nas command ls /mnt/auto`查看 NAS 中的目录内容：
+### Parameter description
+ 
+| Parameter | Abbreviation | Required in YAML mode | Description | 
+| -------- | -------- | -------------- | ------------------------------------------------------------ | 
+| access | a | No | The AccessKey pair that is used in the request. You can use the AccessKey pair that is configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add- command) and the [AccessKey pair that is configured by using environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md# Configure the AccessKey pair by using environment variables). | 
+| debug | - | No | The debug mode. If you enable the `debug` mode, more information is returned. | 
+| help | h | No | Views the help information. | 
+ 
+### Examples 
+ 
+**If a resource description file in YAML exists**, you can run the `s nas command` command to run the specified command in the Function Compute instance. For example, you can run the `s nas command ls /mnt/auto` command to view the directories in NAS: 
 
 ```text
 code
 template.yml
 ```
 
-可以通过`s nas command mkdir /mnt/auto/demo`在 NAS 中创建文件夹 `demo`
+You can run the `s nas command mkdir /mnt/auto/demo` command to create a folder named demo in NAS.
 
-## 权限与策略说明
+## Permissions and policies
 
-### 子账号需要的权限
+### Permissions required for a RAM user
 
-#### 最大权限
+#### Highest level of permissions
 
-**系统策略**：`AliyunFCFullAccess`、`AliyunVPCFullAccess`、`AliyunNasFullAccess`
+**System policy**：`AliyunFCFullAccess`、`AliyunVPCFullAccess`、`AliyunNasFullAccess`
 
-#### 最小权限
+#### Lowest level of permissions
 
-执行命令时，需要检测、部署、调用辅助函数，如果执行 `nas init` 时 `nasConfig` 为 `auto` 需要创建 nas 的相关资源，因此需要如下权限：
+When you run a command, you need to detect, deploy, and invoke helper functions. If nasConfig is set to `auto` when you run `nas init`, you must create resources related to nas. The following permissions are required:
 
-**系统策略**：`AliyunNasReadOnlyAccess`
+**System policy**: `AliyunNasReadOnlyAccess`
 
-**自定义策略**
+**Custom policies**
 
 ```json
 {   
@@ -361,6 +364,6 @@ template.yml
 }
 ```
 
-### 服务角色权限
+### Permissions required for a service-linked role
 
-**系统策略**：`AliyunECSNetworkInterfaceManagementAccess`
+**System policy**: AliyunECSNetworkInterfaceManagementAccess

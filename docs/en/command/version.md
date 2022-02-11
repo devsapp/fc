@@ -1,20 +1,20 @@
-# Version 命令
+# Version commands
 
-`version` 命令是进行函数版本操作的命令；主要包括别名的查看、发布、删除等功能。
+The `version` commands are used to perform operations related to function versions. For example, you can view, publish, and delete aliases. 
 
-- [命令解析](#命令解析)
-- [version list 命令](#version-list-命令)
-  - [参数解析](#参数解析)
-  - [操作案例](#操作案例)
-- [version publish 命令](#version-publish-命令)
-  - [参数解析](#参数解析-1)
-  - [操作案例](#操作案例-1)
-- [remove version 命令](remove.md#remove-version-命令)
-- [权限与策略说明](#权限与策略说明)
+- [Command description](#Command-description)
+- [version list command](#version-list-command)
+  - [Parameter description](#Parameter-description)
+  - [Examples](#Examples)
+- [version publish command](#version-publish-command)
+  - [Parameter description](#Parameter-description-1)
+  - [Examples](#Examples-1)
+- [remove version command](remove.md#remove-version-command)
+- [Permissions and policies](#Permissions-and-policies)
 
-## 命令解析
+## Command description
 
-当执行命令`version -h`/`version --help`时，可以获取帮助文档：
+You can run the `version -h` or `version --help` command to obtain help document:
 
 ```shell script
 Version
@@ -27,7 +27,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/version.md
+  https://github.com/devsapp/fc/blob/main/docs/en/command/version.md
 
 SubCommand List
 
@@ -36,16 +36,16 @@ SubCommand List
 ```
 
 
-在该命令中，包括了两个子命令：
+In the preceding command, the following subcommands are included:
 
-- [list：查看版本列表](#version-list-命令)
-- [publish：发布版本](#version-publish-命令)
+- [list: checks a list of versions.](#version-list-command)
+- [publish: publishes a version](#version-publish-command)
 
-## version list 命令
+## version list command
 
-`version list` 命令，是查看服务已发布的版本列表的命令。
+The `version list` command is used to check a list of published versions. 
 
-当执行命令`version list -h`/`version list --help`时，可以获取帮助文档：
+ You can run the `version list -h` or `version list --help` command to obtain the help document: 
 
 ```shell script
 Version list
@@ -58,7 +58,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/version.md
+  https://github.com/devsapp/fc/blob/main/docs/en/command/version.md
                                
 Options
 
@@ -78,7 +78,7 @@ Options Help
   C-Required: Required parameters in CLI mode
   Y-Required: Required parameters in Yaml mode
   Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
+  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
 
 Examples with Yaml
 
@@ -89,23 +89,28 @@ Examples with CLI
   $ s cli fc version list --region cn-hangzhou --service-name serviceName 
 ```
 
-### 参数解析
+### Parameter description
 
-| 参数全称     | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
-| ------------ | -------- | -------------- | ------------- | ------------------------------------------------------------ |
-| region       | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| service-name | -        | 选填           | 必填          | 服务名                                                       |
-| table        | -        | 选填           | 选填          | 是否以表格形式输出                                           |
-| access       | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug        | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help         | h        | 选填           | 选填          | 查看帮助信息                                                 |
 
-### 操作案例
 
-- **有资源描述文件（Yaml）时**，可以直接执行`s version list`查看当前服务所发布的版本列表；
-- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区以及服务名称，例如`s cli fc version list --region cn-hangzhou --service-name fc-deploy-service`；
+| Parameter    | Abbreviation | Required   in YAML mode | Required   in CLI mode | Description                                                  |
+| ------------ | ------------ | ----------------------- | ---------------------- | ------------------------------------------------------------ |
+| region       | -            | No                      | Yes                    | The  name of the region. Valid values: cn-hangzhou, cn-beijing, cn-beijing,  cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote,  cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2,  ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1,  us-west-1, us-east-1, and ap-south-1. |
+| service-name | -            | No                      | Yes                    | The  name of the service.                                    |
+| table        | -            | No                      | No                     | Specifies  whether to return the result in the form of a table. |
+| access       | a            | No                      | No                     | The  key that is used in this request. You can use the key information configured  by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-命令), or [the key information configured to   environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#通过环境变量配置密钥信息). |
+| debug        | -            | No                      | No                     | Enables  the debug mode. In this case, more logs are generated. |
+| help         | h            | No                      | No                     | Views  help information                                      |
 
-上述命令的执行结果示例：
+
+
+### Examples
+
+- **If a resource description file (YAML) is available,** you can run the `s version list` command to check a list of published versions of the service.
+
+- **In CLI mode (no YAML),** you must specify the region of the service and the name of the service. Example: `s cli fc version list --region cn-hangzhou --service-name fc-deploy-service`.
+
+Example output:
 
 ```text
 fc-deploy-test: 
@@ -116,7 +121,7 @@ fc-deploy-test:
     lastModifiedTime: 2021-11-08T06:07:00Z
 ```
 
-如果指定了`--table`参数，输出示例：
+If the `--table` parameter is specified, the following output is returned:
 
 ```text
   ┌───────────┬──────────────────────┬──────────────────────┬──────────────────────┐
@@ -127,11 +132,11 @@ fc-deploy-test:
 ```
 
 
-## version publish 命令
+## version publish command
 
-`version publish` 命令，是用于发布版本的命令。
+The `version publish` command is used to publish a version. 
 
-当执行命令`version publish -h`/`version publish --help`时，可以获取帮助文档：
+You can run the `version publish -h` or `version publish --hel`p command to obtain the help document:
 
 ```shell script
 Version publish
@@ -144,7 +149,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/version.md
+  https://github.com/devsapp/fc/blob/main/docs/en/command/version.md
                            
 Options
 
@@ -164,7 +169,7 @@ Options Help
   C-Required: Required parameters in CLI mode
   Y-Required: Required parameters in Yaml mode
   Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
+  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
 
 Examples with Yaml
 
@@ -175,23 +180,23 @@ Examples with CLI
   $ s cli fc version publish --region cn-hangzhou --service-name name --description xxx 
 ```
 
-### 参数解析
+### Parameter description
 
-| 参数全称     | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
+| Parameter   | Abbreviation | Required in YAML mode | Required in CLI mode | Description                           |
 | ------------ | -------- | -------------- | ------------- | ------------------------------------------------------------ |
-| region       | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| service-name | -        | 选填           | 必填          | 服务名                                                       |
-| description  | -        | 选填           | 选填          | 版本描述                                                     |
-| access       | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug        | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help         | h        | 选填           | 选填          | 查看帮助信息                                                 |
-
-### 操作案例
-
-- **有资源描述文件（Yaml）时**，可以直接执行`s version publish`进行版本的发布；
-- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区以及服务名称，例如`s cli fc version publish --region cn-hangzhou --service-name fc-deploy-service --description "test publish version"`；
-
-上述命令的执行结果示例：
+| region    | -    | No      | Yes     | The name of the region. Valid values:`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
+| service-name | -    | No      | Yes     | The name of the service.                            |
+| description | -    | No      | No     | Version description                           |
+| access    | a    | No      | No     | The key that is used in this request. You can use the key information that is configured by using the [configcommand](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command), or the [key information that is configured to environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure key information by using environment variables). |
+| debug    | -    | No      | No     | Enables the `debug` mode. In this case, more logs are generated.            |
+| help     | h    | No      | No     | Views the help information.                         |
+ 
+###  Examples
+ 
+- **If a resource description file (YAML) is available, **you can run the `s version publish` command to publish a version.
+- **In CLI mode (no YAML), **you must specify the region of the service and the name of the service. For example, `s cli fc version publish --region cn-hangzhou --service-name fc-deploy-service --description "test publish version"`.
+ 
+ Example output:
 
 ```text
 fc-deploy-test: 
@@ -201,11 +206,11 @@ fc-deploy-test:
   lastModifiedTime: 2021-11-08T06:07:00Z
 ```
 
-## 权限与策略说明
+## Permissions and policies
 
-- `version list` 命令所需要的权限策略： `AliyunFCReadOnlyAccess`
+- Policy required for the `version lis`t command: `AliyunFCReadOnlyAccess`.
 
-- `version publish` 命令所需要的权限策略：
+- Policy required for the `version publish` command:
 
   ```yaml
   {

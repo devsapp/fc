@@ -1,15 +1,15 @@
-# Sync 命令
+# Sync commands
 
-`sync` 命令是将线上的资源同步到本地的命令。
+The `sync` commands are used to synchronize online resources to an on-premises machine. 
 
-- [命令解析](#命令解析)
-  - [参数解析](#参数解析)
-  - [操作案例](#操作案例)
-- [权限与策略说明](#权限与策略说明)
+- [Command description](#Command-description)
+  - [Parameter description](#Parameter-description)
+  - [Examples](#Examples)
+- [Permissions and policies](#Permissions-and-policies)
 
-## 命令解析
+## Command description
 
-当执行命令`sync -h`/`sync --help`时，可以获取帮助文档：
+You can run the `sync -h` or `sync --help` command to obtain the help document:
 
 ```shell script
 Sync
@@ -22,7 +22,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/sync.md                  
+  https://github.com/devsapp/fc/blob/main/docs/en/command/sync.md                  
 
 Options
  
@@ -46,7 +46,7 @@ Options Help
   C-Required: Required parameters in CLI mode
   Y-Required: Required parameters in Yaml mode
   Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
+  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
 
 Examples with Yaml
 
@@ -57,26 +57,27 @@ Examples with CLI
   $ s cli fc sync --region cn-shanghai --service-name serviceName --type config 
 ```
 
-### 参数解析
-
-| 参数全称      | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
+### Parameter description
+ 
+| Parameter   | Abbreviation | Required in YAML mode | Required in CLI mode | Description                           |
 | ------------- | -------- | -------------- | ------------- | ------------------------------------------------------------ |
-| region        | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| service-name  | -        | 选填           | 必填          | 服务名                                                       |
-| function-name | -        | 选填           | 选填          | 函数名                                                       |
-| trigger-name  | -        | 选填           | 选填          | 触发器名                                                     |
-| target-dir    | -        | 选填           | 选填          | 目标路径                                                     |
-| type          | -        | 选填           | 选填          | 类型，包括同步代码和配置，默认是全部同步，可选`code`/`config` |
-| access        | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug         | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help          | h        | 选填           | 选填          | 查看帮助信息                                                 |
-
-### 操作案例
-
-- **有资源描述文件（Yaml）时**，可以直接执行`s sync`将线上资源同步到本地；
-- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要按需指定服务名、函数名等，例如`s cli fc sync --region cn-hanghzou --service-name fc-deploy-service --function-name http-trigger-py36`；
-
-上述命令的执行结果示例：
+| region    | -    | No      | No      | The name of the region. Valid values: `cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
+| service-name | -    | No      | Yes     | The name of the service.                            |
+| function-name | -    | No      | No     | The name of the function.                            |
+| trigger-name | -    | No      | No     | The name of the trigger.                           |
+| target-dir  | -    | No      | No     | The destination directory.                           |
+| type     | -    | No      | No     | The type of the synchronization. You can synchronize code and configurations. By default, both code and configurations are synchronized. Valid values: `code` and `config` |
+| access    | a    | No      | No     | The key information that is used in the request. You can use the key information that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command), or use the [key information that is configured to environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure key information by using environment variables). |
+| debug     | -    | No      | No     | Enables the `debug` mode. In this case, more logs are generated.            |
+| help     | h    | No      | No     | Views the help information.                         |
+ 
+### Examples
+ 
+- **If a resource description file (YAML) is available,** you can run the `s sync` command to synchronize online resources to a local machine.
+- **In the CLI mode (no YAML),** you must specify the names of the service and function. For example, `s cli fc sync --region cn-hanghzou --service-name fc-deploy-service --function-name http-trigger-py36`.
+ 
+Example output:
+ 
 
 ```text
 fc-deploy-test: 
@@ -85,6 +86,6 @@ fc-deploy-test:
   configYmlPath: /Users/jiangyu/demo/test/start-fc-http-python3/s.cn-hangzhou-fc-deploy-service.sync.yaml
 ```
 
-## 权限与策略说明
+## Permissions and policies
 
-使用该命令时，推荐配置系统策略：`AliyunFCReadOnlyAccess`
+We recommend that you use the `AliyunFCReadOnlyAccess` policy when you use this command.

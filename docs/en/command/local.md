@@ -1,22 +1,21 @@
-# Local 命令
+# Local commands
 
-`local` 命令是在本地对函数调试的命令。
+The `local` commands are used to debug local functions. 
 
-- [命令解析](#命令解析)
-- [相关原理](#相关原理)
-- [local invoke 命令](#local-invoke-命令)
-  - [参数解析](#参数解析)
-  - [操作案例](#操作案例)
-- [local start 命令](#local-start-命令)
-  - [参数解析](#参数解析-1)
-  - [操作案例](#操作案例-1)
+- [Command description](#Command-description)
+- [local invoke command](#local-invoke-command)
+  - [Parameter description](#Parameter-description)
+  - [Example](#Example)
+- [local start command](#local-start-command)
+  - [Parameter description](#Parameter-description-1)
+  - [Example](#Example-1)
 
 > ⚠️ 注意：该命令对 Docker 有所依赖，所以在使用该命令时，需要先进行 [Docker 安装](https://docs.docker.com/get-started/#download-and-install-docker) 。
 
 
-## 命令解析
+## Command description
 
-当执行命令`local -h`/`local --help`时，可以获取帮助文档：
+When you run the `local -h` or the `local --help` command, you can obtain the help documentation:
 
 ```shell script
 Local
@@ -29,7 +28,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/local.md
+  https://github.com/devsapp/fc/blob/main/docs/en/command/local.md
 
 SubCommand List
 
@@ -37,19 +36,19 @@ SubCommand List
   start    Local invoke fc http function; help command [s local start -h]               
 ```
 
+The local commands include the following subcommands:
+ 
+- [invoke: the command that is used to debug a local event function.] (#local-invoke-command)
+- [start: the command that is used to debug a local HTTP function.] (#local-start-command) 
+ 
 
-在该命令中，包括了两个个子命令：
+## local invoke command
 
-- [invoke：本地调试事件函数](#local-invoke-命令)
-- [start：本地调试HTTP函数](#local-start-命令)
+The `local invoke` command is used to debug a local event function. 
 
-## local invoke 命令
+>💡Event functions refer to functions that are triggered by events, instead of HTTP triggers. For example, Object Storage Service (OSS) trigger functions, Alibaba Cloud CDN (CDN) trigger functions, and Tablestore trigger functions are event functions. 
 
-`local invoke` 命令，是进行本地事件函数调试的命令。
-
-> 💡 事件函数指的是非 HTTP 触发器的函数，包括不限于 OSS 触发器函数、CDN 触发器函数、Tablestore 触发器函数等。
-
-当执行命令`local invoke -h`/`local invoke --help`时，可以获取帮助文档：
+You can run the `local invoke -h` or the `local invoke --help` command to obtain the help documentation: 
 
 ```shell script
 Local Invoke
@@ -62,7 +61,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/local.md
+  https://github.com/devsapp/fc/blob/main/docs/en/command/local.md
                                
 Options
   -e, --event [string]                [Optional] Event data passed to the function during invocation (default: "")                                                 
@@ -90,7 +89,7 @@ Options Help
   C-Required: Required parameters in CLI mode
   Y-Required: Required parameters in Yaml mode
   Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
+  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
 
 Event Format
   
@@ -102,26 +101,27 @@ Examples with Yaml
   $ s local invoke --event "hello world!"                                                                                          
 ```
 
-### 参数解析
+### Parameter description
 
-| 参数全称      | 参数缩写 | Yaml模式下必填 | 参数含义                                                     |
-| ------------- | -------- | -------------- | ------------------------------------------------------------ |
-| event         | e        | 选填           |传入 `event` 函数的 `event` 事件数据，可以通过 `s cli fc-event` 指令快速获取事件数据示例，详细操作参考[这里](https://github.com/devsapp/fc/blob/main/docs/zh/command/invoke.md#注意事项)|
-| event-file    | f        | 选填           |以文件形式传入 `event` 事件数据|
-| event-stdin   | s        | 选填           |以标准输入形式传入 `event` 事件数据|
-| mode          | m        | 选填           |调试模式选择，包括：<br> - `normal`: 默认模式，本地函数运行容器在函数执行完成后立刻退出<br>`server`: 本地函数运行容器一直存在，用户在其他终端发起的本地调用会复用该容器<br>`api`: 支持通过 sdk 调用本地函数|
-| config        | c        | 选填           |指定断点调试时使用的 IDE，取值范围：`vscode, pycharm, intellij`|
-| debug-port    | d        | 选填           |指定断点调试端口|
-| debug-args    | -        | 选填           |断点调试时传入的参数|
-| debugger-path | q        | 选填           |自定义断点调试器路径|
-| tmp-dir       | -        | 选填           |自定义函数运行环境中 `/tmp` 路径的本机挂载路径，默认为 `./.s/tmp/invoke/serviceName/functionName`/|
-| server-port   | -        | 选填           |自定义本地监听 `server` 的端口，默认是在 7000 到 8000 间的随机端口|
-| debug         | -        | 选填           | 打开`debug`模式，将会输出更多日志信息                        |
-| help          | h        | 选填           | 查看帮助信息                                                 |
+| Parameter     | Abbreviation | Required   in YAML mode | Description                                                  |
+| ------------- | ------------ | ----------------------- | ------------------------------------------------------------ |
+| event         | e            | No                      | The event data  that is passed into the event function. Run the s cli fc-event  command to obtain the sample event data. For more information, click [here](https://github.com/devsapp/fc/blob/main/docs/en/command/invoke.md#注意事项). |
+| event-file    | f            | No                      | Pass the event data by  using a file.                        |
+| event-stdin   | s            | No                      | Pass the event data by  using standard input.                |
+| mode          | m            | No                      | The debugging mode.  Valid values: -normal: By default, the normal mode is used. The container that runs a  local function immediately exits after the local function is invoked. server: The  container that runs a local function does not exit. The container is reused  when users send requests to invoke the local function from another terminal. api: The local  function can be invoked by using SDKs. |
+| config        | c            | No                      | The integrated  development environment (IDE) that is used for breakpoint debugging. Valid  values: vscode,  pycharm, and intellij. |
+| debug-port    | d            | No                      | The port that is  specified for breakpoint debugging.        |
+| debug-args    | -            | No                      | The parameters that  are passed in during breakpoint debugging. |
+| debugger-path | q            | No                      | The path that stores  the custom breakpoint debugger.        |
+| tmp-dir       | -            | No                      | The local path in  which the /tmp path is mounted in the custom function running environment.  Default value: ./.s/tmp/invoke/serviceName/functionName/ |
+| server-port   | -            | No                      | The custom port for listening  server. By default, the port is a random port that ranges from 7000 to  8000. |
+| debug         | -            | No                      | The debug mode. If  you enable the debug mode, more log information is output. |
+| help          | h            | No                      | Specifies whether to  view the help documentation.           |
 
-### 操作案例
 
-**有资源描述文件（Yaml）时**，可以直接执行`s local invoke `进行本地调试，完成的输出示例：
+### Example
+
+**If a resource description file (YAML) exists,** you can run the `s local invoke` command to debug local functions. Sample output:
 
 ```
 FC Invoke Start RequestId: 0ba8ac3f-abf8-46d4-b61f-8e0f9f265d6a
@@ -133,11 +133,11 @@ RequestId: 0ba8ac3f-abf8-46d4-b61f-8e0f9f265d6a 	 Billed Duration: 146 ms 	 Memo
 ```
 
 
-## local start 命令
+## local start command
 
-`local start` 命令，是进行本地 HTTP 函数调试的命令。
+The `local start` command is used to debug local HTTP functions. 
 
-当执行命令`local start -h`/`local start --help`时，可以获取帮助文档：
+When you run the `local -h` or `local --help` command, you can obtain the following help documentation:
 
 ```shell script
 Local Start
@@ -150,7 +150,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/local.md
+  https://github.com/devsapp/fc/blob/main/docs/en/command/local.md
                                
 Options
 
@@ -172,31 +172,31 @@ Options Help
   C-Required: Required parameters in CLI mode
   Y-Required: Required parameters in Yaml mode
   Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
+  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
 
 Examples with Yaml
 
   $ s local start --debug-port 9000 --config vscode                                                                 
 ```
 
-### 参数解析
-
-| 参数全称      | 参数缩写 | Yaml模式下必填 | 参数含义                                                     |
-| ------------- | -------- | -------------- | ------------------------------------------------------------ |
-| config        | c        | 选填           | 指定断点调试时使用的 IDE，可选：`vscode, pycharm, intellij` |
-| debug-port    | d        | 选填           | 指定断点调试端口 |
-| custom-domain | -        | 选填           | 以自定义域名作为 HTTP Server 的访问 url |
-| debug-args    | -        | 选填           | 断点调试时传入的参数 |
-| debugger-path | -        | 选填           | 自定义断点调试器路径 |
-| tmp-dir       | -        | 选填           | 自定义函数运行环境中 `/tmp` 路径的本机挂载路径，默认为 `./.s/tmp/invoke/serviceName/functionName/` |
-| server-port   | -        | 选填           | 自定义本地监听 HTTP Server 的端口，默认是在 7000 到 8000 间的随机端口 |
-| debug         | -        | 选填           | 打开`debug`模式，将会输出更多日志信息                        |
-| help          | h        | 选填           | 查看帮助信息                                                 |
-
-### 操作案例
-
-**有资源描述文件（Yaml）时**，可以直接执行`s local start `进行资源部署，部署完成的输出示例：
-
+### Parameter description 
+ 
+| Parameter | Abbreviation | Required in YAML mode | Description | 
+| ---------------- | ----- | ----- | ----- | 
+| config | c | The IDE that is used for breakpoint debugging. Valid values: `vscode, pycharm, and intellij`. | 
+| debug-port | d | No | The port that is specified for breakpoint debugging. | 
+| custom-domain | - | No | A custom domain is used as the access URL to access the HTTP server. | 
+| debug-args | - | No | The parameters that are passed in during breakpoint debugging. | 
+| debugger-path | y | No | The path that stores the custom breakpoint debugger. | 
+| tmp-dir | - | No | The local path in which the `/tmp` path is mounted in the custom function running environment on your computer. Default value: `./.s/tmp/invoke/serviceName/functionName/` | 
+| server-port | y | No | The custom port for listening the HTTP server. By default, the port ranges from 7000 to 8000. | 
+| debug | - | No | The `debug` mode. If you enable the `debug` mode, more logs are output. | 
+| help | h | No | The help documentation. | 
+ 
+### Example
+ 
+**If a resource description file (YAML) exists**, you can run the `s local start` command to deploy resources. Sample output: 
+ 
 ```text
  	url: http://localhost:7665/2016-08-15/proxy/fc-deploy-service/http-trigger-py36/
 	methods: GET
@@ -207,9 +207,9 @@ Examples with Yaml
         Debug with customDomain method: [s local start -d 3000 auto]
 ```
 
-此时，可以根据命令行提示的`url`信息，在浏览器中查看 HTTP 函数本地调试的具体内容。
+You can view the details about debugging local HTTP functions in a browser by using `url` in the output. 
 
-如果需要通过自定义域名的方式调试 HTTP 函数，则可以在调试时增加`--custom`参数，输出示例：
+If you need to debug an HTTP function by using a custom domain name, you can add the `--custom` parameter before the debugging. Sample output:
 
 ```
   url: http://localhost:7308/
@@ -217,16 +217,19 @@ Examples with Yaml
 	authType: anonymous
 ```
 
-> 关于自定义域名调试模式以及默认的调试模式区别：在使用函数计算的 HTTP 函数时，是有两个域名组成：
+> Difference between debugging by using the custom domain name and debugging by using the default mode: When you use the HTTP function in Function Compute, two domain names can be used for debugging:
 >
-> - 系统域名地址，例如`http://localhost:7665/2016-08-15/proxy/fc-deploy-service/http-trigger-py36/`
-> - 自定义域名地址，例如`http://abc.com`/
+> - A domain name that is allocated by Function Compute. Example: `http://localhost:7665/2016-08-15/proxy/fc-deploy-service/http-trigger-py36/`
+> - A custom domain name. Example: `http://abc.com/`
 >
-> 这两个地址在非 custom runtime 函数中是没有区别的，而对于 custom-runtime/custom-container 函数，这两个地址的核心区别是其`path`不同，例如以传统的 Web 框架为例：
+> For non-custom runtime functions, the two domain names are not distinguished. For custom runtime functions or custom container functions, the difference between a custom runtime function and custom container function is `path`. Take a traditional web framework as an example.
 >
-> - 系统域名地址的基础路径匹配是：`/2016-08-15/proxy/fc-deploy-service/http-trigger-py36/`
-> - 自定义域名地址的基础路径匹配可以是任何形式，包括`/`
+> - The basic path matched for the system domain name is `/2016-08-15/proxy/fc-deploy-service/http-trigger-py36/`
+> - The basic path matched for the custom domain name can be in all forms, including `/`
 >
-> 由于路径的不同，所以在代码开发和处理的时候，都会有所不同，如果使用某个 Web 框架（例如 Express、Django 等），匹配的首页地址为`/`，那么使用系统域名地址则可能会出现`404`，这个时候较为推荐使用自定义域名，获得更原生的体验。所以为了满足开发者在系统域名与自定义域名不同模式下的调试需要，本组件支持`--custom`参数进行自定义域名模式调试。
-> 如果既要使用 custom-runtime/custom-container 函数，又要使用系统域名，还要不处理系统基础路径，那么可以在发给函数的 HTTP 请求中增加 header: `x-fc-invocation-target: 2016-08-15/proxy/$ServiceName/$functionName` 即可
+> The methods to develop or process code vary based on the different paths of the two domain names. If a web framework, such as Express and Django, is used, when the matched path / appears on the homepage. if you use a system domain name, the error code 404 may appear. In this case, we recommend that you use a custom domain name for a more native experience. To meet the requirements of developers who may use system domain names or custom domain names for debugging, the --custom parameter can be added for debugging by using custom domain names. 
+>
+> If you want to use a custom runtime function or custom container function, use the system domain name for debugging, and leave the basic path unchanged, you can add the header x-fc-invocation-target:2016-08-15/proxy/$ServiceName/$functionName to the HTTP request sent to invoke the HTTP function.
+
+
 

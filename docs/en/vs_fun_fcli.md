@@ -1,66 +1,68 @@
-# Serverless Devs 与 Funcraft/Fcli 的对比
+# Compare among Serverless Devs, Function Compute command line interface (fcli), and Funcraft
 
-- [Serverless Devs 与 Funcraft/Fcli 的对比](#serverless-devs-与-funcraftfcli-的对比)
-  - [形式对比](#形式对比)
-  - [功能对比](#功能对比)
-  - [场景对比](#场景对比)
-  - [迁移案例](#迁移案例)
-    - [从 Funcraft 迁移到 Serverless Devs 的方法](#从-funcraft-迁移到-serverless-devs-的方法)
-    - [从 Fcli 迁移到 Serverless Devs 的方法](#从-fcli-迁移到-serverless-devs-的方法)
+- [Format comparison](#Format-comparison)
+- [Feature comparison](#Feature-comparison)
+- [Scenario comparison](#Scenario-comparison)
+- [Migration cases](#Migration-cases)
+    - [Migrate resources from Funcraft to Serverless Devs](#Migrate-resources-from-Funcraft-to-Serverless-Devs)
+    - [Migrate resources from fcli to Serverless Devs](#Migrate-resources-from-fcli-to-Serverless-Devs)
     
 
-## 形式对比
+## Format comparison
 
-|     | fc 组件 | funcraft | fcli |
-| --- | --- | --- | --- |
-| 依赖资源描述文件（Yaml） | ✅ | ✅ | 🙅 | 
-| 纯命令行模式（不依赖Yaml） | ✅ | 🙅 | ✅ | 
+|                                                 | FC component | funcraft | fcli |
+| ----------------------------------------------- | ------------ | -------- | ---- |
+| Dependent on resource description  files (YAML) | ✅            | ✅        | 🙅    |
+| Command line mode                               | ✅            | 🙅        | ✅    |
 
-## 功能对比
 
-|     | fc 组件 | funcraft | fcli |
-| --- | --- | --- | --- |
-| 应用部署 | ✅ | ✅ | ✅（需要执行多条命令） | 
-| 应用移除 | ✅ | 🙅️ | ✅（需要执行多条命令） | 
-| 构建 | ✅ | ✅ | 🙅️ | 
-| 远程调用 | ✅ | ✅ | 🙅️ | 
-| 本地调用 | ✅ | ✅ | 🙅️ | 
-| 查看日志 | ✅ | 🙅 | 🙅️ | 
-| 查看指标 | ✅ | 🙅 | 🙅️ | 
-| NAS操作 | ✅ | ✅ | 🙅️ | 
-| 同步操作 | ✅ | 🙅 | 🙅️ | 
-| 版本 | ✅ | 🙅 | 🙅️ | 
-| 别名 | ✅ | 🙅 | 🙅️ | 
-| 预留 | ✅ | 🙅 | 🙅️ | 
-| 按量资源 | ✅ | 🙅 | 🙅️ | 
-| 层 | ✅ | 🙅 | 🙅️ | 
-| 端云联调 | ✅ | 🙅 | 🙅️ | 
-| 一键压测 | ✅ | 🙅 | 🙅️ | 
-| 内存和并发度探测 | ✅ | 🙅 | 🙅️ | 
-| 实例登录 | ✅ | 🙅 | 🙅️ | 
-| 函数异动感知 | ✅ | 🙅 | 🙅️ | 
-| 端到端部署 | ✅ | 🙅 | 🙅️ | 
-| 多账号管理 | ✅ | 🙅️ | 🙅️ | 
-| API 操作 | ✅ | 🙅️ | ✅️ | 
+## Feature comparison
 
-## 场景对比
 
-|     | fc 组件 | funcraft | fcli |
-| --- | --- | --- | --- |
-| 用户可能同时有测试账号和线上账号，或者个人账号和公司账号，需要进行进行不同账号的切换。| ✅ | 🙅 | 🙅️ | 
-| 用户需要在一个项目的执行前后，进行其他相关的行为定义，例如部署前需要进行build，部署后需要进行版本的发布，相关文件的上传，灰度的设置等。| ✅ | 🙅 | 🙅️ | 
-| 用户需要一键部署端到端的项目，例如将前端代码上传到对象存储，后端代码上传到函数计算，同时部署API网关、CDN等相关业务。| ✅ | 🙅 | 🙅️ | 
-| 用户需要在本地进行调试，但是有一些网络环境时线上的VPC，此时需要在本地连接到线上的VPC环境，进行代码的调试等。| ✅ | 🙅 | 🙅️ | 
-| 在进行项目部署时，Yaml需要从环境变量获取一些敏感信息，或者从其他的文件获取信息，也或者从已经部署完成的项目获得返回值作为入参，进行项目的部署。| ✅ | 🙅 | 🙅️ | 
-| 不依赖Yaml进行相关的原子性的操作，例如查看函数列表，服务列表，删除某个函数、服务，查看版本列表等；| ✅ | 🙅 | ✅ | 
 
-## 迁移案例
+|                              | FC component | funcraft | fcli                                       |
+| ---------------------------- | ------------ | -------- | ------------------------------------------ |
+| Application deployment       | ✅            | ✅        | ✅(Multiple commands need to be  executed.) |
+| Application removal          | ✅            | 🙅️        | ✅(Multiple commands need to be  executed.) |
+| build operation              | ✅            | ✅        | 🙅️                                          |
+| Remote call                  | ✅            | ✅        | 🙅️                                          |
+| Local call                   | ✅            | ✅        | 🙅️                                          |
+| Log query                    | ✅            | 🙅        | 🙅️                                          |
+| Metric query                 | ✅            | 🙅        | 🙅️                                          |
+| nas operation                | ✅            | ✅        | 🙅️                                          |
+| sync operation               | ✅            | 🙅        | 🙅️                                          |
+| version operation            | ✅            | 🙅        | 🙅️                                          |
+| alias operation              | ✅            | 🙅        | 🙅️                                          |
+| provision operation          | ✅            | 🙅        | 🙅️                                          |
+| ondemand operation           | ✅            | 🙅        | 🙅️                                          |
+| layer operation              | ✅            | 🙅        | 🙅️                                          |
+| proxied operation            | ✅            | 🙅        | 🙅️                                          |
+| stress operation             | ✅            | 🙅        | 🙅️                                          |
+| eval operation               | ✅            | 🙅        | 🙅️                                          |
+| Remote debugging             | ✅            | 🙅        | 🙅️                                          |
+| Function exception awareness | ✅            | 🙅        | 🙅️                                          |
+| End-to-end deployment        | ✅            | 🙅        | 🙅️                                          |
+| Multi-account management     | ✅            | 🙅️        | 🙅️                                          |
+| API operations               | ✅            | 🙅️        | ✅️                                          |
 
-### 从 Funcraft 迁移到 Serverless Devs 的方法
+## Scenario comparison
 
-- **【推荐】Yaml 格式切换**：这种方法是将 Funcarft 规范的资源描述文档（例如`template.yaml`文件），转换成符合 Serverless Devs 规范且使用 FC 组件的资源描述文档（例如`s.yaml`文件），可以参考[ fun2s 命令相关文档](command/fun2s.md) ，进行一键转换；
-- **资源信息重新同步**：这种方法是将线上的函数资源，直接同步到本地，包括线上函数的代码和相关的配置（此时的配置是符合 Serverless Devs 规范且使用 FC 组件的资源描述文档，例如 `s.yaml`），可以参考[ sync 命令相关文档](command/sync.md) ，进行快速同步；
+|                                                              | FC component | funcraft | fcli |
+| ------------------------------------------------------------ | ------------ | -------- | ---- |
+| Users may have a production  account and a test account, or a personal account and a company account.  Users need to switch between different accounts to perform different  operations. | ✅            | 🙅        | 🙅️    |
+| Users need to perform different  operations before a project is deployed and after a project is deployed. For  example, users need to perform the build operation before a project is  deployed. After a project is deployed, users need to publish versions, upload  files, and configure canary release settings. | ✅            | 🙅        | 🙅️    |
+| Users need to deploy end-to-end  projects with a few clicks. For example, users need to upload the frontend  code to Object Storage Service (OSS) and the backend code to Function  Compute, and deploy services, such as API Gateway and Alibaba Cloud Content Delivery  Network (CDN), at the same time. | ✅            | 🙅        | 🙅️    |
+| Users need to debug the project  code in an on-premises environment. Before users debug the project code, a  connection must be established to a virtual private cloud (VPC). | ✅            | 🙅        | 🙅️    |
+| When a project is deployed,  sensitive information must be obtained from environment variables or other  files. Users must obtain the values that are returned after the project is  deployed and use the values to configure input parameters. | ✅            | 🙅        | 🙅️    |
+| Users need to perform atomic operations  that do not rely on the YAML file. The operations include viewing functions  and services, deleting a function or a service, and viewing versions. | ✅            | 🙅        | ✅    |
 
-### 从 Fcli 迁移到 Serverless Devs 的方法
+## Migration cases
 
-从 Fcli 迁移到 Serverless Devs 的项目，通常是进行函数管理或者是与自动化脚本集成的需求，此时可以考虑使用[ API 相关能力](command/api.md) 直接进行迁移，FC组件的[ API 能力](command/api.md) 是直接操作函数计算 API 的功能；
+### Migrate resources from Funcraft to Serverless Devs
+
+- **[Recommended] YAML format conversion**: You can use this method to convert the resource description files that are supported by Funcarft to resource description files that are supported by Serverless Devs. For example, you can convert template.yaml files to s.yaml files. In the s.yaml files, the FC component is specified to use. For more information, see [fun2s commands](command/fun2s.md).
+- **Resource information resynchronization**: You can use this method to synchronize cloud function resources to your on-premises devices. The cloud function resources include the function code and related configurations. The configurations (s.yaml files) are provided based on the Serverless Devs specifications, and the FC component is specified to use. For more information, see [sync commands](command/sync.md).
+
+### Migrate resources from fcli to Serverless Devs
+
+fcli can be integrated into your scripts to automatically manage functions. Now, you can call API operations of FunctionCompute to manage functions. For more information, see [API operations](command/api.md).

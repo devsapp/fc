@@ -1,62 +1,65 @@
-# Proxied 命令
+# Proxied commands
 
-`proxied` 命令是实现函数计算端云联调的命令。
+The `proxied` commands are used to implement cloud-terminal joint debugging in Function Compute. 
 
-- [Proxied 命令](#proxied-命令)
-  - [相关原理](#相关原理)
-      - [开启端云联调](#开启端云联调)
-      - [关闭端云联调](#关闭端云联调)
-  - [命令解析](#命令解析)
-  - [proxied setup 命令](#proxied-setup-命令)
-    - [参数解析](#参数解析)
-    - [操作案例](#操作案例)
-  - [proxied invoke 命令](#proxied-invoke-命令)
-    - [参数解析](#参数解析-1)
-    - [操作案例](#操作案例-1)
-  - [proxied cleanup 命令](#proxied-cleanup-命令)
-    - [参数解析](#参数解析-2)
-    - [操作案例](#操作案例-2)
-  - [最佳实践](#最佳实践)
-    - [三步完成端云联调](#三步完成端云联调)
-    - [断点调试](#断点调试)
-      - [VSCode 断点调试案例](#vscode-断点调试案例)
-      - [Intelli 断点调试案例](#intelli-断点调试案例)
-  - [权限与策略说明](#权限与策略说明)
-  - [实战场景举例](#实战场景举例)
+- [Principles](#Principles)
+      - [Enable device-cloud joint debugging](#Enable-device-cloud-joint-debugging)
+      - [Close the device-cloud joint debugging](#Close-the-device-cloud-joint-debugging)
+- [Command description](#Command-description)
+- [proxied setup command](#proxied-setup-command)
+    - [Parameter description](#Parameter-description)
+    - [Examples](#Examples)
+- [proxied invoke command](#proxied-invoke-command)
+    - [Parameter description](#Parameter-description-1)
+    - [Examples](#Examples-1)
+- [proxied cleanup command](#proxied-cleanup-command)
+    - [Parameter description](#Parameter-description-2)
+    - [Examples](#Examples-2)
+- [Best practices](#Best-practices)
+    - [Implement cloud-terminal joint debugging](#Implement-cloud-terminal-joint-debugging)
+    - [Implement breakpoint debugging](#Implement-breakpoint-debugging)
+      - [Use VSCode to implement breakpoint debugging](#Use-VSCode-to-implement-breakpoint-debugging)
+      - [Use IntelliJ IDEA to perform breakpoint debugging](#Use-IntelliJ-IDEA-to-perform-breakpoint-debugging)
+- [Permissions and policies](#Permissions-and-policies)
+- [Examples of actual combat scenarios](#Examples-of-actual-combat-scenarios)
 
-## 相关原理
+## Principles
 
-在 Serverless 架构下，由于部分资源是云产品并且通过 VPC 网络与业务逻辑建立关联，这就导致在开发过程中难以进行代码的调试，通过该命令可以通过代理的模式，将线上资源映射到本地，进而实现 VPC 网络下的本地调试能力。
+In the serverless mode, your business may be associated with cloud services over virtual private clouds (VPCs). However, the tools that you use to debug code in the development environment cannot connect the on- and off-premises environments. Function Compute supports cloud-terminal joint debugging that allows you to map cloud resources to on-premises environments by using the proxy mode. This way, you can debug on-premises code of the services that are deployed over VPCs. 
+
+The following figure shows how Function Compute implements cloud-terminal joint debugging.
 
 ![](https://img.alicdn.com/imgextra/i4/O1CN01m0KYG61CJytdWxp1D_!!6000000000061-2-tps-1146-422.png)
 
-端云联调的架构简图如上图所示，S 工具和通道服务进行的深度集成：
-#### 开启端云联调
+The architecture diagram of the device-cloud joint debugging is shown in the figure above, and the deep integration between the S tool and the channel service is carried out.
 
-用户只要在 s.yaml 的目录下， 执行 s proxied setup,  该命令做了如下事情：
+#### Enable device-cloud joint debugging
 
-1. 根据您 s.yaml 的 vpc 配置等信息创建一个辅助的 Service/Function,  并对辅助函数预留1个实例。该辅助函数的作用是作为代理服务，本地实例所有进出流量都会通过该代理服务。
+As long as the user executes s proxied setup in the s.yaml directory, the command does the following:
 
-2. 启动本地环境的代理容器实例，通过通道服务， 和 1 中的 FC 网络代理容器实例建立一条双向通信 TCP 隧道。
+1. Create an auxiliary Service/Function based on your s.yaml vpc configuration and other information, and reserve 1 instance for the auxiliary function. The role of this helper function is to act as a proxy service through which all incoming and outgoing traffic of the local instance will pass.
 
-3. 启动本地的函数容器实例，比如您是 Custom Runtime 直接跑 SpringBoot 应用， 启动 SpringBoot 的本地函数容器实例和 2 中的代理容器实例共享网络， springboot 应用已经能内网访问线上 VPC 资源。 
+2. Start the proxy container instance of the local environment, and establish a two-way communication TCP tunnel with the FC network proxy container instance in 1 through the channel service.
 
-4. 本地函数容器实例启动成功，即可以开始调试，直接使用 `s proxied invoke` 或者 `curl` 自定义域名调用辅助的 Service/Function，流量会通过代理服务打回到本地函数容器实例， 开启本地 IDE 对实例内的应用进行断点调试。
+3. Start the local function container instance. For example, if you are a Custom Runtime and run the SpringBoot application directly, start the SpringBoot local function container instance and the proxy container instance in 2 to share the network. The springboot application can already access online VPC resources on the intranet.
 
-#### 关闭端云联调
+4. After the local function container instance is successfully started, debugging can be started, directly use `s proxied invoke` or `curl` custom domain name to call the auxiliary Service/Function, the traffic will be sent back to the local function container instance through the proxy service, and the local function will be turned on. The IDE performs breakpoint debugging on the application within the instance.
 
-因为会有一个辅助函数预留1个实例，所以调试结束后，您可以手动清理资源，以免产生不必要的费用
+#### Close the device-cloud joint debugging
 
-1.  在开启端云联调的终端， 直接 `CTRL + C` 中断
+Because there will be a helper function to reserve 1 instance, after debugging, you can manually clean up resources to avoid unnecessary charges
 
-2.  或者在另外一个终端，在相同的目录下执行 `s proxied cleanup`
+1. In the terminal where the end-cloud joint debugging is enabled, directly press `CTRL + C` to interrupt
 
-使用上面 1 或者 2 其中一个方法即可， 如果您不放心， 可以多次执行 `s proxied cleanup`
-> 即使您忘记清理， 如果本地开发机关机或者断网， 通道 session 会自动关闭， 预留的资源也会自动清理。
+2. Or in another terminal, execute `s proxied cleanup` in the same directory
 
-## 命令解析
+You can use one of the methods 1 or 2 above. If you are worried, you can execute `s proxied cleanup` multiple times
 
-当执行命令`proxied -h`/`proxied --help`时，可以获取帮助文档：
+> Even if you forget to clean up, if the local developer shuts down or disconnects from the network, the channel session will be automatically closed and the reserved resources will be automatically cleaned up.
+
+## Command description
+
+You can run the `proxied -h` or `proxied --help` command to obtain the following help information:
 
 ```shell script
 Proxied
@@ -69,7 +72,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/proxied.md
+  https://github.com/devsapp/fc/blob/main/docs/en/command/proxied.md
 
 SubCommand List
 
@@ -79,17 +82,17 @@ SubCommand List
 ```
 
 
-在该命令中，包括了三个子命令：
+The sample code contains the following subcommands:
+ 
+- [setup: Initialize or configure cloud-terminal joint debugging.](#proxied-setup-command)
+- [invoke: Invoke or call on-premises functions.](#proxied-invoke-command)
+- [cleanup: Clean helper resources or environments.](#proxied-cleanup-command)
 
-- [setup：初始化/配置端云联调](#proxied-setup-命令)
-- [invoke：触发/调用本地函数](#proxied-invoke-命令)
-- [cleanup：清理辅助资源/清理环境](#proxied-cleanup-命令)
+## proxied setup command
 
-## proxied setup 命令
-
-`proxied setup` 命令，是初始化/配置端云联调的命令。
-
-当执行命令`proxied setup -h`/`proxied setup --help`时，可以获取帮助文档：
+The `proxied setup` command is used to initialize or configure cloud-terminal joint debugging. 
+ 
+You can run the `proxied setup -h` or `proxied setup --help` command to obtain the following help information:
 
 ```shell script
 Proxied setup
@@ -102,7 +105,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/proxied.md
+  https://github.com/devsapp/fc/blob/main/docs/en/command/proxied.md
                                
 Options
 
@@ -125,7 +128,7 @@ Options Help
   C-Required: Required parameters in CLI mode
   Y-Required: Required parameters in Yaml mode
   Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/zh/yaml_and_cli.md
+  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/en/yaml_and_cli.md
 
 Examples with Yaml
 
@@ -133,22 +136,22 @@ Examples with Yaml
   $ s proxied setup --config vscode --debug-port 3000
 ```
 
-### 参数解析
+### Parameter description
 
-| 参数全称      | 参数缩写 | Yaml模式下必填 | 参数含义                                                     |
-| ------------- | -------- | -------------- | ------------------------------------------------------------ |
-| config        | c        | 选填           |指定断点调试使用的 IDE，可选：vscode, intellij|
-| debug-args    | -        | 选填           |断点调试时传入的参数|
-| debug-port    | d        | 选填           |断点调试器端口|
-| debugger-path | -        | 选填           |自定义断点调试器路径|
-| tmp-dir       | -        | 选填           |自定义函数运行环境中 `/tmp` 路径的本机挂载路径，默认为 `./.s/tmp/invoke/serviceName/functionName/`|
-| access        | a        | 选填           | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug         | -        | 选填           | 打开`debug`模式，将会输出更多日志信息                        |
-| help          | h        | 选填           | 查看帮助信息                                                 |
+| Parameter     | Abbreviation | Required   in YAML mode | Description                                                  |
+| ------------- | ------------ | ----------------------- | ------------------------------------------------------------ |
+| config        | c            | No                      | The  IDEs that you want to use for breakpoint debugging. Valid values: vscode and  intellij. |
+| debug-args    | -            | No                      | The  parameters that you want to configure during breakpoint debugging. |
+| debug-port    | d            | No                      | The  port number of the breakpoint debugger.                 |
+| debugger-path | -            | No                      | The  path of the breakpoint debugger.                        |
+| tmp-dir       | -            | No                      | The  on-premises path to mount the tmp directory  of the custom function environment. Default value: ./.s/tmp/invoke/serviceName/functionName/. |
+| access        | a            | No                      | The  information about the key that is used in this request. You can use the key  information that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-命令) or [environment variable](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#通过环境变量配置密钥信息). |
+| debug         | -            | No                      | Specifies  whether to enable the debug mode. If you enable the debug mode, a larger amount of log  information is returned. |
+| help          | h            | No                      | Queries  the help information.                               |
 
-### 操作案例
+### Examples
 
-**有资源描述文件（Yaml）时**，可以直接执行`s proxied setup `开启端云联调模式，示例输出：
+**If the YAML description file of a resource exists**, you can run the `s proxied setup` command to initialize cloud-terminal joint debugging. The following sample code shows the command output:
 
 ```
 ✔ Make service SESSION-S-d1564 success.
@@ -157,13 +160,13 @@ Proxied resource setup succeeded.
 > Next step tips: s proxied invoke
 ```
 
-在开启端云联调之后，可以进行函数的触发，例如`s proxied invoke`，在使用过后，可以考虑清理相关辅助资源，例如`s proxied cleanup`。
+After the cloud-terminal joint debugging is initialized, you can run commands such as the `s proxied invoke` command to call functions. After you perform related operations, you can run the `s proxied cleanup` command to clean helper resources. 
 
-## proxied invoke 命令
+## proxied invoke command
 
-`proxied invoke` 命令，是进行端云联调函数触发/调用的命令。
+The `proxied invoke` command is used to call or invoke a function when you implement cloud-terminal joint debugging. 
 
-当执行命令`proxied invoke -h`/`proxied invoke --help`时，可以获取帮助文档：
+You can run the `proxied invoke -h` or `proxied invoke --help` command to obtain the following help information:
 
 ```shell script
 Invoke
@@ -176,7 +179,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/proxied.md
+  https://github.com/devsapp/fc/blob/main/docs/en/command/proxied.md
                                
 Options
 
@@ -196,7 +199,7 @@ Options Help
   C-Required: Required parameters in CLI mode
   Y-Required: Required parameters in Yaml mode
   Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/zh/yaml_and_cli.md
+  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/en/yaml_and_cli.md
 
 Event Format
   
@@ -208,20 +211,20 @@ Examples with Yaml
   $ s proxied invoke --event string
 ```
 
-### 参数解析
-
-| 参数全称    | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
+### Parameter description
+ 
+| Parameter &nbsp; &nbsp;| Abbreviation | Required in YAML mode | Required in CLI mode | Description &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |
 | ----------- | -------- | -------------- | ------------- | ------------------------------------------------------------ |
-| event       | e        | 选填           | 选填          |`event` 函数：传入的 `event` 事件数据，可以通过命令`s cli fc-event`快速获取事件，详细操作可以参考[这里](https://github.com/devsapp/fc/blob/main/docs/zh/command/invoke.md#注意事项) ;<br>http 函数：传入的请求参数，格式可以参考 [这里](https://github.com/devsapp/fc/blob/main/docs/zh/Usage/invoke.md#invoke-http-parameter)|
-| event-file  | f        | 选填           | 选填          |将 `event` 参数内容以文件形式传入|
-| event-stdin | s        | 选填           | 选填          |将 `event` 参数内容以标准输入流形式传入|
-| access      | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug       | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help        | h        | 选填           | 选填          | 查看帮助信息                                                 |
+| event &nbsp; &nbsp; &nbsp; | e &nbsp; &nbsp; &nbsp; &nbsp;| No &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | No &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|The `event` function. You can invoke an `event` function to query event data. You can run the `s cli fc-event` command to query the event. For more information, see [Here](https://github.com/devsapp/fc/blob/main/docs/en/command/invoke.md#Considerations) ;<br>The HTTP function. You can invoke an HTTP function to query the request parameters. For more information about the format of the request parameters, see [Here](https://github.com/devsapp/fc/blob/main/docs/en/Usage/invoke.md#invoke-http-parameter)|
+| event-file &nbsp;| f &nbsp; &nbsp; &nbsp; &nbsp;| No &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | No &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|You must specify the value of the `event` parameter by using files.|
+| event-stdin | s &nbsp; &nbsp; &nbsp; &nbsp;| No &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | No &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|You must specify the value of the `event` parameter by using standard input streams.|
+| access &nbsp; &nbsp; &nbsp;| a &nbsp; &nbsp; &nbsp; &nbsp;| No &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | No &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| The information about the key that is used in this request. You can use the key information that is configured by using the config command (https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config add command) or environment variable (https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure the key information by using environment variables). |
+| debug &nbsp; &nbsp; &nbsp; | - &nbsp; &nbsp; &nbsp; &nbsp;| No &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | No &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| Specifies whether to enable the `debug` mode. If you enable the debug mode, a larger amount of log information is returned. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|
+| help &nbsp; &nbsp; &nbsp; &nbsp;| h &nbsp; &nbsp; &nbsp; &nbsp;| No &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | No &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| Queries the help information. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |
+ 
+### Examples
 
-### 操作案例
-
-**有资源描述文件（Yaml）时**，可以通过`s proxied invoke `对端云联调函数进行触发，例如` s proxied invoke -e '{}'`：
+**If the YAML description file of a resource exists**, you can run the `s proxied invoke` command to call the function for which cloud-terminal joint debugging is implemented. In this example, the ` s proxied invoke -e '{}'` command is used.
 
 ```
 [2021-07-13T08:55:05.260] [INFO ] [S-CLI] - Start ...
@@ -235,13 +238,13 @@ FC Invoke Result:
 hello world
 ```
 
-> 对于事件函数，需要先明确具体的事件类型（例如 OSS 事件， CDN 事件等），然后创建临时触发器，并将函数计算侧的目标函数和服务修改成生成的辅助 service/function（ [proxied setup 命令操作过程](#操作案例)中输出的`SESSION-S-d1564/python-event`），然后进行通过触发器即可直接触发函数获得端云联调的能力，例如如果是 OSS 创建 object 的事件，可以向指定的 OSS 中上传文件即可实现线上触发器触发本地函数的能力，即端云联调的能力。测试完成之后，不要忘记将临时指向生成的辅助资源的触发器恢复到原有的服务与函数资源上。
+> For event functions, you need to specify an event type such as the OSS or Alibaba Cloud CDN (CDN) event, create a temporary trigger, and then change the function and the service in Function Compute to the helper service and the helper function, which is `SESSION-S-d1564/python-event` in the command output of the [proxied setup command](#Example). Then, you can use the trigger to call the function to implement cloud-terminal joint debugging. For example, when you upload an OSS object, the cloud trigger can invoke an on-premises function to implement cloud-terminal joint debugging for the function. After the test is completed, you need to restore the trigger that temporarily points to the helper resources to the resources of the original service and function. 
+ 
+## proxied cleanup command
 
-## proxied cleanup 命令
-
-`proxied cleanup` 命令，是对因端云联调而生成的辅助资源进行清理的命令。
-
-当执行命令`proxied cleanup -h`/`proxied cleanup --help`时，可以获取帮助文档：
+The `proxied cleanup` command is used to clean helper resources that are used during cloud-terminal joint debugging. 
+ 
+You can run the `proxied cleanup -h` or `proxied cleanup --help` command to obtain the following help information:
 
 ```shell script
 Proxied cleanup
@@ -254,7 +257,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/proxied.md
+  https://github.com/devsapp/fc/blob/main/docs/en/command/proxied.md
 
 Global Options
 
@@ -267,86 +270,86 @@ Examples with Yaml
   $ s proxied cleanup                                                     
 ```
 
-### 参数解析
+### Parameter description
 
-| 参数全称 | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
-| :------- | -------- | -------------- | ------------- | ------------------------------------------------------------ |
-| access   | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug    | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help     | h        | 选填           | 选填          | 查看帮助信息                                                 |
+| Parameter | Abbreviation | Required in YAML mode | Required in CLI mode | Description                                                  |
+| --------- | ------------ | --------------------- | -------------------- | ------------------------------------------------------------ |
+| access    | a            | No                    | No                   | The information about the key that is used in this request. You  can use the key information that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-命令) or [environment variable](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#通过环境变量配置密钥信息). |
+| debug     | -            | No                    | No                   | Specifies whether to enable the debug mode. If  you enable the debug mode, a larger amount of log information is returned. |
+| help      | h            | No                    | No                   | Queries the help information.                                |
 
-### 操作案例
+### Examples
 
-**有资源描述文件（Yaml）时**，可以直接执行`s proxied clean `/`s proxied cleanup`对因端云联调而产生的辅助资源进行清理，示例输出：
+**If the YAML description file of a resource exists**, you can run the `s proxied cleanup` command to clean helper resources that are used during cloud-terminal joint debugging. The following sample code shows the command output:
 
 ```
 Resource cleanup succeeded.
 ```
 
-## 最佳实践
+## Best practices
 
-### 三步完成端云联调
+### Implement cloud-terminal joint debugging
 
-端云联调可以通过三个非常简单的步骤快速实现：
+To implement cloud-terminal joint debugging, perform the following steps:
 
-- 步骤1: 在已有的项目下，创建端云联调的辅助资源，开启端云联调模式：`s proxied setup`；
-- 步骤2: 在完成端云联调模式开启动作之后，打开一个新的终端，通过`s proxied invoke`或者线上的事件进行函数的触发，调试；
-- 步骤3: 完成端云联调之后，通过`s proxied cleanup`命令，对因端云联调而产生的辅助资源进行清理；
+- Step 1: Run the `s proxied setup` command to enable cloud-terminal joint debugging in a project. Create helper resources that are required for cloud-terminal joint debugging.
+- Step 2: After you enable cloud-terminal joint debugging, open a new terminal, and run the `s proxied invoke` command or use a cloud event to call and debug the function.
+- Step 3: After you complete cloud-terminal joint debugging, run the `s proxied cleanup` command to clean the helper resources that are used during the cloud-terminal joint debugging.
 
-### 断点调试
+### Implement breakpoint debugging
 
-通过与常见的 IDE 进行结合，可以在常见的 IDE 上实现端云联调的断点调试。
+You can implement breakpoint debugging during cloud-terminal joint debugging in common integrated development environments (IDEs). 
 
-#### VSCode 断点调试案例
+#### Use VSCode to implement breakpoint debugging
 
-- 步骤1: 在已有的项目下，开启调试模式的端云联调能力：`$ s proxied setup --config vscode --debug-port 3000`，命令执行完成功后， 本地的函数计算执行环境会阻塞等待调用(执行环境本质是一个 HTTP Server)；
+- Step 1: Run the `$ s proxied setup --config vscode --debug-port 3000` command to initialize cloud-terminal joint debugging in a project. After you run the command, the on-premises environment in which functions are invoked is blocked and pending to be invoked. The execution environment is similar to an HTTP server.
 
-  此时若要进行断点调试，需要进行以下的操作在 VSCode 上进行相关的配置：Serverless Devs 开发者工具自动在工程目录下面生成 `.vscode/launch.json` 文件, 通过下图完成调试配置：
+  Serverless Devs generates the `.vscode/launch.json` file in the project directory. If you want to perform breakpoint debugging, you need to perform operations that are described in the following figure in VScode.
 
   ![](https://img.alicdn.com/imgextra/i1/O1CN01kNeLy01Omd2Ge3Q6J_!!6000000001748-2-tps-341-233.png)
 
   
 
-- 步骤2:  打开一个新的终端，通过`proxied invoke`进行触发（例如`s proxied invoke`，如果是事件函数也可以通过线上触发器进行触发，此时要注意将触发器临时指向辅助函数，详情参考[proxied invoke 命令操作过程](#操作案例-1)），回到 VSCode 界面，既可以进行断点调试了：
+- Step 2: Open a terminal and run the `proxied invoke` command such as the `s proxied invok`e command to call the function. If the function is an event function, you can use a cloud trigger to call the function. The trigger must temporarily point to the helper function. For more information, see [proxied invoke command](#Examples-1). Go back to the VSCode interface. Then, you can perform the breakpoint debugging.
 
   ![img](https://img.alicdn.com/imgextra/i4/O1CN01biJncZ1l3V9VNWOd8_!!6000000004763-2-tps-3542-2232.png)
 
-  调试完成后返回结果。
+  The command output is returned after the cloud-terminal joint debugging is completed. 
 
-  >  若要在调用的时候制定传入的 event 参数，可以使用 `--event`，例如`s proxied invoke -h`
+  >  If you need to use a custom event parameter when you invoke the function, run the `--event` command. For example, you can use the event command in the `s proxied invoke -h` command.
 
-- 步骤3:  完成端云联调之后，通过`s proxied cleanup`命令，对对因端云联调而产生的辅助资源进行清理；
+- Step 3: After you complete cloud-terminal joint debugging, run the `s proxied cleanup` command to clean the helper resources that are used during the cloud-terminal joint debugging.
 
-#### Intelli 断点调试案例
+#### Use IntelliJ IDEA to perform breakpoint debugging
 
-- 步骤1: 例如需要在 IDEA 下进行调试，可以在已有的项目下，开启调试模式的端云联调能力：`$ s proxied setup --config intellij --debug-port 3000`，命令执行完成功后， 本地的函数计算执行环境会阻塞等待调用(执行环境本质是一个 HTTP Server)；
+- Step 1: Run the `$ s proxied setup --config intellij --debug-port 3000` command to enable cloud-terminal joint debugging in a project. After you run the command, the on-premises environment in which functions are invoked is blocked and pending to be invoked. The on-premises environment is similar to an HTTP server.
 
-  此时若要进行断点调试，需要进行以下的操作在 IDEA 上进行相关的配置：
+  If you need to implement breakpoint debugging, perform the following operations in Intellij IDEA:
 
-    1. 在菜单栏选择 Run… > Edit Configurations 。
+    1. In the top navigation bar, choose Run > Edit Configurations
        ![img](https://img.alicdn.com/imgextra/i4/O1CN01CffYNv1UbX74nFI0d_!!6000000002536-2-tps-734-432.png)
-     2. 新建一个 Remote Debugging 。
+    2. Click the + icon and select Remote JVM Debug. 
         ![img](https://img.alicdn.com/imgextra/i2/O1CN014nVPkX1voLpEUKiS9_!!6000000006219-2-tps-2216-1514.png)
-     3. 自定义调试器名称，并将端口配置为 3000 。
+    3. Specify a name for the debugger and set the port number to 3000. 
         ![img](https://img.alicdn.com/imgextra/i2/O1CN014xCgf21lnl9h2QGTA_!!6000000004864-2-tps-2142-1620.png)
-     4. 上述配置完成后，在 IDEA 编辑器侧边栏为函数代码增加断点，点击"开始调试"按钮。
+    4. In the left-side navigation pane, add a breakpoint for the function code and click the debugging icon. 
         ![img](https://img.alicdn.com/imgextra/i1/O1CN01PPR4V61RM0qRiP16r_!!6000000002096-2-tps-3528-2166.png)
 
-- 步骤2:  打开一个新的终端，通过`proxied invoke`进行触发（例如`s proxied invoke`，如果是事件函数也可以通过线上触发器进行触发，此时要注意将触发器临时指向辅助函数，详情参考[proxied invoke 命令操作过程](#操作案例-1)），回到 IDEA 界面，既可以进行断点调试了：
+- Step 2: Open a terminal and run the `proxied invoke` command such as the `s proxied invoke` command to call the function. If the function is an event function, you can use a cloud trigger to call the function. The trigger must temporarily point to the helper function. For more information, see [proxied invoke command](#Examples-1). Go back to the Intellij IDEA interface. Then, you can perform breakpoint debugging.
 
   ![img](https://img.alicdn.com/imgextra/i2/O1CN01gZdC9B20nxYxFvLTr_!!6000000006895-2-tps-3566-2232.png)
 
-  调试完成后返回结果。
+  The command output is returned after the cloud-terminal joint debugging is completed. 
 
-  >  若要在调用的时候制定传入的 event 参数，可以使用 `--event`，例如`s proxied invoke -h`
+  >  If you need to use a custom event parameter when you invoke the function, run the `--event` command. For example, you can use the event command in the `s proxied invoke -h` command.
 
-- 步骤3:  完成端云联调之后，通过`s proxied cleanup`命令，对对因端云联调而产生的辅助资源进行清理；
+-Step 3: After you complete cloud-terminal joint debugging, run the `s proxied cleanup` command to clean helper resources that are used during the cloud-terminal joint debugging.
 
-## 权限与策略说明
+## Permissions and policies
 
-- `proxied setup`命令的权限，更多是和 要被端云联调的函数 Yaml 中所配置的参数有一定的关系，所以此处可以参考 [Yaml 规范文档](../yaml.md) 中关于不同字段与权限的配置。
+- If you need to run the `proxied setup` command, obtain the permissions on the command. The permissions are related to the parameters that are configured in the YAML file of the function for which you want to implement cloud-terminal joint debugging. For more information about how to configure the parameters and the relevant permissions, see [Yaml syntax](../yaml.md). 
 
-- 除了基础配置之外，`proxied `还需要以下策略作为支持：
+- You also need to run the following command to configure the policy that is required by the `proxied` command.
 
   ```
   {
@@ -361,11 +364,11 @@ Resource cleanup succeeded.
   }
   ```
 
-- 如果使用`proxied invoke`命令，还需要对应的`invoke`权限，例如：
+- If you need to run the `proxied invoke` command, obtain the permissions on the `invoke` command based on your business requirements.
 
-  - 最大权限: `AliyunFCInvocationAccess` 或者 `AliyunFCFullAccess`
+  - To obtain the highest level of permissions, attach the `AliyunFCInvocationAccess` or `AliyunFCFullAccess` policy.
 
-  - 最小权限: 
+  - To obtain the lowest level of permissions, run the following command:
 
     ```yaml
     {
@@ -380,11 +383,11 @@ Resource cleanup succeeded.
     }
     ```
 
-- 如果涉及到函数等相关辅助资源的清理，还需要对应的`delete`权限，例如：
+- If you need to clean helper resources of the function, obtain the permissions that allow you to `delete` resources based on your business requirements.
 
-  - 最大权限: `AliyunFCInvocationAccess` 或者 `AliyunFCFullAccess`
+  - To obtain the highest level of permissions, attach the `AliyunFCInvocationAccess` or `AliyunFCFullAccess` policy.
 
-  - 最小权限参考：
+  - To obtain the lowest level of permissions, run the following command:
 
     ````json
     {
@@ -413,21 +416,21 @@ Resource cleanup succeeded.
     }
     ````
 
-## 实战场景举例
-以阿里云函数计算一个真实的企业客户为例：小王是一个业务驱动型的公司的开发， 公司为了提高业务迭代效率， 技术架构向全面云原生化演进， 减少基本设施的管理和运维， 架构大致如下：
+## Examples of actual combat scenarios
+Take a real enterprise customer of Alibaba Cloud Function Computing as an example: Xiao Wang is a developer of a business-driven company. In order to improve the efficiency of business iteration, the company has evolved its technical architecture towards a comprehensive cloud-native approach, reducing the management and operation and maintenance of basic facilities. The structure is roughly as follows:
 
 <img src="https://img.alicdn.com/imgextra/i1/O1CN012AtvSr1ZhYRbKqZWZ_!!6000000003226-2-tps-1508-1378.png" width="70%" height="70%">
 
-小王将迭代最频繁的对外的前后端分离的项目都一键迁移到函数计算的 Custom Runtime，在其中 SpringBoot 的项目需要能使用各种 VPC 内网地址访问下游服务（比如注册中心或者其他微服务接口）， 这个时候Serverless Devs 提供的端云联调 就可以派上用场了， 只需要在 s.yaml (s.yaml 中定义了函数的 VPC 配置) 所在目录下执行：
+Xiao Wang migrates the most frequently iterated external front-end and back-end projects to the Custom Runtime of Function Compute with one click, in which SpringBoot projects need to be able to use various VPC intranet addresses to access downstream services (such as registry or other microservice interfaces) ), at this time, the device-cloud joint debugging provided by Serverless Devs can come in handy. You only need to execute it in the directory where s.yaml (the VPC configuration with functions defined in s.yaml) is located:
 
-`$ s proxied setup`
+`$s proxied setup`
 
-该命令会和云端 VPC 环境建立安全的网络通道，并在本地启动应用实例。此时本地实例可以无缝访问云端 VPC 环境内的资源，比如使用内网地址访问注册中心、RDS、 Kafka 等。这意味着您的应用配置不需要任何改变，就可以在本地和云端环境内的资源交互。
+This command will establish a secure network channel with the cloud VPC environment and start the application instance locally. At this time, the local instance can seamlessly access the resources in the cloud VPC environment, such as using the intranet address to access the registry, RDS, Kafka, etc. This means that your application configuration does not require any changes to interact with resources in the on-premises and cloud environments.
 
-与此同时，直接使用这个SpringBoot后端项目对应在函数计算 FC 上的自定义域名，流量将被路由到本地应用实例上。比如，您的前端项目部署到 FC 的函数名字是 frontend, 对应的自定义域名是 frontend.abc.com。前端依赖的后端服务部署在 FC 上的函数名字是 backend，对应的自定义域名是 backend.abc.com。这个时候，您直接浏览器打开 fronted.abc.com，进行有后端请求的操作，流量就自动从线上路由到本地的 SpringBoot 实例，同时 SpringBoot 的日志在终端实时显示，甚至您也可以使用断点调试来自线上的流量。
+At the same time, directly using the custom domain name on the Function Compute FC corresponding to this SpringBoot backend project, the traffic will be routed to the local application instance. For example, the function name of your front-end project deployed to FC is frontend, and the corresponding custom domain name is frontend.abc.com. The function name of the backend service that the frontend depends on deployed on the FC is backend, and the corresponding custom domain name is backend.abc.com. At this time, you open fronted.abc.com directly in the browser and perform operations with back-end requests. The traffic is automatically routed from the online to the local SpringBoot instance, and the SpringBoot logs are displayed in real time on the terminal. Point to debug traffic from online.
 
-假设本地启动 SpringBoot 后端项目的实例失败，可能的原因包括函数计算的 VPC 配置不对, 对应的下游服务有白名单限制等等。此时您在本地就可以重现和云端环境实例相同的启动过程，这对排查实例启动方面的问题极其有帮助。如下图所示：
+Assuming that the instance of the SpringBoot backend project fails to be started locally, the possible reasons include the wrong VPC configuration of Function Compute, the whitelist restriction of the corresponding downstream service, and so on. At this point, you can reproduce the same startup process as the cloud environment instance locally, which is extremely helpful for troubleshooting instance startup issues. As shown below:
 
 ![](https://img.alicdn.com/imgextra/i3/O1CN01tD1TWT1CiiHeYt7rC_!!6000000000115-2-tps-2282-688.png)
 
-我们从本地实例的启动过程信息就可以明确定位到原因是 Nacos 访问不通，我们需要查看函数是否正确配置了 Nacos 所在的 VPC 信息，或者 Nacos 是否有白名单限制等等。
+We can clearly locate the reason from the startup process information of the local instance that Nacos cannot access. We need to check whether the function is correctly configured with the VPC information where Nacos is located, or whether Nacos has whitelist restrictions, etc.

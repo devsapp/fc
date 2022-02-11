@@ -1,31 +1,26 @@
-# Eval 命令
+# Eval commands
 
-在 Serverless 领域内，通常会出现以下两种使用场景：
+The following two scenarios exist in serverless mode:
 
-- CPU 密集型场景
-  对于 CPU 密集型场景，例如音视频处理、AI 推理或图片处理等，您一般会选择使用单实例单并发。由于该类场景的函数内存大小和 CPU 能力成正比，因此您需要根据函数是成本敏感型还是延迟敏感型选择合适的内存规格。
+- For CPU-intensive scenarios, such as audio and video processing, AI inference and image processing, you can use a single instance to process a single request. In these scenarios, the function memory is proportional to the CPU power. You need to select a proper memory size based on whether the function is cost-sensitive or latency-sensitive. 
 
-- I/O 密集型场景
-  对于 I/O 密集型场景，您一般会选择使用单实例多并发。该类场景下由于函数内存和 CPU 能力成正比，建议您将函数内存规格设置足够大，但可能会出现浪费资源的现象，很难选择合适的单实例并发值。
+- For I/O-intensive scenarios, you can use a single instance to concurrently process multiple requests. In these scenarios, the function memory is proportional to the CPU power. We recommend that you use a large memory size for the function. If you select an improper concurrency value for a single instance, resources may be wasted. 
 
-针对在以上两种使用场景无法设置合适的参数规格的情况，Serverless Devs 为您提供了探测功能，可以实现内存探测和并发度探测，获取满足您需求的参数配置信息。`eval` 命令是对函数进行探测的命令；通过 `eval` 指令，可以对函数探测内存(单实例单并发)或者探测并发度(单实例多并发)。例如给 CPU 密集型场景的函数设置合适的内存，给 I/O 密集型场景的函数设置合适的并发值，根据探测结果，获取满足需求的最佳内存大小或最佳并发度值。
+If you cannot specify parameters that meet your business requirements in the preceding scenarios, you can use Power Tuning that is provided by Serverless Devs to fine-tune memory and concurrency configurations. Power Tuning helps you obtain parameter configurations that meet your business requirements. The eval commands are used to detect the configurations of functions. You can run the eval commands to detect the memory configurations in the scenario where a single instance processes a single request or the concurrency configurations in the scenario where a single instance concurrently processes multiple requests. In this example, the optimal memory size for a function in a CPU-intensive scenario and the optimal concurrency value for a function in an I/O-intensive scenario are obtained by using the eval commands. You can configure the optimal memory size and the optimal concurrency value that meet your business requirements based on the detection results. 
 
-<font color="red">注意: 这个命令只是针对开发上线前阶段的函数， 不要对生产函数执行探测操作</font>
+<font color="red">Note: You can run the eval commands for functions in the development and pre-release environments. We recommend that you do not run the eval commands for functions in the production environments.</font>
 
-- [Eval 命令](#eval-命令)
-  - [命令解析](#命令解析)
-  - [eval start 命令](#eval-start-命令)
-    - [参数解析](#参数解析)
-    - [操作案例](#操作案例)
-      - [内存探测模式](#内存探测模式)
-      - [并发度探测模式](#并发度探测模式)
-  - [权限与策略说明](#权限与策略说明)
-  - [补充](#补充)
-      - [示例](#示例)
-      
-## 命令解析
+- [Command description](#Command-description)
+- [eval start command](#eval-start-command)
+    - [Parameter description](#Parameter-description)
+    - [Examples](#Examples)
+      - [Memory detection](#Memory-detection)
+      - [Concurrency detection](#Concurrency-detection)
+- [Permissions and policies](#Permissions-and-policies)
 
-当执行命令`eval -h`/`eval --help`时，可以获取帮助文档：
+## Command description
+
+You can run the `eval -h` or `eval --help` command to obtain the following information about the relevant help documentation:
 
 ```shell script
 Eval
@@ -39,22 +34,22 @@ Usage
 
 Document
 
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/eval.md
+  https://github.com/devsapp/fc/blob/main/docs/en/command/eval.md
 
 SubCommand List
 
   start   Power tuning online functions; help command [s eval start -h]
 ```
 
-在该命令中，包括了一个子命令：
+The sample code contains the following subcommand:
 
-- [start：线上函数探测](#eval-start-命令)
+- [start: detects the configurations of a function.](#eval-start-command)
 
-## eval start 命令
+## eval start command
 
-`eval start` 命令，是开始进行函数探测的命令。
-
-当执行命令`eval start -h`/`eval start --help`时，可以获取帮助文档：
+The `eval start` command is used to detect the configurations of a function. 
+ 
+You can run the `eval start -h` or `eval start --help` command to obtain the following information about the relevant help documentation:
 
 ```shell script
 Eval start
@@ -63,7 +58,7 @@ Eval start
 
 Document
 
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/eval.md
+  https://github.com/devsapp/fc/blob/main/docs/en/command/eval.md
 
 Usage
 
@@ -99,7 +94,7 @@ Options Help
   Required: Required parameters in YAML mode and CLI mode
   C-Required: Required parameters in CLI mode
   Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
+  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
 
 Examples with Yaml
 
@@ -112,46 +107,48 @@ Examples with CLI
   $ s cli fc eval start --region cn-hangzhou --function-name functionName --service-name serviceName --eval-type concurrency --memory 1536 --concurrency-args 2,30,5 --rt 250  --method get --path '/login' --query 'a=1&b=2' --access default
 ```
 
-### 参数解析
+### Parameter description
 
 
-| 参数全称         | 参数缩写 | Yaml 模式下必填 | Cli 模式下必填 | 参数含义                                                                                                                                                                                                                                                                                                                   |
-| ---------------- | -------- | --------------- | -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | 
-| region           | -        | 选填            | 必填           | 探测的函数所处的地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| service-name     | -        | 选填            | 必填           | 探测的函数所处的服务名                                                                                                                                                                                                                                                                                                     |
-| function-name    | -        | 选填            | 必填           | 探测的函数名                                                                                                                                                                                                                                                                                                               |     |
-| eval-type        | -        | 选填            | 选填           | 探测类型， 取值范围：`memory, concurrency`，默认是 memory                                                                                                                                                                                                                                                                  |
-| memory-size      | -        | 选填            | 选填           | 探测类型为 memory 需要的参数，示例 `128,256,512,1024`                                                                                                                                                                                                                                                                      |
-| run-count        | -        | 选填            | 选填           | 探测类型为 memory 需要的参数， 指定目标函数在不同内存规格下被分别调用的次数                                                                                                                                                                                                                                                |
-| memory           | -        | 选填            | 选填           | 探测类型为 concurrency 需要的参数, 建议设置的较大内存， 比如 弹性实例 1.5G(约 1vCPU) 或者 3G(约 2vCPU), 或者使用性能型实例                                                                                                                                                                         |
-| concurrency-args | -        | 选填            | 选填           | 探测类型为 concurrency 需要的参数, 指定目标函数被探测时的并发度参数范围和步长，例如该参数的配置信息为--concurrency-args 2,20,5，表示并发范围[2,20]，步长为 5，即被探测的目标函数分别在 2、7、12 和 17 不同并发值下实现探测                                                                    |
-| rt               | -        | 选填            | 选填           | 探测类型为 concurrency 需要的参数，期望最大响应时间,  探测期间若发现请求延迟超过 rt,  则停止探测， 更大的并发度没有必要探测                                                                                                                                                                                                                                              |
-| method           | -        | 选填            | 选填           | 针对被探测的函数是 HTTP 函数，取值范围：`GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD` 或者 `get, post, put, patch, delete, options, head`。                                                                                                                                                                                                                                   |
-| path             | -        | 选填            | 选填           | 针对被探测的函数是 HTTP 函数， HTTP 请求的 `path`                                                                                                                                                                                                                                                                          |
-| payload          | -        | 选填            | 选填           | 如果被探测函数是 HTTP 函数时，是 HTTP 请求的 `body`; 如果被探测函数是 `event` 函数时，是函数入参 `event`                                                                                                                                                                                                                   |
-| payload-file     | -        | 选填            | 选填           | 探测类型是 memory 或者 concurrency：如果被探测函数是 HTTP 函数时，文件内容是 HTTP 请求的 `body`; 如果被探测函数是 `event` 函数时，文件内容是函数入参 `event`                            |
-| query            | -        | 选填            | 选填           | 针对被探测的函数是 HTTP 函数， HTTP 请求的 `query`                                                                                                                                                                                                                                                                         |
-| headers          | -        | 选填            | 选填           | 针对被探测的函数是 HTTP 函数， HTTP 请求头, 示例值:`{"header_a":"val"}`                                                                                                                                                                                                                                                    |
-| access           | a        | 选填            | 必填           | 本次请求使用的密钥，可以使用通过[config 命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息)  |
-| debug            | -        | 选填            | 选填           | 打开`debug`模式，将会输出更多日志信息                                                                                                                                                                                                                                                                                      |
-| help             | h        | 选填            | 选填           | 查看帮助信息                                                                                                                                                                                                                                                                                                               |
 
-### 操作案例
+| Parameter        | Abbreviation | Required   in YAML mode | Required   in CLI mode | Description                                                  |
+| ---------------- | ------------ | ----------------------- | ---------------------- | ------------------------------------------------------------ |
+| region           | -            | No                      | Yes                    | The region where the  function is deployed. Valid values: cn-hangzhou, cn-beijing, cn-beijing,  cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote,  cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2,  ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1,  us-west-1, us-east-1, and ap-south-1. |
+| service-name     | -            | No                      | Yes                    | The name of the  service to which the function belongs.      |
+| function-name    | -            | No                      | Yes                    | The name of the  function.                                   |
+| eval-type        | -            | No                      | No                     | The type of the  detection. Valid values: memory  and concurrency. Default value: memory. |
+| memory-size      | -            | No                      | No                     | The memory size. This  parameter is required when you set the eval-type parameter to memory.  Example:128,  256, 512, or 1024. |
+| run-count        | -            | No                      | No                     | Specifies the number  of times that the function is invoked when different memory size are  specified. This parameter is required when you set the eval-type parameter to  memory. |
+| memory           | -            | No                      | No                     | This parameter is  required when you set the eval-type parameter to concurrency. We recommend  that you use a large memory size. For example, you can use an elastic  instance of 1.5 GB (about 1vCPU) or 3 GB (about 2vCPU), or use a performance  instance. |
+| concurrency-args | -            | No                      | No                     | Specifies the  concurrency range and the step size of the function. This parameter is  required when you set the eval-type parameter to concurrency. In this  example, the 2,20,5 value is set for the concurrency-args parameter. This  value indicates that the concurrency range is 2 to 20 and the step size is 5.  The function is detected in concurrency values of 2, 7, 12, and 17. |
+| rt               | -            | No                      | No                     | Specifies the maximum  response time that meets your business requirements. This parameter is  required when you set the eval-type parameter to concurrency. |
+| method           | -            | No                      | No                     | Specifies the request  method of an HTTP function. Valid values: GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD,  get, post, put, patch, delete, options, and head. |
+| path             | -            | No                      | No                     | Specifies the request path of an  HTTP function.             |
+| payload          | -            | No                      | No                     | Specifies the HTTP  request body of an HTTP function or the event input  parameter of an event function. |
+| payload-file     | -            | No                      | No                     | Specifies the file  that contains the HTTP request body of an  HTTP function or the file that contains the event input  parameter of an event function. This parameter is required when you set the eval-type  parameter to memory or concurrency. |
+| query            | -            | No                      | No                     | The query string  of the HTTP request of an HTTP function.   |
+| headers          | -            | No                      | No                     | The HTTP request  headers of an HTTP function. Example: {"header_a":"val"}. |
+| access           | a            | No                      | Yes                    | The AccessKey pair  that is used in the request. You can use the AccessKey pair that is  configured by running [the config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-命令) or by using [environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#通过环境变量配置密钥信息). |
+| debug            | -            | No                      | No                     | The debug mode. If  you enable the dedug mode, a larger number of logs are returned. |
+| help             | h            | No                      | No                     | Views the help  information.                                 |
 
-- **有资源描述文件（Yaml）时**，可以直接执行`s eval start`进行函数探测；
-- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区以及服务名称，函数名等，例如`s cli fc eval start --region cn-hangzhou --function-name cpu-test --function-name test --service-name Service --eval-type memory --run-count 10 --payload '{"key":"val"}' --memory-size 128,256,512,1024 --access default`
 
-#### 内存探测模式
+### Examples
 
-本示例以探测 CPU 密集型场景事件函数为例，介绍如何实现内存模式的探测。请执行以下命令，获取最佳的内存规格：
+- **If a function has a YAML description file**, run the `s eval start` command to detect the configurations of the function.
+- **In CLI mode (no YAML file exists)**, you must add information such as the region ID, function name, and name of the service to the eval start command . Example: `s cli fc eval start --region cn-hangzhou --function-name cpu-test --function-name test --service-name Service --eval-type memory --run-count 10 --payload '{"key":"val"}' --memory-size 128,256,512,1024 --access default`.
+
+#### Memory detection
+
+This example shows how to use the memory detection mode in CPU-intensive scenarios. Run the following command to obtain the optimal memory size:
 
 ```bash
 s cli fc eval start --region cn-hangzhou --function-name cpu-test --service-name Service  --eval-type memory  --run-count 10   --payload '{"key":"val"}' --memory-size 128,256,512,1024  --access default
 ```
 
-本示例表示被探测的目标函数在 128 MB、256 MB、512 MB 和 1024 MB 四个不同的内存模式下分别被调用十次后取平均值，例如目标函数在 128 MB 内存格式下被调用十次后取平均值，最终对目标函数在这四个不同内存模式下分别被调用十次后的平均值进行对比，获取探测信息。
+In this example, a function is invoked 10 times at the following memory sizes: 128 MB, 256 MB, 512 MB, and 1024 MB. After you run the eval start command, the average values of the memory sizes are returned. You can compare the average values to obtain the optimal configurations of the memory size. 
 
-输出示例：
+The following command output is returned:
 
 ```text
 ...
@@ -159,32 +156,32 @@ s cli fc eval start --region cn-hangzhou --function-name cpu-test --service-name
 http://memory-tuning.devsapp.cn/#gAAAAQACAAQ=;AIAARwBYgEYAoPdFAHiBRQ==;37w+OH+BPjiqxzc4/SxAOA==
 ```
 
-此时，可以通过浏览器打开返回的地址，查看相关探测信息：
+Open the URL that is contained in the command output in a browser to view the results of memory detection. The following figure shows the memory detection results.
 
 ![图片alt](https://img.alicdn.com/imgextra/i3/O1CN01nZNiZX1dQO2nqqWVf_!!6000000003730-2-tps-1533-649.png)
 
-关于该结果的解析如下：
+The results contain the following information:
 
-1. 图中红色的线表示执行时间与内存大小的关系；蓝色的线表示所消耗的成本与内存之间的关系；
-2. 右侧四个数字分别是：
-   - Best Cost：消费最少的时候，内存是 512MB；
-   - Best Time：执行耗时最短的时候，内存是 1024MB；
-   - Worst Cost：消费最多的时候，内存是 1024MB；
-   - Worst Time：执行耗时最长的时候，内存是 128MB；
+1. Lines in the middle part: The red line indicates the relationship between the execution time and the memory size. The blue line indicates the relationship between the execution cost and the memory size.
+2. Values on the right side:
+   - Best Cost: specifies the memory size value when the execution cost reaches the minimal value. In the preceding figure, the memory size value is of 512 MB.
+   - Best Time：Best Time: specifies the memory size value when the execution time reaches the minimal value. In the preceding figure, the memory size value is of 1024 MB.
+   - Worst Cost: specifies the memory size value when the execution cost reaches the maximum value. In the preceding figure, the memory size value is of 1024 MB.
+   - Worst Time: specifies the memory size value when the execution time reaches the maximum value. In the preceding figure, the memory size value is of 128 MB.
 
-此时可以根据这个数据，当前函数资源进行内存设定，可以综合曲线和实际业务需求，例如，在当前时刻，延迟要求在 20000ms 以内，256M 是成本最佳， 如果要求延迟在 5000ms 以内， 这个时候 1024M 是最佳选择。
+You can set the memory size value that best suits your needs based on the preceding results. For example, if the execution time cannot exceed 20000 ms, you can set the memory size to 256 MB. If the execution time cannot exceed 5000 ms, you can set the memory size to 1024 MB. 
 
-#### 并发度探测模式
+#### Concurrency detection
 
-本示例以 I/O 密集型场景的 HTTP 函数为例，介绍如何对函数实现并发度的探测。请执行以下命令，获取最佳的并发度规格：
+This example shows how to perform concurrency detection on an HTTP function in I/O-intensive scenarios. Run the following command to obtain the information about the optimal concurrency value:
 
 ```bash
 s cli fc eval start --region cn-hangzhou --function-name demo --service-name Service --eval-type concurrency --memory 1536 --concurrency-args 2,25,5 --rt 600 --method=get --path /login  --query 'a=1&b=2'  --headers='{"header_a":"v"}' --access default
 ```
 
-本示例表示将被探测的目标函数的内存规格设置为 1.5 GB，并发度范围[2,20]，步长为 5，即被探测的目标函数分别在 2，7，12, 17, 22 和 25 不同并发值模式下实现探测，获取探测信息。
+In this example, the configurations of a function whose memory size is of 1.5 GB, concurrency range is from 2 to 20, and step size is 5 is detected. The function is detected in different concurrency values of 2, 7, 12, and 17. 
 
-输出示例：
+The following command output is returned:
 
 ```text
 ...
@@ -192,24 +189,24 @@ s cli fc eval start --region cn-hangzhou --function-name demo --service-name Ser
 http://concurrency-tuning.devsapp.cn/#AgAHAAwAEQAWABkA;zcw8QgAAhkIAACRDAICgQ81MwUOamaZD;AACwQQAAwEEAAMhBAACwQQAAwEEAAMhB
 ```
 
-此时，可以通过浏览器打开返回的地址，查看相关探测信息：
+Open the URL that is contained in the command output in a browser to view the results of concurrency detection. The following figure shows the concurrency detection results.
 
 ![](https://img.alicdn.com/imgextra/i3/O1CN01B2gC2p1WDptdz4n9M_!!6000000002755-2-tps-2714-1252.png)
 
-关于该结果的解析如下：
+The results contain the following information:
 
-1. 图中红色的线表示请求延迟与单实例并发度的关系；蓝色的线表示有效的 QPS 与单实例并发度之间的关系；
+1. Lines in the middle part: The red line indicates the relationship between the execution time and the single-instance concurrency. The blue line indicates the relationship between the effective queries per second (QPS) and the single-instance concurrency.
 
-	>  有效 QPS 指的 （总请求数 - 被限流的 429 请求、以及 OOM 等异常的 5XX 请求数）/ 总时间 计算出来的
+	>  Effective QPS refers to (total number of requests - 429 requests that are throttled, and 5XX requests that are abnormal such as OOM)/total time Calculated
+                                                                                                                                                                                                                                                                    
+2. Values on the right side:
+   - Best QPS: specifies the concurrency value for an instance when the effective QPS reaches the maximum value. In the preceding figure, the concurrency value is 17.
+   - Best Time: specifies the concurrency value for an instance when the execution time reaches the minimum value. In the preceding figure, the concurrency value is 2.
+   - Worst QPS: specifies the concurrency value for an instance when the effective QPS reaches the minimum value. In the preceding figure, the concurrency value is 2.
+   - Worst Time: specifies the concurrency value for an instance when the execution time reaches the minimum value. In the preceding figure, the concurrency value is 17.
 
-2. 右侧四个数字分别是：
-   - Best QPS：有效 QPS 最高的时候，单实例并发度是 12；
-   - Best Latency: 平均请求延迟最小的时候，单实例并发度是 2；
-   - Worst QPS：有效 QPS 最低的时候，单实例并发度是 17；
-   - Worst Latency：平均请求延迟最大的时候，单实例并发度是 22；
+You can set the concurrency value that best suits your needs for based on the preceding results. If the execution time cannot exceed 20 ms, you can set the concurrency value for an instance to 12. 
 
-此时可以根据这个数据，可以对这个函数的单实例多并发的并发度值进行设置， 如果需要函数的每次执行时间都小于 200ms, 那么设置并发度 12 是一个好的选择。
+## Permissions and policies
 
-## 权限与策略说明
-
-不需要特殊权限， 一般 s 使用的 access 有 FCFullAccess 即可
+Attach the FCFullAccess policy. The FCFullAccess policy corresponds to the access parameter specified by using the s config command.

@@ -1,41 +1,41 @@
-# 常见小贴士
+# Common tips
 
-- [Serverless Devs和FC组件的关系](#serverless-devs和FC组件的关系)
-- [如何声明/部署多个函数](#如何声明部署多个函数)
-- [关于`.fcignore`使用方法](#关于fcignore使用方法)
-- [关于`.env`使用方法](#关于env使用方法)
-- [工具中`.s`目录是做什么](#工具中s目录是做什么)
-- [函数进行build操作之后如何处理build的产物](#函数进行build操作之后如何处理build的产物)
-- [Yaml是否支持全局变量/环境变量/引用外部文件](#Yaml是否支持全局变量环境变量引用外部文件)
-- [通过环境变量配置组件](#通过环境变量配置组件)
-- [项目实践案例](#项目实践案例)
+- [Relationship between Serverless Devs and the FC component](#Relationship-between-Serverless-Devs-and-the-FC-component)
+- [Declaration and deployment of multiple functions](#Declaration-and-deployment-of-multiple-functions)
+- [How to use a `.fcignore` file](#How-to-use-a-fcignore-file)
+- [How to use a `.env` file](#How-to-use-a-env-file)
+- [Purpose of the `.s` directory in Serverless Devs](#Purpose-of-the-s-directory-in-Serverless-Devs)
+- [How to process build results](#How-to-process-build-results)
+- [Check whether YAML supports global variables, environment](#Check-whether-YAML-supports-global-variables-environment)
+- [Configure components by using environment variables](#Configure-components-by-using-environment-variables)
+- [Cases](#Cases)
 
-## Serverless Devs和FC组件的关系
+## Relationship between Serverless Devs and the FC component
 
-1. Serverless Devs是一个无厂商锁定Serverless的工具框架，本身不具任何能力，用户可以通过引入不同的组件使用不同的功能，例如：
+1. Serverless Devs is an open source framework for serverless developers and does not provide features. You can integrate different components into Serverless Devs to use different features.
 
    ![图片alt](https://serverless-article-picture.oss-cn-hangzhou.aliyuncs.com/1639104284744_20211210024516345769.png)
 
-2. 而FC组件则是这个工具框架的一个组件，主要是对阿里云函数计算进行操作的，例如创建函数，删除函数、发布版本、业务构建、在线调试等；
+2. You can use the FC component of Serverless Devs to perform operations on Function Compute. For example, you can create functions, delete functions, publish versions, build projects, and perform remote debugging.
 
-> 如果需要进行比喻：
+> Example：
 >
-> - Serverless Devs是小时候玩的红白机，而fc组件，oss组件，nas组件等都是游戏卡，游戏机本身不具备啥功能，根据我们插入的游戏卡实现不同的功能；
-> - Serverless Devs就相当于我们用的VSCode工具，本身不具备太多的能力，但是我们可以安装不同的插件，来丰富VSCode的能力，而这些插件对应到Serverless Devs生态中，就是不同的组件，例如fc组件，nas组件，oss组件等；
+> - Serverless Devs can be compared to the Nintendo Entertainment System, a popular video game console, and components such as FC, Object Storage Service (OSS), and Apsara File Storage NAS (NAS) can be compared to the Nintendo video game cards. The Nintendo Entertainment System can be used only as a platform. You can use the platform together with components such as the game cards to use different features.
+> - Serverless Devs can be used in the same manner as Visual Studio Code that does not provide features. You can insert different plug-ins into Visual Studio Code to provide new features. The plug-ins are used in the same manner as different components in the Serverless Devs ecosystem, such as the FC, NAS, and OSS components.
 
-## 如何声明/部署多个函数
+## Declaration and deployment of multiple functions
 
-函数计算组件在单个模块下在仅支持一个服务对应一个函数，例如下面所示 Yaml 中`project1`仅有一个`service`与`function`：
+The FC component supports only one function for a service that is used in a single project. For example, the YAML file contains only one `service` and one `function` for `project1`.
 
 ```yaml
-edition: 1.0.0          #  命令行YAML规范版本，遵循语义化版本（Semantic Versioning）规范
-name: fcDeployApp       #  项目名称
-access: "default"  #  秘钥别名
+edition: 1.0.0           # The version of the YAML specification, which conforms to semantic versioning
+name: fcDeployApp        # The project name
+access: "default"  # The alias of the key
 
 services:
   project1:
-    component: devsapp/fc  # 组件名称
-    props: #  组件的属性值
+    component: devsapp/fc  # The component name
+    props: # The property value of the component
       region: cn-hangzhou
       service:
         name: fc-build-demo
@@ -45,12 +45,12 @@ services:
         description: this is a test
 ```
 
-如果需要一个`service`下由多个`function`，可以通过全局变量定义`service`，例如：
+If you need to deploy multiple `functions` for one `service`, you can configure the `service` by using global variables. Example:
 
 ```yaml
-edition: 1.0.0          #  命令行YAML规范版本，遵循语义化版本（Semantic Versioning）规范
-name: fcDeployApp       #  项目名称
-access: "default"  #  秘钥别名
+edition: 1.0.0           # The version of the YAML specification, which conforms to semantic versioning
+name: fcDeployApp        # The project name
+access: "default"  # The alias of the key
 
 vars:
   service:
@@ -58,16 +58,16 @@ vars:
     description: 'demo for fc-deploy component'
 services:
   project1:
-    component: devsapp/fc  # 组件名称
-    props: #  组件的属性值
+    component: devsapp/fc   # The component name
+    props: # The property value of the component
       region: cn-hangzhou
       service: ${vars.service}
       function:
         name: py-event-function-1
         description: this is a test
   project2:
-    component: devsapp/fc  # 组件名称
-    props: #  组件的属性值
+    component: devsapp/fc   # The component name
+    props:# The property value of the component
       region: cn-hangzhou
       service: ${vars.service}
       function:
@@ -75,11 +75,11 @@ services:
         description: this is a test
 ```
 
-例如上面的 Yaml 中，全局变量`vars`定义了一个`service`，`project1`和`project2`同时通过魔法变量`${vars.service}`引用了这个`service`，然后分别对应了不同的函数`py-event-function-1`和`py-event-function-2`.
+In the preceding YAML file, the global variable `vars` specifies a `service` and `project1` and `project2`. The service is referenced by using the magic variable `${vars.service}`, and the `py-event-function-1` and `py-event-function-2` functions are deployed for the `service`.
 
-## 关于`.fcignore`使用方法
+## How to use a `.fcignore` file
 
-在代码目录放置一个 .fcignore 文件，部署文件的时候可以排除掉 .fcignore 描述的文件或者文件夹。 例如：
+Save the `.fcignore` file in the code directory. When you deploy files, you can exclude the files or folders that are included in the `.fcignore` file. Example:
 
 ```
 # Logs
@@ -91,21 +91,24 @@ node_modules/
 !demo/node_modules
 ```
 
-打包时会忽略 logs/ 目录 、*.log 文件。所有层级的 node_modules/ 目录会被忽略，但是 demo/node_modules 会被保留。
+The logs/ directory and *.log files can be ignored when you package a code. The node_modules/ directories at all levels are ignored, excluding the demo/node_modules directory. 
 
-**使用场景**：部署大代码包时，通过 nas 命令将项目中的依赖放到 NAS 中，然后通过.fcignore对上传到 nas 的文件忽略掉，再将项目部署到线上。
+**Scenarios**: When you deploy a code package that is larger than 100 MB, the nas command is run to save dependencies to NAS. You can use the .fcignore file to ignore the files that are uploaded to NAS. 
 
-## 关于`.env`使用方法
-项目代码中涉及到数据库的连接信息，云账号的`AccessKeyID`, `AccessKeySecret`等敏感信息，禁止写死在代码中，提交到git仓库。否则会造成严重的安全风险。
 
-### 使用步骤
-1. 假设我的.env文件如下
+## How to use a `.env` file
+
+When you write code or submit the code to the Git repository, do not disclose sensitive data or information that is used to connect to databases. The sensitive data includes the `AccessKeyID` and `AccessKey` secret of your Alibaba Cloud account. If you write the information that is used to connect to databases or sensitive data in the code, your data may be compromised. 
+
+### Example
+1. In this example, the .env file contains the following information:
 ```
 AccessKeyID=xxxx
 AccessKeySecret=xxxxxxx
 ```
-> 注意：务必在`.gitignore`中忽略`.env`文件
-2. 配置文件(`s.yaml`)可以将`.env`中变量作为环境变量传递到FC执行环境中：
+> Note: Add the .env file to the `.gitignore` file to ensure that the `.env` file is ignored. 
+
+2. Configure the `s.yaml` file to transfer variables in the `.env` file to Function Compute as environment variables.
 ```
 # s.yaml
 edition: 1.0.0
@@ -129,66 +132,65 @@ services:
           AccessKeyID: ${env.AccessKeyID}
           AccessKeySecret: ${env.AccessKeySecret}
 ```
-3. 在项目代码中读取环境变量
-- 本地测试可以通过类似[dotenv](https://www.npmjs.com/package/dotenv)库来读取`.env`环境变量
-- 在FC环境线上执行时候，会将环境变量直接注入到当前进程，Nodejs应用可以通过`process.env.AccessKeyID`直接获取环境变量。
+3. Read the environment variables in the project code.
+- For tests on on-premises devices, read the environment variables in the `.env` file by using a module that is similar to the [dotenv](https://www.npmjs.com/package/dotenv) module.
+- For tests in Function Compute, the environment variables are injected into the current process. Node. js obtains the environment variables by using `process.env.AccessKeyID`. 
 
-## 工具中`.s`目录是做什么
+## Purpose of the `.s` directory in Serverless Devs
 
-在使用函数计算组件时，会默认生成`.s`目录，这个目录主要是过程中目录，包括一下能力：
+When you use the FC component, the .s directory is generated. This directory is an in-process directory and provides the following capabilities:
 
-1. 缓存一些数据和信息，例如你本次部署过程的一些线上资源情况等；例如，本次部署完成，工具会存放本次部署的日志在这个目录下，如果用户下次再进行部署，工具将会对比这个日志，与用户当前线上资源是否一致，如果不一致，则提醒用户可能存在线上资源在其他端修改的情况，是否要覆盖部署等操作，实际对应的就是[ deploy文档中的交互式操作部分](./command/deploy.md#注意事项) 表格中`本地记录的服务`与`本地记录的函数`；
-2. 如果有build等操作，通常会存放build操作后的产物（Container场景除外），路径是：`./.s/build/artifacts/<服务名>/<函数名>/ `；
+1. Caches data, such as the cloud resource information that is used during project deployment. After you deploy the project, logs are saved in the .s directory. If you redeploy the project, Serverless Devs compares the resource information that is stored in the logs with your resource information. If the resource information is inconsistent, you are notified about changes in the resources. You can overwrite the changes based on the business requirements. For more information, see Services recorded in your computer and Functions recorded in your computer in the table in the Interactive operations section on the [Deploy](command/deploy.md#注意事项) page.
+2. Stores the build results. For example, the build results are stored in the .`/.s/build/artifacts/<Service name>/<Function name>/` directory. The capability is not supported when a custom container is used.
 
-## 函数进行build操作之后如何处理build的产物
+## How to process build results
 
-一般情况下，build之后的产物有以下几种情况：
+In general, the products after build have the following situations:
 
-1. Container情况，build之后是镜像地址，可以直接进行deploy操作，此时工具会自动push镜像到阿里云容器镜像服务，并且进行项目的部署；
+1. In the case of Containers, after the build is the image address, the deploy operation can be performed directly. At this time, the tool will automatically push the image to the Alibaba Cloud Container Image Service and deploy the project;
 
-2. 非Container情况下：
+2. In the case of non-Container:
 
-   - 用户代码包不大，直接部署：此时，可以考虑直接进行deploy操作，但是需要注意的是，不能在`.fcignore`文件中填写`.s`目录，在部署过程中会提醒是否添加对应的环境变量，可以选择`y`进行添加，以确保build后的产物生效；
+   - The user code package is not large and can be deployed directly: At this time, you can consider deploying directly, but it should be noted that the `.s` directory cannot be filled in the `.fcignore` file, and it will remind you whether to add the corresponding file during the deployment process. environment variables, you can choose `y` to add to ensure that the built product takes effect;
 
-   - 用户代码包比较大，需要上传NAS：如果代码包比较大，需要上传到NAS，则需要在`.fcignore`文件中增加`.s`目录，以忽略build的产物内容；需要在Yaml中`service`下配置`nasConfig`参数，部署过程中需要选择添加环境变量，确保build后的产物生效；项目部署操作完成之后上传`.s`目录下的产物，假如此时服务名称是`ai-cv-image-prediction`，函数名称是`server`，则build的产物（或者依赖）路径为`./.s/build/artifacts/ai-cv-image-prediction/server/ `，所以需要执行下面这条指令进行上传：
+   - The user code package is relatively large and needs to be uploaded to the NAS: If the code package is relatively large and needs to be uploaded to the NAS, the `.s` directory needs to be added to the `.fcignore` file to ignore the content of the build product; it needs to be in Yaml` Configure the `nasConfig` parameter under service`, you need to choose to add environment variables during the deployment process to ensure that the built product takes effect; after the project deployment operation is completed, upload the product in the `.s` directory, if the service name is `ai-cv at this time. -image-prediction`, the function name is `server`, then the build product (or dependency) path is `./.s/build/artifacts/ai-cv-image-prediction/server/`, so you need to execute the following command to upload:
 
      ```
      s nas upload -r ./.s/build/artifacts/ai-cv-image-prediction/server/.s/python /mnt/auto/.s/python
      ```
 
-     此时需要额外注意，我们上传的`/mnt/auto/.s/python`目录可能不存在，所以需要在上传之前，进行目录创建：
+     At this point, we need to pay extra attention. The `/mnt/auto/.s/python` directory we uploaded may not exist, so we need to create the directory before uploading:
 
      ```
      s nas command mkdir /mnt/auto/.s
      ```
 
-## Yaml是否支持全局变量/环境变量/引用外部文件
+## Check whether YAML supports global variables, environment
 
-Serverless Devs的Yaml规范本身支持全局变量、环境变量以及外部内容的引入：
+The YAML files of the serverless application model supports multiple variable formats:
+- Get environment variables of the current server: env(ENV)，example: {env(secretId)}.
+- Get the variables of an external document: file(path)，example: {file(./path)}.
+- Get global variables :${ vars.*}.
+- Get variables of another project :${ projectName.props.*}.
+- Get result variables of another project in the YAML file: ${projectName.output.*}
 
-- 获取当前机器中的环境变量：${env(环境变量)}，例如${env(secretId)}
-- 获取外部文档的变量：${file(路径)}，例如${file(./path)}
-- 获取全局变量：${vars.*}
-- 获取其他项目的变量：${projectName.props.*}
-- 获取Yaml中其他项目的结果变量：${projectName.output.*}
+For more information, see [YAML specifications of Serverless Devs](https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/en/yaml.md).
 
-> 详情可以参考：[Serverless Devs Yaml规范文档](https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/zh/yaml.md)
+## Configure components by using environment variables
 
-## 通过环境变量配置组件
+The FC component is updated at a low speed. To use the latest version of the component, you can manage the component by using environment variables.
 
-组件更新比较滞后，这时可以通过环境变量配置控制组件：
+`FC_DOCKER_VERSION`: docker version control for build or local. For example export FC_DOCKER_VERSION=1.9.21
 
-`FC_DOCKER_VERSION`: build或者local的 docker 版本版控制。例如 export FC_DOCKER_VERSION=1.9.21
+`NAS_CHUNK_SIZE`: nas upload/download slice size, the default is 4M. For example export NAS_CHUNK_SIZE=4
 
-`NAS_CHUNK_SIZE`: nas upload/download 切片大小，默认是 4M。例如 export NAS_CHUNK_SIZE=4
+`FC_INSTANCE_EXEC_TIMEOUT`: Instance login idle timeout, the default is 10 minutes. For example export FC_INSTANCE_EXEC_TIMEOUT=600
 
-`FC_INSTANCE_EXEC_TIMEOUT`: 实例登陆空闲超时时间，默认10分钟。例如 export FC_INSTANCE_EXEC_TIMEOUT=600
+## Cases
 
-## 项目实践案例
-
-- Build相关：
-  - [Python 案例](./../examples/build/python)
-  - [Node.js 案例](./../examples/build/nodejs)
-  - [Java 案例](./../examples/build/java)
-  - [PHP 案例](./../examples/build/php)
-  - [Custom Container 案例](./../examples/build/custom-container)
+- About Build：
+  - [Python Example](./../examples/build/python)
+  - [Node.js Example](./../examples/build/nodejs)
+  - [Java Example](./../examples/build/java)
+  - [PHP Example](./../examples/build/php)
+  - [Custom Container Example](./../examples/build/custom-container)

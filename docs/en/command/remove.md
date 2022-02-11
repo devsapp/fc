@@ -1,46 +1,45 @@
-# Remove 命令
+# Remove commands
 
-`remove` 命令是对已经部署的资源进行移除的操作。
+The `remove` commands are used to remove resources that are deployed. 
 
-- [命令解析](#命令解析)
-  - [参数解析](#参数解析)
-  - [操作案例](#操作案例)
-  - [注意事项](#注意事项)
-- [remove service 命令](#remove-service-命令)
-  - [参数解析](#参数解析-1)
-  - [操作案例](#操作案例-1)
-- [remove function 命令](#deploy-function-命令)
-  - [参数解析](#参数解析-2)
-  - [操作案例](#操作案例-2)
-- [remove trigger 命令](#remove-trigger-命令)
-  - [参数解析](#参数解析-3)
-  - [操作案例](#操作案例-3)
-- [remove domain 命令](#remove-domain-命令)
-  - [参数解析](#参数解析-4)
-  - [操作案例](#操作案例-4)
-- [remove version 命令](#remove-version-命令)
-  - [参数解析](#参数解析-5)
-  - [操作案例](#操作案例-5)
-- [remove alias 命令](#remove-alias-命令)
-  - [参数解析](#参数解析-6)
-  - [操作案例](#操作案例-6)
-- [remove provision 命令](#remove-provision-命令)
-  - [参数解析](#参数解析-7)
-  - [操作案例](#操作案例-7)
-- [remove ondemand 命令](#remove-ondemand-命令)
-  - [参数解析](#参数解析-8)
-  - [操作案例](#操作案例-8)
-- [remove layer 命令](#remove-layer-命令)
-  - [参数解析](#参数解析-9)
-  - [操作案例](#操作案例-9)
+- [Command description](#Command description)
+  - [Parameter description](#Parameter-description)
+  - [Examples](#Examples)
+- [remove service command](#remove-service-command)
+  - [Parameter description](#Parameter-description-1)
+  - [Examples](#Examples-1)
+- [remove function command](#deploy-function-command)
+  - [Parameter description](#Parameter-description-2)
+  - [Examples](#Examples-2)
+- [remove trigger command](#remove-trigger-command)
+  - [Parameter description](#Parameter-description-3)
+  - [Examples](#Examples-3)
+- [remove domain command](#remove-domain-command)
+  - [Parameter description](#Parameter-description-4)
+  - [Examples](#Examples-4)
+- [remove version command](#remove-version-command)
+  - [Parameter description](#Parameter-description-5)
+  - [Examples](#Examples-5)
+- [remove alias command](#remove-alias-command)
+  - [Parameter description](#Parameter-description-6)
+  - [Examples](#Examples-6)
+- [remove provision command](#remove-provision-command)
+  - [Parameter description](#Parameter-description-7)
+  - [Examples](#Examples-7)
+- [remove ondemand command](#remove-ondemand-command)
+  - [Parameter description](#Parameter-description-8)
+  - [Examples](#Examples-8)
+- [remove layer command](#remove-layer-command)
+  - [Parameter description](#Parameter-description-9)
+  - [Examples](#Examples-9)
 - [权限与策略说明](#权限与策略说明)
 
->  ⚠️ 注意： **值得注意的是，资源一旦移除可能无法恢复，所以在使用移除功能时，请您慎重操作**
+>  ⚠️ Note: **Resources may not be restored once they are removed. Proceed with caution when you run the remove commands.**
 
 
-## 命令解析
+## Command description
 
-当执行命令`remove -h`/`remove --help`时，可以获取帮助文档：
+You can run the `remove -h` or `remove --help` command to obtain the help documentation for the remove commands:
 
 ```shell script
 Remove
@@ -54,7 +53,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/remove.md
+  https://github.com/devsapp/fc/blob/main/docs/en/command/remove.md
 
 Options
                               
@@ -72,7 +71,7 @@ Options Help
   C-Required: Required parameters in CLI mode
   Y-Required: Required parameters in Yaml mode
   Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
+  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
 
 SubCommand 
   service    Remove service resources; help command [s remove service -h]                                                        
@@ -91,50 +90,51 @@ Examples with Yaml
 ```
 
 
-在该命令中，包括了九个子命令：
+The remove commands consist of nine subcommands: 
+ 
+- [service: deletes a specified service.](#remove-service-command)
+- [function: deletes a specified function.](#remove-function-command)
+- [trigger: deletes a specified trigger.](#remove-trigger-command)
+- [domain: deletes a specified domain name.](#remove-domain-command)
+- [version: deletes a specified version.](#remove-version-command)
+- [alias: deletes a specified alias.](#remove-alias-command)
+- [provision: deletes specified reserved resources.](#remove-provision-command)
+- [ondemand: deletes specified on-demand resources.](#remove-ondemand-command)
+- [layer: deletes versions of a specified layer.](#remove-layer-command)
+ 
 
-- [service：删除指定的服务](#remove-service-命令)
-- [function：删除指定的函数](#remove-function-命令)
-- [trigger：删除指定的触发器](#remove-trigger-命令)
-- [domain：删除指定的域名](#remove-domain-命令)
-- [version：删除指定的版本](#remove-version-命令)
-- [alias：删除指定的别名](#remove-alias-命令)
-- [provision：删除指定的预留资源](#remove-provision-命令)
-- [ondemand：删除指定的按量资源](#remove-ondemand-命令)
-- [layer：删除指定层的版本](#remove-layer-命令)
 
-
-### 参数解析
-
-| 参数全称   | 参数缩写 | Yaml模式下必填 | 参数含义                                                     |
-| ---------- | -------- | -------------- | ------------------------------------------------------------ |
-| assume-yes | y        | 选填           | 在交互时，默认选择`y`                                        |
-| access     | a        | 选填           | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug      | -        | 选填           | 打开`debug`模式，将会输出更多日志信息                        |
-| help       | h        | 选填           | 查看帮助信息                                                 |
-
-### 操作案例
-
-**有资源描述文件（Yaml）时**，可以直接执行`s remove `进行资源删除，部署完成的输出示例：
-
+### Parameter description
+ 
+ | Parameter  | Abbreviation | Required in YAML mode | Description                           |
+ | ---------- | -------- | -------------- | ------------------------------------------------------------ |
+ | assume-yes | y    | No      | By default, `y` is selected.                     |
+ | access   | a    | No      | The AccessKey pair that is used in the request. You can use the AccessKey pair that is configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command), or [the AccessKey pair that is configured by using environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure the AccessKey pair by using environment variables). |
+ | debug   | -    | No      | The debug mode. If you enable the `debug` mode, more log information is returned.            |
+ | help    | h    | No      | Views the help documentation.                         |
+ 
+### Examples
+ 
+**If the resource description file (YAML) exists**, you can run the `s remove` command to delete resources. Sample command output: 
+ 
 ```text
 Service [myService] deleted successfully.
 Function [myFunction] deleted successfully.
 ```
 
-> ⚠️ 注意：    
-> - 执行`s remove`等同于依次执行 `s remove ondemand`、`s remove provision`、`s remove alias`、`s remove version`、`s remove trigger`、`s remove function`、`s remove service`；
-> - 如果使用了参数`-y`/`--assume-yes`，那么就会无交互式的**强制删除**服务下**所有的资源**，请谨慎使用此参数；     
-> 案例：假如在上海地区有一个服务，服务下有两个函数，Yaml 中仅配置了服务和其中一个函数
-> - 如果执行了 `s remove`，则会提示此服务下两个函数，是否删除所有的函数；
-> - 如果执行 `s remove -y`，会强制删除两个函数和服务；
-> - 如果只想删除当前 Yaml 声明的函数，那么可以执行 `s remove function`
+> ⚠️ Note:
+> - Executing `s remove` is equivalent to executing `s remove ondemand`, `s remove provision`, `s remove alias`, `s remove version`, `s remove trigger`, `s remove function`, `s remove in sequence service`;
+> - If the parameter `-y`/`--assume-yes` is used, then there will be no interactive **forced deletion** of **all resources** under the service, please use this parameter with caution;
+> Case: If there is a service in Shanghai area, there are two functions under the service, and only the service and one of the functions are configured in Yaml
+> - If `s remove` is executed, it will prompt the next two functions of this service, whether to delete all functions;
+> - If `s remove -y` is executed, both functions and services are forcibly removed;
+> - If you just want to remove the current Yaml-declared function, you can do `s remove function`
 
-## remove service 命令
+## remove service command
 
-`remove service` 命令，是删除指定服务的命令。
+You can run the `remove service` command to delete a specified service. 
 
-当执行命令`remove service -h`/`remove service --help`时，可以获取帮助文档：
+You can run the `remove service -h` or `remove service --help` command to obtain the help documentation for the remove service command:
 
 ```shell script
 Remove service
@@ -147,7 +147,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/remove.md
+  https://github.com/devsapp/fc/blob/main/docs/en/command/remove.md
                            
 Options
 
@@ -167,7 +167,7 @@ Options Help
   C-Required: Required parameters in CLI mode
   Y-Required: Required parameters in Yaml mode
   Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
+  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
 
 Examples with Yaml
 
@@ -178,33 +178,33 @@ Examples with CLI
   $ s cli fc remove service --region cn-hangzhou --service-name serviceName
 ```
 
-### 参数解析
-
-| 参数全称     | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
-| ------------ | -------- | -------------- | ------------- | ------------------------------------------------------------ |
-| region       | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| service-name | -        | 选填           | 必填          | 服务名                                                       |
-| assume-yes   | y        | 选填           | 选填          | 在交互时，默认选择`y`                                                       |
-| access       | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug        | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help         | h        | 选填           | 选填          | 查看帮助信息                                                 |
-
-### 操作案例
-
-- **有资源描述文件（Yaml）时**，可以直接执行`s remove service`删除指定的服务；
-- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区以及服务名称，例如`s cli fc remove service --region cn-hangzhou --service-name fc-deploy-service`；
-
-上述命令的执行结果示例：
+### Parameter description
+ 
+ | Parameter   | Abbreviation | Required in YAML mode | Required in CLI mode | Description                           |
+ | ------------ | -------- | -------------- | ------------- | ------------------------------------------------------------ |
+ | region    | -    | No      | Yes     | The region of the service. Valid values: `cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, and ap-south-1`. |
+ | service-name | -    | No      | Yes      | The name of the service.                            |
+ | assume-yes  | y    | No      | No     | By default, `y` is selected.                            |
+ | access    | a    | No      | No     | The AccessKey pair that is used in the request. You can use the AccessKey pair that is configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command), or [the AccessKey pair that is configured by using environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure the AccessKey pair by using environment variables). |
+ | debug    | -    | No      | No     | The debug mode. If you enable the `debug` mode, more log information is returned.            |
+ | help     | h    | No      | No     | Views the help documentation.                         |
+ 
+### Examples
+ 
+- **If the resource description file (YAML) exists**, you can run the `s remove service` command to delete the specified service.
+- **If the resource description file (YAML) does not exist (only the CLI mode is available)**, you need to specify the region and the name of the service. Example: `s cli fc remove service --region cn-hangzhou --service-name fc-deploy-service`.
+ 
+Sample command output: 
 
 ```text
 Service [fc-deploy-service] deleted successfully.
 ```
 
-## remove function 命令
+## remove function commands
 
-`remove function` 命令，是删除指定函数的命令。
+The `remove function` command is a command to delete the specified function.
 
-当执行命令`remove function -h`/`remove function --help`时，可以获取帮助文档：
+When executing the command `remove function -h`/`remove function --help`, you can get help documentation:
 
 ```shell script
 Remove function
@@ -217,7 +217,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/remove.md
+  https://github.com/devsapp/fc/blob/main/docs/en/command/remove.md
 
 Options
 
@@ -238,7 +238,7 @@ Options Help
   C-Required: Required parameters in CLI mode
   Y-Required: Required parameters in Yaml mode
   Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
+  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
 
 Examples with Yaml
 
@@ -249,34 +249,35 @@ Examples with CLI
   $ s cli fc remove function --region cn-hangzhou --service-name serviceName --function-name functionName
 ```
 
-### 参数解析
-
-| 参数全称     | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
-| ------------ | -------- | -------------- | ------------- | ------------------------------------------------------------ |
-| region       | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| service-name | -        | 选填           | 必填          | 服务名                                                       |
-| function-name | -        | 选填           | 必填          | 函数名                                                       |
-| assume-yes   | y        | 选填           | 选填          | 在交互时，默认选择`y`                                                       |
-| access       | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug        | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help         | h        | 选填           | 选填          | 查看帮助信息                                                 |
-
-### 操作案例
-
-- **有资源描述文件（Yaml）时**，可以直接执行`s remove function`删除指定的函数；
-- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区以及服务名称，例如`s cli fc remove function --region cn-hangzhou --service-name fc-deploy-service --function-name fc-deploy-function`；
-
-上述命令的执行结果示例：
+### Parameter description
+ 
+ | Parameter   | Abbreviation | Required in YAML mode | Required in CLI mode | Description                           |
+ | ------------ | -------- | -------------- | ------------- | ------------------------------------------------------------ |
+ | region    | -    | No      | Yes     | The region of the service. Valid values: `cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, and ap-south-1`. |
+ | service-name | -    | No      | Yes     | The name of the service.                            |
+ | function-name | -    | No      | Yes     | The name of the function.                            |
+ | assume-yes  | y    | No      | No     | By default, `y` is selected.                            |
+ | access    | a     | No      | No     | The AccessKey pair that is used in the request. You can use the AccessKey pair that is configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command), or [the AccessKey pair that is configured by using environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure the AccessKey pair by using environment variables). |
+ | debug    | -    | No      | No     | The debug mode. If you enable the `debug` mode, more log information is returned.            |
+ | help     | h    | No      | No     | Views the help documentation.                         |
+ 
+### Examples
+ 
+- **If the resource description file (YAML) exists**, you can run the `s remove function` command to delete the specified function. 
+- **If the resource description file (YAML) does not exist (only the CLI mode is available)**, you need to specify the region and the name of the service. Example: `s cli fc remove function --region cn-hangzhou --service-name fc-deploy-service --function-name fc-deploy-function`.
+ 
+Sample command output: 
 
 ```text
 Function [fc-deploy-function] deleted successfully.
 ```
 
-## remove trigger 命令
+## remove trigger command
 
-`remove trigger` 命令，是删除指定触发器的命令。
+The `remove trigger` command is a command to delete the specified trigger.
 
-当执行命令`remove trigger -h`/`remove trigger --help`时，可以获取帮助文档：
+When executing the command `remove trigger -h`/`remove trigger --help`, you can get help documentation:
+
 
 ```shell script
 Remove trigger
@@ -289,7 +290,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/remove.md
+  https://github.com/devsapp/fc/blob/main/docs/en/command/remove.md
                            
 Options
 
@@ -311,7 +312,7 @@ Options Help
   C-Required: Required parameters in CLI mode
   Y-Required: Required parameters in Yaml mode
   Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
+  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
 
 Examples with Yaml
 
@@ -322,35 +323,35 @@ Examples with CLI
   $ s cli fc remove trigger --region cn-hangzhou --service-name serviceName --function-name functionName --trigger-name triggerName
 ```
 
-### 参数解析
-
-| 参数全称     | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
-| ------------ | -------- | -------------- | ------------- | ------------------------------------------------------------ |
-| region       | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| service-name | -        | 选填           | 必填          | 服务名                                                       |
-| function-name | -        | 选填           | 必填          | 函数名                                                       |
-| trigger-name | -        | 选填           | 必填          | 触发器名                                                       |
-| assume-yes   | y        | 选填           | 选填          | 在交互时，默认选择`y`                                                       |
-| access       | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug        | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help         | h        | 选填           | 选填          | 查看帮助信息                                                 |
-
-### 操作案例
-
-- **有资源描述文件（Yaml）时**，可以直接执行`s remove trigger`删除 Yaml 中声明的所有触发器，可以通过增加`--trigger-name triggerName`删除指定的触发器；
-- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区以及服务名称，例如`s cli fc remove trigger --region cn-hangzhou --service-name fc-deploy-service --function-name fc-deploy-function --trigger-name fc-deploy-trigger`；
-
-上述命令的执行结果示例：
+### Parameter description
+ 
+ | Parameter   | Abbreviation | Required in YAML mode | Required in CLI mode | Description                           |
+ | ------------ | -------- | -------------- | ------------- | ------------------------------------------------------------ |
+ | region    | -    | No      | Yes     | The region of the service. Valid values: `cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, and ap-south-1`. |
+ | service-name | -    | No      | Yes     | The name of the service.                            |
+ | function-name | -    | No      | Yes     | The name of the function.                            |
+ | trigger-name | -    | No      | Yes     | The name of the trigger.                            |
+ | assume-yes  | y    | No      | No     | By default, `y` is selected.                            |
+ | access    | a    | No      | No     | The AccessKey pair that is used in the request. You can use the AccessKey pair that is configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command), or [the AccessKey pair that is configured by using environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure the AccessKey pair by using environment variables). |
+ | debug    | -    | No      | No     | The debug mode. If you enable the `debug` mode, more log information is returned.             |
+ | help     | h    | No      | No     | Views the help documentation.                         |
+ 
+### Examples
+ 
+- **If the resource description file (YAML) exists**, you can run the `s remove trigger` command to delete all triggers that are configured in the resource description file (YAML). You can configure the `--trigger-name triggerName` parameter to specify the trigger that you want to delete. 
+- **If the resource description file (YAML) does not exist (only the CLI mode is available)**, you need to specify the region and the name of the service. Example: `s cli fc remove trigger --region cn-hangzhou --service-name fc-deploy-service --function-name fc-deploy-function --trigger-name fc-deploy-trigger`. 
+ 
+Sample command output: 
 
 ```text
 Trigger [fc-deploy-trigger] deleted successfully.
 ```
 
-## remove domain 命令
+## remove domain command
 
-`remove domain` 命令，是删除指定自定义域名的命令。
+The `remove domain` command is a command to delete the specified custom domain name.
 
-当执行命令`remove domain -h`/`remove domain --help`时，可以获取帮助文档：
+When executing the command `remove domain -h`/`remove domain --help`, you can get help documentation:
 
 ```shell script
 Remove domain
@@ -363,7 +364,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/remove.md
+  https://github.com/devsapp/fc/blob/main/docs/en/command/remove.md
                            
 Options
 
@@ -383,7 +384,7 @@ Options Help
   C-Required: Required parameters in CLI mode
   Y-Required: Required parameters in Yaml mode
   Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
+  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
 
 Examples with Yaml
 
@@ -394,33 +395,32 @@ Examples with CLI
   $ s cli fc remove domain --region cn-hangzhou --domain anycodes.cn
 ```
 
-### 参数解析
-
-| 参数全称     | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
-| ------------ | -------- | -------------- | ------------- | ------------------------------------------------------------ |
-| region       | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| domain | -        | 选填           | 必填          | 自定义域名                                                       |
-| assume-yes   | y        | 选填           | 选填          | 在交互时，默认选择`y`                                                       |
-| access       | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug        | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help         | h        | 选填           | 选填          | 查看帮助信息                                                 |
-
-### 操作案例
-
-- **有资源描述文件（Yaml）时**，可以直接执行`s remove domain`删除 Yaml 中声明的所有自定义域名，可以通过增加`--domain domain`删除指定的自定义域名；
-- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区以及服务名称，例如`s cli fc remove domain --region cn-hangzhou --domain anycodes.cn`；
-
-上述命令的执行结果示例：
-
+### Parameter description
+ 
+ | Parameter   | Abbreviation | Required in YAML mode | Required in CLI mode | Description                           |
+ | ------------ | -------- | -------------- | ------------- | ------------------------------------------------------------ |
+ | region    | -    | No      | Yes     | The region of the service. Valid values: `cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, and ap-south-1`. |
+ | domain | -    | No      | Yes     | The custom domain name.                            |
+ | assume-yes  | y    | No      | No     | By default, `y` is selected.                            |
+ | access    | a    | No      | No     | The AccessKey pair that is used in the request. You can use the AccessKey pair that is configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command), or [the AccessKey pair that is configured by using environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure the AccessKey pair by using environment variables). |
+ | debug    | -    | No      | No     | The debug mode. If you enable the `debug` mode, more log information is returned.            |
+ | help     | h    | No      | No     | Views the help documentation.                         |
+ 
+### Examples
+ 
+- **If the resource description file (YAML) exists**, you can run the `s remove domain` command to delete all custom domain names that are configured in the resource description file (YAML). You can configure the `--domain domain` parameter to specify the custom domain name that you want to delete. 
+- **If the resource description file (YAML) does not exist (only the CLI mode is available)**, you need to specify the region and the name of the service. Example: `s cli fc remove domain --region cn-hangzhou --domain anycodes.cn`. 
+ 
+ Sample command output: 
 ```text
 Custom domain [anycodes.cn] deleted successfully.
 ```
 
-## remove version 命令
+## remove version command
 
-`remove version` 命令，是用户删除指定已发布的版本命令。
+The `remove version` command is a command for the user to delete the specified released version.
 
-当执行命令`remove version -h`/`remove version --help`时，可以获取帮助文档：
+When executing the command `remove version -h`/`remove version --help`, you can get help documentation:
 
 ```shell script
 Remove version
@@ -433,7 +433,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/remove.md
+  https://github.com/devsapp/fc/blob/main/docs/en/command/remove.md
                            
 Options
 
@@ -453,7 +453,7 @@ Options Help
   C-Required: Required parameters in CLI mode
   Y-Required: Required parameters in Yaml mode
   Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
+  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
 
 Examples with Yaml
 
@@ -464,35 +464,35 @@ Examples with CLI
   $ s cli fc remove version --region cn-hangzhou --service-name serviceName --version-id 1
 ```
 
-### 参数解析
-
-| 参数全称     | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
-| ------------ | -------- | -------------- | ------------- | ------------------------------------------------------------ |
-| region       | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| service-name | -        | 选填           | 必填          | 服务名                                                       |
-| version-id   | -        | 必填           | 必填          | 版本Id                                                       |
-| access       | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug        | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help         | h        | 选填           | 选填          | 查看帮助信息                                                 |
-
-### 操作案例
-
-- **有资源描述文件（Yaml）时**，可以直接执行`s remove version --version-id versionId`删除指定`versionId`的版本；
-- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区以及服务名称，例如`s cli fc remove version --region cn-hangzhou --service-name fc-deploy-service --version-id 1`；
-
-上述命令的执行结果示例：
-
+### Parameter description
+ 
+ | Parameter   | Abbreviation | Required in YAML mode | Required in CLI mode | Description                           |
+ | ------------ | -------- | -------------- | ------------- | ------------------------------------------------------------ |
+ | region    | -    | No      | Yes     | The region of the service. Valid values: `cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, and ap-south-1`. |
+ | service-name | -    | No      | Yes     | The name of the service.                            |
+ | version-id  | -    | Yes      | Yes     | The ID of the version.                            |
+ | access    | a    | No      | No     | The AccessKey pair that is used in the request. You can use the AccessKey pair that is configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command), or [the AccessKey pair that is configured by using environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure the AccessKey pair by using environment variables). |
+ | debug    | -    | No      | No     | The debug mode. If you enable the `debug` mode, more log information is returned.            |
+ | help     | h    | No      | No     | Views the help documentation.                         |
+ 
+### Examples
+ 
+- **If the resource description file (YAML) exists**, you can run the `s remove version --version-id versionId` command to delete the version with the specified `versionId`.
+- **If the resource description file (YAML) does not exist (only the CLI mode is available)**, you need to specify the region and the name of the service. Example: `s cli fc remove version --region cn-hangzhou --service-name fc-deploy-service --version-id 1`. 
+ 
+Sample command output: 
+ 
 ```text
 VersionId [1] deleted successfully.
 ```
 
 
 
-## remove alias 命令
+## remove alias command
 
-`remove alias` 命令，是删除指定服务别名的命令。
+The `remove alias` command is a command to remove the specified service alias.
 
-当执行命令`remove alias -h`/`remove alias --help`时，可以获取帮助文档：
+When executing the command `remove alias -h`/`remove alias --help`, you can get help documentation:
 
 ```shell script
 Remove alias
@@ -505,7 +505,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/remove.md
+  https://github.com/devsapp/fc/blob/main/docs/en/command/remove.md
                                
 Options
 
@@ -525,7 +525,7 @@ Options Help
   C-Required: Required parameters in CLI mode
   Y-Required: Required parameters in Yaml mode
   Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/zh/yaml_and_cli.md
+  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/en/yaml_and_cli.md
 
 Examples with Yaml
 
@@ -536,34 +536,33 @@ Examples with CLI
   $ s cli fc remove alias --region cn-hangzhou --service-name serviceName --alias-name aliasName 
 ```
 
-### 参数解析
-
-| 参数全称     | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
-| ------------ | -------- | -------------- | ------------- | ------------------------------------------------------------ |
-| region       | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| service-name | -        | 选填           | 必填          | 服务名                                                       |
-| alias-name   | -        | 必填           | 必填          | 别名                                                         |
-| access       | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug        | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help         | h        | 选填           | 选填          | 查看帮助信息                                                 |
-
-### 操作案例
-
-- **有资源描述文件（Yaml）时**，可以直接执行`s remove alias --alias-name aliasName`删除指定别名；
-- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区以及服务名称，例如`s cli fc remove alias --region cn-hangzhou --service-name fc-deploy-service --alias-name pre`；
-
-上述命令的执行结果示例：
-
+### Parameter description
+ 
+ | Parameter   | Abbreviation | Required in YAML mode | Required in CLI mode | Description                           |
+ | ------------ | -------- | -------------- | ------------- | ------------------------------------------------------------ |
+ | region    | -    | No      | Yes     | The region of the service. Valid values: `cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, and ap-south-1`. |
+ | service-name | -     | No      | Yes     | The name of the service.                            |
+ | alias-name  | -    | Yes      | Yes     | The alias of the service.                             |
+ | access    | a    | No      | No     | The AccessKey pair that is used in the request. You can use the AccessKey pair that is configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command), or [the AccessKey pair that is configured by using environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure the AccessKey pair by using environment variables). |
+ | debug    | -    | No      | No     | The debug mode. If you enable the `debug` mode, more log information is returned.            |
+ | help     | h    | No      | No     | Views the help documentation.                         |
+ 
+### Examples
+ 
+- **If the resource description file (YAML) exists**, you can run the `s remove alias --alias-name aliasName` command to delete the specified alias. 
+- **If the resource description file (YAML) does not exist (only the CLI mode is available)**, you need to specify the region and the name of the service. Example: `s cli fc remove alias --region cn-hangzhou --service-name fc-deploy-service --alias-name pre`. 
+ 
+Sample command output: 
+ 
 ```text
 AliasName [pre] deleted successfully.
 ```
 
+## remove provision commans
 
-## remove provision 命令
+The `remove provision` command is a command to remove reserved resources.
 
-`remove provision` 命令，是删除预留资源的命令。
-
-当执行命令`remove provision -h`/`remove provision --help`时，可以获取帮助文档：
+When executing the command `remove provision -h`/`remove provision --help`, you can get help documentation:
 
 ```shell script
 Remove provision
@@ -576,7 +575,7 @@ Usage
                 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/remove.md
+  https://github.com/devsapp/fc/blob/main/docs/en/command/remove.md
                            
 Options
     
@@ -597,7 +596,7 @@ Options Help
   C-Required: Required parameters in CLI mode
   Y-Required: Required parameters in Yaml mode
   Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
+  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
 
 Examples with Yaml
 
@@ -608,35 +607,35 @@ Examples with CLI
   $ s cli fc remove provision --region cn-hangzhou --service-name serviceName --function-name functionName --qualifier alias   
 ```
 
-### 参数解析
-
-| 参数全称      | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
-| ------------- | -------- | -------------- | ------------- | ------------------------------------------------------------ |
-| region        | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| service-name  | -        | 选填           | 必填          | 服务名                                                       |
-| function-name | -        | 选填           | 必填          | 函数名称 |
-| qualifier     |          | 选填           | 选填          | 服务的版本或者别名，版本仅支持 LATEST。如果指定`qualifier`，则仅清除此`qualifier`下的预留资源；如果未指定，将清除此服务下所有版本的预留资源                   |
-| access        | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug         | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help          | h        | 选填           | 选填          | 查看帮助信息                                                 |
-
-### 操作案例
-
-- **有资源描述文件（Yaml）时**，可以直接执行`s remove provision --qualifier qualifier`删除预留实例；
-- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区以及服务名称，例如`s cli fc remove provision --region cn-hangzhou --service-name fc-deploy-service --qualifier release`；
-
-上述命令的执行结果示例：
-
+### Parameter description
+ 
+ | Parameter   | Abbreviation | Required in YAML mode | Required in CLI mode | Description                           |
+ | ------------- | -------- | -------------- | ------------- | ------------------------------------------------------------ |
+ | region    | -    | No      | Yes     | The region of the service. Valid values: `cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, and ap-south-1`. |
+ | service-name | -    | No      | Yes     | The name of the service.                            |
+ | function-name | -    | No      | Yes     | The name of the function.                           |
+ | qualifier   |     | No      | No     | The version or alias of the service. Only LATEST is supported for the version. If you specify a value for the `qualifier` parameter, only reserved resources that are specified by using the `qualifier` parameter are deleted. If you do not specify a value for the `qualifier` parameter, reserved resources of all versions of the service are deleted.          |
+ | access    | a    | No      | No     | The AccessKey pair that is used in the request. You can use the AccessKey pair that is configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command), or [the AccessKey pair that is configured by using environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure the AccessKey pair by using environment variables). |
+ | debug     | -    | No      | No     | The debug mode. If you enable the `debug` mode, more log information is returned.            |
+ | help     | h    | No      | No     | Views the help documentation.                         |
+ 
+### Examples
+ 
+- **If the resource description file (YAML) exists**, you can run the `s remove provision --qualifier qualifier` command to delete the reserved instances. 
+- **If the resource description file (YAML) does not exist (only the CLI mode is available)**, you need to specify the region and the name of the service. Example: `s cli fc remove provision --region cn-hangzhou --service-name fc-deploy-service --qualifier release`. 
+ 
+Sample command output: 
+ 
 ```text
 Proivision qualifier [release] deleted successfully.
 ```
 
 
-## remove ondemand 命令
+## remove ondemand command
 
-`remove ondemand` 命令，是删除指定函数按量资源的命令。
+The `remove ondemand` command is a command to delete the ondemand resource of the specified function.
 
-当执行命令`remove ondemand -h`/`remove ondemand --help`时，可以获取帮助文档：
+When executing the command `remove ondemand -h`/`remove ondemand --help`, you can get help documentation:
 
 ```shell script
 Remove ondemand
@@ -649,7 +648,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/remove.md
+  https://github.com/devsapp/fc/blob/main/docs/en/command/remove.md
                                
 Options
 
@@ -670,7 +669,7 @@ Options Help
   C-Required: Required parameters in CLI mode
   Y-Required: Required parameters in Yaml mode
   Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/zh/yaml_and_cli.md
+  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/en/yaml_and_cli.md
 
 Examples with Yaml
 
@@ -681,35 +680,35 @@ Examples with CLI
   $ s cli fc remove ondemand --region cn-hangzhou --service-name serviceName
 ```
 
-### 参数解析
-
-| 参数全称      | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
-| ------------- | -------- | -------------- | ------------- | ------------------------------------------------------------ |
-| region        | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| service-name  | -        | 选填           | 必填          | 服务名                                                       |
-| function-name | -        | 必填           | 必填          | 函数名                                                       |
-| qualifier     | -        | 选填           | 选填          | 服务的版本或者别名，版本仅支持 LATEST；如果指定`qualifier`，则仅清除此`qualifier`下的按量资源；如果未指定，将清除此服务下所有版本的按量资源 |
-| access        | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug         | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help          | h        | 选填           | 选填          | 查看帮助信息                                                 |
-
-### 操作案例
-
-- **有资源描述文件（Yaml）时**，可以直接执行`s remove ondemand`删除指定按量资源；
-- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区以及服务名称，例如`s cli fc remove ondemand`；
-
-上述命令的执行结果示例：
+### Parameter description
+ 
+ | Parameter   | Abbreviation | Required in YAML mode | Required in CLI mode | Description                           |
+ | ------------- | -------- | -------------- | ------------- | ------------------------------------------------------------ |
+ | region    | -    | No      | Yes     | The region of the service. Valid values: `cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, and ap-south-1`. |
+ | service-name | -    | No      | Yes     | The name of the service.                            |
+ | function-name | -    | Yes      | Yes     | The name of the function.                            |
+ | qualifier   | -    | No      | No      | The version or alias of the service. Only LATEST is supported for the version. If you specify a value for the `qualifier` parameter, only on-demand resources that are specified by using the `qualifier` parameter are deleted. If you do not specify a value for the `qualifier` parameter, on-demand resources of all versions of the service are deleted. |
+ | access    | a    | No      | No     | The AccessKey pair that is used in the request. You can use the AccessKey pair that is configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command), or [the AccessKey pair that is configured by using environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure the AccessKey pair by using environment variables). |
+ | debug     | -    | No      | No     | The debug mode. If you enable the `debug` mode, more log information is returned.            |
+ | help     | h    | No      | No     | Views the help documentation.                         |
+ 
+### Examples
+ 
+- **If the resource description file (YAML) exists**, you can run the `s remove ondemand` command to delete the specified on-demand resources. 
+- **If the resource description file (YAML) does not exist (only the CLI mode is available)**, you need to specify the region and the name of the service. Example: `s cli fc remove ondemand`. 
+ 
+Sample command output: 
 
 ```text
 Ondemand [*] deleted successfully.
 ```
 
 
-## remove layer 命令
+## remove layer command
 
-`remove layer` 命令，是删除指定层版本的命令。
+The `remove layer` command is a command to remove the specified layer version.
 
-当执行命令`remove layer -h`/`remove layer --help`时，可以获取帮助文档：
+When executing the command `remove layer -h`/`remove layer --help`, you can get help documentation:
 
 ```shell script
 Remove layer
@@ -722,7 +721,7 @@ Usage
                 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/remove.md
+  https://github.com/devsapp/fc/blob/main/docs/en/command/remove.md
                            
 Options
     
@@ -742,7 +741,7 @@ Options Help
   C-Required: Required parameters in CLI mode
   Y-Required: Required parameters in Yaml mode
   Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
+  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
 
 Examples with Yaml
 
@@ -753,29 +752,29 @@ Examples with CLI
   $ s cli fc layer delete --region cn-hangzhou --layer-name layerName
 ```
 
-### 参数解析
-
-| 参数全称   | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
-| ---------- | -------- | -------------- | ------------- | ------------------------------------------------------------ |
-| region     | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| layer-name | -        | 选填           | 必填          | 层名称                                                       |
-| version-id | -        | 选填           | 选填          | 指定层版本。如果指定--version-id，仅删除指定的版本；否则删除层的所有的版本 |
-| access     | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug      | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help       | h        | 选填           | 选填          | 查看帮助信息                                                 |
-
-### 操作案例
-
-- **有资源描述文件（Yaml）时**，可以直接执行`s remove layer --layer-name layerName`删除层的所有版本；
-- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区，例如`s cli fc remove layer --region cn-hangzhou --layer-name demo`；
-
-上述命令的执行结果示例：
+### Parameter description
+ 
+ | Parameter  | Abbreviation | Required in YAML mode | Required in CLI mode | Description                           |
+ | ---------- | -------- | -------------- | ------------- | ------------------------------------------------------------ |
+ | region   | -    | No      | Yes     | The region of the service. Valid values: `cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, and ap-south-1`. |
+ | layer-name | -    | No      | Yes     | The name of the layer.                            |
+ | version-id | -    | No      | No      | The version that you want to delete. If you specify a value for the --version-id parameter, only the version that is specified by using the --version-id parameter is deleted. If you do not specify a value for the --version-id parameter, all versions of the specified layer are deleted. |
+ | access   | a    | No      | No     | The AccessKey pair that is used in the request. You can use the AccessKey pair that is configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command), or [the AccessKey pair that is configured by using environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure the AccessKey pair by using environment variables). |
+ | debug   | -    | No      | No     | The debug mode. If you enable the `debug` mode, more log information is returned.            |
+ | help    | h    | No      | No     | Views the help documentation.                         |
+ 
+### Examples
+ 
+- **If the resource description file (YAML) exists**, you can run the `s remove layer --layer-name layerName` command to delete all versions of the specified layer.
+- **If the resource description file (YAML) does not exist (only the CLI mode is available)**, you need to specify the region of the service. Example: `s cli fc remove layer --region cn-hangzhou --layer-name demo`. 
+ 
+Sample command output: 
 
 ```text
 Layer [demo] deleted successfully.
 ```
 
-## 权限与策略说明
+## Permissions and policies
 
 - `s remove`/`s remove service`：
     ````json
@@ -837,7 +836,7 @@ Layer [demo] deleted successfully.
     }
     ````
 - `s remove version`：
-    系统策略：`AliyunFCReadOnlyAccess`   
+    System policy：`AliyunFCReadOnlyAccess`   
     ```json
     {
         "Version": "1",
@@ -851,7 +850,7 @@ Layer [demo] deleted successfully.
     }
     ```
 - `s remove provision`：
-    系统策略：`AliyunFCReadOnlyAccess`   
+    System policy：`AliyunFCReadOnlyAccess`   
     ```json
     {
         "Version": "1",
@@ -865,7 +864,7 @@ Layer [demo] deleted successfully.
     }
     ```
 - `s remove ondemand`：
-    系统策略：`AliyunFCReadOnlyAccess`
+    System policy：`AliyunFCReadOnlyAccess`
     ```yaml
     {
         "Version": "1",
@@ -879,7 +878,7 @@ Layer [demo] deleted successfully.
     }
     ```
 - `s remove layer`：
-    系统策略：`AliyunFCReadOnlyAccess`
+    System policy：`AliyunFCReadOnlyAccess`
     ````json
   {
       "Version": "1",

@@ -1,25 +1,25 @@
-# Provision 命令
+# Provision commands
 
-`provision` 命令是进行函数预留操作的命令；主要包括预留配置的查看与更新等操作。
+The `provision` commands are used to provision function instances. You can use the commands to view and update provisioned configurations. 
 
-- [命令解析](#命令解析)
-- [provision list 命令](#provision-list-命令)
-  - [参数解析](#参数解析)
-  - [操作案例](#操作案例)
-- [provision put 命令](#provision-put-命令)
-  - [参数解析](#参数解析-1)
-  - [操作案例](#操作案例-1)
-- [provision get 命令](#provision-get-命令)
-  - [参数解析](#参数解析-2)
-  - [操作案例](#操作案例-2)
-- [remove provision](remove.md#remove-provision-命令)
-- [权限与策略说明](#权限与策略说明)
+- [Command description](#Command-description)
+- [provision list command](#provision-list-command)
+  - [Parameter description](#Parameter-description)
+  - [Examples](#Examples)
+- [provision put command](#provision-put-command)
+  - [Parameter description](#Parameter-description-1)
+  - [Examples](#Examples-1)
+- [provision get command](#provision-get-command)
+  - [Parameter description](#Parameter-description-2)
+  - [Examples](#Examples-2)
+- [remove provision](remove.md#remove-provision-command)
+- [Permissions and policies](#Permissions-and-policies)
 
->  ⚠️ 注意：**预留资源会持续产生费用，如果不需要请及时释放资源**
+>  ⚠️ Note: **You are charged for provisioned resources. Release instances that are no longer needed to prevent unnecessary costs.**
 
-## 命令解析
+## Command description
 
-当执行命令`provision -h`/`provision --help`时，可以获取帮助文档：
+You can run the `provision -h` or `provision --help` command to obtain the help document:
 
 ```shell script
 Provision
@@ -32,7 +32,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/provision.md
+  https://github.com/devsapp/fc/blob/main/docs/en/command/provision.md
 
 SubCommand List
 
@@ -42,17 +42,17 @@ SubCommand List
 ```
 
 
-在该命令中，包括了三个子命令：
+ In the preceding command, the following sub-commands are included:
+ 
+- [list: views the list of provisioned resources.](#provision-list-command)
+- [put: configures provisioned resources. You can remove the provisioned resources by setting the value to 0.](#provision-put-command)
+- [get: queries the details of a provisioned resource.](#provision-get-command)
 
-- [list：查看预留列表](#provision-list-命令)
-- [put：配置预留（配置规则，包括缩减到0，即删除预留）](#provision-put-命令)
-- [get：获取预留配置详情](#provision-get-命令)
+## provision list command
 
-## provision list 命令
-
-`provision list` 命令，是查看服务已发布的版本列表的命令。
-
-当执行命令`provision list -h`/`provision list --help`时，可以获取帮助文档：
+You can run the `provision list` command to view the published versions of the service. 
+ 
+You can run the `provision list -h` or `provision list --help` command to obtain the help document: 
 
 ```shell script
 Provision list
@@ -65,7 +65,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/provision.md
+  https://github.com/devsapp/fc/blob/main/docs/en/command/provision.md
                                
 Options
 
@@ -86,7 +86,7 @@ Options Help
   C-Required: Required parameters in CLI mode
   Y-Required: Required parameters in Yaml mode
   Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
+  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
 
 Examples with Yaml
 
@@ -97,24 +97,25 @@ Examples with CLI
   $ s cli fc version list --region cn-hangzhou --service-name serviceName 
 ```
 
-### 参数解析
+### Parameter description
 
-| 参数全称      | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
-| ------------- | -------- | -------------- | ------------- | ------------------------------------------------------------ |
-| region        | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| service-name  | -        | 选填           | 必填          | 服务名                                                       |
-| qualifier     |          | 选填           | 选填          | 配置预留的版本，仅支持服务的 LATEST 和别名                   |
-| table         |          | 选填           |               | 是否以表格形式输出                                           |
-| access        | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug         | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help          | h        | 选填           | 选填          | 查看帮助信息                                                 |
+| Parameter    | Abbreviation | Required   in YAML mode | Required   in CLI mode | Description                                                  |
+| ------------ | ------------ | ----------------------- | ---------------------- | ------------------------------------------------------------ |
+| region       | -            | No                      | Yes                    | The  name of the region. Valid values: cn-hangzhou, cn-beijing, cn-beijing,  cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote,  cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2,  ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1,  us-west-1, us-east-1, ap-south-1. |
+| service-name | -            | No                      | Yes                    | The  name of the service.                                    |
+| qualifier    |              | No                      | No                     | The  version for which provisioned resources are configured. Only LATEST and  service aliases are supported. |
+| table        |              | No                      |                        | Specifies  whether the output is in the form of a table.     |
+| access       | a            | No                      | No                     | The  key that is used in the request. You can use the key information that is  configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-命令) or [the key information that is   configured to environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#通过环境变量配置密钥信息). |
+| debug        | -            | No                      | No                     | Enables  the debug mode. In this case, more logs are generated. |
+| help         | h            | No                      | No                     | Views  help information.                                     |
 
-### 操作案例
 
-- **有资源描述文件（Yaml）时**，可以直接执行`s provision list`查看当前预留示例列表；
-- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区以及服务名称，例如`s cli fc provision list --region cn-hangzhou --service-name fc-deploy-service`；
+### Examples
 
-上述命令的执行结果示例：
+- **If a resource description file (YAML) exists,** run the `s provision list` command to view the list of provisioned instances.
+- **In CLI mode (no YAML file)**, specify the region where the service resides and the name of the service. Example: `s cli fc provision list --region cn-hangzhou --service-name fc-deploy-service`.
+
+Sample output:
 
 ```text
 fc-deploy-test: 
@@ -129,7 +130,7 @@ fc-deploy-test:
     targetTrackingPolicies: (empty array)
 ```
 
-如果指定了`--table`参数，输出示例：
+When the `--table` parameter is specified, the following output is returned:
 
 ```text
   ┌────────────┬────────────┬────────────┬────────────┬────────────┬────────────────────────────┬────────────────────────────┐
@@ -142,11 +143,11 @@ fc-deploy-test:
 ```
 
 
-## provision put 命令
+## provision put command
 
-`provision put` 命令用于配置预留。
+You can run the `provision put` command to configure provisioned resources. 
 
-当执行命令`provision put -h`/`provision put --help`时，可以获取帮助文档：
+You can run the `provision put -h` or `provision put --help` command to obtain the help document:
 
 ```shell script
 Provision put
@@ -159,7 +160,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/provision.md
+  https://github.com/devsapp/fc/blob/main/docs/en/command/provision.md
                            
 Options
 
@@ -182,7 +183,7 @@ Options Help
   C-Required: Required parameters in CLI mode
   Y-Required: Required parameters in Yaml mode
   Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
+  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
 
 Examples with Yaml
 
@@ -194,26 +195,26 @@ Examples with CLI
   $ s cli fc provision put --region cn-hangzhou --service-name serviceName --function-name functionName --qualifier alias --target 1         
 ```
 
-### 参数解析
+### Parameter description
 
-| 参数全称      | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
-| ------------- | -------- | -------------- | ------------- | ------------------------------------------------------------ |
-| region        | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| service-name  | -        | 选填           | 必填          | 服务名                                                       |
-| function-name | -        | 选填           | 必填          | 版本描述                                                     |
-| config        |          | 选填           | 选填          | 定时伸缩与弹性伸缩配置                |
-| qualifier     |          | 选填           | 必填          | 配置预留的版本，仅支持服务的 LATEST 和别名                   |
-| target        |          | 选填           | 选填          | 预留实例数量，target 如果大于0，配置函数预留，**预留资源会持续产生费用，如果不需要请及时释放资源**；target 如果等于0，释放预留资源；`--target`参数的权重大于`--config`中的`target`，即如果`config`的配置文件中和参数指定同时存在`target`配置，优先使用参数中的`target`配置 |
-| access        | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug         | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help          | h        | 选填           | 选填          | 查看帮助信息                                                 |
+| Parameter     | Abbreviation | Required in YAML mode | Required in CLI mode | Description                                                  |
+| ------------- | ------------ | --------------------- | -------------------- | ------------------------------------------------------------ |
+| region        | -            | No                    | Yes                  | The name of the region. Valid values: `cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1`. |
+| service-name  | -            | No                    | Yes                  | The name of the service.                                     |
+| function-name | -            | No                    | Yes                  | Version description.                                         |
+| config        |              | No                    | No                   | Specifies scheduled scaling and auto scaling configurations. |
+| qualifier     |              | No                    | Yes                  | The version for which provisioned resources are configured. Only LATEST and service aliases are supported. |
+| target        |              | No                    | No                   | The number of provisioned instances. If the value of the target parameter is greater than 0, provisioned function resources are configured. **You are charged for provisioned function resources.Release the resources that are no longer used to reduce costs.** If the value of the target parameter is 0, the provisioned resources are released. The `--target` parameter takes a greater weight than the `target` parameter in `--config`. If both the `target` parameter and `--target` parameter exist, the value of the `target` parameter is preferentially used. |
+| access        | a            | No                    | No                   | The key that is used in the request. You can use the key configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command), or [the key information that is configured to environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md##Configure keys by using environment variables). |
+| debug         | -            | No                    | No                   | Enables the `debug` mode. In this case, more logs are generated. |
+| help          | h            | No                    | No                   | Views help information.                                      |
 
-### 操作案例
-
-- **有资源描述文件（Yaml）时**，可以直接执行`s provision put`进行版本的发布，例如`s provision put --qualifier release --target 1`；
-- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区以及服务名称，例如`s cli fc provision put --region cn-hangzhou --service-name fc-deploy-service --qualifier release --target 1 -h`；
-
-上述命令的执行结果示例：
+### Examples:
+ 
+- **If a resource description file exists (YAML),** you can run the `s provision put` command to configure provisioned resources. Example: `s provision put --qualifier release --target 1`.
+- **In CLI mode (no YAML file)**, specify the region where the service resides and the name of the service. Example: `s cli fc provision put --region cn-hangzhou --service-name fc-deploy-service --qualifier release --target 1 -h`;
+ 
+Sample output:
 
 ```text
 fc-deploy-test: 
@@ -223,11 +224,9 @@ fc-deploy-test:
   targetTrackingPolicies: []
 ```
 
-> 💡 删除预留：删除预留的方法，可以通过`s provision put`命令，进行删除，只需要将`target`调整为0即可。例如`s provision put --qualifier release --target 0`
+> 💡 To remove provisioned resources, run the `s provision put` command. You need to only set the target value to 0. Example: `s provision put --qualifier release --target 0`.
 
-> ⚠️ `--target`参数的权重大于`--config`中的`target`，即如果`config`的配置文件中和参数指定同时存在`target`配置，优先使用参数中的`target`配置
-<a id="provision-config" href="#provision-config"></a>
-[阿里云函数计算配置预留拥有多种形式](https://help.aliyun.com/document_detail/138103.html)，单纯通过`target`参数进行控制的只是非常简单的配置，除此之外还支持定时伸缩与弹性伸缩配置方法，此时就需要对`--config`参数进行配置，`--config`参数识别的是一个 JSON 文件，基础格式如下：
+> ⚠️ The `--target` parameter takes a greater weight than target in `--config`. If both the `target` parameter and `--target` parameter exist, the target value is preferentially used. [Alibaba Cloud Function Compute configures provisioned resources in multiple ways.](https://help.aliyun.com/document_detail/138103.html)Aside from the configuration by using the target parameter, you can use scheduled scaling and auto scaling policies. In this case, you must set the --config parameter. The --config parameter is used to identify a JSON file, which conforms to the following format:
 
 ```json
 {
@@ -243,41 +242,43 @@ fc-deploy-test:
 }
 ```
 
-参数内容详情：
+Parameter description:
 
-| 参数名                 | 类型         | 是否必填 | 示例 | 描述                                                         |
-| ---------------------- | ------------ | -------- | ---- | ------------------------------------------------------------ |
-| target                 | number       | 是       | 1    | 预留的目标资源个数                                           |
-| scheduledActions       | list[object] | 否       |      | 定时伸缩策略：通过定时伸缩策略您可以更加灵活地配置预留的函数实例，在指定时间将预留的函数实例量设定成需要的值，使函数实例量更好地贴合业务的并发量。 |
-| targetTrackingPolicies | list[object] | 否       |      | 指标伸缩策略：根据函数实例并发利用率的情况每分钟对预留资源进行一次伸缩。<br>   - 当指标超过追踪值metricTarget时，开始以积极的策略扩容预留模式的函数实例量，以使得指标值恢复到追踪值metricTarget附近。<br>   - 当指标低于追踪值metricTarget时，开始以保守的策略缩容预留模式的函数实例量，以使得指标值逐渐恢复到追踪值metricTarget附近。<br>当您在系统中设置了伸缩最大值和最小值时，预留的函数实例量会在最大值与最小值之间进行伸缩，超出最大值时将停止扩容，低于最小值时将停止缩容。 |
+| Parameter              | Type         | Required | Example | Description                                                  |
+| ---------------------- | ------------ | -------- | ------- | ------------------------------------------------------------ |
+| target                 | number       | Yes      | 1       | The number of  provisioned instances.                        |
+| scheduledActions       | list[object] | No       |         | The configuration of  scheduled auto scaling. You can perform scheduled auto scaling to flexibly  configure provisioned instances. You can configure the number of provisioned  instances to be automatically adjusted to a specified value at scheduled  time. This way, the number of provisioned instances meets the concurrency  requirements of your business. |
+| targetTrackingPolicies | list[object] | No       |         | The configuration of  metric tracking auto scaling. Provisioned instances are scaled in or out  every minute based on the concurrency utilization of provisioned instances. -  When the metric value exceeds the value of the metricTarget parameter, the  system scales out provisioned instances based on a progressive policy to make  the metric value close to the value of the metricTarget parameter. - When the  metric value is smaller than the value of the metricTarget parameter, the  system scales in provisioned instances based on a conservative policy to make  the metric value close to the value of the metricTarget parameter. If you specify  the maximum and minimum numbers of provisioned instances, the system scales  provisioned instances within the range from the minimum number to the maximum  number. If the number of provisioned instances is beyond the range, the  scaling stops. |
 
-其中`scheduledActions`参数的数据结构为：
+The following information describes the data structure of the `scheduledActions` parameter:
 
-| 参数名             | 类型   | 是否必填 | 示例                 | 描述                                                         |
+| Parameter          | Type   | Required | Example              | Description                                                  |
 | ------------------ | ------ | -------- | -------------------- | ------------------------------------------------------------ |
-| name               | string | 是       | demoScheduler        | 定时任务的名称。                                             |
-| startTime          | string | 是       | 2020-10-10T10:10:10Z | 定时伸缩的起始生效时间。                                     |
-| endTime            | string | 是       | 2020-12-10T10:10:10Z | 定时伸缩的结束生效时间。                                     |
-| target             | number | 是       | 10                   | 预留的目标资源个数。                                         |
-| scheduleExpression | string | 是       | cron(0 30 8 * * *)   | 定时信息，支持两种格式。<br>   - At expressions - "at(yyyy-mm-ddThh:mm:ss)"：只调度一次，使用UTC格式。<br/>   - Cron expressions - "cron(0 0 20 * * *)"：调度多次，使用标准crontab格式，如：每天20:00进行调度。 |
+| name               | string | Yes      | demoScheduler        | The name of the  scheduled task.                             |
+| startTime          | string | Yes      | 2020-10-10T10:10:10Z | The time when the  scheduled auto scaling policy starts to take effect. |
+| endTime            | string | Yes      | 2020-12-10T10:10:10Z | The time when the  scheduled auto scaling policy expires.    |
+| target             | number | Yes      | 10                   | The number of  provisioned instances.                        |
+| scheduleExpression | string | Yes      | cron(0 30 8 * * *)   | The schedule  information. Two formats are supported. - At expressions -  "at(yyyy-mm-ddThh:mm:ss)": runs the scheduled task only once. Use  the UTC format. - Cron expressions - “cron(0 0 20 * * *)“: runs the scheduled  task for multiple times. Use the standard crontab format. For example, the  scheduled task is executed at 20:00 every day. |
 
-其中`targetTrackingPolicies`参数的数据结构为：
 
-| 参数名       | 类型           | 是否必填 | 示例                              | 描述                     |
-| ------------ | -------------- | -------- | --------------------------------- | ------------------------ |
-| name         | string         | 是       | demoScheduler                     | 定时任务的名称。         |
-| startTime    | string         | 是       | 2020-10-10T10:10:10Z              | 定时伸缩的起始生效时间。 |
-| endTime      | string         | 是       | 2020-12-10T10:10:10Z              | 定时伸缩的结束生效时间。 |
-| metricType   | string         | 是       | ProvisionedConcurrencyUtilization | 追踪的指标类型。         |
-| metricTarget | number(double) | 是       | 0.6                               | 指标的追踪值。           |
-| minCapacity  | number         | 是       | 10                                | 缩容的最小值。           |
-| maxCapacity  | number         | 是       | 100                               | 扩容的最大值。           |
+The following information describes the data structure of the `targetTrackingPolicies` parameter:
 
-## provision get 命令
+| Parameter    | Type           | Required | Example                           | Description                                                  |
+| ------------ | -------------- | -------- | --------------------------------- | ------------------------------------------------------------ |
+| name         | string         | Yes      | demoScheduler                     | The name of the  scheduled task.                             |
+| startTime    | string         | Yes      | 2020-10-10T10:10:10Z              | The time when the  scheduled auto scaling policy starts to take effect. |
+| endTime      | string         | Yes      | 2020-12-10T10:10:10Z              | The time when the  scheduled auto scaling policy expires.    |
+| metricType   | string         | Yes      | ProvisionedConcurrencyUtilization | The type of the metric  to be tracked.                       |
+| metricTarget | number(double) | Yes      | 0.6                               | The value of the  metric.                                    |
+| minCapacity  | number         | Yes      | 10                                | The minimum number of  provisioned instances for scale-in.   |
+| maxCapacity  | number         | Yes      | 100                               | The maximum number of  provisioned instances for scale-out.  |
 
-`provision get` 命令，是获取预留实例详情的命令。
 
-当执行命令`provision get -h`/`provision get --help`时，可以获取帮助文档：
+## provision get command
+
+The `provision get` command is used to obtain the details of provisioned instances. 
+
+You can run the `provision get -h` or `provision get --help` command to obtain the help document:
 
 ```shell script
 Provision get
@@ -290,7 +291,7 @@ Usage
                 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/provision.md
+  https://github.com/devsapp/fc/blob/main/docs/en/command/provision.md
                            
 Options
     
@@ -311,7 +312,7 @@ Options Help
   C-Required: Required parameters in CLI mode
   Y-Required: Required parameters in Yaml mode
   Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
+  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
 
 Examples with Yaml
 
@@ -322,24 +323,24 @@ Examples with CLI
   $ s cli fc provision get --region cn-hangzhou --service-name serviceName --function-name functionName --qualifier alias   
 ```
 
-### 参数解析
-
-| 参数全称      | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
+### Parameter description
+ 
+| Parameter   | Abbreviation | Required in YAML mode | Required in CLI mode | Description                           |
 | ------------- | -------- | -------------- | ------------- | ------------------------------------------------------------ |
-| region        | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| service-name  | -        | 选填           | 必填          | 服务名                                                       |
-| function-name | -        | 选填           | 必填          | 版本描述                                                     |
-| qualifier     |          | 选填           | 选填          | 配置预留的版本，仅支持服务的 LATEST 和别名                   |
-| access        | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug         | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help          | h        | 选填           | 选填          | 查看帮助信息                                                 |
-
-### 操作案例
-
-- **有资源描述文件（Yaml）时**，可以直接执行`s provision get --qualifier qualifier`获取预留实例详情；
-- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区以及服务名称，例如`s cli fc provision get --region cn-hangzhou --service-name fc-deploy-service --qualifier release`；
-
-上述命令的执行结果示例：
+| region    | -    | No      | Yes     | The name of the region. Valid values: `cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1`. |
+| service-name | -    | No      | Yes     | The name of the service.                            |
+| function-name | -    | No      | Yes     | Version description.                           |
+| qualifier   |     | No      | No     | The version for which provisioned resources are configured. Only LATEST and service aliases are supported.          |
+| access    | a    | No      | No     | The key that is used in the request. You can configure the key information by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command), or [the key information that is configured to environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure key information by using environment variables). |
+| debug     | -    | No      | No     | Enables the `debug` mode. In this case, more logs are generated.            |
+| help     | h    | No      | No     | Views the help information.                         |
+ 
+### Examples
+ 
+- **If a resource description file (YAML) is available,** you can run the `s provision get --qualifier qualifier` command to get the details of the provisioned instances.
+- **In the command line mode (no YAML file),** specify the region and the name of the service. Example, `s cli fc provision get --region cn-hangzhou --service-name fc-deploy-service --qualifier release`;
+ 
+ Sample output:
 
 ```text
 fc-deploy-test: 
@@ -353,11 +354,11 @@ fc-deploy-test:
   targetTrackingPolicies: []
 ```
 
-## 权限与策略说明
+## Permissions and policies
 
-- `provision list`与`provision get` 命令所需要的权限策略： `AliyunFCReadOnlyAccess`
+- Permissions on the `provision list` and `provision get` commands: `AliyunFCReadOnlyAccess`.
 
-- `provision put` 命令所需要的权限策略：
+- Permissions on the `provision put` command:
 
   ```yaml
   {

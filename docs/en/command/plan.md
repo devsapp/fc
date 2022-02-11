@@ -1,15 +1,15 @@
-# Plan 命令
+# Plan commands
 
-`plan` 命令是对函数计算资源变更感知的命令。
+The `plan` commands are used to view the changes of Function Compute resources. 
 
-- [命令解析](#命令解析)
-  - [参数解析](#参数解析)
-  - [操作案例](#操作案例)
-- [权限与策略说明](#权限与策略说明)
+- [Command description](#Command-description)
+  - [Parameter description](#Parameter-description)
+  - [Examples](#Examples)
+- [Permissions and policies](#Permissions-and-policies)
 
-## 命令解析
+## Command description
 
-当执行命令`plan -h`/`plan --help`时，可以获取帮助文档：
+You can run `plan -h` or `plan --help` to obtain the help documentation:
 
 ```shell script
 Plan
@@ -22,7 +22,7 @@ Usage
                             
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/plan.md    
+  https://github.com/devsapp/fc/blob/main/docs/en/command/plan.md    
 
 Options
 
@@ -43,19 +43,19 @@ Examples with Cli
   $ s plan              
 ```
 
-### 参数解析
+### Parameter description
+ 
+| Parameter | Abbreviation | Required in YAML mode | Description | 
+| ---------- | -------- | -------------- | ------------------------------------------------------------ | 
+| type-plan | - | Yes | Views changes that are caused by deployment or deletion. By default, changes that are caused by deployment are viewed. | 
+| sub-command | - | No | Views the changes of resources. If you set type-plan to deploy, you can set sub-command to service, function, trigger, or domain. If you set type-plan to remove, you can set sub-command to service, function, trigger, domain, version, alias, provision, ondemand, onDemand, or layer. | 
+| access | a | No | The AccessKey pair that is used in the request. You can use the AccessKey pair that is configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add- command) and the [AccessKey pair that is configured by using environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md# Configure the AccessKey pair by using environment variables). | 
+| debug | - | No | The debug mode. If you enable the `debug` mode, more log information is returned. | 
+| help | h | No | Views the help information. | 
+ 
+### Examples
 
-| 参数全称   | 参数缩写 | Yaml模式下必填 | 参数含义                                                     |
-| ---------- | -------- | -------------- | ------------------------------------------------------------ |
-| type-plan | - | 必填 | 查看部署或者删除的变更，默认是查看部署 |
-| sub-command | - | 选填 | 查看哪些资源的变更。如果 type-plan 是 deploy 那么可选参数有 service/function/trigger/domain；如果 type-plan 是 remove 那么可选参数有 service/function/trigger/domain/version/alias/provision/ondemand/onDemand/layer |
-| access     | a        | 选填           | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug      | -        | 选填           | 打开`debug`模式，将会输出更多日志信息                        |
-| help       | h        | 选填           | 查看帮助信息                                                 |
-
-### 操作案例
-
-**有资源描述文件（Yaml）时**，可以直接执行`s plan`进行资源变更感知，效果如下：
+**If a resource description file in YAML exists**, you can run the `s plan` command to view resource changes. The following results are returned: 
 
 ```text
 Local Last Deploy status => Online status
@@ -64,10 +64,10 @@ Local Last Deploy status => Online status
   timeout: 160 => 100
 ```
 
-此时需要额外注意几种情况：
+Take note of the following situations:
 
-- 本地全新项目：
-    - 线上不存在目标函数资源：提示即将创建的资源内容
+- Create a new local project：
+    - If the resources of the desired function do not exist in Function Compute, the information about the resource to be created is displayed.
       ```shell script
       ✅ Resources to create:
       
@@ -75,7 +75,7 @@ Local Last Deploy status => Online status
           name: abc
           description: efg
       ```
-    - 线上存在目标函数资源：提示本地项目所需要创建的资源与线上目标函数配置的区别（做 diff 操作）
+    - If the resources of the desired function exist in Function Compute, the difference between the resources that need to be created for the local project and the configurations of the desired function in Function Compute is displayed. 
       ```shell script
       ✅ Resources to change (release => new):
         
@@ -83,8 +83,8 @@ Local Last Deploy status => Online status
           name: abc
           description: efg  =>   demo
       ```
-- 本地已存在项目：
-    - 线上不存在目标函数资源：提示即将创建的资源内容
+- Create an existing local project：
+    - If the resources of the desired function do not exist in Function Compute, the information about the resource to be created is displayed.
       ```shell script
       ✅ Resources to create:
       
@@ -92,8 +92,8 @@ Local Last Deploy status => Online status
           name: abc
           description: efg
       ```
-    - 线上存在目标函数资源：
-        - 本地上一次部署状态和线上资源不一致：提示上次本地部署完成之后，线上资源发生过那些变更，以及即将变成什么样子
+    - The resources of the desired function exist in Function Compute:
+        - If the resource status of the last local deployment is inconsistent with the resource status in Function Compute, the changes of the resource status in Function Compute since the last local deployment and the changed resources are displayed. 
           ```shell script
           ⚠️ Hazard change (last state => release):
             service:
@@ -106,7 +106,7 @@ Local Last Deploy status => Online status
               name: abc
               description: efg  =>   demo
           ```
-        - 本地上一次部署状态和线上资源一致：提示本地项目所需要更新的资源与线上目标函数配置的区别（做 diff 操作）
+        - If the resource status of the last local deployment is the same as the resource status in Function Compute, the difference between the resources that need to be updated for the local project and the configurations of the desired function in Function Compute are displayed.
           ```shell script
           ✅ Resources to change (release => new):
             
@@ -115,6 +115,6 @@ Local Last Deploy status => Online status
               description: efg  =>   demo
           ```
 
-## 权限与策略说明
+## Permissions and policies
 
-使用该命令时，推荐配置系统策略：`AliyunFCReadOnlyAccess`
+If you use the plan commands, we recommend that you configure the system policy: `AliyunFCReadOnlyAccess`.

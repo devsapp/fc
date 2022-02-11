@@ -1,18 +1,18 @@
-# Logs 命令
+# Logs commands
 
-`logs` 命令是查看函数日志的命令。
+The `logs` commands are used to view the logs of a function. 
 
-- [命令解析](#命令解析)
-  - [参数解析](#参数解析)
-  - [操作案例](#操作案例)
-- [权限与策略说明](#权限与策略说明)
+- [Command description](#Command-description)
+  - [Parameter description](#Parameter-description)
+  - [Examples](#Examples)
+- [Permissions and policies](#Permissions-and-policies)
 
-> ⚠️ 注意：在使用该功能之前，需要先开通 SLS 日志服务，并且[函数本身已经配置了相关的日志项目](../yaml.md##logConfig)。
+> ⚠️ Note: Before you use this feature, you must activate Log Service and [configure related log projects](../yaml.md##logConfig). 
 
 
-## 命令解析
+## Command description
 
-当执行命令`logs -h`/`logs --help`时，可以获取帮助文档：
+You can run the `logs -h` or `logs --help` command to obtain the help document:
 
 ```shell script
 Logs
@@ -26,7 +26,7 @@ Usage
 
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/logs.md                
+  https://github.com/devsapp/fc/blob/main/docs/en/command/logs.md                
 
 Options
                
@@ -51,7 +51,7 @@ Options Help
   C-Required: Required parameters in CLI mode
   Y-Required: Required parameters in Yaml mode
   Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
+  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
 
 Examples with Yaml
 
@@ -64,28 +64,28 @@ Examples with CLI
   $ s cli fc logs --region cn-hangzhou --service-name serviceName --function-name functionName --tail
 ```
 
-### 参数解析
+### Parameter description
 
-| 参数全称      | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
+| Parameter   | Abbreviation | Required in YAML mode | Required in CLI mode | Description                           |
 | ------------- | -------- | -------------- | ------------- | ------------------------------------------------------------ |
-| region        | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| service-name  | -        | 选填           | 必填          | 服务名                                                       |
-| function-name | -        | 选填           | 必填          | 函数名                                                       |
-| keyword       | -        | 选填           | 选填          | 查询的关键词                                                 |
-| start-time    | s        | 选填           | 选填          | 查询的时间点起点，UTC时间或者时间戳，例如`2021-06-07T02:54:59+08:00`，`1611827290000` |
-| end-time      | e        | 选填           | 选填          | 查询的时间点终点，UTC时间或者时间戳，例如`2021-06-07T02:54:59+08:00`，`1611827290000` |
-| tail          | -        | 选填           | 选填          | 以`tail`模式进行日志输出                                     |
-| type          | -        | 选填           | 选填          | 查询的日志类型，成功或者失败,取值范围：`success, fail`         |
-| access        | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug         | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help          | h        | 选填           | 选填          | 查看帮助信息                                                 |
+| region    | -    | No      | Yes     | The name of the region. Valid values: `cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1`. |
+| service-name | -    | No      | Yes     | The name of the service.                            |
+| function-name | -    | No      | Yes     | The name of the function.                            |
+| keyword    | -    | No      | No     | Key word for searching.                         |
+| start-time  | s    | No      | No     | The start time of the query, which must be UTC time or a timestamp. Example: `2021-06-07T02:54:59+08:00`，`1611827290000` |
+| end-time   | e    | No      | No     | The end time of the query, which must be UTC time or a timestamp. Example: `2021-06-07T02:54:59+08:00`，`1611827290000` |
+| tail     | -    | No      | No     | Outputs the result in the `tail` mode.                   |
+| type     | -    | No      | No     | The log type to query. Valid values: `success, fail`     |
+| access    | a    | No      | No     | The key that is used in the request. You can use the key information that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command), or the [key information that is configured for environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#key information that is configured to environment variables). |
+| debug     | -    | No      | No     | Enables the `debug` mode. In this case, more logs are generated.            |
+| help     | h    | No      | No     | Views the help information.                         |
 
-### 操作案例
-
-- **有资源描述文件（Yaml）时**，可以直接执行`s logs`进行线上函数的日志查询；
-- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区以及服务名称，函数名等，例如`s cli fc logs --region cn-hangzhou --service-name fc-deploy-service --function-name http-trigger-py36`
-
-上述命令的执行结果示例：
+### Examples
+ 
+- **If a resource description file (YAML) is available, **you can run the `s logs` command to view logs of online functions.
+- **In CLI mode (no YAML),** you must specify the region in which the service resides and names of the service and function. Example: `s cli fc logs --region cn-hangzhou --service-name fc-deploy-service --function-name http-trigger-py36`
+ 
+Sample output:
 
 ```
 FunctionCompute python3 runtime inited.
@@ -97,15 +97,15 @@ FC Invoke Start RequestId: de4812be-9137-4a33-9869-370cb61ac427
 FC Invoke End RequestId: de4812be-9137-4a33-9869-370cb61ac427
 ```
 
-如果需要以`tail`模式进行日志的查询，可以增加`--tail`参数，例如`s logs --tail`；
+You can add the `--tail` parameter to view logs in the `tail` mode. Example: `s logs --tail`.
 
-查询指定时间段的日志，可以通过增加`--start-time`和`--end-time`参数实现，例如`s logs -s 2021-11-04T15:40:00 -e 2021-11-04T15:45:00`；
+You can add the `--start-time` and `--end-time` parameters to view the logs in a specified period. Example: `s logs -s 2021-11-04T15:40:00 -e 2021-11-04T15:45:00`.
 
-## 权限与策略说明
+## Permissions and policies
 
-- 最大权限：`AliyunFCReadOnlyAccess`、`AliyunLogReadOnlyAccess`
+- Maximum permissions: `AliyunFCReadOnlyAccess`, and `AliyunLogReadOnlyAccess`
 
-- 最小权限：`AliyunFCReadOnlyAccess` 与相关接口权限：
+- Minimum permissions: `AliyunFCReadOnlyAccess` and permissions related to some API operations:
 
   ```yaml
   {

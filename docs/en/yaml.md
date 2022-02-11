@@ -1,13 +1,13 @@
-# Yaml规范说明
+# Yaml specification
 
-- [Yaml完整配置](#Yaml完整配置)
-- [字段解析](#字段解析)
-  - [service字段](#service字段)
+- [Yaml complete configuration](#Yaml-complete-configuration)
+- [Field parsing](#Field-parsing)
+  - [service field](#service-field)
     - [role](#role)
     - [logConfig](#logConfig)
     - [vpcConfig](#vpcConfig)
     - [nasConfig](#nasConfig)
-  - [function字段](#function字段)
+  - [function field](#function-field)
     - [customContainerConfig](#customContainerConfig)
     - [environmentVariables](#environmentVariables)
     - [instanceLifecycleConfig](#instanceLifecycleConfig)
@@ -15,44 +15,44 @@
     - [destination](#destination)
     - [customDNS](#customDNS)
     - [dnsOptions](#dnsOptions)
-  - [triggers字段](#triggers字段)
-    - [OSS触发器](#OSS触发器)
-    - [Log触发器](#Log触发器)
-    - [Timer触发器](#Timer触发器)
-    - [Http触发器](#Http触发器)
-    - [MNS触发器](#MNS触发器)
-    - [CDN触发器](#CDN触发器)
-  - [customDomains字段](#customDomains字段)
+  - [triggers field](#triggers-field)
+    - [OSS triggers](#OSS-triggers)
+    - [Log triggers](#Log-triggers)
+    - [Timer triggers](#Timer-triggers)
+    - [Http triggers](#Http-triggers)
+    - [MNS triggers](#MNS-triggers)
+    - [CDN triggers](#CDN-triggers)
+  - [customDomains field](#customDomains-field)
     - [certConfig](#certConfig)
     - [routeConfigs](#routeConfigs)
 
-# Yaml完整配置
+# Yaml complete configuration
 
-阿里云函数计算（FC）组件的Yaml字段如下：
+The Yaml fields of Alibaba Cloud Function Compute (FC) components are as follows:
 
 ```yaml
-edition: 1.0.0          #  命令行YAML规范版本，遵循语义化版本（Semantic Versioning）规范
-name: ffmpeg-app        #  项目名称
-access: default         #  秘钥别名
+edition: 1.0.0 # Command-line YAML specification version, following the Semantic Versioning specification
+name: ffmpeg-app # project name
+access: default # key alias
 
 services:
   fc-deploy-test:
-    component: devsapp/fc  # 组件名称
-    props: #  组件的属性值
+    component: devsapp/fc # component name
+    props: # property value of the component
       region: cn-qingdao
       service:
         name: fc-deploy-service
         description: demo for fc-deploy component
         internetAccess: true
         role: 'acs:ram::xxx:role/AliyunFcDefaultRole'
-        tracingConfig: Enable  # 'Enable' or 'Disable'
+        tracingConfig: Enable # 'Enable' or 'Disable'
         nasConfig:
           userId: 10003
           groupId: 10003
           mountPoints:
             - serverAddr: xxx.cn-qingdao.nas.aliyuncs.com
               nasDir: /fc-deploy-service
-              fcDir: /mnt/auto
+              fcDir: /mnt/auto        
         vpcConfig:
           vpcId: xxx
           securityGroupId: xxx
@@ -78,14 +78,14 @@ services:
           image: xxx
           command: xxx
           args: xxx
-          instanceID: cri-xxxxxx  # 容器镜像服务企业版实例的ID，共享实例时不需要指定该参数
-          accelerationType: Default  # 镜像加速开关，'Default' or 'None'
+          instanceID: cri-xxxxxx  # The ID of the Container Image Service Enterprise Edition instance. You do not need to specify this parameter when sharing an instance.
+          accelerationType: Default  # Mirror acceleration switch, 'Default' or 'None'
         environmentVariables:
           key: 'value'
         initializationTimeout: 20
         initializer: index.initializer
         instanceConcurrency: 1
-        instanceType: e1  # e1(弹性实例) or c1(性能实例)
+        instanceType: e1  # e1 (elastic instance) or c1 (performance instance)
         layer: 
           - xxx
           - xxx
@@ -217,36 +217,35 @@ services:
             privateKey: xxx
 ```
 
-> Tips: 
->  - 如何声明多个函数？     
->    在Serverless Devs的函数计算组件中，默认规定服务和函数是一一对应关系，如果需要在一个服务下声明多个函数，可以参考[常见小贴士](./tips.md) 中提供的[如何声明部署多个函数文档](./tips.md#如何声明部署多个函数)
+> Tips:
+> - How to declare multiple functions?
+> In the function computing component of Serverless Devs, by default, there is a one-to-one correspondence between services and functions. If you need to declare multiple functions under one service, you can refer to [Common Tips](./tips.md) Provided in [How to declare and deploy multiple functions document](./tips.md#How to declare and deploy multiple functions)
 
-# 字段解析
+# Field parsing
 
-| 参数名                              | 必填 | 类型                         | 参数描述   |
-| ----------------------------------- | ---- | ---------------------------- | ---------- |
-| region                              | True | Enum                         | 地域       |
-| [service](#service字段)             | True | [Struct](#service字段)       | 服务       |
-| [function](#function字段)           | True | [Struct](#function字段)      | 函数       |
-| [triggers](#triggers字段)           | True | [Struct](#triggers字段)      | 触发器     |
-| [customDomains](#customDomains字段) | True | [Struct](#customDomains字段) | 自定义域名 |
+| Parameter Name | Required | Type | Parameter Description |
+| ----------------------------------- | ---- | -------- -------------------- | ---------- |
+| region | True | Enum | Region |
+| [service](#service field) | True | [Struct](#service field) | Service |
+| [function](#function field) | True | [Struct](#function field) | function |
+| [triggers](#triggers field) | True | [Struct](#triggers field) | Triggers |
+| [customDomains](#customDomains field) | True | [Struct](#customDomains field) | Custom Domain Name |
 
-地区目前支持：`cn-beijing`, `cn-hangzhou`, `cn-shanghai`, `cn-qingdao`, `cn-zhangjiakou`, `cn-huhehaote`, `cn-shenzhen`, `cn-chengdu`, `cn-hongkong`, `ap-southeast-1`, `ap-southeast-2`, `ap-southeast-3`, `ap-southeast-5`, `ap-northeast-1`, `eu-central-1`, `eu-west-1`, `us-west-1`, `us-east-1`, `ap-south-1`
+Regions currently supported: `cn-beijing`, `cn-hangzhou`, `cn-shanghai`, `cn-qingdao`, `cn-zhangjiakou`, `cn-huhehaote`, `cn-shenzhen`, `cn-chengdu `, `cn-hongkong`, `ap-southeast-1`, `ap-southeast-2`, `ap-southeast-3`, `ap-southeast-5`, `ap-northeast-1`, `eu -central-1`, `eu-west-1`, `us-west-1`, `us-east-1`, `ap-south-1`
 
-## service字段
+## service field
 
-| 参数名                          | 必填  | 类型                                          | 参数描述                                                     |
-| ------------------------------- | ----- | --------------------------------------------- | ------------------------------------------------------------ |
-| name                            | True  | String                                        | service名称                                                  |
-| description                     | False | String                                        | Service的简短描述                                            |
-| internetAccess                  | False | Boolean                                       | 设为true让function可以访问公网                               |
-| [tracingConfig](#tracingConfig) | False | String                                        | 链路追踪，可取值：Enable、Disable                            |
-| [role](#role)                   | False | String[简单配置]/[Struct[详细配置]](#role)    | 授予函数计算所需权限的RAM role, 使用场景包含 1. 把 function产生的 log 发送到用户的 logstore 中 2. 为function 在执行中访问其它云资源生成 token |
-| [logConfig](#logConfig)         | False | Enum[简单配置]/[Struct[详细配置]](#logConfig) | log配置，function产生的log会写入这里配置的logstore           |
-| [vpcConfig](#vpcConfig)         | False | Enum[简单配置]/[Struct[详细配置]](#vpcConfig) | VPC配置, 配置后function可以访问指定VPC                       |
-| [nasConfig](#nasConfig)         | False | Enum[简单配置]/[Struct[详细配置]](#nasConfig) | NAS配置, 配置后function可以访问指定NAS                       |
-
-参考案例：
+| Parameter Name | Required | Type | Parameter Description |
+| ------------------------------- | ----- | ------------- ---------------------------------- | --------------- --------------------------------------------- |
+| name | True | String | service name |
+| description | False | String | A short description of the Service |
+| internetAccess | False | Boolean | Set to true to allow the function to access the public network |
+| [tracingConfig](#tracingConfig) | False | String | Link tracing, available values: Enable, Disable |
+| [role](#role) | False | String[Simple configuration]/[Struct[Detailed configuration]](#role) | The RAM role that grants the permissions required by Function Compute, the usage scenarios include 1. Send the log generated by the function To the user's logstore 2. Generate a token for the function to access other cloud resources during execution |
+| [logConfig](#logConfig) | False | Enum[simple configuration]/[Struct[detailed configuration]](#logConfig) | log configuration, the log generated by the function will be written to the logstore configured here |
+| [vpcConfig](#vpcConfig) | False | Enum[simple configuration]/[Struct[detailed configuration]](#vpcConfig) | VPC configuration, after configuration, the function can access the specified VPC |
+| [nasConfig](#nasConfig) | False | Enum[simple configuration]/[Struct[detailed configuration]](#nasConfig) | NAS configuration, after configuration, the function can access the specified NAS |
+Examples：
 
 ```yaml
 service:
@@ -255,20 +254,19 @@ service:
     internetAccess: true
 ```
 
+### Permission configuration related
 
-### 权限配置相关
+#### Permissions required for sub-accounts
 
-#### 子账号需要的权限
+##### Maximum permissions
 
-##### 最大权限
+System Policy: AliyunFCFullAccess
 
-系统策略：AliyunFCFullAccess
+##### Deployment Least Privileges
 
-##### 部署最小权限
+**Custom Policy**
 
-**自定义策略**
-
-⚠️ `fc:GetService` 的权限默认可以选填。
+⚠️ The permission of `fc:GetService` is optional by default.
 
 ```json
 {
@@ -293,9 +291,9 @@ service:
 }
 ```
 
-##### 删除最小权限
+##### Remove the least privilege
 
-**自定义策略**
+**Custom Policy**
 
 ```json
 {
@@ -312,16 +310,16 @@ service:
 
 ### role
 
-当`role`参数为字符串时，可以是：`acs:ram::xxx:role/AliyunFcDefaultRole`
+When the `role` parameter is a string, it can be: `acs:ram::xxx:role/AliyunFcDefaultRole`
 
-当`role`参数为结构时，可以参考：
+When the `role` parameter is a structure, you can refer to:
 
-| 参数名                | 必填 | 类型                      | 参数描述 |
-| --------------------- | ---- | ------------------------- | -------- |
-| name                  | True | String                    | 角色名   |
-| [policies](#policies) | True | [List\<Struct>](#policies) | 策略列表 |
+| Parameter Name | Required | Type | Parameter Description |
+| --------------------- | ---- | ---------------------- --- | -------- |
+| name | True | String | Character name |
+| [policies](#policies) | True | [List\<Struct>](#policies) | list of policies |
 
-参考案例：
+Examples：
 
 ```
 role:
@@ -337,16 +335,15 @@ role:
         Resource:
           - acs:log:*:*:project/*
 ```
+#### Permission configuration related
 
-#### 权限配置相关
+##### Sub-account requires permission
 
-##### 子账号需要权限
+###### Maximum permissions
 
-###### 最大权限
+**System Policy**: `AliyunFCFullAccess`, `AliyunRAMFullAccess`
 
-**系统策略**：`AliyunFCFullAccess`、`AliyunRAMFullAccess`
-
-###### 更细度的策略
+###### More granular strategies
 
 ```json
 {
@@ -374,40 +371,39 @@ role:
 
 #### policies
 
-其中 `policies` 表示策略列表，当使用了这个字段，需要本地配置的 ak 具有创建 policy 和 role 的权限，列表中的元素支持字符串和 `policy` 结构体，该结构体可以参考:
+Where `policies` represents a list of policies. When this field is used, the locally configured ak needs to have permission to create policies and roles. The elements in the list support strings and `policy` structures, which can be referred to:
 
-| 参数名      | 必填  | 类型                       | 参数描述     |
+| Parameter Name | Required | Type | Parameter Description |
 | ----------- | ----- | -------------------------- | ------------ |
-| name        | True  | String                     | 策略名称     |
-| description | False | String                     | 策略描述     |
-| statement   | True  | [List\<Struct>](#statement) | 策略内容列表 |
+| name | True | String | Policy name |
+| description | False | String | Policy description |
+| statement | True | [List\<Struct>](#statement) | Policy content list |
 
 #### statement
 
-其中 `statement` 表示策略内容列表，列表中元素的结构体可以参考：
+Among them, `statement` represents the list of policy content, and the structure of the elements in the list can be referred to:
 
-| 参数名    | 必填  | 类型                | 参数描述                             |
+| Parameter Name | Required | Type | Parameter Description |
 | --------- | ----- | ------------------- | ------------------------------------ |
-| Effect    | True  | String              | 策略效果，可选值有 'Allow' 和 'Deny' |
-| Action    | True  | List\<String\>        | 策略动作                             |
-| Resource  | True  | String/List\<String\> | 策略的目标资源                       |
-| Condition | False | Object              | 策略的条件限制                       |
+| Effect | True | String | Strategy effect, optional values ​​are 'Allow' and 'Deny' |
+| Action | True | List\<String\> | Policy Action |
+| Resource | True | String/List\<String\> | Policy's target resource |
+| Condition | False | Object | Condition of the policy |
 
 ### logConfig
 
-当`logConfig`参数为简单配置是，可以是：`auto`
+When the `logConfig` parameter is a simple configuration, it can be: `auto`
 
-当`logConfig`参数为结构时，可以参考：
+When the `logConfig` parameter is a structure, you can refer to:
 
-| 参数名                | 必填  | 类型    | 参数描述                                 |
+| Parameter Name | Required | Type | Parameter Description |
 | --------------------- | ----- | ------- | ---------------------------------------- |
-| logstore              | False | String  | loghub中的logstore名称                   |
-| project               | False | String  | loghub中的project名称                    |
-| enableRequestMetrics  | False | Boolean | RequestMetrics开关，取值`true`/`false`   |
-| enableInstanceMetrics | False | Boolean | InstanceMetrics开关，取值`true`/`false`  |
-| logBeginRule          | False | String  | 日志是否切分，取值 `DefaultRegex`/`None` |
-
-参考案例：
+| logstore | False | String | logstore name in loghub |
+| project | False | String | project name in loghub |
+| enableRequestMetrics | False | Boolean | RequestMetrics switch, value `true`/`false` |
+| enableInstanceMetrics | False | Boolean | InstanceMetrics switch, value `true`/`false` |
+| logBeginRule | False | String | Whether the log is split, the value is `DefaultRegex`/`None` |
+Examples：
 
 ```yaml
 service:
@@ -421,24 +417,24 @@ service:
         logstore: XXX
 ```
 
-> logConfig 为 auto时
-> project 名字生成规则 {accountID}-{region}-logproject
-> logstore 名字生成规则 'fc-service-{serviceName}-logstore'.toLocaleLowerCase()
+> when logConfig is auto
+> project name generation rule {accountID}-{region}-logproject
+> logstore name generation rule 'fc-service-{serviceName}-logstore'.toLocaleLowerCase()
 
 
-#### 权限配置相关
+#### Permission configuration related
 
-##### 子账号需要的权限
+##### Permissions required for sub-accounts
 
-###### 最大权限
+###### Maximum permissions
 
-系统策略：`AliyunFCFullAccess`、`AliyunLogFullAccess`
+System policy: `AliyunFCFullAccess`, `AliyunLogFullAccess`
 
-###### 部署最小权限
+###### Deploy with minimal permissions
 
-- 当 `logConfig` 不为 `auto` 
+- when `logConfig` is not `auto`
 
-**自定义策略**
+**Custom Policy**
 
 ```json
 {
@@ -453,9 +449,9 @@ service:
 }
 ```
 
-- 当 `logConfg` 为 `auto`
+- when `logConfg` is `auto`
 
-**自定义策略**
+**Custom Policy**
 
 ```json
 {
@@ -488,16 +484,16 @@ service:
 }
 ```
 
-##### 服务角色权限
+##### Service role permissions
 
-###### 最大权限
+###### Maximum permissions
 
-**系统策略**：`AliyunLogFullAccess`
+**System Policy**: `AliyunLogFullAccess`
 
 
-###### 最小权限
+###### least privilege
 
-**自定义策略**
+**Custom Policy**
 
 ```json
 {
@@ -514,18 +510,18 @@ service:
 
 ### vpcConfig
 
-当`vpcConfig`参数为简单配置是，可以是：`auto`
+When the `vpcConfig` parameter is a simple configuration, it can be: `auto`
 
-当`vpcConfig`参数为结构时，可以参考：
+When the `vpcConfig` parameter is a structure, you can refer to:
 
-| 参数名          | 必填  | 类型         | 参数描述       |
+| Parameter Name | Required | Type | Parameter Description |
 | --------------- | ----- | ------------ | -------------- |
-| securityGroupId | False | String       | 安全组ID       |
-| vSwitchIds      | False | List\<String\> | 交换机 ID 列表 |
-| vpcId           | False | String       | VPC ID         |
+| securityGroupId | False | String | Security Group ID |
+| vSwitchIds | False | List\<String\> | List of switch IDs |
+| vpcId | False | String | VPC ID |
 
 
-参考案例：
+Examples:
 
 ```yaml
 service:    
@@ -540,39 +536,38 @@ service:
     vswitchIds:        
       - vsw-xxx
 ```
+#### Permission configuration related
 
-#### 权限配置相关
+##### Permissions required for sub-accounts
 
-##### 子账号需要的权限
+###### Maximum permissions
 
-###### 最大权限
+**System Policy**: `AliyunFCFullAccess`, `AliyunVPCFullAccess`, `AliyunECSFullAccess`
 
-**系统策略**：`AliyunFCFullAccess`、`AliyunVPCFullAccess`、`AliyunECSFullAccess`
+###### Deployment minimum permissions **<**[**Service permissions reference**](#Permissions required by sub-accounts)**>**
 
-###### 部署最小权限 **<**[**服务权限参考**](#子账号需要的权限)**>**
+- when `vpcConfig` is not `auto`
 
-- 当 `vpcConfig` 不为 `auto`
+**Custom Policy**
 
-**自定义策略**
-
-```json
+````json
 {
-    "Statement":[
-        {
-            "Action":"ram:PassRole",
-            "Effect":"Allow",
-            "Resource":"*"
-        }
-    ],
-    "Version":"1"
+     "Statement":[
+         {
+             "Action":"ram:PassRole",
+             "Effect":"Allow",
+             "Resource": "*"
+         }
+     ],
+     "Version": "1"
 }
-```
+````
 
-- 当 `vpcConfig` 为 `auto`
+- when `vpcConfig` is `auto`
 
-**系统策略**：`AliyunVPCReadOnlyAccess`
+**System Policy**: `AliyunVPCReadOnlyAccess`
 
-**自定义策略**
+**Custom Policy** 
 
 ```json
 {
@@ -603,23 +598,23 @@ service:
 }
 ```
 
-##### 服务角色权限
+##### Service role permissions
 
-**系统策略**：`AliyunECSNetworkInterfaceManagementAccess`
+**System Policy**: `AliyunECSNetworkInterfaceManagementAccess`
 
 ### nasConfig
 
-当`nasConfig`参数为简单配置是，可以是：`auto`
+When the `nasConfig` parameter is a simple configuration, it can be: `auto`
 
-当`nasConfig`参数为结构时，可以参考：
+When the `nasConfig` parameter is a structure, you can refer to:
 
-| 参数名                      | 必填  | 类型                                     | 参数描述             |
-| --------------------------- | ----- | ---------------------------------------- | -------------------- |
-| [mountPoints](#mountPoints) | False | [List\<Struct>[多目录配置]](#mountPoints) | 目录配置             |
-| userId                      | False | String                                   | userID, 默认为10003  |
-| groupId                     | False | String                                   | groupID, 默认为10003 |
+| Parameter Name | Required | Type | Parameter Description |
+| --------------------------- | ----- | --------------- ------------------------- | -------------------- |
+| [mountPoints](#mountPoints) | False | [List\<Struct>[Multiple Directory Configuration]](#mountPoints) | Directory Configuration |
+| userId | False | String | userID, default is 10003 |
+| groupId | False | String | groupID, default is 10003 |
 
-参考案例：
+Examples:
 
 ```yaml
 service:    
@@ -641,39 +636,39 @@ service:
         fcDir: /mnt/auto
 ```
 
-#### 权限配置相关
+#### Permission configuration related
 
-##### 子账号需要的权限
+##### Permissions required for sub-accounts
 
-###### 最大权限
+###### Maximum permissions
 
-**系统策略**：`AliyunFCFullAccess`、`AliyunVPCFullAccess`、`AliyunNasFullAccess`
+**System Policy**: `AliyunFCFullAccess`, `AliyunVPCFullAccess`, `AliyunNasFullAccess`
 
 
-###### 部署最小权限
+###### Deploy with minimal permissions
 
-- 当 `nasConfig` 不为 `auto`
+- when `nasConfig` is not `auto`
 
-**自定义策略**
+**Custom Policy**
 
-```json
+````json
 {
-    "Statement":[
-        {
-            "Action":"ram:PassRole",
-            "Effect":"Allow",
-            "Resource":"*"
-        }
-    ],
-    "Version":"1"
+     "Statement":[
+         {
+             "Action":"ram:PassRole",
+             "Effect":"Allow",
+             "Resource": "*"
+         }
+     ],
+     "Version": "1"
 }
-```
+````
 
-- 当 `nasConfig` 为 `auto`
+- when `nasConfig` is `auto`
 
-**系统策略**：`AliyunNasReadOnlyAccess`
+**System Policy**: `AliyunNasReadOnlyAccess`
 
-**自定义策略**
+**Custom Policy** 
 
 ```json
 {
@@ -729,38 +724,38 @@ service:
 }
 ```
 
-##### 服务角色权限
+##### Service role permissions
 
-**系统策略**：`AliyunECSNetworkInterfaceManagementAccess`
+**System Policy**: `AliyunECSNetworkInterfaceManagementAccess`
 
 
 #### mountPoints
 
-| 参数名     | 必填  | 类型   | 参数描述       |
+| Parameter Name | Required | Type | Parameter Description |
 | ---------- | ----- | ------ | -------------- |
-| serverAddr | False | String | NAS 服务器地址 |
-| nasDir     | False | String | NAS目录        |
-| fcDir      | False | String | 函数计算目录   |
+| serverAddr | False | String | NAS server address |
+| nasDir | False | String | NAS directory |
+| fcDir | False | String | Function calculation directory |
 
 ### tracingConfig
 
-链路追踪，可取值：Enable、Disable
+Link tracking, possible values: Enable, Disable
 
-参考案例
+Examples
 
-```yaml
-service:    
-  name: unit-deploy-service    
-  description: 'demo for fc-deploy component'    
-  internetAccess: true    
-  tracingConfig: Enable     
-```
+````yaml
+service:
+   name: unit-deploy-service
+   description: 'demo for fc-deploy component'
+   internetAccess: true
+   tracingConfig: Enable
+````
 
-#### 权限配置相关
+#### Permission configuration related
 
-##### 子账号需要的权限
+##### Permissions required for sub-accounts
 
-**系统策略**：`AliyunFCFullAccess`、`AliyunTracingAnalysisReadOnlyAccess`
+**System policy**: `AliyunFCFullAccess`, `AliyunTracingAnalysisReadOnlyAccess`
 
 ```yaml
 {
@@ -776,34 +771,33 @@ service:
 ```
 
 
-## function字段
+## function field
 
-| 参数名                                              | 必填  | 类型                                  | 参数描述                                               |
+| Parameter Name | Required | Type | Parameter Description |
 | --------------------------------------------------- | ----- | ------------------------------------- | ------------------------------------------------------ |
-| name                                                | True  | String                                | function名称                                           |
-| description                                         | False | String                                | function的简短描述                                     |
-| codeUri                                             | False | String                                | 代码位置                                               |
-| ossBucket                                           | False | String                                | 代码存放的 oss 存储桶                                  |
-| ossKey                                              | False | String                                | 如果指定 oss 代码，所对应的对象，不能与codeUri同时出现 |
-| handler                                             | False | String                                | function执行的入口，具体格式和语言相关                 |
-| memorySize                                          | False | Number                                | function的内存规格                                     |
-| [runtime](#runtime)                                 | True  | String                                | 运行时                                                 |
-| timeout                                             | False | Number                                | function运行的超时时间                                 |
-| caPort                                              | False | Number                                | CustomContainer/Runtime指定端口                        |
-| [customContainerConfig](#customContainerConfig)     | False | [Struct](#customContainerConfig)      | 自定义镜像配置                                         |
-| [environmentVariables](#environmentVariables)       | False | [Struct](#environmentVariables) | 环境变量                                               |
-| initializationTimeout                               | False | Number                                | 初始化方法超时时间                                     |
-| initializer                                         | False | String                                | 初始化方法                                             |
-| instanceConcurrency                                 | False | Number                                | 单实例多并发                                           |
-| instanceType                                        | False | String                                | 函数实例类型，可选值为：e1（弹性实例）、c1（性能实例） |
-| layer | False | List\<String\> | 函数绑定层，仅支持 Nodejs、Python；取值是层的 ARN |
-| [instanceLifecycleConfig](#instanceLifecycleConfig) | False | [Struct](#instanceLifecycleConfig)    | 扩展函数                                               |
-| [asyncConfiguration](#asyncConfiguration)            | False | [Struct](#asyncConfiguration)          | 异步配置                                               |
-| [customDNS](#customDNS)            | False | [Struct](#customDNS)          | DNS 配置 |
-| [customRuntimeConfig](#customRuntimeConfig)            | False | [Struct](#customRuntimeConfig)          | 自定义运行时启动配置  |
+| name | True | String | function name |
+| description | False | String | A short description of the function |
+| codeUri | False | String | Code position |
+| ossBucket | False | String | The oss bucket where the code is stored |
+| ossKey | False | String | If oss code is specified, the corresponding object cannot appear at the same time as codeUri |
+| handler | False | String | The entry of function execution, the specific format is related to the language |
+| memorySize | False | Number | The memory size of the function |
+| [runtime](#runtime) | True | String | Runtime |
+| timeout | False | Number | The timeout time for the function to run |
+| caPort | False | Number | CustomContainer/Runtime specified port |
+| [customContainerConfig](#customContainerConfig) | False | [Struct](#customContainerConfig) | Custom image configuration |
+| [environmentVariables](#environmentVariables) | False | [Struct](#environmentVariables) | Environment Variables |
+| initializationTimeout | False | Number | initialization method timeout |
+| initializer | False | String | Initializer |
+| instanceConcurrency | False | Number | Single instance with multiple concurrency |
+| instanceType | False | String | Function instance type, optional values: e1 (elastic instance), c1 (performance instance) |
+| layer | False | List\<String\> | Function binding layer, only supports Nodejs and Python; the value is the ARN of the layer |
+| [instanceLifecycleConfig](#instanceLifecycleConfig) | False | [Struct](#instanceLifecycleConfig) | extension function |
+| [asyncConfiguration](#asyncConfiguration) | False | [Struct](#asyncConfiguration) | Async Configuration |
+| [customDNS](#customDNS) | False | [Struct](#customDNS) | DNS Configuration |
+| [customRuntimeConfig](#customRuntimeConfig) | False | [Struct](#customRuntimeConfig) | Custom runtime startup configuration |
 
-
-参考案例：
+Examples：
 
 ```yaml
 function:    
@@ -816,15 +810,15 @@ function:
   timeout: 60
 ```
 
-### 账号需要的函数权限
+### Function permissions required by the account
 
-#### 最大权限
+#### Maximum permissions
 
 `AliyunFCFullAccess`
 
-#### 部署最小权限
+#### deploy least privilege
 
-⚠️ `fc:GetFunctionAsyncInvokeConfig` 选填，不影响使用
+⚠️ `fc:GetFunctionAsyncInvokeConfig`【Optional】, does not affect use
 
 ```json
 {
@@ -844,7 +838,7 @@ function:
 ```
 
 
-#### 删除最小权限
+#### remove least privilege
 
 ```json
 {
@@ -862,85 +856,85 @@ function:
 
 ### runtime
 
-runtime目前支持：`nodejs4.4`、`nodejs6`、`nodejs8`、`nodejs10`、`nodejs12`、`python2.7`、`python3`、`java8`、`java11`、`php7.2`、`dotnetcore2.1`、`custom`及`custom-container`
+The runtime currently supports: `nodejs4.4`, `nodejs6`, `nodejs8`, `nodejs10`, `nodejs12`, `python2.7`, `python3`, `java8`, `java11`, `php7.2`, `dotnetcore2.1`, `custom` and `custom-container`
 
-当 runtime 为 custom-container 服务角色权限：
+When the runtime is the custom-container service role permission:
 
-**系统策略**：`AliyunContainerRegistryReadOnlyAccess`
+**System Policy**: `AliyunContainerRegistryReadOnlyAccess`
 
 
 ### customContainerConfig
 
-| 参数名           | 必填  | 类型   | 参数描述                                                     |
+| Parameter Name | Required | Type | Parameter Description |
 | ---------------- | ----- | ------ | ------------------------------------------------------------ |
-| image            | False | String | 容器镜像仓库地址                                             |
-| command          | False | String | 容器启动指令，示例值: '["/code/myserver"]'                   |
-| args             | False | String | 容器启动参数，示例值: '["-arg1", "value1"]'                  |
-| accelerationType | False | String | 镜像加速开关，可选值：'Default'、'None'，前者表示开启，后者表示关闭 |
-| instanceID       | False | String | 容器镜像服务企业版实例的ID。当容器镜像选择的是企业版实例时，您需要给容器镜像服务企业版添加实例ID，该实例的默认解析必须是服务所在的VPC网络地址。目前不支持PrivateZone产品定义域名解析 |
+| image | False | String | Container image repository address |
+| command | False | String | Container startup command, example value: '["/code/myserver"]' |
+| args | False | String | Container startup parameters, example values: '["-arg1", "value1"]' |
+| accelerationType | False | String | Mirror acceleration switch, optional values: 'Default', 'None', the former means on, the latter means off |
+| instanceID | False | String | The ID of the Container Image Service Enterprise Edition instance. When an enterprise version instance is selected for the container image, you need to add an instance ID to the enterprise version of the container image service. The default resolution of the instance must be the VPC network address where the service is located. PrivateZone product definition domain name resolution is not currently supported |
 
 
 ### environmentVariables
 
-Object格式，例如：
+Object format, for example:
 
-```
+````
 TempKey: tempValue
-```
+````
 
 ### instanceLifecycleConfig
 
-| 参数名                           | 必填  | 类型                          | 参数描述       |
+| Parameter Name | Required | Type | Parameter Description |
 | -------------------------------- | ----- | ----------------------------- | -------------- |
-| [preFreeze](#prefreeze和prestop) | False | [Struct](#prefreeze和prestop) | PreFreeze 函数 |
-| [preStop](#prefreeze和prestop)   | False | [Struct](#prefreeze和prestop) | PreStop 函数   |
+| [preFreeze](#prefreeze and prestop) | False | [Struct](#prefreeze and prestop) | PreFreeze function |
+| [preStop](#prefreeze and prestop) | False | [Struct](#prefreeze and prestop) | PreStop function |
 
-#### preFreeze和preStop
+#### preFreeze and preStop
 
-| 参数名  | 必填  | 类型   | 参数描述 |
+| Parameter Name | Required | Type | Parameter Description |
 | ------- | ----- | ------ | -------- |
-| handler | True  | String | 函数入口 |
-| timeout | False | Number | 超时时间 |
+| handler | True | String | Function entry |
+| timeout | False | Number | Timeout time |
 
 ### asyncConfiguration
 
-| 参数名                      | 必填  | 类型                   | 参数描述                                               |
-| --------------------------- | ----- | ---------------------- | ------------------------------------------------------ |
-| maxAsyncEventAgeInSeconds   | False | Number                 | 消息最大存活时长，取值范围[1,2592000]。单位：秒        |
-| maxAsyncRetryAttempts       | False | Number                 | 异步调用失败后的最大重试次数，默认值为3。取值范围[0,8] |
-| statefulInvocation          | False | Boolean                | 是否开启有状态异步调用                                 |
-| [destination](#destination) | False | [Struct](#destination) | 异步调用目标的配置结构体                               |
+| Parameter Name | Required | Type | Parameter Description |
+| --------------------------- | ----- | ---------------------- | ------------------------------------------------------------------ |
+| maxAsyncEventAgeInSeconds | False | Number | The maximum survival time of the message, the value range is [1,2592000]. Unit: Second |
+| maxAsyncRetryAttempts | False | Number | The maximum number of retries after an asynchronous call fails, the default value is 3. Value range [0,8] |
+| statefulInvocation | False | Boolean | Whether to enable stateful asynchronous invocation |
+| [destination](#destination) | False | [Struct](#destination) | The configuration structure of the asynchronous call destination |
 
 
 ### customDNS
 
-| 参数名 | 必填  | 类型 | 参数描述  |
-| --------------------------- | ----- | ---------------------- | ------------------------------------------------------ |
-| nameServers | False | List\<String\> | DNS 服务器的 IP 地址列表 |
-| searches | False | List\<String\> | DNS 搜索域列表 |
-| dnsOptions | False | [List\<Struct\>](#dnsOptions) | 对应 resolv.conf DNS 配置的 Options 项 |
+| Parameter Name | Required | Type | Parameter Description |
+| --------------------------- | ----- | ---------------------- | ------------------------------------------------------------------ |
+| nameServers | False | List\<String\> | List of IP addresses of DNS servers |
+| searches | False | List\<String\> | DNS search domains list |
+| dnsOptions | False | [List\<Struct\>](#dnsOptions) | Corresponds to the Options item of resolv.conf DNS configuration |
 
 ### customRuntimeConfig
 
-| 参数名 | 必填  | 类型 | 参数描述  |
-| --------------------------- | ----- | ---------------------- | ------------------------------------------------------ |
-| command | True | List\<String\> | 启动指令，示例值: ["/code/myserver"] |
-| args | False | String | 启动参数，示例值: ["-arg1", "value1"] |
+| Parameter Name | Required | Type | Parameter Description |
+| --------------------------- | ----- | ---------------------- | ------------------------------------------------------------------ |
+| command | True | List\<String\> | Start command, example value: ["/code/myserver"] |
+| args | False | String | Startup arguments, example values: ["-arg1", "value1"] |
 
 
 #### dnsOptions
 
-| 参数名 | 必填  | 类型 | 参数描述  |
-| --------------------------- | ----- | ---------------------- | ------------------------------------------------------ |
-| name | True | String | 对应 resolv.conf DNS 配置的 Options 项的键 |
-| value | True | String | 对应 resolv.conf DNS 配置的 Options 项的值 |
+| Parameter Name | Required | Type | Parameter Description |
+| --------------------------- | ----- | ---------------------- | ------------------------------------------------------------------ |
+| name | True | String | The key corresponding to the Options item of the resolv.conf DNS configuration |
+| value | True | String | Corresponds to the value of the Options item of the resolv.conf DNS configuration |
 
-#### 权限配置相关
+#### Permission configuration related
 
-##### 服务角色权限
+##### Service role permissions
 
-- 配置了 fc：`AliyunFCInvocationAccess`
-- 配置了 mns
+- fc is configured: `AliyunFCInvocationAccess`
+- mns is configured
 
 ````
 {
@@ -953,21 +947,21 @@ TempKey: tempValue
 }
 ````
 
-##### 子账号需要的权限
+##### Permissions required for sub-accounts
 
-###### 最大权限
+###### Maximum permissions
 
-**系统策略**：`AliyunFCFullAccess`、`AliyunMNSReadOnlyAccess`【查看消息服务(MNS)的权限】、`AliyunEventBridgeReadOnlyAccess`【事件总线（EventBridge）的权限】、`AliyunMQReadOnlyAccess`【消息队列(MQ)的权限】、`AliyunFCInvocationAccess`【调用函数权限】
+**System policy**: `AliyunFCFullAccess`, `AliyunMNSReadOnlyAccess` [permission to view message service (MNS)], `AliyunEventBridgeReadOnlyAccess` [permission to event bus (EventBridge)], `AliyunMQReadOnlyAccess` [permission to message queue (MQ)] , `AliyunFCInvocationAccess` [invocation function permission]
 
-###### 最小权限
+###### Operating minimum permissions
 
-**系统策略**
+**System Policy**
 
-- 如果配置了mns相关 `AliyunMNSReadOnlyAccess`
-- 如果配置了EventBridge相关 `AliyunEventBridgeReadOnlyAccess`
-- 如果配置了MQ相关 `AliyunMQReadOnlyAccess`
+- If mns related `AliyunMNSReadOnlyAccess` is configured
+- If EventBridge related `AliyunEventBridgeReadOnlyAccess` is configured
+- If MQ related `AliyunMQReadOnlyAccess` is configured
 
-**自定义策略**
+**Custom Policy**
 
 ```json
 {
@@ -1008,34 +1002,34 @@ TempKey: tempValue
 
 #### destination
 
-| 参数名    | 必填  | 类型   | 参数描述               |
-| --------- | ----- | ------ | ---------------------- |
-| onSuccess | False | String | 异步调用失败的目标服务 |
-| onFailure | False | String | 异步调用成功的目标服务 |
+| Parameter Name | Required | Type | Parameter Description |
+| --------- | ----- | ------ | ------------ |
+| onSuccess | False | String | The target service for which the asynchronous call failed |
+| onFailure | False | String | Asynchronous call to successful target service |
 
 
-## triggers字段
+## triggers field
 
-| 参数名    | 必填  | 类型   | 参数描述                                                     |
-| --------- | ----- | ------ | ------------------------------------------------------------ |
-| name      | True  | String | 触发器名称                                                   |
-| type      | True  | Enum   | 触发器类型                                                   |
-| role      | False | String | 使用一个 RAM 角色的 ARN 为函数指定执行角色，事件源会使用该角色触发函数执行，请确保该角色有调用函数的权限 |
-| sourceArn | False | String | 触发器事件源的 ARN                                           |
-| qualifier | False | String | 触发器函数的版本或者别名，默认 `LATEST`                      |
-| config    | True  | Struct | 触发器配置，包括[OSS触发器](#OSS触发器), [Log触发器](#Log触发器), [Log触发器](#Log触发器), [Timer触发器](#Timer触发器), [Http触发器](#Http触发器), [MNS触发器](#MNS触发器), [CDN触发器](#CDN触发器) |
+| Parameter Name | Required | Type | Parameter Description |
+| --------- | ----- | ------ | -------------------------------------------------------------- |
+| name | True | String | trigger name |
+| type | True | Enum | trigger type |
+| role | False | String | Use the ARN of a RAM role to specify the execution role for the function, the event source will use this role to trigger the function execution, please ensure that the role has the permission to call the function |
+| sourceArn | False | String | ARN of the trigger event source |
+| qualifier | False | String | Version or alias of trigger function, default `LATEST` |
+| config | True | Struct | Trigger configuration, including [OSS trigger](#OSS trigger), [Log trigger](#Log trigger), [Log trigger](#Log trigger), [Timer trigger](#Timer trigger), [Http trigger](#Http trigger), [MNS trigger](#MNS trigger), [CDN trigger](#CDN trigger) |
 
-type目前支持：`http`, `timer`, `oss`, `log`, `mns_topic`, `cdn_events`, `tablestore`
+type currently supports: `http`, `timer`, `oss`, `log`, `mns_topic`, `cdn_events`, `tablestore`
 
-### OSS触发器
+### OSS triggers
 
-| 参数名            | 必填 | 类型              | 参数描述                     |
+| Parameter Name | Required | Type | Parameter Description |
 | ----------------- | ---- | ----------------- | ---------------------------- |
-| bucketName        | True | String            | OSS 中目标 bucket 名称       |
-| events            | True | List\<String\>      | OSS 端触发函数执行的事件列表 |
-| [filter](#filter) | True | [Struct](#filter) | 触发条件                     |
+| bucketName | True | String | Target bucket name in OSS |
+| events | True | List\<String\> | The list of events that trigger the function execution on the OSS side |
+| [filter](#filter) | True | [Struct](#filter) | Trigger condition |
 
-参考案例：
+Examples:
 
 ```yaml
 triggers:  
@@ -1053,15 +1047,15 @@ triggers:
           Suffix: ''
 ```
 
-#### 权限配置相关
+#### Permission configuration related
 
-##### 子账号权限
+##### Sub-account permissions
 
-###### 最大权限
+###### Maximum permissions
 
-`AliyunFCFullAccess`、`AliyunOSSFullAccess`
+`AliyunFCFullAccess`, `AliyunOSSFullAccess`
 
-###### 操作最小权限
+###### Operating minimum permissions
 
 ```json
 {
@@ -1097,7 +1091,7 @@ triggers:
 ```
 
 
-##### 触发器角色权限
+##### Trigger role permissions
 
 ```json
 {
@@ -1116,31 +1110,30 @@ triggers:
 
 #### filter
 
-| 参数名 | 必填  | 类型          | 参数描述 |
+| Parameter Name | Required | Type | Parameter Description |
 | ------ | ----- | ------------- | -------- |
-| Key    | False | [Struct](Key) | 键值     |
+| Key | False | [Struct](Key) | key value |
 
 ##### Key
 
-| 参数名 | 必填  | 类型   | 参数描述 |
+| Parameter Name | Required | Type | Parameter Description |
 | ------ | ----- | ------ | -------- |
-| Prefix | False | String | 前缀     |
-| Suffix | False | String | 后缀     |
+| Prefix | False | String | Prefix |
+| Suffix | False | String | Suffix |
 
-### Log触发器
+### Log trigger
 
 
-| 参数名                                  | 必填 | 类型                         | 参数描述                                                   |
+| Parameter Name | Required | Type | Parameter Description |
 | --------------------------------------- | ---- | ---------------------------- | ---------------------------------------------------------- |
-| [logConfig](#logConfig-1)               | True | [Struct](#logConfig-1)       | 日志配置                                                   |
-| [jobConfig](#jobConfig)                 | True | [Struct](#jobConfig)         | job配置                                                    |
-| [sourceConfig](#sourceConfig)           | True | [Struct](#sourceConfig)      | source配置                                                 |
-| [functionParameter](#functionParameter) | True | [Struct](#functionParameter) | 该参数将作为函数Event的Parameter传入函数。默认值为空（{}） |
-| enable                                  | True | Boolean                      | 触发器开关                                                 |
+| [logConfig](#logConfig-1) | True | [Struct](#logConfig-1) | Log Configuration |
+| [jobConfig](#jobConfig) | True | [Struct](#jobConfig) | job configuration |
+| [sourceConfig](#sourceConfig) | True | [Struct](#sourceConfig) | source configuration |
+| [functionParameter](#functionParameter) | True | [Struct](#functionParameter) | This parameter will be passed into the function as the Parameter of the function Event. The default value is empty ({}) |
+| enable | True | Boolean | Trigger switch |
 
 
-参考案例：
-
+References:
 ```yaml
 triggers:  
   - name: log    
@@ -1161,15 +1154,15 @@ triggers:
       enable: false
 ```
 
-#### 权限配置相关
+#### Permission configuration related
 
-##### 子账号权限
+##### Sub-account permissions
 
-###### 最大权限
+###### Maximum permissions
 
-`AliyunFCFullAccess`、`AliyunLogFullAccess`
+`AliyunFCFullAccess`, `AliyunLogFullAccess`
 
-###### 最小权限
+###### Operating minimum permissions
 
 ```json
 {
@@ -1204,7 +1197,7 @@ triggers:
 }
 ```
 
-##### 触发器角色权限
+##### Trigger role permissions
 
 ```json
 {
@@ -1245,42 +1238,42 @@ triggers:
 
 #### logConfig
 
-| 参数名   | 必填  | 类型   | 参数描述                                                     |
-| -------- | ----- | ------ | ------------------------------------------------------------ |
-| project  | False | String | 日志项目名称                                                 |
-| logstore | False | String | 日志仓库名称，日志服务触发函数执行过程的日志会记录到该日志仓库中 |
+| Parameter Name | Required | Type | Parameter Description |
+| -------- | ----- | ------ | -------------------------------------------------------------- |
+| project | False | String | Log project name |
+| logstore | False | String | The name of the log store, the log of the function execution process triggered by the log service will be recorded in the log store |
 
 
 #### jobConfig
 
-| 参数名          | 必填  | 类型   | 参数描述                                                     |
+| Parameter Name | Required | Type | Parameter Description |
 | --------------- | ----- | ------ | ------------------------------------------------------------ |
-| maxRetryTime    | False | String | 表示日志服务触发函数执行时，如果遇到错误，所允许的最大尝试次数，取值范围：[0,100] |
-| triggerInterval | False | String | 日志服务触发函数运行的时间间隔，取值范围：[3,600]，单位：秒  |
+| maxRetryTime | False | String | Indicates the maximum number of attempts allowed if an error is encountered when the log service triggers the function execution, the value range: [0,100] |
+| triggerInterval | False | String | The time interval at which the log service triggers the function to run, value range: [3,600], unit: second |
 
 #### sourceConfig
 
-| 参数名   | 必填  | 类型   | 参数描述                                                   |
-| -------- | ----- | ------ | ---------------------------------------------------------- |
-| logstore | False | String | 触发器会定时从该日志仓库中订阅数据到函数服务进行自定义加工 |
+| Parameter Name | Required | Type | Parameter Description |
+| -------- | ----- | ------ | ------------------------------------------------------------ |
+| logstore | False | String | The trigger will periodically subscribe data from the log store to the function service for custom processing |
 
 #### functionParameter
 
-Object格式，例如：
+Object format, for example:
 
 ```
 TempKey: tempValue
 ```
 
-### Timer触发器
+### Timer trigger
 
-| 参数名         | 必填  | 类型    | 参数描述                                            |
+| Parameter Name | Required | Type | Parameter Description |
 | -------------- | ----- | ------- | --------------------------------------------------- |
-| cronExpression | True  | String  | 时间触发器表达式，支持两种设置：@every、cron 表达式 |
-| enable         | True  | Boolean | 是否启用该触发器                                    |
-| payload        | False | String  | 代表触发器事件本身的输入内容                        |
+| cronExpression | True | String | Time trigger expression, supports two settings: @every, cron expression |
+| enable | True | Boolean | Whether to enable this trigger |
+| payload | False | String | Represents the input content of the trigger event itself |
 
-参考案例：
+References:
 
 ```yaml
 triggers:  
@@ -1292,16 +1285,15 @@ triggers:
       cronExpression: '@every 100m'    
       enable: false
 ```
+#### Permission configuration related
 
-#### 权限配置相关
+##### Function permissions required by the sub-account
 
-##### 子账号需要的函数权限
-
-###### 最大权限
+###### Maximum permissions
 
 `AliyunFCFullAccess`
 
-###### 最小权限
+###### Least privilege
 
 ```json
 {
@@ -1321,14 +1313,14 @@ triggers:
 }
 ```
 
-### Http触发器
+### Http trigger
 
-| 参数名   | 必填 | 类型         | 参数描述                                                     |
-| -------- | ---- | ------------ | ------------------------------------------------------------ |
-| authType | True | String       | 鉴权类型，可选值：anonymous、function                        |
-| methods  | True | List\<String\> | HTTP 触发器支持的访问方法，可选值：GET、POST、PUT、DELETE、HEAD |
+| Parameter Name | Required | Type | Parameter Description |
+| -------- | ---- | ------------ | -------------------------------------------------- |
+| authType | True | String | Authentication type, optional values: anonymous, function |
+| methods | True | List\<String\> | Access methods supported by HTTP triggers, optional values: GET, POST, PUT, DELETE, HEAD |
 
-参考案例：
+Examples：
 
 ```yaml
 triggers:  
@@ -1341,15 +1333,15 @@ triggers:
         - GET
 ```
 
-#### 权限配置相关
+#### Permission configuration related
 
-##### 子账号需要的函数权限
+##### Function permissions required by the sub-account
 
-###### 最大权限
+###### Maximum permissions
 
 `AliyunFCFullAccess`
 
-###### 最小权限
+###### Least privilege
 
 ```json
 {
@@ -1369,17 +1361,17 @@ triggers:
 }
 ```
 
-### MNS触发器
+### MNS Triggers
 
-| 参数名              | 必填  | 类型   | 参数描述                                                     |
-| ------------------- | ----- | ------ | ------------------------------------------------------------ |
-| topicName           | True  | String | mns topic的名字                                              |
-| region              | False | List   | mns topic 所在的 region，如果不填，默认为和函数一样的 region |
-| notifyContentFormat | False | String | 推送给函数入参 event 的格式，可选值：STREAM, JSON            |
-| notifyStrategy      | False | String | 调用函数的重试策略，可选值：BACKOFF_RETRY, EXPONENTIAL_DECAY_RETRY |
-| filterTag           | False | String | 描述了该订阅中消息过滤的标签（标签一致的消息才会被推送）,不超过 16 个字符的字符串，默认不进行消息过滤，即默认不填写该字段 |
+| Parameter Name | Required | Type | Parameter Description |
+| ------------------- | ----- | ------ | ---------------- |
+| topicName | True | String | mns topic name |
+| region | False | List | The region where the mns topic is located, if not filled, the default is the same region as the function |
+| notifyContentFormat | False | String | The format of the input parameter event pushed to the function, optional values: STREAM, JSON |
+| notifyStrategy | False | String | Retry strategy for calling the function, optional values: BACKOFF_RETRY, EXPONENTIAL_DECAY_RETRY |
+| filterTag | False | String | Describes the tag of message filtering in this subscription (only messages with the same tag will be pushed), a string of no more than 16 characters, message filtering is not performed by default, that is, this field is not filled in by default |
 
-参考案例：
+References:
 
 ```yaml
 triggers:  
@@ -1394,15 +1386,15 @@ triggers:
       notifyStrategy: BACKOFF_RETRY
 ```
 
-#### 权限配置相关
+#### Permission configuration related
 
-##### 子账号需要的函数权限
+##### Function permissions required by the sub-account
 
-###### 最大权限
+###### Maximum permissions
 
-`AliyunFCFullAccess`、`AliyunMNSFullAccess`
+`AliyunFCFullAccess`, `AliyunMNSFullAccess`
 
-###### 最小权限
+###### Operating minimum permissions
 
 ```json
 {
@@ -1435,7 +1427,7 @@ triggers:
 }
 ```
 
-##### 触发器角色权限
+##### Trigger role permissions
 
 ```json
 {
@@ -1452,16 +1444,16 @@ triggers:
 }
 ```
 
-### CDN 触发器
+### CDN Triggers
 
-| 参数名              | 必填 | 类型                | 参数描述                                          |
+| Parameter Name | Required | Type | Parameter Description |
 | ------------------- | ---- | ------------------- | ------------------------------------------------- |
-| eventName           | True | String              | 为 CDN 端触发函数执行的事件，一经创建不能更改     |
-| eventVersion        | True | String              | 为 CDN 端触发函数执行事件的版本，一经创建不能更改 |
-| notes               | True | String              | 备注信息                                          |
-| [filter](#filter-1) | True | [Struct](#filter-1) | 过滤器（至少需要一个过滤器）                      |
+| eventName | True | String | The event that triggers function execution on the CDN side, once created, cannot be changed |
+| eventVersion | True | String | The version that triggers the function execution event on the CDN side, once created, it cannot be changed |
+| notes | True | String | Notes information |
+| [filter](#filter-1) | True | [Struct](#filter-1) | Filter (requires at least one filter) |
 
-参考案例：
+References:
 
 ```yaml
 triggers:  
@@ -1479,15 +1471,15 @@ triggers:
           - sss
 ```
 
-#### 权限配置相关
+#### Permission configuration related
 
-##### 子账号权限
+##### Sub-account permissions
 
-###### 最大权限
+###### Maximum permissions
 
-`AliyunFCFullAccess`、`AliyunCDNFullAccess`
+`AliyunFCFullAccess`, `AliyunCDNFullAccess`
 
-###### 最小权限
+###### Operating minimum permissions
 
 ```json
 {
@@ -1522,7 +1514,7 @@ triggers:
 }
 ```
 
-##### 触发器角色权限
+##### Trigger role permissions
 
 ```json
 {
@@ -1541,18 +1533,18 @@ triggers:
 
 #### filter
 
-| 参数名 | 必填 | 类型         | 参数描述         |
+| Parameter Name | Required | Type | Parameter Description |
 | ------ | ---- | ------------ | ---------------- |
-| domain | True | List\<String\> | 过滤参数值的集合 |
+| domain | True | List\<String\> | Collection of filter parameter values |
 
-### Tablestore 触发器
+### Tablestore triggers
 
-| 参数名       | 必填 | 类型         | 参数描述           |
+| Parameter Name | Required | Type | Parameter Description |
 | ------------ | ---- | ------------ | ------------------ |
-| instanceName | True | List\<String\> | 表格存储实例的名称 |
-| tableName    | True | List\<String\> | 实例中的表名称     |
+| instanceName | True | List\<String\> | Name of the Tablestore instance |
+| tableName | True | List\<String\> | table name in instance |
 
-参考案例：
+References:
 
 ```yaml
 triggers:  
@@ -1565,15 +1557,15 @@ triggers:
     config: {}
 ```
 
-#### 权限配置相关
+#### Permission configuration related
 
-##### 子账号需要的函数权限
+##### Function permissions required by the sub-account
 
-###### 最大权限
+###### Maximum permissions
 
-`AliyunFCFullAccess`、`AliyunOTSFullAccess`
+`AliyunFCFullAccess`, `AliyunOTSFullAccess`
 
-###### 最小权限
+###### Operating minimum permissions
 
 ```json
 {
@@ -1608,7 +1600,7 @@ triggers:
 }
 ```
 
-##### 触发器角色权限
+##### Trigger role permissions
 
 ```json
 {
@@ -1635,16 +1627,16 @@ triggers:
 }
 ```
 
-## customDomains字段
+## customDomains field
 
-| 参数名                      | 必填  | 类型                        | 参数描述                                   |
+| Parameter Name | Required | Type | Parameter Description |
 | --------------------------- | ----- | --------------------------- | ------------------------------------------ |
-| domainName                  | True  | String                      | 域名，如果是auto取值，系统则会默认分配域名 |
-| protocol                    | True  | String                      | 协议，取值：`HTTP`, `HTTPS`, `HTTP, HTTPS` |
-| [routeConfigs](#certConfig) | True  | [List\<Struct>](#certConfig) | 路由                                       |
-| [certConfig](#routeConfigs) | False | [Struct](#routeConfigs)     | 域名证书                                   |
+| domainName | True | String | Domain name, if the value is auto, the system will assign the domain name by default |
+| protocol | True | String | Protocol, value: `HTTP`, `HTTPS`, `HTTP, HTTPS` |
+| [routeConfigs](#certConfig) | True | [List\<Struct>](#certConfig) | routes |
+| [certConfig](#routeConfigs) | False | [Struct](#routeConfigs) | Domain Certificate |
 
-参考案例：
+References:
 
 ```yaml
 customDomains:
@@ -1656,19 +1648,19 @@ customDomains:
           functionName: event-function
 ```
 
-> ⚠️ 注意：如果域名配置为`auto`，系统会默认分配测试域名，该域名仅供测试使用，不对其稳定性等做保证，Serverless Devs FC 组件在日后有权对该域名进行回收等处理，如是线上业务，生产需求业务，强烈建议绑定自己的自定义域名。
+> ⚠️ Note: If the domain name is configured as `auto`, the system will assign a test domain name by default. This domain name is only for testing use, and its stability is not guaranteed. The Serverless Devs FC component has the right to recycle the domain name in the future. In the case of online business and production demand business, it is strongly recommended to bind your own custom domain name.
 
-### 权限配置相关
+### Permissions
 
-#### 子账号需要的权限
+#### Permissions required for a RAM user
 
-##### 最大权限
+##### Highest level of permissions
 
-系统策略：`AliyunFCFullAccess`
+System Policy: `AliyunFCFullAccess`
 
-##### 最小权限
+##### Lowest level of permissions
 
-> 服务和函数权限较多的原因：`domainName` 为 `auto`，需要创建http函数作为一个辅助函数，使用完之后会进行删除
+> Reasons for more service and function permissions: `domainName` is `auto`, you need to create an http function as an auxiliary function, which will be deleted after use
 
 ```yaml
 {
@@ -1721,17 +1713,27 @@ customDomains:
 
 ### certConfig
 
-| 参数名      | 必填  | 类型   | 参数描述 |
-| ----------- | ----- | ------ | -------- |
-| certName    | False | String | 证书名称 |
-| privateKey  | False | String | 表示私钥，仅支持 PEM 格式 |
-| certificate | False | String | 表示证书，仅支持 PEM 格式 |
+
+
+| Parameter   | Required | Type   | Description                                                  |
+| ----------- | -------- | ------ | ------------------------------------------------------------ |
+| certName    | False    | String | The  name of the certificate.                                |
+| privateKey  | False    | String | The private  key. The key must be in the PEM format.         |
+| certificate | False    | String | The  certificate. The certificate must be in the PEM format. |
+
+
 
 ### routeConfigs
 
-| 参数名       | 必填  | 类型   | 参数描述   |
-| ------------ | ----- | ------ | ---------- |
-| path         | True  | String | 路径       |
-| serviceName  | False | String | 服务名     |
-| functionName | False | String | 函数名     |
-| qualifier    | False | String | 服务的版本 |
+
+
+| Parameter    | Required | Type   | Description                  |
+| ------------ | -------- | ------ | ---------------------------- |
+| path         | True     | String | The  path.                   |
+| serviceName  | False    | String | The  name of the service.    |
+| functionName | False    | String | The  name of the function.   |
+| qualifier    | False    | String | The  version of the service. |
+
+
+
+ 

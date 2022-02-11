@@ -1,87 +1,87 @@
-# 快速体验功能
+# Quick start
 
-- [快速体验功能](#快速体验功能)
-  - [工具安装](#工具安装)
-  - [密钥配置](#密钥配置)
-  - [测试项目创建](#测试项目创建)
-  - [功能体验](#功能体验)
-    - [部署 deploy](#部署-deploy)
-    - [调用相关](#调用相关)
-      - [本地调用](#本地调用)
-      - [远程调用](#远程调用)
-    - [可观测性](#可观测性)
-      - [日志查看](#日志查看)
-      - [指标查看](#指标查看)
-    - [其他](#其他)
+- [Tool installation](#Tool-installation)
+- [Key Configuration](#Key-Configuration)
+- [Create a test project](#Create-a-test-project)
+- [Experience features](#Experience-features)
+    - [deploy operation](#deploy-operation)
+    - [Invoke](#Invoke)
+      - [Local invoke](#Local-invoke)
+      - [Remote invoke](#Remote-invoke)
+    - [Observability](#Observability)
+      - [Query logs](#Query-logs)
+      - [Query metrics](#Query-metrics)
+    - [Commands](#Commands)
 
-## 工具安装
-- 第一步：安装 Node.js(>=10.8.0) 与 NPM 包管理工具；  
-- 第二步：安装 Serverless Devs 开发者工具；   
+## Tool installation
+- Step 1: Install Node.js (>=10.8.0) and NPM package management tool;
+- Step 2: Install Serverless Devs developer tools;
     ```shell script
     $ npm install @serverless-devs/s -g
     ```
-- 第三步：可以通过`s -v`判断工具是否安装成功，如果安装成功可以看到相对应的版本信息，例如：
+- Step 3: You can use `s -v` to judge whether the tool is installed successfully. If the installation is successful, you can see the corresponding version information, for example:
     ```shell script
     @serverless-devs/s: 2.0.89, @serverless-devs/core: 0.1.7, darwin-x64, node-v12.15.0
     ```
 
-## 密钥配置
+## Key Configuration
 
-> 由于本快速上手文档，将会以 [阿里云函数计算](https://www.aliyun.com/product/fc) 为例，所以此处的密钥配置也是以阿里云密钥配置为例： 
-> - AccountId获取页面：https://account.console.aliyun.com/#/secure  
-> - 获取密钥页面：https://usercenter.console.aliyun.com/#/manage/ak
+> Since this quick start document will take [Alibaba Cloud Function Computing](https://www.aliyun.com/product/fc) as an example, the password configuration here is also based on Alibaba Cloud password configuration:
+> - Get AccountId: https://account.console.aliyun.com/#/secure  
+> - Get key: https://usercenter.console.aliyun.com/#/manage/ak
 
-- 打开 [AccountId获取页面](https://account.console.aliyun.com/#/secure) 获取AccountId ：
-  ![AccountId获取页面](https://images.devsapp.cn/access/aliyun-accountid.jpg)
+- Open [Get AccountId Page](https://account.console.aliyun.com/#/secure) to obtain AccountId:
+  ![Get AccountId Page](https://images.devsapp.cn/access/aliyun-accountid.jpg)
 
-- 打开 [获取密钥页面](https://usercenter.console.aliyun.com/#/manage/ak) 获取密钥信息 ：
-  ![获取密钥页面](https://images.devsapp.cn/access/aliyun-access.jpg)
+- Open [Get Key Page](https://usercenter.console.aliyun.com/#/manage/ak) to obtain key:
+  ![Get Key Page](https://images.devsapp.cn/access/aliyun-access.jpg)
  
-- 执行`s config add`，并选择`Alibaba Cloud (alibaba)`：
+- Execute `s config add` and select `Alibaba Cloud (alibaba)`:
     ```shell script
     $ s config add 
     ? Please select a template: Alibaba Cloud (alibaba)
     🧭 Refer to the document for alibaba key:  http://config.devsapp.net/account/alibaba
     ? AccountID () 
     ```
-- 此时，可以按照引导，进行密钥的配置：
+- At this point, you can follow the instructions to configure the key:
     ```shell script
     ? Please select a template: Alibaba Cloud (alibaba)
     🧭 Refer to the document for alibaba key:  http://config.devsapp.net/account/alibaba
-    ? AccountID 此处填写AccountID
-    ? AccessKeyID 此处填写AccessKeyID
-    ? AccessKeySecret 此处填写AccessKeySecret
+    ? AccountID Fill in AccountID here
+    ? AccessKeyID Fill in AccessKeyID here
+    ? AccessKeySecret Fill in AccessKeySecret here
     ? Please create alias for key pair. If not, please enter to skip alibaba-access
     
         Alias: alibaba-access
-        AccountID: 此处填写AccountID
-        AccessKeyID: 此处填写AccessKeyID
-        AccessKeySecret: 此处填写AccessKeySecret
+        AccountID: Fill in AccountID here
+        AccessKeyID: Fill in AccessKeyID here
+        AccessKeySecret: Fill in AccessKeySecret here
     
     Configuration successful
     ```
-- 为了验证密钥是否正确配置，可以通过`s config get -a alibaba-access`进行指定密钥的查看：
+- In order to verify whether the password is correctly configured, you can view the specified password through `s config get -aalibaba-access`:
     ```shell script
     $ s config get -a alibaba-access
     [2021-10-27T17:39:39.881] [INFO ] [S-CLI] - 
     
     alibaba-access:
-      AccountID: 此处填*******tID
-      AccessKeyID: 此处填*********yID
-      AccessKeySecret: 此处填*************ret
+      AccountID: *******ID
+      AccessKeyID: *********ID
+      AccessKeySecret: *************key
     ```
+
+> For more detailed key configuration methods, please refer to [Secret Configuration Document](./config.md)  
   
-  
-> 云账号 AccessKey 是您访问阿里云 API 的密钥，具有该账户完全的权限，请您务必妥善保管！不要通过任何方式（e.g. Github）将 AccessKey 公开到外部渠道，以避免被他人利用而造成 [安全威胁](https://help.aliyun.com/knowledge_detail/54059.html?spm=5176.2020520153.0.0.57f1336a8PQ1KR) 。    
-> 强烈建议您遵循 [阿里云安全最佳实践](https://help.aliyun.com/document_detail/102600.html?spm=5176.2020520153.0.0.57f1336a8PQ1KR) ，使用 RAM 子用户 AccessKey 来进行 API 调用。
+> AccessKey is the key for your cloud account to access the Alibaba Cloud API. It has full permissions for the account. Please keep it safe! Do not share AccessKey to external channels in any way (eg Github) to avoid being used by others to cause [security threat](https://help.aliyun.com/knowledge_detail/54059.html?spm=5176.2020520153.0.0.57f1336a8PQ1KR ).  
+> Strongly recommended that you follow the [Alibaba Cloud Security Best Practices](https://help.aliyun.com/document_detail/102600.html?spm=5176.2020520153.0.0.57f1336a8PQ1KR) and use the RAM sub-user AccessKey to make API calls.
 
+## Create a test project
 
-## 测试项目创建
+Create a Python language Hello World project through the `s init` command. During the boot process, the process of filling in the project name and selecting the key may appear:
+- Project name can be: `start-fc-http-python3`   
+- The key can choose the one we created above: `alibaba-access`   
+For example:
 
-通过`s init`命令创建一个 Python 语言的 Hello World 项目，在引导的过程中，可能会出现填写项目名称以及选择密钥的过程：
-- 项目名称可以是：`start-fc-http-python3`
-- 密钥可以选择我们上文中创建过的：`alibaba-access`    
-例如：
 ```shell script
 $ s init devsapp/start-fc-http-python3
 
@@ -100,13 +100,13 @@ $ s init devsapp/start-fc-http-python3
 
 ? 是否立即部署该项目？ (Y/n) 
 ```  
-此时，可以先不进行项目的部署，即选择`n`即可。接下来，可以通过`cd`等命令进入项目（例如：`cd start-fc-http-python3`）。
+If you do not want to deploy the project, select `n`. Run the `cd` command to enter the project directory. For example, run the `cd start-fc-http-python3` command. 
 
-## 功能体验
+## Experience features
 
-### 部署 deploy
+### deploy operation
 
-为了便于后续的体验，可以对默认的`s.yaml`文件进行修改，增加自动化日志配置的能力：`logConfig: auto`，完整的项目 Yaml 如下：
+Modify the `s.yaml` file to improve the user experience. For example, add `logConfig: auto` to the file to enable the automatic log configuration feature. After you modify the YAML file, the YAML file contains the following information: 
 
 ```yaml
 edition: 1.0.0          #  命令行YAML规范版本，遵循语义化版本（Semantic Versioning）规范
@@ -146,7 +146,7 @@ services:
                 - GET
 ```
 
-保存并退出编辑之后，可以执行`s deploy`直接进行项目的部署，稍等片刻，即可看到部署结果：
+Save the configuration and close the file. Then, run the `s deploy` command to deploy the project. Wait for a moment and view the deployment result:
 
 ```shell script
 fc-deploy-test: 
@@ -170,11 +170,11 @@ fc-deploy-test:
       name: httpTrigger
 ```
 
-### 调用相关
+### Invoke
 
-#### 本地调用
+#### Local invoke
 
-由于该项目是一个 HTTP 函数，所以可以使用`s local start`进行本地调用的测试（如果是其他 Event 函数，可以考虑用 `s local invoke`）。
+The project is an HTTP function. You can run the `s local start` command to call the function on your on-premises device. To call event functions, run the `s local invoke` command. 
 
 ```shell script
  	url: http://localhost:7665/2016-08-15/proxy/fc-deploy-service/http-trigger-py36/
@@ -186,12 +186,11 @@ fc-deploy-test:
         Debug with customDomain method: [s local start -d 3000 auto]
 ```
 
-此时，可以根据系统返回的`url`参数，在浏览器中打开`http://localhost:7665/2016-08-15/proxy/fc-deploy-service/http-trigger-py36/`，进行 HTTP 函数的本地测试。
+To call the HTTP function on your on-premises device, enter the value of the `url` parameter, for example, `http://localhost:7665/2016-08-15/proxy/fc-deploy-service/http-trigger-py36/`, in the address bar of your browser. 
 
+#### Remote invoke
 
-#### 远程调用
-
-在当前项目下，直接使用 `s invoke` 即可实现线上函数的调用/触发：
+Run the `s invoke` command to call or trigger a cloud function: 
 
 ```shell script
 Request url: https://1583208943291465.cn-hangzhou.fc.aliyuncs.com/2016-08-15/proxy/fc-deploy-service/http-trigger-py36/
@@ -207,11 +206,11 @@ FC Invoke Result[code: ${resp.code}]:
 Hello world!
 ```
 
-### 可观测性
+### Observability
 
-#### 日志查看
+#### Query logs
 
-在当前项目下，直接使用 `s logs` 命令，可以进行日志查看，也可以通过 `s logs -t` 进入到 `tail` 模式：
+Run the `s logs` command to query logs. You can also run the `s logs -t` command to enter the `tail` mode to query logs.
 
 
 ```shell script
@@ -223,9 +222,9 @@ FC Invoke Start RequestId: eb9cf022-297e-4a27-b3bf-ad304f6e04c9
 FC Invoke End RequestId: eb9cf022-297e-4a27-b3bf-ad304f6e04c9
 ```
 
-#### 指标查看
-
-在当前项目，直接执行 `s metrics` 命令，可以进行指标的查看：
+#### Query metrics
+ 
+Run the `s metrics` command to query metrics.
 
 ```text
 [2021-06-07T12:20:06.661] [INFO ] [FC-METRICS] - 请用浏览器访问Uri地址进行查看: http://localhost:3000
@@ -233,15 +232,18 @@ FC Invoke End RequestId: eb9cf022-297e-4a27-b3bf-ad304f6e04c9
 
 ![image](https://user-images.githubusercontent.com/21079031/120958920-419b2400-c78b-11eb-9f3c-8b49c1354a37.png)
 
-### 其他
+### Commands
 
-更多命令的使用，可以参考命令帮助文档详情：
+For more information about commands, see the command help document.
 
-| 构建&部署 | 可观测性 | 调用&调试 |  发布&配置  |  其他功能 |
-| --- | --- | --- |--- | --- |
-| [**部署 deploy**](command/deploy.md)   | [指标查询 metrics](command/metrics.md) | [**本地调用 local**](command/local.md)      | [**版本 version**](command/version.md)      | [**硬盘挂载 nas**](command/nas.md) | 
-| [**构建 build**](command/build.md)     | [日志查询 logs](command/logs.md)       | [远程调用 invoke](command/invoke.md)    | [**别名 alias**](command/alias.md)         | [查看函数 info](command/info.md)  | 
-| [移除 remove](command/remove.md)   |                                              | [**端云联调 proxied**](command/proxied.md) | [预留 provision](command/provision.md)   | [**资源同步 sync**](command/sync.md) | 
-|                                          |                                              | [实例登录 instance](command/instance.md)    | [按量资源 ondemand](command/ondemand.md) | [压测 stress](command/stress.md) | 
-|                                          |                                              | [内存&并发度探测 eval](command/eval.md)  | [层 layer](command/layer.md) | [Fun项目迁移 fun2s](command/fun2s.md)                     | 
-|                                          |                                              |   |  | [API调用 api](command/api.md)                     | 
+
+
+| Building   and deployment       | Observability                 | Call   and debugging              | Release   and configuration       | Other   feature             |
+| ------------------------------- | ----------------------------- | --------------------------------- | --------------------------------- | --------------------------- |
+| [**deploy**](command/deploy.md) | [metrics](command/metrics.md) | [**local**](command/local.md)     | [**version**](command/version.md) | [**nas**](command/nas.md)   |
+| [**build**](command/build.md)   | [logs](command/logs.md)       | [invoke](command/invoke.md)       | [**alias**](command/alias.md)     | [info](command/info.md)     |
+| [remove](command/remove.md)     |                               | [**proxied**](command/proxied.md) | [provision](command/provision.md) | [**sync**](command/sync.md) |
+|                                 |                               | [remote](command/remote.md)       | [ondemand](command/ondemand.md)   | [stress](command/stress.md) |
+|                                 |                               | [eval](command/eval.md)           | [layer](command/layer.md)         | [fun2s](command/fun2s.md)   |
+|                                 |                               |                                   |                                   | [api](command/api.md)       |
+

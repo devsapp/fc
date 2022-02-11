@@ -6,7 +6,7 @@ The api commands are used to perform operations on Function Compute API.
 
 - [Command description](#Command-description)
   - [Parameter description](#Parameter-description)
-  - [Example](#Example)
+  - [Examples](#Examples)
 - [Permissions and policies](#Permissions-and-policies)
 
 
@@ -25,7 +25,7 @@ Usage
                             
 Document
   
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/api.md    
+  https://github.com/devsapp/fc/blob/main/docs/en/command/api.md    
 
 API Document 
 
@@ -46,11 +46,11 @@ Examples with Cli
  
 | Parameter  | Abbreviation | Required in YAML mode | Description                           |
 | ---------- | -------- | -------------- | ------------------------------------------------------------ |
-| access   | a    | No      | The key that is used in the request. You can use the key information that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-command), or [the key information that is configured to environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#Configure key information by using environment variables). |
+| access   | a    | No      | The key that is used in the request. You can use the key information that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command), or [the key information that is configured to environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure key information by using environment variables). |
 | debug   | -    | No      | Enables the `debug` mode. In this case, more logs are generated.            |
 | help    | h    | No      | Views the help information.                         |
 
-### Example
+### Examples
  
 The following example uses the `ListService` operation as an example. For more information, visit https://help.aliyun.com/document_detail/175559.html. 
  
