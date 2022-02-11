@@ -105,7 +105,7 @@ Examples with Yaml
 
 | Parameter     | Abbreviation | Required   in YAML mode | Description                                                  |
 | ------------- | ------------ | ----------------------- | ------------------------------------------------------------ |
-| event         | e            | No                      | The event data  that is passed into the event function. Run the s cli fc-event  command to obtain the sample event data. For more information, click [here](https://github.com/devsapp/fc/blob/main/docs/en/command/invoke.md#注意事项). |
+| event         | e            | No                      | The event data  that is passed into the event function. Run the s cli fc-event  command to obtain the sample event data. For more information, click [here](https://github.com/devsapp/fc/blob/main/docs/en/command/invoke.md#Precautions). |
 | event-file    | f            | No                      | Pass the event data by  using a file.                        |
 | event-stdin   | s            | No                      | Pass the event data by  using standard input.                |
 | mode          | m            | No                      | The debugging mode.  Valid values: -normal: By default, the normal mode is used. The container that runs a  local function immediately exits after the local function is invoked. server: The  container that runs a local function does not exit. The container is reused  when users send requests to invoke the local function from another terminal. api: The local  function can be invoked by using SDKs. |

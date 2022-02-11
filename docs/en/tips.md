@@ -140,7 +140,7 @@ services:
 
 When you use the FC component, the .s directory is generated. This directory is an in-process directory and provides the following capabilities:
 
-1. Caches data, such as the cloud resource information that is used during project deployment. After you deploy the project, logs are saved in the .s directory. If you redeploy the project, Serverless Devs compares the resource information that is stored in the logs with your resource information. If the resource information is inconsistent, you are notified about changes in the resources. You can overwrite the changes based on the business requirements. For more information, see Services recorded in your computer and Functions recorded in your computer in the table in the Interactive operations section on the [Deploy](command/deploy.md#注意事项) page.
+1. Caches data, such as the cloud resource information that is used during project deployment. After you deploy the project, logs are saved in the .s directory. If you redeploy the project, Serverless Devs compares the resource information that is stored in the logs with your resource information. If the resource information is inconsistent, you are notified about changes in the resources. You can overwrite the changes based on the business requirements. For more information, see Services recorded in your computer and Functions recorded in your computer in the table in the Interactive operations section on the [Deploy](command/deploy.md#Precautions) page.
 2. Stores the build results. For example, the build results are stored in the .`/.s/build/artifacts/<Service name>/<Function name>/` directory. The capability is not supported when a custom container is used.
 
 ## How to process build results
