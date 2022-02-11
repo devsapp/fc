@@ -38,8 +38,8 @@ SubCommand List
 
 The local commands include the following subcommands:
  
-- [invoke: the command that is used to debug a local event function.] (#local-invoke-command)
-- [start: the command that is used to debug a local HTTP function.] (#local-start-command) 
+- [invoke: the command that is used to debug a local event function.](#local-invoke-command)
+- [start: the command that is used to debug a local HTTP function.](#local-start-command) 
  
 
 ## local invoke command

@@ -77,7 +77,7 @@ Examples with CLI
 | event-stdin   | s    | No      | No     | The file of the event.                           |
 | invocation-type | -    | No      | No     | The invocation type. Valid values: `async, sync`. Default value: `sync`.       |
 | stateful-async-invocation-id | -    | No      | No     | The stateful asynchronous invocation.   |
-| access     | a    | No      | No     | The AccessKey pair that is used in the request. You can use the AccessKey pair that is configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command), or the AccessKey pair that is configured by using [environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure the AccessKey pair by using environment variables). |
+| access     | a    | No      | No     | The AccessKey pair that is used in the request. You can use the AccessKey pair that is configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command), or the AccessKey pair that is configured by using [environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables). |
 | debug      | -    | No      | No     | The debug mode. If you enable the `debug` mode, more log information is returned.            |
 | help      | h    | No      | No     | The help information.                         |
  

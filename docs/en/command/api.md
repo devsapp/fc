@@ -46,7 +46,7 @@ Examples with Cli
  
 | Parameter  | Abbreviation | Required in YAML mode | Description                           |
 | ---------- | -------- | -------------- | ------------------------------------------------------------ |
-| access   | a    | No      | The key that is used in the request. You can use the key information that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command), or [the key information that is configured to environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure key information by using environment variables). |
+| access   | a    | No      | The key that is used in the request. You can use the key information that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command), or [the Configure-keys-by-using-environment-variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure key information by using environment variables). |
 | debug   | -    | No      | Enables the `debug` mode. In this case, more logs are generated.            |
 | help    | h    | No      | Views the help information.                         |
 

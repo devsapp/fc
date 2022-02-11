@@ -76,7 +76,7 @@ Examples with CLI
 | end-time   | e    | No      | No     | The end time of the query, which must be UTC time or a timestamp. Example: `2021-06-07T02:54:59+08:00`，`1611827290000` |
 | tail     | -    | No      | No     | Outputs the result in the `tail` mode.                   |
 | type     | -    | No      | No     | The log type to query. Valid values: `success, fail`     |
-| access    | a    | No      | No     | The key that is used in the request. You can use the key information that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command), or the [key information that is configured for environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#key information that is configured to environment variables). |
+| access    | a    | No      | No     | The key that is used in the request. You can use the key information that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command), or the [key information that is configured for environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables). |
 | debug     | -    | No      | No     | Enables the `debug` mode. In this case, more logs are generated.            |
 | help     | h    | No      | No     | Views the help information.                         |
 

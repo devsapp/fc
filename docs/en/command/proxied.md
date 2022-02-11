@@ -145,7 +145,7 @@ Examples with Yaml
 | debug-port    | d            | No                      | The  port number of the breakpoint debugger.                 |
 | debugger-path | -            | No                      | The  path of the breakpoint debugger.                        |
 | tmp-dir       | -            | No                      | The  on-premises path to mount the tmp directory  of the custom function environment. Default value: ./.s/tmp/invoke/serviceName/functionName/. |
-| access        | a            | No                      | The  information about the key that is used in this request. You can use the key  information that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-命令) or [environment variable](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#通过环境变量配置密钥信息). |
+| access        | a            | No                      | The  information about the key that is used in this request. You can use the key  information that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command) or [environment variable](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables). |
 | debug         | -            | No                      | Specifies  whether to enable the debug mode. If you enable the debug mode, a larger amount of log  information is returned. |
 | help          | h            | No                      | Queries  the help information.                               |
 
@@ -274,7 +274,7 @@ Examples with Yaml
 
 | Parameter | Abbreviation | Required in YAML mode | Required in CLI mode | Description                                                  |
 | --------- | ------------ | --------------------- | -------------------- | ------------------------------------------------------------ |
-| access    | a            | No                    | No                   | The information about the key that is used in this request. You  can use the key information that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-命令) or [environment variable](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#通过环境变量配置密钥信息). |
+| access    | a            | No                    | No                   | The information about the key that is used in this request. You  can use the key information that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command) or [environment variable](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables). |
 | debug     | -            | No                    | No                   | Specifies whether to enable the debug mode. If  you enable the debug mode, a larger amount of log information is returned. |
 | help      | h            | No                    | No                   | Queries the help information.                                |
 

@@ -92,7 +92,7 @@ Examples with Yaml
 
 | Parameter | Abbreviation | Required   in YAML mode | Description                                                  |
 | --------- | ------------ | ----------------------- | ------------------------------------------------------------ |
-| access    | a            | No                      | The AccessKey pair  that is used in the request. You can use the AccessKey pair that is  configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-命令) and [the AccessKey pair that is   configured by using environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#通过环境变量配置密钥信息). |
+| access    | a            | No                      | The AccessKey pair  that is used in the request. You can use the AccessKey pair that is  configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command) and [the AccessKey pair that is   configured by using environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables). |
 | debug     | -            | No                      | The debug mode. If  you enable the debug mode, more log information is returned. |
 | help      | h            | No                      | Views the help  information.                                 |
 
@@ -160,7 +160,7 @@ Examples with Yaml
 | --------- | -------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | 
 | recursive | r | No |                               |
 | override | o | No |                               |
-| access | a | No | The AccessKey pair that is used in the request. You can use the AccessKey pair that is configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command) and the [AccessKey pair that is configured by using environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md# Configure the AccessKey pair by using environment variables). |
+| access | a | No | The AccessKey pair that is used in the request. You can use the AccessKey pair that is configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command) and the [AccessKey pair that is configured by using environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md# Configure-keys-by-using-environment-variables). |
 | debug | - | No | The debug mode. If you enable the `debug` mode, more log information is returned. |
 | help | h | No | Views the help information. | 
  
@@ -229,7 +229,7 @@ Examples with Yaml
 | -------- | -------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | override | o    | No      | Specifies that the existing file is overwritten. |
 | no-unzip | - | No | Specifies that the folder is not decompressed. |
-| access | a | No | The AccessKey pair that is used in the request. You can use the AccessKey pair that is configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add- command) and the [AccessKey pair that is configured by using environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md# Configure the AccessKey pair by using environment variables). | 
+| access | a | No | The AccessKey pair that is used in the request. You can use the AccessKey pair that is configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add- command) and the [AccessKey pair that is configured by using environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md# Configure-keys-by-using-environment-variables). | 
 | debug | - | No | The debug mode. If you enable the `debug` mode, more log information is returned. | 
 | help | h | No | Views the help information. | 
  
@@ -279,7 +279,7 @@ Examples with Yaml
  
 | Parameter | Abbreviation | Required in YAML mode | Description | 
 | -------- | -------- | -------------- | ------------------------------------------------------------ | 
-| access | a | No | The AccessKey pair that is used in the request. You can use the AccessKey pair that is configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add- command) and the [AccessKey pair that is configured by using environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md# Configure the AccessKey pair by using environment variables). | 
+| access | a | No | The AccessKey pair that is used in the request. You can use the AccessKey pair that is configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add- command) and the [AccessKey pair that is configured by using environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md# Configure-keys-by-using-environment-variables). | 
 | debug | - | No | The debug mode. If you enable the `debug` mode, more information is returned. | 
 | help | h | No | Views the help information. | 
  

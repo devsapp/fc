@@ -92,7 +92,7 @@ The deploy command consists of the following subcommands:
  | use-local | -    | No      | Preferentially uses on-premises configurations to deploy resources.                   |
  | use-remote | -    | No     | Preferentially uses online configurations to deploy resources.                   |
  | assume-yes | y    | No      | Selects yes by default for additional operations                    |
- | access   | a    | No      | The key that is used in the request. You can use a key that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add), or a [key that is configured in environment variables.](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure keys by using environment variables) |
+ | access   | a    | No      | The key that is used in the request. You can use a key that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add), or a [key that is configured in environment variables.](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables) |
  | debug   | -    | No      | Enables the debug mode to output more log information.            |
  | help    | h    | No      | Views help information.                         |
  
@@ -223,7 +223,7 @@ Examples with Yaml
 | use-local  | -    | No      | Preferentially uses on-premises configurations to deploy resources.                   |
 | user-remote | -    | No      | Preferentially uses online configurations to deploy resources.                   |
 | assume-yes | y    | No      | Selects yes by default for additional operations.                    |
-| access   | a    | No      | The key that is used in the request. You can use a key that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add), or a [key that is configured in environment variables.](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure keys by using environment variables) |
+| access   | a    | No      | The key that is used in the request. You can use a key that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add), or a [key that is configured in environment variables.](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables) |
 | debug    | -    | No      | Enables the debug mode to output more log information.            |
 | help    | h    | No      | Views help information.                         |
  
@@ -297,7 +297,7 @@ Examples with Yaml
 | use-local  | -    | No      | Uses on-premises configurations to deploy resources.                     |
 | user-remote | -    | No      |                               |
 | assume-yes | y    | No      | Selects yes by default for additional operations.                    |
-| access   | a    | No      | The key that is used in the request. You can use a key that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add), or a [key that is configured in environment variables.](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure keys by using environment variables) |
+| access   | a    | No      | The key that is used in the request. You can use a key that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add), or a [key that is configured in environment variables.](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables) |
 | debug    | -     | No      | Enables the debug mode to output more log information.            |
 | help    | h    | No      | Views help information.                         |
  
@@ -378,7 +378,7 @@ Examples with Yaml
 | use-local  | -    | No      | Uses on-premises configurations to deploy resources.                     |
 | user-remote | -    | No      |                               |
 | assume-yes  | y    | No      | Selects yes by default for additional operations.                     |
-| access    | a    | No      | The key that is used in the request. You can use a key that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add), or a [key that is configured in environment variables.](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure keys by using environment variables) |
+| access    | a    | No      | The key that is used in the request. You can use a key that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add), or a [key that is configured in environment variables.](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables) |
 | debug    | -    | No      | Enables the debug mode to output more log information.            |
 | help     | h    | No      | Views help information.                         |
  
@@ -464,7 +464,7 @@ Examples with Yaml
 | use-local  | -    | No      | Uses on-premises configurations to deploy resources. |
 | user-remote | -    | No      | Uses online configurations to deploy resources. |
 | assume-yes | y    | No      | Selects yes by default for additional operations.                    |
-| access   | a    | No      | The key that is used in the request. You can use a key that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add), or a [key that is configured in environment variables.](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure keys by using environment variables) |
+| access   | a    | No      | The key that is used in the request. You can use a key that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add), or a [key that is configured in environment variables.](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables) |
 | debug    | -    | No      | Enables the debug mode to output more log information.            |
 | help    | h    | No      | Views help information.                         |
  

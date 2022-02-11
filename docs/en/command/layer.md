@@ -113,7 +113,7 @@ Examples with CLI
 | compatible-runtime | -            | Optional                | Optional               | Supported runtime.  Default value: nodejs12,nodejs10,nodejs8,nodejs6,python3,python2.7 |
 | description        |              | Optional                | Optional               | The description of the  layer.                               |
 | layer-name         |              | Required                | Required               | The name of the layer.                                       |
-| access             | a            | Optional                | Optional               | The key used in this  request. You can use the key configured by running the [config](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-命令) command or [the key configured to the   environment variable](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#通过环境变量配置密钥信息). |
+| access             | a            | Optional                | Optional               | The key used in this  request. You can use the key configured by running the [config](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command) command or [the key configured to the   environment variable](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables). |
 | debug              | -            | Optional                | Optional               | Enables debug mode to  obtain more logs.                     |
 | help               | h            | Optional                | Optional               | Obtains the help  document.                                  |
 
