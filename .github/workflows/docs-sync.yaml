@@ -23,6 +23,6 @@ jobs:
       - name: Run step only when files change.
         if: steps.docs-changed.outputs.any_changed == 'true'
         run: |
-          curl http://index.serverless-devs-docs.1740298130743624.ap-southeast-1.fc.devsapp.net
+          curl http://index.serverless-devs-docs.1767215449378635.cn-hongkong.fc.devsapp.net
         
       
