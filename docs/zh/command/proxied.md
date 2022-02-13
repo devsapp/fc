@@ -1,3 +1,10 @@
+---
+title: 端云联调 proxied
+description: '端云联调 proxied'
+position: 3
+category: '调用&调试'
+---
+
 # Proxied 命令
 
 `proxied` 命令是实现函数计算端云联调的命令。

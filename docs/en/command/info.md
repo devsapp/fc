@@ -1,3 +1,9 @@
+---
+title: Info commands
+description: 'Info commands'
+position: 3
+category: 'Other'
+---
 # Info commands
 
 The `info` command is used to view the online resource information about a function. 

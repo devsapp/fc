@@ -1,3 +1,9 @@
+---
+title: Fun2s commands
+description: 'Fun2s commands'
+position: 2
+category: 'Other'
+---
 # Fun2s commands
 
 The `fun2s` command is the command that converts the `template.yaml` recognized by Funcraft DevTools into the `s.yaml` recognized by Serverless Devs.

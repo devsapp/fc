@@ -1,3 +1,9 @@
+---
+title: Build commands
+description: 'Build commands'
+position: 2
+category: 'Build&Deploy'
+---
 # Build commands
 
 The `build` command is used to build functions and install dependencies. 

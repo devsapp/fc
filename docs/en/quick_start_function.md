@@ -1,3 +1,10 @@
+---
+title: Quick start
+description: 'Quick Start'
+position: 5
+category: 'Overview'
+---
+
 # Quick start
 
 - [Tool installation](#Tool-installation)

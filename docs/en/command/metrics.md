@@ -1,3 +1,9 @@
+---
+title: Metrics command
+description: 'Metrics command'
+position: 1
+category: 'Observability'
+---
 # Metrics command
 
 The `metrics` command is a command for viewing function metrics information.

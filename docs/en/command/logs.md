@@ -1,3 +1,9 @@
+---
+title: Logs command
+description: 'Logs command'
+position: 2
+category: 'Observability'
+---
 # Logs commands
 
 The `logs` commands are used to view the logs of a function. 

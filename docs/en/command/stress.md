@@ -1,3 +1,9 @@
+---
+title: Stress commands
+description: 'Stress commands'
+position: 5
+category: 'Other'
+---
 # Stress commands
 
 The `stress` commands are used to perform a stress testing on a function. 

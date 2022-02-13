@@ -1,3 +1,9 @@
+---
+title: Config Secret
+description: 'Config Secret'
+position: 2
+category: 'Overview'
+---
 # Config Secret
 
 - [Get secret key](#Get-secret-key)

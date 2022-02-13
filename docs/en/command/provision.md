@@ -1,3 +1,10 @@
+---
+title: Provision commands
+description: 'Provision commands'
+position: 3
+category: 'Release&configuration'
+---
+
 # Provision commands
 
 The `provision` commands are used to provision function instances. You can use the commands to view and update provisioned configurations. 

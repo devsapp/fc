@@ -1,3 +1,9 @@
+---
+title: Deploy commands
+description: 'Deploy commands'
+position: 1
+category: 'Build&Deploy'
+---
 # Deploy commands
 
 The `deploy` command is used to deploy function resources. You can use this command to deploy on-premises resources that are specified in a [YAML file](../yaml.md) to an online environment. 

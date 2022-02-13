@@ -1,3 +1,9 @@
+---
+title: Eval commands
+description: 'Eval commands'
+position: 5
+category: 'Call&Debugging'
+---
 # Eval commands
 
 The following two scenarios exist in serverless mode:

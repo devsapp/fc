@@ -1,3 +1,10 @@
+---
+title: 别名 alias
+description: '别名 alias'
+position: 2
+category: '发布&配置'
+---
+
 # Alias 命令
 
 `alias` 命令是对函数别名操作的命令；主要包括别名的查看、发布、修改、删除等功能。

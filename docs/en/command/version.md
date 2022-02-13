@@ -1,3 +1,10 @@
+---
+title: Version commands
+description: 'Version commands'
+position: 1
+category: 'Release&configuration'
+---
+
 # Version commands
 
 The `version` commands are used to perform operations related to function versions. For example, you can view, publish, and delete aliases. 

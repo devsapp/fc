@@ -1,3 +1,10 @@
+---
+title: 常见小贴士
+description: '常见小贴士'
+position: 6
+category: '概览'
+---
+
 # 常见小贴士
 
 - [Serverless Devs和FC组件的关系](#serverless-devs和FC组件的关系)

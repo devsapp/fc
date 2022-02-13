@@ -1,3 +1,10 @@
+---
+title: 功能
+description: '快速体验功能'
+position: 5
+category: '概览'
+---
+
 # 快速体验功能
 
 - [工具安装](#工具安装)

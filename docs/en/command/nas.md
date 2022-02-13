@@ -1,3 +1,9 @@
+---
+title: Nas commands
+description: 'Nas commands'
+position: 1
+category: 'Other'
+---
 # Nas commands
 
 The `nas` commands are used to perform operations on Apsara File Storage NAS (NAS), including uploading files, downloading files, and running custom commands. 

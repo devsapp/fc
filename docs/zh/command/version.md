@@ -1,3 +1,10 @@
+---
+title: 版本 version
+description: '版本 version'
+position: 1
+category: '发布&配置'
+---
+
 # Version 命令
 
 `version` 命令是进行函数版本操作的命令；主要包括别名的查看、发布、删除等功能。

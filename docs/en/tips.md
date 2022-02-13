@@ -1,3 +1,10 @@
+---
+title: Tips
+description: 'Common tips'
+position: 6
+category: 'Overview'
+---
+
 # Common tips
 
 - [Relationship between Serverless Devs and the FC component](#Relationship-between-Serverless-Devs-and-the-FC-component)

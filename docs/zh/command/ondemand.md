@@ -1,3 +1,10 @@
+---
+title: 	按量资源 onDemand
+description: '按量资源 onDemand'
+position: 4
+category: '发布&配置'
+---
+
 # Ondemand 命令
 
 `ondemand` 命令是对函数计算按量资源操作的命令。

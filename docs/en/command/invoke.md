@@ -1,3 +1,10 @@
+---
+title: Invoke commands
+description: 'Invoke commands'
+position: 2
+category: 'Call&Debugging'
+---
+
 # Invoke commands
 
 The `invoke` command is used to invoke or trigger online functions. 

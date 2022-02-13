@@ -1,3 +1,9 @@
+---
+title: Instance commands
+description: 'Instance commands'
+position: 4
+category: 'Call&Debugging'
+---
 # Instance commands (Beta)
 
 The `instance` command supports logging into active instances; including viewing the list of active instances and performing command-line operations on specified instances

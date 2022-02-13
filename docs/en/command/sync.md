@@ -1,3 +1,9 @@
+---
+title: Sync commands
+description: 'Sync commands'
+position: 4
+category: 'Other'
+---
 # Sync commands
 
 The `sync` commands are used to synchronize online resources to an on-premises machine. 

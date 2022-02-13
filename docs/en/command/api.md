@@ -1,3 +1,9 @@
+---
+title: Api commands
+description: 'Api commands'
+position: 6
+category: 'Other'
+---
 # Api commands (coming soon)
 
 > The api commands are in the process of development, which will be available soon. You can use the FC-API component to perform related operations. For more information, see [FC-API component](https://github.com/devsapp/fc-api). 

@@ -1,3 +1,9 @@
+---
+title: VS Funcraft
+description: 'Compare among Serverless Devs, Function Compute command line interface (fcli), and Funcraft'
+position: 7
+category: 'Overview'
+---
 # Compare among Serverless Devs, Function Compute command line interface (fcli), and Funcraft
 
 - [Format comparison](#Format-comparison)

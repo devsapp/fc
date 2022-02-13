@@ -1,3 +1,10 @@
+---
+title: Local commands
+description: 'Local commands'
+position: 1
+category: 'Call&Debugging'
+---
+
 # Local commands
 
 The `local` commands are used to debug local functions. 

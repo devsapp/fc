@@ -1,3 +1,9 @@
+---
+title: Remove commands
+description: 'Remove commands'
+position: 3
+category: 'Build&Deploy'
+---
 # Remove commands
 
 The `remove` commands are used to remove resources that are deployed. 

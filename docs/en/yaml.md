@@ -1,3 +1,10 @@
+---
+title: Yaml specification
+description: 'Yaml specification'
+position: 3
+category: 'Overview'
+---
+
 # Yaml specification
 
 - [Yaml complete configuration](#Yaml-complete-configuration)

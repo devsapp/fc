@@ -1,3 +1,9 @@
+---
+title: Plan commands
+description: 'Plan commands'
+position: 4
+category: 'Build&Deploy'
+---
 # Plan commands
 
 The `plan` commands are used to view the changes of Function Compute resources. 

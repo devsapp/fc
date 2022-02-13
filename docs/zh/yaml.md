@@ -1,3 +1,10 @@
+---
+title: Yaml规范
+description: 'Yaml规范说明'
+position: 3
+category: '概览'
+---
+
 # Yaml规范说明
 
 - [Yaml完整配置](#Yaml完整配置)

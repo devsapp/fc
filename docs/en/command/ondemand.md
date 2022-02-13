@@ -1,3 +1,10 @@
+---
+title: 	Ondemand commands
+description: 'Ondemand commands'
+position: 4
+category: 'Release&configuration'
+---
+
 # Ondemand commands
 
 You can use the `ondemand` command to manage on-demand resources of Function Compute. 

@@ -1,3 +1,9 @@
+---
+title: API调用 api
+description: 'API调用 api'
+position: 6
+category: '其他功能'
+---
 # Api 命令【支持中】
 
 > 该命令正在支持的过程中，目前可以使用fc-api组件进行代替，具体参考[FC-API组件](https://github.com/devsapp/fc-api)。

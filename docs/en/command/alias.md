@@ -1,3 +1,10 @@
+---
+title: Alias commands
+description: 'Alias commands'
+position: 2
+category: 'Release&configuration'
+---
+
 # Alias commands
 
 The `alias` commands are used to perform operations on the aliases of functions. For example, you can run the alias commands to view, publish, change, and delete aliases. 

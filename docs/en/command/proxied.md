@@ -1,3 +1,10 @@
+---
+title: Proxied commands
+description: 'Proxied commands'
+position: 3
+category: 'Call&Debugging'
+---
+
 # Proxied commands
 
 The `proxied` commands are used to implement cloud-terminal joint debugging in Function Compute. 
