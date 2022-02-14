@@ -1,3 +1,9 @@
+---
+title: Build 命令
+description: 'Build 命令'
+position: 2
+category: '构建&部署'
+---
 # Build 命令
 
 `build` 命令是进行函数构建/依赖安装的命令。

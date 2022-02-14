@@ -1,3 +1,10 @@
+---
+title: Remove 命令
+description: 'Remove 命令'
+position: 3
+category: '构建&部署'
+---
+
 # Remove 命令
 
 `remove` 命令是对已经部署的资源进行移除的操作。
@@ -5,7 +12,6 @@
 - [命令解析](#命令解析)
   - [参数解析](#参数解析)
   - [操作案例](#操作案例)
-  - [注意事项](#注意事项)
 - [remove service 命令](#remove-service-命令)
   - [参数解析](#参数解析-1)
   - [操作案例](#操作案例-1)

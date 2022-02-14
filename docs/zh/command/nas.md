@@ -1,3 +1,9 @@
+---
+title: 硬盘挂载 nas
+description: '硬盘挂载 nas'
+position: 1
+category: '其他功能'
+---
 # Nas 命令
 
 `nas` 命令是对硬盘挂载（NAS）产品操作的接口，包括上传文件、下载文件、执行自定义命令等能力。

@@ -1,3 +1,10 @@
+---
+title: 预留 provision
+description: '预留 provision'
+position: 3
+category: '发布&配置'
+---
+
 # Provision 命令
 
 `provision` 命令是进行函数预留操作的命令；主要包括预留配置的查看与更新等操作。

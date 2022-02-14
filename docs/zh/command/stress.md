@@ -1,3 +1,9 @@
+---
+title: 压测 stress
+description: '压测 stress'
+position: 5
+category: '其他功能'
+---
 # Stress 命令
 
 `stress` 命令是对函数进行压测的命令。

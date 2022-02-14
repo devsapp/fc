@@ -1,3 +1,9 @@
+---
+title: 实例登录 instance
+description: '实例登录 instance'
+position: 4
+category: '调用&调试'
+---
 # instance 命令【公测中】
 
 `instance` 命令支持登陆进入活跃实例；包括查看活跃实例列表和对指定实例进行命令行操作

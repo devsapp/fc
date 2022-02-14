@@ -1,3 +1,10 @@
+---
+title: 别名 alias
+description: '别名 alias'
+position: 2
+category: '发布&配置'
+---
+
 # Alias 命令
 
 `alias` 命令是对函数别名操作的命令；主要包括别名的查看、发布、修改、删除等功能。
@@ -12,6 +19,7 @@
 - [alias publish 命令](#alias-publish-命令)
   - [参数解析](#参数解析-2)
   - [操作案例](#操作案例-2)
+  - [Publish 主版本获取逻辑](#Publish-主版本获取逻辑)
 - [remove alias 命令](remove.md#remove-alias-命令)
 - [权限与策略说明](#权限与策略说明)
 

@@ -1,3 +1,9 @@
+---
+title: 日志查询 logs
+description: '日志查询 logs'
+position: 2
+category: '可观测性'
+---
 # Logs 命令
 
 `logs` 命令是查看函数日志的命令。

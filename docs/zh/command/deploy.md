@@ -1,3 +1,9 @@
+---
+title: Deploy 命令
+description: 'Deploy 命令'
+position: 1
+category: '构建&部署'
+---
 # Deploy 命令
 
 `deploy` 命令是对函数资源进行部署的命令，即将本地在  [`Yaml` 文件](../yaml.md) 中声明的资源部署到线上。
