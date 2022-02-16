@@ -63,16 +63,16 @@ interface EndProps {
 interface IRemove {
   props: EndProps;
   subCommand?:
-    | 'layer'
-    | 'domain'
-    | 'ondemand'
-    | 'onDemand'
-    | 'provision'
-    | 'alias'
-    | 'version'
-    | 'service'
-    | 'function'
-    | 'trigger';
+  | 'layer'
+  | 'domain'
+  | 'ondemand'
+  | 'onDemand'
+  | 'provision'
+  | 'alias'
+  | 'version'
+  | 'service'
+  | 'function'
+  | 'trigger';
 }
 
 export default class Remove {

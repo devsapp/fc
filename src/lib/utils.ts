@@ -81,13 +81,12 @@ export const tableShow = (data, showKey) => {
     formatter: (value) => value,
   };
   const header = showKey.map((value) =>
-    _.isString(value)
+    (_.isString(value)
       ? {
-          ...header_option,
-          value,
-        }
-      : { ...header_option, ...value },
-  );
+        ...header_option,
+        value,
+      }
+      : { ...header_option, ...value }));
 
   console.log(Table(header, data, options).render());
 };
