@@ -250,7 +250,7 @@ For more information about commands, see the command help document.
 | [**deploy**](command/deploy.md) | [metrics](command/metrics.md) | [**local**](command/local.md)     | [**version**](command/version.md) | [**nas**](command/nas.md)   |
 | [**build**](command/build.md)   | [logs](command/logs.md)       | [invoke](command/invoke.md)       | [**alias**](command/alias.md)     | [info](command/info.md)     |
 | [remove](command/remove.md)     |                               | [**proxied**](command/proxied.md) | [provision](command/provision.md) | [**sync**](command/sync.md) |
-|                                 |                               | [remote](command/remote.md)       | [ondemand](command/ondemand.md)   | [stress](command/stress.md) |
+|                                 |                               | [instance](command/instance.md)       | [ondemand](command/ondemand.md)   | [stress](command/stress.md) |
 |                                 |                               | [eval](command/eval.md)           | [layer](command/layer.md)         | [fun2s](command/fun2s.md)   |
 |                                 |                               |                                   |                                   | [api](command/api.md)       |
 

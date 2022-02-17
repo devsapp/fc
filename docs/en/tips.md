@@ -196,8 +196,8 @@ The FC component is updated at a low speed. To use the latest version of the com
 ## Cases
 
 - About Build：
-  - [Python Example](./../examples/build/python)
-  - [Node.js Example](./../examples/build/nodejs)
-  - [Java Example](./../examples/build/java)
-  - [PHP Example](./../examples/build/php)
-  - [Custom Container Example](./../examples/build/custom-container)
+  - [Python Example](./../../examples/build/python)
+  - [Node.js Example](./../../examples/build/nodejs)
+  - [Java Example](./../../examples/build/java)
+  - [PHP Example](./../../examples/build/php)
+  - [Custom Container Example](./../../examples/build/custom-container)

@@ -3,11 +3,13 @@ title: Deploy commands
 description: 'Deploy commands'
 position: 1
 category: 'Build&Deploy'
+
 ---
+
 # Deploy commands
 
 The `deploy` command is used to deploy function resources. You can use this command to deploy on-premises resources that are specified in a [YAML file](../yaml.md) to an online environment. 
- 
+
   - [Command description](#Command description)
     - [Parameters description](#Parameters-description)
     - [Examples](#Examples)
@@ -83,29 +85,29 @@ Examples with Yaml
 
 
 The deploy command consists of the following subcommands:
- 
+
 - [service: deploys only services](#deploy-service-command)
 - [function: deploys only functions](#deploy-function-command)
 - [trigger: deploys only triggers](#deploy-trigger-command)
 - [domain: deploys only domains](#deploy-domain-command)
- 
+
 
 ### Parameters description
 
- | Full name  | Abbreviation | Required in YAML mode | Description                           |
- | ---------- | -------- | -------------- | ------------------------------------------------------------ |
- | type    | -    | No      | The deployment type. Valid values:code and config.              |
- | use-local | -    | No      | Preferentially uses on-premises configurations to deploy resources.                   |
- | use-remote | -    | No     | Preferentially uses online configurations to deploy resources.                   |
- | assume-yes | y    | No      | Selects yes by default for additional operations                    |
- | access   | a    | No      | The key that is used in the request. You can use a key that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add), or a [key that is configured in environment variables.](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables) |
- | debug   | -    | No      | Enables the debug mode to output more log information.            |
- | help    | h    | No      | Views help information.                         |
- 
+| Full name  | Abbreviation | Required in YAML mode | Description                                                  |
+| ---------- | ------------ | --------------------- | ------------------------------------------------------------ |
+| type       | -            | No                    | The deployment type. Valid values:code and config.           |
+| use-local  | -            | No                    | Preferentially uses on-premises configurations to deploy resources. |
+| use-remote | -            | No                    | Preferentially uses online configurations to deploy resources. |
+| assume-yes | y            | No                    | Selects yes by default for additional operations             |
+| access     | a            | No                    | The key that is used in the request. You can use a key that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add), or a [key that is configured in environment variables.](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables) |
+| debug      | -            | No                    | Enables the debug mode to output more log information.       |
+| help       | h            | No                    | Views help information.                                      |
+
 ### Examples
- 
+
 **If a YAML resource description file exists**, you can run the `s deploy ` command to deploy resources. Sample output:
- 
+
 ```text
 fc-deploy-test: 
   region:   cn-hangzhou
@@ -136,39 +138,39 @@ Take note of the following information about specific deployment scenarios:
 
 - **Interactive operations may be involved when deploying**:
 
-   - When it is detected that the online resources are inconsistent with the last deployed resources recorded locally, it will remind you whether to use online resources or offline resources; if you do not want this interactive operation, you can add `- when executing the command -use-local`/`--use-remote` parameter, in this case, the local configuration/online configuration will be used first, for example:
-       
-    | Whether online services   exist | Whether online functions   exist | Recorded on-premises   services | Recorded on-premises   functions | On-premises services to   deploy | On-premises functions to   deploy | Direct deployment             | use-local                                  | use-remote                                                   |
-    | ------------------------------- | -------------------------------- | ------------------------------- | -------------------------------- | -------------------------------- | --------------------------------- | ----------------------------- | ------------------------------------------ | ------------------------------------------------------------ |
-    | Yes                             | Yes                              | Same as online services         | Same as online functions         | -                                | -                                 | No additional operation       | Online services and functions  are updated | Online services and functions  remain unchanged              |
-    | Yes                             | No                               | Same as online services         | -                                | -                                | -                                 | No additional operation       | Online services and functions  are updated | Online services remain  unchanged, and online functions are created |
-    | No                              | No                               | -                               | -                                | -                                | -                                 | No additional operation       | Online services and functions  are updated | Online services and functions  are created                   |
-    | Yes                             | Yes                              | Different from online  services | Different from online  functions | Same as online services          | Same as online functions          | No additional operation       | Online services and functions  are updated | Online services and functions  remain unchanged              |
-    | Yes                             | Yes                              | Different from online  services | Different from online  functions | Different from online  services  | Different from online  functions  | Additional operation required | Online services and functions  are updated | Online services and functions  remain unchanged              |
+  - When it is detected that the online resources are inconsistent with the last deployed resources recorded locally, it will remind you whether to use online resources or offline resources; if you do not want this interactive operation, you can add `- when executing the command -use-local`/`--use-remote` parameter, in this case, the local configuration/online configuration will be used first, for example:
 
-    > Online services & online functions: refers to services and functions that have been deployed;
-    >
-    > Locally recorded service & locally recorded function: refers to the state recorded when the deployment was performed locally last time, if it is the first time, no state is recorded;
+  | Whether online services   exist | Whether online functions   exist | Recorded on-premises   services | Recorded on-premises   functions | On-premises services to   deploy | On-premises functions to   deploy | Direct deployment             | use-local                                  | use-remote                                                   |
+  | ------------------------------- | -------------------------------- | ------------------------------- | -------------------------------- | -------------------------------- | --------------------------------- | ----------------------------- | ------------------------------------------ | ------------------------------------------------------------ |
+  | Yes                             | Yes                              | Same as online services         | Same as online functions         | -                                | -                                 | No additional operation       | Online services and functions  are updated | Online services and functions  remain unchanged              |
+  | Yes                             | No                               | Same as online services         | -                                | -                                | -                                 | No additional operation       | Online services and functions  are updated | Online services remain  unchanged, and online functions are created |
+  | No                              | No                               | -                               | -                                | -                                | -                                 | No additional operation       | Online services and functions  are updated | Online services and functions  are created                   |
+  | Yes                             | Yes                              | Different from online  services | Different from online  functions | Same as online services          | Same as online functions          | No additional operation       | Online services and functions  are updated | Online services and functions  remain unchanged              |
+  | Yes                             | Yes                              | Different from online  services | Different from online  functions | Different from online  services  | Different from online  functions  | Additional operation required | Online services and functions  are updated | Online services and functions  remain unchanged              |
 
-    **Original intention of function design**: Since some services involve multiple team operations during deployment/update, if the default local configuration forcibly overrides the online configuration, it may cause the content to be updated through other channels/clients to become invalid. In order to More secure and standardized update function resources, so the ability to configure abnormal awareness online is introduced.
+   > Online services & online functions: refers to services and functions that have been deployed;
+   >
+   > Locally recorded service & locally recorded function: refers to the state recorded when the deployment was performed locally last time, if it is the first time, no state is recorded;
 
-    > When deploying, an example of the form of interaction is as follows:
-    >
-    > ````
-    > Local Last Deploy status => Online status
-    >
-    > description: "this is a test" => "this is a test console"
-    >
-    > ? Remote function: http-trigger-py36 is inconsistent with the config you deployed last time, deploy it with local config or remote
-    > config? (Use arrow keys)
-    > ❯ use local
-    > use remote
-    > ````
-    >
-    > At this time, it means that after the last local deployment and between the local deployment, the online function resources have been modified by other means. The modified content is `description`, and the content of the last deployment is `this is a test` `, the online configuration is now `this is a test console`, if you choose:
-    >
-    > - `use local`: The latest local configuration will be used by default to override the online configuration;
-    > - `use remote`: this part will not be updated;
+   **Original intention of function design**: Since some services involve multiple team operations during deployment/update, if the default local configuration forcibly overrides the online configuration, it may cause the content to be updated through other channels/clients to become invalid. In order to More secure and standardized update function resources, so the ability to configure abnormal awareness online is introduced.
+
+   > When deploying, an example of the form of interaction is as follows:
+   >
+   > ````
+   > Local Last Deploy status => Online status
+   > 
+   > description: "this is a test" => "this is a test console"
+   > 
+   > ? Remote function: http-trigger-py36 is inconsistent with the config you deployed last time, deploy it with local config or remote
+   > config? (Use arrow keys)
+   > ❯ use local
+   > use remote
+   > ````
+   >
+   > At this time, it means that after the last local deployment and between the local deployment, the online function resources have been modified by other means. The modified content is `description`, and the content of the last deployment is `this is a test` `, the online configuration is now `this is a test console`, if you choose:
+   >
+   > - `use local`: The latest local configuration will be used by default to override the online configuration;
+   > - `use remote`: this part will not be updated;
 
   - When deploying, when it detects that some additional configuration needs to be added to the process, it will remind you whether to add the configuration, etc.; for example, the Python language project, the `s build` operation is performed before deployment, and the deployment involves Put some dependency paths into environment variables to help dependencies take effect; if you do not want interactive operations at this time, you can add `-y`/`--assume-yes` parameters;
 
@@ -223,20 +225,20 @@ Examples with Yaml
 ```
 
 ### Parameters description
- 
-| Full name  | Abbreviation | Required in YAML mode | Description                           |
-| ----------- | -------- | -------------- | ------------------------------------------------------------ |
-| use-local  | -    | No      | Preferentially uses on-premises configurations to deploy resources.                   |
-| user-remote | -    | No      | Preferentially uses online configurations to deploy resources.                   |
-| assume-yes | y    | No      | Selects yes by default for additional operations.                    |
-| access   | a    | No      | The key that is used in the request. You can use a key that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add), or a [key that is configured in environment variables.](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables) |
-| debug    | -    | No      | Enables the debug mode to output more log information.            |
-| help    | h    | No      | Views help information.                         |
- 
+
+| Full name   | Abbreviation | Required in YAML mode | Description                                                  |
+| ----------- | ------------ | --------------------- | ------------------------------------------------------------ |
+| use-local   | -            | No                    | Preferentially uses on-premises configurations to deploy resources. |
+| user-remote | -            | No                    | Preferentially uses online configurations to deploy resources. |
+| assume-yes  | y            | No                    | Selects yes by default for additional operations.            |
+| access      | a            | No                    | The key that is used in the request. You can use a key that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add), or a [key that is configured in environment variables.](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables) |
+| debug       | -            | No                    | Enables the debug mode to output more log information.       |
+| help        | h            | No                    | Views help information.                                      |
+
 ### Examples
- 
+
 **If a YAML resource description file exists**, you can run the `s deploy service ` command to deploy services. Sample output:
- 
+
 ```text
 fc-deploy-test: 
   region:  cn-hangzhou
@@ -296,21 +298,21 @@ Examples with Yaml
 ```
 
 ### Parameters description
- 
-| Full name  | Abbreviation | Required in YAML mode | Description                           |
-| ----------- | -------- | -------------- | ------------------------------------------------------------ |
-| type    | -    | No      | The deployment type. Valid values: code and config.              |
-| use-local  | -    | No      | Uses on-premises configurations to deploy resources.                     |
-| user-remote | -    | No      |                               |
-| assume-yes | y    | No      | Selects yes by default for additional operations.                    |
-| access   | a    | No      | The key that is used in the request. You can use a key that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add), or a [key that is configured in environment variables.](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables) |
-| debug    | -     | No      | Enables the debug mode to output more log information.            |
-| help    | h    | No      | Views help information.                         |
- 
+
+| Full name   | Abbreviation | Required in YAML mode | Description                                                  |
+| ----------- | ------------ | --------------------- | ------------------------------------------------------------ |
+| type        | -            | No                    | The deployment type. Valid values: code and config.          |
+| use-local   | -            | No                    | Uses on-premises configurations to deploy resources.         |
+| user-remote | -            | No                    |                                                              |
+| assume-yes  | y            | No                    | Selects yes by default for additional operations.            |
+| access      | a            | No                    | The key that is used in the request. You can use a key that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add), or a [key that is configured in environment variables.](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables) |
+| debug       | -            | No                    | Enables the debug mode to output more log information.       |
+| help        | h            | No                    | Views help information.                                      |
+
 ### Examples
- 
+
 **If a YAML resource description file exists**, you can run the `s deploy function ` command to deploy functions. Sample output:
- 
+
 ```text
 fc-deploy-test: 
   region:   cn-hangzhou
@@ -377,21 +379,21 @@ Examples with Yaml
 ```
 
 ### Parameters
- 
-| Full name   | Abbreviation | Required in YAML mode | Parameter                           |
-| ------------ | -------- | -------------- | ------------------------------------------------------------ |
-| trigger-name | -    | No      | The names of the triggers that you want to deploy. |
-| use-local  | -    | No      | Uses on-premises configurations to deploy resources.                     |
-| user-remote | -    | No      |                               |
-| assume-yes  | y    | No      | Selects yes by default for additional operations.                     |
-| access    | a    | No      | The key that is used in the request. You can use a key that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add), or a [key that is configured in environment variables.](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables) |
-| debug    | -    | No      | Enables the debug mode to output more log information.            |
-| help     | h    | No      | Views help information.                         |
- 
+
+| Full name    | Abbreviation | Required in YAML mode | Parameter                                                    |
+| ------------ | ------------ | --------------------- | ------------------------------------------------------------ |
+| trigger-name | -            | No                    | The names of the triggers that you want to deploy.           |
+| use-local    | -            | No                    | Uses on-premises configurations to deploy resources.         |
+| user-remote  | -            | No                    |                                                              |
+| assume-yes   | y            | No                    | Selects yes by default for additional operations.            |
+| access       | a            | No                    | The key that is used in the request. You can use a key that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add), or a [key that is configured in environment variables.](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables) |
+| debug        | -            | No                    | Enables the debug mode to output more log information.       |
+| help         | h            | No                    | Views help information.                                      |
+
 ### Examples
- 
+
 **If a YAML resource description file exists**, you can run the `s deploy trigger ` command to deploy triggers. Sample output: 
- 
+
 ```text
 fc-deploy-test: 
   region:   cn-hangzhou
@@ -463,21 +465,21 @@ Examples with Yaml
 ```
 
 ### Parameters description
- 
-| Full name  | Abbreviation | Required in YAML mode | Description                           |
-| ----------- | -------- | -------------- | ------------------------------------------------------------ |
-| domain   | -    | No      | The domain names that you want to deploy. |
-| use-local  | -    | No      | Uses on-premises configurations to deploy resources. |
-| user-remote | -    | No      | Uses online configurations to deploy resources. |
-| assume-yes | y    | No      | Selects yes by default for additional operations.                    |
-| access   | a    | No      | The key that is used in the request. You can use a key that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add), or a [key that is configured in environment variables.](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables) |
-| debug    | -    | No      | Enables the debug mode to output more log information.            |
-| help    | h    | No      | Views help information.                         |
- 
+
+| Full name   | Abbreviation | Required in YAML mode | Description                                                  |
+| ----------- | ------------ | --------------------- | ------------------------------------------------------------ |
+| domain      | -            | No                    | The domain names that you want to deploy.                    |
+| use-local   | -            | No                    | Uses on-premises configurations to deploy resources.         |
+| user-remote | -            | No                    | Uses online configurations to deploy resources.              |
+| assume-yes  | y            | No                    | Selects yes by default for additional operations.            |
+| access      | a            | No                    | The key that is used in the request. You can use a key that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add), or a [key that is configured in environment variables.](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables) |
+| debug       | -            | No                    | Enables the debug mode to output more log information.       |
+| help        | h            | No                    | Views help information.                                      |
+
 ### Examples
- 
+
  **If a YAML resource description file exists**, you can run the `s deploy domain ` command to deploy custom domain names. Sample output:
- 
+
 ```text
 fc-deploy-test: 
   region:   cn-hangzhou
