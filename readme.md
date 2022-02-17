@@ -14,7 +14,7 @@
 
 
 <p align="center">
-  <span><b><a href="./README.md">中文</a> ｜ <a href="./readme_en.md">English</a></b></span><br>
+  <span><b><a href="./readme.md">中文</a> ｜ <a href="./readme_en.md">English</a></b></span><br>
 </p>
 
 

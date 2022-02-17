@@ -58,15 +58,15 @@ category: '概览'
 
 # 项目贡献
 
-我们非常希望您可以和我们一起贡献这个项目。贡献内容包括不限于代码的维护、应用/组件的贡献、文档的完善等，更多详情可以参考[ 🏆 贡献指南](./CONTRIBUTING.md)。
+我们非常希望您可以和我们一起贡献这个项目。贡献内容包括不限于代码的维护、应用/组件的贡献、文档的完善等，更多详情可以参考[ 🏆 贡献指南](./../../CONTRIBUTING.md)。
 
 与此同时，我们也非常感谢所有[ 👬 参与贡献的小伙伴](https://github.com/devsapp/fc/graphs/contributors) ，为 Serverless Devs FC 组件项目贡献的努力和汗水。
 
 # 开源许可
 
-Serverless Devs FC 组件遵循 [MIT License](./LICENSE) 开源许可。
+Serverless Devs FC 组件遵循 [MIT License](./../../LICENSE) 开源许可。
 
-位于`node_modules`和外部目录中的所有文件都是本软件使用的外部维护库，具有自己的许可证；我们建议您阅读它们，因为它们的条款可能与[MIT License](./LICENSE)的条款不同。
+位于`node_modules`和外部目录中的所有文件都是本软件使用的外部维护库，具有自己的许可证；我们建议您阅读它们，因为它们的条款可能与[MIT License](./../../LICENSE)的条款不同。
 
 # 交流社区
 

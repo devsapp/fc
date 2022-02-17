@@ -194,8 +194,8 @@ Serverless Devs的Yaml规范本身支持全局变量、环境变量以及外部�
 ## 项目实践案例
 
 - Build相关：
-  - [Python 案例](./../examples/build/python)
-  - [Node.js 案例](./../examples/build/nodejs)
-  - [Java 案例](./../examples/build/java)
-  - [PHP 案例](./../examples/build/php)
-  - [Custom Container 案例](./../examples/build/custom-container)
+  - [Python 案例](./../../examples/build/python)
+  - [Node.js 案例](./../../examples/build/nodejs)
+  - [Java 案例](./../../examples/build/java)
+  - [PHP 案例](./../../examples/build/php)
+  - [Custom Container 案例](./../../examples/build/custom-container)
