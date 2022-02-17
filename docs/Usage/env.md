@@ -4,11 +4,9 @@
   - [创建环境](#创建环境)
     - [引导式操作创建](#引导式操作创建)
   - [部署环境](#部署环境)
-  - [删除环境](#删除环境)
+  - [查询环境](#查询环境)
   - [指定环境部署服务](#指定环境部署服务)
     - [使用差异化配置](#使用差异化配置)
-  - [多环境Pipeline](#多环境Pipeline)
-    - [引导式交互操作](#引导式交互操作)
 - [背景及原理](#背景及原理)
   - [Serverless Devs多环境](#Serverless Devs多环境)
   - [Infrastructure as Template](#Infrastructure as Template)
@@ -16,7 +14,7 @@
   - [概念组成](#概念组成)
     - [Application](#Application)
     - [Service](#Service)
-    - [Pipeline](#Pipeline)
+    - [Environment](#Environment)
 - [最佳实践](#最佳实践)
   - [场景一、使用FC部署NodeJs函数](#场景一、使用FC部署NodeJs函数)
     - [平台管理员定义基础设施模板](#平台管理员定义基础设施模板)
@@ -28,10 +26,16 @@
       - [部署服务到测试环境](#部署服务到测试环境)
       - [创建生产环境](#创建生产环境)
       - [部署服务到生产环境，并使用差异化配置](#部署服务到生产环境，并使用差异化配置)
-      - [使用Github进行CI/CD](#使用Github进行CI/CD)
 
 --------
 # 快速使用
+## 权限说明
+环境操作基础设施时需要操作对应云资源的权限，需要授予函数计算服务账号以角色扮演的方式访问您的云资源，因此需要：
+1. 创建普通的服务角色，授信服务选择**函数计算**
+2. 为该角色授予环境所需要的权限
+
+您可以在环境中使用指定的roleArn，也可以授权让Serverless Devs自动创建环境所需要的角色
+
 ## 创建环境
 ```
 s env init --filename fc-env-testing.yaml
@@ -60,6 +64,15 @@ s env init
 s env deploy --name fc-env-testing
 ```
 执行指令后，Serverless Devs会进行环境基础设施的部署，此时环境的所有信息都是持久化的，您不用担心本地配置文件删除后无法恢复的问题
+
+## 查询环境
+```
+s env info --name fc-env-testing
+```
+```
+s env list
+```
+执行指令后，Serverless Devs会返回环境当前的信息
 
 ## 指定环境部署服务
 ```
@@ -101,108 +114,20 @@ s deploy --env fc-env-testing
   * 当指定了环境时，您无需在props中指定region，组件会自动保证将服务部署到环境所在的region。当`s.yaml`中的region和环境所在region不匹配时，会自动替换成环境所在region
 
 ### 使用差异化配置
-当您将服务部署到指定的环境上时，如果希望在该环境下使用差异化的配置(比如测试环境的函数内存为1024，生产环境的内存为2048)，可以通过`--overlays`参数
-```
+当您将服务部署到指定的环境上时，如果希望在该环境下使用差异化的配置(比如测试环境的函数内存为1024，生产环境的内存为2048)，可以通过`--overlays`参数。
+`--overlays`参数接收的数据格式是`json`或者`yaml`
+```shell
  s deploy --env fc-env-testing --overlays '{"function":{"memorySize":256,"timeout":120}}'
 ```
-通过```---overlays```参数，会使用指定的配置增量替换(Patch操作) props中的值
-
-## 多环境Pipeline
-当需要通过多环境组织您的CI/CD流水线时，可以通过如下指令操作
+也可以使用文件来设置差异化配置
 ```shell
-s pipeline init --name fc-pipeline --provider github --stages \
-  '{"stages":[{"name":"testing","environment":"fc-env-testing"},{"name":"staging","service":"demo-service","environment":"fc-env-staging","overlays":{"function":{"memorySize":1024,"timeout":120}}},{"name":"production","environment":"fc-env-staging"}]}'
+ s deploy --env fc-test-2 --overlays "$(cat overlay.yaml)" --patch-strategy merge
 ```
-执行成功后，会在`.s/pipeline`目录中生成`fc-pipeline.yaml`文件，您可以查看并编辑该文件
 
-```yaml
-#.s/pipeline/fc-pipeline.yaml
-name: fc-pipeline
-# 触发pipeline事件源
-source:
-  #  github action schema
-  on:
-    push:
-      branches:
-        - master
-    pull_request:
-      branches:
-        - master
+通过```--overlays```参数，会使用指定的配置增量替换(Patch操作) props中的值。patch有两种策略：
+1. 合并(merge)：默认策略，通过``` --patch-strategy merge```来生效，指定该策略时，在遇到相同的key值时，会将对应的value进行合并；
+2. 替换(replace)：通过``` --patch-strategy replace```来生效，指定该策略时，在遇到相同的key值时，会使用overlay中的value直接进行替换；
 
-# 部署配置
-stages:
-  - name: testing
-    environment: fc-env-testing #指定环境
-
-  - name: staging
-    service: demo-service #指定服务
-    environment: fc-env-staging #指定环境
-    overlays: #增量替换配置
-      function:
-        memorySize: 1024
-        timeout: 120
-  - name: production
-    environment: fc-env-production #指定环境
-```
-指令执行成功后，如果您使用的是github作为VCS，会在`.github/workflows`目录下生成`fc-pipeline.yaml`，即帮助您自动创建Github Action配置
-```yaml
-name: fc-pipeline
-on:
-  pull_request:
-    branches:
-    - master
-  push:
-    branches:
-    - master
-jobs:
-  initializer:
-    name: initializer job
-    runs-on: ubuntu-latest
-    steps:
-    - name: checkout source code
-      uses: actions/checkout@v2
-    - name: Initializing Serverless-Devs
-      uses: Serverless-Devs/serverless-devs-initialization-action@main
-      with:
-        AccessKeyID: ${{ secrets.ALIYUN_ACCESS_KEY_ID }}
-        AccessKeySecret: ${{ secrets.ALIYUN_ACCESS_KEY_SECRET }}
-        AccountID: ${{ secrets.ALIYUN_ACCOUNT_ID }}
-        provider: alibaba
-  build-demo-service:
-    name: build alicloud function of service demo-service
-    needs: initializer
-    runs-on: ubuntu-latest
-    steps:
-    - name: Install npm
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: Build package and make artifacts used serverless devs
-      run: s build
-    strategy:
-      matrix:
-        node-version:
-        - 10.x
-        - 12.x
-        - 14.x
-        - 15.x
-  deployment:
-    name: Deploy the service with multi environments
-    needs:
-    - build-demo-service
-    runs-on: ubuntu-latest
-    steps:
-    - name: testing
-      run: s deploy --env fc-env-testing
-    - name: staging
-      run: >-
-        s demo-service deploy --env fc-env-staging
-        --overlays '{"memorySize":1024,"timeout":120}'
-  - name: production
-      run: >-
-        s deploy --env fc-env-production
-```
-### 引导式交互操作
 
 # 背景及原理
 随着以现代化应用的普及，项目中会涉及越来越多的云资源。对于一家现代化企业，平台团队根据业务场景进行抽象，对研发人员屏蔽了基础设施；基础设施团队根据职责边界，又为平台团队规划了不同的子账号以及权限策略。
@@ -250,10 +175,10 @@ Serverless Devs是一款面向Serverless应用生命周期的DevsOps工具，目
 
 ## 整体工作流
 
-![alt](image/overall.png)
+![alt](https://img.alicdn.com/imgextra/i1/O1CN014O2OLr1gRFequqnOC_!!6000000004138-2-tps-2248-1596.png)
 
 ## 概念组成
-![alt](image/concept.png)
+![alt](https://img.alicdn.com/imgextra/i2/O1CN01TYGUXA1nr5JBz557q_!!6000000005142-2-tps-1590-926.png)
 
 ### Application
 一组`Service`、`Policy`、`Environment`、`Pipeline`所有资源的集合
@@ -267,13 +192,6 @@ Serverless Devs是一款面向Serverless应用生命周期的DevsOps工具，目
 `Service`运行在多个`Environment`上，每个`Environment`都是`Service`运行的载体，描述了基础设施(如网络、集群、存储)的配置，以及应用运行时的运维配置(如弹性伸缩、资源规格)
 * `Environment`是部署的范畴，不关注跟代码相关配置
 * `Environment`可以被多个Service共享
-
-### Pipeline
-每个`Service`关联一个`Pipeline`，描述了CI/CD的配置，包括**source**、**initial**、**build**、**deploy**阶段
-* **source**：触发`Pipeline`执行的事件源，比如git仓库的master分支每次合入操作触发一次`Pipeline`的执行
-* **initial**：构建前执行的动作，通常是安装依赖
-* **build**：自定义构建配置，`S`提供了默认的build能力，如果指定了就不执行s build
-* **deploy**：描述部署配置，包含多个stage，每个stage关联一个`Environment`
 
 # 最佳实践
 ## 场景一、使用FC部署NodeJs函数
@@ -335,10 +253,3 @@ s env init --name env-production
 ```
  s deploy --env env-testing --overlays '{"function":{"memorySize":256,"timeout":120}}'
 ```
-
-#### 使用Github进行CI/CD
-```shell
-s pipeline init 
-```
-push代码，在Github上查看CI/CD过程
-

@@ -1,5 +1,7 @@
 import * as _ from 'lodash';
 import * as core from '@serverless-devs/core';
+import * as yaml from 'js-yaml';
+import Immutable from 'immutable';
 import logger from '../../common/logger';
 import { IInputs, IProperties } from '../interface/interface';
 
@@ -23,7 +25,7 @@ export default class InfraAsTemplate {
 
     const parsedArgs: { [key: string]: any } = core.commandParse(inputs, {
       boolean: ['help'],
-      string: ['env'],
+      string: ['env', 'overlays', 'patch-strategy'],
       alias: { help: 'h', env: 'e' },
     });
     const argsData: any = parsedArgs?.data || {};
@@ -34,7 +36,7 @@ export default class InfraAsTemplate {
     }
 
     // check the environment and using environment state to modify the inputs.
-    const { env } = argsData;
+    const { env, overlays } = argsData;
     await logger.task('Checking', [
       {
         title: `Checking Environment ${env} exists `,
@@ -60,13 +62,33 @@ export default class InfraAsTemplate {
           logger.debug(
             `Resolved environment state is:\n${JSON.stringify(state, null, '  ')}`,
           );
+          // modifying the prop which associated with overlay args
+          if (!_.isEmpty(overlays)) {
+            let parsedOverlays: { [key: string]: any };
+            try {
+              parsedOverlays = JSON.parse(overlays);
+            } catch (e) {
+              logger.info('Overlays is not a json object, try to parsed as yaml');
+            }
+
+            try {
+              parsedOverlays = yaml.load(overlays, 'utf8');
+            } catch (e) {
+              throw new Error(`Overlays ${overlays} is not a vaild json or yaml object`);
+            }
+
+            const patchStrategy = argsData['patch-strategy'] || 'merge';
+            inputs.props = InfraAsTemplate.patchProps(inputs.props, parsedOverlays, patchStrategy);
+            logger.debug(`Props after patched is: ${JSON.stringify(inputs.props, null, 2)}`);
+          }
+
+          // modifying the prop which associated with environment
           inputs.props = InfraAsTemplate.modifyVariables(inputs.props, state) || {};
 
           // keep the service region consistent with environment
           if (inputs.props?.region !== state.region) {
             inputs.props.region = state.region;
           }
-
           logger.debug(`Props after modified is: ${JSON.stringify(inputs.props, null, '  ')}`);
         },
       },
@@ -97,6 +119,42 @@ export default class InfraAsTemplate {
     };
   }
 
+  private static patchProps(baseProps: any, patchProps: any, patchStrategy: string) {
+    logger.debug(`patching base: ${JSON.stringify(baseProps, null, 2)}\n, patch: ${JSON.stringify(patchProps, null, 2)}\n, patchStrategy: ${patchStrategy}`);
+    if (patchStrategy === 'replace') {
+      return { ...baseProps, ...patchProps };
+    } else if (patchStrategy === 'merge') {
+      return Immutable.mergeDeep(baseProps, patchProps);
+    } else {
+      throw new Error(`Unknown patch strategy: ${patchStrategy}, must be 'replace' or 'merge'`);
+    }
+  }
+
+  private static walkThroughPatch(baseObj: any, lookup: any, parentStr = '') {
+    if (Object.prototype.toString.call(baseObj) === '[object Object]') {
+      Object.keys(baseObj).forEach((key) => {
+        if (Object.prototype.toString.call(baseObj[key]) === '[object Object]') {
+          const newParent = parentStr === '' ? `${parentStr}${key}` : `${parentStr}.${key}`;
+          InfraAsTemplate.walkThroughPatch(baseObj[key], lookup, newParent);
+        } else if (Object.prototype.toString.call(baseObj[key]) === '[object Array]') {
+          const path = parentStr === '' ? `${parentStr}${key}` : `${parentStr}.${key}`;
+          if (Object.prototype.toString.call(lookup[path]) === '[object Array]') {
+            let merged = Immutable.Set(lookup[path]);
+            baseObj[key].forEach((base: any) => {
+              logger.debug(`base: ${JSON.stringify(base, null, 2)}`);
+              merged = merged.add(base);
+            });
+            baseObj[key] = Array.from(merged);
+          }
+        } else {
+          const path = parentStr === '' ? `${parentStr}${key}` : `${parentStr}.${key}`;
+          if (lookup[path]) {
+            baseObj[key] = lookup[path];
+          }
+        }
+      });
+    }
+  }
 
   private static modifyVariables(variables: any, lookup: any) {
     const _walkResult: any = {};
@@ -108,20 +166,17 @@ export default class InfraAsTemplate {
 
   private static lookupVariables(value: any, parentStr = '', result: any) {
     if (Object.prototype.toString.call(value) === '[object Object]') {
-      if (parentStr !== '') {
-        parentStr = `${parentStr}.`;
-      }
       Object.keys(value).forEach((key) => {
-        const showKey = `${parentStr}${key}`;
+        const path = parentStr === '' ? `${parentStr}${key}` : `${parentStr}.${key}`;
         const objValue = value[key];
-        result[showKey] = objValue;
-        InfraAsTemplate.lookupVariables(objValue, `${showKey}`, result);
+        result[path] = objValue;
+        InfraAsTemplate.lookupVariables(objValue, `${path}`, result);
       });
     } else if (Object.prototype.toString.call(value) === '[object Array]') {
       value.forEach((_arrValue: any, i: number) => {
-        const showKey = `${parentStr}[${i}]`;
-        result[showKey] = _arrValue;
-        InfraAsTemplate.lookupVariables(_arrValue, `${showKey}`, result);
+        const path = `${parentStr}[${i}]`;
+        result[path] = _arrValue;
+        InfraAsTemplate.lookupVariables(_arrValue, `${path}`, result);
       });
     }
   }
