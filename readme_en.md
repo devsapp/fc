@@ -29,7 +29,7 @@
 ❶ [Run the following command to install Serverless Devs](https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/en/install.md): `npm install -g @serverless-devs/s`  
 > After installation, you also need to configure the key. Please refer to [Secret Configuration Document](./en/config.md)
 
-❷ Run the following command to initialize the `Hello World` project of Function Compute: `s init devsapp/start-fc-http-python3` 
+❷ Run the following command to initialize the `Hello World` project of Function Compute: `s init devsapp/start-fc-http-python3`          
 ❸ Determine whether to deploy the project. To deploy the project, enter `y` and press Enter.     
 
 > The [Create an application](en/quick_start_application.md) topic introduces the following projects: [**Serverless: Hello World**](docs/en/quick_start_application.md#serverlesshello-world)[**Artificial intelligence: object detection**](docs/en/quick_start_application.md#AITarget-Detection), [**Traditional framework: Django-based blog project**](docs/en/quick_start_application.md#Traditional-framework-based-on-django-blog-project). The [Quick start](docs/en/quick_start_function.md) topic introduces the following features: [**deploy operation**](docs/en/quick_start_function.md#deploy-operation), [**Invoke**](docs/en/quick_start_function.md#Invoke), and [**Observability**](docs/en/quick_start_function.md#Observability). 
