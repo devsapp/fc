@@ -6,16 +6,21 @@ export const ENV_HELP_INFO = [
     content: 'Environments provisioned infrastructures that can be shared between services.',
   },
   {
-    header: 'Usage',
-    content: '$ s env <command> <options>',
+    header: 'Document',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/env.md',
   },
   {
-    header: 'Command List',
+    header: 'Usage',
+    content: '$ s env <sub-command> <options>',
+  },
+  {
+    header: 'SubCommand List',
     content: [
       { name: 'init', summary: 'Create a new environment.' },
       { name: 'deploy', summary: 'Deploy an environment associated with templates.' },
       { name: 'info', summary: 'Show the information of a environment.' },
-      { name: 'remove', summary: 'Destroy an environment and all the resources provisioned by templates.' },
+      { name: 'list', summary: 'List all environments associated with specified aliyun account.' },
+      // { name: 'remove', summary: 'Destroy an environment and all the resources provisioned by templates.' },
     ],
   },
   {
@@ -48,8 +53,8 @@ export const ENV_HELP_INFO = [
     content: [
       '$ s {bold env} {bold init} {underline --filename test.yaml}',
       '$ s {bold env} {bold deploy} {underline --name testing}',
-      '$ s {bold env} {bold remove} {underline --name testing}',
       '$ s {bold env} {bold info} {underline --name testing}',
+      '$ s {bold env} {bold list}',
     ],
   },
 ];
