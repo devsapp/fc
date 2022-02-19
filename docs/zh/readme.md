@@ -6,14 +6,14 @@ category: '概览'
 ---
 
 ![图片alt](https://serverless-article-picture.oss-cn-hangzhou.aliyuncs.com/1635756716877_20211101085157044368.png)
-<p align="center">
-  <a href="https://nodejs.org/en/">
+<p align="center" class="flex justify-center">
+  <a href="https://nodejs.org/en/" class="ml-1">
     <img src="https://img.shields.io/badge/node-%3E%3D%2010.8.0-brightgreen" alt="node.js version">
   </a>
-  <a href="https://github.com/devsapp/fc/blob/master/LICENSE">
+  <a href="https://github.com/devsapp/fc/blob/master/LICENSE" class="ml-1">
     <img src="https://img.shields.io/badge/License-MIT-green" alt="license">
   </a>
-  <a href="https://github.com/devsapp/fc/issues">
+  <a href="https://github.com/devsapp/fc/issues" class="ml-1">
     <img src="https://img.shields.io/github/issues/devsapp/fc" alt="issues">
   </a>
   </a>
