@@ -7,31 +7,31 @@ category: '概览'
 
 # Yaml规范说明
 
-- [Yaml完整配置](#Yaml完整配置)
+- [Yaml完整配置](#yaml完整配置)
 - [字段解析](#字段解析)
   - [service字段](#service字段)
     - [role](#role)
-    - [logConfig](#logConfig)
-    - [vpcConfig](#vpcConfig)
-    - [nasConfig](#nasConfig)
+    - [logConfig](#logconfig)
+    - [vpcConfig](#vpcconfig)
+    - [nasConfig](#nasconfig)
   - [function字段](#function字段)
-    - [customContainerConfig](#customContainerConfig)
-    - [environmentVariables](#environmentVariables)
-    - [instanceLifecycleConfig](#instanceLifecycleConfig)
-    - [asyncConfiguration](#asyncConfiguration)
+    - [customContainerConfig](#customcontainerconfig)
+    - [environmentVariables](#environmentvariables)
+    - [instanceLifecycleConfig](#instancelifecycleconfig)
+    - [asyncConfiguration](#asyncconfiguration)
     - [destination](#destination)
-    - [customDNS](#customDNS)
-    - [dnsOptions](#dnsOptions)
+    - [customDNS](#customdns)
+    - [dnsOptions](#dnsoptions)
   - [triggers字段](#triggers字段)
-    - [OSS触发器](#OSS触发器)
-    - [Log触发器](#Log触发器)
-    - [Timer触发器](#Timer触发器)
-    - [Http触发器](#Http触发器)
-    - [MNS触发器](#MNS触发器)
-    - [CDN触发器](#CDN触发器)
-  - [customDomains字段](#customDomains字段)
-    - [certConfig](#certConfig)
-    - [routeConfigs](#routeConfigs)
+    - [OSS触发器](#oss触发器)
+    - [Log触发器](#log触发器)
+    - [Timer触发器](#timer触发器)
+    - [Http触发器](#http触发器)
+    - [MNS触发器](#mns触发器)
+    - [CDN触发器](#cdn触发器)
+  - [customDomains字段](#customdomains字段)
+    - [certConfig](#certconfig)
+    - [routeConfigs](#routeconfigs)
 
 # Yaml完整配置
 
@@ -249,9 +249,9 @@ services:
 | internetAccess                  | False | Boolean                                       | 设为true让function可以访问公网                               |
 | [tracingConfig](#tracingConfig) | False | String                                        | 链路追踪，可取值：Enable、Disable                            |
 | [role](#role)                   | False | String[简单配置]/[Struct[详细配置]](#role)    | 授予函数计算所需权限的RAM role, 使用场景包含 1. 把 function产生的 log 发送到用户的 logstore 中 2. 为function 在执行中访问其它云资源生成 token |
-| [logConfig](#logConfig)         | False | Enum[简单配置]/[Struct[详细配置]](#logConfig) | log配置，function产生的log会写入这里配置的logstore           |
-| [vpcConfig](#vpcConfig)         | False | Enum[简单配置]/[Struct[详细配置]](#vpcConfig) | VPC配置, 配置后function可以访问指定VPC                       |
-| [nasConfig](#nasConfig)         | False | Enum[简单配置]/[Struct[详细配置]](#nasConfig) | NAS配置, 配置后function可以访问指定NAS                       |
+| [logConfig](#logconfig)         | False | Enum[简单配置]/[Struct[详细配置]](#logconfig) | log配置，function产生的log会写入这里配置的logstore           |
+| [vpcConfig](#vpcconfig)         | False | Enum[简单配置]/[Struct[详细配置]](#vpcconfig) | VPC配置, 配置后function可以访问指定VPC                       |
+| [nasConfig](#nasconfig)         | False | Enum[简单配置]/[Struct[详细配置]](#nasconfig) | NAS配置, 配置后function可以访问指定NAS                       |
 
 参考案例：
 
@@ -797,16 +797,16 @@ service:
 | [runtime](#runtime)                                 | True  | String                                | 运行时                                                 |
 | timeout                                             | False | Number                                | function运行的超时时间                                 |
 | caPort                                              | False | Number                                | CustomContainer/Runtime指定端口                        |
-| [customContainerConfig](#customContainerConfig)     | False | [Struct](#customContainerConfig)      | 自定义镜像配置                                         |
-| [environmentVariables](#environmentVariables)       | False | [Struct](#environmentVariables) | 环境变量                                               |
+| [customContainerConfig](#customcontainerconfig)     | False | [Struct](#customcontainerconfig)      | 自定义镜像配置                                         |
+| [environmentVariables](#environmentvariables)       | False | [Struct](#environmentvariables) | 环境变量                                               |
 | initializationTimeout                               | False | Number                                | 初始化方法超时时间                                     |
 | initializer                                         | False | String                                | 初始化方法                                             |
 | instanceConcurrency                                 | False | Number                                | 单实例多并发                                           |
 | instanceType                                        | False | String                                | 函数实例类型，可选值为：e1（弹性实例）、c1（性能实例） |
 | layer | False | List\<String\> | 函数绑定层，仅支持 Nodejs、Python；取值是层的 ARN |
-| [instanceLifecycleConfig](#instanceLifecycleConfig) | False | [Struct](#instanceLifecycleConfig)    | 扩展函数                                               |
-| [asyncConfiguration](#asyncConfiguration)            | False | [Struct](#asyncConfiguration)          | 异步配置                                               |
-| [customDNS](#customDNS)            | False | [Struct](#customDNS)          | DNS 配置 |
+| [instanceLifecycleConfig](#instancelifecycleconfig) | False | [Struct](#instancelifecycleconfig)    | 扩展函数                                               |
+| [asyncConfiguration](#asyncconfiguration)            | False | [Struct](#asyncconfiguration)          | 异步配置                                               |
+| [customDNS](#customdns)            | False | [Struct](#customdns)          | DNS 配置 |
 | [customRuntimeConfig](#customRuntimeConfig)            | False | [Struct](#customRuntimeConfig)          | 自定义运行时启动配置  |
 
 
@@ -925,7 +925,7 @@ TempKey: tempValue
 | --------------------------- | ----- | ---------------------- | ------------------------------------------------------ |
 | nameServers | False | List\<String\> | DNS 服务器的 IP 地址列表 |
 | searches | False | List\<String\> | DNS 搜索域列表 |
-| dnsOptions | False | [List\<Struct\>](#dnsOptions) | 对应 resolv.conf DNS 配置的 Options 项 |
+| dnsOptions | False | [List\<Struct\>](#dnsoptions) | 对应 resolv.conf DNS 配置的 Options 项 |
 
 ### customRuntimeConfig
 
@@ -1648,8 +1648,8 @@ triggers:
 | --------------------------- | ----- | --------------------------- | ------------------------------------------ |
 | domainName                  | True  | String                      | 域名，如果是auto取值，系统则会默认分配域名 |
 | protocol                    | True  | String                      | 协议，取值：`HTTP`, `HTTPS`, `HTTP, HTTPS` |
-| [routeConfigs](#certConfig) | True  | [List\<Struct>](#certConfig) | 路由                                       |
-| [certConfig](#routeConfigs) | False | [Struct](#routeConfigs)     | 域名证书                                   |
+| [routeConfigs](#certconfig) | True  | [List\<Struct>](#certconfig) | 路由                                       |
+| [certConfig](#routeconfigs) | False | [Struct](#routeconfigs)     | 域名证书                                   |
 
 参考案例：
 
