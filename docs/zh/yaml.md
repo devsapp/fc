@@ -93,7 +93,7 @@ services:
         initializer: index.initializer
         instanceConcurrency: 1
         instanceType: e1  # e1(弹性实例) or c1(性能实例)
-        layer: 
+        layers: 
           - xxx
           - xxx
         instanceLifecycleConfig:
@@ -803,7 +803,7 @@ service:
 | initializer                                         | False | String                                | 初始化方法                                             |
 | instanceConcurrency                                 | False | Number                                | 单实例多并发                                           |
 | instanceType                                        | False | String                                | 函数实例类型，可选值为：e1（弹性实例）、c1（性能实例） |
-| layer | False | List\<String\> | 函数绑定层，仅支持 Nodejs、Python；取值是层的 ARN |
+| layers | False | List\<String\> | 函数绑定层，仅支持 Nodejs、Python；取值是层的 ARN |
 | [instanceLifecycleConfig](#instancelifecycleconfig) | False | [Struct](#instancelifecycleconfig)    | 扩展函数                                               |
 | [asyncConfiguration](#asyncconfiguration)            | False | [Struct](#asyncconfiguration)          | 异步配置                                               |
 | [customDNS](#customdns)            | False | [Struct](#customdns)          | DNS 配置 |
