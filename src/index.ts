@@ -442,7 +442,7 @@ export default class FcBaseComponent {
         logstore: logConfig?.logstore,
         regionId: region,
         topic: serviceName,
-        query: props?.function?.name,
+        query: functionName,
       };
     } catch (ex) {
       if (ex.code?.endsWith('NotFound')) {
