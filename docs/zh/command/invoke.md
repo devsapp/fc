@@ -1,3 +1,9 @@
+---
+title: 函数触发 invoke
+description: '函数触发 invoke'
+position: 2
+category: '调用&调试'
+---
 # Invoke 命令
 
 `invoke` 命令是对线上函数进行调用/触发的命令。

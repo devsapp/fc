@@ -69,7 +69,10 @@ export const INVOKE = [
   eventFormat,
   {
     header: 'Examples with Yaml',
-    content: ['$ s invoke'],
+    content: [
+      '$ s invoke',
+      '$ s invoke --invocation-type async',
+    ],
   },
   {
     header: 'Examples with CLI',

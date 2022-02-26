@@ -1,9 +1,15 @@
+---
+title: 本地调用 local
+description: '本地调用 local'
+position: 1
+category: '调用&调试'
+---
+
 # Local 命令
 
 `local` 命令是在本地对函数调试的命令。
 
 - [命令解析](#命令解析)
-- [相关原理](#相关原理)
 - [local invoke 命令](#local-invoke-命令)
   - [参数解析](#参数解析)
   - [操作案例](#操作案例)

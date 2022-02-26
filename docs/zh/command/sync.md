@@ -1,3 +1,10 @@
+---
+title: 资源同步 sync
+description: '资源同步 sync'
+position: 4
+category: '其他功能'
+---
+
 # Sync 命令
 
 `sync` 命令是将线上的资源同步到本地的命令。

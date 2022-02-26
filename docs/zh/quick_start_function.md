@@ -1,3 +1,10 @@
+---
+title: 功能
+description: '快速体验功能'
+position: 5
+category: '概览'
+---
+
 # 快速体验功能
 
 - [工具安装](#工具安装)
@@ -6,11 +13,11 @@
 - [功能体验](#功能体验)
     - [部署 deploy](#部署-deploy)
     - [调用相关](#调用相关)
-        - [本地调用](#本地调用)
-        - [远程调用](#远程调用)
+      - [本地调用](#本地调用)
+      - [远程调用](#远程调用)
     - [可观测性](#可观测性)
-        - [日志查看](#日志查看)
-        - [指标查看](#指标查看)
+      - [日志查看](#日志查看)
+      - [指标查看](#指标查看)
     - [其他](#其他)
 
 ## 工具安装
@@ -70,6 +77,7 @@
       AccessKeySecret: 此处填*************ret
     ```
   
+> 更详细的密钥配置方法，可以参考[密钥配置文档](./config.md)  
   
 > 云账号 AccessKey 是您访问阿里云 API 的密钥，具有该账户完全的权限，请您务必妥善保管！不要通过任何方式（e.g. Github）将 AccessKey 公开到外部渠道，以避免被他人利用而造成 [安全威胁](https://help.aliyun.com/knowledge_detail/54059.html?spm=5176.2020520153.0.0.57f1336a8PQ1KR) 。    
 > 强烈建议您遵循 [阿里云安全最佳实践](https://help.aliyun.com/document_detail/102600.html?spm=5176.2020520153.0.0.57f1336a8PQ1KR) ，使用 RAM 子用户 AccessKey 来进行 API 调用。
@@ -241,6 +249,6 @@ FC Invoke End RequestId: eb9cf022-297e-4a27-b3bf-ad304f6e04c9
 | [**部署 deploy**](command/deploy.md)   | [指标查询 metrics](command/metrics.md) | [**本地调用 local**](command/local.md)      | [**版本 version**](command/version.md)      | [**硬盘挂载 nas**](command/nas.md) | 
 | [**构建 build**](command/build.md)     | [日志查询 logs](command/logs.md)       | [远程调用 invoke](command/invoke.md)    | [**别名 alias**](command/alias.md)         | [查看函数 info](command/info.md)  | 
 | [移除 remove](command/remove.md)   |                                              | [**端云联调 proxied**](command/proxied.md) | [预留 provision](command/provision.md)   | [**资源同步 sync**](command/sync.md) | 
-|                                          |                                              | [远程调试 remote](command/remote.md)    | [按量资源 ondemand](command/ondemand.md) | [压测 stress](command/stress.md) | 
+|                                          |                                              | [实例登录 instance](command/instance.md)    | [按量资源 ondemand](command/ondemand.md) | [压测 stress](command/stress.md) | 
 |                                          |                                              | [内存&并发度探测 eval](command/eval.md)  | [层 layer](command/layer.md) | [Fun项目迁移 fun2s](command/fun2s.md)                     | 
 |                                          |                                              |   |  | [API调用 api](command/api.md)                     | 

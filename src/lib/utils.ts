@@ -67,15 +67,15 @@ export function isHttpFunction(props: IProperties): boolean {
 export const tableShow = (data, showKey) => {
   const options = {
     borderStyle: 'solid',
-    borderColor: 'blue',
+    borderColor: 'white',
     headerAlign: 'center',
     align: 'left',
-    color: 'cyan',
+    color: 'white',
     width: '100%',
   };
   const header_option = {
-    headerColor: 'cyan',
-    color: 'cyan',
+    headerColor: 'white',
+    color: 'white',
     align: 'left',
     width: 'auto',
     formatter: (value) => value,

@@ -1,3 +1,10 @@
+---
+title: Plan 命令
+description: 'Plan 命令'
+position: 4
+category: '构建&部署'
+---
+
 # Plan 命令
 
 `plan` 命令是对函数计算资源变更感知的命令。

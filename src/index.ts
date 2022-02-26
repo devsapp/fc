@@ -186,9 +186,12 @@ export default class FcBaseComponent {
       }
     }
     if (deployRes.systemDomain) {
-      result.url = {
-        system_url: deployRes.systemDomain,
-      };
+      // https://github.com/devsapp/fc/issues/383
+      if (['custom', 'custom-container'].includes(props.function?.runtime) && !deployRes.customDomains) {
+        result.url = {
+          system_url: deployRes.systemDomain,
+        };
+      }
     }
     if (deployRes.customDomains) {
       result.url = result.url || {};
@@ -450,7 +453,7 @@ export default class FcBaseComponent {
         logstore: logConfig?.logstore,
         regionId: region,
         topic: serviceName,
-        query: props?.function?.name,
+        query: functionName,
       };
     } catch (ex) {
       if (ex.code?.endsWith('NotFound')) {

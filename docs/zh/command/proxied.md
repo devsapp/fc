@@ -1,35 +1,34 @@
+---
+title: 端云联调 proxied
+description: '端云联调 proxied'
+position: 3
+category: '调用&调试'
+---
+
 # Proxied 命令
 
 `proxied` 命令是实现函数计算端云联调的命令。
 
-- [Proxied 命令](#proxied-命令)
-  - [相关原理](#相关原理)
+- [相关原理](#相关原理)
       - [开启端云联调](#开启端云联调)
       - [关闭端云联调](#关闭端云联调)
-  - [命令解析](#命令解析)
-  - [proxied setup 命令](#proxied-setup-命令)
+- [命令解析](#命令解析)
+- [proxied setup 命令](#proxied-setup-命令)
     - [参数解析](#参数解析)
     - [操作案例](#操作案例)
-  - [proxied invoke 命令](#proxied-invoke-命令)
+- [proxied invoke 命令](#proxied-invoke-命令)
     - [参数解析](#参数解析-1)
     - [操作案例](#操作案例-1)
-  - [proxied cleanup 命令](#proxied-cleanup-命令)
+- [proxied cleanup 命令](#proxied-cleanup-命令)
     - [参数解析](#参数解析-2)
     - [操作案例](#操作案例-2)
-  - [最佳实践](#最佳实践)
+- [最佳实践](#最佳实践)
     - [三步完成端云联调](#三步完成端云联调)
     - [断点调试](#断点调试)
       - [VSCode 断点调试案例](#vscode-断点调试案例)
       - [Intelli 断点调试案例](#intelli-断点调试案例)
-  - [权限与策略说明](#权限与策略说明)
-  - [实战场景举例](#实战场景举例)
-
-> [端云联调](proxied.md)能力与[云端调试](remote.md)能力的区别：
->
-> - 端云联调：函数在本地环境运行，函数流量经过线上环境；
-> - 远程调试：函数在线上环境运行，本地接收线上的运行结果；
-
-
+- [权限与策略说明](#权限与策略说明)
+- [实战场景举例](#实战场景举例)
 
 ## 相关原理
 
@@ -37,7 +36,7 @@
 
 ![](https://img.alicdn.com/imgextra/i4/O1CN01m0KYG61CJytdWxp1D_!!6000000000061-2-tps-1146-422.png)
 
-端云联调的架构简图如上图所示，S 工具和通道服务进行的深度集成：
+端云联调的架构简图如上图所示，S 工具和通道服务进行的深度集成。
 #### 开启端云联调
 
 用户只要在 s.yaml 的目录下， 执行 s proxied setup,  该命令做了如下事情：
@@ -423,7 +422,7 @@ Resource cleanup succeeded.
 ## 实战场景举例
 以阿里云函数计算一个真实的企业客户为例：小王是一个业务驱动型的公司的开发， 公司为了提高业务迭代效率， 技术架构向全面云原生化演进， 减少基本设施的管理和运维， 架构大致如下：
 
-![](https://img.alicdn.com/imgextra/i1/O1CN012AtvSr1ZhYRbKqZWZ_!!6000000003226-2-tps-1508-1378.png)
+<img src="https://img.alicdn.com/imgextra/i1/O1CN012AtvSr1ZhYRbKqZWZ_!!6000000003226-2-tps-1508-1378.png" width="70%" height="70%">
 
 小王将迭代最频繁的对外的前后端分离的项目都一键迁移到函数计算的 Custom Runtime，在其中 SpringBoot 的项目需要能使用各种 VPC 内网地址访问下游服务（比如注册中心或者其他微服务接口）， 这个时候Serverless Devs 提供的端云联调 就可以派上用场了， 只需要在 s.yaml (s.yaml 中定义了函数的 VPC 配置) 所在目录下执行：
 

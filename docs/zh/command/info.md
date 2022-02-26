@@ -1,3 +1,10 @@
+---
+title: 查看函数 info
+description: '查看函数 info'
+position: 3
+category: '其他功能'
+---
+
 # Info 命令
 
 `info` 命令是查看函数线上资源详情的命令。
