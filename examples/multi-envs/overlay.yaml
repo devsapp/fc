@@ -1,0 +1,24 @@
+service:
+  vpcConfig:
+    vpcId: ${environment.outputs.vpcId}
+    securityGroupId: ${environment.outputs.securityGroupId}
+    vswitchIds:
+      - vsw-8vbw6t9z3ffgcmqr8ki28
+function:
+  memorySize: 256
+  timeout: 120
+  instanceConcurrency: 1
+  instanceType: e1
+triggers:
+  - name: timer-0
+    type: timer
+    config:
+      payload: '{"s": "ss"}'
+      cronExpression: '@every 100m'
+      enable: false
+  - name: timer-1
+    type: timer
+    config:
+      payload: '{"s": "ss"}'
+      cronExpression: '@every 100m'
+      enable: false

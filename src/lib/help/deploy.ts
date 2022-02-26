@@ -25,6 +25,13 @@ const deployType = {
   type: String,
 };
 
+const env = {
+  name: 'env',
+  alias: 'e',
+  type: String,
+  description: '[Optional] Specify an environment name and deploy on the environment ',
+};
+
 const options = [useLocal, useRemote, assumeYesDescribe];
 
 export const DEPLOY = [
@@ -48,6 +55,7 @@ export const DEPLOY = [
       useRemote,
       assumeYesDescribe,
       skipPush,
+      env,
     ],
   },
   { ...globalParams },

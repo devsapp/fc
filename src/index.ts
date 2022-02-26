@@ -29,6 +29,7 @@ import {
   STRESS,
   STRESS_START,
   STRESS_CLEAN,
+  ENV_HELP_INFO,
 } from './lib/help';
 import * as DEPLOY_HELP from './lib/help/deploy';
 import * as LAYER_HELP from './lib/help/layer';
@@ -48,6 +49,7 @@ import OnDemand from './lib/component/on-demand';
 import Remove from './lib/component/remove';
 import Plan from './lib/component/plan';
 import Provision from './lib/component/provision';
+import InfraAsTemplate from './lib/component/infra-as-template';
 import {
   PayloadOption,
   EventTypeOption,
@@ -92,6 +94,7 @@ export default class FcBaseComponent {
   }
 
   async plan(inputs: IInputs) {
+    await InfraAsTemplate.modifyInputs(inputs);
     const { isHelp, errorMessage, planType } = Plan.handlerInputs(inputs);
     if (errorMessage) {
       throw new Error(errorMessage);
@@ -110,6 +113,7 @@ export default class FcBaseComponent {
   }
 
   async deploy(inputs: IInputs): Promise<any> {
+    await InfraAsTemplate.modifyInputs(inputs);
     const { props, args } = this.handlerComponentInputs(inputs);
     const parsedArgs: { [key: string]: any } = core.commandParse(inputs, {
       boolean: ['help'],
@@ -214,6 +218,7 @@ export default class FcBaseComponent {
   }
 
   async remove(inputs: IInputs): Promise<any> {
+    await InfraAsTemplate.modifyInputs(inputs);
     const { credentials, help, props, subCommand, errorMessage } = await Remove.handlerInputs(
       inputs,
     );
@@ -236,6 +241,7 @@ export default class FcBaseComponent {
   }
 
   async info(inputs: IInputs): Promise<any> {
+    await InfraAsTemplate.modifyInputs(inputs);
     const { props, args } = this.handlerComponentInputs(inputs);
     if (this.isHelp(args)) {
       core.help(INFO);
@@ -276,6 +282,7 @@ export default class FcBaseComponent {
   }
 
   async sync(inputs: IInputs): Promise<any> {
+    await InfraAsTemplate.modifyInputs(inputs);
     const { props, args } = this.handlerComponentInputs(inputs);
     if (this.isHelp(args)) {
       core.help(SYNC);
@@ -299,6 +306,7 @@ export default class FcBaseComponent {
   }
 
   async build(inputs: IInputs): Promise<any> {
+    await InfraAsTemplate.modifyInputs(inputs);
     const { props, args, argsObj } = this.handlerComponentInputs(inputs);
     const parsedArgs: { [key: string]: any } = core.commandParse(
       { args, argsObj },
@@ -317,6 +325,7 @@ export default class FcBaseComponent {
   }
 
   async local(inputs: IInputs): Promise<any> {
+    await InfraAsTemplate.modifyInputs(inputs);
     const { props, args, argsObj } = this.handlerComponentInputs(inputs);
     const parsedArgs: { [key: string]: any } = core.commandParse(
       { args, argsObj },
@@ -372,6 +381,7 @@ export default class FcBaseComponent {
   }
 
   async invoke(inputs: IInputs): Promise<any> {
+    await InfraAsTemplate.modifyInputs(inputs);
     const { props, args } = this.handlerComponentInputs(inputs);
     if (this.isHelp(args)) {
       core.help(INVOKE);
@@ -395,6 +405,7 @@ export default class FcBaseComponent {
   }
 
   async logs(inputs: IInputs): Promise<any> {
+    await InfraAsTemplate.modifyInputs(inputs);
     const { props, args, argsObj } = this.handlerComponentInputs(inputs);
 
     const comParse: any = core.commandParse(
@@ -457,6 +468,7 @@ export default class FcBaseComponent {
   }
 
   async metrics(inputs: IInputs): Promise<any> {
+    await InfraAsTemplate.modifyInputs(inputs);
     const { props, args, argsObj } = this.handlerComponentInputs(inputs);
 
     const comParse: any = core.commandParse(
@@ -479,6 +491,7 @@ export default class FcBaseComponent {
   }
 
   async nas(inputs: IInputs) {
+    await InfraAsTemplate.modifyInputs(inputs);
     const { props, args, project, argsObj } = this.handlerComponentInputs(inputs);
     const SUPPORTED_METHOD = ['init', 'download', 'upload', 'command'];
 
@@ -581,6 +594,7 @@ https://gitee.com/devsapp/fc/blob/main/docs/zh/command/nas.md#nas-upload-命令\
   }
 
   async stress(inputs: IInputs): Promise<any> {
+    await InfraAsTemplate.modifyInputs(inputs);
     const { props, project } = this.handlerComponentInputs(inputs);
     const SUPPORTED_METHOD: string[] = ['start', 'clean'];
     const STRESS_SUB_COMMAND_HELP_KEY = {
@@ -688,6 +702,7 @@ https://gitee.com/devsapp/fc/blob/main/docs/zh/command/nas.md#nas-upload-命令\
   }
 
   async version(inputs: IInputs): Promise<any> {
+    await InfraAsTemplate.modifyInputs(inputs);
     const { credentials, help, props, subCommand, table, errorMessage } =
       await Version.handlerInputs(inputs);
 
@@ -706,6 +721,7 @@ https://gitee.com/devsapp/fc/blob/main/docs/zh/command/nas.md#nas-upload-命令\
   }
 
   async alias(inputs: IInputs): Promise<any> {
+    await InfraAsTemplate.modifyInputs(inputs);
     const { credentials, help, props, subCommand, table, errorMessage } = await Alias.handlerInputs(
       inputs,
     );
@@ -721,6 +737,7 @@ https://gitee.com/devsapp/fc/blob/main/docs/zh/command/nas.md#nas-upload-命令\
   }
 
   async provision(inputs: IInputs): Promise<any> {
+    await InfraAsTemplate.modifyInputs(inputs);
     const { credentials, help, props, subCommand, table, errorMessage } =
       await Provision.handlerInputs(inputs);
 
@@ -739,6 +756,7 @@ https://gitee.com/devsapp/fc/blob/main/docs/zh/command/nas.md#nas-upload-命令\
   }
 
   async ondemand(inputs: IInputs) {
+    await InfraAsTemplate.modifyInputs(inputs);
     const { credentials, help, props, subCommand, table, errorMessage } =
       await OnDemand.handlerInputs(inputs);
 
@@ -757,12 +775,14 @@ https://gitee.com/devsapp/fc/blob/main/docs/zh/command/nas.md#nas-upload-命令\
   }
 
   async onDemand(inputs: IInputs): Promise<any> {
+    await InfraAsTemplate.modifyInputs(inputs);
     // warning: 2021.12.23 交互修改警告，过段时间可以删除
     this.logger.warn('The onDemand command will be removed soon, please use ondemand');
     return await this.ondemand(inputs);
   }
 
   async layer(inputs: IInputs): Promise<any> {
+    await InfraAsTemplate.modifyInputs(inputs);
     const { props, args, argsObj } = this.handlerComponentInputs(inputs);
 
     const LAYER_COMMAND = {
@@ -814,6 +834,7 @@ https://gitee.com/devsapp/fc/blob/main/docs/zh/command/nas.md#nas-upload-命令\
   }
 
   async proxied(inputs: IInputs): Promise<any> {
+    await InfraAsTemplate.modifyInputs(inputs);
     const { args, argsObj } = this.handlerComponentInputs(inputs);
     const SUPPORTED_METHOD = ['setup', 'invoke', 'clean', 'cleanup'];
 
@@ -875,6 +896,7 @@ https://gitee.com/devsapp/fc/blob/main/docs/zh/command/nas.md#nas-upload-命令\
   }
 
   async fun2s(inputs: IInputs): Promise<any> {
+    await InfraAsTemplate.modifyInputs(inputs);
     const { args } = this.handlerComponentInputs(inputs);
     const isHelp = this.isHelp(args);
     if (isHelp) {
@@ -884,6 +906,7 @@ https://gitee.com/devsapp/fc/blob/main/docs/zh/command/nas.md#nas-upload-命令\
   }
 
   async remote(inputs: IInputs): Promise<any> {
+    await InfraAsTemplate.modifyInputs(inputs);
     const { args, argsObj } = this.handlerComponentInputs(inputs);
     const SUPPORTED_METHOD = ['setup', 'invoke', 'cleanup'];
 
@@ -936,6 +959,7 @@ https://gitee.com/devsapp/fc/blob/main/docs/zh/command/nas.md#nas-upload-命令\
   }
 
   async eval(inputs: IInputs): Promise<any> {
+    await InfraAsTemplate.modifyInputs(inputs);
     const { props, project } = this.handlerComponentInputs(inputs);
     const SUPPORTED_METHOD: string[] = ['start'];
     const DEFAULT_EVAL_TYPE = 'memory';
@@ -1033,6 +1057,30 @@ https://gitee.com/devsapp/fc/blob/main/docs/zh/command/nas.md#nas-upload-命令\
       commandName,
       null,
       fcEvalArgs,
+    );
+  }
+
+  async env(inputs: IInputs): Promise<any> {
+    await InfraAsTemplate.modifyInputs(inputs);
+    const { props, args, argsObj } = this.handlerComponentInputs(inputs);
+    const parsedArgs: { [key: string]: any } = core.commandParse(
+      { args, argsObj },
+      {
+        boolean: ['help'],
+        alias: { help: 'h' },
+      },
+    );
+
+    if (parsedArgs?.data?.help) {
+      core.help(ENV_HELP_INFO);
+      return;
+    }
+    return await this.componentMethodCaller(
+      inputs,
+      'devsapp/infrastructure-as-template',
+      'env',
+      props,
+      args,
     );
   }
 
