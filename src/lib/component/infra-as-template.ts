@@ -4,6 +4,7 @@ import * as yaml from 'js-yaml';
 import Immutable from 'immutable';
 import logger from '../../common/logger';
 import { IInputs, IProperties } from '../interface/interface';
+import fs from 'fs';
 
 const COMMON_VARIABLE_TYPE_REG = new RegExp(/\$\{(.*)\}/, 'i');
 export interface InfraConfig {
@@ -68,13 +69,17 @@ export default class InfraAsTemplate {
             try {
               parsedOverlays = JSON.parse(overlays);
             } catch (e) {
-              logger.info('Overlays is not a json object, try to parsed as yaml');
-            }
+              logger.info('Overlays is not a json object, try to parsed as yaml file.');
 
-            try {
-              parsedOverlays = yaml.load(overlays, 'utf8');
-            } catch (e) {
-              throw new Error(`Overlays ${overlays} is not a vaild json or yaml object`);
+              if (!fs.existsSync(overlays)) {
+                throw new Error(`Overlays file ${overlays} does not exist, please check your command args.`);
+              }
+
+              try {
+                parsedOverlays = yaml.load(fs.readFileSync(overlays), 'utf8');
+              } catch (e) {
+                throw new Error(`Overlays ${overlays} is not a vaild json or yaml object, please check your command args.`);
+              }
             }
 
             const patchStrategy = argsData['patch-strategy'] || 'merge';

@@ -222,10 +222,10 @@ s deploy --env fc-env-testing
 s deploy --env fc-env-testing --overlays '{"function":{"memorySize":256,"timeout":120}}'
 ```
 
-也可以使用文件来设置 `overlays`
+也可以使用 yaml 文件来设置 `overlays`
 
 ```shell
-s deploy --env fc-test-2 --overlays "$(cat overlay.yaml)" --patch-strategy merge
+s deploy --env fc-test-2 --overlays overlay.yaml --patch-strategy merge
 ```
 
 通过 ``--overlays`` 参数，组件会使用指定的配置增量替换(Patch操作) props 中的值。patch 有两种策略：
