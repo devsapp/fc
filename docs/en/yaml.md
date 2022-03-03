@@ -383,22 +383,22 @@ role:
 
 Where `policies` represents a list of policies. When this field is used, the locally configured ak needs to have permission to create policies and roles. The elements in the list support strings and `policy` structures, which can be referred to:
 
-| Parameter Name | Required | Type                        | Parameter Description |
-| -------------- | -------- | --------------------------- | --------------------- |
-| name           | True     | String                      | Policy name           |
-| description    | False    | String                      | Policy description    |
-| statement      | True     | [List\<Struct>](#statement) | Policy content list   |
+| Parameter Name | Required | Type | Parameter Description |
+| ----------- | ----- | -------------------------- | ------------ |
+| name | True | String | Policy name |
+| description | False | String | Policy description |
+| statement | True | [List\<Struct>](#statement) | Policy content list |
 
 #### statement
 
 Among them, `statement` represents the list of policy content, and the structure of the elements in the list can be referred to:
 
-| Parameter Name | Required | Type                  | Parameter Description                                   |
-| -------------- | -------- | --------------------- | ------------------------------------------------------- |
-| Effect         | True     | String                | Strategy effect, optional values are 'Allow' and 'Deny' |
-| Action         | True     | List\<String\>        | Policy Action                                           |
-| Resource       | True     | String/List\<String\> | Policy's target resource                                |
-| Condition      | False    | Object                | Condition of the policy                                 |
+| Parameter Name | Required | Type | Parameter Description |
+| --------- | ----- | ------------------- | ------------------------------------ |
+| Effect | True | String | Strategy effect, optional values ​​are 'Allow' and 'Deny' |
+| Action | True | List\<String\> | Policy Action |
+| Resource | True | String/List\<String\> | Policy's target resource |
+| Condition | False | Object | Condition of the policy |
 
 ### logConfig
 
@@ -406,14 +406,14 @@ When the `logConfig` parameter is a simple configuration, it can be: `auto`
 
 When the `logConfig` parameter is a structure, you can refer to:
 
-| Parameter Name        | Required | Type    | Parameter Description                                        |
-| --------------------- | -------- | ------- | ------------------------------------------------------------ |
-| logstore              | False    | String  | logstore name in loghub                                      |
-| project               | False    | String  | project name in loghub                                       |
-| enableRequestMetrics  | False    | Boolean | RequestMetrics switch, value `true`/`false`                  |
-| enableInstanceMetrics | False    | Boolean | InstanceMetrics switch, value `true`/`false`                 |
-| logBeginRule          | False    | String  | Whether the log is split, the value is `DefaultRegex`/`None` |
-| Examples：            |          |         |                                                              |
+| Parameter Name | Required | Type | Parameter Description |
+| --------------------- | ----- | ------- | ---------------------------------------- |
+| logstore | False | String | logstore name in loghub |
+| project | False | String | project name in loghub |
+| enableRequestMetrics | False | Boolean | RequestMetrics switch, value `true`/`false` |
+| enableInstanceMetrics | False | Boolean | InstanceMetrics switch, value `true`/`false` |
+| logBeginRule | False | String | Whether the log is split, the value is `DefaultRegex`/`None` |
+Examples：
 
 ```yaml
 service:
@@ -524,11 +524,11 @@ When the `vpcConfig` parameter is a simple configuration, it can be: `auto`
 
 When the `vpcConfig` parameter is a structure, you can refer to:
 
-| Parameter Name  | Required | Type           | Parameter Description |
-| --------------- | -------- | -------------- | --------------------- |
-| securityGroupId | False    | String         | Security Group ID     |
-| vSwitchIds      | False    | List\<String\> | List of switch IDs    |
-| vpcId           | False    | String         | VPC ID                |
+| Parameter Name | Required | Type | Parameter Description |
+| --------------- | ----- | ------------ | -------------- |
+| securityGroupId | False | String | Security Group ID |
+| vSwitchIds | False | List\<String\> | List of switch IDs |
+| vpcId | False | String | VPC ID |
 
 
 Examples:
@@ -546,7 +546,6 @@ service:
     vswitchIds:        
       - vsw-xxx
 ```
-
 #### Permission configuration related
 
 ##### Permissions required for sub-accounts
@@ -619,11 +618,11 @@ When the `nasConfig` parameter is a simple configuration, it can be: `auto`
 
 When the `nasConfig` parameter is a structure, you can refer to:
 
-| Parameter Name              | Required | Type                                                         | Parameter Description     |
-| --------------------------- | -------- | ------------------------------------------------------------ | ------------------------- |
-| [mountPoints](#mountPoints) | False    | [List\<Struct>[Multiple Directory Configuration]](#mountPoints) | Directory Configuration   |
-| userId                      | False    | String                                                       | userID, default is 10003  |
-| groupId                     | False    | String                                                       | groupID, default is 10003 |
+| Parameter Name | Required | Type | Parameter Description |
+| --------------------------- | ----- | --------------- ------------------------- | -------------------- |
+| [mountPoints](#mountPoints) | False | [List\<Struct>[Multiple Directory Configuration]](#mountPoints) | Directory Configuration |
+| userId | False | String | userID, default is 10003 |
+| groupId | False | String | groupID, default is 10003 |
 
 Examples:
 
@@ -742,11 +741,11 @@ service:
 
 #### mountPoints
 
-| Parameter Name | Required | Type   | Parameter Description          |
-| -------------- | -------- | ------ | ------------------------------ |
-| serverAddr     | False    | String | NAS server address             |
-| nasDir         | False    | String | NAS directory                  |
-| fcDir          | False    | String | Function calculation directory |
+| Parameter Name | Required | Type | Parameter Description |
+| ---------- | ----- | ------ | -------------- |
+| serverAddr | False | String | NAS server address |
+| nasDir | False | String | NAS directory |
+| fcDir | False | String | Function calculation directory |
 
 ### tracingConfig
 
@@ -876,13 +875,13 @@ When the runtime is the custom-container service role permission:
 
 ### customContainerConfig
 
-| Parameter Name   | Required | Type   | Parameter Description                                        |
-| ---------------- | -------- | ------ | ------------------------------------------------------------ |
-| image            | False    | String | Container image repository address                           |
-| command          | False    | String | Container startup command, example value: '["/code/myserver"]' |
-| args             | False    | String | Container startup parameters, example values: '["-arg1", "value1"]' |
-| accelerationType | False    | String | Mirror acceleration switch, optional values: 'Default', 'None', the former means on, the latter means off |
-| instanceID       | False    | String | The ID of the Container Image Service Enterprise Edition instance. When an enterprise version instance is selected for the container image, you need to add an instance ID to the enterprise version of the container image service. The default resolution of the instance must be the VPC network address where the service is located. PrivateZone product definition domain name resolution is not currently supported |
+| Parameter Name | Required | Type | Parameter Description |
+| ---------------- | ----- | ------ | ------------------------------------------------------------ |
+| image | False | String | Container image repository address |
+| command | False | String | Container startup command, example value: '["/code/myserver"]' |
+| args | False | String | Container startup parameters, example values: '["-arg1", "value1"]' |
+| accelerationType | False | String | Mirror acceleration switch, optional values: 'Default', 'None', the former means on, the latter means off |
+| instanceID | False | String | The ID of the Container Image Service Enterprise Edition instance. When an enterprise version instance is selected for the container image, you need to add an instance ID to the enterprise version of the container image service. The default resolution of the instance must be the VPC network address where the service is located. PrivateZone product definition domain name resolution is not currently supported |
 
 
 ### environmentVariables
@@ -895,50 +894,50 @@ TempKey: tempValue
 
 ### instanceLifecycleConfig
 
-| Parameter Name                      | Required | Type                             | Parameter Description |
-| ----------------------------------- | -------- | -------------------------------- | --------------------- |
-| [preFreeze](#prefreeze and prestop) | False    | [Struct](#prefreeze and prestop) | PreFreeze function    |
-| [preStop](#prefreeze and prestop)   | False    | [Struct](#prefreeze and prestop) | PreStop function      |
+| Parameter Name | Required | Type | Parameter Description |
+| -------------------------------- | ----- | ----------------------------- | -------------- |
+| [preFreeze](#prefreeze and prestop) | False | [Struct](#prefreeze and prestop) | PreFreeze function |
+| [preStop](#prefreeze and prestop) | False | [Struct](#prefreeze and prestop) | PreStop function |
 
 #### preFreeze and preStop
 
-| Parameter Name | Required | Type   | Parameter Description |
-| -------------- | -------- | ------ | --------------------- |
-| handler        | True     | String | Function entry        |
-| timeout        | False    | Number | Timeout time          |
+| Parameter Name | Required | Type | Parameter Description |
+| ------- | ----- | ------ | -------- |
+| handler | True | String | Function entry |
+| timeout | False | Number | Timeout time |
 
 ### asyncConfiguration
 
-| Parameter Name              | Required | Type                   | Parameter Description                                        |
-| --------------------------- | -------- | ---------------------- | ------------------------------------------------------------ |
-| maxAsyncEventAgeInSeconds   | False    | Number                 | The maximum survival time of the message, the value range is [1,2592000]. Unit: Second |
-| maxAsyncRetryAttempts       | False    | Number                 | The maximum number of retries after an asynchronous call fails, the default value is 3. Value range [0,8] |
-| statefulInvocation          | False    | Boolean                | Whether to enable stateful asynchronous invocation           |
-| [destination](#destination) | False    | [Struct](#destination) | The configuration structure of the asynchronous call destination |
+| Parameter Name | Required | Type | Parameter Description |
+| --------------------------- | ----- | ---------------------- | ------------------------------------------------------------------ |
+| maxAsyncEventAgeInSeconds | False | Number | The maximum survival time of the message, the value range is [1,2592000]. Unit: Second |
+| maxAsyncRetryAttempts | False | Number | The maximum number of retries after an asynchronous call fails, the default value is 3. Value range [0,8] |
+| statefulInvocation | False | Boolean | Whether to enable stateful asynchronous invocation |
+| [destination](#destination) | False | [Struct](#destination) | The configuration structure of the asynchronous call destination |
 
 
 ### customDNS
 
-| Parameter Name | Required | Type                          | Parameter Description                                        |
-| -------------- | -------- | ----------------------------- | ------------------------------------------------------------ |
-| nameServers    | False    | List\<String\>                | List of IP addresses of DNS servers                          |
-| searches       | False    | List\<String\>                | DNS search domains list                                      |
-| dnsOptions     | False    | [List\<Struct\>](#dnsoptions) | Corresponds to the Options item of resolv.conf DNS configuration |
+| Parameter Name | Required | Type | Parameter Description |
+| --------------------------- | ----- | ---------------------- | ------------------------------------------------------------------ |
+| nameServers | False | List\<String\> | List of IP addresses of DNS servers |
+| searches | False | List\<String\> | DNS search domains list |
+| dnsOptions | False | [List\<Struct\>](#dnsoptions) | Corresponds to the Options item of resolv.conf DNS configuration |
 
 ### customRuntimeConfig
 
-| Parameter Name | Required | Type           | Parameter Description                                  |
-| -------------- | -------- | -------------- | ------------------------------------------------------ |
-| command        | True     | List\<String\> | Start command, example value: ["/code/myserver"]       |
-| args           | False    | String         | Startup arguments, example values: ["-arg1", "value1"] |
+| Parameter Name | Required | Type | Parameter Description |
+| --------------------------- | ----- | ---------------------- | ------------------------------------------------------------------ |
+| command | True | List\<String\> | Start command, example value: ["/code/myserver"] |
+| args | False | String | Startup arguments, example values: ["-arg1", "value1"] |
 
 
 #### dnsOptions
 
-| Parameter Name | Required | Type   | Parameter Description                                        |
-| -------------- | -------- | ------ | ------------------------------------------------------------ |
-| name           | True     | String | The key corresponding to the Options item of the resolv.conf DNS configuration |
-| value          | True     | String | Corresponds to the value of the Options item of the resolv.conf DNS configuration |
+| Parameter Name | Required | Type | Parameter Description |
+| --------------------------- | ----- | ---------------------- | ------------------------------------------------------------------ |
+| name | True | String | The key corresponding to the Options item of the resolv.conf DNS configuration |
+| value | True | String | Corresponds to the value of the Options item of the resolv.conf DNS configuration |
 
 #### Permission configuration related
 
@@ -1013,32 +1012,32 @@ TempKey: tempValue
 
 #### destination
 
-| Parameter Name | Required | Type   | Parameter Description                                     |
-| -------------- | -------- | ------ | --------------------------------------------------------- |
-| onSuccess      | False    | String | The target service for which the asynchronous call failed |
-| onFailure      | False    | String | Asynchronous call to successful target service            |
+| Parameter Name | Required | Type | Parameter Description |
+| --------- | ----- | ------ | ------------ |
+| onSuccess | False | String | The target service for which the asynchronous call failed |
+| onFailure | False | String | Asynchronous call to successful target service |
 
 
 ## triggers field
 
-| Parameter Name | Required | Type   | Parameter Description                                        |
-| -------------- | -------- | ------ | ------------------------------------------------------------ |
-| name           | True     | String | trigger name                                                 |
-| type           | True     | Enum   | trigger type                                                 |
-| role           | False    | String | Use the ARN of a RAM role to specify the execution role for the function, the event source will use this role to trigger the function execution, please ensure that the role has the permission to call the function |
-| sourceArn      | False    | String | ARN of the trigger event source                              |
-| qualifier      | False    | String | Version or alias of trigger function, default `LATEST`       |
-| config         | True     | Struct | Trigger configuration, including [OSS trigger](#OSS trigger), [Log trigger](#Log trigger), [Log trigger](#Log trigger), [Timer trigger](#Timer trigger), [Http trigger](#Http trigger), [MNS trigger](#MNS trigger), [CDN trigger](#CDN trigger) |
+| Parameter Name | Required | Type | Parameter Description |
+| --------- | ----- | ------ | -------------------------------------------------------------- |
+| name | True | String | trigger name |
+| type | True | Enum | trigger type |
+| role | False | String | Use the ARN of a RAM role to specify the execution role for the function, the event source will use this role to trigger the function execution, please ensure that the role has the permission to call the function |
+| sourceArn | False | String | ARN of the trigger event source |
+| qualifier | False | String | Version or alias of trigger function, default `LATEST` |
+| config | True | Struct | Trigger configuration, including [OSS trigger](#OSS trigger), [Log trigger](#Log-trigger), [Log trigger](#Log-trigger), [Timer trigger](#Timer trigger), [Http trigger](#Http trigger), [MNS trigger](#MNS trigger), [CDN trigger](#CDN trigger) |
 
 type currently supports: `http`, `timer`, `oss`, `log`, `mns_topic`, `cdn_events`, `tablestore`
 
 ### OSS triggers
 
-| Parameter Name    | Required | Type              | Parameter Description                                        |
-| ----------------- | -------- | ----------------- | ------------------------------------------------------------ |
-| bucketName        | True     | String            | Target bucket name in OSS                                    |
-| events            | True     | List\<String\>    | The list of events that trigger the function execution on the OSS side |
-| [filter](#filter) | True     | [Struct](#filter) | Trigger condition                                            |
+| Parameter Name | Required | Type | Parameter Description |
+| ----------------- | ---- | ----------------- | ---------------------------- |
+| bucketName | True | String | Target bucket name in OSS |
+| events | True | List\<String\> | The list of events that trigger the function execution on the OSS side |
+| [filter](#filter) | True | [Struct](#filter) | Trigger condition |
 
 Examples:
 
@@ -1121,16 +1120,16 @@ triggers:
 
 #### filter
 
-| Parameter Name | Required | Type          | Parameter Description |
-| -------------- | -------- | ------------- | --------------------- |
-| Key            | False    | [Struct](Key) | key value             |
+| Parameter Name | Required | Type | Parameter Description |
+| ------ | ----- | ------------- | -------- |
+| Key | False | [Struct](Key) | key value |
 
 ##### Key
 
-| Parameter Name | Required | Type   | Parameter Description |
-| -------------- | -------- | ------ | --------------------- |
-| Prefix         | False    | String | Prefix                |
-| Suffix         | False    | String | Suffix                |
+| Parameter Name | Required | Type | Parameter Description |
+| ------ | ----- | ------ | -------- |
+| Prefix | False | String | Prefix |
+| Suffix | False | String | Suffix |
 
 ### Log trigger
 
@@ -1250,24 +1249,24 @@ triggers:
 
 #### logConfig
 
-| Parameter Name | Required | Type   | Parameter Description                                        |
-| -------------- | -------- | ------ | ------------------------------------------------------------ |
-| project        | False    | String | Log project name                                             |
-| logstore       | False    | String | The name of the log store, the log of the function execution process triggered by the log service will be recorded in the log store |
+| Parameter Name | Required | Type | Parameter Description |
+| -------- | ----- | ------ | -------------------------------------------------------------- |
+| project | False | String | Log project name |
+| logstore | False | String | The name of the log store, the log of the function execution process triggered by the log service will be recorded in the log store |
 
 
 #### jobConfig
 
-| Parameter Name  | Required | Type   | Parameter Description                                        |
-| --------------- | -------- | ------ | ------------------------------------------------------------ |
-| maxRetryTime    | False    | String | Indicates the maximum number of attempts allowed if an error is encountered when the log service triggers the function execution, the value range: [0,100] |
-| triggerInterval | False    | String | The time interval at which the log service triggers the function to run, value range: [3,600], unit: second |
+| Parameter Name | Required | Type | Parameter Description |
+| --------------- | ----- | ------ | ------------------------------------------------------------ |
+| maxRetryTime | False | String | Indicates the maximum number of attempts allowed if an error is encountered when the log service triggers the function execution, the value range: [0,100] |
+| triggerInterval | False | String | The time interval at which the log service triggers the function to run, value range: [3,600], unit: second |
 
 #### sourceConfig
 
-| Parameter Name | Required | Type   | Parameter Description                                        |
-| -------------- | -------- | ------ | ------------------------------------------------------------ |
-| logstore       | False    | String | The trigger will periodically subscribe data from the log store to the function service for custom processing |
+| Parameter Name | Required | Type | Parameter Description |
+| -------- | ----- | ------ | ------------------------------------------------------------ |
+| logstore | False | String | The trigger will periodically subscribe data from the log store to the function service for custom processing |
 
 #### functionParameter
 
@@ -1279,11 +1278,11 @@ TempKey: tempValue
 
 ### Timer trigger
 
-| Parameter Name | Required | Type    | Parameter Description                                        |
-| -------------- | -------- | ------- | ------------------------------------------------------------ |
-| cronExpression | True     | String  | Time trigger expression, supports two settings: @every, cron expression |
-| enable         | True     | Boolean | Whether to enable this trigger                               |
-| payload        | False    | String  | Represents the input content of the trigger event itself     |
+| Parameter Name | Required | Type | Parameter Description |
+| -------------- | ----- | ------- | --------------------------------------------------- |
+| cronExpression | True | String | Time trigger expression, supports two settings: @every, cron expression |
+| enable | True | Boolean | Whether to enable this trigger |
+| payload | False | String | Represents the input content of the trigger event itself |
 
 References:
 
@@ -1328,10 +1327,10 @@ triggers:
 
 ### Http trigger
 
-| Parameter Name | Required | Type           | Parameter Description                                        |
-| -------------- | -------- | -------------- | ------------------------------------------------------------ |
-| authType       | True     | String         | Authentication type, optional values: anonymous, function    |
-| methods        | True     | List\<String\> | Access methods supported by HTTP triggers, optional values: GET, POST, PUT, DELETE, HEAD |
+| Parameter Name | Required | Type | Parameter Description |
+| -------- | ---- | ------------ | -------------------------------------------------- |
+| authType | True | String | Authentication type, optional values: anonymous, function |
+| methods | True | List\<String\> | Access methods supported by HTTP triggers, optional values: GET, POST, PUT, DELETE, HEAD |
 
 Examples：
 
@@ -1376,13 +1375,13 @@ triggers:
 
 ### MNS Triggers
 
-| Parameter Name      | Required | Type   | Parameter Description                                        |
-| ------------------- | -------- | ------ | ------------------------------------------------------------ |
-| topicName           | True     | String | mns topic name                                               |
-| region              | False    | List   | The region where the mns topic is located, if not filled, the default is the same region as the function |
-| notifyContentFormat | False    | String | The format of the input parameter event pushed to the function, optional values: STREAM, JSON |
-| notifyStrategy      | False    | String | Retry strategy for calling the function, optional values: BACKOFF_RETRY, EXPONENTIAL_DECAY_RETRY |
-| filterTag           | False    | String | Describes the tag of message filtering in this subscription (only messages with the same tag will be pushed), a string of no more than 16 characters, message filtering is not performed by default, that is, this field is not filled in by default |
+| Parameter Name | Required | Type | Parameter Description |
+| ------------------- | ----- | ------ | ---------------- |
+| topicName | True | String | mns topic name |
+| region | False | List | The region where the mns topic is located, if not filled, the default is the same region as the function |
+| notifyContentFormat | False | String | The format of the input parameter event pushed to the function, optional values: STREAM, JSON |
+| notifyStrategy | False | String | Retry strategy for calling the function, optional values: BACKOFF_RETRY, EXPONENTIAL_DECAY_RETRY |
+| filterTag | False | String | Describes the tag of message filtering in this subscription (only messages with the same tag will be pushed), a string of no more than 16 characters, message filtering is not performed by default, that is, this field is not filled in by default |
 
 References:
 
@@ -1459,12 +1458,12 @@ triggers:
 
 ### CDN Triggers
 
-| Parameter Name      | Required | Type                | Parameter Description                                        |
-| ------------------- | -------- | ------------------- | ------------------------------------------------------------ |
-| eventName           | True     | String              | The event that triggers function execution on the CDN side, once created, cannot be changed |
-| eventVersion        | True     | String              | The version that triggers the function execution event on the CDN side, once created, it cannot be changed |
-| notes               | True     | String              | Notes information                                            |
-| [filter](#filter-1) | True     | [Struct](#filter-1) | Filter (requires at least one filter)                        |
+| Parameter Name | Required | Type | Parameter Description |
+| ------------------- | ---- | ------------------- | ------------------------------------------------- |
+| eventName | True | String | The event that triggers function execution on the CDN side, once created, cannot be changed |
+| eventVersion | True | String | The version that triggers the function execution event on the CDN side, once created, it cannot be changed |
+| notes | True | String | Notes information |
+| [filter](#filter-1) | True | [Struct](#filter-1) | Filter (requires at least one filter) |
 
 References:
 
@@ -1546,16 +1545,16 @@ triggers:
 
 #### filter
 
-| Parameter Name | Required | Type           | Parameter Description                 |
-| -------------- | -------- | -------------- | ------------------------------------- |
-| domain         | True     | List\<String\> | Collection of filter parameter values |
+| Parameter Name | Required | Type | Parameter Description |
+| ------ | ---- | ------------ | ---------------- |
+| domain | True | List\<String\> | Collection of filter parameter values |
 
 ### Tablestore triggers
 
-| Parameter Name | Required | Type           | Parameter Description           |
-| -------------- | -------- | -------------- | ------------------------------- |
-| instanceName   | True     | List\<String\> | Name of the Tablestore instance |
-| tableName      | True     | List\<String\> | table name in instance          |
+| Parameter Name | Required | Type | Parameter Description |
+| ------------ | ---- | ------------ | ------------------ |
+| instanceName | True | List\<String\> | Name of the Tablestore instance |
+| tableName | True | List\<String\> | table name in instance |
 
 References:
 
@@ -1642,12 +1641,13 @@ triggers:
 
 ## customDomains field
 
-| Parameter Name              | Required | Type                         | Parameter Description                                        |
-| --------------------------- | -------- | ---------------------------- | ------------------------------------------------------------ |
-| domainName                  | True     | String                       | Domain name, if the value is auto, the system will assign the domain name by default |
-| protocol                    | True     | String                       | Protocol, value: `HTTP`, `HTTPS`, `HTTP, HTTPS`              |
-| [routeConfigs](#certconfig) | True     | [List\<Struct>](#certconfig) | routes                                                       |
-| [certConfig](#routeconfigs) | False    | [Struct](#routeconfigs)      | Domain Certificate                                           |
+| Parameter Name | Required | Type | Parameter Description |
+| --------------------------- | ----- | --------------------------- | ------------------------------------------ |
+| domainName | True | String | Domain name, if the value is auto, the system will assign the domain name by default |
+| protocol | True | String | Protocol, value: `HTTP`, `HTTPS`, `HTTP, HTTPS` |
+| [routeConfigs](#routeconfigs) | True | [List\<Struct>](#routeconfigs) | routes |
+| [certConfig](#certconfig) | False | [Struct](#certconfig) | Domain Certificate |
+| certId | False | Number   | cert ID |
 
 References:
 
@@ -1662,6 +1662,101 @@ customDomains:
 ```
 
 > ⚠️ Note: If the domain name is configured as `auto`, the system will assign a test domain name by default. This domain name is only for testing use, and its stability is not guaranteed. The Serverless Devs FC component has the right to recycle the domain name in the future. In the case of online business and production demand business, it is strongly recommended to bind your own custom domain name.
+
+
+### certConfig
+
+| Parameter   | Required | Type   | Description                                                  |
+| ----------- | -------- | ------ | ------------------------------------------------------------ |
+| certName    | False    | String | The  name of the certificate.                                |
+| privateKey  | False    | String | The private key. The key must be in the PEM format.         |
+| certificate | False    | String | The  certificate. The certificate must be in the PEM format. |
+
+
+### routeConfigs
+
+| Parameter    | Required | Type   | Description                  |
+| ------------ | -------- | ------ | ---------------------------- |
+| path         | True     | String | The  path.                   |
+| serviceName  | False    | String | The  name of the service.    |
+| functionName | False    | String | The  name of the function.   |
+| qualifier    | False    | String | The  version of the service. |
+ 
+#### Obtain the certificate content by configuring certId
+
+
+
+If certConfig is not configured, you can use 'certId' to obtain the configuration. Will call ali cloud digital certificate management service [interface](https://help.aliyun.com/document_detail/126512.html) access to configuration, so you need to has the authority to obtain the certificate details.
+
+References:
+````
+customDomains:
+    - domainName: test.com
+      protocol: HTTP,HTTPS
+      certId: 123456
+      routeConfigs:
+        - path: /*
+````
+
+#### Obtain the certificate by configuring certConfig
+
+When configuring certConfig, you can obtain the certificate and privateKey in any of the following ways:
+
+Directly fill in **file content**
+References:
+```yaml
+customDomains:
+    - domainName: test.com
+      protocol: HTTP,HTTPS
+      routeConfigs:
+        - path: /*
+      certConfig:
+        certName: certName
+        certificate: '-----BEGIN CERTIFICATE----\n certificate content \n----END CERTIFICATE-----'
+        privateKey: '-----BEGIN RSA PRIVATE KEY----\n privateKey content \n----END RSA PRIVATE KEY-----'
+```
+
+**Local file path**
+References:
+```yaml
+customDomains:
+    - domainName: test.com
+      protocol: HTTP,HTTPS
+      routeConfigs:
+        - path: /*
+      certConfig:
+        certName: certName
+        certificate: ./localpath/certificate.pem 
+        privateKey: ./localpath/privateKey.pem 
+```
+
+**HTTP or HTTPS** address that can be accessed directly from the public network
+References:
+```yaml
+customDomains:
+    - domainName: test.com
+      protocol: HTTP,HTTPS
+      routeConfigs:
+        - path: /*
+      certConfig:
+        certName: certName
+        certificate: https://oss.abc.com/certificate
+        privateKey: http://oss.abc.com/privateKey
+```
+
+**OSS** address in the format of 'OSS ://{region}/{bucketName}/{objectName}', but the 'sub-account' must have access to the 'OSS file'
+References:
+```yaml
+customDomains:
+    - domainName: test.com
+      protocol: HTTP,HTTPS
+      routeConfigs:
+        - path: /*
+      certConfig:
+        certName: certName
+        certificate: oss://cn-hangzhou/bucketName/certificate.pem
+        privateKey: oss://cn-hangzhou/bucketName/privateKey.pem
+```
 
 ### Permissions
 
@@ -1723,27 +1818,3 @@ System Policy: `AliyunFCFullAccess`
     "Version": "1"
 }
 ```
-
-### certConfig
-
-
-
-| Parameter   | Required | Type   | Description                                                  |
-| ----------- | -------- | ------ | ------------------------------------------------------------ |
-| certName    | False    | String | The  name of the certificate.                                |
-| privateKey  | False    | String | The private  key. The key must be in the PEM format.         |
-| certificate | False    | String | The  certificate. The certificate must be in the PEM format. |
-
-
-
-### routeConfigs
-
-
-
-| Parameter    | Required | Type   | Description                  |
-| ------------ | -------- | ------ | ---------------------------- |
-| path         | True     | String | The  path.                   |
-| serviceName  | False    | String | The  name of the service.    |
-| functionName | False    | String | The  name of the function.   |
-| qualifier    | False    | String | The  version of the service. |
-
