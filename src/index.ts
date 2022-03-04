@@ -527,13 +527,6 @@ export default class FcBaseComponent {
     }
     const transformArgs = args.replace(commandName, '').replace(/(^\s*)|(\s*$)/g, '');
 
-    // warning: 2021.12.24 交互修改警告，过段时间可以删除
-    if (commandName === 'upload') {
-      this.logger
-        .warn(`The nas upload interaction has changed. For specific information, please refer to:
-https://github.com/devsapp/fc/blob/main/docs/zh/zh/command/nas.md#nas-upload-命令
-https://gitee.com/devsapp/fc/blob/main/docs/zh/command/nas.md#nas-upload-命令\n`);
-    }
     // s nas command ls -lh /mnt/auto 会被解析为 --help
     if (comParse?.data?.help && !args?.includes('ls -lh')) {
       core.help(NAS_SUB_COMMAND_HELP_INFO[commandName]);
@@ -571,7 +564,7 @@ https://gitee.com/devsapp/fc/blob/main/docs/zh/command/nas.md#nas-upload-命令\
       return;
     }
 
-    const payload = await GenerateNasProps.generateNasProps(
+    const payload = await GenerateNasProps.getServiceConfig(
       props,
       project?.access,
       inputs.credentials,
