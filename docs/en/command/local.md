@@ -216,7 +216,7 @@ Examples with Yaml
 
 You can view the details about debugging local HTTP functions in a browser by using `url` in the output. 
 
-If you need to debug an HTTP function by using a custom domain name, you can add the `--custom` parameter before the debugging. Sample output:
+If you need to debug an HTTP function by using a custom domain name, you can add the `--custom-domain` parameter before the debugging. Sample output:
 
 ```
   url: http://localhost:7308/
@@ -238,5 +238,16 @@ If you need to debug an HTTP function by using a custom domain name, you can add
 >
 > If you want to use a custom runtime function or custom container function, use the system domain name for debugging, and leave the basic path unchanged, you can add the header x-fc-invocation-target:2016-08-15/proxy/$ServiceName/$functionName to the HTTP request sent to invoke the HTTP function.
 
+### Note
 
+Interaction design for `s local start`:
 
+- If there is no customDomains configuration, must use the domain name system path: `/2016-08-15/proxy/serviceName/functionName/`
+
+- The customDomains configuration exists
+  1. Specify --custom-domain to use the path configured by the specified domain name
+  2. --custom-domain is not specified
+    2.1 If there is only one customDomains, directly use the path configured with this domain name
+    2.2 If there are multiple domain names, 'interaction' is generated and the configured domain name path is selected
+
+  > To use the system domain name path, use --custom-domain system or select system

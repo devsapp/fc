@@ -233,6 +233,17 @@ Examples with Yaml
 > - 系统域名地址的基础路径匹配是：`/2016-08-15/proxy/fc-deploy-service/http-trigger-py36/`
 > - 自定义域名地址的基础路径匹配可以是任何形式，包括`/`
 >
-> 由于路径的不同，所以在代码开发和处理的时候，都会有所不同，如果使用某个 Web 框架（例如 Express、Django 等），匹配的首页地址为`/`，那么使用系统域名地址则可能会出现`404`，这个时候较为推荐使用自定义域名，获得更原生的体验。所以为了满足开发者在系统域名与自定义域名不同模式下的调试需要，本组件支持`--custom`参数进行自定义域名模式调试。
+> 由于路径的不同，所以在代码开发和处理的时候，都会有所不同，如果使用某个 Web 框架（例如 Express、Django 等），匹配的首页地址为`/`，那么使用系统域名地址则可能会出现`404`，这个时候较为推荐使用自定义域名，获得更原生的体验。所以为了满足开发者在系统域名与自定义域名不同模式下的调试需要，本组件支持`--custom-domain`参数进行自定义域名模式调试。
 > 如果既要使用 custom-runtime/custom-container 函数，又要使用系统域名，还要不处理系统基础路径，那么可以在发给函数的 HTTP 请求中增加 header: `x-fc-invocation-target: 2016-08-15/proxy/$ServiceName/$functionName` 即可
 
+### 注意事项
+
+针对 s local start 本地调用交互设计：
+
+- 如果不存在 customDomains 配置，一定使用系统域名路径：`/2016-08-15/proxy/serviceName/functionName/`
+- 存在 customDomains 配置
+  1. 指定 --custom-domain 参数, 使用指定域名配置的路径
+  2. 未指定 --custom-domain
+    2.1 如果 customDomains 仅有一个，直接使用此域名配置的路径
+    2.2 如果存在多个则产生`交互`，选择配置的域名路径
+  > 如果使用系统域名路径，使用 --custom-domain system 或者选择时候选择 system
