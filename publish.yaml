@@ -2,7 +2,7 @@ Type: Component
 Name: fc
 Provider:
   - 阿里云
-Version: 0.1.42
+Version: dev
 Description: 阿里云函数计算基础组件
 HomePage: https://github.com/devsapp/fc
 Tags:
@@ -59,753 +59,860 @@ Service:
     Authorities:
       - 函数计算全部权限
 Properties:
-  region:
-    Description: 地域
-    Required: true
-    Type:
-      - Enum:
-          - cn-beijing
-          - cn-hangzhou
-          - cn-shanghai
-          - cn-qingdao
-          - cn-zhangjiakou
-          - cn-huhehaote
-          - cn-shenzhen
-          - cn-chengdu
-          - cn-hongkong
-          - ap-southeast-1
-          - ap-southeast-2
-          - ap-southeast-3
-          - ap-southeast-5
-          - ap-northeast-1
-          - eu-central-1
-          - eu-west-1
-          - us-west-1
-          - us-east-1
-          - ap-south-1
-  service:
-    Description: 服务
-    Required: true
-    Type:
-      - Struct:
-          name:
-            Description: Service名称
-            Required: True
-            Example: myService
-            Type:
-              - String
+  definitions:
+    roleStatement:
+      type: object
+      title: 自定义策略
+      description: 自定义策略内容
+      default: {}
+      examples: []
+      required:
+        - name
+        - description
+        - statement
+      properties:
+        name:
+          type: string
+          title: 策略名称
+          description: 策略名称
+          default: ''
+          examples:
+            - myPolicy
+        description:
+          type: string
+          title: 策略描述
+          description: 策略描述
+          default: ''
+          examples:
+            - custom policy
+        statement:
+          type: array
+          title: 策略内容列表
+          description: 策略内容列表
+          default: []
+          examples: []
+          additionalItems: true
+          items:
+            - type: object
+              title: 策略内容列表
+              description: 策略内容列表
+              default: {}
+              examples: []
+              required:
+                - Effect
+                - Action
+                - Resource
+              properties:
+                Effect:
+                  title: 策略生效
+                  description: 策略生效，可选值有 'Allow' 和 'Deny'
+                  default: Allow
+                  enum:
+                    - Allow
+                    - Deny
+                Action:
+                  type: array
+                  title: 策略动作
+                  description: 策略动作
+                  default: []
+                  additionalItems: true
+                  items:
+                    - type: string
+                      title: 策略动作
+                      description: 策略动作
+                      examples:
+                        - log:ListProject
+                Resource:
+                  type: array
+                  title: 策略的目标资源
+                  description: 策略的目标资源
+                  default: []
+                  examples: []
+                  additionalItems: true
+                  items:
+                    - type: string
+                      title: 策略的目标资源
+                      description: 策略的目标资源
+                      default: ''
+                      examples:
+                        - acs:log:*:*:project/*
+                      pattern: '^acs:.*$'
+                Condition:
+                  type: object
+                  title: 策略的条件限制
+                  description: 策略的条件限制
+              additionalProperties: true
+      additionalProperties: true
+    role:
+      type: object
+      description: 自定义策略列表创建角色
+      default: {}
+      required:
+        - name
+        - policies
+      properties:
+        name:
+          type: string
+          title: 角色名称
+          default: ''
+          examples:
+            - roleName
+        policies:
+          type: array
+          title: 策略列表
           description:
-            Description: Service的简短描述
-            Required: True
-            Example: myService Description
-            Type:
-              - String
-          internetAccess:
-            Description: 设为true让function可以访问公网
-            Required: False
-            Default: true
-            Type:
-              - Boolean
-          role:
-            Description: 授予函数计算所需权限的RAM role, 使用场景包含 1. 把 function产生的 log 发送到用户的 logstore 中 2. 为function 在执行中访问其它云资源生成 token
-            Required: False
-            Example: 'acs:ram::xxx:role/qianfeng-fc-deploy-test-role'
-            Type:
-              - String[简单配置]
-              - Struct[详细配置]:
-                  name:
-                    Description: 角色名
-                    Required: True
-                    Type:
-                      - String
-                  policies:
-                    Description: 角色名
-                    Required: True
-                    Type:
-                      - List<String>
-          tracingConfig:
-            Description: 链路追踪，可取值：Enable、Disable
-            Required: False
-            Default: Disable
-            Type:
-              - Enum:
-                  - Enable
-                  - Disable
-          nasConfig:
-            Description: 链路追踪，可取值：Enable、Disable
-            Required: False
-            Default: auto
-            Type:
-              - String[简单配置]
-              - Strcut[详细配置]:
-                  userId:
-                    Description: userID, 默认为10003
-                    Required: False
-                    Default: 10003
-                    Type:
-                      - Number
-                  groupId:
-                    Description: groupID, 默认为10003
-                    Required: False
-                    Default: 10003
-                    Type:
-                      - Number
-                  mountPoints:
-                    Description: 目录配置
-                    Required: False
-                    Type:
-                      - List<Struct>:
-                          serverAddr:
-                            Description: NAS 服务器地址
-                            Required: False
-                            Example: xxx.cn-qingdao.nas.aliyuncs.com
-                            Type:
-                              - String
-                          nasDir:
-                            Description: NAS目录
-                            Required: False
-                            Example: /qianfeng-fc-deploy-service
-                            Type:
-                              - String
-                          fcDir:
-                            Description: 函数计算目录
-                            Required: False
-                            Example: /
-                            Type:
-                              - String
-          vpcConfig:
-            Description: VPC配置, 配置后function可以访问指定VPC
-            Required: False
-            Type:
-              - Struct:
-                  vpcId:
-                    Description: VPC ID
-                    Required: False
-                    Type:
-                      - String
-                  securityGroupId:
-                    Description: 安全组ID
-                    Required: False
-                    Type:
-                      - String
-                  vswitchIds:
-                    Description: 一个或多个VSwitch ID
-                    Required: False
-                    Type:
-                      - List<String>
-          logConfig:
-            Description: log配置，function产生的log会写入这里配置的logstore
-            Required: False
-            Type:
-              - Struct:
-                  project:
-                    Description: loghub中的logstore名称
-                    Required: False
-                    Type:
-                      - String
-                  logstore:
-                    Description: loghub中的project名称
-                    Required: False
-                    Type:
-                      - String
-                  enableRequestMetrics:
-                    Description: RequestMetrics开关，取值`true`/`false`
-                    Required: False
-                    Deafult: false
-                    Type:
-                      - Boolean
-                  enableInstanceMetrics:
-                    Description: InstanceMetrics开关，取值`true`/`false`
-                    Required: False
-                    Deafult: false
-                    Type:
-                      - Boolean
-  function:
-    Description: function名称
-    Required: True
-    Example: qianfeng-fc-base-service
-    Type:
-      - Struct:
-          name:
-            Description: function名称
-            Required: True
-            Example: qianfeng-fc-base-service
-            Type:
-              - String
+            当使用了这个字段，需要本地配置的 ak 具有创建 policy 和 role 的权限，列表中的元素支持字符串和 policy
+            结构体
+          default: []
+          examples: []
+          additionalItems: true
+          items:
+            - type: string
+              description: 阿里云系统内置策略
+              default: ''
+              examples:
+                - AliyunOSSFullAccess
+      additionalProperties: true
+    logConfig:
+      type: object
+      default: {}
+      examples: []
+      required:
+        - project
+        - logstore
+      properties:
+        project:
+          type: string
+          title: 日志项目
+          default: ''
+          examples:
+            - xx-project
+        logstore:
+          type: string
+          title: 日志仓库
+          default: ''
+          examples:
+            - xx-logstore
+        logBeginRule:
+          title: 日志分割规则
+          x-tooltip: 开启日志分割后，将按照日期格式分割长日志内容，如包含多个`2021-11-11`内容的单条日志将被默认分割为多行，当前日期以及下一个日期前的所有内容将作为一条独立日志写入SLS
+          default: None
+          enum:
+            - DefaultRegex
+            - None
+          x-enum-label:
+            - 启用
+            - 禁用
+        enableRequestMetrics:
+          type: boolean
+          title: 请求级别指标
+          x-tooltip:
+            开启该功能后，您可以查看该服务下所有函数的某次调用所消耗的时间及内存。您可以基于请求级别指标创建 Grafana 大盘，点击<a
+            href='https://help.aliyun.com/document_detail/208005.html' target='blank'>这里</a>查看更多详情。
+          default: true
+        enableInstanceMetrics:
+          type: boolean
+          title: 实例级别指标
+          x-tooltip:
+            开启后，您可以查看实例级别的 CPU 使用情况、内存使用情况、实例网络情况和实例内请求数等核心指标信息。点击<a href='https://help.aliyun.com/document_detail/262088.html'
+            target='blank'>这里</a>查看更多详情。
+          default: false
+          examples:
+            - true
+      additionalProperties: true
+    vpcConfig:
+      type: object
+      required:
+        - vpcId
+        - securityGroupId
+        - vswitchIds
+      properties:
+        vpcId:
+          type: string
+          title: 专有网络VPC
+          x-tooltip:
+            当前服务中的函数可以访问的 VPC。点击<a href='https://help.aliyun.com/document_detail/72959.html'
+            target='blank'>这里</a>查看更多详情。
+          default: ''
+        vswitchIds:
+          type: array
+          title: 交换机
+          x-tooltip:
+            函数计算可以访问的子网。函数服务会在您提供的交换机创建弹性网卡. 您的函数将通过弹性网卡访问您专有网络里面的资源。点击<a href='https://help.aliyun.com/document_detail/72959.html'
+            target='blank'>这里</a>查看更多详情
+          default: []
+          additionalItems: true
+          items:
+            - type: string
+              examples:
+                - vsw-xxx1
+                - vsw-xxx2
+        securityGroupId:
+          type: string
+          title: 安全组
+          x-tooltip:
+            此安全组是ENI所在的安全组，也就是函数计算所在的安全组，安全组限定了函数计算在VPC中的出入站规则。需要设置您的VPC所在安全组的入站规则为允许函数计算所在的安全组访问。否则，函数计算无法顺畅地访问您的VPC内资源。点击<a
+            href='https://help.aliyun.com/document_detail/72959.html' target='blank'>这里</a>查看更多详情。
+          default: ''
+      additionalProperties: true
+    nasConfig:
+      type: object
+      required:
+        - userId
+        - groupId
+        - mountPoints
+      properties:
+        userId:
+          type: integer
+          title: 用户
+          description: 访问 NAS 中文件时所用的用户，等同于文件系统中的用户（UID）的概念。UserID 取值范围从 1 到 65534，不包括0（为了执行安全，函数计算暂时不提供root用户的方式）。点击这里查看更多详情。
+          default: 10003
+          examples:
+            - 10003
+        groupId:
+          type: integer
+          title: 用户组
+          description: 访问 NAS 中文件时所用的用户组，等同于文件系统中的用户组（GID）的概念。GroupID 取值范围从 1 到 65534，不包括0（为了执行安全，函数计算暂时不提供root用户的方式）。点击这里查看更多详情。
+          default: 10003
+          examples:
+            - 10003
+        mountPoints:
+          type: array
+          title: 挂载点
+          description: NAS 的挂载点。点击这里查看更多详情。
+          default: []
+          examples: []
+          additionalItems: true
+          items:
+            - type: object
+              title: NAS 挂载点
+              default: {}
+              examples: []
+              required:
+                - serverAddr
+                - nasDir
+                - fcDir
+              properties:
+                serverAddr:
+                  type: string
+                  title: NAS 挂载点
+                  default: ''
+                  examples:
+                    - xxx-xxx.cn-shenzhen.nas.aliyuncs.com
+                nasDir:
+                  type: string
+                  title: 远端NAS中目录
+                  description: 通用型 NAS 以 / 开头，极速型 NAS 必须以 /share 开头。
+                  default: ''
+                  examples:
+                    - '/unit-deploy-service'
+                fcDir:
+                  type: string
+                  title: 函数运行环境中本地目录
+                  description: 必须为 /home/ 或者 /mnt/ 的子目录，例如 /home/app
+                  examples:
+                    - '/mnt/auto'
+              additionalProperties: true
+      additionalProperties: true
+    methods:
+      type: array
+      default:
+        - - GET
+          - POST
+      items:
+        - type: string
+          title: 请求方法
+          default:
+            - GET
+            - POST
+          examples:
+            - GET
+            - POST
+          enum:
+            - GET
+            - POST
+            - PUT
+            - DELETE
+            - HEAD
+    roleArn:
+      type: string
+      pattern: '^acs:ram.*:role.*$'
+      title: 角色名称
+      description: 使用一个 RAM 角色的 ARN 为函数指定执行角色，事件源会使用该角色触发函数执行，请确保该角色有调用函数的权限
+    sourceArn:
+      type: string
+      pattern: '^acs:.*$'
+      title: 事件源的 ARN
+      description: 触发器事件源的 ARN
+    namePattern:
+      title: 名称
+      description: 只能包含字母、数字、下划线和中划线。不能以数字、中划线开头。长度在 1-128 之间。
+      type: string
+      pattern: '^[a-zA-Z0-9-_]{1,128}$'
+  type: object
+  x-component: FormCollapse
+  properties:
+    region:
+      default: cn-hangzhou
+      title: 地域
+      enum:
+        - cn-beijing
+        - cn-hangzhou
+        - cn-shanghai
+        - cn-qingdao
+        - cn-zhangjiakou
+        - cn-huhehaote
+        - cn-shenzhen
+        - cn-chengdu
+        - cn-hongkong
+        - ap-southeast-1
+        - ap-southeast-2
+        - ap-southeast-3
+        - ap-southeast-5
+        - ap-northeast-1
+        - eu-central-1
+        - eu-west-1
+        - us-west-1
+        - us-east-1
+        - ap-south-1
+    service:
+      title: 服务配置
+      type: object
+      properties:
+        name:
+          '$ref': '#/definitions/namePattern'
+          x-component-props:
+            collapse-name: basic
+            collapse-title: 基础信息
+        description:
+          title: 描述
+          description: 服务的描述信息
+          maxLength: 4096
+          type: string
+        internetAccess:
+          title: 允许公网访问
+          description: 配置服务中的函数是否可以访问互联网
+          default: true
+          type: boolean
+        role:
+          title: 服务角色
+          x-tooltip:
+            当前服务和服务中的函数将会使用这个 RAM 角色（Role）来访问您的阿里云资源。点击<a href='https://help.aliyun.com/document_detail/52885.html'
+            target='blank'>这里</a>查看更多详情。
+          examples:
+            - acs:ram::xxx:role/fc-default-role
+          type: string
           description:
-            Description: function的简短描述
-            Required: True
-            Example: 'this is test'
-            Type:
-              - String
-          codeUri:
-            Description: 代码位置
-            Required: False
-            Example: './code.zip'
-            Type:
-              - String
-          ossBucket:
-            Description: 如果指定oss代码，所在的存储桶，不能与codeUri同时出现
-            Required: False
-            Type:
-              - String
-          ossKey:
-            Description: 如果指定oss代码，所对应的对象，不能与codeUri同时出现
-            Required: False
-            Type:
-              - String
-          handler:
-            Description: function执行的入口，具体格式和语言相关
-            Required: False
-            Default: 'index.handler'
-            Type:
-              - String
-          memorySize:
-            Description: function的内存规格
-            Required: False
-            Default: 128
-            Type:
-              - Number
-          gpuMemorySize:
-            Description: function的显存规格
-            Required: False
-            Default: 8192
-            Type:
-              - Number
-          runtime:
-            Description: function的内存规格
-            Required: True
-            Default: nodejs12
-            Type:
-              - Enum:
-                  - nodejs4.4
-                  - nodejs6
-                  - nodejs8
-                  - nodejs10
-                  - nodejs12
-                  - python2.7
-                  - python3
-                  - java8
-                  - java11
-                  - php7.2
-                  - dotnetcore2.1
-                  - custom
-                  - custom-container
-          timeout:
-            Description: function运行的超时时间
-            Required: False
-            Default: 60
-            Type:
-              - Number
-          caPort:
-            Description: CustomContainer/Runtime指定端口
-            Required: False
-            Default: 9000
-            Type:
-              - Number
-          customContainerConfig:
-            Description: 自定义镜像配置
-            Required: False
-            Type:
-              - Struct:
-                  image:
-                    Description: 仓库地址
-                    Required: False
-                    Type:
-                      - String
-                  command:
-                    Description: 指令
-                    Required: False
-                    Type:
-                      - String
-                  args:
-                    Description: 参数
-                    Required: False
-                    Type:
-                      - String
-          environmentVariables:
-            Description: CustomContainer/Runtime指定端口
-            Required: False
-            Example: 9000
-            Type:
-              - Any
-          initializationTimeout:
-            Description: 初始化方法超时时间
-            Required: False
-            Example: 30
-            Type:
-              - Number
-          initializer:
-            Description: 初始化方法超时时间
-            Required: False
-            Example: index.initializer
-            Type:
-              - String
-          instanceConcurrency:
-            Description: 单实例多并发
-            Required: False
-            Example: 1
-            Type:
-              - Number
-          instanceType:
-            Description: 实例类型
-            Required: False
-            Example: e1
-            Type:
-              - String
-          instanceLifecycleConfig:
-            Description: 扩展函数
-            Required: False
-            Type:
-              - Struct:
-                  preFreeze:
-                    Description: PreFreeze 函数
-                    Required: False
-                    Type:
-                      - Struct:
-                          handler:
-                            Description: 函数入口
-                            Required: False
-                            Type:
-                              - String
-                          timeout:
-                            Description: 超时时间
-                            Required: False
-                            Type:
-                              - Number
-                  preStop:
-                    Description: preStop 函数
-                    Required: False
-                    Type:
-                      - Struct:
-                          handler:
-                            Description: 函数入口
-                            Required: False
-                            Type:
-                              - String
-                          timeout:
-                            Description: 超时时间
-                            Required: False
-                            Type:
-                              - Number
-          asyncConfiguration:
-            Description: 异步配置
-            Required: False
-            Type:
-              - Struct:
-                  destination:
-                    Description: 目标地址
-                    Required: False
-                    Type:
-                      - Struct:
-                          onSuccess:
-                            Description: 成功配置
-                            Required: False
-                            Example: acs:fc:{region}:{uid}:services/{serviceName}.{qualifier}/functions/{functionName}
-                            Type:
-                              - String
-                          onFailure:
-                            Description: 失败配置
-                            Required: False
-                            Example: acs:fc:{region}:{uid}:services/{serviceName}.{qualifier}/functions/{functionName}
-                            Type:
-                              - String
-                  maxAsyncEventAgeInSeconds:
-                    Description: 消息最大有效期(s)
-                    Required: False
-                    Type:
-                      - Number
-                  maxAsyncRetryAttempts:
-                    Description: 最大重试次数
-                    Required: False
-                    Type:
-                      - Number
-                  statefulInvocation:
-                    Description: 异步调用状态
-                    Required: False
-                    Type:
-                      - Boolean
-  triggers:
-    Description: 触发器配置
-    Required: False
-    Type:
-      - List<Struct>[HTTP触发器]:
-          name:
-            Description: 触发器名称
-            Required: True
-            Type:
-              - String
-          type:
-            Description: 触发器类型
-            Required: True
-            Default: http
-            Type:
-              - String
-          role:
-            Description: 使用一个 RAM 角色的 ARN 为函数指定执行角色，事件源会使用该角色触发函数执行，请确保该角色有调用函数的权限
-            Required: False
-            Type:
-              - String
-          sourceArn:
-            Description: 资源Arn
-            Required: False
-            Type:
-              - String
-          config:
-            Description: 触发器配置
-            Required: True
-            Type:
-              - Struct:
-                  authType:
-                    Description: 鉴权类型，可选值：anonymous、function
-                    Required: False
-                    Default: anonymous
-                    Type:
-                      - Enum:
-                          - anonymous
-                          - function
-                  methods:
-                    Description: 鉴权类型，可选值：anonymous、function
-                    Required: False
-                    Default: anonymous
-                    Type:
-                      - List<Enum>:
-                          - GET
-                          - POST
-                          - PUT
-                          - DELETE
-                          - HEAD
-      - List<Struct>[时间触发器]:
-          name:
-            Description: 触发器名称
-            Required: True
-            Type:
-              - String
-          type:
-            Description: 触发器类型
-            Required: True
-            Default: http
-            Type:
-              - String
-          config:
-            Description: 触发器配置
-            Required: True
-            Default: http
-            Type:
-              - Struct:
-                  cronExpression:
-                    Description: 时间触发器表达式
-                    Required: True
-                    Example: '0 0 8 * * *'
-                    Type:
-                      - String
-                  enable:
-                    Description: 表示是否启用该触发器
-                    Required: True
-                    Example: true
-                    Type:
-                      - Boolean
-                  payload:
-                    Description: 传入参数
-                    Required: False
-                    Type:
-                      - String
-      - List<Struct>[OSS触发器]:
-          name:
-            Description: 触发器名称
-            Required: True
-            Type:
-              - String
-          type:
-            Description: 触发器类型
-            Required: True
-            Default: oss
-            Type:
-              - String
-          role:
-            Description: 使用一个 RAM 角色的 ARN 为函数指定执行角色，事件源会使用该角色触发函数执行，请确保该角色有调用函数的权限
-            Required: False
-            Type:
-              - String
-          sourceArn:
-            Description: 资源Arn
-            Required: False
-            Type:
-              - String
-          config:
-            Description: 触发器配置
-            Required: FaTruelse
-            Type:
-              - Struct:
-                  bucketName:
-                    Description: 为 OSS 中对应的 bucket 名称
-                    Required: True
-                    Default: http
-                    Type:
-                      - String
-                  events:
-                    Description: 为 OSS 端触发函数执行的事件
-                    Required: True
-                    Type:
-                      - List<String>
-                  filter:
-                    Description: 筛选条件
-                    Required: False
-                    Type:
-                      - Struct:
-                          Key:
-                            Description: 筛选条件
-                            Required: False
-                            Type:
-                              - Struct:
-                                  Prefix:
-                                    Description: 前缀
-                                    Required: False
-                                    Example: source/
-                                    Type:
-                                      - String
-                                  Suffix:
-                                    Description: 后缀
-                                    Required: False
-                                    Example: .png
-                                    Type:
-                                      - String
-      - List<Struct>[日志触发器]:
-          name:
-            Description: 触发器名称
-            Required: True
-            Type:
-              - String
-          type:
-            Description: 触发器类型
-            Required: True
-            Default: http
-            Type:
-              - String
-          role:
-            Description: 使用一个 RAM 角色的 ARN 为函数指定执行角色，事件源会使用该角色触发函数执行，请确保该角色有调用函数的权限
-            Required: False
-            Type:
-              - String
-          sourceArn:
-            Description: 资源Arn
-            Required: False
-            Type:
-              - String
-          config:
-            Description: 触发器配置
-            Required: True
-            Type:
-              - Struct:
-                  logConfig:
-                    Description: log配置
-                    Required: True
-                    Type:
-                      - Struct:
-                          project:
-                            Description: 表示日志服务 Project 名称
-                            Required: False
-                            Type:
-                              - String
-                          logstore:
-                            Description: 表示触发函数执行时，产生的日志会记录到该 Logstore
-                            Required: False
-                            Type:
-                              - String
-                  jobConfig:
-                    Description: job配置
-                    Required: True
-                    Type:
-                      - Struct:
-                          maxRetryTime:
-                            Description: 表示日志服务触发函数执行时，如果遇到错误，所允许的最大尝试次数
-                            Required: False
-                            Type:
-                              - String
-                          triggerInterval:
-                            Description: 表示日志服务触发函数执行的间隔
-                            Required: False
-                            Type:
-                              - String
-                  sourceConfig:
-                    Description: source配置
-                    Required: True
-                    Type:
-                      - Struct:
-                          logstore:
-                            Description: 数据源的 Logstore 名称。触发器会定时从该 Logstore 订阅数据到函数计算
-                            Required: False
-                            Type:
-                              - String
-                  functionParameter:
-                    Description: 日志服务将该配置内容作为函数 event, 当事件触发时
-                    Required: False
-                    Type:
-                      - Any
-                  enable:
-                    Description: 开关
-                    Required: False
-                    Type:
-                      - Boolean
-      - List<Struct>[MNS触发器]:
-          name:
-            Description: 触发器名称
-            Required: True
-            Type:
-              - String
-          type:
-            Description: 触发器类型
-            Required: True
-            Default: mns_topic
-            Type:
-              - String
-          role:
-            Description: 使用一个 RAM 角色的 ARN 为函数指定执行角色，事件源会使用该角色触发函数执行，请确保该角色有调用函数的权限
-            Required: False
-            Type:
-              - String
-          sourceArn:
-            Description: 资源Arn
-            Required: False
-            Type:
-              - String
-          config:
-            Description: 触发器配置
-            Required: True
-            Type:
-              - Struct:
-                  topicName:
-                    Description: mns topic的名字
-                    Required: True
-                    Type:
-                      - String
-                  region:
-                    Description: mns topic 所在的 region，如果不填，默认为和函数一样的 region
-                    Required: False
-                    Type:
-                      - String
-                  notifyContentFormat:
-                    Description: 推送给函数入参 event 的格式，可选值：STREAM, JSON
-                    Required: False
-                    Type:
-                      - Enum:
-                          - STREAM
-                          - JSON
-                  notifyStrategy:
-                    Description: 调用函数的重试策略，可选值：BACKOFF_RETRY, EXPONENTIAL_DECAY_RETRY
-                    Required: False
-                    Type:
-                      - Enum:
-                          - BACKOFF_RETRY
-                          - EXPONENTIAL_DECAY_RETRY
-                  filterTag:
-                    Description: 描述了该订阅中消息过滤的标签（标签一致的消息才会被推送）,不超过 16 个字符的字符串，默认不进行消息过滤，即默认不填写该字段
-                    Required: False
-                    Type:
-                      - String
-      - List<Struct>[CDN触发器]:
-          name:
-            Description: 触发器名称
-            Required: True
-            Type:
-              - String
-          type:
-            Description: 触发器类型
-            Required: True
-            Default: cdn
-            Type:
-              - String
-          role:
-            Description: 使用一个 RAM 角色的 ARN 为函数指定执行角色，事件源会使用该角色触发函数执行，请确保该角色有调用函数的权限
-            Required: False
-            Type:
-              - String
-          sourceArn:
-            Description: 资源Arn
-            Required: False
-            Type:
-              - String
-          config:
-            Description: 触发器配置
-            Required: True
-            Type:
-              - Struct:
-                  eventName:
-                    Description: 为 CDN 端触发函数执行的事件，一经创建不能更改
-                    Required: True
-                    Type:
-                      - String
-                  eventVersion:
-                    Description: 为 CDN 端触发函数执行事件的版本，一经创建不能更改
-                    Required: True
-                    Type:
-                      - String
-                  notes:
-                    Description: 备注信息
-                    Required: True
-                    Type:
-                      - String
-                  filter:
-                    Description: 过滤器（至少需要一个过滤器）
-                    Required: True
-                    Type:
-                      - Struct:
-                          domain:
-                            Description: 网址
-                            Required: True
-                            Type:
-                              - List<String>
-  customDomains:
-    Description: 自定义域名配置
-    Required: False
-    Type:
-      - List<Struct>:
-          domainName:
-            Description: 域名，可以选择auto，用来分配默认域名
-            Required: True
-            Type:
-              - List<String>
-          protocol:
-            Description: 协议
-            Required: True
-            Type:
-              - Enum:
-                  - HTTP
-                  - HTTPS
-                  - HTTP, HTTPS
-          routeConfigs:
-            Description: 路由
-            Required: True
-            Type:
-              - List<Struct>:
-                  - path:
-                      Description: 路径
-                      Required: True
-                      Type:
-                        - String
+            注意：在 RAM 控制台创建服务所使用的角色时，需要选择“阿里云服务”，并且“受信服务”为“函数计算”。详情参考<a href='https://ram.console.aliyun.com/roles/AliyunFCDefaultRole'
+            target='blank'>默认角色</a>
+          pattern: '^acs:ram.*:role.*$'
+        tracingConfig:
+          title: 链路追踪功能
+          x-tooltip:
+            启用链路追踪功能后，您可以使用 Jaeger上传链路信息，使您能够跟踪函数的执行，帮助您快速分析和诊断 Serverless
+            架构下的性能瓶颈。点击<a href='https://help.aliyun.com/document_detail/189804.html'
+            target='blank'>这里</a>查看更多详情。                注意：函数计算在后台为您创建的链路追踪资源可能会产生费用（有一定的免费额度），详情请参见<a
+            href='https://help.aliyun.com/document_detail/169781.html' target='blank'>链路追踪计费方式。</a>
+          description:
+            配置服务的链路追踪功能，启用链路追踪功能后，您可以使用 Jaeger 上传链路信息，使您能够跟踪函数的执行，帮助您快速分析和诊断
+            Serverless 架构下的性能瓶颈。
+          default: Disable
+          enum:
+            - Enable
+            - Disable
+          x-enum-label:
+            - 启用
+            - 禁用
+        logConfig:
+          title: 日志配置
+          x-tooltip: 配置服务的日志功能，启用日志功能后，您可以查看函数的执行日志，从而方便您的代码调试、故障分析、数据分析等操作。
+          oneOf:
+            - title: 自动配置
+              x-tooltip:
+                启用日志功能后，您可以查看函数的执行日志，从而方便您的代码调试、故障分析、数据分析等操作。点击<a href='https://help.aliyun.com/document_detail/73349.html'
+                target='blank'>这里</a>查看更多详情。注意：函数计算在后台为您创建的日志服务资源会产生费用，详情请参见<a href='https://help.aliyun.com/document_detail/107745.htm'
+                target='blank'>日志服务计费方式</a>。
+              enum:
+                - auto
+            - '$ref': '#/definitions/logConfig'
+              title: 自定义配置
+        vpcConfig:
+          title: VPC网络配置
+          x-tooltip: 配置服务中函数使用的网络，例如配置函数是否可以访问公网，是否可以访问 VPC 中的资源等。
+          oneOf:
+            - title: 自动配置
+              x-tooltip: 选择自动配置，系统将会自动为您创建一个VPC、Switch、安全组
+              enum:
+                - auto
+            - title: 自定义配置
+              '$ref': '#/definitions/vpcConfig'
+        nasConfig:
+          title: 存储配置
+          x-tooltip: 配置服务中函数使用的 NAS 文件系统。配置后您的函数可以像访问本地文件系统一样访问存储在其中一个NAS文件系统上的文件。
+          oneOf:
+            - title: 自动配置
+              description:
+                1、选择自动配置 NAS，需要绑定 VPC、VSwitch 和安全组，如您未绑定，将会为您自动创建并绑定在当前服务中<br/>                    2、将为您创建一个新的通用型NAS文件系统，费用为容量型
+                0.35 元/GB/月，性能型（部分地区无容量型） 1.85元/GB/月，请您及时关注 NAS 费用账单<br/>                    3、若您自动配置
+                NAS 成功后选择禁用再启用，系统将优先匹配上一次 NAS 配置，如有需要可以手动更改配置
+              enum:
+                - auto
+            - '$ref': '#/definitions/nasConfig'
+              description:
+                如果您已经为当前函数配置过VPC交换机且和NAS文件系统的可用区不一致，可在NAS中创建一个新的挂载点指向函数计算绑定的交换机。由于同一VPC内不同交换机之间内网互通，因此函数计算可以通过该交换机访问在其他可用区的VPC内资源，但可能会多
+                1～2ms 左右的延时。点击这里查看更多详情。
+              title: 自定义配置
+    function:
+      type: object
+      title: 函数配置
+      additionalProperties: false
+      required:
+        - name
+        - codeUri
+        - runtime
+      properties:
+        name:
+          '$ref': '#/definitions/namePattern'
+        description:
+          title: 描述
+          examples:
+            - this is test description
+          type: string
+        codeUri:
+          title: 代码路径
+          description: 本地代码包路径
+          type: string
+          examples:
+            - '/home/admin'
+          x-reactions:
+            dependencies:
+              - collapse.function.function.basic.ossBucket
+            fulfill:
+              schema:
+                x-visible: '{{!$deps[0]}}'
+        ossBucket:
+          title: ossBucket
+          description: 如果指定oss代码，所在的存储桶，不能与codeUri同时出现
+          type: string
+          x-reactions:
+            dependencies:
+              - collapse.function.function.basic.codeUri
+            fulfill:
+              schema:
+                x-visible: '{{!$deps[0]}}'
+        ossKey:
+          title: ossKey
+          description: 如果指定oss代码，所对应的对象，不能与codeUri同时出现
+          type: string
+          x-reactions:
+            dependencies:
+              - collapse.function.function.basic.codeUri
+            fulfill:
+              schema:
+                x-visible: '{{!$deps[0]}}'
+        handler:
+          title: 函数入口
+          x-tooltip: 指定调用函数时需要从哪个文件中的哪个函数开始执行。
+          description:
+            在“运行环境”为 Node.js 时，当前值的格式为 [文件名].[函数名]。如果当前值为 index.handler，那么在函数被触发时，将执行
+            index.js 文件中的 handler 函数。
+          examples:
+            - index.handler
+          type: string
+        memorySize:
+          title: 内存规格
+          description: 函数执行内存。当执行函数时，可使用的最大内存。
+          default: 512
+          type: integer
+          enum:
+            - 128
+            - 256
+            - 512
+            - 1024
+            - 2048
+            - 3072
+          x-enum-label:
+            - 128 MB
+            - 256 MB
+            - 512 MB
+            - 1 GB
+            - 2 GB
+            - 3 GB
+        runtime:
+          title: 运行环境
+          default: nodejs12
+          type: string
+          enum:
+            - nodejs14
+            - nodejs12
+            - nodejs10
+            - nodejs8
+            - python3
+            - java8
+            - java11
+            - php7.2
+            - dotnetcore2.1
+            - custom
+            - custom-container
+            - nodejs4.4
+            - nodejs6
+            - python2.7
+        customRuntimeConfig:
+          x-reactions:
+            dependencies:
+              - collapse.function.function.runtime
+            fulfill:
+              schema:
+                x-visible: "{{$deps[0] === 'custom'}}"
+          title: custom配置
+          type: object
+          properties:
+            command:
+              type: array
+              title: 启动指令
+              description: 自定义bootstrap启动命令和参数列表。需填写绝对路径，如：/code/myBootstrap
+              default: []
+              examples: []
+              additionalItems: true
+              items:
+                - type: string
+            args:
+              type: array
+              title: 启动参数
+              description: 自定义bootstrap接收的参数列表。依次追加到启动命令之后
+              additionalItems: true
+              items:
+                - type: string
+          x-component: FormGrid
+        customContainerConfig:
+          x-reactions:
+            dependencies:
+              - collapse.function.function.runtime
+            fulfill:
+              schema:
+                x-visible: "{{$deps[0] === 'custom-container'}}"
+          title: 自定义镜像配置
+          type: object
+          properties:
+            image:
+              title: 容器镜像地址
+              description:
+                您需要在容器中实现一个 HTTP Server。当调用函数时，函数计算会启动您的容器，并通过容器中的 HTTP Server
+                对外提供服务。注意：镜像资源使用量中的执行时间是从仓库拉取镜像开始计算的，容器镜像在一段时间一定范围内有缓存，因此并不是每次冷启动一定会产生镜像拉取的费用。这里查看更多详情。
+              type: string
+            instanceID:
+              title: 企业镜像ID
+              description: 容器镜像服务企业版实例的ID。当容器镜像选择的是企业版实例时，您需要给容器镜像服务企业版添加实例ID，该实例的默认解析必须是服务所在的VPC网络地址。目前不支持PrivateZone产品定义域名解析
+              type: string
+            command:
+              examples:
+                - '["/code/myserver"]'
+              title: Command
+              description: 容器的启动命令，例如["/code/myserver"]。该参数为可选参数，如果不填写，则默认使用镜像中的Entrypoint/CMD。点击这里查看更多详情。
+              type: string
+            args:
+              title: Args
+              description: 容器的启动参数，例如["-arg1", "value1"]。该参数为可选参数，如果不填写，则默认使用镜像中的CMD。点击这里查看更多详情。
+              examples:
+                - '["-arg1", "value1"]'
+              type: string
+            accelerationType:
+              title: 拉取镜像加速
+              description: 开启函数计算的镜像加速后，可提速 2~5 倍，将分钟级的镜像拉取缩短至秒级。开启镜像加速将会将镜像转存在函数计算的安全镜像加速存储中。点击这里查看更多详情。
+              default: Default
+              type: string
+              enum:
+                - Default
+                - None
+              x-enum-label:
+                - 启用
+                - 禁用
+        instanceType:
+          title: 实例类型
+          default: e1
+          type: string
+          enum:
+            - e1
+            - c1
+            - g1
+          x-enum-label:
+            - 弹性实例
+            - 性能实例
+            - GPU实例
+          x-tooltip: 函数计算提供性能实例和弹性实例两种实例类型。<br/>                弹性实例：函数计算基本实例，规格小于性能实例，不能执行时间较长的离线任务或平滑地将大应用迁移至函数计算。<br/>                性能实例：大规格实例，包含多种实例规格，资源上限更高，适配场景更多。<br/>                点击这里查看更多详情。
+          description: 点击<a href='https://help.aliyun.com/document_detail/179379.html'
+            target='blank'>这里</a>查看实例类型详情，使用限制和使用场景。
+        gpuMemorySize:
+          title: GPU内存规格
+          description: 函数执行内存。当执行函数时，可使用的最大内存。
+          default: 8192
+          type: integer
+          enum:
+            - 8192
+            - 16384
+          x-enum-label:
+            - 8GB
+            - 16GB
+          x-reactions:
+            dependencies:
+              - collapse.function.function.envInfo.instanceType
+            fulfill:
+              schema:
+                x-visible: "{{$deps[0] === 'g1'}}"
+        timeout:
+          title: 执行超时时间
+          description: 如果函数在这个时间内未能成功执行，函数计算会返回超时错误，请设置大小合适的超时时间，避免函数执行超时。
+          default: 60
+          type: integer
+        instanceConcurrency:
+          title: 单实例并发数
+          description:
+            函数计算支持单实例多并发的功能，这个值用来配置单个函数实例可以同时处理多少个请求。点击这里<a href='https://help.aliyun.com/document_detail/144586.html'
+            target='blank'>查看</a>更多详情。
+          default: 1
+          type: integer
+        caPort:
+          title: 监听端口
+          description: 您的 HTTP Server 所监听的端口。
+          default: 9000
+          type: integer
+        environmentVariables:
+          title: 环境变量
+          description: 配置函数运行环境中的环境变量。
+          type: object
+          x-component: KeyValue
+        layer:
+          type: array
+          title: 层
+          description: 层可以为您提供自定义的公共依赖库、运行时环境及函数扩展等发布与部署能力。
+          additionalItems: true
+          items:
+            - type: string
+        initializer:
+          title: 初始化函数
+          description:
+            函数计算平台会根据请求动态分配实例执行函数，当函数有连续调用时，会复用同一实例。Initializer 是初始化函数，保证在同一实例中执行且成功执行一次。点击这里查看更多详情。                    在“运行环境”为
+            Node.js 时，当前值的格式为 [文件名].[函数名]。如果当前值为 index.handler，那么在函数被触发时，将执行 index.js
+            文件中的 handler 函数。
+          examples:
+            - index.initializer
+          type: string
+        initializationTimeout:
+          title: 初始化函数超时时间
+          description: 执行初始化函数的超时时间
+          default: 30
+          type: integer
+        instanceLifecycleConfig:
+          title: 扩展函数
+          type: object
+          properties:
+            preFreeze:
+              title: PreFreeze 函数
+              type: object
+              properties:
+                handler:
+                  title: 函数入口
+                  x-tooltip:
+                    在每次函数计算服务决定冷冻当前函数实例前，您希望函数计算调用的函数。PreFreeze 函数输入参数没有 event
+                    参数。PreFreeze 函数无返回值，在函数末尾增加返回逻辑是无效的。Python、PHP 及 C# Runtime 不支持配置
+                    PreFreeze 函数。点击这里查看更多详情。                            在“运行环境”为 Node.js
+                    时，当前值的格式为 [文件名].[函数名]。如果当前值为 index.handler，那么在函数被触发时，将执行 index.js
+                    文件中的 handler 函数。
+                  type: string
+                timeout:
+                  title: 超时时间
+                  x-tooltip: 执行PreFreeze 函数的超时时间
+                  type: integer
+                  default: 30
+            preStop:
+              type: object
+              title: PreStop 函数
+              properties:
+                handler:
+                  title: 函数入口
+                  x-tooltip:
+                    在每次函数计算决定停止当前函数实例前，您希望函数计算调用的函数。PreStop 函数输入参数没有event参数。PreStop
+                    函数无返回值，在函数末尾增加返回逻辑是无效的。所有 Runtime 均支持配置 PreStop 函数。点击<a href='https://help.aliyun.com/document_detail/191143.html'
+                    target='blank'>这里</a>查看更多详情。<br/>                            在“运行环境”为
+                    Node.js 时，当前值的格式为 [文件名].[函数名]。如果当前值为 index.handler，那么在函数被触发时，将执行
+                    index.js 文件中的 handler 函数。
+                  type: string
+                timeout:
+                  title: 超时时间
+                  x-tooltip: 执行PreStop 函数的超时时间
+                  type: integer
+                  default: 30
+        customDNS:
+          title: DNS 配置
+          type: object
+          description: 用户自定义的 DNS 配置，平台根据该配置生成/etc/resolv.conf。仅对官方提供的 Runtime 生效。
+          required:
+            - nameServers
+            - searches
+          properties:
+            nameServers:
+              type: array
+              title: Name Servers
+              description: 请输入合法的 IP，例如：8.8.8.8
+              additionalItems: true
+              items:
+                - x-validator:
+                    - ipv4
+                  type: string
+            searches:
+              type: array
+              title: 搜索域
+              description: DNS 搜索域列表
+              additionalItems: true
+              items:
+                - type: string
+            dnsOptions:
+              type: array
+              title: DNS 选项
+              description: 对应 resolv.conf DNS 配置的 Options 项，列表中每一项的键是必填的
+              additionalItems: true
+              items:
+                - type: object
+                  x-component: FormGrid
+                  required:
+                    - name
+                    - value
+                  properties:
+                    name:
+                      title: 键
+                      type: string
+                    value:
+                      title: 值
+                      type: string
+        asyncConfiguration:
+          title: 异步配置
+          type: object
+          properties:
+            destination:
+              title: 目标地址
+              type: object
+              properties:
+                onSuccess:
+                  title: 成功目标
+                  examples:
+                    - acs:fc:{region}:{uid}:services/{serviceName}.{qualifier}/functions/{functionName}
+                  type: string
+                  x-tooltip: 在使用异步调用时，您可以在函数执行成功或执行失败后将执行信息发送给其他目标服务。
+                onFailure:
+                  title: 失败目标
+                  examples:
+                    - acs:fc:{region}:{uid}:services/{serviceName}.{qualifier}/functions/{functionName}
+                  type: string
+                  x-tooltip: 在使用异步调用时，您可以在函数执行成功或执行失败后将执行信息发送给其他目标服务。
+            maxAsyncEventAgeInSeconds:
+              title: 消息最大有效期(s)
+              type: integer
+            maxAsyncRetryAttempts:
+              title: 最大重试次数
+              type: integer
+              x-tooltip:
+                在异步调用失败时，函数计算在<a href='blank' target='https://help.aliyun.com/document_detail/52878.html'>某些情况</a>下会自动重试，您可以根据业务需求减少或增加对异步调用的重试。点击<a
+                href='blank' target='https://help.aliyun.com/document_detail/52878.html'>这里</a>查看更多详情。
+            statefulInvocation:
+              title: 异步调用状态
+              type: boolean
+              x-tooltip:
+                有状态异步调用可以提供更好的可观测性。支持查询调用的状态，排队情况，执行情况，执行结果等。同时也提供调用级的控制能力。比如可以主动终止调用。有状态的异步调用适用于函数执行时间较长的场景的调用。点击<a
+                href='blank' target='https://help.aliyun.com/document_detail/52878.html'>这里</a>查看更多详情。<br><br>                    无状态异步调用支持的功能较少，但通常可以满足一般的业务场景。点击<a
+                href='blank' target='https://help.aliyun.com/document_detail/52878.html'>这里</a>查看更多详情。
+    triggers:
+      title: 触发器配置
+      type: array
+      x-component-props:
+        flag: type
+      items:
+        - type: object
+          title: HTTP触发器
+          x-name: http
+          properties:
+            type:
+              title: 触发器类型
+              default: http
+              description: HTTP 函数只能创建 HTTP 类型的触发器。
+              enum:
+                - http
+            name:
+              title: name
+              description: 只能包含字母、数字、下划线和中划线。不能以数字、中划线开头。长度在 1-128 之间。
+              type: string
+            config:
+              title: 触发器配置
+              type: object
+              properties:
+                authType:
+                  title: 鉴权类型
+                  default: anonymous
+                  enum:
+                    - anonymous
+                    - function
+                  x-enum-label:
+                    - 无需身份验证，支持匿名访问
+                    - 需要通过身份验证，不支持匿名访问
+                methods:
+                  '$ref': '#/definitions/methods'
+    customDomains:
+      title: 域名配置
+      description:
+        当您的函数使用 HTTP 请求触发时，您可能需要使用您自己的自定义域名来访问您的函数。例如，您创建了一个函数作为 Web 应用，您希望用户通过固定的域名访问这个
+        Web 应用，这时候您就可以为该 Web 应用绑定自定义域名。除此之外，您还可以为该域名设置 CDN 加速功能，将部署在函数计算的应用作为源站，把源内容发布到边缘节点，使终端用户能快速读取所需内容。
+      type: array
+      items:
+        - type: object
+          properties:
+            domainName:
+              title: 域名
+              description: 域名，可以选择auto，用来分配默认域名
+              default: auto
+            protocol:
+              title: 协议
+              type: string
+              enum:
+                - HTTP
+                - HTTPS
+                - HTTP, HTTPS
+            routeConfigs:
+              title: 路由配置
+              type: array
+              items:
+                - type: object
+                  x-component: FormGrid
+                  properties:
+                    path:
+                      title: 路径
+                      type: string
                     serviceName:
-                      Description: 服务名
-                      Required: False
-                      Type:
-                        - String
+                      title: 服务名
+                      type: string
                     functionName:
-                      Description: 函数名
-                      Required: False
-                      Type:
-                        - String
-          certConfig:
-            certName:
-              Description: 名称
-              Required: False
-              Type:
-                - String
-            certificate:
-              Description: 表示私钥
-              Required: False
-              Type:
-                - String
-            privateKey:
-              Description: 表示证书
-              Required: False
-              Type:
-                - String
+                      title: 函数名
+                      type: string
+                    qualifier:
+                      title: 版本或别名
+                      type: string
+            certConfig:
+              title: 证书配置
+              type: object
+              x-decorator-props:
+                labelWidth: 80
+              properties:
+                certName:
+                  '$ref': '#/definitions/namePattern'
+                certificate:
+                  title: PEM 证书内容
+                  description:
+                    PEM 证书的内容应该以 -----BEGIN CERTIFICATE----- 开头，-----END CERTIFICATE-----
+                    结尾
+                  type: string
+                  pattern: '^-----BEGIN CERTIFICATE.*'
+                privateKey:
+                  title: PEM 证书私钥
+                  description: PEM 证书的密钥应该以 -----BEGIN RSA PRIVATE KEY----- 开头，-----END
+                    RSA PRIVATE KEY----- 结尾
+                  type: string
+                  pattern: '^-----BEGIN RSA PRIVATE KEY.*'
+  additionalProperties: false
