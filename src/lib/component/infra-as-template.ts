@@ -27,7 +27,7 @@ export default class InfraAsTemplate {
     const parsedArgs: { [key: string]: any } = core.commandParse(inputs, {
       boolean: ['help'],
       string: ['env', 'overlays', 'patch-strategy'],
-      alias: { help: 'h', env: 'e' },
+      alias: { help: 'h' },
     });
     const argsData: any = parsedArgs?.data || {};
     if (argsData?.help) {
