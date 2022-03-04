@@ -27,7 +27,6 @@ const deployType = {
 
 const env = {
   name: 'env',
-  alias: 'e',
   type: String,
   description: '[Optional] Specify an environment name and deploy on the environment ',
 };
