@@ -251,3 +251,52 @@ Interaction design for `s local start`:
     2.2 If there are multiple domain names, 'interaction' is generated and the configured domain name path is selected
 
   > To use the system domain name path, use --custom-domain system or select system
+
+## Simulation NAS directory
+
+When nasConfig is configured in YAML, local can emulate the nas directory structure, for example:
+
+s.yaml is configured as follows
+````yaml
+services:
+  helloworld:
+    component:  fc
+    props:
+      region: cn-hangzhou
+      service:
+        name: hello-world-service
+        description: 'hello world by serverless devs'
+        vpcConfig: auto
+        nasConfig:
+          userId: 10003
+          groupId: 10003
+          mountPoints:
+            - serverAddr: xxx.cn-hangzhou.nas.aliyuncs.com
+              nasDir: /hello-world-service
+              fcDir: /mnt/auto
+      function:
+        name: event-py3
+        description: 'hello world by serverless devs'
+        runtime: python3
+        codeUri: ./code
+        handler: index.handler
+        memorySize: 128
+        timeout: 60
+````
+
+The code/index.py content is as follows
+````
+# -*- coding: utf-8 -*-
+import logging
+import os
+
+def handler(event, context):
+  logger = logging.getLogger()
+  logger.info('============')
+  os.system("ls /mnt/auto")
+  logger.info('============')
+  return 'hello world\n'
+````
+
+File `test.ts` is stored in directory `.s/nas/auto-default/hello-world-service`, which is of the same level as file `s.yaml`.The directory structure and execution results are as follows:
+<img src="https://img.alicdn.com/imgextra/i4/O1CN01NqMcAX1h6vhheEDlz_!!6000000004229-2-tps-2494-1536.png"/>

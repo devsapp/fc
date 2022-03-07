@@ -247,3 +247,50 @@ Examples with Yaml
     2.1 如果 customDomains 仅有一个，直接使用此域名配置的路径
     2.2 如果存在多个则产生`交互`，选择配置的域名路径
   > 如果使用系统域名路径，使用 --custom-domain system 或者选择时候选择 system
+
+## 调用时模拟 NAS 目录
+
+当yaml中配置了nasConfig时，local 可以模拟 nas 的目录结构，例如：
+`s.yaml` 配置如下
+````yaml
+services:
+  helloworld:
+    component:  fc
+    props:
+      region: cn-hangzhou
+      service:
+        name: hello-world-service
+        description: 'hello world by serverless devs'
+        vpcConfig: auto
+        nasConfig:
+          userId: 10003
+          groupId: 10003
+          mountPoints:
+            - serverAddr: xxx.cn-hangzhou.nas.aliyuncs.com
+              nasDir: /hello-world-service
+              fcDir: /mnt/auto
+      function:
+        name: event-py3
+        description: 'hello world by serverless devs'
+        runtime: python3
+        codeUri: ./code
+        handler: index.handler
+        memorySize: 128
+        timeout: 60
+````
+`code/index.py` 内容如下
+````
+# -*- coding: utf-8 -*-
+import logging
+import os
+
+def handler(event, context):
+  logger = logging.getLogger()
+  logger.info('============')
+  os.system("ls /mnt/auto")
+  logger.info('============')
+  return 'hello world\n'
+````
+
+`s.yaml` 同目录级别 `.s/nas/auto-default/hello-world-service` 的目录下存在一个文件为 `test.ts` 的文件，目录结构及执行结果如下：
+<img src="https://img.alicdn.com/imgextra/i4/O1CN01NqMcAX1h6vhheEDlz_!!6000000004229-2-tps-2494-1536.png"/>
