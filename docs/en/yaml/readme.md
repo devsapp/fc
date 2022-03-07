@@ -4,6 +4,17 @@ description: 'Yaml specification'
 position: 1
 category: 'Yaml-Spec'
 ---
+# Field parsing
+
+| Parameter Name                        | Required | Type                           | Parameter Description |
+| ------------------------------------- | -------- | ------------------------------ | --------------------- |
+| region                                | True     | Enum                           | Region                |
+| [service](./service.md)             | True     | [Struct](./service.md)       | Service               |
+| [function](./function.md)           | True     | [Struct](./function.md)      | function              |
+| [triggers](./triggers.md)           | True     | [Struct](./triggers.md)      | Triggers              |
+| [customDomains](./customDomains.md) | True     | [Struct](./customDomains.md) | Custom Domain Name    |
+
+Regions currently supported: `cn-beijing`, `cn-hangzhou`, `cn-shanghai`, `cn-qingdao`, `cn-zhangjiakou`, `cn-huhehaote`, `cn-shenzhen`, `cn-chengdu `, `cn-hongkong`, `ap-southeast-1`, `ap-southeast-2`, `ap-southeast-3`, `ap-southeast-5`, `ap-northeast-1`, `eu -central-1`, `eu-west-1`, `us-west-1`, `us-east-1`, `ap-south-1`
 
 # Yaml complete configuration
 
@@ -201,14 +212,3 @@ services:
 > - How to declare multiple functions?
 >   In the function computing component of Serverless Devs, by default, there is a one-to-one correspondence between services and functions. If you need to declare multiple functions under one service, you can refer to [Common Tips](http://www.serverless-devs.com/en/fc/tips) Provided in [How to declare and deploy multiple functions document](http://www.serverless-devs.com/en/fc/tips#declaration-and-deployment-of-multiple-functions)
 
-# Field parsing
-
-| Parameter Name                        | Required | Type                           | Parameter Description |
-| ------------------------------------- | -------- | ------------------------------ | --------------------- |
-| region                                | True     | Enum                           | Region                |
-| [service](#service field)             | True     | [Struct](#service field)       | Service               |
-| [function](#function field)           | True     | [Struct](#function field)      | function              |
-| [triggers](#triggers field)           | True     | [Struct](#triggers field)      | Triggers              |
-| [customDomains](#customDomains field) | True     | [Struct](#customDomains field) | Custom Domain Name    |
-
-Regions currently supported: `cn-beijing`, `cn-hangzhou`, `cn-shanghai`, `cn-qingdao`, `cn-zhangjiakou`, `cn-huhehaote`, `cn-shenzhen`, `cn-chengdu `, `cn-hongkong`, `ap-southeast-1`, `ap-southeast-2`, `ap-southeast-3`, `ap-southeast-5`, `ap-northeast-1`, `eu -central-1`, `eu-west-1`, `us-west-1`, `us-east-1`, `ap-south-1`

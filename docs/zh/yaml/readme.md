@@ -5,6 +5,18 @@ position: 1
 category: 'Yaml规范'
 ---
 
+# 字段解析
+
+| 参数名                              | 必填 | 类型                         | 参数描述   |
+| ----------------------------------- | ---- | ---------------------------- | ---------- |
+| region                              | True | Enum                         | 地域       |
+| [service](./service.md)             | True | [Struct](./service.md)       | 服务       |
+| [function](./function.md)           | True | [Struct](./function.md)      | 函数       |
+| [triggers](./triggers.md)           | True | [Struct](./triggers.md)      | 触发器     |
+| [customDomains](./customDomains.md) | True | [Struct](./customDomains.md) | 自定义域名 |
+
+地区(region)目前支持：`cn-beijing`, `cn-hangzhou`, `cn-shanghai`, `cn-qingdao`, `cn-zhangjiakou`, `cn-huhehaote`, `cn-shenzhen`, `cn-chengdu`, `cn-hongkong`, `ap-southeast-1`, `ap-southeast-2`, `ap-southeast-3`, `ap-southeast-5`, `ap-northeast-1`, `eu-central-1`, `eu-west-1`, `us-west-1`, `us-east-1`, `ap-south-1`
+
 # Yaml完整配置
 
 
@@ -202,14 +214,3 @@ services:
 >    在Serverless Devs的函数计算组件中，默认规定服务和函数是一一对应关系，如果需要在一个服务下声明多个函数，可以参考[常见小贴士](http://www.serverless-devs.com/fc/tips) 中提供的[如何声明部署多个函数文档](http://www.serverless-devs.com/fc/tips#%E5%A6%82%E4%BD%95%E5%A3%B0%E6%98%8E%E9%83%A8%E7%BD%B2%E5%A4%9A%E4%B8%AA%E5%87%BD%E6%95%B0)
 
 
-# 字段解析
-
-| 参数名                              | 必填 | 类型                         | 参数描述   |
-| ----------------------------------- | ---- | ---------------------------- | ---------- |
-| region                              | True | Enum                         | 地域       |
-| [service](#service字段)             | True | [Struct](#service字段)       | 服务       |
-| [function](#function字段)           | True | [Struct](#function字段)      | 函数       |
-| [triggers](#triggers字段)           | True | [Struct](#triggers字段)      | 触发器     |
-| [customDomains](#customDomains字段) | True | [Struct](#customDomains字段) | 自定义域名 |
-
-地区(region)目前支持：`cn-beijing`, `cn-hangzhou`, `cn-shanghai`, `cn-qingdao`, `cn-zhangjiakou`, `cn-huhehaote`, `cn-shenzhen`, `cn-chengdu`, `cn-hongkong`, `ap-southeast-1`, `ap-southeast-2`, `ap-southeast-3`, `ap-southeast-5`, `ap-northeast-1`, `eu-central-1`, `eu-west-1`, `us-west-1`, `us-east-1`, `ap-south-1`
