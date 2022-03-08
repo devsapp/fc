@@ -179,7 +179,7 @@ Serverless Devs的Yaml规范本身支持全局变量、环境变量以及外部�
 - 获取其他项目的变量：${projectName.props.*}
 - 获取Yaml中其他项目的结果变量：${projectName.output.*}
 
-> 详情可以参考：[Serverless Devs Yaml规范文档](https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/zh/yaml.md)
+> 详情可以参考：[Serverless Devs Yaml规范文档](https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/zh/yaml/readme.md)
 
 ## 通过环境变量配置组件
 

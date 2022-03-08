@@ -354,7 +354,7 @@ You can implement breakpoint debugging during cloud-terminal joint debugging in 
 
 ## Permissions and policies
 
-- If you need to run the `proxied setup` command, obtain the permissions on the command. The permissions are related to the parameters that are configured in the YAML file of the function for which you want to implement cloud-terminal joint debugging. For more information about how to configure the parameters and the relevant permissions, see [Yaml syntax](../yaml.md). 
+- If you need to run the `proxied setup` command, obtain the permissions on the command. The permissions are related to the parameters that are configured in the YAML file of the function for which you want to implement cloud-terminal joint debugging. For more information about how to configure the parameters and the relevant permissions, see [Yaml syntax](../yaml/readme.md). 
 
 - You also need to run the following command to configure the policy that is required by the `proxied` command.
 

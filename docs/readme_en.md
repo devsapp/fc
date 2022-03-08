@@ -52,7 +52,7 @@ The following table lists the commands that are supported by the FC component:
 |                                    |                                  |                                      |                                      | [api   (to be supported)](en/command/api.md) |
 
 
-When you use the FC component, you must edit resource description files. For more information about the YAML specifications of the FC component, see [**YAML specifications**](en/yaml.md). You also need to read some tips on the FC component, such as [Declaration and deployment of multiple functions](en/tips.md#Declaration-and-deployment-of-multiple-functions). For more information, see [Common tips](en/tips.md).
+When you use the FC component, you must edit resource description files. For more information about the YAML specifications of the FC component, see [**YAML specifications**](en/yaml/readme.md). You also need to read some tips on the FC component, such as [Declaration and deployment of multiple functions](en/tips.md#Declaration-and-deployment-of-multiple-functions). For more information, see [Common tips](en/tips.md).
 
 > If you are using Funcraft or Function Compute command line interface (fcli), you can view the differences among Funcraft, fcli, and Serverless Devs from [**Compare among Serverless Devs, fcli, and Funcraft**](en/vs_fun_fcli.md). To migrate resources from Funcraft or fcli to Serverless Devs, see [**Migrate resources from Funcraft to Serverless Devs**](en/vs_fun_fcli.md#Migrate-resources-from-Funcraft-to-Serverless-Devs) and [**Migrate resources from fcli to Serverless Devs**](en/vs_fun_fcli.md#Migrate-resources-from-fcli-to-Serverless-Devs) 
 

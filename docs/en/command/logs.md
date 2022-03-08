@@ -13,7 +13,7 @@ The `logs` commands are used to view the logs of a function.
   - [Examples](#Examples)
 - [Permissions and policies](#Permissions-and-policies)
 
-> ⚠️ Note: Before you use this feature, you must activate Log Service and [configure related log projects](../yaml.md##logConfig). 
+> ⚠️ Note: Before you use this feature, you must activate Log Service and [configure related log projects](../service.md#logconfig). 
 
 
 ## Command description

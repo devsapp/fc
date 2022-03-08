@@ -8,7 +8,7 @@ category: 'Build&Deploy'
 
 # Deploy commands
 
-The `deploy` command is used to deploy function resources. You can use this command to deploy on-premises resources that are specified in a [YAML file](../yaml.md) to an online environment. 
+The `deploy` command is used to deploy function resources. You can use this command to deploy on-premises resources that are specified in a [YAML file](../yaml/readme.md) to an online environment. 
 
   - [Command description](#Command description)
     - [Parameters description](#Parameters-description)
@@ -503,4 +503,4 @@ $ s deploy domain --domain http-trigger-py36.fc-deploy-service.1583208943291465.
 
 ## Permissions and policies
 
-The permissions of the deploy command are related to the parameters that are configured in a YAML file. For more information about the configurations of fields and permissions in a YAML file, see [YAML specifications](../yaml.md). 
+The permissions of the deploy command are related to the parameters that are configured in a YAML file. For more information about the configurations of fields and permissions in a YAML file, see [YAML specifications](../yaml/readme.md). 

@@ -6,7 +6,7 @@ category: '构建&部署'
 ---
 # Deploy 命令
 
-`deploy` 命令是对函数资源进行部署的命令，即将本地在  [`Yaml` 文件](../yaml.md) 中声明的资源部署到线上。
+`deploy` 命令是对函数资源进行部署的命令，即将本地在  [`Yaml` 文件](../yaml/readme.md) 中声明的资源部署到线上。
 
   - [命令解析](#命令解析)
     - [参数解析](#参数解析)
@@ -504,4 +504,4 @@ $ s deploy domain --domain http-trigger-py36.fc-deploy-service.1583208943291465.
 
 ## 权限与策略说明
 
-`deploy`命令的权限，更多是和 Yaml 中所配置的参数有一定的关系，所以此处可以参考 [Yaml 规范文档](../yaml.md) 中关于不同字段与权限的配置。
+`deploy`命令的权限，更多是和 Yaml 中所配置的参数有一定的关系，所以此处可以参考 [Yaml 规范文档](../yaml/readme.md) 中关于不同字段与权限的配置。

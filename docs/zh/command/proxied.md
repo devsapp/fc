@@ -350,7 +350,7 @@ Resource cleanup succeeded.
 
 ## 权限与策略说明
 
-- `proxied setup`命令的权限，更多是和 要被端云联调的函数 Yaml 中所配置的参数有一定的关系，所以此处可以参考 [Yaml 规范文档](../yaml.md) 中关于不同字段与权限的配置。
+- `proxied setup`命令的权限，更多是和 要被端云联调的函数 Yaml 中所配置的参数有一定的关系，所以此处可以参考 [Yaml 规范文档](../yaml/readme.md) 中关于不同字段与权限的配置。
 
 - 除了基础配置之外，`proxied `还需要以下策略作为支持：
 

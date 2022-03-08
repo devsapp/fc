@@ -50,7 +50,7 @@
 |                                          |                                              | [内存&并发度探测 eval](zh/command/eval.md)  | [层 layer](zh/command/layer.md) |   [压测 stress](zh/command/stress.md)                   | 
 |                                          |                                              |   |  | [API调用 api【支持中】](zh/command/api.md)                    
 
-在使用函数计算（FC）组件时，还会涉及到资源描述文件的编写，关于函数计算（FC）组件的 Yaml 规范可以参考[**函数计算（FC） Yaml 规范文档**](zh/yaml.md)，除此之外，在使用本组件的时候，还会有一些[小 Tips ](zh/tips.md) 可供学习和了解，例如[如何部署多个函数](zh/tips.md#如何声明部署多个函数) ......
+在使用函数计算（FC）组件时，还会涉及到资源描述文件的编写，关于函数计算（FC）组件的 Yaml 规范可以参考[**函数计算（FC） Yaml 规范文档**](zh/yaml/readme.md)，除此之外，在使用本组件的时候，还会有一些[小 Tips ](zh/tips.md) 可供学习和了解，例如[如何部署多个函数](zh/tips.md#如何声明部署多个函数) ......
 
 > 如果您之前是 Funcraft 或者 Fcli 的用户，您可以参考[**Serverless Devs 与 Funcraft、Fcli等工具的对比**](zh/vs_fun_fcli.md) 文档，以便获取这三个工具之间的区别，以及如何快速[**从 Funcraft 迁移到 Serverless Devs 的方法**](zh/vs_fun_fcli.md#从-funcraft-迁移到-serverless-devs-的方法)、[**从 Fcli 迁移到 Serverless Devs 的方法**](zh/vs_fun_fcli.md#从-fcli-迁移到-serverless-devs-的方法)等。
 
