@@ -51,6 +51,7 @@ Properties:
       required:
         - name
         - statement
+      additionalProperties: false
       properties:
         name:
           type: string
@@ -85,6 +86,7 @@ Properties:
                 - Effect
                 - Action
                 - Resource
+              additionalProperties: false
               properties:
                 Effect:
                   title: 策略生效
@@ -102,6 +104,7 @@ Properties:
                   uniqueItems: true
                   items:
                     - type: string
+                      minLength: 1
                       title: 策略动作
                       description: 策略动作
                       examples:
@@ -126,8 +129,6 @@ Properties:
                   type: object
                   title: 策略的条件限制
                   description: 策略的条件限制
-              additionalProperties: false
-      additionalProperties: false
     role:
       type: object
       description: 自定义策略列表创建角色
@@ -135,6 +136,7 @@ Properties:
       required:
         - name
         - policies
+      additionalProperties: false
       properties:
         name:
           type: string
@@ -162,8 +164,6 @@ Properties:
                 default: ''
                 examples:
                   - AliyunOSSFullAccess
-
-      additionalProperties: false
     logConfig:
       type: object
       default: {}
@@ -171,6 +171,7 @@ Properties:
       required:
         - project
         - logstore
+      additionalProperties: false
       properties:
         project:
           type: string
@@ -212,13 +213,13 @@ Properties:
           default: false
           examples:
             - true
-      additionalProperties: false
     vpcConfig:
       type: object
       required:
         - vpcId
         - securityGroupId
         - vswitchIds
+      additionalProperties: false
       properties:
         vpcId:
           type: string
@@ -239,6 +240,7 @@ Properties:
           uniqueItems: true
           items:
             - type: string
+              minLength: 1
               examples:
                 - vsw-xxx1
                 - vsw-xxx2
@@ -250,11 +252,11 @@ Properties:
             此安全组是ENI所在的安全组，也就是函数计算所在的安全组，安全组限定了函数计算在VPC中的出入站规则。需要设置您的VPC所在安全组的入站规则为允许函数计算所在的安全组访问。否则，函数计算无法顺畅地访问您的VPC内资源。点击<a
             href='https://help.aliyun.com/document_detail/72959.html' target='blank'>这里</a>查看更多详情。
           default: ''
-      additionalProperties: false
     nasConfig:
       type: object
       required:
         - mountPoints
+      additionalProperties: false
       properties:
         userId:
           type: integer
@@ -291,6 +293,7 @@ Properties:
                 - serverAddr
                 - nasDir
                 - fcDir
+              additionalProperties: false
               properties:
                 serverAddr:
                   type: string
@@ -314,8 +317,6 @@ Properties:
                   description: 必须为 /home/ 或者 /mnt/ 的子目录，例如 /home/app
                   examples:
                     - '/mnt/auto'
-              additionalProperties: false
-      additionalProperties: false
     methods:
       type: array
       default:
@@ -356,6 +357,7 @@ Properties:
   required:
     - region
     - service
+  additionalProperties: false
   properties:
     region:
       default: cn-hangzhou
@@ -588,9 +590,9 @@ Properties:
                 x-visible: "{{$deps[0] === 'custom'}}"
           title: custom配置
           type: object
-          additionalProperties: false
           required:
             - command
+          additionalProperties: false
           properties:
             command:
               type: array
@@ -602,6 +604,7 @@ Properties:
               uniqueItems: true
               items:
                 - type: string
+                  minLength: 1
             args:
               type: array
               title: 启动参数
@@ -783,6 +786,7 @@ Properties:
           title: DNS 配置
           type: object
           description: 用户自定义的 DNS 配置，平台根据该配置生成/etc/resolv.conf。仅对官方提供的 Runtime 生效。
+          additionalProperties: false
           properties:
             nameServers:
               type: array
@@ -827,6 +831,7 @@ Properties:
           properties:
             destination:
               type: object
+              additionalProperties: false
               properties:
                 onSuccess:
                   title: 成功目标
@@ -976,6 +981,7 @@ Properties:
                   uniqueItems: true
                   items:
                     - type: string
+                      minLength: 1
                 filter:
                   title: 筛选条件
                   type: object
@@ -1070,6 +1076,7 @@ Properties:
                       title: source配置
                       description: 数据源的 Logstore 名称。触发器会定时从该 Logstore 订阅数据到函数计算
                       type: string
+                      minLength: 1
                 functionParameter:
                   title: 参数配置
                   description: 日志服务将该配置内容作为函数 event, 当事件触发时
@@ -1110,6 +1117,7 @@ Properties:
                   title: topic的名字
                   description: mns topic的名字
                   type: string
+                  minLength: 1
                 filterTag:
                   title: 过滤标签
                   description: 描述了该订阅中消息过滤的标签（标签一致的消息才会被推送）,不超过 16 个字符的字符串，默认不进行消息过滤，即默认不填写该字段
@@ -1165,10 +1173,12 @@ Properties:
                   title: 触发事件
                   description: 为 CDN 端触发函数执行的事件，一经创建不能更改
                   type: string
+                  minLength: 1
                 eventVersion:
                   title: 触发事件版本
                   description: 触发事件的版本号。目前仅支持1.0.0事件版本。
                   type: string
+                  minLength: 1
                 filter:
                   description: 过滤器（至少需要一个过滤器）
                   type: object
@@ -1183,9 +1193,12 @@ Properties:
                       uniqueItems: true
                       items:
                         - type: string
+                          minLength: 1
                 notes:
                   title: 备注信息
                   type: string
+                  minLength: 1
+
             role:
               '$ref': '#/definitions/roleArn'
             sourceArn:
@@ -1278,6 +1291,10 @@ Properties:
               type: object
               x-decorator-props:
                 labelWidth: 80
+              required:
+                - certName
+                - certificate
+                - privateKey
               properties:
                 certName:
                   '$ref': '#/definitions/namePattern'
@@ -1294,4 +1311,3 @@ Properties:
                     RSA PRIVATE KEY----- 结尾
                   type: string
                   pattern: '^-----BEGIN RSA PRIVATE KEY.*'
-  additionalProperties: false
