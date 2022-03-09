@@ -487,10 +487,12 @@ Properties:
         - required:
             - name
             - codeUri
+            - runtime
         - required:
             - name
             - ossBucket
             - ossKey
+            - runtime
       properties:
         name:
           '$ref': '#/definitions/namePattern'
@@ -1261,7 +1263,7 @@ Properties:
               type: string
               enum:
                 - HTTP
-                - HTTP, HTTPS
+                - HTTP,HTTPS
             routeConfigs:
               title: 路由配置
               type: array
@@ -1286,6 +1288,9 @@ Properties:
                     qualifier:
                       title: 版本或别名
                       type: string
+            certId:
+              title: 获取证书内容
+              type: integer
             certConfig:
               title: 证书配置
               type: object
@@ -1304,10 +1309,10 @@ Properties:
                     PEM 证书的内容应该以 -----BEGIN CERTIFICATE----- 开头，-----END CERTIFICATE-----
                     结尾
                   type: string
-                  pattern: '^-----BEGIN CERTIFICATE.*'
+                  minLength: 1
                 privateKey:
                   title: PEM 证书私钥
                   description: PEM 证书的密钥应该以 -----BEGIN RSA PRIVATE KEY----- 开头，-----END
                     RSA PRIVATE KEY----- 结尾
                   type: string
-                  pattern: '^-----BEGIN RSA PRIVATE KEY.*'
+                  minLength: 1
