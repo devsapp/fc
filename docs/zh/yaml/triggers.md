@@ -109,14 +109,14 @@ triggers:
 
 | 参数名 | 必填  | 类型          | 参数描述 |
 | ------ | ----- | ------------- | -------- |
-| Key    | False | [Struct](Key) | 键值     |
+| Key    | True | [Struct](Key) | 键值     |
 
 ##### Key
 
 | 参数名 | 必填  | 类型   | 参数描述 |
 | ------ | ----- | ------ | -------- |
-| Prefix | False | String | 前缀     |
-| Suffix | False | String | 后缀     |
+| Prefix | True | String | 前缀     |
+| Suffix | True | String | 后缀     |
 
 ### Log触发器
 
@@ -238,8 +238,8 @@ triggers:
 
 | 参数名   | 必填  | 类型   | 参数描述                                                     |
 | -------- | ----- | ------ | ------------------------------------------------------------ |
-| project  | False | String | 日志项目名称                                                 |
-| logstore | False | String | 日志仓库名称，日志服务触发函数执行过程的日志会记录到该日志仓库中 |
+| project  | True | String | 日志项目名称                                                 |
+| logstore | True | String | 日志仓库名称，日志服务触发函数执行过程的日志会记录到该日志仓库中 |
 
 
 #### jobConfig
@@ -253,7 +253,7 @@ triggers:
 
 | 参数名   | 必填  | 类型   | 参数描述                                                   |
 | -------- | ----- | ------ | ---------------------------------------------------------- |
-| logstore | False | String | 触发器会定时从该日志仓库中订阅数据到函数服务进行自定义加工 |
+| logstore | True | String | 触发器会定时从该日志仓库中订阅数据到函数服务进行自定义加工 |
 
 #### functionParameter
 

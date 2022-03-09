@@ -173,8 +173,8 @@ role:
 
 | 参数名                | 必填  | 类型    | 参数描述                                 |
 | --------------------- | ----- | ------- | ---------------------------------------- |
-| logstore              | False | String  | loghub中的logstore名称                   |
-| project               | False | String  | loghub中的project名称                    |
+| logstore              | True | String  | loghub中的logstore名称                   |
+| project               | True | String  | loghub中的project名称                    |
 | enableRequestMetrics  | False | Boolean | RequestMetrics开关，取值`true`/`false`   |
 | enableInstanceMetrics | False | Boolean | InstanceMetrics开关，取值`true`/`false`  |
 | logBeginRule          | False | String  | 日志是否切分，取值 `DefaultRegex`/`None` |
@@ -292,9 +292,9 @@ service:
 
 | 参数名          | 必填  | 类型         | 参数描述       |
 | --------------- | ----- | ------------ | -------------- |
-| securityGroupId | False | String       | 安全组ID       |
-| vSwitchIds      | False | List\<String\> | 交换机 ID 列表 |
-| vpcId           | False | String       | VPC ID         |
+| securityGroupId | True | String       | 安全组ID       |
+| vswitchIds      | True | List\<String\> | 交换机 ID 列表 |
+| vpcId           | True | String       | VPC ID         |
 
 
 参考案例：
@@ -387,7 +387,7 @@ service:
 
 | 参数名                      | 必填  | 类型                                     | 参数描述             |
 | --------------------------- | ----- | ---------------------------------------- | -------------------- |
-| [mountPoints](#mountPoints) | False | [List\<Struct>[多目录配置]](#mountPoints) | 目录配置             |
+| [mountPoints](#mountPoints) | True | [List\<Struct>[多目录配置]](#mountPoints) | 目录配置             |
 | userId                      | False | String                                   | userID, 默认为10003  |
 | groupId                     | False | String                                   | groupID, 默认为10003 |
 
@@ -510,9 +510,9 @@ service:
 
 | 参数名     | 必填  | 类型   | 参数描述       |
 | ---------- | ----- | ------ | -------------- |
-| serverAddr | False | String | NAS 服务器地址 |
-| nasDir     | False | String | NAS目录        |
-| fcDir      | False | String | 函数计算目录   |
+| serverAddr | True | String | NAS 服务器地址 |
+| nasDir     | True | String | NAS目录        |
+| fcDir      | True | String | 函数计算目录   |
 
 ### tracingConfig
 

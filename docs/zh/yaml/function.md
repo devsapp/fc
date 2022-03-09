@@ -101,7 +101,7 @@ runtime目前支持：`nodejs4.4`、`nodejs6`、`nodejs8`、`nodejs10`、`nodejs
 
 | 参数名           | 必填  | 类型   | 参数描述                                                     |
 | ---------------- | ----- | ------ | ------------------------------------------------------------ |
-| image            | False | String | 容器镜像仓库地址                                             |
+| image            | True | String | 容器镜像仓库地址                                             |
 | command          | False | String | 容器启动指令，示例值: '["/code/myserver"]'                   |
 | args             | False | String | 容器启动参数，示例值: '["-arg1", "value1"]'                  |
 | accelerationType | False | String | 镜像加速开关，可选值：'Default'、'None'，前者表示开启，后者表示关闭 |
