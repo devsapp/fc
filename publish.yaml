@@ -2,58 +2,40 @@ Type: Component
 Name: fc
 Provider:
   - 阿里云
-Version: dev
+Version: 0.1.43
 Description: 阿里云函数计算基础组件
 HomePage: https://github.com/devsapp/fc
 Tags:
   - 函数计算
 Category: 基础云产品
 Commands:
-  deploy: 部署资源
-  remove: 删除资源
-  local: 本地调试
-  build: 构建函数
-  invoke: 远端调用
-  info: 获取线上资源配置
-  sync: 同步线上资源配置/代码到本地
-  logs: 实时获取线上函数的运行日志
-  metrics: 查看线上函数的监控指标
-  nas: 管理远端 NAS 文件系统中的文件
-  stress: 压测函数
-  layer: 层
-  alias: 服务别名
-  version: 服务版本
-  ondemand: 按量资源
-  provision: 预留实例
-  proxied: 端云连调
-  fun2s: 将fun转化为s可读的配置
-  instance: 实例操作【公测中】
-#   Build & Deploy:
-#     deploy: Deploy local resources online
-#     build: Build the dependencies.
-#     remove: The ability to delete resources
-#   Observability:
-#     metrics: Query function metrics information
-#     logs: Query the function log. You need to open SLS log service
-#   Invoke & Debug:
-#     local: Run your serverless application locally for quick development & testing
-#     invoke: Invoke/Trigger online functions
-#     proxied: Local invoke via proxied service.
-#     remote: Remote invoke via proxied service.
-#   Publish & Config:
-#     version: Service version operation
-#     alias: Service alias operation
-#     provision: provision reservation operation
-#     ondemand: Resource on-demand operation
-#     layer: Resource layer operation
-#   Others:
-#     nas: Manage nas, include upload,download and so on
-#     plan: Perceived resource change
-#     info: Query online resource details
-#     sync: Synchronize online resources to offline resources
-#     stress: Stress test for the serverless application
-#     fc-api: Directly operate the FC API without yaml support
-#     fun2s: Convert the Yaml specification of Funcraft to Serverless Devs
+  Build & Deploy:
+    deploy: Deploy local resources online
+    build: Build the dependencies.
+    remove: The ability to delete resources
+  Observability:
+    metrics: Query function metrics information
+    logs: Query the function log. You need to open SLS log service
+  Invoke & Debug:
+    local: Run your serverless application locally for quick development & testing
+    invoke: Invoke/Trigger online functions
+    proxied: Local invoke via proxied service.
+    remote: Remote invoke via proxied service.
+  Publish & Config:
+    version: Service version operation
+    alias: Service alias operation
+    provision: provision reservation operation
+    ondemand: Resource on-demand operation
+    layer: Resource layer operation
+  Others:
+    nas: Manage nas, include upload,download and so on
+    plan: Perceived resource change
+    info: Query online resource details
+    sync: Synchronize online resources to offline resources
+    stress: Stress test for the serverless application
+    fc-api: Directly operate the FC API without yaml support
+    fun2s: Convert the Yaml specification of Funcraft to Serverless Devs
+    instance: 实例操作【公测中】
 Service:
   函数计算:
     Authorities:
@@ -68,11 +50,12 @@ Properties:
       examples: []
       required:
         - name
-        - description
         - statement
+      additionalProperties: false
       properties:
         name:
           type: string
+          minLength: 1
           title: 策略名称
           description: 策略名称
           default: ''
@@ -91,7 +74,8 @@ Properties:
           description: 策略内容列表
           default: []
           examples: []
-          additionalItems: true
+          minItems: 1
+          uniqueItems: true
           items:
             - type: object
               title: 策略内容列表
@@ -102,6 +86,7 @@ Properties:
                 - Effect
                 - Action
                 - Resource
+              additionalProperties: false
               properties:
                 Effect:
                   title: 策略生效
@@ -115,9 +100,11 @@ Properties:
                   title: 策略动作
                   description: 策略动作
                   default: []
-                  additionalItems: true
+                  minItems: 1
+                  uniqueItems: true
                   items:
                     - type: string
+                      minLength: 1
                       title: 策略动作
                       description: 策略动作
                       examples:
@@ -128,7 +115,8 @@ Properties:
                   description: 策略的目标资源
                   default: []
                   examples: []
-                  additionalItems: true
+                  minItems: 1
+                  uniqueItems: true
                   items:
                     - type: string
                       title: 策略的目标资源
@@ -141,8 +129,6 @@ Properties:
                   type: object
                   title: 策略的条件限制
                   description: 策略的条件限制
-              additionalProperties: true
-      additionalProperties: true
     role:
       type: object
       description: 自定义策略列表创建角色
@@ -150,10 +136,12 @@ Properties:
       required:
         - name
         - policies
+      additionalProperties: false
       properties:
         name:
           type: string
           title: 角色名称
+          minLength: 1
           default: ''
           examples:
             - roleName
@@ -165,14 +153,17 @@ Properties:
             结构体
           default: []
           examples: []
-          additionalItems: true
+          minItems: 1
+          uniqueItems: true
           items:
-            - type: string
-              description: 阿里云系统内置策略
-              default: ''
-              examples:
-                - AliyunOSSFullAccess
-      additionalProperties: true
+            oneOf:
+              - '$ref': '#/definitions/roleStatement'
+              - type: string
+                description: 阿里云系统内置策略
+                minLength: 1
+                default: ''
+                examples:
+                  - AliyunOSSFullAccess
     logConfig:
       type: object
       default: {}
@@ -180,15 +171,18 @@ Properties:
       required:
         - project
         - logstore
+      additionalProperties: false
       properties:
         project:
           type: string
+          minLength: 1
           title: 日志项目
           default: ''
           examples:
             - xx-project
         logstore:
           type: string
+          minLength: 1
           title: 日志仓库
           default: ''
           examples:
@@ -219,16 +213,17 @@ Properties:
           default: false
           examples:
             - true
-      additionalProperties: true
     vpcConfig:
       type: object
       required:
         - vpcId
         - securityGroupId
         - vswitchIds
+      additionalProperties: false
       properties:
         vpcId:
           type: string
+          minLength: 1
           title: 专有网络VPC
           x-tooltip:
             当前服务中的函数可以访问的 VPC。点击<a href='https://help.aliyun.com/document_detail/72959.html'
@@ -241,30 +236,33 @@ Properties:
             函数计算可以访问的子网。函数服务会在您提供的交换机创建弹性网卡. 您的函数将通过弹性网卡访问您专有网络里面的资源。点击<a href='https://help.aliyun.com/document_detail/72959.html'
             target='blank'>这里</a>查看更多详情
           default: []
-          additionalItems: true
+          minItems: 1
+          uniqueItems: true
           items:
             - type: string
+              minLength: 1
               examples:
                 - vsw-xxx1
                 - vsw-xxx2
         securityGroupId:
           type: string
+          minLength: 1
           title: 安全组
           x-tooltip:
             此安全组是ENI所在的安全组，也就是函数计算所在的安全组，安全组限定了函数计算在VPC中的出入站规则。需要设置您的VPC所在安全组的入站规则为允许函数计算所在的安全组访问。否则，函数计算无法顺畅地访问您的VPC内资源。点击<a
             href='https://help.aliyun.com/document_detail/72959.html' target='blank'>这里</a>查看更多详情。
           default: ''
-      additionalProperties: true
     nasConfig:
       type: object
       required:
-        - userId
-        - groupId
         - mountPoints
+      additionalProperties: false
       properties:
         userId:
           type: integer
           title: 用户
+          minimum: 1
+          maximum: 65534
           description: 访问 NAS 中文件时所用的用户，等同于文件系统中的用户（UID）的概念。UserID 取值范围从 1 到 65534，不包括0（为了执行安全，函数计算暂时不提供root用户的方式）。点击这里查看更多详情。
           default: 10003
           examples:
@@ -272,6 +270,8 @@ Properties:
         groupId:
           type: integer
           title: 用户组
+          minimum: 1
+          maximum: 65534
           description: 访问 NAS 中文件时所用的用户组，等同于文件系统中的用户组（GID）的概念。GroupID 取值范围从 1 到 65534，不包括0（为了执行安全，函数计算暂时不提供root用户的方式）。点击这里查看更多详情。
           default: 10003
           examples:
@@ -282,7 +282,8 @@ Properties:
           description: NAS 的挂载点。点击这里查看更多详情。
           default: []
           examples: []
-          additionalItems: true
+          minItems: 1
+          uniqueItems: true
           items:
             - type: object
               title: NAS 挂载点
@@ -292,15 +293,18 @@ Properties:
                 - serverAddr
                 - nasDir
                 - fcDir
+              additionalProperties: false
               properties:
                 serverAddr:
                   type: string
+                  minLength: 1
                   title: NAS 挂载点
                   default: ''
                   examples:
                     - xxx-xxx.cn-shenzhen.nas.aliyuncs.com
                 nasDir:
                   type: string
+                  minLength: 1
                   title: 远端NAS中目录
                   description: 通用型 NAS 以 / 开头，极速型 NAS 必须以 /share 开头。
                   default: ''
@@ -308,17 +312,16 @@ Properties:
                     - '/unit-deploy-service'
                 fcDir:
                   type: string
+                  minLength: 1
                   title: 函数运行环境中本地目录
                   description: 必须为 /home/ 或者 /mnt/ 的子目录，例如 /home/app
                   examples:
                     - '/mnt/auto'
-              additionalProperties: true
-      additionalProperties: true
     methods:
       type: array
       default:
-        - - GET
-          - POST
+        - GET
+        - POST
       items:
         - type: string
           title: 请求方法
@@ -351,6 +354,10 @@ Properties:
       pattern: '^[a-zA-Z0-9-_]{1,128}$'
   type: object
   x-component: FormCollapse
+  required:
+    - region
+    - service
+  additionalProperties: false
   properties:
     region:
       default: cn-hangzhou
@@ -378,6 +385,8 @@ Properties:
     service:
       title: 服务配置
       type: object
+      required:
+        - name
       properties:
         name:
           '$ref': '#/definitions/namePattern'
@@ -401,11 +410,19 @@ Properties:
             target='blank'>这里</a>查看更多详情。
           examples:
             - acs:ram::xxx:role/fc-default-role
-          type: string
           description:
             注意：在 RAM 控制台创建服务所使用的角色时，需要选择“阿里云服务”，并且“受信服务”为“函数计算”。详情参考<a href='https://ram.console.aliyun.com/roles/AliyunFCDefaultRole'
             target='blank'>默认角色</a>
           pattern: '^acs:ram.*:role.*$'
+          oneOf:
+            - type: string
+              title: 服务角色
+              description:
+                当前服务和服务中的函数将会使用这个 RAM 角色（Role）来访问您的阿里云资源。点击<a href='https://help.aliyun.com/document_detail/52885.html'
+                target='blank'>这里</a>查看更多详情。
+              pattern: '^acs:ram.*:role.*$'
+            - '$ref': '#/definitions/role'
+              title: 高级配置
         tracingConfig:
           title: 链路追踪功能
           x-tooltip:
@@ -434,8 +451,8 @@ Properties:
                 target='blank'>日志服务计费方式</a>。
               enum:
                 - auto
-            - '$ref': '#/definitions/logConfig'
-              title: 自定义配置
+            - title: 自定义配置
+              '$ref': '#/definitions/logConfig'
         vpcConfig:
           title: VPC网络配置
           x-tooltip: 配置服务中函数使用的网络，例如配置函数是否可以访问公网，是否可以访问 VPC 中的资源等。
@@ -466,10 +483,16 @@ Properties:
       type: object
       title: 函数配置
       additionalProperties: false
-      required:
-        - name
-        - codeUri
-        - runtime
+      oneOf:
+        - required:
+            - name
+            - codeUri
+            - runtime
+        - required:
+            - name
+            - ossBucket
+            - ossKey
+            - runtime
       properties:
         name:
           '$ref': '#/definitions/namePattern'
@@ -481,6 +504,7 @@ Properties:
         codeUri:
           title: 代码路径
           description: 本地代码包路径
+          minLength: 1
           type: string
           examples:
             - '/home/admin'
@@ -494,6 +518,7 @@ Properties:
           title: ossBucket
           description: 如果指定oss代码，所在的存储桶，不能与codeUri同时出现
           type: string
+          minLength: 1
           x-reactions:
             dependencies:
               - collapse.function.function.basic.codeUri
@@ -504,6 +529,7 @@ Properties:
           title: ossKey
           description: 如果指定oss代码，所对应的对象，不能与codeUri同时出现
           type: string
+          minLength: 1
           x-reactions:
             dependencies:
               - collapse.function.function.basic.codeUri
@@ -566,6 +592,9 @@ Properties:
                 x-visible: "{{$deps[0] === 'custom'}}"
           title: custom配置
           type: object
+          required:
+            - command
+          additionalProperties: false
           properties:
             command:
               type: array
@@ -573,14 +602,15 @@ Properties:
               description: 自定义bootstrap启动命令和参数列表。需填写绝对路径，如：/code/myBootstrap
               default: []
               examples: []
-              additionalItems: true
+              minItems: 1
+              uniqueItems: true
               items:
                 - type: string
+                  minLength: 1
             args:
               type: array
               title: 启动参数
               description: 自定义bootstrap接收的参数列表。依次追加到启动命令之后
-              additionalItems: true
               items:
                 - type: string
           x-component: FormGrid
@@ -593,6 +623,8 @@ Properties:
                 x-visible: "{{$deps[0] === 'custom-container'}}"
           title: 自定义镜像配置
           type: object
+          required:
+            - image
           properties:
             image:
               title: 容器镜像地址
@@ -600,6 +632,7 @@ Properties:
                 您需要在容器中实现一个 HTTP Server。当调用函数时，函数计算会启动您的容器，并通过容器中的 HTTP Server
                 对外提供服务。注意：镜像资源使用量中的执行时间是从仓库拉取镜像开始计算的，容器镜像在一段时间一定范围内有缓存，因此并不是每次冷启动一定会产生镜像拉取的费用。这里查看更多详情。
               type: string
+              minLength: 1
             instanceID:
               title: 企业镜像ID
               description: 容器镜像服务企业版实例的ID。当容器镜像选择的是企业版实例时，您需要给容器镜像服务企业版添加实例ID，该实例的默认解析必须是服务所在的VPC网络地址。目前不支持PrivateZone产品定义域名解析
@@ -681,11 +714,11 @@ Properties:
           description: 配置函数运行环境中的环境变量。
           type: object
           x-component: KeyValue
-        layer:
+        layers:
           type: array
           title: 层
           description: 层可以为您提供自定义的公共依赖库、运行时环境及函数扩展等发布与部署能力。
-          additionalItems: true
+          uniqueItems: true
           items:
             - type: string
         initializer:
@@ -705,10 +738,14 @@ Properties:
         instanceLifecycleConfig:
           title: 扩展函数
           type: object
+          additionalProperties: false
           properties:
             preFreeze:
               title: PreFreeze 函数
               type: object
+              required:
+                - handler
+              additionalProperties: false
               properties:
                 handler:
                   title: 函数入口
@@ -719,6 +756,7 @@ Properties:
                     时，当前值的格式为 [文件名].[函数名]。如果当前值为 index.handler，那么在函数被触发时，将执行 index.js
                     文件中的 handler 函数。
                   type: string
+                  minLength: 1
                 timeout:
                   title: 超时时间
                   x-tooltip: 执行PreFreeze 函数的超时时间
@@ -726,7 +764,10 @@ Properties:
                   default: 30
             preStop:
               type: object
+              required:
+                - handler
               title: PreStop 函数
+              additionalProperties: false
               properties:
                 handler:
                   title: 函数入口
@@ -737,6 +778,7 @@ Properties:
                     Node.js 时，当前值的格式为 [文件名].[函数名]。如果当前值为 index.handler，那么在函数被触发时，将执行
                     index.js 文件中的 handler 函数。
                   type: string
+                  minLength: 1
                 timeout:
                   title: 超时时间
                   x-tooltip: 执行PreStop 函数的超时时间
@@ -746,15 +788,13 @@ Properties:
           title: DNS 配置
           type: object
           description: 用户自定义的 DNS 配置，平台根据该配置生成/etc/resolv.conf。仅对官方提供的 Runtime 生效。
-          required:
-            - nameServers
-            - searches
+          additionalProperties: false
           properties:
             nameServers:
               type: array
               title: Name Servers
               description: 请输入合法的 IP，例如：8.8.8.8
-              additionalItems: true
+              uniqueItems: true
               items:
                 - x-validator:
                     - ipv4
@@ -763,14 +803,14 @@ Properties:
               type: array
               title: 搜索域
               description: DNS 搜索域列表
-              additionalItems: true
+              uniqueItems: true
               items:
                 - type: string
             dnsOptions:
               type: array
               title: DNS 选项
               description: 对应 resolv.conf DNS 配置的 Options 项，列表中每一项的键是必填的
-              additionalItems: true
+              uniqueItems: true
               items:
                 - type: object
                   x-component: FormGrid
@@ -781,16 +821,19 @@ Properties:
                     name:
                       title: 键
                       type: string
+                      minLength: 1
                     value:
                       title: 值
                       type: string
+                      minLength: 1
         asyncConfiguration:
           title: 异步配置
           type: object
+          additionalProperties: false
           properties:
             destination:
-              title: 目标地址
               type: object
+              additionalProperties: false
               properties:
                 onSuccess:
                   title: 成功目标
@@ -807,9 +850,14 @@ Properties:
             maxAsyncEventAgeInSeconds:
               title: 消息最大有效期(s)
               type: integer
+              minimum: 1
+              maximum: 2592000
             maxAsyncRetryAttempts:
               title: 最大重试次数
               type: integer
+              default: 3
+              minimum: 0
+              maximum: 8
               x-tooltip:
                 在异步调用失败时，函数计算在<a href='blank' target='https://help.aliyun.com/document_detail/52878.html'>某些情况</a>下会自动重试，您可以根据业务需求减少或增加对异步调用的重试。点击<a
                 href='blank' target='https://help.aliyun.com/document_detail/52878.html'>这里</a>查看更多详情。
@@ -825,10 +873,15 @@ Properties:
       type: array
       x-component-props:
         flag: type
+      uniqueItems: true
       items:
         - type: object
           title: HTTP触发器
           x-name: http
+          required:
+            - type
+            - name
+            - config
           properties:
             type:
               title: 触发器类型
@@ -837,12 +890,13 @@ Properties:
               enum:
                 - http
             name:
-              title: name
-              description: 只能包含字母、数字、下划线和中划线。不能以数字、中划线开头。长度在 1-128 之间。
-              type: string
+              '$ref': '#/definitions/namePattern'
             config:
               title: 触发器配置
               type: object
+              required:
+                - authType
+                - methods
               properties:
                 authType:
                   title: 鉴权类型
@@ -855,6 +909,338 @@ Properties:
                     - 需要通过身份验证，不支持匿名访问
                 methods:
                   '$ref': '#/definitions/methods'
+        - type: object
+          title: 定时触发器
+          x-name: timer
+          required:
+            - type
+            - name
+            - config
+          properties:
+            type:
+              title: 触发器类型
+              default: timer
+              enum:
+                - timer
+            name:
+              '$ref': '#/definitions/namePattern'
+            config:
+              title: 触发器配置
+              type: object
+              required:
+                - cronExpression
+                - enable
+              properties:
+                cronExpression:
+                  title: cron表达式
+                  description:
+                    默认 Cron 以 UTC 时间运行，即北京时间减去 8 个小时。例如如果您想要在北京时间每天 12:00 调度函数，那么转化为
+                    UTC 时间就是每天 4:00 调度函数，即 0 0 4 * * *。                                如果您的任务需要按照特定时区运行，可以通过CRON_TZ指定时区，例如在北京时间每个月一号的凌晨四点触发函数执行，则可以使用CRON_TZ=Asia/Shanghai
+                    0 0 4 1 * *。
+                  examples:
+                    - 0 0 8 * * *
+                  type: string
+                enable:
+                  title: 是否启用
+                  type: boolean
+                payload:
+                  title: 触发消息
+                  description: 输入自定义的参数。该触发消息将会作为 event 中 payload 的值。
+                  type: string
+        - type: object
+          title: OSS触发器
+          x-name: oss
+          required:
+            - type
+            - name
+            - config
+          properties:
+            type:
+              title: 触发器类型
+              default: oss
+              enum:
+                - oss
+            name:
+              '$ref': '#/definitions/namePattern'
+            config:
+              title: 触发器配置
+              type: object
+              required:
+                - bucketName
+                - events
+                - filter
+              properties:
+                bucketName:
+                  title: Bucket 名称
+                  default: ''
+                  type: string
+                  minLength: 1
+                events:
+                  title: 触发事件
+                  description: 当 OSS 中发生指定的事件时触发当前触发器
+                  type: array
+                  minItems: 1
+                  uniqueItems: true
+                  items:
+                    - type: string
+                      minLength: 1
+                filter:
+                  title: 筛选条件
+                  type: object
+                  required:
+                    - Key
+                  properties:
+                    Key:
+                      title: 筛选条件
+                      type: object
+                      required:
+                        - Prefix
+                        - Suffix
+                      properties:
+                        Prefix:
+                          title: 文件前缀
+                          description: 要匹配的文件名称的前缀。强烈建议配置精准的前缀和后缀，避免触发事件嵌套循环触发引起额外费用，同一个Bucket下的不同触发器条件不能重叠包含。点击这里查看更多详情。
+                          examples:
+                            - source/
+                          type: string
+                          minLength: 1
+                        Suffix:
+                          title: 文件后缀
+                          description: 要匹配的文件名称的后缀。强烈建议配置精准的前缀和后缀，避免触发事件嵌套循环触发引起额外费用，同一个Bucket下的不同触发器条件不能重叠包含。点击这里查看更多详情。
+                          examples:
+                            - '.png'
+                          type: string
+                          minLength: 1
+            role:
+              '$ref': '#/definitions/roleArn'
+            sourceArn:
+              '$ref': '#/definitions/sourceArn'
+        - type: object
+          title: 日志触发器
+          x-name: log
+          required:
+            - type
+            - name
+            - config
+          properties:
+            type:
+              title: 触发器类型
+              default: log
+              enum:
+                - log
+            name:
+              '$ref': '#/definitions/namePattern'
+            config:
+              title: 触发器配置
+              type: object
+              required:
+                - logConfig
+                - jobConfig
+                - sourceConfig
+                - enable
+              properties:
+                logConfig:
+                  title: log配置
+                  type: object
+                  required:
+                    - project
+                    - logstore
+                  properties:
+                    project:
+                      title: 日志项目
+                      description: 表示日志服务 Project 名称
+                      type: string
+                      minLength: 1
+                    logstore:
+                      title: 日志仓库
+                      description: 当前触发器会定时从此 logstore 中订阅数据，然后触发函数。
+                      type: string
+                      minLength: 1
+                jobConfig:
+                  title: job配置
+                  type: object
+                  properties:
+                    maxRetryTime:
+                      title: 重试次数
+                      description: 取值范围为 0～100。日志服务根据触发间隔每次触发函数执行时，如果遇到错误（例如权限不足、网络失败、函数执行异常返回等），该参数定义本次触发所允许的最大重试次数。对于本次触发，如果超过最大重试次数仍无法成功的。需要等到下一次触发间隔到来时，由日志服务再次触发函数执行。
+                      type: integer
+                    triggerInterval:
+                      title: 触发间隔
+                      description: 日志服务触发函数运行的间隔，比如每隔 120 秒将 logstore 在最近 120 秒内的数据取出到函数服务，以执行自定义计算。
+                      type: integer
+                sourceConfig:
+                  title: source配置
+                  type: object
+                  required:
+                    - logstore
+                  properties:
+                    logstore:
+                      title: source配置
+                      description: 数据源的 Logstore 名称。触发器会定时从该 Logstore 订阅数据到函数计算
+                      type: string
+                      minLength: 1
+                functionParameter:
+                  title: 参数配置
+                  description: 日志服务将该配置内容作为函数 event, 当事件触发时
+                  type: object
+                enable:
+                  title: 是否开启
+                  type: boolean
+            role:
+              '$ref': '#/definitions/roleArn'
+            sourceArn:
+              '$ref': '#/definitions/sourceArn'
+        - type: object
+          title: MNS触发器
+          x-name: mns_topic
+          required:
+            - type
+            - name
+            - config
+          properties:
+            type:
+              title: 触发器类型
+              default: mns_topic
+              enum:
+                - mns_topic
+            name:
+              '$ref': '#/definitions/namePattern'
+            config:
+              description: 触发器配置
+              type: object
+              required:
+                - topicName
+              properties:
+                region:
+                  title: MNS 地域
+                  description: MNS 中 Topic 所在的地域。强烈建议 MNS Topic 和 函数计算的函数在相同的地域，不同的地域会增加网络延时风险。
+                  type: string
+                topicName:
+                  title: topic的名字
+                  description: mns topic的名字
+                  type: string
+                  minLength: 1
+                filterTag:
+                  title: 过滤标签
+                  description: 描述了该订阅中消息过滤的标签（标签一致的消息才会被推送）,不超过 16 个字符的字符串，默认不进行消息过滤，即默认不填写该字段
+                  type: string
+                notifyContentFormat:
+                  title: Event 格式
+                  description: 推送给函数入参 event 的格式，可选值：STREAM, JSON
+                  type: string
+                  enum:
+                    - STREAM
+                    - JSON
+                notifyStrategy:
+                  title: 重试策略
+                  description:
+                    退避重试：重试3次，每次重试的间隔时间是10秒到20秒之间的随机值。                                指数衰减重试：重试176次，每次重试的间隔时间指数递增至512秒，总计重试时间为1天。每次重试的具体间隔为：1，2，4，8，16，32，64，128，256，512，512...512
+                    （共167个512）。
+                  type: string
+                  enum:
+                    - BACKOFF_RETRY
+                    - EXPONENTIAL_DECAY_RETRY
+                  x-enum-label:
+                    - 退避重试
+                    - 指数衰减重试
+            role:
+              '$ref': '#/definitions/roleArn'
+            sourceArn:
+              '$ref': '#/definitions/sourceArn'
+        - type: object
+          title: CDN触发器
+          x-name: cdn_events
+          required:
+            - type
+            - name
+            - config
+          properties:
+            type:
+              title: 触发器类型
+              default: cdn_events
+              enum:
+                - cdn_events
+            name:
+              '$ref': '#/definitions/namePattern'
+            config:
+              description: 触发器配置
+              type: object
+              required:
+                - eventName
+                - eventVersion
+                - filter
+                - notes
+              properties:
+                eventName:
+                  title: 触发事件
+                  description: 为 CDN 端触发函数执行的事件，一经创建不能更改
+                  type: string
+                  minLength: 1
+                eventVersion:
+                  title: 触发事件版本
+                  description: 触发事件的版本号。目前仅支持1.0.0事件版本。
+                  type: string
+                  minLength: 1
+                filter:
+                  description: 过滤器（至少需要一个过滤器）
+                  type: object
+                  required:
+                    - domain
+                  properties:
+                    domain:
+                      title: 域名
+                      description: 您在 CDN 控制台添加域名时设置的加速域名。
+                      type: array
+                      minItems: 1
+                      uniqueItems: true
+                      items:
+                        - type: string
+                          minLength: 1
+                notes:
+                  title: 备注信息
+                  type: string
+                  minLength: 1
+
+            role:
+              '$ref': '#/definitions/roleArn'
+            sourceArn:
+              '$ref': '#/definitions/sourceArn'
+        - type: object
+          title: Tablestore触发器
+          x-name: tablestore
+          required:
+            - type
+            - name
+            - config
+          properties:
+            type:
+              title: 触发器类型
+              default: tablestore
+              enum:
+                - tablestore
+            name:
+              '$ref': '#/definitions/namePattern'
+            config:
+              description: 触发器配置
+              type: object
+              required:
+                - instanceName
+                - tableName
+              properties:
+                instanceName:
+                  title: 实例名
+                  description: 请选择表格存储中的实例。表格存储触发器可以在表格存储中的数据更新时自动触发函数执行。
+                  type: string
+                  minLength: 1
+                tableName:
+                  title: 表名
+                  description: 请选择表格存储中的表名称。表格存储触发器可以在表格存储中的数据更新时自动触发函数执行。
+                  type: string
+                  minLength: 1
+            role:
+              '$ref': '#/definitions/roleArn'
+            sourceArn:
+              '$ref': '#/definitions/sourceArn'
     customDomains:
       title: 域名配置
       description:
@@ -863,6 +1249,10 @@ Properties:
       type: array
       items:
         - type: object
+          required:
+            - domainName
+            - protocol
+            - routeConfigs
           properties:
             domainName:
               title: 域名
@@ -873,18 +1263,22 @@ Properties:
               type: string
               enum:
                 - HTTP
-                - HTTPS
-                - HTTP, HTTPS
+                - HTTP,HTTPS
             routeConfigs:
               title: 路由配置
               type: array
+              minItems: 1
+              uniqueItems: true
               items:
                 - type: object
                   x-component: FormGrid
+                  required:
+                    - path
                   properties:
                     path:
                       title: 路径
                       type: string
+                      minLength: 1
                     serviceName:
                       title: 服务名
                       type: string
@@ -894,11 +1288,18 @@ Properties:
                     qualifier:
                       title: 版本或别名
                       type: string
+            certId:
+              title: 获取证书内容
+              type: integer
             certConfig:
               title: 证书配置
               type: object
               x-decorator-props:
                 labelWidth: 80
+              required:
+                - certName
+                - certificate
+                - privateKey
               properties:
                 certName:
                   '$ref': '#/definitions/namePattern'
@@ -908,11 +1309,10 @@ Properties:
                     PEM 证书的内容应该以 -----BEGIN CERTIFICATE----- 开头，-----END CERTIFICATE-----
                     结尾
                   type: string
-                  pattern: '^-----BEGIN CERTIFICATE.*'
+                  minLength: 1
                 privateKey:
                   title: PEM 证书私钥
                   description: PEM 证书的密钥应该以 -----BEGIN RSA PRIVATE KEY----- 开头，-----END
                     RSA PRIVATE KEY----- 结尾
                   type: string
-                  pattern: '^-----BEGIN RSA PRIVATE KEY.*'
-  additionalProperties: false
+                  minLength: 1

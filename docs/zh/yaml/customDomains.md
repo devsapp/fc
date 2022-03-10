@@ -34,9 +34,9 @@ customDomains:
 
 | 参数名      | 必填  | 类型   | 参数描述 |
 | ----------- | ----- | ------ | -------- |
-| certName    | False | String | 证书名称 |
-| privateKey  | False | String | 表示私钥，内容仅支持 PEM 格式 |
-| certificate | False | String | 表示证书，内容仅支持 PEM 格式 |
+| certName    | True | String | 证书名称 |
+| privateKey  | True | String | 表示私钥，内容仅支持 PEM 格式 |
+| certificate | True | String | 表示证书，内容仅支持 PEM 格式 |
 
 
 #### 通过配置 certId 获取证书内容
