@@ -1152,7 +1152,7 @@ export default class FcBaseComponent {
   }
 
   private async updateCore() {
-    if (!_.isFunction(core.popCore)) {
+    if (!_.isFunction(core.extend2)) {
       try {
         const homePath = _.isFunction(core.getRootHome) ? core.getRootHome() : os.homedir();
         const corePath = path.join(homePath, 'cache', 'core');
