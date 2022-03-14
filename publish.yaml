@@ -77,58 +77,61 @@ Properties:
           minItems: 1
           uniqueItems: true
           items:
-            - type: object
-              title: 策略内容列表
-              description: 策略内容列表
-              default: {}
-              examples: []
-              required:
-                - Effect
-                - Action
-                - Resource
-              additionalProperties: false
-              properties:
-                Effect:
-                  title: 策略生效
-                  description: 策略生效，可选值有 'Allow' 和 'Deny'
-                  default: Allow
-                  enum:
-                    - Allow
-                    - Deny
-                Action:
-                  type: array
-                  title: 策略动作
-                  description: 策略动作
-                  default: []
-                  minItems: 1
-                  uniqueItems: true
-                  items:
-                    - type: string
-                      minLength: 1
-                      title: 策略动作
-                      description: 策略动作
-                      examples:
-                        - log:ListProject
-                Resource:
-                  type: array
-                  title: 策略的目标资源
-                  description: 策略的目标资源
-                  default: []
-                  examples: []
-                  minItems: 1
-                  uniqueItems: true
-                  items:
-                    - type: string
-                      title: 策略的目标资源
-                      description: 策略的目标资源
-                      default: ''
-                      examples:
-                        - acs:log:*:*:project/*
-                      pattern: '^acs:.*$'
-                Condition:
-                  type: object
-                  title: 策略的条件限制
-                  description: 策略的条件限制
+            oneOf:
+              - type: object
+                title: 策略内容列表
+                description: 策略内容列表
+                default: {}
+                examples: []
+                required:
+                  - Effect
+                  - Action
+                  - Resource
+                additionalProperties: false
+                properties:
+                  Effect:
+                    title: 策略生效
+                    description: 策略生效，可选值有 'Allow' 和 'Deny'
+                    default: Allow
+                    enum:
+                      - Allow
+                      - Deny
+                  Action:
+                    type: array
+                    title: 策略动作
+                    description: 策略动作
+                    default: []
+                    minItems: 1
+                    uniqueItems: true
+                    items:
+                      oneOf:
+                        - type: string
+                          minLength: 1
+                          title: 策略动作
+                          description: 策略动作
+                          examples:
+                            - log:ListProject
+                  Resource:
+                    type: array
+                    title: 策略的目标资源
+                    description: 策略的目标资源
+                    default: []
+                    examples: []
+                    minItems: 1
+                    uniqueItems: true
+                    items:
+                      oneOf:
+                        - type: string
+                          title: 策略的目标资源
+                          description: 策略的目标资源
+                          default: ''
+                          examples:
+                            - acs:log:*:*:project/*
+                          pattern: '^acs:.*$'
+                  Condition:
+                    type: object
+                    title: 策略的条件限制
+                    description: 策略的条件限制
     role:
       type: object
       description: 自定义策略列表创建角色
@@ -239,11 +242,12 @@ Properties:
           minItems: 1
           uniqueItems: true
           items:
-            - type: string
-              minLength: 1
-              examples:
-                - vsw-xxx1
-                - vsw-xxx2
+            oneOf:
+              - type: string
+                minLength: 1
+                examples:
+                  - vsw-xxx1
+                  - vsw-xxx2
         securityGroupId:
           type: string
           minLength: 1
@@ -285,58 +289,60 @@ Properties:
           minItems: 1
           uniqueItems: true
           items:
-            - type: object
-              title: NAS 挂载点
-              default: {}
-              examples: []
-              required:
-                - serverAddr
-                - nasDir
-                - fcDir
-              additionalProperties: false
-              properties:
-                serverAddr:
-                  type: string
-                  minLength: 1
-                  title: NAS 挂载点
-                  default: ''
-                  examples:
-                    - xxx-xxx.cn-shenzhen.nas.aliyuncs.com
-                nasDir:
-                  type: string
-                  minLength: 1
-                  title: 远端NAS中目录
-                  description: 通用型 NAS 以 / 开头，极速型 NAS 必须以 /share 开头。
-                  default: ''
-                  examples:
-                    - '/unit-deploy-service'
-                fcDir:
-                  type: string
-                  minLength: 1
-                  title: 函数运行环境中本地目录
-                  description: 必须为 /home/ 或者 /mnt/ 的子目录，例如 /home/app
-                  examples:
-                    - '/mnt/auto'
+            oneOf:
+              - type: object
+                title: NAS 挂载点
+                default: {}
+                examples: []
+                required:
+                  - serverAddr
+                  - nasDir
+                  - fcDir
+                additionalProperties: false
+                properties:
+                  serverAddr:
+                    type: string
+                    minLength: 1
+                    title: NAS 挂载点
+                    default: ''
+                    examples:
+                      - xxx-xxx.cn-shenzhen.nas.aliyuncs.com
+                  nasDir:
+                    type: string
+                    minLength: 1
+                    title: 远端NAS中目录
+                    description: 通用型 NAS 以 / 开头，极速型 NAS 必须以 /share 开头。
+                    default: ''
+                    examples:
+                      - '/unit-deploy-service'
+                  fcDir:
+                    type: string
+                    minLength: 1
+                    title: 函数运行环境中本地目录
+                    description: 必须为 /home/ 或者 /mnt/ 的子目录，例如 /home/app
+                    examples:
+                      - '/mnt/auto'
     methods:
       type: array
       default:
         - GET
         - POST
       items:
-        - type: string
-          title: 请求方法
-          default:
-            - GET
-            - POST
-          examples:
-            - GET
-            - POST
-          enum:
-            - GET
-            - POST
-            - PUT
-            - DELETE
-            - HEAD
+        oneOf:
+          - type: string
+            title: 请求方法
+            default:
+              - GET
+              - POST
+            examples:
+              - GET
+              - POST
+            enum:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - HEAD
     roleArn:
       type: string
       pattern: '^acs:ram.*:role.*$'
@@ -605,14 +611,16 @@ Properties:
               minItems: 1
               uniqueItems: true
               items:
-                - type: string
-                  minLength: 1
+                oneOf:
+                  - type: string
+                    minLength: 1
             args:
               type: array
               title: 启动参数
               description: 自定义bootstrap接收的参数列表。依次追加到启动命令之后
               items:
-                - type: string
+                oneOf:
+                  - type: string
           x-component: FormGrid
         customContainerConfig:
           x-reactions:
@@ -720,7 +728,8 @@ Properties:
           description: 层可以为您提供自定义的公共依赖库、运行时环境及函数扩展等发布与部署能力。
           uniqueItems: true
           items:
-            - type: string
+            oneOf:
+              - type: string
         initializer:
           title: 初始化函数
           description:
@@ -796,36 +805,39 @@ Properties:
               description: 请输入合法的 IP，例如：8.8.8.8
               uniqueItems: true
               items:
-                - x-validator:
-                    - ipv4
-                  type: string
+                oneOf:
+                  - x-validator:
+                      - ipv4
+                    type: string
             searches:
               type: array
               title: 搜索域
               description: DNS 搜索域列表
               uniqueItems: true
               items:
-                - type: string
+                oneOf:
+                  - type: string
             dnsOptions:
               type: array
               title: DNS 选项
               description: 对应 resolv.conf DNS 配置的 Options 项，列表中每一项的键是必填的
               uniqueItems: true
               items:
-                - type: object
-                  x-component: FormGrid
-                  required:
-                    - name
-                    - value
-                  properties:
-                    name:
-                      title: 键
-                      type: string
-                      minLength: 1
-                    value:
-                      title: 值
-                      type: string
-                      minLength: 1
+                oneOf:
+                  - type: object
+                    x-component: FormGrid
+                    required:
+                      - name
+                      - value
+                    properties:
+                      name:
+                        title: 键
+                        type: string
+                        minLength: 1
+                      value:
+                        title: 值
+                        type: string
+                        minLength: 1
         asyncConfiguration:
           title: 异步配置
           type: object
@@ -875,372 +887,375 @@ Properties:
         flag: type
       uniqueItems: true
       items:
-        - type: object
-          title: HTTP触发器
-          x-name: http
-          required:
-            - type
-            - name
-            - config
-          properties:
-            type:
-              title: 触发器类型
-              default: http
-              description: HTTP 函数只能创建 HTTP 类型的触发器。
-              enum:
-                - http
-            name:
-              '$ref': '#/definitions/namePattern'
-            config:
-              title: 触发器配置
-              type: object
-              required:
-                - authType
-                - methods
-              properties:
-                authType:
-                  title: 鉴权类型
-                  default: anonymous
-                  enum:
-                    - anonymous
-                    - function
-                  x-enum-label:
-                    - 无需身份验证，支持匿名访问
-                    - 需要通过身份验证，不支持匿名访问
-                methods:
-                  '$ref': '#/definitions/methods'
-        - type: object
-          title: 定时触发器
-          x-name: timer
-          required:
-            - type
-            - name
-            - config
-          properties:
-            type:
-              title: 触发器类型
-              default: timer
-              enum:
-                - timer
-            name:
-              '$ref': '#/definitions/namePattern'
-            config:
-              title: 触发器配置
-              type: object
-              required:
-                - cronExpression
-                - enable
-              properties:
-                cronExpression:
-                  title: cron表达式
-                  description:
-                    默认 Cron 以 UTC 时间运行，即北京时间减去 8 个小时。例如如果您想要在北京时间每天 12:00 调度函数，那么转化为
-                    UTC 时间就是每天 4:00 调度函数，即 0 0 4 * * *。                                如果您的任务需要按照特定时区运行，可以通过CRON_TZ指定时区，例如在北京时间每个月一号的凌晨四点触发函数执行，则可以使用CRON_TZ=Asia/Shanghai
-                    0 0 4 1 * *。
-                  examples:
-                    - 0 0 8 * * *
-                  type: string
-                enable:
-                  title: 是否启用
-                  type: boolean
-                payload:
-                  title: 触发消息
-                  description: 输入自定义的参数。该触发消息将会作为 event 中 payload 的值。
-                  type: string
-        - type: object
-          title: OSS触发器
-          x-name: oss
-          required:
-            - type
-            - name
-            - config
-          properties:
-            type:
-              title: 触发器类型
-              default: oss
-              enum:
-                - oss
-            name:
-              '$ref': '#/definitions/namePattern'
-            config:
-              title: 触发器配置
-              type: object
-              required:
-                - bucketName
-                - events
-                - filter
-              properties:
-                bucketName:
-                  title: Bucket 名称
-                  default: ''
-                  type: string
-                  minLength: 1
-                events:
-                  title: 触发事件
-                  description: 当 OSS 中发生指定的事件时触发当前触发器
-                  type: array
-                  minItems: 1
-                  uniqueItems: true
-                  items:
-                    - type: string
-                      minLength: 1
-                filter:
-                  title: 筛选条件
-                  type: object
-                  required:
-                    - Key
-                  properties:
-                    Key:
-                      title: 筛选条件
-                      type: object
-                      required:
-                        - Prefix
-                        - Suffix
-                      properties:
-                        Prefix:
-                          title: 文件前缀
-                          description: 要匹配的文件名称的前缀。强烈建议配置精准的前缀和后缀，避免触发事件嵌套循环触发引起额外费用，同一个Bucket下的不同触发器条件不能重叠包含。点击这里查看更多详情。
-                          examples:
-                            - source/
-                          type: string
-                          minLength: 1
-                        Suffix:
-                          title: 文件后缀
-                          description: 要匹配的文件名称的后缀。强烈建议配置精准的前缀和后缀，避免触发事件嵌套循环触发引起额外费用，同一个Bucket下的不同触发器条件不能重叠包含。点击这里查看更多详情。
-                          examples:
-                            - '.png'
-                          type: string
-                          minLength: 1
-            role:
-              '$ref': '#/definitions/roleArn'
-            sourceArn:
-              '$ref': '#/definitions/sourceArn'
-        - type: object
-          title: 日志触发器
-          x-name: log
-          required:
-            - type
-            - name
-            - config
-          properties:
-            type:
-              title: 触发器类型
-              default: log
-              enum:
-                - log
-            name:
-              '$ref': '#/definitions/namePattern'
-            config:
-              title: 触发器配置
-              type: object
-              required:
-                - logConfig
-                - jobConfig
-                - sourceConfig
-                - enable
-              properties:
-                logConfig:
-                  title: log配置
-                  type: object
-                  required:
-                    - project
-                    - logstore
-                  properties:
-                    project:
-                      title: 日志项目
-                      description: 表示日志服务 Project 名称
-                      type: string
-                      minLength: 1
-                    logstore:
-                      title: 日志仓库
-                      description: 当前触发器会定时从此 logstore 中订阅数据，然后触发函数。
-                      type: string
-                      minLength: 1
-                jobConfig:
-                  title: job配置
-                  type: object
-                  properties:
-                    maxRetryTime:
-                      title: 重试次数
-                      description: 取值范围为 0～100。日志服务根据触发间隔每次触发函数执行时，如果遇到错误（例如权限不足、网络失败、函数执行异常返回等），该参数定义本次触发所允许的最大重试次数。对于本次触发，如果超过最大重试次数仍无法成功的。需要等到下一次触发间隔到来时，由日志服务再次触发函数执行。
-                      type: integer
-                    triggerInterval:
-                      title: 触发间隔
-                      description: 日志服务触发函数运行的间隔，比如每隔 120 秒将 logstore 在最近 120 秒内的数据取出到函数服务，以执行自定义计算。
-                      type: integer
-                sourceConfig:
-                  title: source配置
-                  type: object
-                  required:
-                    - logstore
-                  properties:
-                    logstore:
-                      title: source配置
-                      description: 数据源的 Logstore 名称。触发器会定时从该 Logstore 订阅数据到函数计算
-                      type: string
-                      minLength: 1
-                functionParameter:
-                  title: 参数配置
-                  description: 日志服务将该配置内容作为函数 event, 当事件触发时
-                  type: object
-                enable:
-                  title: 是否开启
-                  type: boolean
-            role:
-              '$ref': '#/definitions/roleArn'
-            sourceArn:
-              '$ref': '#/definitions/sourceArn'
-        - type: object
-          title: MNS触发器
-          x-name: mns_topic
-          required:
-            - type
-            - name
-            - config
-          properties:
-            type:
-              title: 触发器类型
-              default: mns_topic
-              enum:
-                - mns_topic
-            name:
-              '$ref': '#/definitions/namePattern'
-            config:
-              description: 触发器配置
-              type: object
-              required:
-                - topicName
-              properties:
-                region:
-                  title: MNS 地域
-                  description: MNS 中 Topic 所在的地域。强烈建议 MNS Topic 和 函数计算的函数在相同的地域，不同的地域会增加网络延时风险。
-                  type: string
-                topicName:
-                  title: topic的名字
-                  description: mns topic的名字
-                  type: string
-                  minLength: 1
-                filterTag:
-                  title: 过滤标签
-                  description: 描述了该订阅中消息过滤的标签（标签一致的消息才会被推送）,不超过 16 个字符的字符串，默认不进行消息过滤，即默认不填写该字段
-                  type: string
-                notifyContentFormat:
-                  title: Event 格式
-                  description: 推送给函数入参 event 的格式，可选值：STREAM, JSON
-                  type: string
-                  enum:
-                    - STREAM
-                    - JSON
-                notifyStrategy:
-                  title: 重试策略
-                  description:
-                    退避重试：重试3次，每次重试的间隔时间是10秒到20秒之间的随机值。                                指数衰减重试：重试176次，每次重试的间隔时间指数递增至512秒，总计重试时间为1天。每次重试的具体间隔为：1，2，4，8，16，32，64，128，256，512，512...512
-                    （共167个512）。
-                  type: string
-                  enum:
-                    - BACKOFF_RETRY
-                    - EXPONENTIAL_DECAY_RETRY
-                  x-enum-label:
-                    - 退避重试
-                    - 指数衰减重试
-            role:
-              '$ref': '#/definitions/roleArn'
-            sourceArn:
-              '$ref': '#/definitions/sourceArn'
-        - type: object
-          title: CDN触发器
-          x-name: cdn_events
-          required:
-            - type
-            - name
-            - config
-          properties:
-            type:
-              title: 触发器类型
-              default: cdn_events
-              enum:
-                - cdn_events
-            name:
-              '$ref': '#/definitions/namePattern'
-            config:
-              description: 触发器配置
-              type: object
-              required:
-                - eventName
-                - eventVersion
-                - filter
-                - notes
-              properties:
-                eventName:
-                  title: 触发事件
-                  description: 为 CDN 端触发函数执行的事件，一经创建不能更改
-                  type: string
-                  minLength: 1
-                eventVersion:
-                  title: 触发事件版本
-                  description: 触发事件的版本号。目前仅支持1.0.0事件版本。
-                  type: string
-                  minLength: 1
-                filter:
-                  description: 过滤器（至少需要一个过滤器）
-                  type: object
-                  required:
-                    - domain
-                  properties:
-                    domain:
-                      title: 域名
-                      description: 您在 CDN 控制台添加域名时设置的加速域名。
-                      type: array
-                      minItems: 1
-                      uniqueItems: true
-                      items:
+        oneOf:
+          - type: object
+            title: HTTP触发器
+            x-name: http
+            required:
+              - type
+              - name
+              - config
+            properties:
+              type:
+                title: 触发器类型
+                default: http
+                description: HTTP 函数只能创建 HTTP 类型的触发器。
+                enum:
+                  - http
+              name:
+                '$ref': '#/definitions/namePattern'
+              config:
+                title: 触发器配置
+                type: object
+                required:
+                  - authType
+                  - methods
+                properties:
+                  authType:
+                    title: 鉴权类型
+                    default: anonymous
+                    enum:
+                      - anonymous
+                      - function
+                    x-enum-label:
+                      - 无需身份验证，支持匿名访问
+                      - 需要通过身份验证，不支持匿名访问
+                  methods:
+                    '$ref': '#/definitions/methods'
+          - type: object
+            title: 定时触发器
+            x-name: timer
+            required:
+              - type
+              - name
+              - config
+            properties:
+              type:
+                title: 触发器类型
+                default: timer
+                enum:
+                  - timer
+              name:
+                '$ref': '#/definitions/namePattern'
+              config:
+                title: 触发器配置
+                type: object
+                required:
+                  - cronExpression
+                  - enable
+                properties:
+                  cronExpression:
+                    title: cron表达式
+                    description:
+                      默认 Cron 以 UTC 时间运行，即北京时间减去 8 个小时。例如如果您想要在北京时间每天 12:00 调度函数，那么转化为
+                      UTC 时间就是每天 4:00 调度函数，即 0 0 4 * * *。                                如果您的任务需要按照特定时区运行，可以通过CRON_TZ指定时区，例如在北京时间每个月一号的凌晨四点触发函数执行，则可以使用CRON_TZ=Asia/Shanghai
+                      0 0 4 1 * *。
+                    examples:
+                      - 0 0 8 * * *
+                    type: string
+                  enable:
+                    title: 是否启用
+                    type: boolean
+                  payload:
+                    title: 触发消息
+                    description: 输入自定义的参数。该触发消息将会作为 event 中 payload 的值。
+                    type: string
+          - type: object
+            title: OSS触发器
+            x-name: oss
+            required:
+              - type
+              - name
+              - config
+            properties:
+              type:
+                title: 触发器类型
+                default: oss
+                enum:
+                  - oss
+              name:
+                '$ref': '#/definitions/namePattern'
+              config:
+                title: 触发器配置
+                type: object
+                required:
+                  - bucketName
+                  - events
+                  - filter
+                properties:
+                  bucketName:
+                    title: Bucket 名称
+                    default: ''
+                    type: string
+                    minLength: 1
+                  events:
+                    title: 触发事件
+                    description: 当 OSS 中发生指定的事件时触发当前触发器
+                    type: array
+                    minItems: 1
+                    uniqueItems: true
+                    items:
+                      oneOf:
                         - type: string
                           minLength: 1
-                notes:
-                  title: 备注信息
-                  type: string
-                  minLength: 1
+                  filter:
+                    title: 筛选条件
+                    type: object
+                    required:
+                      - Key
+                    properties:
+                      Key:
+                        title: 筛选条件
+                        type: object
+                        required:
+                          - Prefix
+                          - Suffix
+                        properties:
+                          Prefix:
+                            title: 文件前缀
+                            description: 要匹配的文件名称的前缀。强烈建议配置精准的前缀和后缀，避免触发事件嵌套循环触发引起额外费用，同一个Bucket下的不同触发器条件不能重叠包含。点击这里查看更多详情。
+                            examples:
+                              - source/
+                            type: string
+                            minLength: 1
+                          Suffix:
+                            title: 文件后缀
+                            description: 要匹配的文件名称的后缀。强烈建议配置精准的前缀和后缀，避免触发事件嵌套循环触发引起额外费用，同一个Bucket下的不同触发器条件不能重叠包含。点击这里查看更多详情。
+                            examples:
+                              - '.png'
+                            type: string
+                            minLength: 1
+              role:
+                '$ref': '#/definitions/roleArn'
+              sourceArn:
+                '$ref': '#/definitions/sourceArn'
+          - type: object
+            title: 日志触发器
+            x-name: log
+            required:
+              - type
+              - name
+              - config
+            properties:
+              type:
+                title: 触发器类型
+                default: log
+                enum:
+                  - log
+              name:
+                '$ref': '#/definitions/namePattern'
+              config:
+                title: 触发器配置
+                type: object
+                required:
+                  - logConfig
+                  - jobConfig
+                  - sourceConfig
+                  - enable
+                properties:
+                  logConfig:
+                    title: log配置
+                    type: object
+                    required:
+                      - project
+                      - logstore
+                    properties:
+                      project:
+                        title: 日志项目
+                        description: 表示日志服务 Project 名称
+                        type: string
+                        minLength: 1
+                      logstore:
+                        title: 日志仓库
+                        description: 当前触发器会定时从此 logstore 中订阅数据，然后触发函数。
+                        type: string
+                        minLength: 1
+                  jobConfig:
+                    title: job配置
+                    type: object
+                    properties:
+                      maxRetryTime:
+                        title: 重试次数
+                        description: 取值范围为 0～100。日志服务根据触发间隔每次触发函数执行时，如果遇到错误（例如权限不足、网络失败、函数执行异常返回等），该参数定义本次触发所允许的最大重试次数。对于本次触发，如果超过最大重试次数仍无法成功的。需要等到下一次触发间隔到来时，由日志服务再次触发函数执行。
+                        type: integer
+                      triggerInterval:
+                        title: 触发间隔
+                        description: 日志服务触发函数运行的间隔，比如每隔 120 秒将 logstore 在最近 120 秒内的数据取出到函数服务，以执行自定义计算。
+                        type: integer
+                  sourceConfig:
+                    title: source配置
+                    type: object
+                    required:
+                      - logstore
+                    properties:
+                      logstore:
+                        title: source配置
+                        description: 数据源的 Logstore 名称。触发器会定时从该 Logstore 订阅数据到函数计算
+                        type: string
+                        minLength: 1
+                  functionParameter:
+                    title: 参数配置
+                    description: 日志服务将该配置内容作为函数 event, 当事件触发时
+                    type: object
+                  enable:
+                    title: 是否开启
+                    type: boolean
+              role:
+                '$ref': '#/definitions/roleArn'
+              sourceArn:
+                '$ref': '#/definitions/sourceArn'
+          - type: object
+            title: MNS触发器
+            x-name: mns_topic
+            required:
+              - type
+              - name
+              - config
+            properties:
+              type:
+                title: 触发器类型
+                default: mns_topic
+                enum:
+                  - mns_topic
+              name:
+                '$ref': '#/definitions/namePattern'
+              config:
+                description: 触发器配置
+                type: object
+                required:
+                  - topicName
+                properties:
+                  region:
+                    title: MNS 地域
+                    description: MNS 中 Topic 所在的地域。强烈建议 MNS Topic 和 函数计算的函数在相同的地域，不同的地域会增加网络延时风险。
+                    type: string
+                  topicName:
+                    title: topic的名字
+                    description: mns topic的名字
+                    type: string
+                    minLength: 1
+                  filterTag:
+                    title: 过滤标签
+                    description: 描述了该订阅中消息过滤的标签（标签一致的消息才会被推送）,不超过 16 个字符的字符串，默认不进行消息过滤，即默认不填写该字段
+                    type: string
+                  notifyContentFormat:
+                    title: Event 格式
+                    description: 推送给函数入参 event 的格式，可选值：STREAM, JSON
+                    type: string
+                    enum:
+                      - STREAM
+                      - JSON
+                  notifyStrategy:
+                    title: 重试策略
+                    description:
+                      退避重试：重试3次，每次重试的间隔时间是10秒到20秒之间的随机值。                                指数衰减重试：重试176次，每次重试的间隔时间指数递增至512秒，总计重试时间为1天。每次重试的具体间隔为：1，2，4，8，16，32，64，128，256，512，512...512
+                      （共167个512）。
+                    type: string
+                    enum:
+                      - BACKOFF_RETRY
+                      - EXPONENTIAL_DECAY_RETRY
+                    x-enum-label:
+                      - 退避重试
+                      - 指数衰减重试
+              role:
+                '$ref': '#/definitions/roleArn'
+              sourceArn:
+                '$ref': '#/definitions/sourceArn'
+          - type: object
+            title: CDN触发器
+            x-name: cdn_events
+            required:
+              - type
+              - name
+              - config
+            properties:
+              type:
+                title: 触发器类型
+                default: cdn_events
+                enum:
+                  - cdn_events
+              name:
+                '$ref': '#/definitions/namePattern'
+              config:
+                description: 触发器配置
+                type: object
+                required:
+                  - eventName
+                  - eventVersion
+                  - filter
+                  - notes
+                properties:
+                  eventName:
+                    title: 触发事件
+                    description: 为 CDN 端触发函数执行的事件，一经创建不能更改
+                    type: string
+                    minLength: 1
+                  eventVersion:
+                    title: 触发事件版本
+                    description: 触发事件的版本号。目前仅支持1.0.0事件版本。
+                    type: string
+                    minLength: 1
+                  filter:
+                    description: 过滤器（至少需要一个过滤器）
+                    type: object
+                    required:
+                      - domain
+                    properties:
+                      domain:
+                        title: 域名
+                        description: 您在 CDN 控制台添加域名时设置的加速域名。
+                        type: array
+                        minItems: 1
+                        uniqueItems: true
+                        items:
+                          oneOf:
+                            - type: string
+                              minLength: 1
+                  notes:
+                    title: 备注信息
+                    type: string
+                    minLength: 1
 
-            role:
-              '$ref': '#/definitions/roleArn'
-            sourceArn:
-              '$ref': '#/definitions/sourceArn'
-        - type: object
-          title: Tablestore触发器
-          x-name: tablestore
-          required:
-            - type
-            - name
-            - config
-          properties:
-            type:
-              title: 触发器类型
-              default: tablestore
-              enum:
-                - tablestore
-            name:
-              '$ref': '#/definitions/namePattern'
-            config:
-              description: 触发器配置
-              type: object
-              required:
-                - instanceName
-                - tableName
-              properties:
-                instanceName:
-                  title: 实例名
-                  description: 请选择表格存储中的实例。表格存储触发器可以在表格存储中的数据更新时自动触发函数执行。
-                  type: string
-                  minLength: 1
-                tableName:
-                  title: 表名
-                  description: 请选择表格存储中的表名称。表格存储触发器可以在表格存储中的数据更新时自动触发函数执行。
-                  type: string
-                  minLength: 1
-            role:
-              '$ref': '#/definitions/roleArn'
-            sourceArn:
-              '$ref': '#/definitions/sourceArn'
+              role:
+                '$ref': '#/definitions/roleArn'
+              sourceArn:
+                '$ref': '#/definitions/sourceArn'
+          - type: object
+            title: Tablestore触发器
+            x-name: tablestore
+            required:
+              - type
+              - name
+              - config
+            properties:
+              type:
+                title: 触发器类型
+                default: tablestore
+                enum:
+                  - tablestore
+              name:
+                '$ref': '#/definitions/namePattern'
+              config:
+                description: 触发器配置
+                type: object
+                required:
+                  - instanceName
+                  - tableName
+                properties:
+                  instanceName:
+                    title: 实例名
+                    description: 请选择表格存储中的实例。表格存储触发器可以在表格存储中的数据更新时自动触发函数执行。
+                    type: string
+                    minLength: 1
+                  tableName:
+                    title: 表名
+                    description: 请选择表格存储中的表名称。表格存储触发器可以在表格存储中的数据更新时自动触发函数执行。
+                    type: string
+                    minLength: 1
+              role:
+                '$ref': '#/definitions/roleArn'
+              sourceArn:
+                '$ref': '#/definitions/sourceArn'
     customDomains:
       title: 域名配置
       description:
@@ -1248,71 +1263,73 @@ Properties:
         Web 应用，这时候您就可以为该 Web 应用绑定自定义域名。除此之外，您还可以为该域名设置 CDN 加速功能，将部署在函数计算的应用作为源站，把源内容发布到边缘节点，使终端用户能快速读取所需内容。
       type: array
       items:
-        - type: object
-          required:
-            - domainName
-            - protocol
-            - routeConfigs
-          properties:
-            domainName:
-              title: 域名
-              description: 域名，可以选择auto，用来分配默认域名
-              default: auto
-            protocol:
-              title: 协议
-              type: string
-              enum:
-                - HTTP
-                - HTTP,HTTPS
-            routeConfigs:
-              title: 路由配置
-              type: array
-              minItems: 1
-              uniqueItems: true
-              items:
-                - type: object
-                  x-component: FormGrid
-                  required:
-                    - path
-                  properties:
-                    path:
-                      title: 路径
-                      type: string
-                      minLength: 1
-                    serviceName:
-                      title: 服务名
-                      type: string
-                    functionName:
-                      title: 函数名
-                      type: string
-                    qualifier:
-                      title: 版本或别名
-                      type: string
-            certId:
-              title: 获取证书内容
-              type: integer
-            certConfig:
-              title: 证书配置
-              type: object
-              x-decorator-props:
-                labelWidth: 80
-              required:
-                - certName
-                - certificate
-                - privateKey
-              properties:
-                certName:
-                  '$ref': '#/definitions/namePattern'
-                certificate:
-                  title: PEM 证书内容
-                  description:
-                    PEM 证书的内容应该以 -----BEGIN CERTIFICATE----- 开头，-----END CERTIFICATE-----
-                    结尾
-                  type: string
-                  minLength: 1
-                privateKey:
-                  title: PEM 证书私钥
-                  description: PEM 证书的密钥应该以 -----BEGIN RSA PRIVATE KEY----- 开头，-----END
-                    RSA PRIVATE KEY----- 结尾
-                  type: string
-                  minLength: 1
+        oneOf:
+          - type: object
+            required:
+              - domainName
+              - protocol
+              - routeConfigs
+            properties:
+              domainName:
+                title: 域名
+                description: 域名，可以选择auto，用来分配默认域名
+                default: auto
+              protocol:
+                title: 协议
+                type: string
+                enum:
+                  - HTTP
+                  - HTTP,HTTPS
+              routeConfigs:
+                title: 路由配置
+                type: array
+                minItems: 1
+                uniqueItems: true
+                items:
+                  oneOf:
+                    - type: object
+                      x-component: FormGrid
+                      required:
+                        - path
+                      properties:
+                        path:
+                          title: 路径
+                          type: string
+                          minLength: 1
+                        serviceName:
+                          title: 服务名
+                          type: string
+                        functionName:
+                          title: 函数名
+                          type: string
+                        qualifier:
+                          title: 版本或别名
+                          type: string
+              certId:
+                title: 获取证书内容
+                type: integer
+              certConfig:
+                title: 证书配置
+                type: object
+                x-decorator-props:
+                  labelWidth: 80
+                required:
+                  - certName
+                  - certificate
+                  - privateKey
+                properties:
+                  certName:
+                    '$ref': '#/definitions/namePattern'
+                  certificate:
+                    title: PEM 证书内容
+                    description:
+                      PEM 证书的内容应该以 -----BEGIN CERTIFICATE----- 开头，-----END CERTIFICATE-----
+                      结尾
+                    type: string
+                    minLength: 1
+                  privateKey:
+                    title: PEM 证书私钥
+                    description: PEM 证书的密钥应该以 -----BEGIN RSA PRIVATE KEY----- 开头，-----END
+                      RSA PRIVATE KEY----- 结尾
+                    type: string
+                    minLength: 1
