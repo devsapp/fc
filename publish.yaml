@@ -343,6 +343,7 @@ Properties:
               - PUT
               - DELETE
               - HEAD
+              - OPTIONS
     roleArn:
       type: string
       pattern: '^acs:ram.*:role.*$'
