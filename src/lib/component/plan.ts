@@ -23,9 +23,8 @@ export default class Remove {
     if (planType === 'deploy') {
       const deployCommandList = ['service', 'function', 'trigger', 'domain'];
       if (!_.isEmpty(subCommand) && !deployCommandList.includes(subCommand)) {
-        return {
-          errorMessage: `Does not support ${subCommand} command.When plan-type is ${planType}, --sub-command supports not specified or ${deployCommandList.toString()}`,
-        };
+        const errorMessage = `Does not support ${subCommand} command.When plan-type is ${planType}, --sub-command supports not specified or ${deployCommandList.toString()}`;
+        throw new core.CatchableError(errorMessage);
       }
     } else if (planType === 'remove') {
       const removeCommandList = [
@@ -41,12 +40,11 @@ export default class Remove {
         'layer',
       ];
       if (!removeCommandList.includes(subCommand)) {
-        return {
-          errorMessage: `Does not support ${subCommand} command.When plan-type is ${planType}, --sub-command supports not specified or ${removeCommandList.toString()}`,
-        };
+        const errorMessage = `Does not support ${subCommand} command.When plan-type is ${planType}, --sub-command supports not specified or ${removeCommandList.toString()}`;
+        throw new core.CatchableError(errorMessage);
       }
     } else {
-      return { errorMessage: `--plan-type only supports deploy and remove, not ${planType}` };
+      throw new core.CatchableError(`--plan-type only supports deploy and remove, not ${planType}`);
     }
 
     return { planType, subCommand };

@@ -75,10 +75,7 @@ export default class Alias {
     logger.debug(`version subCommand: ${subCommand}`);
     if (!Object.keys(ALIAS_COMMAND_HELP_KEY).includes(subCommand)) {
       core.help(HELP.ALIAS);
-      return {
-        help: true,
-        errorMessage: `Does not support ${subCommand} command`,
-      };
+      throw new core.CatchableError(`Does not support ${subCommand} command`);
     }
 
     if (parsedData.help) {

@@ -1,11 +1,74 @@
-import _ from 'lodash';
-import { isAutoConfig } from './utils';
-import { VpcConfig } from './interface/vpc';
-import { NasConfig } from './interface/nas';
-import Client from './client';
-import logger from '../common/logger';
+import * as core from '@serverless-devs/core';
+import * as HELP from '../help/nas';
+import { isAutoConfig } from '../utils';
+import { VpcConfig } from '../interface/vpc';
+import { NasConfig } from '../interface/nas';
+import Client from '../client';
+import logger from '../../common/logger';
 
-export default class GenerateNasProps {
+const { lodash: _ } = core;
+
+export default class Nas {
+  static async handlerComponentInputs(inputs) {
+    const { props, args, argsObj } = inputs;
+    const SUPPORTED_METHOD = ['init', 'download', 'upload', 'command'];
+
+    const apts = {
+      boolean: ['all', 'long', 'help', 'recursive', 'override', 'force', 'assume-yes'],
+      alias: { force: 'f', override: 'o', recursive: 'r', help: 'h', long: 'l', 'assume-yes': 'y' },
+    };
+    // @ts-ignore
+    const comParse: any = core.commandParse({ args, argsObj }, apts);
+    const argsData: any = comParse?.data || {};
+
+    const assumeYes: boolean = argsData.y || argsData['assume-yes'];
+    const nonOptionsArgs = comParse.data?._ || [];
+    logger.debug(`nonOptionsArgs is ${JSON.stringify(nonOptionsArgs)}`);
+    if (!comParse?.data) {
+      logger.error('Not found sub-command.');
+      core.help(HELP.NAS_HELP_INFO);
+      return { isHelp: true };
+    }
+
+    if (nonOptionsArgs.length === 0) {
+      if (!comParse?.data?.help) {
+        logger.error('Not found sub-command.');
+      }
+      core.help(HELP.NAS_HELP_INFO);
+      return { isHelp: true };
+    }
+
+    const commandName: string = nonOptionsArgs[0];
+    if (!SUPPORTED_METHOD.includes(commandName)) {
+      logger.error(`Not supported sub-command: [${commandName}]`);
+      core.help(HELP.NAS_HELP_INFO);
+      return { isHelp: true };
+    }
+    const transformArgs = args.replace(commandName, '').replace(/(^\s*)|(\s*$)/g, '');
+
+    // s nas command ls -lh /mnt/auto 会被解析为 --help
+    if (comParse?.data?.help && !args?.includes('ls -lh')) {
+      core.help(HELP.NAS_SUB_COMMAND_HELP_INFO[commandName]);
+      return { isHelp: true };
+    }
+    nonOptionsArgs.shift();
+    const { nasConfig, vpcConfig, name, role } = props?.service || {};
+
+    const componentInputs = _.cloneDeep(inputs);
+    delete componentInputs.argsObj;
+    return {
+      commandName,
+      nasConfig,
+      componentInputs,
+      props,
+      assumeYes,
+      vpcConfig,
+      name,
+      role,
+      transformArgs,
+    };
+  }
+
   // 如果是 auto 使用线上配置，不在缓存中获取
   static async getServiceConfig(props, access, credentials) {
     let { name, vpcConfig, nasConfig, role } = props?.service || {};
@@ -54,7 +117,7 @@ export default class GenerateNasProps {
       });
     }
 
-    return GenerateNasProps.toNasAbility(props?.region, vpcConfig, name, role, nasConfig);
+    return Nas.toNasAbility(props?.region, vpcConfig, name, role, nasConfig);
   }
 
   static async toNasAbility(

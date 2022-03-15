@@ -67,7 +67,7 @@ export default class OnDemand {
     logger.debug(`ondemand subCommand: ${subCommand}`);
     if (!ONDEMAND_COMMADN.includes(subCommand)) {
       core.help(HELP.ON_DEMAND);
-      return { help: true, errorMessage: `Does not support ${subCommand} command` };
+      throw new core.CatchableError(`Does not support ${subCommand} command`);
     }
     if (parsedData.help) {
       core.help(ONDEMAND_COMMADN_HELP_KEY[subCommand]);

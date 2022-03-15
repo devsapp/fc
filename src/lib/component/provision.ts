@@ -83,7 +83,7 @@ export default class Provision {
     logger.debug(`provision subCommand: ${subCommand}`);
     if (!Object.keys(PROVISION_COMMADN_HELP_KEY).includes(subCommand)) {
       core.help(HELP.PROVISION);
-      return { help: true, errorMessage: `Does not support ${subCommand} command` };
+      throw new core.CatchableError(`Does not support ${subCommand} command`);
     }
     if (parsedData.help) {
       core.help(PROVISION_COMMADN_HELP_KEY[subCommand]);

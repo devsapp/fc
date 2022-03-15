@@ -2,8 +2,8 @@ import * as _ from 'lodash';
 import * as core from '@serverless-devs/core';
 import * as yaml from 'js-yaml';
 import Immutable from 'immutable';
-import logger from '../../common/logger';
-import { IInputs, IProperties } from '../interface/interface';
+import logger from '../common/logger';
+import { IInputs } from './interface/interface';
 import fs from 'fs';
 
 const COMMON_VARIABLE_TYPE_REG = new RegExp(/\$\{(.*)\}/, 'i');
@@ -25,16 +25,9 @@ export default class InfraAsTemplate {
     logger.debug(`Props is: ${JSON.stringify(inputs.props)}`);
 
     const parsedArgs: { [key: string]: any } = core.commandParse(inputs, {
-      boolean: ['help'],
       string: ['env', 'overlays', 'patch-strategy'],
-      alias: { help: 'h' },
     });
     const argsData: any = parsedArgs?.data || {};
-    if (argsData?.help) {
-      return {
-        isHelp: true,
-      };
-    }
 
     // check the environment and using environment state to modify the inputs.
     const { env, overlays } = argsData;
@@ -46,10 +39,6 @@ export default class InfraAsTemplate {
         task: async () => {
           const infraComponentInputs = InfraAsTemplate.handlerInputs(inputs);
           infraComponentInputs.props = {};
-          core.reportComponent('infrastructure-as-template', {
-            methodName: 'deploy',
-            uid: inputs?.credentials?.AccountID,
-          });
           const infraComponentInst = await core.load('infrastructure-as-template');
           const result = await infraComponentInst.deploy(infraComponentInputs);
           const state = {
@@ -101,27 +90,15 @@ export default class InfraAsTemplate {
   }
 
   private static handlerInputs(inputs: IInputs): any {
-    const project = inputs?.project;
-    const props: IProperties = inputs?.props;
-    const access: string = project?.access;
-    const args: string = inputs?.args;
-    const argsObj: any = inputs?.argsObj;
-    const curPath: any = inputs?.path;
-    const projectName: string = project?.projectName;
-    const appName: string = inputs?.appName;
-
-    return {
-      project: {
-        component: 'infrastructure-as-template',
-        projectName: `${projectName}-infrastructure-as-template-project`,
-        access,
-      },
-      appName,
-      props,
-      args,
-      argsObj,
-      path: curPath,
+    const cloneInputs = _.cloneDeep(inputs);
+    const { access, projectName = '' } = inputs?.project || {};
+    cloneInputs.project = {
+      component: 'infrastructure-as-template',
+      projectName: `${projectName}-infrastructure-as-template-project`,
+      access,
     };
+
+    return cloneInputs;
   }
 
   private static patchProps(baseProps: any, patchProps: any, patchStrategy: string) {
