@@ -5,7 +5,7 @@ set -e
 # git clone && cd repo
 
 source .env
-s config add --AccessKeyID "$AccessKeyID" --AccessKeySecret "$AccessKeySecret" --AccountID "$AccountID" --aliasName "$aliasName"
+s config add --AccessKeyID "$AccessKeyID" --AccessKeySecret "$AccessKeySecret" --AccountID "$AccountID" --access "$aliasName"
 
 s build --use-docker
 
