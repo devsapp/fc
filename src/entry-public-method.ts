@@ -23,7 +23,7 @@ export default class EntryPublicMethod {
    * @returns 
    */
   async handlerPreMethod(inputs: IInputs, options?: { getSecretKey?: boolean }) {
-    const { getSecretKey } = options;
+    const { getSecretKey } = options || {};
   
     // 判断是否是 help，如果是则退出不处理
     if (this.isHelp(inputs.args, inputs.argsObj)) {
