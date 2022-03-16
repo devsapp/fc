@@ -140,13 +140,11 @@ export default class FcBaseComponent extends EntryPublicMethod {
         result.function.timeout = deployRes.function.timeout;
       }
     }
-    if (deployRes.systemDomain) {
-      // https://github.com/devsapp/fc/issues/383
-      if (['custom', 'custom-container'].includes(props.function?.runtime) && !deployRes.customDomains) {
-        result.url = {
-          system_url: deployRes.systemDomain,
-        };
-      }
+    // https://github.com/devsapp/fc/issues/383
+    if (deployRes.systemDomain && !['custom', 'custom-container'].includes(props.function?.runtime)) {
+      result.url = {
+        system_url: deployRes.systemDomain,
+      };
     }
     if (deployRes.customDomains) {
       result.url = result.url || {};
