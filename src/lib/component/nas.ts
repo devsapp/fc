@@ -14,7 +14,8 @@ export default class Nas {
     const SUPPORTED_METHOD = ['init', 'download', 'upload', 'command'];
 
     const apts = {
-      boolean: ['all', 'long', 'help', 'recursive', 'override', 'force', 'assume-yes'],
+      boolean: ['all', 'long', 'help', 'recursive', 'override', 'force', 'assume-yes', 'debug'],
+      string: ['template', 't', 'a', 'access'],
       alias: { force: 'f', override: 'o', recursive: 'r', help: 'h', long: 'l', 'assume-yes': 'y' },
     };
     // @ts-ignore
@@ -44,7 +45,31 @@ export default class Nas {
       core.help(HELP.NAS_HELP_INFO);
       return { isHelp: true };
     }
-    const transformArgs = args.replace(commandName, '').replace(/(^\s*)|(\s*$)/g, '');
+
+    // 转换 args 参数输入
+    console.log();
+    let transformArgs = args.replace(commandName, '');
+    if (argsData.debug) {
+      transformArgs = transformArgs.replace('--debug', '');
+    }
+    // 抛除全局参数 access
+    if (argsData.access) {
+      transformArgs = transformArgs.replace('--access', '').replace(argsData.access, '');
+    } else if (argsData.a && transformArgs.includes('-a ')) {
+      if (argsData.a.join) { // fix: s nas common ls -al /mnt/auto -a access
+        argsData.a = argsData.a.join('').replace(/(^\s*)|(\s*$)/g, '');
+      }
+      transformArgs = transformArgs.replace('-a ', '').replace(argsData.a, '');
+    }
+    // 抛除全局参数 template
+    if (argsData.template) {
+      transformArgs = transformArgs.replace('--template', '').replace(argsData.template, '');
+    } else if (argsData.t && transformArgs.includes('-t ')) {
+      if (argsData.t.join) { // fix: s nas common ls -lt /mnt/auto -t s-s.yaml
+        argsData.t = argsData.t.join('').replace(/(^\s*)|(\s*$)/g, '');
+      }
+      transformArgs = transformArgs.replace('-t ', '').replace(argsData.t, '');
+    }
 
     // s nas command ls -lh /mnt/auto 会被解析为 --help
     if (comParse?.data?.help && !args?.includes('ls -lh')) {
@@ -65,7 +90,7 @@ export default class Nas {
       vpcConfig,
       name,
       role,
-      transformArgs,
+      transformArgs: transformArgs.replace(/(^\s*)|(\s*$)/g, ''),
     };
   }
 
