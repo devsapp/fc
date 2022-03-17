@@ -26,27 +26,7 @@ category: '发布&配置'
 
 ## 命令解析
 
-当执行命令`provision -h`/`provision --help`时，可以获取帮助文档：
-
-```shell script
-Provision
-
-  Resource reservation operation 
-
-Usage
-
-  s provision <sub-command> <options>
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/provision.md
-
-SubCommand List
-
-  list      View the list of resource reservation; help command [s provision list -h] 
-  put       Put resource reservation; help command [s provision put -h] 
-  get       Get resource reservation; help command [s provision get -h] 
-```
+当执行命令`provision -h`/`provision --help`时，可以获取帮助文档。
 
 
 在该命令中，包括了三个子命令：
@@ -59,50 +39,7 @@ SubCommand List
 
 `provision list` 命令，是查看服务已发布的版本列表的命令。
 
-当执行命令`provision list -h`/`provision list --help`时，可以获取帮助文档：
-
-```shell script
-Provision list
-
-  View the list of provision 
-
-Usage
-
-  s provision list <options>
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/provision.md
-                               
-Options
-
-  --region [string]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
-  --service-name [string]             [C-Required] Specify the fc service name
-  --qualifier string                  [C-Required] Specify the qualifier parameter. Only supports LATEST and alias
-  --table                             [Optional] Table format output     
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]      [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s version list 
-
-Examples with CLI
-
-  $ s cli fc version list --region cn-hangzhou --service-name serviceName 
-```
+当执行命令`provision list -h`/`provision list --help`时，可以获取帮助文档。
 
 ### 参数解析
 
@@ -153,53 +90,7 @@ fc-deploy-test:
 
 `provision put` 命令用于配置预留。
 
-当执行命令`provision put -h`/`provision put --help`时，可以获取帮助文档：
-
-```shell script
-Provision put
-
-  Set reserved configuration 
-
-Usage
-
-  s provision put <options>
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/provision.md
-                           
-Options
-
-  --region [string]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
-  --service-name [string]             [C-Required] Specify the fc service name  
-  --function-name [string]            [C-Required] Specify the fc function name   
-  --config string                     [Optional] Specify the configuration path parameter                         
-  --qualifier string                  [C-Required] Specify the qualifier parameter. Only supports LATEST and alias                           
-  --target number                     [Optional] Specify the provision target parameter          
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]      [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s provision put --target 1 --qualifier alias                
-  $ s provision put --config ./provision.json --qualifier alias 
-
-Examples with CLI
-
-  $ s cli fc provision put --region cn-hangzhou --service-name serviceName --function-name functionName --qualifier alias --target 1         
-```
+当执行命令`provision put -h`/`provision put --help`时，可以获取帮助文档。
 
 ### 参数解析
 
@@ -284,50 +175,7 @@ fc-deploy-test:
 
 `provision get` 命令，是获取预留实例详情的命令。
 
-当执行命令`provision get -h`/`provision get --help`时，可以获取帮助文档：
-
-```shell script
-Provision get
-
-  Get provision configuration 
-
-Usage
-
-  s provision get <options>
-                
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/provision.md
-                           
-Options
-    
-  --region [string]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
-  --service-name [string]             [C-Required] Specify the fc service name  
-  --function-name [string]            [C-Required] Specify the fc function name                         
-  --qualifier string                  [C-Required] Specify the qualifier parameter. Only supports LATEST and alias                           
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]      [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s provision get --qualifier alias
-
-Examples with CLI
-
-  $ s cli fc provision get --region cn-hangzhou --service-name serviceName --function-name functionName --qualifier alias   
-```
+当执行命令`provision get -h`/`provision get --help`时，可以获取帮助文档。
 
 ### 参数解析
 

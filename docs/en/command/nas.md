@@ -30,29 +30,7 @@ The `nas` commands are used to perform operations on Apsara File Storage NAS (NA
 
 ## Command description
 
-You can run the `nas -h` or `nas --help` command to obtain the help documentation:
-
-```shell script
-Nas
-
-  Upload and download files for NAS service. 
-
-Usage
-
-  $ s nas <sub-command> <options>
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/en/command/nas.md
-
-SubCommand List
-
-  init       Init nas resource; help command [s nas init -h]               
-  upload     Upload resources; help command [s nas upload -h] 
-  download   Download resources; help command [s nas download -h]  
-  command    Execute relevant instructions; help command [s nas command -h]  
-```
-
+You can run the `nas -h` or `nas --help` command to obtain the help documentation.
 
 The nas commands include the following subcommands:
  
@@ -66,31 +44,7 @@ The nas commands include the following subcommands:
 
 The `nas init` command is used to initialize NAS. After you run the `s.yaml` or `s.yml` command to write a document, NAS resources may not be created before the project is deployed. In this case, you can run the `nas init` command to initialize NAS. This way, you can use NAS. 
  
-You can run the `nas init -h` or `nas init --help` command to obtain the help documentation:
-
-```shell script
-Nas Init
-
-  Init nas resources. 
-
-Usage
-
-  $ s nas init 
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/en/command/nas.md
-                              
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]		 [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Examples with Yaml
-
-  $ s nas init
-```
+You can run the `nas init -h` or `nas init --help` command to obtain the help documentation.
 
 ### Parameter description
 
@@ -121,44 +75,7 @@ fc-deploy-test:
 
 The `nas upload` command is used to upload local files to NAS. 
 
-You can run the `nas upload -h` or `nas upload --help` command to view the help documentation:
-
-```shell script
-Nas Upload
-
-  Upload resources
-
-Usage
-
-  $ s nas upload <options> <local> <remote> 
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/en/command/nas.md
-                               
-Options
-
-  -r, --recursive     [Optional] Iterate to copy folder content 
-  -o, --override      [Optional] Override existing files    
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]      [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/en/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s nas upload /home/usr/demo.file /mnt/auto
-```
+You can run the `nas upload -h` or `nas upload --help` command to view the help documentation.
 
 ### Parameter description
  
@@ -190,44 +107,7 @@ Dir [./code] uploaded successfully.
 
 The `nas download` command is used to download files that are stored in NAS, which is attached to Function Compute. 
 
-You can run the `nas download -h` or `nas download --help` command to obtain the help documentation:
-
-```shell script
-Nas Download
-
-  Download resources. 
-
-Usage
-
-  $ s nas download <options> <remote> <local> 
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/en/command/nas.md
-                               
-Options
-
-  -o, --override     [Optional] Override existing files 
-  --no-unzip         [Optional] Do not unzip the folder
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]      [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/en/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s nas download /mnt/auto /home/usr/demo.file
-```
+You can run the `nas download -h` or `nas download --help` command to obtain the help documentation.
 
 ### Parameter Description
  
@@ -253,33 +133,7 @@ File [/mnt/auto/template.yml] download successfully.
 
 The `nas command` command is used to run the specified commands in an instance. For example, you can run the `nas command` command to create a file or folder, or delete a file or folder in a function instance to which NAS is attached. 
 
-You can run the `nas command -h` or `nas command --help` command to obtain the help documentation:
-
-```shell script
-Nas Command
-
-  Operation instruction. 
-
-Usage
-
-  $ s nas command <command> 
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/en/command/nas.md
-                               
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]      [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Examples with Yaml
-
-  $ s nas command ls -al /mnt/auto
-  $ s nas command rm -rf /mnt/auto/demoDir
-  $ s nas command mkdir /mnt/auto/demoDir
-```
+You can run the `nas command -h` or `nas command --help` command to obtain the help documentation.
 
 ### Parameter description
  

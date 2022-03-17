@@ -17,43 +17,6 @@ The `build` command is used to build functions and install dependencies.
 
 You can run the `build -h/build --help` command to obtain the documentation.
 
-```shell script
-Build
-
-  Build the dependencies
-
-Usage
-
-  s build <options>  
-                            
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/en/command/build.md
-
-Options
-
-  -f, --dockerfile [string]   [Optional] Specify the dockerfile path             
-  -d, --use-docker            [Optional] Use docker container to build functions 
-  -b, --use-buildkit          [Optional] Use buildkit to build functions         
-
-Global Options
-
-  -h, --help                 [Optional] Help for command               
-  --debug                    [Optional] Output debug informations        
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s build               
-  $ s build --use-docker  
-```
 
 ### Parameter description 
  
@@ -95,7 +58,10 @@ When you build functions and install dependencies, different runtime environment
 Take Python as an example. In a Python project that has the `requirements.txt` file, you can use the `s build --use-docker` command to install dependencies:
 
 
-![](https://img.alicdn.com/imgextra/i3/O1CN016yUmJP1aKU4boPjWo_!!6000000003311-2-tps-1667-978.png)
+
+![](https://serverless-article-picture.oss-cn-hangzhou.aliyuncs.com/1647525227853_20220317135348699845.png)
+
+
 
 The preceding figure shows the following information:
 
@@ -110,7 +76,7 @@ The preceding figure shows the following information:
 
 > To install dependencies in **Java**, you can perform the following operations: develop and edit source code, run the `s build --use-docker` command in the project directory to compile the Java project and install dependencies.
 >
-> ![](https://img.alicdn.com/imgextra/i4/O1CN014gwk4d1PZdOnL9gWC_!!6000000001855-2-tps-1304-622.png)
+> ![](https://serverless-article-picture.oss-cn-hangzhou.aliyuncs.com/1647525285018_20220317135456740085.png)
 >
 > Run the `s deploy` command to deploy the project. In Java projects, deliverable ZIP files are JAR packages. 
 
@@ -120,6 +86,6 @@ The preceding figure shows the following information:
 
 > 💡 In scenarios in which code libraries are used, you may need to perform more operations in addition to installing the libraries for various programming languages. For example, the runtime environment of a Puppeteer application deployed in Function Compute is Node.js. In addition to the Puppeteer library, an underlying .so library, such as [apt-get.list](https://github.com/devsapp/start-puppeteer/blob/master/src/nodejs12/src/apt-get.list), needs to be installed, as shown in the following figure:
 >
-> ![](https://img.alicdn.com/imgextra/i2/O1CN01IOxwXQ1EiNBT7jFtJ_!!6000000000385-2-tps-1684-964.png)
+> ![](https://serverless-article-picture.oss-cn-hangzhou.aliyuncs.com/1647526098404_20220317140844044956.png)
 >
 > For more information, see the "Deploy using Nodejs 12 with NAS" section in the [fc-start-puppeteer](https://github.com/devsapp/start-puppeteer/tree/master/src) page. 

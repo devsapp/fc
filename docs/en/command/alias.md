@@ -25,28 +25,7 @@ The `alias` commands are used to perform operations on the aliases of functions.
 
 ## Command description
 
-You can run the `alias -h` or `alias --help` command to obtain the following information about the relevant help documentation:
-
-```shell script
-Alias
-
-  Service alias operation 
-
-Usage
-
-  s alias <sub-command> <options>
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/en/command/alias.md
-
-SubCommand List
-
-  get       Get alias details; help command [s alias get -h]               
-  list      View the list of alias; help command [s alias list -h] 
-  publish   Publish alias; help command [s alias publish -h]  
-```
-
+You can run the `alias -h` or `alias --help` command to obtain the information about the relevant help documentation.
 
 The sample code contains the following subcommands:
 
@@ -58,49 +37,7 @@ The sample code contains the following subcommands:
 
 You can run the `alias get` command to obtain the details of the specified alias of a service. 
 
- You can run the `alias get -h` or `alias get --help` command to obtain the following information about the relevant help documentation:
-
-```shell script
-Alias get
-
-  Get alias details 
-
-Usage
-
-  s alias get <options> 
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/en/command/alias.md
-                               
-Options
-
-  --region [string]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1
-  --service-name [string]        	  [C-Required] Specify the fc service name  
-  --alias-name [string]               [Required] Specify the fc alias name 
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]		 [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/en/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s alias get --alias-name aliasName
-
-Examples with CLI
-
-  $ s cli fc alias get --region cn-hangzhou --service-name serviceName --alias-name aliasName
-```
+ You can run the `alias get -h` or `alias get --help` command to obtain the information about the relevant help documentation.
 
 ### Parameter description
 
@@ -134,49 +71,7 @@ fc-deploy-test:
 
 You can run the `alias list` command to obtain the details of aliases in a table. 
 
-You can run the `alias list -h` or `alias list --help` to obtain the following information about the relevant help documentation:
-
-```shell script
-Alias list
-
-  View the list of service alias 
-
-Usage
-
-  s alias list <options>   
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/en/command/alias.md
-                               
-Options
-
-  --region [string]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
-  --service-name [string]       	  [C-Required] Specify the fc service name  
-  --table                             [Optional] Table format output     
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]      [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/en/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s alias list 
-
-Examples with CLI
-
-  $ s cli fc alias list --region cn-hangzhou --service-name serviceName
-```
+You can run the `alias list -h` or `alias list --help` to obtain the information about the relevant help documentation.
 
 ### Parameter description
 
@@ -222,56 +117,7 @@ When the `--table` parameter is specified, the following command output is retur
 
 You can run the `alias publish` command to publish or update an alias. 
 
-You can run the `alias publish -h` or `alias publish --help` command to obtain the following information about the relevant help documentation:
-
-```shell script
-Alias publish
-
-  Publish service alias 
-
-Usage
-
-  s alias publish <options>  
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/en/command/alias.md
-                               
-Options
-
-  --region [string]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
-  --service-name [string]             [C-Required] Specify the fc service name  
-  --description [string]              [Optional] Specify the alias description     
-  --alias-name [string]            	  [Required] Specify the fc alias name                   
-  --gversion [number]              	  [Optional] The grayscale version id  
-  --version-id [number]            	  [Optional] The version Id               
-  --version-latest [boolean]          [Optional] Binding the latest service version          
-  --weight [number]                   [Optional] The weight for grayscale version 
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]      [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/en/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s alias publish --alias-name aliasName --version-id 2                             
-  $ s alias publish --alias-name aliasName --version-latest                         
-  $ s alias publish --description description --alias-name aliasName --version-id 2 --gversion 3 --weight 20                                                      
-
-Examples with CLI
-
-  $ s cli fc alias publish --region cn-hangzhou --service-name serviceName --alias-name aliasName --version-id 2 
-```
+You can run the `alias publish -h` or `alias publish --help` command to obtain the information about the relevant help documentation.
 
 ### Parameter description
 

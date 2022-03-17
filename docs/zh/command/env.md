@@ -33,56 +33,7 @@
 
 ## 命令解析
 
-当执行命令 `env -h` / `env --help` 时，可以获取帮助文档：
-
-```shell
-Env
-
-  Environments provisioned infrastructures that can be shared between services. 
-
-Document
-
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/env.md 
-
-Usage
-
-  $ s env <sub-command> <options> 
-
-SubCommand List
-
-  init     Create a new environment.   
-  deploy   Deploy an environment associated with templates.  
-  info     Show the information of a environment.  
-  list     List all environments associated with specified aliyun account. 
-
-Options
-
-  -n, --name <name>           Specify the environment name.    
-  -f, --filename <filename>   Specify an environment manifest when using `s env init`.   
-  -o, --overwrite             Overwrite the environment manifest in local when using `s env init`. 
-
-Global Options
-
-  --debug string          [Optional] Output debug informations   
-  -h, --help              [Optional] Help for command  
-  -t, --template string   [Optional] Specify the template file   
-  -a, --access string     [Optional] Specify key alias   
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode  
-  C-Required: Required parameters in CLI mode  
-  Y-Required: Required parameters in Yaml mode   
-  Optional: Non mandatory parameter  
-  ✋ The difference between Yaml mode and CLI mode: http://ej6.net/yc 
-
-Examples with Yaml
-
-  $ s env init --filename test.yaml 
-  $ s env deploy --name testing   
-  $ s env info --name testing   
-  $ s env list
-```
+当执行命令 `env -h` / `env --help` 时，可以获取帮助文档。
 
 ## 权限说明
 

@@ -26,27 +26,7 @@ The `provision` commands are used to provision function instances. You can use t
 
 ## Command description
 
-You can run the `provision -h` or `provision --help` command to obtain the help document:
-
-```shell script
-Provision
-
-  Resource reservation operation 
-
-Usage
-
-  s provision <sub-command> <options>
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/en/command/provision.md
-
-SubCommand List
-
-  list      View the list of resource reservation; help command [s provision list -h] 
-  put       Put resource reservation; help command [s provision put -h] 
-  get       Get resource reservation; help command [s provision get -h] 
-```
+You can run the `provision -h` or `provision --help` command to obtain the help documen.
 
 
  In the preceding command, the following sub-commands are included:
@@ -59,51 +39,7 @@ SubCommand List
 
 You can run the `provision list` command to view the published versions of the service. 
  
-You can run the `provision list -h` or `provision list --help` command to obtain the help document: 
-
-```shell script
-Provision list
-
-  View the list of provision 
-
-Usage
-
-  s provision list <options>
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/en/command/provision.md
-                               
-Options
-
-  --region [string]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
-  --service-name [string]             [C-Required] Specify the fc service name
-  --qualifier string                  [C-Required] Specify the qualifier parameter. Only supports LATEST and alias
-  --table                             [Optional] Table format output     
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]      [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s version list 
-
-Examples with CLI
-
-  $ s cli fc version list --region cn-hangzhou --service-name serviceName 
-```
-
+You can run the `provision list -h` or `provision list --help` command to obtain the help document.
 ### Parameter description
 
 | Parameter    | Abbreviation | Required   in YAML mode | Required   in CLI mode | Description                                                  |
@@ -154,53 +90,7 @@ When the `--table` parameter is specified, the following output is returned:
 
 You can run the `provision put` command to configure provisioned resources. 
 
-You can run the `provision put -h` or `provision put --help` command to obtain the help document:
-
-```shell script
-Provision put
-
-  Set reserved configuration 
-
-Usage
-
-  s provision put <options>
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/en/command/provision.md
-                           
-Options
-
-  --region [string]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
-  --service-name [string]             [C-Required] Specify the fc service name  
-  --function-name [string]            [C-Required] Specify the fc function name   
-  --config string                     [Optional] Specify the configuration path parameter                         
-  --qualifier string                  [C-Required] Specify the qualifier parameter. Only supports LATEST and alias                           
-  --target number                     [Optional] Specify the provision target parameter          
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]      [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s provision put --target 1 --qualifier alias                
-  $ s provision put --config ./provision.json --qualifier alias 
-
-Examples with CLI
-
-  $ s cli fc provision put --region cn-hangzhou --service-name serviceName --function-name functionName --qualifier alias --target 1         
-```
+You can run the `provision put -h` or `provision put --help` command to obtain the help document.
 
 ### Parameter description
 
@@ -285,50 +175,7 @@ The following information describes the data structure of the `targetTrackingPol
 
 The `provision get` command is used to obtain the details of provisioned instances. 
 
-You can run the `provision get -h` or `provision get --help` command to obtain the help document:
-
-```shell script
-Provision get
-
-  Get provision configuration 
-
-Usage
-
-  s provision get <options>
-                
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/en/command/provision.md
-                           
-Options
-    
-  --region [string]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
-  --service-name [string]             [C-Required] Specify the fc service name  
-  --function-name [string]            [C-Required] Specify the fc function name                         
-  --qualifier string                  [C-Required] Specify the qualifier parameter. Only supports LATEST and alias                           
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]      [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s provision get --qualifier alias
-
-Examples with CLI
-
-  $ s cli fc provision get --region cn-hangzhou --service-name serviceName --function-name functionName --qualifier alias   
-```
+You can run the `provision get -h` or `provision get --help` command to obtain the help document.
 
 ### Parameter description
  

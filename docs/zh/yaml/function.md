@@ -238,5 +238,5 @@ TempKey: tempValue
 
 | 参数名    | 必填  | 类型   | 参数描述               |
 | --------- | ----- | ------ | ---------------------- |
-| onSuccess | False | String | 异步调用失败的目标服务 |
-| onFailure | False | String | 异步调用成功的目标服务 |
+| onSuccess | False | String | 异步调用成功的目标服务 |
+| onFailure | False | String | 异步调用失败的目标服务 |
