@@ -16,39 +16,7 @@ category: '构建&部署'
 
 ## 命令解析
 
-当执行命令`plan -h`/`plan --help`时，可以获取帮助文档：
-
-```shell script
-Plan
-
-  Perceived resource change
-
-Usage
-
-  s plan <options>  
-                            
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/plan.md    
-
-Options
-
-  --type-plan [remove/deploy]   [Required] Expected instruction,value: remove/deploy(default: "deploy")               
-  --sub-command string          [Optional] Expected subcommand.                                                       
-                                If type-plan is deploy, optional value:service/function/trigger/domain                
-                                If type-plan is remove, optional                                                      
-                                value:service/function/trigger/domain/version/alias/provision/ondemand/onDemand/layer
-
-Global Options
-
-  -h, --help                 [Optional] Help for command    
-  -a, --access [string]      [Optional] Specify key alias             
-  --debug                    [Optional] Output debug informations        
-
-Examples with Cli
-
-  $ s plan              
-```
+当执行命令`plan -h`/`plan --help`时，可以获取帮助文档。
 
 ### 参数解析
 

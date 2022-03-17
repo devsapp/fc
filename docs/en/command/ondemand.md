@@ -24,27 +24,7 @@ You can use the `ondemand` command to manage on-demand resources of Function Com
 
 ## Command description
 
-You can run the `ondemand -`h or `ondemand --help` command to query the following help information:
-
-```shell script
-OnDemand
-
-  Resource on-demand operation 
-
-Usage
-
-  s ondemand <sub-command> <options>
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/en/command/ondemand.md
-
-SubCommand List
-
-  get       Get resource on-demand; help command [s ondemand get -h]               
-  list      View the list of resource on-demand; help command [s ondemand list -h] 
-  put       Put resource on-demand; help command [s ondemand put -h]
-```
+You can run the `ondemand -`h or `ondemand --help` command to query the help information.
 
 The ondemand command consists of three subcommands:
  
@@ -56,51 +36,7 @@ The ondemand command consists of three subcommands:
 
 The `ondemand get` command is used to query the details of specified on-demand resources. 
  
-You can run the `ondemand get -h` or `ondemand get --help`command to query the following help information:
-
-```shell script
-Ondemand get
-
-  Get on-demand configuration 
-
-Usage
-
-  s ondemand get <options>
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/en/command/ondemand.md
-                               
-Options
-
-  --region [string]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1
-  --service-name [string]        	  [C-Required] Specify the fc service name  
-  --function-name [string]        	  [C-Required] Specify the fc function name  
-  --qualifier [string]                [Optional] Specify the qualifier parameter. Only supports LATEST and alias  
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]		 [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/en/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s ondemand get --qualifier qualifier 
-
-Examples with CLI
-
-  $ s cli fc ondemand get --region cn-hangzhou --service-name serviceName --function-name functionName --qualifier qualifier 
-```
-
+You can run the `ondemand get -h` or `ondemand get --help`command to query the help information.
 ### Parameters decription
 
 | Full   name   | Abbreviation | Required   in YAML mode | Required   in CLI mode | Description                                                  |
@@ -135,49 +71,7 @@ fc-deploy-test:
 
 The `ondemand list` command is used to query the lists of on-demand resources. 
 
-You can run the `ondemand list -h` or `ondemand list --help` command to query the following help information:
-
-```shell script
-OnDemand list
-
-  View the list of on-demand 
-
-Usage
-
-  s ondemand list <options>
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/en/command/ondemand.md
-                               
-Options
-
-  --region [string]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
-  --service-name [string]       	  [C-Required] Specify the fc service name  
-  --table                             [Optional] Table format output     
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]      [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/en/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s ondemand list 
-
-Examples with CLI
-
-  $ s cli fc ondemand list --region cn-hangzhou --service-name serviceName
-```
+You can run the `ondemand list -h` or `ondemand list --help` command to query the help information
 
 ### Parameters description
  
@@ -221,51 +115,7 @@ Sample output if you specify the `--table` parameter:
 
 The `ondemand put` command is used to publish or update an alias. 
 
-You can run the `ondemand put -h` or `ondemand put --help` command to query the following help information:
-
-```shell script
-Ondemand put
-
-  Set reserved configuration 
-
-Usage
-
-  s ondemand put <options>
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/en/command/ondemand.md
-                               
-Options
-
-  --region [string]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
-  --service-name [string]             [C-Required] Specify the fc service name  
-  --function-name [string]            [C-Required] Specify the fc function name  
-  --qualifier [string]                [Required] Specify the qualifier parameter. Only supports LATEST and alias  
-  --max [string]                      [Required] Specify the maximumInstanceCount parameter  
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]      [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/en/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s ondemand put --qualifier pre --max 1                                                       
-
-Examples with CLI
-
-  $ s cli fc ondemand put --region cn-hangzhou --service-name serviceName --function-name functionName --qualifier alias --max 1
-```
+You can run the `ondemand put -h` or `ondemand put --help` command to query the help information.
 
 ### Parameters description
  

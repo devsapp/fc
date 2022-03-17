@@ -62,27 +62,7 @@ category: '调用&调试'
 
 ## 命令解析
 
-当执行命令`proxied -h`/`proxied --help`时，可以获取帮助文档：
-
-```shell script
-Proxied
-
-  Local invoke with real net traffic via proxied service
-
-Usage
-
-  s proxied <sub-command> <options>
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/proxied.md
-
-SubCommand List
-
-  setup            Setup the preconditions; [s proxied setup -h]               
-  invoke           Invoke local function; help command [s proxied invoke -h] 
-  cleanup    Clean the related resource and environment; help command [s proxied cleanup -h]  
-```
+当执行命令`proxied -h`/`proxied --help`时，可以获取帮助文档。
 
 
 在该命令中，包括了三个子命令：
@@ -95,49 +75,7 @@ SubCommand List
 
 `proxied setup` 命令，是初始化/配置端云联调的命令。
 
-当执行命令`proxied setup -h`/`proxied setup --help`时，可以获取帮助文档：
-
-```shell script
-Proxied setup
-
-  Setup for local invoke via proxied service
-
-Usage
-
-  s proxied setup <options>  
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/proxied.md
-                               
-Options
-
-  -c, --config [vscode/intellij]           [Optional] elect which IDE to use when debugging and output related debug config tips for the IDE. value: vscode, intellij                                          
-  --debug-args [string]                    [Optional] Additional parameters that will be passed to the debugger                    
-  -d, --debug-port [number]                [Optional] Specify the sandboxed container starting in debug mode, and exposing this port on localhost                                                            
-  --debugger-path [string]                 [Optional] The path of the debugger on the host                                 
-  --tmp-dir [string]                       [Optional] The temp directory mounted to '/tmp' , default: './.s/tmp/invoke/serviceName/functionName/'   
-                                 
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]		 [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/zh/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s proxied setup
-  $ s proxied setup --config vscode --debug-port 3000
-```
+当执行命令`proxied setup -h`/`proxied setup --help`时，可以获取帮助文档。
 
 ### 参数解析
 
@@ -169,50 +107,7 @@ Proxied resource setup succeeded.
 
 `proxied invoke` 命令，是进行端云联调函数触发/调用的命令。
 
-当执行命令`proxied invoke -h`/`proxied invoke --help`时，可以获取帮助文档：
-
-```shell script
-Invoke
-
-  Invoke local function in the container, pre-action is [s proxied setup]
-
-Usage
-
-  s proxied invoke <options>  
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/proxied.md
-                               
-Options
-
-  -e, --event [string]                [Optional] Event data passed to the function during invocation (default: "")                                                 
-  -f, --event-file [string]           [Optional] A file containing event data passed to the function during invoke             
-  -s, --event-stdin [string]          [Optional] Read from standard input, to support script pipeline                    
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]      [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/zh/yaml_and_cli.md
-
-Event Format
-  
-  Quickly obtain the data structures of different events through the command [s cli fc-event -h]
-
-Examples with Yaml
-
-  $ s proxied invoke 
-  $ s proxied invoke --event string
-```
+当执行命令`proxied invoke -h`/`proxied invoke --help`时，可以获取帮助文档。
 
 ### 参数解析
 
@@ -247,31 +142,7 @@ hello world
 
 `proxied cleanup` 命令，是对因端云联调而生成的辅助资源进行清理的命令。
 
-当执行命令`proxied cleanup -h`/`proxied cleanup --help`时，可以获取帮助文档：
-
-```shell script
-Proxied cleanup
-
-  Clean the helper resource and the local container
-
-Usage
-
-  s proxied cleanup [options]
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/proxied.md
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]      [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Examples with Yaml
-
-  $ s proxied cleanup                                                     
-```
+当执行命令`proxied cleanup -h`/`proxied cleanup --help`时，可以获取帮助文档。
 
 ### 参数解析
 

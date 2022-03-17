@@ -23,7 +23,7 @@ type目前支持：`http`, `timer`, `oss`, `log`, `mns_topic`, `cdn_events`, `ta
 | 参数名            | 必填 | 类型              | 参数描述                     |
 | ----------------- | ---- | ----------------- | ---------------------------- |
 | bucketName        | True | String            | OSS 中目标 bucket 名称       |
-| events            | True | List\<String\>      | OSS 端触发函数执行的事件列表 |
+| events            | True | List\<String\>      | OSS 端触发函数执行的事件列表， 相关文档：https://help.aliyun.com/document_detail/62922.html#section-mf3-l4l-1nf |
 | [filter](#filter) | True | [Struct](#filter) | 触发条件                     |
 
 参考案例：
@@ -540,8 +540,8 @@ triggers:
 
 | 参数名       | 必填 | 类型         | 参数描述           |
 | ------------ | ---- | ------------ | ------------------ |
-| instanceName | True | List\<String\> | 表格存储实例的名称 |
-| tableName    | True | List\<String\> | 实例中的表名称     |
+| instanceName | True | String | 表格存储实例的名称 |
+| tableName    | True | String | 实例中的表名称     |
 
 参考案例：
 
@@ -553,7 +553,9 @@ triggers:
     role: acs:ram::<account-id>:role/AliyunTableStoreStreamNotificationRole    
     # qualifier: 1 
     # LATEST    
-    config: {}
+    config: 
+      instanceName: xxx
+      tableName: xxx
 ```
 
 #### 权限配置相关

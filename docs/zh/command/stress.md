@@ -37,26 +37,7 @@ category: '其他功能'
 
 ## 命令解析
 
-当执行命令`stress -h`/`stress --help`时，可以获取帮助文档：
-
-```shell script
-Stress
-
-  Stress test for the serverless application 
-
-Usage
-
-  s stress <sub-command> <options>
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/stress.md
-
-SubCommand List
-
-  start   Start stress test; help command [s stress start -h]         
-  clean   Clean the relevant resources; help command [s stress clean -h]               
-```
+当执行命令`stress -h`/`stress --help`时，可以获取帮助文档。
 
 
 在该命令中，包括了两个子命令：
@@ -68,55 +49,7 @@ SubCommand List
 
 `stress start`: 对部署在函数计算上的函数进行压测的命令。
 
-当执行命令`stress start -h`/`stress start --help`时，可以获取帮助文档：
-
-```shell script
-Stress start
-
-  Start stress test 
-
-Usage
-
-  s stress start <options>
-                               
-Options
-
-  --region [string]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
-  --service-name [string]             [C-Required] Specify the fc service name  
-  --function-name [string]            [C-Required] Specify the fc function name
-  --function-type [http/event]        [C-Required] Type of the target function, value: http/event              
-  --method [string]                   [Optional] Target method, only for --function-type http                                  
-  --payload [string]                  [Optional] Represents the event/request_body passed to the function    
-  --payload-file [string]             [Optional] Contains the event passed to the function    
-  --num-user [number]                 [Optional] Number of the simulated users                                                 
-  -q, --qualifier [string]            [Optional] Qualifier of the target function, only for event function                                                 
-  --run-time [number]                 [Optional] Intervals for stress                                                                                                  
-  --spawn-rate [number]               [Optional] Increasing number of users per second                                         
-  -u, --url [string]                  [Optional] Target url
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]      [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s stress start --payload-file ./payload.file                                                                                                       
-  $ s stress start --num-user 6 --spawn-rate 10 --run-time 30 --url myUrl --method post --payload "hello world"                                                                                   
-
-Examples with CLI
-
-  $ s cli fc stress start --num-user 6 --spawn-rate 10 --run-time 30 --function-type event --service-name serviceName --function-name functionName --qualifier LATEST --payload "hello world" --region cn-hangzhou                                                                    
-```
+当执行命令`stress start -h`/`stress start --help`时，可以获取帮助文档。
 
 ### 参数解析
 
@@ -179,46 +112,7 @@ fc-deploy-test:
 
 `stress clean` 命令，用来清理发起压测的辅助资源(即一个辅助的service/function)以及本地的 html 压测报告。
 
-当执行命令`stress clean -h`时，可以获取帮助文档：
-
-```shell script
-Stress clean
-
-  Clean the relevant resources, including helper resources.                                                                    
-
-Usage
-
-  s stress clean <options>
-                               
-Options
-
-  --region [string]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
-  --service-name [string]             [C-Required] Specify the fc service name  
-  --function-name [string]            [C-Required] Specify the fc function name    
-  -y, --assume-yes                    [Optional] Assume that the answer to any question which would be asked is yes 
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]      [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s stress clean                                                                                
-
-Examples with CLI
-
-  $ s cli fc stress clean --region cn-hangzhou --service-name serviceName --function-name functionName -y 
-```
+当执行命令`stress clean -h`时，可以获取帮助文档。
 
 ### 参数解析
 

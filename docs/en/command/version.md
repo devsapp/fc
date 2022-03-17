@@ -21,27 +21,7 @@ The `version` commands are used to perform operations related to function versio
 
 ## Command description
 
-You can run the `version -h` or `version --help` command to obtain help document:
-
-```shell script
-Version
-
-  Service version operation 
-
-Usage
-
-  s version <sub-command> <options>
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/en/command/version.md
-
-SubCommand List
-
-  list      View the list of service versions; help command [s version list -h] 
-  publish   Publish service version; help command [s version publish -h] 
-```
-
+You can run the `version -h` or `version --help` command to obtain help document.
 
 In the preceding command, the following subcommands are included:
 
@@ -52,49 +32,7 @@ In the preceding command, the following subcommands are included:
 
 The `version list` command is used to check a list of published versions. 
 
- You can run the `version list -h` or `version list --help` command to obtain the help document: 
-
-```shell script
-Version list
-
-  View the list of service versions 
-
-Usage
-
-  s version list <options>  
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/en/command/version.md
-                               
-Options
-
-  --region [string]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
-  --service-name [string]             [C-Required] Specify the fc service name  
-  --table                             [Optional] Table format output     
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]      [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s version list 
-
-Examples with CLI
-
-  $ s cli fc version list --region cn-hangzhou --service-name serviceName 
-```
+ You can run the `version list -h` or `version list --help` command to obtain the help document.
 
 ### Parameter description
 
@@ -143,49 +81,7 @@ If the `--table` parameter is specified, the following output is returned:
 
 The `version publish` command is used to publish a version. 
 
-You can run the `version publish -h` or `version publish --hel`p command to obtain the help document:
-
-```shell script
-Version publish
-
-  Publish service version 
-
-Usage
-
-  s version publish <options>  
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/en/command/version.md
-                           
-Options
-
-  --region [string]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
-  --service-name [string]             [C-Required] Specify the fc service name  
-  --description [string]              [Optional] Specify the description     
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]      [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s version publish --description xxx 
-
-Examples with CLI
-
-  $ s cli fc version publish --region cn-hangzhou --service-name name --description xxx 
-```
+You can run the `version publish -h` or `version publish --hel`p command to obtain the help document.
 
 ### Parameter description
 

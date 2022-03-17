@@ -18,35 +18,7 @@ category: '其他功能'
 
 ## 命令解析
 
-当执行命令`api -h`/`api --help`时，可以获取帮助文档：
-
-```shell script
-Api
-
-  Directly operate the FC API without yaml support
-
-Usage
-
-  s cli fc api <api> <options>  
-                            
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/api.md    
-
-API Document 
-
-  https://help.aliyun.com/document_detail/188577.html
-
-Global Options
-
-  -h, --help                 [Optional] Help for command    
-  -a, --access [string]      [Optional] Specify key alias             
-  --debug                    [Optional] Output debug informations        
-
-Examples with Cli
-
-  $ s cli fc api ListService              
-```
+当执行命令`api -h`/`api --help`时，可以获取帮助文档。
 
 ### 参数解析
 

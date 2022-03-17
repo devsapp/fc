@@ -23,7 +23,7 @@ The `stress` commands are used to perform a stress testing on a function.
 
 The `stress` commands create a helper function to perform a stress testing on a function. The following figure shows the workflow:
 
-![](https://img.alicdn.com/imgextra/i1/O1CN017QO1In1lNearCqdo1_!!6000000004807-2-tps-669-460.png)
+![图片alt](https://serverless-article-picture.oss-cn-hangzhou.aliyuncs.com/1647526464542_20220317141428852826.png)
 
 1. The `stress start` command creates a helper function based on the built-in configuration of the component. Both the name of the helper function and the name of the service to which the helper function belongs are `_DEFAULT_FC_STRESS_COMPONENT_SERVICE`.
 
@@ -36,26 +36,7 @@ The `stress` commands create a helper function to perform a stress testing on a 
 
 ## Command description
 
-You can run the `stress -h` or `stress --help` command to obtain the help documentation:
-
-```shell script
-Stress
-
-  Stress test for the serverless application 
-
-Usage
-
-  s stress <sub-command> <options>
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/en/command/stress.md
-
-SubCommand List
-
-  start   Start stress test; help command [s stress start -h]         
-  clean   Clean the relevant resources; help command [s stress clean -h]               
-```
+You can run the `stress -h` or `stress --help` command to obtain the help documentation.
 
 
 The stress commands include the following subcommands:
@@ -67,55 +48,7 @@ The stress commands include the following subcommands:
 
 The `stress start` command is used to perform stress testing on functions in Function Compute. 
  
-You can run the `stress start -h` or `stress start --help` command to obtain the help documentation:
-
-```shell script
-Stress start
-
-  Start stress test 
-
-Usage
-
-  s stress start <options>
-                               
-Options
-
-  --region [string]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
-  --service-name [string]             [C-Required] Specify the fc service name  
-  --function-name [string]            [C-Required] Specify the fc function name
-  --function-type [http/event]        [C-Required] Type of the target function, value: http/event              
-  --method [string]                   [Optional] Target method, only for --function-type http                                  
-  --payload [string]                  [Optional] Represents the event/request_body passed to the function    
-  --payload-file [string]             [Optional] Contains the event passed to the function    
-  --num-user [number]                 [Optional] Number of the simulated users                                                 
-  -q, --qualifier [string]            [Optional] Qualifier of the target function, only for event function                                                 
-  --run-time [number]                 [Optional] Intervals for stress                                                                                                  
-  --spawn-rate [number]               [Optional] Increasing number of users per second                                         
-  -u, --url [string]                  [Optional] Target url
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]      [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s stress start --payload-file ./payload.file                                                                                                       
-  $ s stress start --num-user 6 --spawn-rate 10 --run-time 30 --url myUrl --method post --payload "hello world"                                                                                   
-
-Examples with CLI
-
-  $ s cli fc stress start --num-user 6 --spawn-rate 10 --run-time 30 --function-type event --service-name serviceName --function-name functionName --qualifier LATEST --payload "hello world" --region cn-hangzhou                                                                    
-```
+You can run the `stress start -h` or `stress start --help` command to obtain the help documentation.
 
 ### Parameter description
 
@@ -181,45 +114,6 @@ You can check the stress testing report based on the returned information. Examp
 The `stress clean` command is used to clean up the resources that are used for stress testing and local HTML stress testing reports. 
 
 You can run the `stress clean -h` command to obtain the help documentation.
-
-```shell script
-Stress clean
-
-  Clean the relevant resources, including helper resources.                                                                    
-
-Usage
-
-  s stress clean <options>
-                               
-Options
-
-  --region [string]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
-  --service-name [string]             [C-Required] Specify the fc service name  
-  --function-name [string]            [C-Required] Specify the fc function name    
-  -y, --assume-yes                    [Optional] Assume that the answer to any question which would be asked is yes 
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]      [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s stress clean                                                                                
-
-Examples with CLI
-
-  $ s cli fc stress clean --region cn-hangzhou --service-name serviceName --function-name functionName -y 
-```
 
 ### Parameter description
  

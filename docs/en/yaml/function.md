@@ -238,6 +238,6 @@ TempKey: tempValue
 
 | Parameter Name | Required | Type | Parameter Description |
 | --------- | ----- | ------ | ------------ |
-| onSuccess | False | String | The target service for which the asynchronous call failed |
-| onFailure | False | String | Asynchronous call to successful target service |
+| onSuccess | False | String | Asynchronous call to successful target service |
+| onFailure | False | String | The target service for which the asynchronous call failed |
 

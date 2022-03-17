@@ -15,46 +15,7 @@ The `fun2s` command is the command that converts the `template.yaml` recognized 
 
 ## Command description
 
-When executing the command `fun2s -h`/`fun2s --help`, you can get help documentation:
-
-```shell script
-Fun2s
-
-  Convert the Yaml specification of Funcraft to the Yaml specification of Serverless Devs.
-
-Usage
-
-  s cli fc fun2s <options>
-                            
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/en/command/fun2s.md
-
-Options
-
-  --force [Optional] Mandatory overwrite s file
-  --region [string] [Optional] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn- shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west- 1/us-west-1/us-east-1/ap-south-1
-  --source [string] [Optional] Specify Funcraft configuration path, default: template.yaml/template.yml
-  --target [string] [Optional] Specify Serverless Devs configuration path, default: s.yaml
-
-Global Options
-
-  -h, --help [Optional] Help for command
-  -a, --access [string] [Optional] Specify key alias
-  --debug [Optional] Output debug informations
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
-
-Examples with CLI
-
-  $ s cli fc fun2s --region cn-shenzhen --target ./s.yml
-````
+When executing the command `fun2s -h`/`fun2s --help`, you can get help documentation.
 
 ### Parameter description
 

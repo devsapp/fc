@@ -19,75 +19,13 @@ The `instance` command supports logging into active instances; including viewing
 
 ## Command description
 
-When executing the command `instance -h`/`instance --help`, you can get help documentation:
-
-```shell script
-Instance
-
-  Function instance operation
-
-Document
-
-  https://github.com/devsapp/fc/blob/main/docs/en/command/instance.md
-
-Usage
-
-  $ s instance <sub-command>
-
-SubCommand List
-
-  list View the list of active function instance; help command [s instance list -h]
-  exec Execute a command in a instance; help command [s instance exec -h]
-````
+When executing the command `instance -h`/`instance --help`, you can get help documentation.
 
 ## instance list command
 
 `instance list` command to get a list of all currently active instances of the function.
 
-When executing the command `instance list -h`/`instance list --help`, you can get help documentation:
-
-````
-Instance list
-
-  View the list of active function instance
-
-Document
-
-  https://github.com/devsapp/fc/blob/main/docs/en/command/instance.md
-
-Usage
-
-  $ s instance list <options>
-
-Options
-
-  --region [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen /cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1 /us-west-1/us-east-1/ap-south-1
-  --service-name string [C-Required] Specify the fc service name
-  --function-name string [C-Required] Specify the fc function name
-
-Global Options
-
-  --debug string [Optional] Output debug informations
-  -h, --help [Optional] Help for command
-  -t, --template string [Optional] Specify the template file
-  -a, --access string [Optional] Specify key alias
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: http://ej6.net/yc
-
-Examples with Yaml
-
-  $ s instance list
-
-Examples with CLI
-
-  $ s cli fc instance list --region cn-hangzhou --service-name serviceName --function-name functionName
-````
+When executing the command `instance list -h`/`instance list --help`, you can get help documentation.
 
 ### Parameter description
 
@@ -120,59 +58,7 @@ fc-event-test:
 
 `instance exec` command, log in to the specified instance.
 
-When executing the command `instance exec -h`/`instance exec --help`, you can get help documentation:
-
-````
-Instance exec
-
-  Execute a command in an instance
-
-Document
-
-  https://github.com/devsapp/fc/blob/main/docs/en/command/instance.md
-
-Usage
-
-  $ s instance exec <instanceId> <options>
-
-Options
-
-  --region [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen /cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1 /us-west-1/us-east-1/ap-south-1
-  --service-name string [C-Required] Specify the fc service name
-  --function-name string [C-Required] Specify the fc function name
-  --qualifier string [Optional] Specify the qualifier parameter. Only supports LATEST and alias
-  -i, --stdin [Optionnal] Open standard input
-  -t, --tty [Required] Allocate a terminal device
-
-Global Options
-
-  --debug string [Optional] Output debug informations
-  -h, --help [Optional] Help for command
-  -t, --template string [Optional] Specify the template file
-  -a, --access string [Optional] Specify key alias
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: http://ej6.net/yc
-
-Notice
-
-  The abbreviation for --tty -t cannot be used alone, because -t is a system parameter of serverless-devs
-
-Examples with Yaml
-
-  $ s instance exec c-*******-*******b4644b0ee ls
-  $ s instance exec -it c-*******-*******b4644b0ee /bin/bash
-
-Examples with CLI
-
-  $ s cli fc instance exec --region cn-hangzhou --service-name serviceName --function-name functionName c-*******-*******b4644b0ee ls
-  $ s cli fc instance exec --region cn-hangzhou --service-name serviceName --function-name functionName -i --tty c-*******-*******b4644b0ee /bin/ bash
-````
+When executing the command `instance exec -h`/`instance exec --help`, you can get help documentation.
 
 ### Parameter description
 

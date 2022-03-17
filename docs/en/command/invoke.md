@@ -17,59 +17,7 @@ The `invoke` command is used to invoke or trigger online functions.
 
 ## Command description
 
-You can run the `invoke -h` or `invoke --help` command to obtain the help documentation:
-
-```shell script
-Invoke
-
-  Invoke/trigger online functions 
-
-Usage
-
-  s invoke <options>  
-                                          
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/en/command/invoke.md
-
-Options
-
-  --region [string]               [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
-  --service-name [string]         [C-Required] Specify the fc service name  
-  --function-name [string]        [Optional] Specify the fc function name   
-  --timeout [number]              [Optional] Configure client timeout
-  -e, --event [string]            [Optional] Event data passed to the function during invocation (default: "")                                                         
-  -f, --event-file [string]       [Optional] Event funtion: A file containing event data passed to the function during invoke                                                                 
-  -s, --event-stdin [string]      [Optional] Read from standard input, to support script pipeline                                                      
-  --invocation-type [async/sync]  [Optional] Invocation type, value: async/sync, default: sync                                                                                                
-  --stateful-async-invocation-id  [Optional] Stateful asynchronous invocation, only takes effect when --invocation-type=async                           
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]      [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations    
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
-
-Event Format
-  
-  Quickly obtain the data structures of different events through the command [s cli fc-event -h]
-
-Examples with Yaml
-
-  $ s invoke               
-
-Examples with CLI
-
-  $ s cli fc invoke --region cn-hangzhou --service-name serviceName --function-name functionName --event evnetString                              
-```
+You can run the `invoke -h` or `invoke --help` command to obtain the help documentation.
 
 ### Parameter description
  

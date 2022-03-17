@@ -25,28 +25,7 @@ category: '发布&配置'
 
 ## 命令解析
 
-当执行命令`alias -h`/`alias --help`时，可以获取帮助文档：
-
-```shell script
-Alias
-
-  Service alias operation 
-
-Usage
-
-  s alias <sub-command> <options>
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/alias.md
-
-SubCommand List
-
-  get       Get alias details; help command [s alias get -h]               
-  list      View the list of alias; help command [s alias list -h] 
-  publish   Publish alias; help command [s alias publish -h]  
-```
-
+当执行命令`alias -h`/`alias --help`时，可以获取帮助文档。
 
 在该命令中，包括了三个子命令：
 
@@ -58,49 +37,7 @@ SubCommand List
 
 `alias get` 命令，是获取服务指定别名详情的命令。
 
-当执行命令`alias get -h`/`alias get --help`时，可以获取帮助文档：
-
-```shell script
-Alias get
-
-  Get alias details 
-
-Usage
-
-  s alias get <options> 
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/alias.md
-                               
-Options
-
-  --region [string]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1
-  --service-name [string]        	  [C-Required] Specify the fc service name  
-  --alias-name [string]               [Required] Specify the fc alias name 
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]		 [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/zh/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s alias get --alias-name aliasName
-
-Examples with CLI
-
-  $ s cli fc alias get --region cn-hangzhou --service-name serviceName --alias-name aliasName
-```
+当执行命令`alias get -h`/`alias get --help`时，可以获取帮助文档。
 
 ### 参数解析
 
@@ -134,49 +71,7 @@ fc-deploy-test:
 
 `alias list` 命令，是进列举别名列表的命令。
 
-当执行命令`alias list -h`/`alias list --help`时，可以获取帮助文档：
-
-```shell script
-Alias list
-
-  View the list of service alias 
-
-Usage
-
-  s alias list <options>   
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/alias.md
-                               
-Options
-
-  --region [string]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
-  --service-name [string]       	  [C-Required] Specify the fc service name  
-  --table                             [Optional] Table format output     
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]      [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/zh/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s alias list 
-
-Examples with CLI
-
-  $ s cli fc alias list --region cn-hangzhou --service-name serviceName
-```
+当执行命令`alias list -h`/`alias list --help`时，可以获取帮助文档。
 
 ### 参数解析
 
@@ -221,56 +116,7 @@ fc-deploy-test:
 
 `alias publish` 命令，是对别名进行发布和更新的命令。
 
-当执行命令`alias publish -h`/`alias publish --help`时，可以获取帮助文档：
-
-```shell script
-Alias publish
-
-  Publish service alias 
-
-Usage
-
-  s alias publish <options>  
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/alias.md
-                               
-Options
-
-  --region [string]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
-  --service-name [string]             [C-Required] Specify the fc service name  
-  --description [string]              [Optional] Specify the alias description     
-  --alias-name [string]            	  [Required] Specify the fc alias name                   
-  --gversion [number]              	  [Optional] The grayscale version id  
-  --version-id [number]            	  [Optional] The version Id               
-  --version-latest [boolean]          [Optional] Binding the latest service version          
-  --weight [number]                   [Optional] The weight for grayscale version 
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]      [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/zh/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s alias publish --alias-name aliasName --version-id 2                             
-  $ s alias publish --alias-name aliasName --version-latest                         
-  $ s alias publish --description description --alias-name aliasName --version-id 2 --gversion 3 --weight 20                                                      
-
-Examples with CLI
-
-  $ s cli fc alias publish --region cn-hangzhou --service-name serviceName --alias-name aliasName --version-id 2 
-```
+当执行命令`alias publish -h`/`alias publish --help`时，可以获取帮助文档。
 
 ### 参数解析
 

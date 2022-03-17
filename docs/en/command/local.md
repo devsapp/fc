@@ -22,27 +22,7 @@ The `local` commands are used to debug local functions.
 
 ## Command description
 
-When you run the `local -h` or the `local --help` command, you can obtain the help documentation:
-
-```shell script
-Local
-
-  Run your serverless application locally for quick development & testing. 
-
-Usage
-
-  $ s local <sub-command> <options>
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/en/command/local.md
-
-SubCommand List
-
-  invoke   Local start fc event function; help command [s local invoke -h]         
-  start    Local invoke fc http function; help command [s local start -h]               
-```
-
+When you run the `local -h` or the `local --help` command, you can obtain the help documentation.
 The local commands include the following subcommands:
  
 - [invoke: the command that is used to debug a local event function.](#local-invoke-command)
@@ -55,59 +35,7 @@ The `local invoke` command is used to debug a local event function.
 
 >💡Event functions refer to functions that are triggered by events, instead of HTTP triggers. For example, Object Storage Service (OSS) trigger functions, Alibaba Cloud CDN (CDN) trigger functions, and Tablestore trigger functions are event functions. 
 
-You can run the `local invoke -h` or the `local invoke --help` command to obtain the help documentation: 
-
-```shell script
-Local Invoke
-
-  Local invoke fc event function 
-
-Usage
-
-  $ s local invoke <options> 
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/en/command/local.md
-                               
-Options
-  -e, --event [string]                [Optional] Event data passed to the function during invocation (default: "")                                                 
-  -f, --event-file [string]           [Optional] A file containing event data passed to the function during invoke             
-  -s, --event-stdin [string]          [Optional] Read from standard input, to support script pipeline                        
-  -m, --mode [api/server/normal]      [Optional] Invoke mode, including api, server and normal:                                
-                                       - api: start api server for invokeFunction api invoking                      
-                                       - server: start server container for invoking function in the other terminal repeatedly                                                                   
-                                       - normal: default mode, invoke event function and then close the container
-  -c, --config [vscode/pycharm/idea]  [Optional] Select which IDE to use when debugging and output related debug config tips for the IDE. value: vscode/pycharm/idea                                   
-  -d, --debug-port [number]           [Optional] Specify the local function container starting in debug mode, and exposing this port on localhost                                                   
-  --debug-args [string]               [Optional] Additional parameters that will be passed to the debugger                     
-  --debugger-path [string]            [Optional] The path of the debugger on the host                                          
-  --tmp-dir [string]                  [Optional] The temp directory mounted to '/tmp' , default: './.s/tmp/invoke/serviceName/functionName/'                                                            
-  --server-port [number]              [Optional] The exposed port of http server, default value is the random port between 7000 and 8000
-
-Global Options
-
-  -h, --help                 [Optional] Help for command             
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
-
-Event Format
-  
-  Quickly obtain the data structures of different events through the command [s cli fc-event -h]
-
-
-Examples with Yaml
-
-  $ s local invoke --event "hello world!"                                                                                          
-```
-
+You can run the `local invoke -h` or the `local invoke --help` command to obtain the help documentation.
 ### Parameter description
 
 | Parameter     | Abbreviation | Required   in YAML mode | Description                                                  |
@@ -144,47 +72,7 @@ RequestId: 0ba8ac3f-abf8-46d4-b61f-8e0f9f265d6a 	 Billed Duration: 146 ms 	 Memo
 
 The `local start` command is used to debug local HTTP functions. 
 
-When you run the `local -h` or `local --help` command, you can obtain the following help documentation:
-
-```shell script
-Local Start
-
-  Local invoke fc http function 
-
-Usage
-
-  $ s local start <options> 
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/en/command/local.md
-                               
-Options
-
-  -c, --config [vscode/pycharm/idea]      [Optional] Select which IDE to use when debugging and output related debug config tips for the IDE. value: vscode/pycharm/idea
-  -d, --debug-port [number]               [Optional] Specify the sandboxed container starting in debug mode, and exposing this port on localhost 
-  --custom-domain                         [Optional] Access in the form of custom domain    
-  --debug-args [string]                   [Optional] Additional parameters that will be passed to the debugger    
-  --debug-path [string]                   [Optional] The path of the debugger on the host   
-  --tmp-dir [string]                      [Optional] The temp directory mounted to '/tmp' , default: './.s/tmp/invoke/serviceName/functionName/'                                                            
-  --server-port [number]                  [Optional] The exposed port of http server, default value is the random port between 7000 and 8000
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s local start --debug-port 9000 --config vscode                                                                 
-```
+When you run the `local -h` or `local --help` command, you can obtain the following help documentation.
 
 ### Parameter description 
  

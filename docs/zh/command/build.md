@@ -15,45 +15,7 @@ category: '构建&部署'
 
 ## 命令解析
 
-当执行命令`build -h`/`build --help`时，可以获取帮助文档：
-
-```shell script
-Build
-
-  Build the dependencies
-
-Usage
-
-  s build <options>  
-                            
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/build.md
-
-Options
-
-  -f, --dockerfile [string]   [Optional] Specify the dockerfile path             
-  -d, --use-docker            [Optional] Use docker container to build functions 
-  -b, --use-buildkit          [Optional] Use buildkit to build functions         
-
-Global Options
-
-  -h, --help                 [Optional] Help for command               
-  --debug                    [Optional] Output debug informations        
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s build               
-  $ s build --use-docker  
-```
+当执行命令`build -h`/`build --help`时，可以获取帮助文档。
 
 ### 参数解析
 
