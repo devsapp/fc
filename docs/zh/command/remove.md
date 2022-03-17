@@ -374,7 +374,7 @@ Document
 Options
 
   --region [string]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
-  --domain [string]                   [C-Required] Specify the fc custom domain  
+  --domain-name [string]                   [C-Required] Specify the fc custom domain-name 
   -y, --assume-yes                    [Optional] Assume that the answer to any question which would be asked is yes              
 
 Global Options
@@ -405,7 +405,7 @@ Examples with CLI
 | 参数全称     | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
 | ------------ | -------- | -------------- | ------------- | ------------------------------------------------------------ |
 | region       | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| domain | -        | 选填           | 必填          | 自定义域名                                                       |
+| domain-name | -        | 选填           | 必填          | 自定义域名                                                       |
 | assume-yes   | y        | 选填           | 选填          | 在交互时，默认选择`y`                                                       |
 | access       | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
 | debug        | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |

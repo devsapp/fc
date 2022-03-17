@@ -192,7 +192,7 @@ export const REMOVE_DOMAIN = [
     optionList: [
       regionDescribe,
       {
-        name: 'domain',
+        name: 'domain-name',
         description: '[C-Required] Specify the fc custom domain',
         type: String,
       },
@@ -207,7 +207,7 @@ export const REMOVE_DOMAIN = [
   },
   {
     header: 'Examples with Yaml',
-    content: ['$ s cli fc remove domain --region cn-hangzhou --domain anycodes.cn'],
+    content: ['$ s cli fc remove domain --region cn-hangzhou --domain-name anycodes.cn'],
   },
 ];
 
