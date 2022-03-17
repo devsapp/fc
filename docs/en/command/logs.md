@@ -27,11 +27,11 @@ You can run the `logs -h` or `logs --help` command to obtain the help document.
 | region    | -    | No      | Yes     | The name of the region. Valid values: `cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1`. |
 | service-name | -    | No      | Yes     | The name of the service.                            |
 | function-name | -    | No      | Yes     | The name of the function.                            |
-| keyword    | -    | No      | No     | Key word for searching.                         |
+| type     | -    | No      | No     | The log type to query. Valid values: `success, fail`     |
+| request-id     | -    | No      | No     | Query according to requestId within the time interval.     |
 | start-time  | s    | No      | No     | The start time of the query, which must be UTC time or a timestamp. Example: `2021-06-07T02:54:59+08:00`，`1611827290000` |
 | end-time   | e    | No      | No     | The end time of the query, which must be UTC time or a timestamp. Example: `2021-06-07T02:54:59+08:00`，`1611827290000` |
 | tail     | -    | No      | No     | Outputs the result in the `tail` mode.                   |
-| type     | -    | No      | No     | The log type to query. Valid values: `success, fail`     |
 | access    | a    | No      | No     | The key that is used in the request. You can use the key information that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command), or the [key information that is configured for environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables). |
 | debug     | -    | No      | No     | Enables the `debug` mode. In this case, more logs are generated.            |
 | help     | h    | No      | No     | Views the help information.                         |
