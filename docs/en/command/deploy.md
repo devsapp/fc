@@ -288,7 +288,7 @@ Options Help
   C-Required: Required parameters in CLI mode
   Y-Required: Required parameters in Yaml mode
   Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
+  ✋ The difference between Yaml mode and CLI mode: https://www.serverless-devs.com/en/serverless-devs/yaml_and_cli
 
 Examples with Yaml
 
