@@ -3,7 +3,7 @@ name: fcDeployApp       #  项目名称
 
 services:
   fc-deploy-test:
-    component: ${path(../..)}
+    component: ${path(../../..)}
     props: #  组件的属性值
       region: cn-shenzhen
       service:

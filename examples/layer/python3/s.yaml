@@ -1,0 +1,26 @@
+edition: 1.0.0
+name: hello-world-app
+access: "default"
+
+vars: # 全局变量
+  region: cn-zhangjiakou
+  service:
+    name: hello-world-service
+    description: 'hello world by serverless devs'
+
+services:
+  helloworld: # 业务名称/模块名称
+    component: devsapp/fc
+    props: #  组件的属性值
+      region: ${vars.region}
+      service: ${vars.service}
+      function:
+        name: event-py3
+        description: 'hello world by serverless devs'
+        runtime: python3
+        codeUri: ./python
+        handler: index.handler
+        memorySize: 128
+        timeout: 60
+        layers:
+          - 57bbf06269f73c18099ca76b3f7214f0#test-local-invoke#2
