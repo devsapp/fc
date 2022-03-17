@@ -32,7 +32,7 @@ The `deploy` command is used to deploy function resources. You can use this comm
 
 ## Command description
 
-You can run the `deploy -h` or `deploy --help` command to query the following help information.
+You can run the `deploy -h` or `deploy --help` command to query the help information.
 
 The deploy command consists of the following subcommands:
 

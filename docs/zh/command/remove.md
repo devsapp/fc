@@ -179,49 +179,7 @@ Trigger [fc-deploy-trigger] deleted successfully.
 
 `remove domain` 命令，是删除指定自定义域名的命令。
 
-当执行命令`remove domain -h`/`remove domain --help`时，可以获取帮助文档：
-
-```shell script
-Remove domain
-
-  Delete domain
-
-Usage
-
-  s remove domain <options>  
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/remove.md
-                           
-Options
-
-  --region [string]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
-  --domain-name [string]                   [C-Required] Specify the fc custom domain-name 
-  -y, --assume-yes                    [Optional] Assume that the answer to any question which would be asked is yes              
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]      [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s remove domain
-
-Examples with CLI
-
-  $ s cli fc remove domain --region cn-hangzhou --domain anycodes.cn
-```
+当执行命令`remove domain -h`/`remove domain --help`时，可以获取帮助文档。
 
 ### 参数解析
 
