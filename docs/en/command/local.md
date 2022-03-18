@@ -17,7 +17,7 @@ The `local` commands are used to debug local functions.
   - [Parameter description](#Parameter-description-1)
   - [Example](#Example-1)
 
-> ⚠️ 注意：该命令对 Docker 有所依赖，所以在使用该命令时，需要先进行 [Docker 安装](https://docs.docker.com/get-started/#download-and-install-docker) 。
+> ⚠️ Note: This command is dependent on Docker, so when using this command, you need to[Docker installation](https://docs.docker.com/get-started/#download-and-install-docker) 。
 
 
 ## Command description

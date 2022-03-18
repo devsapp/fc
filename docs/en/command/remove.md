@@ -38,7 +38,7 @@ The `remove` commands are used to remove resources that are deployed.
 - [remove layer command](#remove-layer-command)
   - [Parameter description](#Parameter-description-9)
   - [Examples](#Examples-9)
-- [权限与策略说明](#权限与策略说明)
+- [Permissions and policies](#Permissions-and-policies)
 
 >  ⚠️ Note: **Resources may not be restored once they are removed. Proceed with caution when you run the remove commands.**
 
@@ -347,7 +347,7 @@ Sample command output:
 Layer [demo] deleted successfully.
 ```
 
-## Permissions and policies
+## Permissions-and-policies
 
 - `s remove`/`s remove service`：
     ````json
