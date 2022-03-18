@@ -16,13 +16,11 @@ export default class Local {
     const nonOptionsArgs = parsedArgs.data?._;
     if (argsData?.help && nonOptionsArgs.length === 0) {
       core.help(HELP.LOCAL_HELP_INFO);
-      return;
+      return { isHelp: true };
     }
 
     if (!nonOptionsArgs || nonOptionsArgs.length === 0) {
-      logger.error(' Error: expects argument invoke/start.');
-      // help info
-      return;
+      throw new core.CatchableError(' Error: expects argument invoke/start.', 'Please invoke `s local -h`');
     }
     const methodName: string = nonOptionsArgs[0];
     if (!SUPPORTED_LOCAL_METHOD.includes(methodName)) {

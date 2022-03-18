@@ -5,7 +5,7 @@ import { isLogConfig, LogsProps } from '../interface/sls';
 import { getFcNames } from '../utils';
 
 export default class Log {
-  static async handlerComponentInputs(inputs, info) {
+  static async handlerComponentInputs(inputs) {
     const { props, args, argsObj } = inputs;  
     const minimistOpts = {
       boolean: ['help'],
@@ -29,22 +29,26 @@ export default class Log {
 
     let logsPayload: LogsProps;
     try {
-      const { logConfig } =
-        (
-          await info({
-            ...inputs,
-            props: {
-              region,
-              service: { name: serviceName },
-              // @ts-ignore
-              function: { name: functionName },
-            },
-            args: '',
-          })
-        ).service || {};
+      const infoInputs = {
+        ...core.lodash.cloneDeep(inputs),
+        props: {
+          region,
+          serviceName,
+          functionName,
+        },
+        project: {
+          component: 'devsapp/fc-info',
+          projectName: inputs.project?.projectName,
+          access: inputs.project?.access,
+        },
+        args: '',
+        argsObj: undefined,
+      };
 
+      const fcInfo = await core.load('devsapp/fc-info');
+      const { logConfig } = (await fcInfo.info(infoInputs)).service || {};
       if (!isLogConfig(logConfig)) {
-        throw new Error(
+        throw new core.CatchableError(
           'The service logConfig is not found online, please confirm whether logConfig is configured first, and then execute [s deploy].',
         );
       }

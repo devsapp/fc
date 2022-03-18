@@ -234,7 +234,7 @@ export default class FcBaseComponent extends EntryPublicMethod {
   }
 
   async local(inputs: IInputs): Promise<any> {
-    await super.handlerPreMethod(inputs, { getSecretKey: true });
+    await super.handlerPreMethod(inputs);
     const { isHelp, methodName, fcLocalInvokeArgs } = await Local.handlerComponentInputs(inputs);
     if (isHelp) { return; }
 
@@ -278,7 +278,8 @@ export default class FcBaseComponent extends EntryPublicMethod {
 
   async logs(inputs: IInputs): Promise<any> {
     await super.handlerPreMethod(inputs, { getSecretKey: true });
-    const { logsPayload, args, isHelp } = await Log.handlerComponentInputs(inputs, this.info);
+    const res = await Log.handlerComponentInputs(inputs);
+    const { logsPayload, args, isHelp } = res;
     if (isHelp) { return; }
 
     await this.componentMethodCaller(inputs, 'devsapp/sls', 'logs', logsPayload, args);
