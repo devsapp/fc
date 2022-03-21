@@ -253,7 +253,7 @@ $ s deploy trigger --trigger-name httpTrigger
 
 | 参数全称    | 参数缩写 | Yaml模式下必填 | 参数含义                                                     |
 | ----------- | -------- | -------------- | ------------------------------------------------------------ |
-| domain      | -        | 选填           | 仅操作指定域名 |
+| domain-name      | -        | 选填           | 仅操作指定域名 |
 | use-local   | -        | 选填           | 使用本地配置进行部署 |
 | user-remote | -        | 选填           | 使用线上配置 |
 | assume-yes  | y        | 选填           | 在交互时，默认选择`y`                                        |
@@ -280,10 +280,10 @@ fc-deploy-test:
 
 > 在进行服务资源部署时，可能会涉及到交互式操作，相关的描述参考[ deploy 命令 注意事项](#注意事项) 中的`在部署时可能会涉及到交互式操作`。
 
-单独部署某个指定的自定义域名，可以通过增加`--domain`参数实现，参考命令：
+单独部署某个指定的自定义域名，可以通过增加`--domain-name`参数实现，参考命令：
 
 ```
-$ s deploy domain --domain http-trigger-py36.fc-deploy-service.1583208943291465.cn-hangzhou.fc.devsapp.net
+$ s deploy domain --domain-name http-trigger-py36.fc-deploy-service.1583208943291465.cn-hangzhou.fc.devsapp.net
 ```
 
 ## 权限与策略说明

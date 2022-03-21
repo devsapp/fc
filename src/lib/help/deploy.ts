@@ -192,9 +192,9 @@ export const DEPLOY_DOMAIN = [
     header: 'Options',
     optionList: [
       {
-        name: 'domain',
+        name: 'domain-name',
         description:
-          '[Optional] Only deploy the specified domain, multiple domains can be specified using [--domain domain1 --domain domain2]',
+          '[Optional] Only deploy the specified domain, multiple domains can be specified using [--domain-name domain1 --domain-name domain2]',
         type: String,
       },
       ...options,

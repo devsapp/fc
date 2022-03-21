@@ -209,7 +209,7 @@ export default class Instance {
       command: _.isEmpty(command) ? ['/bin/bash'] : command,
     };
 
-    logger.debug('Enter `exit` to open the link on the server side to exit (recommended), or execute `control + ]` to force the client to exit', 'yellow');
+    logger.debug('Enter `exit` to open the link on the server side to exit (recommended), or execute `control + ]` to force the client to exit');
     // eslint-disable-next-line no-async-promise-executor
     await new Promise(async (resolve) => {
       const hooks = {

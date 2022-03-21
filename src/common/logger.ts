@@ -1,7 +1,5 @@
 import { Logger } from '@serverless-devs/core';
 
-export const CONTEXT = 'FC';
-
-const logger = new Logger(CONTEXT);
+const logger = new Logger('FC');
 
 export default logger;

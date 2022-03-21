@@ -91,7 +91,7 @@ export default class Remove {
     logger.debug(`remove subCommand: ${subCommand}`);
     if (!COMMAND.includes(subCommand)) {
       core.help(HELP.REMOVE);
-      return { errorMessage: `Does not support ${subCommand} command` };
+      throw new core.CatchableError(`Does not support ${subCommand} command`);
     }
 
     if (parsedData.help) {

@@ -54,10 +54,7 @@ export default class Version {
     logger.debug(`version subCommand: ${subCommand}`);
     if (!VERSION_COMMAND.includes(subCommand)) {
       core.help(HELP.VERSION_HELP);
-      return {
-        help: true,
-        errorMessage: `Does not support ${subCommand} command`,
-      };
+      throw new core.CatchableError(`Does not support ${subCommand} command`);
     }
 
     if (parsedData.help) {

@@ -2,45 +2,16 @@
 import * as core from '@serverless-devs/core';
 import * as _ from 'lodash';
 import Logger from './common/logger';
-import {
-  LOCAL_HELP_INFO,
-  NAS_HELP_INFO,
-  NAS_SUB_COMMAND_HELP_INFO,
-  LOCAL_INVOKE_HELP_INFO,
-  LOCAL_START_HELP_INFO,
-  BUILD_HELP_INFO,
-  PLAN_HELP,
-  EVAL,
-  EVAL_START,
-  FUN_TO_S,
-  INFO,
-  INVOKE,
-  LOGS,
-  METRICS,
-  SYNC,
-  REMOTE,
-  REMOTE_SETUP,
-  REMOTE_INVOKE,
-  REMOTE_CLEANUP,
-  PROXIED,
-  PROXIED_SETUP,
-  PROXIED_INVOKE,
-  PROXIED_CLEANUP,
-  STRESS,
-  STRESS_START,
-  STRESS_CLEAN,
-  ENV_HELP_INFO,
-} from './lib/help';
+import * as HELP from './lib/help';
 import * as DEPLOY_HELP from './lib/help/deploy';
 import * as LAYER_HELP from './lib/help/layer';
-import GenerateNasProps from './lib/transform-nas';
-import { IInputs, IProperties } from './lib/interface/interface';
-import { isLogConfig, LogsProps } from './lib/interface/sls';
-import { FcInfoProps } from './lib/interface/component/fc-info';
+import Nas from './lib/component/nas';
+import { IInputs } from './lib/interface/interface';
+import { infoPropsGenerator } from './lib/component/info';
 import { FcSyncProps } from './lib/interface/component/fc-sync';
 import Instance from './lib/component/instance';
 import { FcMetricsProps } from './lib/interface/component/fc-metrics';
-import { getFcNames, isAutoConfig, isHttpFunction } from './lib/utils';
+import { getFcNames, isAutoConfig } from './lib/utils';
 import * as tips from './lib/tips';
 import FcStress from './lib/component/fc-stress';
 import Version from './lib/component/version';
@@ -49,38 +20,27 @@ import OnDemand from './lib/component/on-demand';
 import Remove from './lib/component/remove';
 import Plan from './lib/component/plan';
 import Provision from './lib/component/provision';
-import InfraAsTemplate from './lib/component/infra-as-template';
-import {
-  PayloadOption,
-  EventTypeOption,
-  HttpTypeOption,
-} from './lib/interface/component/fc-common';
-import { StressOption } from './lib/interface/component/fc-stress';
-import * as yaml from 'js-yaml';
+import EntryPublicMethod from './entry-public-method';
 import FcProxiedInvoke from './lib/component/fc-proxied-invoke';
 import FcRemoteDebug from './lib/component/fc-remote-debug';
 import FcEval from './lib/component/fc-eval';
-import { EvalOption } from './lib/interface/component/fc-eval';
 import { FcInvokeProps } from './lib/interface/component/fc-remote-invoke';
-import path from 'path';
-import os from 'os';
-import fs from 'fs';
+import Log from './lib/component/logs';
+import Local from './lib/component/local';
 
-const SUPPORTED_LOCAL_METHOD: string[] = ['invoke', 'start'];
 const DEPLOY_SUPPORT_CONFIG_ARGS = ['code', 'config'];
 
-export default class FcBaseComponent {
+export default class FcBaseComponent extends EntryPublicMethod {
   logger = Logger;
 
   async instance(inputs) {
+    await super.handlerPreMethod(inputs, { getSecretKey: true });
     const {
-      credentials,
       help,
       subCommand,
       props,
     } = await Instance.handlerInputs(inputs);
 
-    await this.report('fc', subCommand ? `version ${subCommand}` : 'version', credentials?.AccountID);
     if (help) {
       return;
     }
@@ -94,14 +54,12 @@ export default class FcBaseComponent {
   }
 
   async plan(inputs: IInputs) {
-    await InfraAsTemplate.modifyInputs(inputs);
-    const { isHelp, errorMessage, planType } = Plan.handlerInputs(inputs);
-    if (errorMessage) {
-      throw new Error(errorMessage);
-    }
+    await super.handlerPreMethod(inputs, { getSecretKey: true });
+    const { isHelp, planType } = Plan.handlerInputs(inputs);
     if (isHelp) {
-      return core.help(PLAN_HELP);
+      return core.help(HELP.PLAN_HELP);
     }
+
     const palnRs = await this.componentMethodCaller(
       inputs,
       'devsapp/fc-plan',
@@ -113,12 +71,9 @@ export default class FcBaseComponent {
   }
 
   async deploy(inputs: IInputs): Promise<any> {
-    await InfraAsTemplate.modifyInputs(inputs);
+    await super.handlerPreMethod(inputs, { getSecretKey: true });
     const { props, args } = this.handlerComponentInputs(inputs);
-    const parsedArgs: { [key: string]: any } = core.commandParse(inputs, {
-      boolean: ['help'],
-      alias: { help: 'h' },
-    });
+    const parsedArgs: { [key: string]: any } = core.commandParse(inputs, this.MINIMIST_HELP_OPT);
 
     const parsedData = parsedArgs?.data || {};
     const rawData = parsedData._ || [];
@@ -185,13 +140,11 @@ export default class FcBaseComponent {
         result.function.timeout = deployRes.function.timeout;
       }
     }
-    if (deployRes.systemDomain) {
-      // https://github.com/devsapp/fc/issues/383
-      if (['custom', 'custom-container'].includes(props.function?.runtime) && !deployRes.customDomains) {
-        result.url = {
-          system_url: deployRes.systemDomain,
-        };
-      }
+    // https://github.com/devsapp/fc/issues/383
+    if (deployRes.systemDomain && !['custom', 'custom-container'].includes(props.function?.runtime)) {
+      result.url = {
+        system_url: deployRes.systemDomain,
+      };
     }
     if (deployRes.customDomains) {
       result.url = result.url || {};
@@ -218,85 +171,48 @@ export default class FcBaseComponent {
   }
 
   async remove(inputs: IInputs): Promise<any> {
-    await InfraAsTemplate.modifyInputs(inputs);
-    const { credentials, help, props, subCommand, errorMessage } = await Remove.handlerInputs(
-      inputs,
-    );
+    await super.handlerPreMethod(inputs, { getSecretKey: true });
+    const { help, props, subCommand } = await Remove.handlerInputs(inputs);
 
-    await this.report('fc', subCommand ? `remove ${subCommand}` : 'remove', credentials?.AccountID);
-    if (errorMessage) {
-      throw new Error(errorMessage);
-    }
-    if (help) {
-      return;
-    }
+    if (help) { return; }
 
     await new Remove().remove(
-      {
-        props,
-        subCommand,
-      },
-      this.handlerInputs(inputs),
+      { props, subCommand },
+      this.handlerInputs(inputs), // TODO: remove this.handlerInputs
     );
   }
 
   async info(inputs: IInputs): Promise<any> {
-    await InfraAsTemplate.modifyInputs(inputs);
-    const { props, args } = this.handlerComponentInputs(inputs);
-    if (this.isHelp(args)) {
-      core.help(INFO);
+    await super.handlerPreMethod(inputs, { getSecretKey: true });
+    const { props, args, argsObj } = this.handlerComponentInputs(inputs);
+    if (this.isHelp(args, argsObj)) {
+      core.help(HELP.INFO);
       return;
     }
-    const propsGenerator = (property: any) => {
-      if (_.isEmpty(property)) {
-        return null;
-      }
-      const res: FcInfoProps = {
-        region: property?.region,
-        serviceName: property?.service?.name,
-      };
-      if (!_.isNil(property?.function?.name)) {
-        Object.assign(res, {
-          functionName: property?.function?.name,
-        });
-      }
-      if (!_.isEmpty(property?.triggers)) {
-        Object.assign(res, {
-          triggerNames: property?.triggers.map((t) => t.name),
-        });
-      }
-      if (!_.isEmpty(property?.customDomains)) {
-        Object.assign(res, {
-          customDomains: property?.customDomains.map((t) => t.domainName),
-        });
-      }
-      return res;
-    };
+    
     return await this.componentMethodCaller(
       inputs,
       'devsapp/fc-info',
       'info',
-      propsGenerator(props),
+      infoPropsGenerator(props),
       args,
     );
   }
 
   async sync(inputs: IInputs): Promise<any> {
-    await InfraAsTemplate.modifyInputs(inputs);
-    const { props, args } = this.handlerComponentInputs(inputs);
-    if (this.isHelp(args)) {
-      core.help(SYNC);
+    await super.handlerPreMethod(inputs, { getSecretKey: true });
+    const { props, args, argsObj } = this.handlerComponentInputs(inputs);
+    if (this.isHelp(args, argsObj)) {
+      core.help(HELP.SYNC);
       return;
     }
 
     let property: undefined | FcSyncProps;
-
     if (!_.isEmpty(props)) {
       property = {
         region: props?.region,
         serviceName: props?.service?.name,
       };
-
       if (!_.isNil(props?.function?.name)) {
         property.functionName = props?.function?.name;
       }
@@ -306,18 +222,11 @@ export default class FcBaseComponent {
   }
 
   async build(inputs: IInputs): Promise<any> {
-    await InfraAsTemplate.modifyInputs(inputs);
-    const { props, args, argsObj } = this.handlerComponentInputs(inputs);
-    const parsedArgs: { [key: string]: any } = core.commandParse(
-      { args, argsObj },
-      {
-        boolean: ['help'],
-        alias: { help: 'h' },
-      },
-    );
+    await super.handlerPreMethod(inputs);
+    const { props, args } = this.handlerComponentInputs(inputs);
 
-    if (parsedArgs?.data?.help) {
-      core.help(BUILD_HELP_INFO);
+    if (this.isHelp(args)) {
+      core.help(HELP.BUILD_HELP_INFO);
       return;
     }
     await this.componentMethodCaller(inputs, 'devsapp/fc-build', 'build', props, args);
@@ -325,49 +234,12 @@ export default class FcBaseComponent {
   }
 
   async local(inputs: IInputs): Promise<any> {
-    await InfraAsTemplate.modifyInputs(inputs);
-    const { props, args, argsObj } = this.handlerComponentInputs(inputs);
-    const parsedArgs: { [key: string]: any } = core.commandParse(
-      { args, argsObj },
-      {
-        boolean: ['help'],
-        alias: { help: 'h' },
-      },
-    );
-    const argsData: any = parsedArgs?.data || {};
-    const nonOptionsArgs = parsedArgs.data?._;
-    if (argsData?.help && nonOptionsArgs.length === 0) {
-      core.help(LOCAL_HELP_INFO);
-      return;
-    }
+    await super.handlerPreMethod(inputs, { getSecretKey: true });
+    const { isHelp, methodName, fcLocalInvokeArgs } = await Local.handlerComponentInputs(inputs);
+    if (isHelp) { return; }
 
-    if (!nonOptionsArgs || nonOptionsArgs.length === 0) {
-      this.logger.error(' Error: expects argument invoke/start.');
-      // help info
-      return;
-    }
-    const methodName: string = nonOptionsArgs[0];
-    if (!SUPPORTED_LOCAL_METHOD.includes(methodName)) {
-      this.logger.error(
-        `Unsupported subcommand ${methodName} for local method, only start and invoke are supported.`,
-      );
-      return;
-    }
-    if (argsData?.help && methodName === 'start') {
-      core.help(LOCAL_START_HELP_INFO);
-      return;
-    }
-    if (argsData?.help && methodName === 'invoke') {
-      core.help(LOCAL_INVOKE_HELP_INFO);
-      return;
-    }
-    // 删除 methodName
-    const fcLocalInvokeArgs: string = args
-      ? args.replace(methodName, '').replace(/(^\s*)|(\s*$)/g, '')
-      : '';
-    this.logger.debug(`Args of local method is: ${fcLocalInvokeArgs}`);
-
-    inputs.argsObj.shift();
+    const { props, args } = inputs;
+    inputs.argsObj?.shift();
     const localRes: any = await this.componentMethodCaller(
       inputs,
       'devsapp/fc-local-invoke',
@@ -381,10 +253,10 @@ export default class FcBaseComponent {
   }
 
   async invoke(inputs: IInputs): Promise<any> {
-    await InfraAsTemplate.modifyInputs(inputs);
-    const { props, args } = this.handlerComponentInputs(inputs);
-    if (this.isHelp(args)) {
-      core.help(INVOKE);
+    await super.handlerPreMethod(inputs, { getSecretKey: true });
+    const { props, args, argsObj } = this.handlerComponentInputs(inputs);
+    if (this.isHelp(args, argsObj)) {
+      core.help(HELP.INVOKE);
       return;
     }
     const invokePayload: FcInvokeProps = {
@@ -405,138 +277,48 @@ export default class FcBaseComponent {
   }
 
   async logs(inputs: IInputs): Promise<any> {
-    await InfraAsTemplate.modifyInputs(inputs);
-    const { props, args, argsObj } = this.handlerComponentInputs(inputs);
-
-    const comParse: any = core.commandParse(
-      { args, argsObj },
-      {
-        boolean: ['help'],
-        string: ['region', 'service-name', 'function-name'],
-        alias: { help: 'h' },
-      },
-    )?.data;
-    if (comParse?.help) {
-      core.help(LOGS);
-      return;
-    }
-
-    const { region, serviceName, functionName } = getFcNames(comParse, props);
-    this.logger.debug(
-      `[logs] region: ${region}, serviceName: ${serviceName}, functionName: ${functionName}`,
-    );
-
-    let logsPayload: LogsProps;
-    try {
-      const { logConfig } =
-        (
-          await this.info({
-            ...inputs,
-            props: {
-              region,
-              service: { name: serviceName },
-              // @ts-ignore
-              function: { name: functionName },
-            },
-            args: '',
-          })
-        ).service || {};
-
-      if (!isLogConfig(logConfig)) {
-        throw new Error(
-          'The service logConfig is not found online, please confirm whether logConfig is configured first, and then execute [s deploy].',
-        );
-      }
-
-      logsPayload = {
-        project: logConfig?.project,
-        logstore: logConfig?.logstore,
-        regionId: region,
-        topic: serviceName,
-        query: functionName,
-      };
-    } catch (ex) {
-      if (ex.code?.endsWith('NotFound')) {
-        throw new Error(
-          `Online search failed, error message: ${ex.message}. Please execute [s deploy]`,
-        );
-      }
-      throw ex;
-    }
+    await super.handlerPreMethod(inputs, { getSecretKey: true });
+    const { logsPayload, args, isHelp } = await Log.handlerComponentInputs(inputs, this.info);
+    if (isHelp) { return; }
 
     await this.componentMethodCaller(inputs, 'devsapp/sls', 'logs', logsPayload, args);
   }
 
   async metrics(inputs: IInputs): Promise<any> {
-    await InfraAsTemplate.modifyInputs(inputs);
+    await super.handlerPreMethod(inputs, { getSecretKey: true });
     const { props, args, argsObj } = this.handlerComponentInputs(inputs);
-
-    const comParse: any = core.commandParse(
-      { args, argsObj },
-      {
-        boolean: ['help'],
-        string: ['region', 'service-name', 'function-name'],
-        alias: { help: 'h' },
-      },
-    )?.data;
+    const opts = {
+      boolean: ['help'],
+      string: ['region', 'service-name', 'function-name'],
+      alias: { help: 'h' },
+    };
+    // @ts-ignore
+    const comParse: any = core.commandParse({ args, argsObj }, opts)?.data;
 
     if (comParse?.help) {
-      core.help(METRICS);
+      core.help(HELP.METRICS);
       return;
     }
 
     const payload: FcMetricsProps = getFcNames(comParse, props);
-
     await this.componentMethodCaller(inputs, 'devsapp/fc-metrics', 'metrics', payload, args);
   }
 
   async nas(inputs: IInputs) {
-    await InfraAsTemplate.modifyInputs(inputs);
-    const { props, args, project, argsObj } = this.handlerComponentInputs(inputs);
-    const SUPPORTED_METHOD = ['init', 'download', 'upload', 'command'];
-
-    const apts = {
-      boolean: ['all', 'long', 'help', 'recursive', 'override', 'force', 'assume-yes'],
-      alias: { force: 'f', override: 'o', recursive: 'r', help: 'h', long: 'l', 'assume-yes': 'y' },
-    };
-    const comParse: any = core.commandParse({ args, argsObj }, apts);
-    const argsData: any = comParse?.data || {};
-
-    const assumeYes: boolean = argsData.y || argsData['assume-yes'];
-    const nonOptionsArgs = comParse.data?._ || [];
-    this.logger.debug(`nonOptionsArgs is ${JSON.stringify(nonOptionsArgs)}`);
-    if (!comParse?.data) {
-      this.logger.error('Not found sub-command.');
-      core.help(NAS_HELP_INFO);
-      return;
-    }
-
-    if (nonOptionsArgs.length === 0) {
-      if (!comParse?.data?.help) {
-        this.logger.error('Not found sub-command.');
-      }
-      core.help(NAS_HELP_INFO);
-      return;
-    }
-
-    const commandName: string = nonOptionsArgs[0];
-    if (!SUPPORTED_METHOD.includes(commandName)) {
-      this.logger.error(`Not supported sub-command: [${commandName}]`);
-      core.help(NAS_HELP_INFO);
-      return;
-    }
-    const transformArgs = args.replace(commandName, '').replace(/(^\s*)|(\s*$)/g, '');
-
-    // s nas command ls -lh /mnt/auto 会被解析为 --help
-    if (comParse?.data?.help && !args?.includes('ls -lh')) {
-      core.help(NAS_SUB_COMMAND_HELP_INFO[commandName]);
-      return;
-    }
-    nonOptionsArgs.shift();
-    const { nasConfig, vpcConfig, name, role } = props?.service || {};
-
-    const componentInputs = _.cloneDeep(inputs);
-    delete componentInputs.argsObj;
+    await super.handlerPreMethod(inputs, { getSecretKey: true });
+    const {
+      isHelp,
+      commandName,
+      nasConfig,
+      componentInputs,
+      props,
+      assumeYes,
+      vpcConfig,
+      name,
+      role,
+      transformArgs,
+    } = await Nas.handlerComponentInputs(inputs);
+    if (isHelp) { return; }
 
     if (commandName === 'init' && isAutoConfig(nasConfig)) {
       return await this.componentMethodCaller(
@@ -548,7 +330,7 @@ export default class FcBaseComponent {
       );
     } else if (commandName === 'init') {
       this.logger.info('Ensuring nas dir');
-      const payload = await GenerateNasProps.toNasAbility(
+      const payload = await Nas.toNasAbility(
         props?.region,
         vpcConfig,
         name,
@@ -564,17 +346,14 @@ export default class FcBaseComponent {
       return;
     }
 
-    const payload = await GenerateNasProps.getServiceConfig(
+    const payload = await Nas.getServiceConfig(
       props,
-      project?.access,
+      inputs.project?.access,
       inputs.credentials,
     );
 
-    this.logger.debug(
-      `transform nas payload: ${JSON.stringify(
-        payload.payload,
-      )}, args: ${transformArgs}, command: ${commandName}`,
-    );
+    this.logger.debug(`transform nas payload: ${JSON.stringify(payload.payload)}`);
+    this.logger.debug(`  args: ${transformArgs}, command: ${commandName}`);
     await this.componentMethodCaller(
       componentInputs,
       'devsapp/nas',
@@ -587,88 +366,23 @@ export default class FcBaseComponent {
   }
 
   async stress(inputs: IInputs): Promise<any> {
-    await InfraAsTemplate.modifyInputs(inputs);
-    const { props, project } = this.handlerComponentInputs(inputs);
-    const SUPPORTED_METHOD: string[] = ['start', 'clean'];
-    const STRESS_SUB_COMMAND_HELP_KEY = {
-      start: STRESS_START,
-      clean: STRESS_CLEAN,
-    };
+    await super.handlerPreMethod(inputs, { getSecretKey: true });
+    const {
+      isHelp,
+      access,
+      region,
+      commandName,
+      stressOpts,
+      httpTypeOpts,
+      eventTypeOpts,
+      payloadOpts,
+      argsData,
+    } = await FcStress.handlerComponentInputs(inputs);
+    if (isHelp) { return; }
 
-    const apts = {
-      boolean: ['help', 'assume-yes'],
-      alias: {
-        help: 'h',
-        region: 'r',
-        access: 'a',
-        qualifier: 'q',
-        url: 'u',
-        method: 'm',
-        payload: 'p',
-        'payload-file': 'f',
-        'assume-yes': 'y',
-      },
-    };
-    const comParse: any = core.commandParse(inputs, apts);
-    const argsData: any = comParse?.data || {};
-    const nonOptionsArgs = argsData?._ || [];
-
-    this.logger.debug(`nonOptionsArgs is ${JSON.stringify(nonOptionsArgs)}`);
-    if (!argsData) {
-      this.logger.error('Not found sub-command.');
-      core.help(STRESS);
-      return;
-    }
-    if (nonOptionsArgs.length === 0) {
-      if (!argsData?.help) {
-        this.logger.error('Not found sub-command.');
-      }
-      core.help(STRESS);
-      return;
-    }
-
-    const commandName: string = nonOptionsArgs[0];
-    if (!SUPPORTED_METHOD.includes(commandName)) {
-      this.logger.error(`Not supported sub-command: [${commandName}]`);
-      core.help(STRESS);
-      return;
-    }
-
-    if (argsData?.help) {
-      core.help(STRESS_SUB_COMMAND_HELP_KEY[commandName]);
-      return;
-    }
-    const stressOpts: StressOption = {
-      functionType: argsData['function-type'] || (isHttpFunction(props) ? 'http' : 'event'),
-      numUser: argsData['num-user'],
-      spawnRate: argsData['spawn-rate'],
-      runningTime: argsData['run-time'],
-      invocationType: argsData['invocation-type'],
-    };
-
-    let eventTypeOpts: EventTypeOption = null;
-    let httpTypeOpts: HttpTypeOption = null;
-    if (stressOpts?.functionType === 'event') {
-      eventTypeOpts = {
-        serviceName: argsData['service-name'] || props?.service?.name,
-        functionName: argsData['function-name'] || props?.function?.name,
-        qualifier: argsData?.qualifier,
-      };
-      this.logger.debug(`Using event options: \n${yaml.dump(eventTypeOpts)}`);
-    } else if (stressOpts?.functionType === 'http') {
-      httpTypeOpts = {
-        url: argsData?.url,
-        method: argsData?.method,
-      };
-      this.logger.debug(`Using http options: \n${yaml.dump(httpTypeOpts)}`);
-    }
-    const payloadOpts: PayloadOption = {
-      payloadFile: argsData['payload-file'],
-      payload: argsData?.payload,
-    };
     const fcStress: FcStress = new FcStress(
-      project?.access,
-      props?.region || argsData?.region,
+      access,
+      region,
       stressOpts,
       httpTypeOpts,
       eventTypeOpts,
@@ -695,87 +409,49 @@ export default class FcBaseComponent {
   }
 
   async version(inputs: IInputs): Promise<any> {
-    await InfraAsTemplate.modifyInputs(inputs);
-    const { credentials, help, props, subCommand, table, errorMessage } =
-      await Version.handlerInputs(inputs);
-
-    await this.report(
-      'fc',
-      subCommand ? `version ${subCommand}` : 'version',
-      credentials?.AccountID,
-    );
-    if (help) {
-      if (errorMessage) throw new Error(errorMessage);
-      return;
-    }
+    await super.handlerPreMethod(inputs, { getSecretKey: true });
+    const { help, props, subCommand, table } = await Version.handlerInputs(inputs);
+    if (help) { return; }
 
     const qualifier = new Version();
     return await qualifier[subCommand](props, table);
   }
 
   async alias(inputs: IInputs): Promise<any> {
-    await InfraAsTemplate.modifyInputs(inputs);
-    const { credentials, help, props, subCommand, table, errorMessage } = await Alias.handlerInputs(
-      inputs,
-    );
-
-    await this.report('fc', subCommand ? `alias ${subCommand}` : 'alias', credentials?.AccountID);
-    if (help) {
-      if (errorMessage) throw new Error(errorMessage);
-      return;
-    }
+    await super.handlerPreMethod(inputs, { getSecretKey: true });
+    const { help, props, subCommand, table } = await Alias.handlerInputs(inputs);
+    if (help) { return; }
 
     const qualifier = new Alias();
     return await qualifier[subCommand](props, table);
   }
 
   async provision(inputs: IInputs): Promise<any> {
-    await InfraAsTemplate.modifyInputs(inputs);
-    const { credentials, help, props, subCommand, table, errorMessage } =
-      await Provision.handlerInputs(inputs);
-
-    await this.report(
-      'fc',
-      subCommand ? `provision ${subCommand}` : 'provision',
-      credentials?.AccountID,
-    );
-    if (help) {
-      if (errorMessage) throw new Error(errorMessage);
-      return;
-    }
+    await super.handlerPreMethod(inputs, { getSecretKey: true });
+    const { help, props, subCommand, table } = await Provision.handlerInputs(inputs);
+    if (help) { return; }
 
     const provision = new Provision();
     return await provision[subCommand](props, table);
   }
 
   async ondemand(inputs: IInputs) {
-    await InfraAsTemplate.modifyInputs(inputs);
-    const { credentials, help, props, subCommand, table, errorMessage } =
-      await OnDemand.handlerInputs(inputs);
-
-    await this.report(
-      'fc',
-      subCommand ? `ondemand ${subCommand}` : 'ondemand',
-      credentials?.AccountID,
-    );
-    if (help) {
-      if (errorMessage) throw new Error(errorMessage);
-      return;
-    }
+    await super.handlerPreMethod(inputs, { getSecretKey: true });
+    const { help, props, subCommand, table } = await OnDemand.handlerInputs(inputs);
+    if (help) { return; }
 
     const ondemand = new OnDemand();
     return await ondemand[subCommand](props, table);
   }
 
   async onDemand(inputs: IInputs): Promise<any> {
-    await InfraAsTemplate.modifyInputs(inputs);
     // warning: 2021.12.23 交互修改警告，过段时间可以删除
     this.logger.warn('The onDemand command will be removed soon, please use ondemand');
     return await this.ondemand(inputs);
   }
 
   async layer(inputs: IInputs): Promise<any> {
-    await InfraAsTemplate.modifyInputs(inputs);
+    await super.handlerPreMethod(inputs, { getSecretKey: true });
     const { props, args, argsObj } = this.handlerComponentInputs(inputs);
 
     const LAYER_COMMAND = {
@@ -786,13 +462,8 @@ export default class FcBaseComponent {
       versions: LAYER_HELP.LAYER_VERSIONS,
     };
 
-    const comParse: any = core.commandParse(
-      { args, argsObj },
-      {
-        boolean: ['help'],
-        alias: { help: 'h' },
-      },
-    );
+    // @ts-ignore
+    const comParse: any = core.commandParse({ args, argsObj }, this.MINIMIST_HELP_OPT);
     const argsData: any = comParse?.data || {};
     const nonOptionsArgs = argsData?._ || [];
     this.logger.debug(`nonOptionsArgs is ${JSON.stringify(nonOptionsArgs)}`);
@@ -827,61 +498,52 @@ export default class FcBaseComponent {
   }
 
   async proxied(inputs: IInputs): Promise<any> {
-    await InfraAsTemplate.modifyInputs(inputs);
+    await super.handlerPreMethod(inputs, { getSecretKey: true });
     const { args, argsObj } = this.handlerComponentInputs(inputs);
     const SUPPORTED_METHOD = ['setup', 'invoke', 'clean', 'cleanup'];
 
-    const apts = {
-      boolean: ['help'],
-      alias: { help: 'h' },
-    };
-    const comParse: any = core.commandParse({ args, argsObj }, apts);
+    // @ts-ignore
+    const comParse: any = core.commandParse({ args, argsObj }, this.MINIMIST_HELP_OPT);
     const argsData: any = comParse?.data || {};
     const nonOptionsArgs = argsData?._ || [];
     this.logger.debug(`nonOptionsArgs is ${JSON.stringify(nonOptionsArgs)}`);
-    if (argsData?.help && nonOptionsArgs.length === 0) {
-      core.help(PROXIED);
+
+    const showhelp = nonOptionsArgs.length === 0;
+    if (showhelp || (argsData?.help && showhelp)) {
+      core.help(HELP.PROXIED);
       return;
     }
-    if (nonOptionsArgs.length === 0) {
-      core.help(PROXIED);
-      return;
-    }
+
     const methodName: string = nonOptionsArgs[0];
     if (!SUPPORTED_METHOD.includes(methodName)) {
       this.logger.error(`Not supported sub-command: [${methodName}]`);
-      core.help(PROXIED);
+      core.help(HELP.PROXIED);
       return;
     }
-    const { AccountID: accountID } = inputs?.credentials || {};
     const fcProxiedInvoke: FcProxiedInvoke = new FcProxiedInvoke(inputs);
     if (methodName === 'setup') {
-      await this.report('fc', 'proxied_setup', accountID);
       if (argsData?.help) {
-        core.help(PROXIED_SETUP);
+        core.help(HELP.PROXIED_SETUP);
         return;
       }
       return await FcProxiedInvoke.setup(fcProxiedInvoke.makeInputs(methodName));
     } else if (methodName === 'invoke') {
-      await this.report('fc', 'proxied_invoke', accountID);
       if (argsData?.help) {
-        core.help(PROXIED_INVOKE);
+        core.help(HELP.PROXIED_INVOKE);
         return;
       }
       return await FcProxiedInvoke.invoke(fcProxiedInvoke.makeInputs(methodName));
     } else if (methodName === 'clean') {
       // clean
-      await this.report('fc', 'proxied_clean', accountID);
       if (argsData?.help) {
-        core.help(PROXIED_CLEANUP);
+        core.help(HELP.PROXIED_CLEANUP);
         return;
       }
       return await FcProxiedInvoke.clean(fcProxiedInvoke.makeInputs(methodName));
     } else {
       // cleanup
-      await this.report('fc', 'proxied_cleanup', accountID);
       if (argsData?.help) {
-        core.help(PROXIED_CLEANUP);
+        core.help(HELP.PROXIED_CLEANUP);
         return;
       }
       return await FcProxiedInvoke.cleanup(fcProxiedInvoke.makeInputs(methodName));
@@ -889,62 +551,35 @@ export default class FcBaseComponent {
   }
 
   async fun2s(inputs: IInputs): Promise<any> {
-    await InfraAsTemplate.modifyInputs(inputs);
-    const { args } = this.handlerComponentInputs(inputs);
-    const isHelp = this.isHelp(args);
-    if (isHelp) {
-      return core.help(FUN_TO_S);
+    await super.handlerPreMethod(inputs, { getSecretKey: true });
+    const { args, argsObj } = this.handlerComponentInputs(inputs);
+    if (this.isHelp(args, argsObj)) {
+      return core.help(HELP.FUN_TO_S);
     }
     return await this.componentMethodCaller(inputs, 'fc-transform', 'fun2fc', {}, args);
   }
 
   async remote(inputs: IInputs): Promise<any> {
-    await InfraAsTemplate.modifyInputs(inputs);
-    const { args, argsObj } = this.handlerComponentInputs(inputs);
-    const SUPPORTED_METHOD = ['setup', 'invoke', 'cleanup'];
+    await super.handlerPreMethod(inputs, { getSecretKey: true });
+    const { methodName, isHelp, subCommandHelp } = await FcRemoteDebug.handlerComponentInputs(inputs);
+    if (isHelp) { return; }
 
-    const apts = {
-      boolean: ['help'],
-      alias: { help: 'h' },
-    };
-    const comParse: any = core.commandParse({ args, argsObj }, apts);
-    const argsData: any = comParse?.data || {};
-    const nonOptionsArgs = argsData?._ || [];
-    this.logger.debug(`nonOptionsArgs is ${JSON.stringify(nonOptionsArgs)}`);
-    if (argsData?.help && nonOptionsArgs.length === 0) {
-      core.help(REMOTE);
-      return;
-    }
-    if (nonOptionsArgs.length === 0) {
-      core.help(REMOTE);
-      return;
-    }
-    const methodName: string = nonOptionsArgs[0];
-    if (!SUPPORTED_METHOD.includes(methodName)) {
-      this.logger.error(`Not supported sub-command: [${methodName}]`);
-      core.help(REMOTE);
-      return;
-    }
-    const { AccountID: accountID } = inputs?.credentials || {};
     const fcRemoteDebug: FcRemoteDebug = new FcRemoteDebug(inputs);
     if (methodName === 'setup') {
-      await this.report('fc', 'remote_setup', accountID);
-      if (argsData?.help) {
-        core.help(REMOTE_SETUP);
+      if (subCommandHelp) {
+        core.help(HELP.REMOTE_SETUP);
         return;
       }
       return await FcRemoteDebug.setup(fcRemoteDebug.makeInputs(methodName));
     } else if (methodName === 'invoke') {
-      await this.report('fc', 'remote_invoke', accountID);
-      if (argsData?.help) {
-        core.help(REMOTE_INVOKE);
+      if (subCommandHelp) {
+        core.help(HELP.REMOTE_INVOKE);
         return;
       }
       return await FcRemoteDebug.invoke(fcRemoteDebug.makeInputs(methodName));
     } else if (methodName === 'cleanup') {
-      await this.report('fc', 'remote_cleanup', accountID);
-      if (argsData?.help) {
-        core.help(REMOTE_CLEANUP);
+      if (subCommandHelp) {
+        core.help(HELP.REMOTE_CLEANUP);
         return;
       }
       return await FcRemoteDebug.cleanup(fcRemoteDebug.makeInputs(methodName));
@@ -952,85 +587,15 @@ export default class FcBaseComponent {
   }
 
   async eval(inputs: IInputs): Promise<any> {
-    await InfraAsTemplate.modifyInputs(inputs);
-    const { props, project } = this.handlerComponentInputs(inputs);
-    const SUPPORTED_METHOD: string[] = ['start'];
-    const DEFAULT_EVAL_TYPE = 'memory';
+    await super.handlerPreMethod(inputs, { getSecretKey: true });
 
-    const apts = {
-      boolean: ['help', 'assume-yes'],
-      alias: {
-        help: 'h',
-        region: 'r',
-        access: 'a',
-        'payload-file': 'f',
-        'assume-yes': 'y',
-      },
-    };
-    const args: string = (inputs?.args || '').replace(/(^\s*)|(\s*$)/g, '');
-    const comParse: any = core.commandParse({ ...inputs, args }, apts);
-    const argsData: any = comParse?.data || {};
-    const nonOptionsArgs = argsData?._ || [];
+    const { isHelp, project, evalOpts, httpTypeOpts, payloadOpts, region, commandName } = 
+      await FcEval.handlerComponentInputs(inputs);
+    if (isHelp) { return; }
 
-    this.logger.debug(`nonOptionsArgs is ${JSON.stringify(nonOptionsArgs)}`);
-    if (!argsData) {
-      this.logger.error('Not fount sub-command.');
-      core.help(EVAL);
-      return;
-    }
-    if (nonOptionsArgs.length === 0) {
-      if (!argsData?.help) {
-        this.logger.error('Not fount sub-command.');
-      }
-      core.help(EVAL);
-      return;
-    }
-
-    const commandName: string = nonOptionsArgs[0];
-    if (!SUPPORTED_METHOD.includes(commandName)) {
-      this.logger.error(`Not supported sub-command: [${commandName}]`);
-      core.help(EVAL);
-      return;
-    }
-
-    if (argsData?.help) {
-      core.help(EVAL_START);
-      return;
-    }
-    let functionType = argsData['function-type'];
-    // yaml 模式
-    if (props?.service?.name && props?.function?.name) {
-      functionType = functionType || isHttpFunction(props) ? 'http' : 'event';
-    }
-
-    const evalOpts: EvalOption = {
-      serviceName: argsData['service-name'] || props?.service?.name,
-      functionName: argsData['function-name'] || props?.function?.name,
-      functionType,
-      evalType: argsData['eval-type'] || DEFAULT_EVAL_TYPE,
-      memorySizeList: argsData['memory-size'],
-      runCount: argsData['run-count'],
-      rt: argsData?.rt,
-      memory: argsData?.memory,
-      concurrencyArgs: argsData['concurrency-args'],
-    };
-
-    const httpTypeOpts: HttpTypeOption = {
-      url: argsData?.url,
-      method: argsData?.method,
-      path: argsData?.path,
-      query: argsData?.query,
-      body: argsData?.body,
-      headers: argsData?.headers,
-    };
-    this.logger.debug(`Using http options: \n${yaml.dump(httpTypeOpts)}`);
-    const payloadOpts: PayloadOption = {
-      payloadFile: argsData['payload-file'],
-      payload: argsData?.payload,
-    };
     const fcEval: FcEval = new FcEval(
       project?.access,
-      props?.region || argsData?.region,
+      region,
       evalOpts,
       httpTypeOpts,
       payloadOpts,
@@ -1054,18 +619,11 @@ export default class FcBaseComponent {
   }
 
   async env(inputs: IInputs): Promise<any> {
-    await InfraAsTemplate.modifyInputs(inputs);
+    await super.handlerPreMethod(inputs, { getSecretKey: true });
     const { props, args, argsObj } = this.handlerComponentInputs(inputs);
-    const parsedArgs: { [key: string]: any } = core.commandParse(
-      { args, argsObj },
-      {
-        boolean: ['help'],
-        alias: { help: 'h' },
-      },
-    );
 
-    if (parsedArgs?.data?.help) {
-      core.help(ENV_HELP_INFO);
+    if (this.isHelp(args, argsObj)) {
+      core.help(HELP.ENV_HELP_INFO);
       return;
     }
     return await this.componentMethodCaller(
@@ -1075,103 +633,5 @@ export default class FcBaseComponent {
       props,
       args,
     );
-  }
-
-  // 解析入参
-  private isHelp(args: string) {
-    const comParse: any = core.commandParse(
-      { args },
-      {
-        boolean: ['help'],
-        alias: { help: 'h' },
-      },
-    );
-    return comParse?.data?.help;
-  }
-  private handlerInputs(inputs: IInputs): any {
-    const project = inputs?.project;
-    const props: IProperties = inputs?.props;
-    const access: string = project?.access;
-    const args: string = inputs?.args;
-    const argsObj: any = inputs?.argsObj;
-    const curPath: any = inputs?.path;
-    const projectName: string = project?.projectName;
-    const appName: string = inputs?.appName;
-
-    return {
-      appName,
-      projectName,
-      access,
-      props,
-      args,
-      argsObj,
-      curPath,
-    };
-  }
-  private async report(componentName: string, command: string, accountID?: string): Promise<void> {
-    core.reportComponent(componentName, {
-      command,
-      uid: accountID,
-    });
-  }
-  private handlerComponentInputs(inputs: IInputs, componentName?: string): any {
-    const { appName, projectName, access, props, args, argsObj, curPath } =
-      this.handlerInputs(inputs);
-    return {
-      project: {
-        component: componentName,
-        projectName: componentName ? `${projectName}-${componentName}-project` : projectName,
-        access,
-      },
-      appName,
-      props,
-      args,
-      argsObj,
-      path: curPath,
-    };
-  }
-
-  private async componentMethodCaller(
-    inputs: IInputs,
-    componentName: string,
-    methodName: string,
-    props?: any,
-    args?: string,
-  ): Promise<any> {
-    const componentInputs: any = this.handlerComponentInputs(inputs, componentName);
-    await this.report(componentName, methodName, inputs?.credentials?.AccountID);
-    componentInputs.props = props;
-    componentInputs.args = args;
-    await this.updateCore();
-    // const componentIns: any = await core.load(`devsapp/${componentName}`);
-    const componentIns: any = await core.load(`${componentName}`);
-    this.logger.debug(
-      `Inputs of component: ${componentName} is: ${JSON.stringify(componentInputs, null, '  ')}`,
-    );
-    return await componentIns[methodName](componentInputs);
-  }
-
-  private async updateCore() {
-    if (!_.isFunction(core.extend2)) {
-      try {
-        const homePath = _.isFunction(core.getRootHome) ? core.getRootHome() : os.homedir();
-        const corePath = path.join(homePath, 'cache', 'core');
-        const lockPath = path.resolve(corePath, '.s.lock');
-        const result = await core.request(
-          'https://registry.devsapp.cn/simple/devsapp/core/releases/latest',
-        );
-        const version = result.tag_name;
-        const url = `https://registry.devsapp.cn/simple/devsapp/core/zipball/${version}`;
-        const filename = `core@${version}.zip`;
-        await core.downloadRequest(url, corePath, { filename, extract: true, strip: 1 });
-        fs.writeFileSync(lockPath, JSON.stringify({ version }, null, 2));
-      } catch (error) {
-        this.logger.log(
-          "\nWARNING\n======================\n* Exception happened! Please execute 's clean --cache' and try again",
-          'yellow',
-        );
-        process.exit(1);
-      }
-    }
   }
 }
