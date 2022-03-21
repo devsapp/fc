@@ -187,4 +187,4 @@ def handler(event, context):
 ````
 
 File `test.ts` is stored in directory `.s/nas/auto-default/hello-world-service`, which is of the same level as file `s.yaml`.The directory structure and execution results are as follows:
-<img src="https://img.alicdn.com/imgextra/i4/O1CN01NqMcAX1h6vhheEDlz_!!6000000004229-2-tps-2494-1536.png"/>
+<img src="https://img.alicdn.com/imgextra/i2/O1CN01rTAOUC21O8uIqGZU1_!!6000000006974-0-tps-2494-1536.jpg"/>
