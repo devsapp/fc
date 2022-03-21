@@ -327,10 +327,10 @@ fc-deploy-test:
 
 > When you deploy services, additional operations may be required. For more information, see the Additional operations may be required when you deploy resources section in [Precautions](#Precautions). 
 
-If you want to deploy a specified custom domain name, you can add the `--domain` parameter to your command. Example:
+If you want to deploy a specified custom domain name, you can add the `--domain-name` parameter to your command. Example:
 
 ```
-$ s deploy domain --domain http-trigger-py36.fc-deploy-service.1583208943291465.cn-hangzhou.fc.devsapp.net
+$ s deploy domain --domain-name http-trigger-py36.fc-deploy-service.1583208943291465.cn-hangzhou.fc.devsapp.net
 ```
 
 ## Permissions and policies
