@@ -73,7 +73,7 @@ SubCommand
   service    Only deploy service resources; help command [s deploy service -h]                                                        
   function   Only deploy function resources; help command [s deploy function -h]                                                       
   trigger    Only deploy trigger resources; help command [s deploy trigger -h]                                                        
-  domain     Only deploy domain resources; help command [s deploy domain -h]  
+  domain-name     Only deploy domain resources; help command [s deploy domain -h]  
 
 Examples with Yaml
 
