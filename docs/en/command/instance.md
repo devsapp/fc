@@ -104,7 +104,7 @@ For example, user Xiao Li found that some function errors occurred in his online
 <img src="https://img.alicdn.com/imgextra/i2/O1CN011qHFxA1hMxYdmzFs4_!!6000000004264-2-tps-1500-674.png" />
 
 2. After the installation is complete, execute the tcpdump command to capture the request of the remote service IP, and save the capture result in the tcpdump.cap file:
-<img src="https://img.alicdn.com/imgextra/i4/O1CN01iaWbjE1w82tvxkrne_!!6000000006262-2-tps-1500-504.png" />
+<img src="https://img.alicdn.com/imgextra/i4/O1CN01HK9vYp1NlQPYOQNHI_!!6000000001610-0-tps-1500-504.jpg" />
 
 3. After capturing the packets, upload the tcpdump.cap file to your own OSS with the help of the OSS command line tool ossutil64 , and then download it to the local analysis tool wireshark for analysis.
 <img src="https://img.alicdn.com/imgextra/i2/O1CN01eSFr0v21D9OTCTdhE_!!6000000006950-2-tps-1500-372.png" />
