@@ -22,27 +22,7 @@ category: '调用&调试'
 
 ## 命令解析
 
-当执行命令`local -h`/`local --help`时，可以获取帮助文档：
-
-```shell script
-Local
-
-  Run your serverless application locally for quick development & testing. 
-
-Usage
-
-  $ s local <sub-command> <options>
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/local.md
-
-SubCommand List
-
-  invoke   Local start fc event function; help command [s local invoke -h]         
-  start    Local invoke fc http function; help command [s local start -h]               
-```
-
+当执行命令`local -h`/`local --help`时，可以获取帮助文档。
 
 在该命令中，包括了两个个子命令：
 
@@ -55,58 +35,7 @@ SubCommand List
 
 > 💡 事件函数指的是非 HTTP 触发器的函数，包括不限于 OSS 触发器函数、CDN 触发器函数、Tablestore 触发器函数等。
 
-当执行命令`local invoke -h`/`local invoke --help`时，可以获取帮助文档：
-
-```shell script
-Local Invoke
-
-  Local invoke fc event function 
-
-Usage
-
-  $ s local invoke <options> 
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/local.md
-                               
-Options
-  -e, --event [string]                [Optional] Event data passed to the function during invocation (default: "")                                                 
-  -f, --event-file [string]           [Optional] A file containing event data passed to the function during invoke             
-  -s, --event-stdin [string]          [Optional] Read from standard input, to support script pipeline                        
-  -m, --mode [api/server/normal]      [Optional] Invoke mode, including api, server and normal:                                
-                                       - api: start api server for invokeFunction api invoking                      
-                                       - server: start server container for invoking function in the other terminal repeatedly                                                                   
-                                       - normal: default mode, invoke event function and then close the container
-  -c, --config [vscode/pycharm/idea]  [Optional] Select which IDE to use when debugging and output related debug config tips for the IDE. value: vscode/pycharm/idea                                   
-  -d, --debug-port [number]           [Optional] Specify the local function container starting in debug mode, and exposing this port on localhost                                                   
-  --debug-args [string]               [Optional] Additional parameters that will be passed to the debugger                     
-  --debugger-path [string]            [Optional] The path of the debugger on the host                                          
-  --tmp-dir [string]                  [Optional] The temp directory mounted to '/tmp' , default: './.s/tmp/invoke/serviceName/functionName/'                                                            
-  --server-port [number]              [Optional] The exposed port of http server, default value is the random port between 7000 and 8000
-
-Global Options
-
-  -h, --help                 [Optional] Help for command             
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
-
-Event Format
-  
-  Quickly obtain the data structures of different events through the command [s cli fc-event -h]
-
-
-Examples with Yaml
-
-  $ s local invoke --event "hello world!"                                                                                          
-```
+当执行命令`local invoke -h`/`local invoke --help`时，可以获取帮助文档。
 
 ### 参数解析
 
@@ -143,47 +72,7 @@ RequestId: 0ba8ac3f-abf8-46d4-b61f-8e0f9f265d6a 	 Billed Duration: 146 ms 	 Memo
 
 `local start` 命令，是进行本地 HTTP 函数调试的命令。
 
-当执行命令`local start -h`/`local start --help`时，可以获取帮助文档：
-
-```shell script
-Local Start
-
-  Local invoke fc http function 
-
-Usage
-
-  $ s local start <options> 
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/local.md
-                               
-Options
-
-  -c, --config [vscode/pycharm/idea]      [Optional] Select which IDE to use when debugging and output related debug config tips for the IDE. value: vscode/pycharm/idea
-  -d, --debug-port [number]               [Optional] Specify the sandboxed container starting in debug mode, and exposing this port on localhost 
-  --custom-domain                         [Optional] Access in the form of custom domain    
-  --debug-args [string]                   [Optional] Additional parameters that will be passed to the debugger    
-  --debug-path [string]                   [Optional] The path of the debugger on the host   
-  --tmp-dir [string]                      [Optional] The temp directory mounted to '/tmp' , default: './.s/tmp/invoke/serviceName/functionName/'                                                            
-  --server-port [number]                  [Optional] The exposed port of http server, default value is the random port between 7000 and 8000
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s local start --debug-port 9000 --config vscode                                                                 
-```
+当执行命令`local start -h`/`local start --help`时，可以获取帮助文档。
 
 ### 参数解析
 

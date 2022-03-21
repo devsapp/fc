@@ -29,26 +29,6 @@ The `layer` commands are used to perform layer operations.
 
 You can run the `layer -h` or `layer --help` command to obtain the help document.
 
-```shell script
-Layer
-
-  Resource layer operation 
-
-Usage
-
-  s layer <sub-command> <options>
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/en/command/layer.md
-
-SubCommand List
-
-  publish        New layer version; help command [s layer publish -h] 
-  list           Get layer list; help command [s layer list -h] 
-  detail         Get layer versionConfig; help command [s layer detail -h] 
-  versions       Get layer versions; help command [s layer verisons -h] 
-```
 
 Four commands are included: 
  
@@ -63,50 +43,6 @@ The `layer publish` command is a used to publish a layer.
  
 You can run the `layer publish -h` or `layer publish --help` command to obtain the help document.
 
-```shell script
-Layer publish
-
-  New layer version 
-
-Usage
-
-  s layer publish <options>  
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/en/command/layer.md
-                               
-Options
-
-  --region [string]             [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1       
-  --code string                 [Required] Specify the code parameter               
-  --compatible-runtime string   [Optional] Specify the compatibleRuntime parameter  
-  --description string          [Optional] Specify the description parameter        
-  --layer-name string           [Optional] Specify the layer name parameter         
-
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]      [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s layer publish --layer-name testName --code ./src 
-
-Examples with CLI
-
-  $ s cli fc layer publish --region cn-hangzhou --layer-name testName --code ./src --compatible-runtime nodejs12,nodejs10,python3 
-```
 
 ### Parameters description
 
@@ -142,47 +78,6 @@ The `layer list` command is used to obtain the list of layers.
 
 You can run the `layer list -h` or `layer list--help` command to obtain the help document.
 
-```shell script
-Layer list
-
-  Get layer list 
-
-Usage
-
-  s layer list <options>
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/en/command/layer.md
-                           
-Options
-
-  --region [string]        [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
-  --prefix [string]        [Optional] Specify the prefix parameter    
-  --table                  [Optional] Table format output       
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]      [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s layer list          
-
-Examples with CLI
-
-  $ s cli fc layer list --region cn-hangzhou       
-```
 
 ### Parameters description
 
@@ -224,47 +119,6 @@ The `layer detail` command is used to obtain details of a specified layer and it
 
 You can run the `layer detail -h` or `layer detail --help` command to obtain the help document.
 
-```shell script
-Layer detail
-
-  Get layer version config 
-
-Usage
-
-  s layer detail <options> 
-                
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/en/command/layer.md
-                           
-Options
-    
-  --region [string]           [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
-  --layer-name [string]       [C-Required] Specify the layer name parameter    
-  --version-id [number]       [C-Required] Specify the version parameter                             
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]      [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s layer detail --layer-name layerName --version-id 1 
-
-Examples with CLI
-
-  $ s cli fc layer detail --region cn-hangzhou --layer-name layerName --version-id 1 
-```
 
 ### Parameters description
 
@@ -312,47 +166,6 @@ The `layer versions` command is used to obtain the versions of a specified layer
 
 You can run the `layer version -h` or `layer versions --help` command to obtain the help document.
 
-```shell script
-Layer versions
-
-  Get layer versions 
-
-Usage
-
-  s layer versions <options>
-                
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/en/command/layer.md
-                           
-Options
-    
-  --region [string]          [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
-  --layer-name [string]      [Required] Specify the layer name parameter   
-  --table                    [Optional] Table format output                           
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]      [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s layer versions --layer-name layerName
-
-Examples with CLI
-
-  $ s cli fc layer versions --region cn-hangzhou --layer-name layerName
-```
 
 ### Parameters description
 

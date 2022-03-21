@@ -30,56 +30,7 @@ category: '构建&部署'
 
 ## 命令解析
 
-当执行命令`deploy -h`/`deploy --help`时，可以获取帮助文档：
-
-```shell script
-Deploy
-
-  Deploy local resources online                                                                
-
-Usage
-
-  $ s deploy <options>
-  $ s deploy <sub-command> <options>
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/deploy.md
-
-Options
-
-  --type [code/config]    [Optional] Only deploy configuration or code, value: code/config                   
-  --use-local             [Optional] Deploy resource using local config               
-  --use-remote            [Optional] Deploy resource using remote config                                 
-  -y, --assume-yes        [Optional] Assume that the answer to any question which would be asked is yes 
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]   	 [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
-
-SubCommand 
-  service    Only deploy service resources; help command [s deploy service -h]                                                        
-  function   Only deploy function resources; help command [s deploy function -h]                                                       
-  trigger    Only deploy trigger resources; help command [s deploy trigger -h]                                                        
-  domain     Only deploy domain resources; help command [s deploy domain -h]  
-
-Examples with Yaml
-
-  $ s deploy              
-  $ s deploy --use-local 
-  $ s deploy --type code
-
-```
+当执行命令`deploy -h`/`deploy --help`时，可以获取帮助文档。
 
 
 在该命令中，包括了四个子命令：
@@ -182,47 +133,7 @@ fc-deploy-test:
 
 `deploy service` 命令，是部署服务资源的命令。
 
-当执行命令`deploy service -h`/`deploy service --help`时，可以获取帮助文档：
-
-```shell script
-Deploy service
-
-  Only deploy service resources 
-
-Usage
-
-  $ s deploy service <options> 
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/deploy.md
-
-Options
-
-  --use-local         [Optional] Deploy resource using local config
-  --use-remote        [Optional] Deploy resource using remote config     
-  -y, --assume-yes    [Optional] Assume that the answer to any question which would be asked is yes 
-
-Global Options
-
-  -h, --help                 Help for command          
-  -a, --access [string]      Specify key alias         
-  --debug                    Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s deploy service             
-  $ s deploy service --use-local 
-
-```
+当执行命令`deploy service -h`/`deploy service --help`时，可以获取帮助文档。
 
 ### 参数解析
 
@@ -252,50 +163,7 @@ fc-deploy-test:
 
 `deploy function` 命令，是部署函数的命令。
 
-当执行命令`deploy function -h`/`deploy function --help`时，可以获取帮助文档：
-
-```shell script
-$ s cli fc deploy function -h
-
-Deploy function
-
-  Only deploy function resources 
-
-Usage
-
-  $ s deploy function <options> 
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/deploy.md
-
-Options
-
-  --type [code/config]    [Optional] Only deploy configuration or code, value: code/config              
-  --use-local             [Optional] Deploy resource using local config    
-  --use-remote            [Optional] Deploy resource using remote config                              
-  -y, --assume-yes        [Optional] Assume that the answer to any question which would be asked is yes 
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [aliasName]   [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s deploy function             
-  $ s deploy function --use-local 
-
-```
+当执行命令`deploy function -h`/`deploy function --help`时，可以获取帮助文档。
 
 ### 参数解析
 
@@ -334,50 +202,7 @@ fc-deploy-test:
 
 `deploy trigger` 命令，是部署函数触发器的命令。
 
-当执行命令`deploy trigger -h`/`deploy trigger --help`时，可以获取帮助文档：
-
-```shell script
-$ s cli fc deploy trigger -h
-
-Deploy trigger
-
-  Only deploy trigger resources 
-
-Usage
-
-  $ s deploy trigger <options> 
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/deploy.md
-
-Options
-
-  --trigger-name [string]        [Optional] Only deploy the specified trigger, multiple triggers can be specified using [--trigger-name name1 --trigger-name name2]                    
-  --use-local                    [Optional] Deploy resource using local config            
-  --use-remote                   [Optional] Deploy resource using remote config                                 
-  -y, --assume-yes               [Optional] Assume that the answer to any question which would be asked is yes            
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]      [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s deploy trigger             
-  $ s deploy trigger --use-local 
-  $ s deploy trigger --trigger-name name1 --trigger-name name2
-```
+当执行命令`deploy trigger -h`/`deploy trigger --help`时，可以获取帮助文档。
 
 ### 参数解析
 
@@ -422,48 +247,7 @@ $ s deploy trigger --trigger-name httpTrigger
 
 `deploy domain` 命令，是部署自定义域名的命令。
 
-当执行命令`deploy domain -h`/`deploy domain --help`时，可以获取帮助文档：
-
-```shell script
-$ s cli fc deploy domain -h
-
-Deploy domain
-
-  Only deploy domain resources 
-
-Usage
-
-  $ s deploy domain <options> 
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/deploy.md
-
-Options
-
-  --domain [string]   [Optional] Only deploy the specified domain, multiple domains can be specified using [--domain domain1 --domain domain2]   
-  --use-local         [Optional] Deploy resource using local config    
-  --use-remote        [Optional] Deploy resource using remote config                              
-  -y, --assume-yes    [Optional] Assume that the answer to any question which would be asked is yes 
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]      [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s deploy domain 
-```
+当执行命令`deploy domain -h`/`deploy domain --help`时，可以获取帮助文档。
 
 ### 参数解析
 

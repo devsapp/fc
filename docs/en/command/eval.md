@@ -26,26 +26,7 @@ If you cannot specify parameters that meet your business requirements in the pre
 
 ## Command description
 
-You can run the `eval -h` or `eval --help` command to obtain the following information about the relevant help documentation:
-
-```shell script
-Eval
-
-  Power tuning online functions
-
-
-Usage
-
-  s eval <sub-command>
-
-Document
-
-  https://github.com/devsapp/fc/blob/main/docs/en/command/eval.md
-
-SubCommand List
-
-  start   Power tuning online functions; help command [s eval start -h]
-```
+You can run the `eval -h` or `eval --help` command to obtain the information about the relevant help documentation.
 
 The sample code contains the following subcommand:
 
@@ -55,63 +36,7 @@ The sample code contains the following subcommand:
 
 The `eval start` command is used to detect the configurations of a function. 
  
-You can run the `eval start -h` or `eval start --help` command to obtain the following information about the relevant help documentation:
-
-```shell script
-Eval start
-
-  Power tuning start
-
-Document
-
-  https://github.com/devsapp/fc/blob/main/docs/en/command/eval.md
-
-Usage
-
-  s eval start <options>
-
-Options
-
-  --concurrency-args [string]   [Optional] Concurrency args of power tuning that can convert to concurrency list, for --eval-type concurrency
-  --eval-type [string]          [Optional] Type of the power tuning, value: memory/concurrency
-  --function-name [string]      [C-Required] Specify the fc function name
-  --headers [string]            [Optional] Target headers, only for HTTP function
-  --memory [number]             [Optional] Function memory of power tuning, only for --eval-type concurrency
-  --memory-size [string]        [Optional] Function MemorySize List of power tuning, only for --eval-type memory
-  --method [string]             [Optional] Target method, only for HTTP function
-  --path [string]               [Optional] Target path, only for HTTP function
-  --payload [string]            [Optional] Represents the event(Event function)/request_body(HTTP function) passed to the function
-  --payload-file [string]       [Optional] Represents the the event(Event function)/request_body(HTTP function)
-  --query [string]              [Optional] Target query, only for HTTP function
-  --region [string]             [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1
-  --rt [number]                 [Optional] Max response time, only for --eval-type concurrency
-  --run-count [number]          [Optional] Number of Invoke Function, only for --eval-type memory
-  --service-name [string]       [C-Required] Specify the fc service name
-
-Global Options
-
-  -a, --access string     [Optional] Specify key alias
-  --debug string          [Optional] Output debug informations
-  -h, --help boolean      [Optional] Help for command
-  -t, --template string   [Optional] Specify the template file
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s eval start --eval-type memory --run-count 10 --payload-file ./payload.file  --memory-size 128,256,512,1024
-  $ s eval start --eval-type concurrency --memory 1536 --concurrency-args 2,20,5 --rt 250 --method get --path '/login' --query 'a=1&b=2'
-
-Examples with CLI
-
-  $ s cli fc eval start --region cn-hangzhou --function-name functionName --service-name serviceName --eval-type memory --run-count 10 --payload 'hello world' --memory-size 128,256,512,1024 --access default
-  $ s cli fc eval start --region cn-hangzhou --function-name functionName --service-name serviceName --eval-type concurrency --memory 1536 --concurrency-args 2,30,5 --rt 250  --method get --path '/login' --query 'a=1&b=2' --access default
-```
+You can run the `eval start -h` or `eval start --help` command to obtain the information about the relevant help documentation.
 
 ### Parameter description
 

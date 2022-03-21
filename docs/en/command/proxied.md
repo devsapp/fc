@@ -36,7 +36,7 @@ In the serverless mode, your business may be associated with cloud services over
 
 The following figure shows how Function Compute implements cloud-terminal joint debugging.
 
-![](https://img.alicdn.com/imgextra/i4/O1CN01m0KYG61CJytdWxp1D_!!6000000000061-2-tps-1146-422.png)
+![](https://serverless-article-picture.oss-cn-hangzhou.aliyuncs.com/1647526279672_20220317141123086227.png)
 
 The architecture diagram of the device-cloud joint debugging is shown in the figure above, and the deep integration between the S tool and the channel service is carried out.
 
@@ -66,27 +66,7 @@ You can use one of the methods 1 or 2 above. If you are worried, you can execute
 
 ## Command description
 
-You can run the `proxied -h` or `proxied --help` command to obtain the following help information:
-
-```shell script
-Proxied
-
-  Local invoke with real net traffic via proxied service
-
-Usage
-
-  s proxied <sub-command> <options>
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/en/command/proxied.md
-
-SubCommand List
-
-  setup            Setup the preconditions; [s proxied setup -h]               
-  invoke           Invoke local function; help command [s proxied invoke -h] 
-  cleanup    Clean the related resource and environment; help command [s proxied cleanup -h]  
-```
+You can run the `proxied -h` or `proxied --help` command to obtain the help information.
 
 
 The sample code contains the following subcommands:
@@ -99,49 +79,7 @@ The sample code contains the following subcommands:
 
 The `proxied setup` command is used to initialize or configure cloud-terminal joint debugging. 
  
-You can run the `proxied setup -h` or `proxied setup --help` command to obtain the following help information:
-
-```shell script
-Proxied setup
-
-  Setup for local invoke via proxied service
-
-Usage
-
-  s proxied setup <options>  
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/en/command/proxied.md
-                               
-Options
-
-  -c, --config [vscode/intellij]           [Optional] elect which IDE to use when debugging and output related debug config tips for the IDE. value: vscode, intellij                                          
-  --debug-args [string]                    [Optional] Additional parameters that will be passed to the debugger                    
-  -d, --debug-port [number]                [Optional] Specify the sandboxed container starting in debug mode, and exposing this port on localhost                                                            
-  --debugger-path [string]                 [Optional] The path of the debugger on the host                                 
-  --tmp-dir [string]                       [Optional] The temp directory mounted to '/tmp' , default: './.s/tmp/invoke/serviceName/functionName/'   
-                                 
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]		 [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/en/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s proxied setup
-  $ s proxied setup --config vscode --debug-port 3000
-```
+You can run the `proxied setup -h` or `proxied setup --help` command to obtain the following help information.
 
 ### Parameter description
 
@@ -173,50 +111,7 @@ After the cloud-terminal joint debugging is initialized, you can run commands su
 
 The `proxied invoke` command is used to call or invoke a function when you implement cloud-terminal joint debugging. 
 
-You can run the `proxied invoke -h` or `proxied invoke --help` command to obtain the following help information:
-
-```shell script
-Invoke
-
-  Invoke local function in the container, pre-action is [s proxied setup]
-
-Usage
-
-  s proxied invoke <options>  
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/en/command/proxied.md
-                               
-Options
-
-  -e, --event [string]                [Optional] Event data passed to the function during invocation (default: "")                                                 
-  -f, --event-file [string]           [Optional] A file containing event data passed to the function during invoke             
-  -s, --event-stdin [string]          [Optional] Read from standard input, to support script pipeline                    
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]      [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/en/yaml_and_cli.md
-
-Event Format
-  
-  Quickly obtain the data structures of different events through the command [s cli fc-event -h]
-
-Examples with Yaml
-
-  $ s proxied invoke 
-  $ s proxied invoke --event string
-```
+You can run the `proxied invoke -h` or `proxied invoke --help` command to obtain the help information.
 
 ### Parameter description
  
@@ -251,31 +146,7 @@ hello world
 
 The `proxied cleanup` command is used to clean helper resources that are used during cloud-terminal joint debugging. 
  
-You can run the `proxied cleanup -h` or `proxied cleanup --help` command to obtain the following help information:
-
-```shell script
-Proxied cleanup
-
-  Clean the helper resource and the local container
-
-Usage
-
-  s proxied cleanup [options]
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/en/command/proxied.md
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]      [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Examples with Yaml
-
-  $ s proxied cleanup                                                     
-```
+You can run the `proxied cleanup -h` or `proxied cleanup --help` command to obtain the help information.
 
 ### Parameter description
 
@@ -313,7 +184,7 @@ You can implement breakpoint debugging during cloud-terminal joint debugging in 
 
   Serverless Devs generates the `.vscode/launch.json` file in the project directory. If you want to perform breakpoint debugging, you need to perform operations that are described in the following figure in VScode.
 
-  ![](https://img.alicdn.com/imgextra/i1/O1CN01kNeLy01Omd2Ge3Q6J_!!6000000001748-2-tps-341-233.png)
+  ![](https://img.alicdn.com/imgextra/i4/O1CN016yg2M51JaCElmIwZy_!!6000000001044-0-tps-341-233.jpg)
 
   
 
@@ -426,7 +297,7 @@ You can implement breakpoint debugging during cloud-terminal joint debugging in 
 ## Examples of actual combat scenarios
 Take a real enterprise customer of Alibaba Cloud Function Computing as an example: Xiao Wang is a developer of a business-driven company. In order to improve the efficiency of business iteration, the company has evolved its technical architecture towards a comprehensive cloud-native approach, reducing the management and operation and maintenance of basic facilities. The structure is roughly as follows:
 
-<img src="https://img.alicdn.com/imgextra/i1/O1CN012AtvSr1ZhYRbKqZWZ_!!6000000003226-2-tps-1508-1378.png" width="70%" height="70%">
+<img src="https://serverless-article-picture.oss-cn-hangzhou.aliyuncs.com/1647526420400_20220317141343428635.png" width="70%" height="70%">
 
 Xiao Wang migrates the most frequently iterated external front-end and back-end projects to the Custom Runtime of Function Compute with one click, in which SpringBoot projects need to be able to use various VPC intranet addresses to access downstream services (such as registry or other microservice interfaces) ), at this time, the device-cloud joint debugging provided by Serverless Devs can come in handy. You only need to execute it in the directory where s.yaml (the VPC configuration with functions defined in s.yaml) is located:
 

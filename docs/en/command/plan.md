@@ -15,39 +15,7 @@ The `plan` commands are used to view the changes of Function Compute resources.
 
 ## Command description
 
-You can run `plan -h` or `plan --help` to obtain the help documentation:
-
-```shell script
-Plan
-
-  Perceived resource change
-
-Usage
-
-  s plan <options>  
-                            
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/en/command/plan.md    
-
-Options
-
-  --type-plan [remove/deploy]   [Required] Expected instruction,value: remove/deploy(default: "deploy")               
-  --sub-command string          [Optional] Expected subcommand.                                                       
-                                If type-plan is deploy, optional value:service/function/trigger/domain                
-                                If type-plan is remove, optional                                                      
-                                value:service/function/trigger/domain/version/alias/provision/ondemand/onDemand/layer
-
-Global Options
-
-  -h, --help                 [Optional] Help for command    
-  -a, --access [string]      [Optional] Specify key alias             
-  --debug                    [Optional] Output debug informations        
-
-Examples with Cli
-
-  $ s plan              
-```
+You can run `plan -h` or `plan --help` to obtain the help documentation.
 
 ### Parameter description
  

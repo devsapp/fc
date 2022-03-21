@@ -15,51 +15,7 @@ The `info` command is used to view the online resource information about a funct
 
 ## Command description
 
-You can run the `info -h` or `info --help` command to obtain the help documentation:
-
-```shell script
-Info
-
-  Query online resource details 
-
-Usage
-
-  s info <options>  
-                    
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/en/command/info.md
-
-Options
-
-  --region [string]               [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
-  --service-name [string]         [C-Required] Specify the fc service name  
-  --function-name [string]        [Optional] Specify the fc function name   
-  --trigger-name [string]         [Optional] Specify the fc trigger name   
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]      [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations    
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s info               
-
-Examples with CLI
-
-  $ s cli fc info --region region --service-name serviceName --access accessName                                                                    
-  $ s cli fc info --region region --service-name serviceName --function-name functionName --trigger-name triggerName  
-```
+You can run the `info -h` or `info --help` command to obtain the help documentation.
 
 ### Parameter description 
  

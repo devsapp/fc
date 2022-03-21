@@ -24,27 +24,7 @@ category: '发布&配置'
 
 ## 命令解析
 
-当执行命令`ondemand -h`/`ondemand --help`时，可以获取帮助文档：
-
-```shell script
-OnDemand
-
-  Resource on-demand operation 
-
-Usage
-
-  s ondemand <sub-command> <options>
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/ondemand.md
-
-SubCommand List
-
-  get       Get resource on-demand; help command [s ondemand get -h]               
-  list      View the list of resource on-demand; help command [s ondemand list -h] 
-  put       Put resource on-demand; help command [s ondemand put -h]
-```
+当执行命令`ondemand -h`/`ondemand --help`时，可以获取帮助文档。
 
 
 在该命令中，包括了三个子命令：
@@ -57,50 +37,7 @@ SubCommand List
 
 `ondemand get` 命令，是获取服务指定按量资源详情的命令。
 
-当执行命令`ondemand get -h`/`ondemand get --help`时，可以获取帮助文档：
-
-```shell script
-Ondemand get
-
-  Get on-demand configuration 
-
-Usage
-
-  s ondemand get <options>
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/ondemand.md
-                               
-Options
-
-  --region [string]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1
-  --service-name [string]        	  [C-Required] Specify the fc service name  
-  --function-name [string]        	  [C-Required] Specify the fc function name  
-  --qualifier [string]                [Optional] Specify the qualifier parameter. Only supports LATEST and alias  
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]		 [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/zh/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s ondemand get --qualifier qualifier 
-
-Examples with CLI
-
-  $ s cli fc ondemand get --region cn-hangzhou --service-name serviceName --function-name functionName --qualifier qualifier 
-```
+当执行命令`ondemand get -h`/`ondemand get --help`时，可以获取帮助文档。
 
 ### 参数解析
 
@@ -134,49 +71,7 @@ fc-deploy-test:
 
 `ondemand list` 命令，是列举按量资源列表的命令。
 
-当执行命令`ondemand list -h`/`ondemand list --help`时，可以获取帮助文档：
-
-```shell script
-OnDemand list
-
-  View the list of on-demand 
-
-Usage
-
-  s ondemand list <options>
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/ondemand.md
-                               
-Options
-
-  --region [string]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
-  --service-name [string]       	  [C-Required] Specify the fc service name  
-  --table                             [Optional] Table format output     
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]      [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/zh/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s ondemand list 
-
-Examples with CLI
-
-  $ s cli fc ondemand list --region cn-hangzhou --service-name serviceName
-```
+当执行命令`ondemand list -h`/`ondemand list --help`时，可以获取帮助文档。
 
 ### 参数解析
 
@@ -220,51 +115,7 @@ fc-deploy-test:
 
 `ondemand put` 命令，是对别名进行发布和更新的命令。
 
-当执行命令`ondemand put -h`/`ondemand put --help`时，可以获取帮助文档：
-
-```shell script
-Ondemand put
-
-  Set reserved configuration 
-
-Usage
-
-  s ondemand put <options>
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/ondemand.md
-                               
-Options
-
-  --region [string]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
-  --service-name [string]             [C-Required] Specify the fc service name  
-  --function-name [string]            [C-Required] Specify the fc function name  
-  --qualifier [string]                [Required] Specify the qualifier parameter. Only supports LATEST and alias  
-  --max [string]                      [Required] Specify the maximumInstanceCount parameter  
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]      [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/zh/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s ondemand put --qualifier pre --max 1                                                       
-
-Examples with CLI
-
-  $ s cli fc ondemand put --region cn-hangzhou --service-name serviceName --function-name functionName --qualifier alias --max 1
-```
+当执行命令`ondemand put -h`/`ondemand put --help`时，可以获取帮助文档。
 
 ### 参数解析
 

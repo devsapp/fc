@@ -18,35 +18,7 @@ The api commands are used to perform operations on Function Compute API.
 
 ## Command description
 
-You can run the api -h or api --help command to obtain the help documentation:
-
-```shell script
-Api
-
-  Directly operate the FC API without yaml support
-
-Usage
-
-  s cli fc api <api> <options>  
-                            
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/en/command/api.md    
-
-API Document 
-
-  https://help.aliyun.com/document_detail/188577.html
-
-Global Options
-
-  -h, --help                 [Optional] Help for command    
-  -a, --access [string]      [Optional] Specify key alias             
-  --debug                    [Optional] Output debug informations        
-
-Examples with Cli
-
-  $ s cli fc api ListService              
-```
+You can run the `api -h` or `api --help` command to obtain the help documentation.
 
 ### Parameter description
  

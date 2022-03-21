@@ -182,48 +182,7 @@ Take note of the following information about specific deployment scenarios:
 
 The `deploy service` command is a command to deploy service resources.
 
-When executing the command `deploy service -h`/`deploy service --help`, you can get help documentation:
-
-```shell script
-Deploy service
-
-  Only deploy service resources 
-
-Usage
-
-  $ s deploy service <options> 
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/en/command/deploy.md
-
-Options
-
-  --use-local         [Optional] Deploy resource using local config
-  --use-remote        [Optional] Deploy resource using remote config     
-  -y, --assume-yes    [Optional] Assume that the answer to any question which would be asked is yes 
-
-Global Options
-
-  -h, --help                 Help for command          
-  -a, --access [string]      Specify key alias         
-  --debug                    Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s deploy service             
-  $ s deploy service --use-local 
-
-```
-
+When executing the command `deploy service -h`/`deploy service --help`, you can get help documentation.
 ### Parameters description
 
 | Full name   | Abbreviation | Required in YAML mode | Description                                                  |
@@ -252,50 +211,7 @@ fc-deploy-test:
 
 The `deploy function` command is the command to deploy the function.
 
-When executing the command `deploy function -h`/`deploy function --help`, you can get help documentation:
-
-```shell script
-$ s cli fc deploy function -h
-
-Deploy function
-
-  Only deploy function resources 
-
-Usage
-
-  $ s deploy function <options> 
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/en/command/deploy.md
-
-Options
-
-  --type [code/config]    [Optional] Only deploy configuration or code, value: code/config              
-  --use-local             [Optional] Deploy resource using local config    
-  --use-remote            [Optional] Deploy resource using remote config                              
-  -y, --assume-yes        [Optional] Assume that the answer to any question which would be asked is yes 
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [aliasName]   [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s deploy function             
-  $ s deploy function --use-local 
-
-```
+When executing the command `deploy function -h`/`deploy function --help`, you can get help documentation.
 
 ### Parameters description
 
@@ -333,50 +249,7 @@ fc-deploy-test:
 
 The `deploy trigger` command is the command to deploy the function trigger.
 
-When executing the command `deploy trigger -h`/`deploy trigger --help`, you can get help documentation:
-
-```shell script
-$ s cli fc deploy trigger -h
-
-Deploy trigger
-
-  Only deploy trigger resources 
-
-Usage
-
-  $ s deploy trigger <options> 
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/en/command/deploy.md
-
-Options
-
-  --trigger-name [string]        [Optional] Only deploy the specified trigger, multiple triggers can be specified using [--trigger-name name1 --trigger-name name2]                    
-  --use-local                    [Optional] Deploy resource using local config            
-  --use-remote                   [Optional] Deploy resource using remote config                                 
-  -y, --assume-yes               [Optional] Assume that the answer to any question which would be asked is yes            
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]      [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s deploy trigger             
-  $ s deploy trigger --use-local 
-  $ s deploy trigger --trigger-name name1 --trigger-name name2
-```
+When executing the command `deploy trigger -h`/`deploy trigger --help`, you can get help documentation.
 
 ### Parameters
 
@@ -421,48 +294,7 @@ $ s deploy trigger --trigger-name httpTrigger
 
 The `deploy domain` command is a command to deploy a custom domain name.
 
-When executing the command `deploy domain -h`/`deploy domain --help`, you can get help documentation:
-
-```shell script
-$ s cli fc deploy domain -h
-
-Deploy domain
-
-  Only deploy domain resources 
-
-Usage
-
-  $ s deploy domain <options> 
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/en/command/deploy.md
-
-Options
-
-  --domain [string]   [Optional] Only deploy the specified domain, multiple domains can be specified using [--domain domain1 --domain domain2]   
-  --use-local         [Optional] Deploy resource using local config    
-  --use-remote        [Optional] Deploy resource using remote config                              
-  -y, --assume-yes    [Optional] Assume that the answer to any question which would be asked is yes 
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]      [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s deploy domain 
-```
+When executing the command `deploy domain -h`/`deploy domain --help`, you can get help documentation.
 
 ### Parameters description
 

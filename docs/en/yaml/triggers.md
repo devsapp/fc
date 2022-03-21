@@ -23,7 +23,7 @@ type currently supports: `http`, `timer`, `oss`, `log`, `mns_topic`, `cdn_events
 | Parameter Name | Required | Type | Parameter Description |
 | ----------------- | ---- | ----------------- | ---------------------------- |
 | bucketName | True | String | Target bucket name in OSS |
-| events | True | List\<String\> | The list of events that trigger the function execution on the OSS side |
+| events | True | List\<String\> | The list of events that trigger the function execution on the OSS side, Document: https://www.alibabacloud.com/help/en/doc-detail/62922.html#section-mf3-l4l-1nf |
 | [filter](#filter) | True | [Struct](#filter) | Trigger condition |
 
 Examples:
@@ -540,8 +540,8 @@ triggers:
 
 | Parameter Name | Required | Type | Parameter Description |
 | ------------ | ---- | ------------ | ------------------ |
-| instanceName | True | List\<String\> | Name of the Tablestore instance |
-| tableName | True | List\<String\> | table name in instance |
+| instanceName | True | String | Name of the Tablestore instance |
+| tableName | True | String | table name in instance |
 
 References:
 
@@ -553,7 +553,9 @@ triggers:
     role: acs:ram::<account-id>:role/AliyunTableStoreStreamNotificationRole    
     # qualifier: 1 
     # LATEST    
-    config: {}
+    config: 
+      instanceName: xxx
+      tableName: xxx
 ```
 
 #### Permission configuration related
