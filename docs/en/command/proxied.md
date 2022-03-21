@@ -184,7 +184,7 @@ You can implement breakpoint debugging during cloud-terminal joint debugging in 
 
   Serverless Devs generates the `.vscode/launch.json` file in the project directory. If you want to perform breakpoint debugging, you need to perform operations that are described in the following figure in VScode.
 
-  ![](https://img.alicdn.com/imgextra/i1/O1CN01kNeLy01Omd2Ge3Q6J_!!6000000001748-2-tps-341-233.png)
+  ![](https://img.alicdn.com/imgextra/i4/O1CN016yg2M51JaCElmIwZy_!!6000000001044-0-tps-341-233.jpg)
 
   
 
