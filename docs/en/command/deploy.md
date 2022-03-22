@@ -32,57 +32,7 @@ The `deploy` command is used to deploy function resources. You can use this comm
 
 ## Command description
 
-You can run the `deploy -h` or `deploy --help` command to query the following help information:
-
-```shell script
-Deploy
-
-  Deploy local resources online                                                                
-
-Usage
-
-  $ s deploy <options>
-  $ s deploy <sub-command> <options>
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/en/command/deploy.md
-
-Options
-
-  --type [code/config]    [Optional] Only deploy configuration or code, value: code/config                   
-  --use-local             [Optional] Deploy resource using local config               
-  --use-remote            [Optional] Deploy resource using remote config                                 
-  -y, --assume-yes        [Optional] Assume that the answer to any question which would be asked is yes 
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]   	 [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/en/yaml_and_cli.md
-
-SubCommand 
-  service    Only deploy service resources; help command [s deploy service -h]                                                        
-  function   Only deploy function resources; help command [s deploy function -h]                                                       
-  trigger    Only deploy trigger resources; help command [s deploy trigger -h]                                                        
-  domain-name     Only deploy domain resources; help command [s deploy domain -h]  
-
-Examples with Yaml
-
-  $ s deploy              
-  $ s deploy --use-local 
-  $ s deploy --type code
-
-```
-
+You can run the `deploy -h` or `deploy --help` command to query the following help information.
 
 The deploy command consists of the following subcommands:
 
