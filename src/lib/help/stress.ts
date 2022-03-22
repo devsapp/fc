@@ -117,7 +117,7 @@ export const STRESS_START = [
   {
     header: 'Examples with CLI',
     content: [
-      '$ s stress start --num-user 6 --spawn-rate 10 --run-time 30 --url myUrl --method post --payload "hello world"',
+      '$ s cli stress start --num-user 6 --spawn-rate 10 --run-time 30 --url myUrl --method post --payload "hello world"',
     ],
   },
 ];
