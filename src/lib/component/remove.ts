@@ -232,7 +232,7 @@ export default class Remove {
     }
 
     if (_.isEmpty(serviceName)) {
-      throw new Error('not found serviceName');
+      throw new core.CatchableError('not found serviceName');
     }
 
     if (subCommand === 'onDemand' || subCommand === 'ondemand') {

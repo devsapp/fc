@@ -169,6 +169,7 @@ When executing the command `deploy function -h`/`deploy function --help`, you ca
 | ----------- | ------------ | --------------------- | ------------------------------------------------------------ |
 | type        | -            | No                    | The deployment type. Valid values: code and config.          |
 | use-local   | -            | No                    | Uses on-premises configurations to deploy resources.         |
+| skip-push | -        | No           |  Skip auto push docker image   |
 | user-remote | -            | No                    |                                                              |
 | assume-yes  | y            | No                    | Selects yes by default for additional operations.            |
 | access      | a            | No                    | The key that is used in the request. You can use a key that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add), or a [key that is configured in environment variables.](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables) |
