@@ -17,7 +17,7 @@ export const PLAN_HELP = [
     header: 'Options',
     optionList: [
       {
-        name: 'type-plan',
+        name: 'plan-type',
         typeLabel: '{underline [remove/deploy]}',
         description: '[Required] Expected instruction,value: remove/deploy(default: "deploy")',
         type: String,
@@ -25,8 +25,8 @@ export const PLAN_HELP = [
       {
         name: 'sub-command',
         description: `[Optional] Expected subcommand.
-          If type-plan is deploy, optional value:service/function/trigger/domain
-          If type-plan is remove, optional value:service/function/trigger/domain/version/alias/provision/ondemand/onDemand/layer`,
+          If plan-type is deploy, optional value:service/function/trigger/domain
+          If plan-type is remove, optional value:service/function/trigger/domain/version/alias/provision/ondemand/onDemand/layer`,
         type: String,
       },
     ],
@@ -35,6 +35,6 @@ export const PLAN_HELP = [
   { ...globalDescribe },
   {
     header: 'Examples with Yaml',
-    content: ['$ s plan --type-plan deploy', '$ s plan --type-plan remove'],
+    content: ['$ s plan --plan-type deploy', '$ s plan --plan-type remove'],
   },
 ];
