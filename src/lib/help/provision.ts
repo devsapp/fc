@@ -92,6 +92,7 @@ export const PROVISION_PUT = [
         description: '[Optional] Specify the provision target parameter',
         type: Number,
       },
+      qualifier,
       {
         name: 'config',
         description:
