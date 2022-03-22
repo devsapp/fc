@@ -4,7 +4,7 @@ description: 'Api commands'
 position: 6
 category: 'Other'
 ---
-# Api commands (coming soon)
+# Api commands
 
 The api commands are used to perform operations on Function Compute API. 
 
