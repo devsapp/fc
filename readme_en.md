@@ -47,7 +47,7 @@ The following table lists the commands that are supported by the FC component:
 | [remove](docs/en/command/remove.md)     |                                  | [**proxied**](docs/en/command/proxied.md) | [provision](docs/en/command/provision.md) | [info](docs/en/command/info.md)                   |
 | [plan](docs/en/command/plan.md)         |                                  | [instance](docs/en/command/instance.md)       | [ondemand](docs/en/command/ondemand.md)   | [**sync**](docs/en/command/sync.md)               |
 |                                    |                                  | [eval](docs/en/command/eval.md)           | [layer](docs/en/command/layer.md)         | [stress](docs/en/command/stress.md)               |
-|                                    |                                  |                                      |                                      | [api   (to be supported)](docs/en/command/api.md) |
+|                                    |                                  |                                      |                                      | [api](docs/en/command/api.md) |
 
 
 When you use the FC component, you must edit resource description files. For more information about the YAML specifications of the FC component, see [**YAML specifications**](docs/en/yaml/readme.md). You also need to read some tips on the FC component, such as [Declaration and deployment of multiple functions](docs/en/tips.md#Declaration-and-deployment-of-multiple-functions). For more information, see [Common tips](docs/en/tips.md).
