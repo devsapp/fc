@@ -32,18 +32,10 @@ export function isAutoConfig(config: any): boolean {
 }
 
 export function getFcNames(argsParse, inputsProps) {
-  if (argsParse?.region) {
-    return {
-      region: argsParse.region,
-      serviceName: argsParse['service-name'],
-      functionName: argsParse['function-name'],
-    };
-  }
-
   return {
-    region: inputsProps?.region,
-    serviceName: inputsProps?.service?.name,
-    functionName: inputsProps?.function?.name,
+    region: argsParse.region || inputsProps?.region,
+    serviceName: argsParse['service-name'] || inputsProps?.service?.name,
+    functionName: argsParse['function-name'] || inputsProps?.function?.name,
   };
 }
 
