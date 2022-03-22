@@ -49,9 +49,8 @@ category: '发布&配置'
 | service-name  | -        | 选填           | 必填          | 服务名                                                       |
 | qualifier     |          | 选填           | 选填          | 配置预留的版本，仅支持服务的 LATEST 和别名                   |
 | table         |          | 选填           |               | 是否以表格形式输出                                           |
-| access        | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug         | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help          | h        | 选填           | 选填          | 查看帮助信息                                                 |
+
+> 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)
 
 ### 操作案例
 
@@ -102,9 +101,8 @@ fc-deploy-test:
 | config        |          | 选填           | 选填          | 定时伸缩与弹性伸缩配置                |
 | qualifier     |          | 必填           | 必填          | 配置预留的版本，仅支持服务的 LATEST 和别名                   |
 | target        |          | 选填           | 选填          | 预留实例数量，target 如果大于0，配置函数预留，**预留资源会持续产生费用，如果不需要请及时释放资源**；target 如果等于0，释放预留资源；`--target`参数的权重大于`--config`中的`target`，即如果`config`的配置文件中和参数指定同时存在`target`配置，优先使用参数中的`target`配置 |
-| access        | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug         | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help          | h        | 选填           | 选填          | 查看帮助信息                                                 |
+
+> 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)
 
 ### 操作案例
 
@@ -185,9 +183,8 @@ fc-deploy-test:
 | service-name  | -        | 选填           | 必填          | 服务名                                                       |
 | function-name | -        | 选填           | 必填          | 版本描述                                                     |
 | qualifier     |          | 选填           | 选填          | 配置预留的版本，仅支持服务的 LATEST 和别名                   |
-| access        | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug         | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help          | h        | 选填           | 选填          | 查看帮助信息                                                 |
+
+> 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)
 
 ### 操作案例
 

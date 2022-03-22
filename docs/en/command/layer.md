@@ -55,9 +55,8 @@ You can run the `layer publish -h` or `layer publish --help` command to obtain t
 | compatible-runtime | -            | Optional                | Optional               | Supported runtime.  Default value: nodejs12,nodejs10,nodejs8,nodejs6,python3,python2.7 |
 | description        |              | Optional                | Optional               | The description of the  layer.                               |
 | layer-name         |              | Required                | Required               | The name of the layer.                                       |
-| access             | a            | Optional                | Optional               | The key used in this  request. You can use the key configured by running the [config](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command) command or [the key configured to the   environment variable](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables). |
-| debug              | -            | Optional                | Optional               | Enables debug mode to  obtain more logs.                     |
-| help               | h            | Optional                | Optional               | Obtains the help  document.                                  |
+
+> The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
 
 
 ### Examples
@@ -86,9 +85,8 @@ You can run the `layer list -h` or `layer list--help` command to obtain the help
 | region  | -    | Optional      | Required     | The region. Valid values: cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, and ap-south-1` |
 | prefix  | -    | Optional      | Optional     |                               |
 | table  | -    | Optional      | Optional     |                               |
-| access  | a    | Optional      | Optional     | The key used in this request. You can use the key configured by running the config command (https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add) or the key configured to the environment variable (https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Use environment variables to configure keys). |
-| debug  | -    | Optional      | Optional     | Enables debug mode to obtain more logs.             |
-| help   | h    | Optional      | Optional     | Obtains the help document.                         |
+
+> The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
 
 ### Examples
 
@@ -127,9 +125,8 @@ You can run the `layer detail -h` or `layer detail --help` command to obtain the
 | region   | -    | Optional      | Required     | The region. Valid values: `cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
 | layer-name | -     | Required      | Required     | The name of the layer.                            |
 | version-id | -    | Required      | Required     | The version of the layer.                            |
-| access   | a    | Optional     | Optional     | The key used in this request. You can use the key configured by running the config command (https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add) or the key configured to the environment variable (https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Use environment variables to configure keys). |
-| debug   | -    | Optional      | Optional     | Enables debug mode to obtain more logs.            |
-| help    | h    | Optional      | Optional     | Obtains the help document.                         |
+
+> The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
  
 ### 操作案例
 
@@ -174,9 +171,8 @@ You can run the `layer version -h` or `layer versions --help` command to obtain 
 | region   | -    | Optional      | Required     | The region. Valid values: cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, and ap-south-1 |
 | layer-name | -    | Required      | Required     | The name of the layer.                            |
 | table   | -    | Optional      | Required     | Specifies whether to display outputs in a table.                      |
-| access   | a    | Optional      | Optional     | The key used in this request. You can use the key configured by running the config command (https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add) or the key configured to the environment variable (https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Use environment variables to configure keys). |
-| debug   | -    | Optional     | Optional     | Enables debug mode to obtain more logs.            |
-| help    | h    | Optional      | Optional     | Obtains the help document.                         |
+
+> The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
  
 ### 操作案例
 

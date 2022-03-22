@@ -59,9 +59,8 @@ You can run the `eval start -h` or `eval start --help` command to obtain the inf
 | payload-file     | -            | No                      | No                     | Specifies the file  that contains the HTTP request body of an  HTTP function or the file that contains the event input  parameter of an event function. This parameter is required when you set the eval-type  parameter to memory or concurrency. |
 | query            | -            | No                      | No                     | The query string  of the HTTP request of an HTTP function.   |
 | headers          | -            | No                      | No                     | The HTTP request  headers of an HTTP function. Example: {"header_a":"val"}. |
-| access           | a            | No                      | Yes                    | The AccessKey pair  that is used in the request. You can use the AccessKey pair that is  configured by running [the config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command) or by using [environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables). |
-| debug            | -            | No                      | No                     | The debug mode. If  you enable the dedug mode, a larger number of logs are returned. |
-| help             | h            | No                      | No                     | Views the help  information.                                 |
+
+> The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
 
 
 ### Examples

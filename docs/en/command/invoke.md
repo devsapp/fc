@@ -32,9 +32,8 @@ You can run the `invoke -h` or `invoke --help` command to obtain the help docume
 | event-stdin   | s    | No      | No     | The file of the event.                           |
 | invocation-type | -    | No      | No     | The invocation type. Valid values: `async, sync`. Default value: `sync`.       |
 | stateful-async-invocation-id | -    | No      | No     | The stateful asynchronous invocation.   |
-| access     | a    | No      | No     | The AccessKey pair that is used in the request. You can use the AccessKey pair that is configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command), or the AccessKey pair that is configured by using [environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables). |
-| debug      | -    | No      | No     | The debug mode. If you enable the `debug` mode, more log information is returned.            |
-| help      | h    | No      | No     | The help information.                         |
+
+> The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
  
 ### Examples
 

@@ -46,9 +46,8 @@ You can run the `alias get` command to obtain the details of the specified alias
 | region       | -            | No                      | Yes                    | The region. Valid  values: cn-hangzhou,  cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou,  cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1,  ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1,  eu-west-1, us-west-1, us-east-1, and ap-south-1. |
 | service-name | -            | No                      | Yes                    | The name of the  service.                                    |
 | alias-name   | -            | Yes                     | Yes                    | The name of the alias.                                       |
-| access       | a            | No                      | No                     | The AccessKey pair  that is used in the request. You can use the AccessKey pair that is  configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command) or by using [environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables). |
-| debug        | -            | No                      | No                     | The debug mode. If  you enable the dedug mode, more logs are returned. |
-| help         | h            | No                      | No                     | Views the help  information.                                 |
+
+> The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
 
 ### Examples
 
@@ -80,9 +79,8 @@ You can run the `alias list -h` or `alias list --help` to obtain the information
 | region       | -            | No                    | Yes                  | The region. Valid values: `cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, and ap-south-1`. |
 | service-name | -            | No                    | Yes                  | The name of the service.                                     |
 | table        | -            | No                    | No                   | Specifies whether the details of the aliases are returned in a table. |
-| access       | a            | No                    | No                   | The AccessKey pair that is used in this request. You can use the AccessKey pair that is configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command) or [the AccessKey pair that is configured by using environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables). |
-| debug        | -            | No                    | No                   | The `debug` mode. If you enable the debug mode, more logs are returned. |
-| help         | h            | No                    | No                   | Views the help information.                                  |
+
+> The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
 
 
 ### Examples
@@ -131,9 +129,8 @@ You can run the `alias publish -h` or `alias publish --help` command to obtain t
 | version-id  | -    | No      | No     | The ID of the version. If the version-id and version-latest parameters are specified, you need to select a version number in interactive mode. | 
 | version-latest | -   | No      | No     | Specifies the latest version of the service. The version-id parameter takes precedence over the version-latest parameter. |
 | weight    | -    | No      | No     | The weight of the canary release version. This parameter is required when the gversion parameter is specified. |
-| access    | a    | No      | No     | The AccessKey pair that is used in the request. You can use the AccessKey pair that is configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command) or [the AccessKey pair that is configured by using [environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables). |
-| debug    | -    | No      | No     | The `debug` mode. If you enable the debug mode, more logs are returned.            |
-| help     | h    | No      | No     | Views the help information.                         |
+
+> The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
 
 ### Examples
 

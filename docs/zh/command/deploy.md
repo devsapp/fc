@@ -49,9 +49,8 @@ category: '构建&部署'
 | use-local  | -        | 选填           | 优先使用本地配置进行部署                                     |
 | use-remote | -        | 选填           | 优先使用线上配置进行部署                                     |
 | assume-yes | y        | 选填           | 在交互时，默认选择`y`                                        |
-| access     | a        | 选填           | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug      | -        | 选填           | 打开`debug`模式，将会输出更多日志信息                        |
-| help       | h        | 选填           | 查看帮助信息                                                 |
+
+> 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)
 
 ### 操作案例
 
@@ -142,10 +141,8 @@ fc-deploy-test:
 | use-local   | -        | 选填           | 优先使用本地配置进行部署                                     |
 | user-remote | -        | 选填           | 优先使用线上配置进行部署                                     |
 | assume-yes  | y        | 选填           | 在交互时，默认选择`y`                                        |
-| access      | a        | 选填           | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug       | -        | 选填           | 打开`debug`模式，将会输出更多日志信息                        |
-| help        | h        | 选填           | 查看帮助信息                                                 |
 
+> 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)
 ### 操作案例
 
 **有资源描述文件（Yaml）时**，可以直接执行`s deploy service `进行服务的部署，部署完成的输出示例：
@@ -174,9 +171,8 @@ fc-deploy-test:
 | user-remote | -        | 选填           |                                                              |
 | skip-push | -        | 选填           |  跳过自动推送镜像   |
 | assume-yes  | y        | 选填           | 在交互时，默认选择`y`                                        |
-| access      | a        | 选填           | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug       | -        | 选填           | 打开`debug`模式，将会输出更多日志信息                        |
-| help        | h        | 选填           | 查看帮助信息                                                 |
+
+> 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)
 
 ### 操作案例
 
@@ -212,9 +208,8 @@ fc-deploy-test:
 | use-local    | -        | 选填           | 使用本地配置进行部署                                         |
 | user-remote  | -        | 选填           |                                                              |
 | assume-yes   | y        | 选填           | 在交互时，默认选择`y`                                        |
-| access       | a        | 选填           | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug        | -        | 选填           | 打开`debug`模式，将会输出更多日志信息                        |
-| help         | h        | 选填           | 查看帮助信息                                                 |
+
+> 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)
 
 ### 操作案例
 
@@ -257,9 +252,8 @@ $ s deploy trigger --trigger-name httpTrigger
 | use-local   | -        | 选填           | 使用本地配置进行部署 |
 | user-remote | -        | 选填           | 使用线上配置 |
 | assume-yes  | y        | 选填           | 在交互时，默认选择`y`                                        |
-| access      | a        | 选填           | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug       | -        | 选填           | 打开`debug`模式，将会输出更多日志信息                        |
-| help        | h        | 选填           | 查看帮助信息                                                 |
+
+> 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)
 
 ### 操作案例
 

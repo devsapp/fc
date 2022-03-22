@@ -25,9 +25,8 @@ You can run the `info -h` or `info --help` command to obtain the help documentat
 | service-name | -    | No      | Yes     | The name of the service.                            |
 | function-name | -    | No      | No     | The name of the function.                            |
 | trigger-name | -    | No      | No     | The name of the trigger.                            |
-| access    | a    | No      | No     | The AccessKey pair that is used in the request. You can use the AccessKey pair that is configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command), or the AccessKey pair that is configured by using [environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables). |
-| debug     | -    | No      | No     | The debug mode. If you enable the `debug` mode, more log information is returned.            |
-| help     | h    | No      | No     | The help documentation.                         |
+
+> The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
 
 ### Examples
  

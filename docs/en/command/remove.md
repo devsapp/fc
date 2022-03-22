@@ -67,9 +67,8 @@ The remove commands consist of nine subcommands:
  | Parameter  | Abbreviation | Required in YAML mode | Description                           |
  | ---------- | -------- | -------------- | ------------------------------------------------------------ |
  | assume-yes | y    | No      | By default, `y` is selected.                     |
- | access   | a    | No      | The AccessKey pair that is used in the request. You can use the AccessKey pair that is configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command), or [the AccessKey pair that is configured by using environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables). |
- | debug   | -    | No      | The debug mode. If you enable the `debug` mode, more log information is returned.            |
- | help    | h    | No      | Views the help documentation.                         |
+
+> The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
  
 ### Examples
  
@@ -101,9 +100,8 @@ You can run the `remove service -h` or `remove service --help` command to obtain
  | region    | -    | No      | Yes     | The region of the service. Valid values: `cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, and ap-south-1`. |
  | service-name | -    | No      | Yes      | The name of the service.                            |
  | assume-yes  | y    | No      | No     | By default, `y` is selected.                            |
- | access    | a    | No      | No     | The AccessKey pair that is used in the request. You can use the AccessKey pair that is configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command), or [the AccessKey pair that is configured by using environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables). |
- | debug    | -    | No      | No     | The debug mode. If you enable the `debug` mode, more log information is returned.            |
- | help     | h    | No      | No     | Views the help documentation.                         |
+
+> The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
  
 ### Examples
  
@@ -130,9 +128,8 @@ When executing the command `remove function -h`/`remove function --help`, you ca
  | service-name | -    | No      | Yes     | The name of the service.                            |
  | function-name | -    | No      | Yes     | The name of the function.                            |
  | assume-yes  | y    | No      | No     | By default, `y` is selected.                            |
- | access    | a     | No      | No     | The AccessKey pair that is used in the request. You can use the AccessKey pair that is configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command), or [the AccessKey pair that is configured by using environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables). |
- | debug    | -    | No      | No     | The debug mode. If you enable the `debug` mode, more log information is returned.            |
- | help     | h    | No      | No     | Views the help documentation.                         |
+
+> The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
  
 ### Examples
  
@@ -160,9 +157,8 @@ When executing the command `remove trigger -h`/`remove trigger --help`, you can 
  | function-name | -    | No      | Yes     | The name of the function.                            |
  | trigger-name | -    | No      | Yes     | The name of the trigger.                            |
  | assume-yes  | y    | No      | No     | By default, `y` is selected.                            |
- | access    | a    | No      | No     | The AccessKey pair that is used in the request. You can use the AccessKey pair that is configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command), or [the AccessKey pair that is configured by using environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables). |
- | debug    | -    | No      | No     | The debug mode. If you enable the `debug` mode, more log information is returned.             |
- | help     | h    | No      | No     | Views the help documentation.                         |
+
+> The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
  
 ### Examples
  
@@ -188,9 +184,8 @@ When executing the command `remove domain -h`/`remove domain --help`, you can ge
  | region    | -    | No      | Yes     | The region of the service. Valid values: `cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, and ap-south-1`. |
  | domain | -    | No      | Yes     | The custom domain name.                            |
  | assume-yes  | y    | No      | No     | By default, `y` is selected.                            |
- | access    | a    | No      | No     | The AccessKey pair that is used in the request. You can use the AccessKey pair that is configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command), or [the AccessKey pair that is configured by using environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables). |
- | debug    | -    | No      | No     | The debug mode. If you enable the `debug` mode, more log information is returned.            |
- | help     | h    | No      | No     | Views the help documentation.                         |
+
+> The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
  
 ### Examples
  
@@ -214,9 +209,8 @@ When executing the command `remove version -h`/`remove version --help`, you can 
  | region    | -    | No      | Yes     | The region of the service. Valid values: `cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, and ap-south-1`. |
  | service-name | -    | No      | Yes     | The name of the service.                            |
  | version-id  | -    | Yes      | Yes     | The ID of the version.                            |
- | access    | a    | No      | No     | The AccessKey pair that is used in the request. You can use the AccessKey pair that is configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command), or [the AccessKey pair that is configured by using environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables). |
- | debug    | -    | No      | No     | The debug mode. If you enable the `debug` mode, more log information is returned.            |
- | help     | h    | No      | No     | Views the help documentation.                         |
+
+> The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
  
 ### Examples
  
@@ -244,9 +238,8 @@ When executing the command `remove alias -h`/`remove alias --help`, you can get 
  | region    | -    | No      | Yes     | The region of the service. Valid values: `cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, and ap-south-1`. |
  | service-name | -     | No      | Yes     | The name of the service.                            |
  | alias-name  | -    | Yes      | Yes     | The alias of the service.                             |
- | access    | a    | No      | No     | The AccessKey pair that is used in the request. You can use the AccessKey pair that is configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command), or [the AccessKey pair that is configured by using environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables). |
- | debug    | -    | No      | No     | The debug mode. If you enable the `debug` mode, more log information is returned.            |
- | help     | h    | No      | No     | Views the help documentation.                         |
+
+> The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
  
 ### Examples
  
@@ -273,9 +266,8 @@ When executing the command `remove provision -h`/`remove provision --help`, you 
  | service-name | -    | No      | Yes     | The name of the service.                            |
  | function-name | -    | No      | Yes     | The name of the function.                           |
  | qualifier   |     | No      | No     | The version or alias of the service. Only LATEST is supported for the version. If you specify a value for the `qualifier` parameter, only reserved resources that are specified by using the `qualifier` parameter are deleted. If you do not specify a value for the `qualifier` parameter, reserved resources of all versions of the service are deleted.          |
- | access    | a    | No      | No     | The AccessKey pair that is used in the request. You can use the AccessKey pair that is configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command), or [the AccessKey pair that is configured by using environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables). |
- | debug     | -    | No      | No     | The debug mode. If you enable the `debug` mode, more log information is returned.            |
- | help     | h    | No      | No     | Views the help documentation.                         |
+
+> The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
  
 ### Examples
  
@@ -303,9 +295,8 @@ When executing the command `remove ondemand -h`/`remove ondemand --help`, you ca
  | service-name | -    | No      | Yes     | The name of the service.                            |
  | function-name | -    | Yes      | Yes     | The name of the function.                            |
  | qualifier   | -    | No      | No      | The version or alias of the service. Only LATEST is supported for the version. If you specify a value for the `qualifier` parameter, only on-demand resources that are specified by using the `qualifier` parameter are deleted. If you do not specify a value for the `qualifier` parameter, on-demand resources of all versions of the service are deleted. |
- | access    | a    | No      | No     | The AccessKey pair that is used in the request. You can use the AccessKey pair that is configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command), or [the AccessKey pair that is configured by using environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables). |
- | debug     | -    | No      | No     | The debug mode. If you enable the `debug` mode, more log information is returned.            |
- | help     | h    | No      | No     | Views the help documentation.                         |
+
+> The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
  
 ### Examples
  
@@ -332,9 +323,8 @@ When executing the command `remove layer -h`/`remove layer --help`, you can get 
  | region   | -    | No      | Yes     | The region of the service. Valid values: `cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, and ap-south-1`. |
  | layer-name | -    | No      | Yes     | The name of the layer.                            |
  | version-id | -    | No      | No      | The version that you want to delete. If you specify a value for the --version-id parameter, only the version that is specified by using the --version-id parameter is deleted. If you do not specify a value for the --version-id parameter, all versions of the specified layer are deleted. |
- | access   | a    | No      | No     | The AccessKey pair that is used in the request. You can use the AccessKey pair that is configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command), or [the AccessKey pair that is configured by using environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables). |
- | debug   | -    | No      | No     | The debug mode. If you enable the `debug` mode, more log information is returned.            |
- | help    | h    | No      | No     | Views the help documentation.                         |
+
+> The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
  
 ### Examples
  

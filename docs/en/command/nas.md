@@ -9,9 +9,6 @@ category: 'Other'
 The `nas` commands are used to perform operations on Apsara File Storage NAS (NAS), including uploading files, downloading files, and running custom commands. 
 
 - [Command description](#Command-description)
-- [nas init command](#nas-init-command)
-  - [Parameter description](#Parameter-description)
-  - [Examples](#Examples)
 - [nas upload command](#nas-upload-command)
   - [Parameter description](#Parameter-description-1)
   - [Examples](#Examples-1)
@@ -33,44 +30,11 @@ The `nas` commands are used to perform operations on Apsara File Storage NAS (NA
 You can run the `nas -h` or `nas --help` command to obtain the help documentation.
 
 The nas commands include the following subcommands:
- 
-- [init: initializes NAS.](#nas-init-command)
+
 - [upload: queries aliases.](#nas-upload-command)
 - [download: publishes or updates aliases.](#nas-download-command)
 - [command: runs Linux commands in Function Compute.](#nas-command-command) 
  
-
-## nas init command
-
-The `nas init` command is used to initialize NAS. After you run the `s.yaml` or `s.yml` command to write a document, NAS resources may not be created before the project is deployed. In this case, you can run the `nas init` command to initialize NAS. This way, you can use NAS. 
- 
-You can run the `nas init -h` or `nas init --help` command to obtain the help documentation.
-
-### Parameter description
-
-
-
-| Parameter | Abbreviation | Required   in YAML mode | Description                                                  |
-| --------- | ------------ | ----------------------- | ------------------------------------------------------------ |
-| access    | a            | No                      | The AccessKey pair  that is used in the request. You can use the AccessKey pair that is  configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command) and [the AccessKey pair that is   configured by using environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables). |
-| debug     | -            | No                      | The debug mode. If  you enable the debug mode, more log information is returned. |
-| help      | h            | No                      | Views the help  information.                                 |
-
-
-### Examples
-
-**If a resource description file in YAML exists**, you can run the `s nas init` to initialize NAS. The following example shows the output of the command:
-```text
-fc-deploy-test: 
-  userId:      10003
-  groupId:     10003
-  mountPoints: 
-    - 
-      serverAddr: 06c1e48887-rmm92.cn-hangzhou.nas.aliyuncs.com
-      nasDir:     /fc-deploy-service
-      fcDir:      /mnt/auto
-```
-
 ## nas upload upload
 
 The `nas upload` command is used to upload local files to NAS. 
@@ -83,9 +47,8 @@ You can run the `nas upload -h` or `nas upload --help` command to view the help 
 | --------- | -------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | 
 | recursive | r | No |                               |
 | override | o | No |                               |
-| access | a | No | The AccessKey pair that is used in the request. You can use the AccessKey pair that is configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command) and the [AccessKey pair that is configured by using environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md# Configure-keys-by-using-environment-variables). |
-| debug | - | No | The debug mode. If you enable the `debug` mode, more log information is returned. |
-| help | h | No | Views the help information. | 
+
+> The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
  
 ### Examples
  
@@ -115,9 +78,8 @@ You can run the `nas download -h` or `nas download --help` command to obtain the
 | -------- | -------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | override | o    | No      | Specifies that the existing file is overwritten. |
 | no-unzip | - | No | Specifies that the folder is not decompressed. |
-| access | a | No | The AccessKey pair that is used in the request. You can use the AccessKey pair that is configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add- command) and the [AccessKey pair that is configured by using environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md# Configure-keys-by-using-environment-variables). | 
-| debug | - | No | The debug mode. If you enable the `debug` mode, more log information is returned. | 
-| help | h | No | Views the help information. | 
+
+> The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
  
 ### Examples 
  
@@ -136,12 +98,8 @@ The `nas command` command is used to run the specified commands in an instance. 
 You can run the `nas command -h` or `nas command --help` command to obtain the help documentation.
 
 ### Parameter description
- 
-| Parameter | Abbreviation | Required in YAML mode | Description | 
-| -------- | -------- | -------------- | ------------------------------------------------------------ | 
-| access | a | No | The AccessKey pair that is used in the request. You can use the AccessKey pair that is configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add- command) and the [AccessKey pair that is configured by using environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md# Configure-keys-by-using-environment-variables). | 
-| debug | - | No | The debug mode. If you enable the `debug` mode, more information is returned. | 
-| help | h | No | Views the help information. | 
+
+> The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
  
 ### Examples 
  
@@ -164,7 +122,7 @@ You can run the `s nas command mkdir /mnt/auto/demo` command to create a folder 
 
 #### Lowest level of permissions
 
-When you run a command, you need to detect, deploy, and invoke helper functions. If nasConfig is set to `auto` when you run `nas init`, you must create resources related to nas. The following permissions are required:
+When you run a command, you need to detect, deploy, and invoke helper functions. The following permissions are required:
 
 **System policy**: `AliyunNasReadOnlyAccess`
 

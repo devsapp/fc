@@ -43,9 +43,8 @@ The `version list` command is used to check a list of published versions.
 | region       | -            | No                      | Yes                    | The  name of the region. Valid values: cn-hangzhou, cn-beijing, cn-beijing,  cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote,  cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2,  ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1,  us-west-1, us-east-1, and ap-south-1. |
 | service-name | -            | No                      | Yes                    | The  name of the service.                                    |
 | table        | -            | No                      | No                     | Specifies  whether to return the result in the form of a table. |
-| access       | a            | No                      | No                     | The  key that is used in this request. You can use the key information configured  by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command), or [the key information configured to   environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables). |
-| debug        | -            | No                      | No                     | Enables  the debug mode. In this case, more logs are generated. |
-| help         | h            | No                      | No                     | Views  help information                                      |
+
+> The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
 
 
 
@@ -90,9 +89,8 @@ You can run the `version publish -h` or `version publish --hel`p command to obta
 | region    | -    | No      | Yes     | The name of the region. Valid values:`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
 | service-name | -    | No      | Yes     | The name of the service.                            |
 | description | -    | No      | No     | Version description                           |
-| access    | a    | No      | No     | The key that is used in this request. You can use the key information that is configured by using the [configcommand](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command), or the [Configure-keys-by-using-environment-variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables). |
-| debug    | -    | No      | No     | Enables the `debug` mode. In this case, more logs are generated.            |
-| help     | h    | No      | No     | Views the help information.                         |
+
+> The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
  
 ###  Examples
  

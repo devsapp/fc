@@ -50,9 +50,8 @@ The deploy command consists of the following subcommands:
 | use-local  | -            | No                    | Preferentially uses on-premises configurations to deploy resources. |
 | use-remote | -            | No                    | Preferentially uses online configurations to deploy resources. |
 | assume-yes | y            | No                    | Selects yes by default for additional operations             |
-| access     | a            | No                    | The key that is used in the request. You can use a key that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add), or a [key that is configured in environment variables.](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables) |
-| debug      | -            | No                    | Enables the debug mode to output more log information.       |
-| help       | h            | No                    | Views help information.                                      |
+
+> The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
 
 ### Examples
 
@@ -140,9 +139,8 @@ When executing the command `deploy service -h`/`deploy service --help`, you can 
 | use-local   | -            | No                    | Preferentially uses on-premises configurations to deploy resources. |
 | user-remote | -            | No                    | Preferentially uses online configurations to deploy resources. |
 | assume-yes  | y            | No                    | Selects yes by default for additional operations.            |
-| access      | a            | No                    | The key that is used in the request. You can use a key that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add), or a [key that is configured in environment variables.](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables) |
-| debug       | -            | No                    | Enables the debug mode to output more log information.       |
-| help        | h            | No                    | Views help information.                                      |
+
+> The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
 
 ### Examples
 
@@ -172,9 +170,8 @@ When executing the command `deploy function -h`/`deploy function --help`, you ca
 | skip-push | -        | No           |  Skip auto push docker image   |
 | user-remote | -            | No                    |                                                              |
 | assume-yes  | y            | No                    | Selects yes by default for additional operations.            |
-| access      | a            | No                    | The key that is used in the request. You can use a key that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add), or a [key that is configured in environment variables.](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables) |
-| debug       | -            | No                    | Enables the debug mode to output more log information.       |
-| help        | h            | No                    | Views help information.                                      |
+
+> The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
 
 ### Examples
 
@@ -210,9 +207,8 @@ When executing the command `deploy trigger -h`/`deploy trigger --help`, you can 
 | use-local    | -            | No                    | Uses on-premises configurations to deploy resources.         |
 | user-remote  | -            | No                    |                                                              |
 | assume-yes   | y            | No                    | Selects yes by default for additional operations.            |
-| access       | a            | No                    | The key that is used in the request. You can use a key that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add), or a [key that is configured in environment variables.](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables) |
-| debug        | -            | No                    | Enables the debug mode to output more log information.       |
-| help         | h            | No                    | Views help information.                                      |
+
+> The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
 
 ### Examples
 
@@ -255,9 +251,8 @@ When executing the command `deploy domain -h`/`deploy domain --help`, you can ge
 | use-local   | -            | No                    | Uses on-premises configurations to deploy resources.         |
 | user-remote | -            | No                    | Uses online configurations to deploy resources.              |
 | assume-yes  | y            | No                    | Selects yes by default for additional operations.            |
-| access      | a            | No                    | The key that is used in the request. You can use a key that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add), or a [key that is configured in environment variables.](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables) |
-| debug       | -            | No                    | Enables the debug mode to output more log information.       |
-| help        | h            | No                    | Views help information.                                      |
+
+> The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
 
 ### Examples
 

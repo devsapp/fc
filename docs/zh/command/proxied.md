@@ -86,9 +86,8 @@ category: '调用&调试'
 | debug-port    | d        | 选填           |断点调试器端口|
 | debugger-path | -        | 选填           |自定义断点调试器路径|
 | tmp-dir       | -        | 选填           |自定义函数运行环境中 `/tmp` 路径的本机挂载路径，默认为 `./.s/tmp/invoke/serviceName/functionName/`|
-| access        | a        | 选填           | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug         | -        | 选填           | 打开`debug`模式，将会输出更多日志信息                        |
-| help          | h        | 选填           | 查看帮助信息                                                 |
+
+> 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)
 
 ### 操作案例
 
@@ -116,9 +115,8 @@ Proxied resource setup succeeded.
 | event       | e        | 选填           | 选填          |`event` 函数：传入的 `event` 事件数据，可以通过命令`s cli fc-event`快速获取事件，详细操作可以参考[这里](https://github.com/devsapp/fc/blob/main/docs/zh/command/invoke.md#注意事项) ;<br>http 函数：传入的请求参数，格式可以参考 [这里](https://github.com/devsapp/fc/blob/main/docs/zh/Usage/invoke.md#invoke-http-parameter)|
 | event-file  | f        | 选填           | 选填          |将 `event` 参数内容以文件形式传入|
 | event-stdin | s        | 选填           | 选填          |将 `event` 参数内容以标准输入流形式传入|
-| access      | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug       | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help        | h        | 选填           | 选填          | 查看帮助信息                                                 |
+
+> 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)
 
 ### 操作案例
 
@@ -146,11 +144,7 @@ hello world
 
 ### 参数解析
 
-| 参数全称 | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
-| :------- | -------- | -------------- | ------------- | ------------------------------------------------------------ |
-| access   | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug    | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help     | h        | 选填           | 选填          | 查看帮助信息                                                 |
+> 当前命令支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)
 
 ### 操作案例
 

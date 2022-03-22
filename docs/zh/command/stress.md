@@ -68,9 +68,8 @@ category: '其他功能'
 | spawn-rate    | -        | 选填           | 选填          |每秒新增模拟用户数|
 | url           | u        | 选填           | 选填          |被压测目标函数的 url，仅对 function-type 为 http 的函数压测有效|
 | invocation-type | -      | 选填         | 选填        | 调用类型：可选值 async、sync |
-| access        | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过 [config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug         | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help          | h        | 选填           | 选填          | 查看帮助信息                                                 |
+
+> 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)
 
 ### 操作案例
 
@@ -122,9 +121,8 @@ fc-deploy-test:
 | service-name  | -        | 选填           | 选填          |                                                              |
 | function-name | -        | 选填           | 选填          |                                                              |
 | assume-yes    | y        | 选填           | 选填          | 在交互时，默认选择`y`                                        |
-| access        | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug         | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help          | h        | 选填           | 选填          | 查看帮助信息                                                 |
+
+> 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)
 
 ### 操作案例
 
