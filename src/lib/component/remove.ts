@@ -211,6 +211,9 @@ export default class Remove {
           planArgs += '--assume-yes';
         }
       } catch (ex) {
+        if (ex?.name === 'CatchableError') {
+          throw ex;
+        }
         // 异常：不作处理兜底
         logger.debug(`error: ${ex.message}`);
       }
