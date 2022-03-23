@@ -10,7 +10,7 @@ category: 'Yaml规范'
 | 参数名                      | 必填  | 类型                        | 参数描述                                   |
 | --------------------------- | ----- | --------------------------- | ------------------------------------------ |
 | domainName                  | True  | String                      | 域名，如果是auto取值，系统则会默认分配域名 |
-| protocol                    | True  | String                      | 协议，取值：`HTTP`, `HTTPS`, `HTTP, HTTPS` |
+| protocol                    | True  | String                      | 协议，取值：`HTTP`, `HTTP,HTTPS` |
 | [routeConfigs](#routeconfigs) | True  | [List\<Struct>](#routeconfigs) | 路由                                       |
 | [certConfig](#certconfig) | False | [Struct](#certconfig)     | 域名证书                                   |
 | certId | False | Number   | 域名证书ID |
