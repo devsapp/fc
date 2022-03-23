@@ -25,6 +25,7 @@ category: '调用&调试'
 | region          | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
 | service-name    | -        | 选填           | 必填          | 服务名                                                       |
 | function-name   | -        | 选填           | 必填          | 函数名                                                       |
+| qualifier   | -        | 选填           | 选填          | 指定调用的版本或者别名 |
 | timeout           | -      | 选填           | 选填          | 客户端调用时间 [时间设置原理](https://github.com/devsapp/fc/issues/480) |
 | event           | e        | 选填           | 选填          | 事件                                                         |
 | event-file      | f        | 选填           | 选填          | 事件文件                                                     |
