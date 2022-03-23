@@ -189,7 +189,7 @@ export default class FcBaseComponent extends EntryPublicMethod {
       core.help(HELP.INFO);
       return;
     }
-    
+
     return await this.componentMethodCaller(
       inputs,
       'devsapp/fc-info',
@@ -590,7 +590,7 @@ export default class FcBaseComponent extends EntryPublicMethod {
   async eval(inputs: IInputs): Promise<any> {
     await super.handlerPreMethod(inputs, { getSecretKey: true });
 
-    const { isHelp, project, evalOpts, httpTypeOpts, payloadOpts, region, commandName } = 
+    const { isHelp, project, evalOpts, httpTypeOpts, payloadOpts, region, commandName } =
       await FcEval.handlerComponentInputs(inputs);
     if (isHelp) { return; }
 
@@ -631,6 +631,17 @@ export default class FcBaseComponent extends EntryPublicMethod {
       inputs,
       'devsapp/infrastructure-as-template',
       'env',
+      props,
+      args,
+    );
+  }
+
+  async api(inputs: IInputs): Promise<any> {
+    const { props, args, argsObj } = this.handlerComponentInputs(inputs);
+    return await this.componentMethodCaller(
+      inputs,
+      'fc-api-component',
+      'index',
       props,
       args,
     );

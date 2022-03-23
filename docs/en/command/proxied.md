@@ -20,7 +20,6 @@ The `proxied` commands are used to implement cloud-terminal joint debugging in F
     - [Parameter description](#Parameter-description-1)
     - [Examples](#Examples-1)
 - [proxied cleanup command](#proxied-cleanup-command)
-    - [Parameter description](#Parameter-description-2)
     - [Examples](#Examples-2)
 - [Best practices](#Best-practices)
     - [Implement cloud-terminal joint debugging](#Implement-cloud-terminal-joint-debugging)
@@ -145,11 +144,6 @@ hello world
 The `proxied cleanup` command is used to clean helper resources that are used during cloud-terminal joint debugging. 
  
 You can run the `proxied cleanup -h` or `proxied cleanup --help` command to obtain the help information.
-
-### Parameter description
-
-| Parameter | Abbreviation | Required in YAML mode | Required in CLI mode | Description                                                  |
-| --------- | ------------ | --------------------- | -------------------- | ------------------------------------------------------------ |
 
 > The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
 

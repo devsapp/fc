@@ -44,6 +44,7 @@
     "test-integration": "jest --testNamePattern ^Integration::",
     "lint": "f2elint scan",
     "fix": "f2elint fix",
+    "watch": "tsc -w",
     "typecheck": "npx tsc -p tsconfig.json --noEmit"
   },
   "husky": {

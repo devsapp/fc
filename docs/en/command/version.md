@@ -47,7 +47,6 @@ The `version list` command is used to check a list of published versions.
 > The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
 
 
-
 ### Examples
 
 - **If a resource description file (YAML) is available,** you can run the `s version list` command to check a list of published versions of the service.

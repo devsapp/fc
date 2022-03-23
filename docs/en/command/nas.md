@@ -10,13 +10,12 @@ The `nas` commands are used to perform operations on Apsara File Storage NAS (NA
 
 - [Command description](#Command-description)
 - [nas upload command](#nas-upload-command)
-  - [Parameter description](#Parameter-description-1)
+  - [Parameter description](#Parameter-description)
   - [Examples](#Examples-1)
 - [nas download command](#nas-download-command)
-  - [Parameter description](#Parameter-description-2)
+  - [Parameter description](#Parameter-description-1)
   - [Examples](#Examples-2)
 - [nas command command](#nas-command-command)
-  - [Parameter description](#Parameter-description-3)
   - [Examples](#Examples-3)
 - [Permissions and policies](#Permissions-and-policies)
 
@@ -96,8 +95,6 @@ File [/mnt/auto/template.yml] download successfully.
 The `nas command` command is used to run the specified commands in an instance. For example, you can run the `nas command` command to create a file or folder, or delete a file or folder in a function instance to which NAS is attached. 
 
 You can run the `nas command -h` or `nas command --help` command to obtain the help documentation.
-
-### Parameter description
 
 > The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
  

@@ -25,8 +25,8 @@ You can run the `build -h/build --help` command to obtain the documentation.
 | dockerfile | f | Optional | Specifies the file that you want to use to customize an image. | 
 | use-docker | d | Optional | Builds the image with docker. | 
 | use-buildkit | b | Optional | Builds the image with buildctl. | 
-| debug | - | Optional | Enables the debug mode to generate more logs. | 
-| help | h | Optional | Views help information | 
+
+> The current command also supports some global parameters (such as `-a/--access`, `--debug`, `--help`, etc.), please refer to [Serverless Devs Global Parameters Document](https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/en/command/readme.md#supported-parameters)
 
 ### Examples
 

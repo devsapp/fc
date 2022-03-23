@@ -24,8 +24,8 @@ category: '构建&部署'
 | dockerfile   | f        | 选填          | 指定构建自定义镜像的文件 |
 | use-docker   | d        | 选填          | 通过 docker 构建 |
 | use-buildkit | b        | 选填          | 通过 buildctl 构建 |
-| debug        | -        | 选填          | 打开`debug`模式，将会输出更多日志信息 |
-| help         | h        | 选填          | 查看帮助信息                          |
+
+> 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`, `--help`等），详情可参考 [Serverless Devs 全局参数文档](https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/zh/command/readme.md#%E5%85%A8%E5%B1%80%E5%8F%82%E6%95%B0)
 
 ### 操作案例
 
