@@ -82,7 +82,6 @@ You can run the `alias list -h` or `alias list --help` to obtain the information
 
 > The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
 
-
 ### Examples
  
 - **If the YAML description file of resources exist**, you can run the `s alias list` command to obtain the details of aliases in a table.

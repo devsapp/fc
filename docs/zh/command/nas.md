@@ -10,13 +10,12 @@ category: '其他功能'
 
 - [命令解析](#命令解析)
 - [nas upload 命令](#nas-upload-命令)
-  - [参数解析](#参数解析-1)
+  - [参数解析](#参数解析)
   - [操作案例](#操作案例-1)
 - [nas download 命令](#nas-download-命令)
-  - [参数解析](#参数解析-2)
+  - [参数解析](#参数解析-1)
   - [操作案例](#操作案例-2)
 - [nas command 命令](#nas-command-命令)
-  - [参数解析](#参数解析-3)
   - [操作案例](#操作案例-3)
 - [权限与策略说明](#权限与策略说明)
 
@@ -96,8 +95,6 @@ File [/mnt/auto/template.yml] download successfully.
 `nas command` 命令，是在实例中执行特定指令的命令；例如通过 `nas command` 命令，在已经挂在 NAS 产品的函数实例中创建文件/文件夹/删除文件/文件夹等。
 
 当执行命令`nas command -h`/`nas command --help`时，可以获取帮助文档。
-
-### 参数解析
 
 > 支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)
 

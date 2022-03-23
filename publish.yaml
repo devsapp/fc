@@ -35,7 +35,8 @@ Commands:
     stress: Stress test for the serverless application
     fc-api: Directly operate the FC API without yaml support
     fun2s: Convert the Yaml specification of Funcraft to Serverless Devs
-    instance: 实例操作【公测中】
+    instance: Instance login and operation [beta]
+    api: API call directly [beta]
 Service:
   函数计算:
     Authorities:

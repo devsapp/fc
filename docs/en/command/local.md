@@ -50,8 +50,8 @@ You can run the `local invoke -h` or the `local invoke --help` command to obtain
 | debugger-path | q            | No                      | The path that stores  the custom breakpoint debugger.        |
 | tmp-dir       | -            | No                      | The local path in  which the /tmp path is mounted in the custom function running environment.  Default value: ./.s/tmp/invoke/serviceName/functionName/ |
 | server-port   | -            | No                      | The custom port for listening  server. By default, the port is a random port that ranges from 7000 to  8000. |
-| debug         | -            | No                      | The debug mode. If  you enable the debug mode, more log information is output. |
-| help          | h            | No                      | Specifies whether to  view the help documentation.           |
+
+> The current command also supports some global parameters (such as `-a/--access`, `--debug`, `--help`, etc.), please refer to [Serverless Devs Global Parameters Document](https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/en/command/readme.md#supported-parameters)
 
 
 ### Example

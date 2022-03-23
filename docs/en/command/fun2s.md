@@ -25,6 +25,7 @@ When executing the command `fun2s -h`/`fun2s --help`, you can get help documenta
 | region | - | Optional | Region, reads Funcraft's configuration by default. Value range: `cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap -southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east -1, ap-south-1` |
 | source | - | Optional | Funcraft's configuration file path (default is `template.yaml`/`template.yml`) |
 | target | - | optional | path to the generated Serverless Devs configuration file (default is `s.yaml`) |
+| access | a | Optional | The key used in this request can be used via [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/ config.md#config-add-command) configured key information, and [key information configured to environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/ en/command/config.md#Configure key information through environment variables) |
 
 > The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
 

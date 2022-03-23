@@ -51,8 +51,8 @@ category: '调用&调试'
 | debugger-path | q        | 选填           |自定义断点调试器路径|
 | tmp-dir       | -        | 选填           |自定义函数运行环境中 `/tmp` 路径的本机挂载路径，默认为 `./.s/tmp/invoke/serviceName/functionName`/|
 | server-port   | -        | 选填           |自定义本地监听 `server` 的端口，默认是在 7000 到 8000 间的随机端口|
-| debug         | -        | 选填           | 打开`debug`模式，将会输出更多日志信息                        |
-| help          | h        | 选填           | 查看帮助信息                                                 |
+
+> 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`, `--help`等），详情可参考 [Serverless Devs 全局参数文档](https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/zh/command/readme.md#%E5%85%A8%E5%B1%80%E5%8F%82%E6%95%B0)
 
 ### 操作案例
 
@@ -85,8 +85,8 @@ RequestId: 0ba8ac3f-abf8-46d4-b61f-8e0f9f265d6a 	 Billed Duration: 146 ms 	 Memo
 | debugger-path | -        | 选填           | 自定义断点调试器路径 |
 | tmp-dir       | -        | 选填           | 自定义函数运行环境中 `/tmp` 路径的本机挂载路径，默认为 `./.s/tmp/invoke/serviceName/functionName/` |
 | server-port   | -        | 选填           | 自定义本地监听 HTTP Server 的端口，默认是在 7000 到 8000 间的随机端口 |
-| debug         | -        | 选填           | 打开`debug`模式，将会输出更多日志信息                        |
-| help          | h        | 选填           | 查看帮助信息                                                 |
+
+> 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`, `--help`等），详情可参考 [Serverless Devs 全局参数文档](https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/zh/command/readme.md#%E5%85%A8%E5%B1%80%E5%8F%82%E6%95%B0)
 
 ### 操作案例
 
