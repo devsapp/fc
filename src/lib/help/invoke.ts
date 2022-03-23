@@ -38,6 +38,11 @@ export const INVOKE = [
         type: Number,
       },
       {
+        name: 'qualifier',
+        description: '[Optional] Specify the qualifier parameter',
+        type: String,
+      },
+      {
         name: 'event-file',
         description:
           '[Optional] Event funtion: A file containing event data passed to the function during invoke',

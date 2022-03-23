@@ -27,6 +27,7 @@ You can run the `invoke -h` or `invoke --help` command to obtain the help docume
 | service-name  | -    | No      | Yes     | The name of the service.                            |
 | function-name  | -    | No      | Yes     | The name of the function.                            |
 | timeout      | -   | No      | No     | The client timeout session. [Timeout setting principles] (https://github.com/devsapp/fc/issues/480) |
+| qualifier      | -    | No      | No     | Specify the version or alias to call                            |
 | event      | e    | No      | No     | The event.                             |
 | event-file   | f    | No      | No     | The event file.                           |
 | event-stdin   | s    | No      | No     | The file of the event.                           |
