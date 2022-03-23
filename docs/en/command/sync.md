@@ -27,9 +27,8 @@ You can run the `sync -h` or `sync --help` command to obtain the help document.
 | trigger-name | -    | No      | No     | The name of the trigger.                           |
 | target-dir  | -    | No      | No     | The destination directory.                           |
 | type     | -    | No      | No     | The type of the synchronization. You can synchronize code and configurations. By default, both code and configurations are synchronized. Valid values: `code` and `config` |
-| access    | a    | No      | No     | The key information that is used in the request. You can use the key information that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command), or use the [Configure-keys-by-using-environment-variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables). |
-| debug     | -    | No      | No     | Enables the `debug` mode. In this case, more logs are generated.            |
-| help     | h    | No      | No     | Views the help information.                         |
+
+> The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
  
 ### Examples
  

@@ -5,8 +5,6 @@ import fs from 'fs';
 import logger from './common/logger';
 import InfraAsTemplate from './lib/infra-as-template';
 import { IInputs, IProperties } from "./lib/interface/interface";
-import { ICredentials } from './lib/interface/profile';
-import { getCredentials } from './lib/utils';
 
 const { lodash: _ } = core;
 
@@ -34,12 +32,7 @@ export default class EntryPublicMethod {
   
     // 处理密钥
     if (getSecretKey) {
-      const credentials: ICredentials = await getCredentials(inputs.credentials, inputs?.project?.access);
-      inputs.credentials = credentials;
-  
-      if (credentials.Alias) {
-        _.set(inputs, 'project.access', credentials.Alias);
-      }
+      await core.getCredential(inputs, inputs.project?.access);
     }
 
     await InfraAsTemplate.modifyInputs(inputs); // 多环境处理

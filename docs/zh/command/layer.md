@@ -51,9 +51,8 @@ category: '发布&配置'
 | compatible-runtime | -        | 选填           | 选填          | 支持的`runtime`，默认值为`nodejs12,nodejs10,nodejs8,nodejs6,python3,python2.7` |
 | description        |          | 选填           | 选填          | 发布层的描述                                                 |
 | layer-name         |          | 必填           | 必填          | 层的名字                                                     |
-| access             | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug              | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help               | h        | 选填           | 选填          | 查看帮助信息                                                 |
+
+> 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)
 
 ### 操作案例
 
@@ -80,9 +79,8 @@ fc-deploy-test: 544c887879c38e5d0afcaf8b4f8f348e#demo#1
 | region   | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
 | prefix   | -        | 选填           | 选填          |                                                              |
 | table    | -        | 选填           | 选填          |                                                              |
-| access   | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug    | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help     | h        | 选填           | 选填          | 查看帮助信息                                                 |
+
+> 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)
 
 ### 操作案例
 
@@ -120,9 +118,8 @@ fc-deploy-test:
 | region     | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
 | layer-name | -        | 必填           | 必填          | 层名称                                                       |
 | version-id | -        | 必填           | 必填          | 层版本                                                       |
-| access     | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug      | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help       | h        | 选填           | 选填          | 查看帮助信息                                                 |
+
+> 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)
 
 ### 操作案例
 
@@ -166,9 +163,8 @@ fc-deploy-test:
 | region     | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
 | layer-name | -        | 必填           | 必填          | 层名称                                                       |
 | table      | -        | 选填           | 必填          | 是否以表格形式输出                                           |
-| access     | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug      | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help       | h        | 选填           | 选填          | 查看帮助信息                                                 |
+
+> 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)
 
 ### 操作案例
 

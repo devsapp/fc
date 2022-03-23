@@ -85,8 +85,8 @@ When you run the `local -h` or `local --help` command, you can obtain the follow
 | debugger-path | y | No | The path that stores the custom breakpoint debugger. | 
 | tmp-dir | - | No | The local path in which the `/tmp` path is mounted in the custom function running environment on your computer. Default value: `./.s/tmp/invoke/serviceName/functionName/` | 
 | server-port | y | No | The custom port for listening the HTTP server. By default, the port ranges from 7000 to 8000. | 
-| debug | - | No | The `debug` mode. If you enable the `debug` mode, more logs are output. | 
-| help | h | No | The help documentation. | 
+
+> The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
  
 ### Example
  

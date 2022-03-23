@@ -47,9 +47,8 @@ category: '发布&配置'
 | service-name  | -        | 选填           | 必填          | 服务名                                                       |
 | function-name | -        | 选填           | 必填          | 函数名                                                       |
 | qualifier     | -        | 必填           | 必填          | 版本，支持LATEST和别名                                       |
-| access        | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug         | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help          | h        | 选填           | 选填          | 查看帮助信息                                                 |
+
+> 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)
 
 ### 操作案例
 
@@ -80,9 +79,8 @@ fc-deploy-test:
 | region       | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
 | service-name | -        | 选填           | 必填          | 服务名                                                       |
 | table        | -        | 选填           | 选填          | 是否以表格形式输出                                           |
-| access       | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug        | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help         | h        | 选填           | 选填          | 查看帮助信息                                                 |
+
+> 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)
 
 ### 操作案例
 
@@ -126,9 +124,8 @@ fc-deploy-test:
 | function-name | -        | 选填           | 选填          | 函数名                                                       |
 | qualifier     | -        | 必填           | 必填          | 版本，支持LATEST和别名                                       |
 | max           | -        | 必填           | 必填          | 最大实例数量                                                 |
-| access        | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug         | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help          | h        | 选填           | 选填          | 查看帮助信息                                                 |
+
+> 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)                                    |
 
 ### 操作案例
 

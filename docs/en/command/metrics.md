@@ -24,9 +24,8 @@ When executing the command `metrics -h`/`metrics --help`, you can get help docum
 | region | - | optional | required | cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu- west-1, us-west-1, us-east-1, ap-south-1` |
 | service-name | - | optional | required | service name |
 | function-name | - | optional | required | function name |
-| access | a | Optional | Optional | The key used in this request can be used via the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command) configured key information, and [key information configured to environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables) |
-| debug | - | optional | optional | open `debug` mode, will output more log information |
-| help | h | Optional | Optional | View help information |
+
+> The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
 
 ### Examples
 

@@ -31,9 +31,8 @@ category: '调用&调试'
 | event-stdin     | s        | 选填           | 选填          | 事件输入                                                     |
 | invocation-type | -        | 选填           | 选填          | 调用类型，取值范围：`async, sync`，默认：`sync`              |
 | stateful-async-invocation-id | -        | 选填           | 选填          | 有状态的异步调用     |
-| access          | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug           | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help            | h        | 选填           | 选填          | 查看帮助信息                                                 |
+
+> 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)
 
 ### 操作案例
 

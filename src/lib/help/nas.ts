@@ -17,10 +17,6 @@ export const NAS_HELP_INFO = [
     header: 'SubCommand List',
     content: [
       {
-        desc: 'init',
-        example: 'Init nas resource; help command [s nas init -h]',
-      },
-      {
         desc: 'download',
         example: 'Download resources; help command [s nas download -h]',
       },

@@ -60,9 +60,8 @@ category: '调用&调试'
 | payload-file     | -        | 选填            | 选填           | 探测类型是 memory 或者 concurrency：如果被探测函数是 HTTP 函数时，文件内容是 HTTP 请求的 `body`; 如果被探测函数是 `event` 函数时，文件内容是函数入参 `event`                            |
 | query            | -        | 选填            | 选填           | 针对被探测的函数是 HTTP 函数， HTTP 请求的 `query`                                                                                                                                                                                                                                                                         |
 | headers          | -        | 选填            | 选填           | 针对被探测的函数是 HTTP 函数， HTTP 请求头, 示例值:`{"header_a":"val"}`                                                                                                                                                                                                                                                    |
-| access           | a        | 选填            | 必填           | 本次请求使用的密钥，可以使用通过[config 命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息)  |
-| debug            | -        | 选填            | 选填           | 打开`debug`模式，将会输出更多日志信息                                                                                                                                                                                                                                                                                      |
-| help             | h        | 选填            | 选填           | 查看帮助信息                                                                                                                                                                                                                                                                                                               |
+
+> 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)
 
 ### 操作案例
 

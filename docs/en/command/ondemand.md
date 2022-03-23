@@ -45,9 +45,8 @@ You can run the `ondemand get -h` or `ondemand get --help`command to query the h
 | service-name  | -            | No                      | Yes                    | The  name of the service.                                    |
 | function-name | -            | No                      | Yes                    | The  name of the function.                                   |
 | qualifier     | -            | Yes                     | Yes                    | The  version. You can specify LATEST or an alias.            |
-| access        | a            | No                      | No                     | The  key that is used in the request. You can use a key that is configured by  using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command), or [a key that is configured in   environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables). |
-| debug         | -            | No                      | No                     | Enables  the debug mode to output more log information.      |
-| help          | h            | No                      | No                     | Views  the help information.                                 |
+
+> The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
 
 
 ### Examples
@@ -80,9 +79,8 @@ You can run the `ondemand list -h` or `ondemand list --help` command to query th
 | region    | -    | No      | Yes     | The region. Valid values: `cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, and ap-south-1`.|
 | service-name | -    | No      | Yes     | The name of the service.                            |
 | table    | -    | No      | No     | Exports the query results in a table.                      |
-| access    | a    | No      | No     | The key that is used in the request. You can use a key that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add), or [a key that is configured in environment variables.](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables) |
-| debug    | -    | No      | No     | Enables the debug mode to output more log information.            |
-| help     | h    | No      | No     | Views the help information.                         |
+
+> The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
  
 ### Examples
 
@@ -126,9 +124,8 @@ You can run the `ondemand put -h` or `ondemand put --help` command to query the 
 | function-name | -    | No      | No     | The name of the function.                            |
 | qualifier   | -    | Yes      | Yes     | The version. You can specify LATEST or an alias.                    |
 | max      | -    | Yes      | Yes     | The maximum number of instances.                         |
-| access    | a    | No      | No     | The key that is used in the request. You can use a key that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add), or [a key that is configured in environment variables.](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure keys in environment variables) |
-| debug     | -    | No      | No     | Enables th debug mode to output more log information.            |
-| help     | h    | No      | No     | Views the help information.                         |
+
+> The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
  
 ###  Examples
  

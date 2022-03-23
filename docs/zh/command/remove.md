@@ -67,9 +67,8 @@ category: '构建&部署'
 | 参数全称   | 参数缩写 | Yaml模式下必填 | 参数含义                                                     |
 | ---------- | -------- | -------------- | ------------------------------------------------------------ |
 | assume-yes | y        | 选填           | 在交互时，默认选择`y`                                        |
-| access     | a        | 选填           | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug      | -        | 选填           | 打开`debug`模式，将会输出更多日志信息                        |
-| help       | h        | 选填           | 查看帮助信息                                                 |
+
+> 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)
 
 ### 操作案例
 
@@ -101,9 +100,8 @@ Function [myFunction] deleted successfully.
 | region       | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
 | service-name | -        | 选填           | 必填          | 服务名                                                       |
 | assume-yes   | y        | 选填           | 选填          | 在交互时，默认选择`y`                                                       |
-| access       | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug        | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help         | h        | 选填           | 选填          | 查看帮助信息                                                 |
+
+> 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)
 
 ### 操作案例
 
@@ -130,9 +128,8 @@ Service [fc-deploy-service] deleted successfully.
 | service-name | -        | 选填           | 必填          | 服务名                                                       |
 | function-name | -        | 选填           | 必填          | 函数名                                                       |
 | assume-yes   | y        | 选填           | 选填          | 在交互时，默认选择`y`                                                       |
-| access       | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug        | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help         | h        | 选填           | 选填          | 查看帮助信息                                                 |
+
+> 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)
 
 ### 操作案例
 
@@ -160,9 +157,8 @@ Function [fc-deploy-function] deleted successfully.
 | function-name | -        | 选填           | 必填          | 函数名                                                       |
 | trigger-name | -        | 选填           | 必填          | 触发器名                                                       |
 | assume-yes   | y        | 选填           | 选填          | 在交互时，默认选择`y`                                                       |
-| access       | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug        | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help         | h        | 选填           | 选填          | 查看帮助信息                                                 |
+
+> 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)
 
 ### 操作案例
 
@@ -179,49 +175,7 @@ Trigger [fc-deploy-trigger] deleted successfully.
 
 `remove domain` 命令，是删除指定自定义域名的命令。
 
-当执行命令`remove domain -h`/`remove domain --help`时，可以获取帮助文档：
-
-```shell script
-Remove domain
-
-  Delete domain
-
-Usage
-
-  s remove domain <options>  
-
-Document
-  
-  https://github.com/devsapp/fc/blob/main/docs/zh/command/remove.md
-                           
-Options
-
-  --region [string]                   [C-Required] Specify the fc region, value: cn-hangzhou/cn-beijing/cn-beijing/cn-hangzhou/cn-shanghai/cn-qingdao/cn-zhangjiakou/cn-huhehaote/cn-shenzhen/cn-chengdu/cn-hongkong/ap-southeast-1/ap-southeast-2/ap-southeast-3/ap-southeast-5/ap-northeast-1/eu-central-1/eu-west-1/us-west-1/us-east-1/ap-south-1    
-  --domain-name [string]                   [C-Required] Specify the fc custom domain-name 
-  -y, --assume-yes                    [Optional] Assume that the answer to any question which would be asked is yes              
-
-Global Options
-
-  -h, --help                 [Optional] Help for command          
-  -a, --access [string]      [Optional] Specify key alias         
-  --debug                    [Optional] Output debug informations 
-
-Options Help
-
-  Required: Required parameters in YAML mode and CLI mode
-  C-Required: Required parameters in CLI mode
-  Y-Required: Required parameters in Yaml mode
-  Optional: Non mandatory parameter
-  ✋ The difference between Yaml mode and CLI mode: https://github.com/Serverless-Devs/Serverless-Devs/blob/docs/docs/zh/yaml_and_cli.md
-
-Examples with Yaml
-
-  $ s remove domain
-
-Examples with CLI
-
-  $ s cli fc remove domain --region cn-hangzhou --domain anycodes.cn
-```
+当执行命令`remove domain -h`/`remove domain --help`时，可以获取帮助文档。
 
 ### 参数解析
 
@@ -230,9 +184,8 @@ Examples with CLI
 | region       | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
 | domain-name | -        | 选填           | 必填          | 自定义域名                                                       |
 | assume-yes   | y        | 选填           | 选填          | 在交互时，默认选择`y`                                                       |
-| access       | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug        | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help         | h        | 选填           | 选填          | 查看帮助信息                                                 |
+
+> 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)
 
 ### 操作案例
 
@@ -258,9 +211,8 @@ Custom domain [anycodes.cn] deleted successfully.
 | region       | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
 | service-name | -        | 选填           | 必填          | 服务名                                                       |
 | version-id   | -        | 必填           | 必填          | 版本Id                                                       |
-| access       | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug        | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help         | h        | 选填           | 选填          | 查看帮助信息                                                 |
+
+> 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)
 
 ### 操作案例
 
@@ -288,9 +240,8 @@ VersionId [1] deleted successfully.
 | region       | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
 | service-name | -        | 选填           | 必填          | 服务名                                                       |
 | alias-name   | -        | 必填           | 必填          | 别名                                                         |
-| access       | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug        | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help         | h        | 选填           | 选填          | 查看帮助信息                                                 |
+
+> 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)
 
 ### 操作案例
 
@@ -318,9 +269,8 @@ AliasName [pre] deleted successfully.
 | service-name  | -        | 选填           | 必填          | 服务名                                                       |
 | function-name | -        | 选填           | 必填          | 函数名称 |
 | qualifier     |          | 选填           | 选填          | 服务的版本或者别名，版本仅支持 LATEST。如果指定`qualifier`，则仅清除此`qualifier`下的预留资源；如果未指定，将清除此服务下所有版本的预留资源                   |
-| access        | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug         | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help          | h        | 选填           | 选填          | 查看帮助信息                                                 |
+
+> 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)
 
 ### 操作案例
 
@@ -348,9 +298,8 @@ Proivision qualifier [release] deleted successfully.
 | service-name  | -        | 选填           | 必填          | 服务名                                                       |
 | function-name | -        | 必填           | 必填          | 函数名                                                       |
 | qualifier     | -        | 选填           | 选填          | 服务的版本或者别名，版本仅支持 LATEST；如果指定`qualifier`，则仅清除此`qualifier`下的按量资源；如果未指定，将清除此服务下所有版本的按量资源 |
-| access        | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug         | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help          | h        | 选填           | 选填          | 查看帮助信息                                                 |
+
+> 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)
 
 ### 操作案例
 
@@ -377,9 +326,8 @@ Ondemand [*] deleted successfully.
 | region     | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
 | layer-name | -        | 选填           | 必填          | 层名称                                                       |
 | version-id | -        | 选填           | 选填          | 指定层版本。如果指定--version-id，仅删除指定的版本；否则删除层的所有的版本 |
-| access     | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug      | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help       | h        | 选填           | 选填          | 查看帮助信息                                                 |
+
+> 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)
 
 ### 操作案例
 

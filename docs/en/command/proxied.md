@@ -90,9 +90,8 @@ You can run the `proxied setup -h` or `proxied setup --help` command to obtain t
 | debug-port    | d            | No                      | The  port number of the breakpoint debugger.                 |
 | debugger-path | -            | No                      | The  path of the breakpoint debugger.                        |
 | tmp-dir       | -            | No                      | The  on-premises path to mount the tmp directory  of the custom function environment. Default value: ./.s/tmp/invoke/serviceName/functionName/. |
-| access        | a            | No                      | The  information about the key that is used in this request. You can use the key  information that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command) or [environment variable](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables). |
-| debug         | -            | No                      | Specifies  whether to enable the debug mode. If you enable the debug mode, a larger amount of log  information is returned. |
-| help          | h            | No                      | Queries  the help information.                               |
+
+> The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
 
 ### Examples
 
@@ -120,9 +119,8 @@ You can run the `proxied invoke -h` or `proxied invoke --help` command to obtain
 | event &nbsp; &nbsp; &nbsp; | e &nbsp; &nbsp; &nbsp; &nbsp;| No &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | No &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|The `event` function. You can invoke an `event` function to query event data. You can run the `s cli fc-event` command to query the event. For more information, see [Here](https://github.com/devsapp/fc/blob/main/docs/en/command/invoke.md#Considerations) ;<br>The HTTP function. You can invoke an HTTP function to query the request parameters. For more information about the format of the request parameters, see [Here](https://github.com/devsapp/fc/blob/main/docs/en/Usage/invoke.md#invoke-http-parameter)|
 | event-file &nbsp;| f &nbsp; &nbsp; &nbsp; &nbsp;| No &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | No &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|You must specify the value of the `event` parameter by using files.|
 | event-stdin | s &nbsp; &nbsp; &nbsp; &nbsp;| No &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | No &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|You must specify the value of the `event` parameter by using standard input streams.|
-| access &nbsp; &nbsp; &nbsp;| a &nbsp; &nbsp; &nbsp; &nbsp;| No &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | No &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| The information about the key that is used in this request. You can use the key information that is configured by using the config command (https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config add command) or environment variable (https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure the key information by using environment variables). |
-| debug &nbsp; &nbsp; &nbsp; | - &nbsp; &nbsp; &nbsp; &nbsp;| No &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | No &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| Specifies whether to enable the `debug` mode. If you enable the debug mode, a larger amount of log information is returned. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|
-| help &nbsp; &nbsp; &nbsp; &nbsp;| h &nbsp; &nbsp; &nbsp; &nbsp;| No &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | No &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| Queries the help information. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |
+
+> The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
  
 ### Examples
 
@@ -152,9 +150,8 @@ You can run the `proxied cleanup -h` or `proxied cleanup --help` command to obta
 
 | Parameter | Abbreviation | Required in YAML mode | Required in CLI mode | Description                                                  |
 | --------- | ------------ | --------------------- | -------------------- | ------------------------------------------------------------ |
-| access    | a            | No                    | No                   | The information about the key that is used in this request. You  can use the key information that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command) or [environment variable](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables). |
-| debug     | -            | No                    | No                   | Specifies whether to enable the debug mode. If  you enable the debug mode, a larger amount of log information is returned. |
-| help      | h            | No                    | No                   | Queries the help information.                                |
+
+> The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
 
 ### Examples
 

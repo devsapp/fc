@@ -32,9 +32,8 @@ category: '可观测性'
 | end-time      | e        | 选填           | 选填          | 查询的时间点终点，UTC时间或者时间戳，例如`2021-06-07T02:54:59+08:00`，`1611827290000` |
 | tail          | -        | 选填           | 选填          | 以`tail`模式进行日志输出                                     |
 | type          | -        | 选填           | 选填          | 查询的日志类型，成功或者失败,取值范围：`success, fail`         |
-| access        | a        | 选填           | 选填          | 本次请求使用的密钥，可以使用通过[config命令](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#config-add-命令) 配置的密钥信息，以及[配置到环境变量的密钥信息](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/zh/command/config.md#通过环境变量配置密钥信息) |
-| debug         | -        | 选填           | 选填          | 打开`debug`模式，将会输出更多日志信息                        |
-| help          | h        | 选填           | 选填          | 查看帮助信息                                                 |
+
+> 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)
 
 ### 操作案例
 

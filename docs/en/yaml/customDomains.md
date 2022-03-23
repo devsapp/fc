@@ -10,7 +10,7 @@ category: 'Yaml-Spec'
 | Parameter Name | Required | Type | Parameter Description |
 | --------------------------- | ----- | --------------------------- | ------------------------------------------ |
 | domainName | True | String | Domain name, if the value is auto, the system will assign the domain name by default |
-| protocol | True | String | Protocol, value: `HTTP`, `HTTPS`, `HTTP, HTTPS` |
+| protocol | True | String | Protocol, value: `HTTP`, `HTTP,HTTPS` |
 | [routeConfigs](#routeconfigs) | True | [List\<Struct>](#routeconfigs) | routes |
 | [certConfig](#certconfig) | False | [Struct](#certconfig) | Domain Certificate |
 | certId | False | Number   | cert ID |

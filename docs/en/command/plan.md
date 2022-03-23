@@ -21,11 +21,10 @@ You can run `plan -h` or `plan --help` to obtain the help documentation.
  
 | Parameter | Abbreviation | Required in YAML mode | Description | 
 | ---------- | -------- | -------------- | ------------------------------------------------------------ | 
-| type-plan | - | Yes | Views changes that are caused by deployment or deletion. By default, changes that are caused by deployment are viewed. | 
-| sub-command | - | No | Views the changes of resources. If you set type-plan to deploy, you can set sub-command to service, function, trigger, or domain. If you set type-plan to remove, you can set sub-command to service, function, trigger, domain, version, alias, provision, ondemand, onDemand, or layer. | 
-| access | a | No | The AccessKey pair that is used in the request. You can use the AccessKey pair that is configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add- command) and the [AccessKey pair that is configured by using environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md# Configure-keys-by-using-environment-variables). | 
-| debug | - | No | The debug mode. If you enable the `debug` mode, more log information is returned. | 
-| help | h | No | Views the help information. | 
+| plan-type | - | Yes | Views changes that are caused by deployment or deletion. By default, changes that are caused by deployment are viewed. | 
+| sub-command | - | No | Views the changes of resources. If you set plan-type to deploy, you can set sub-command to service, function, trigger, or domain. If you set plan-type to remove, you can set sub-command to service, function, trigger, domain, version, alias, provision, ondemand, onDemand, or layer. | 
+
+> The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
  
 ### Examples
 

@@ -132,7 +132,7 @@ export const LAYER_DETAIL = [
       layerName,
       {
         name: 'version-id',
-        description: '[C-Required] Specify the version parameter',
+        description: '[Required] Specify the version parameter',
         type: Number,
       },
     ],

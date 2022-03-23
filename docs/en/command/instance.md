@@ -35,9 +35,8 @@ When executing the command `instance list -h`/`instance list --help`, you can ge
 | service-name | - | optional | required | service name |
 | function-name | - | optional | required | function name |
 | qualifier | - | optional | optional | version or alias, default is `LATEST` |
-| access | a | Optional | Optional | The key used in this request can be used via the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command) configured key information, and [key information configured to environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure key information through environment variables) |
-| debug | - | optional | optional | open `debug` mode, will output more log information |
-| help | h | Optional | Optional | View help information |
+
+> The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
 
 ### Examples
 
@@ -70,9 +69,8 @@ When executing the command `instance exec -h`/`instance exec --help`, you can ge
 | qualifier | - | optional | optional | version or alias, default is `LATEST` |
 | stdin | i | optional | optional | open stdin |
 | tty | t | optional | optional | assign a terminal device |
-| access | a | Optional | Optional | The key used in this request can be used via the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command) configured key information, and [key information configured to environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables) |
-| debug | - | optional | optional | open `debug` mode, will output more log information |
-| help | h | Optional | Optional | View help information |
+
+> The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
 
 ### Examples
 

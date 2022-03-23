@@ -67,10 +67,8 @@ You can run the `stress start -h` or `stress start --help` command to obtain the
 | spawn-rate      | -            | No                      | No                     | The number of new  simulated users per second.               |
 | url             | u            | No                      | No                     | The URL of the  function on which the stress testing is performed. This parameter takes  effect only when you perform stress testing on the function that is triggered  by events. |
 | invocation-type | -            | No                      | No                     | The type of function  invocation. Valid values: async and sync. |
-| access          | a            | No                      | No                     | The AccessKey pair  that is used in the request. You can use the AccessKey pair that is  configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command) and the AccessKey pair that is [configured by using environment   variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables). |
-| debug           | -            | No                      | No                     | The debug mode. If  you enable the debug mode, more log information is returned. |
-| help            | h            | No                      | No                     | Views the help  documentation.                               |
 
+> The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
 
 
 ### Examples
@@ -123,9 +121,8 @@ You can run the `stress clean -h` command to obtain the help documentation.
 | service-name | - | No | No | | 
 | function-name | - | No | No | | 
 | assume-yes | y | No | No | By default, `y` is selected. | 
-| access | a | No | No | The AccessKey pair that is used in the request. You can use the AccessKey pair that is configured by running the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add- command) and the [AccessKey pair that is configured by using environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md# Configure-keys-by-using-environment-variables). | 
-| debug | - | No | No | The debug mode. If you enable the `debug` mode, more log information is returned. | 
-| help | h | No | No | Views the help information. | 
+
+> The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
 
 ### Examples
  

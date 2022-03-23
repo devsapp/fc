@@ -32,9 +32,8 @@ You can run the `logs -h` or `logs --help` command to obtain the help document.
 | start-time  | s    | No      | No     | The start time of the query, which must be UTC time or a timestamp. Example: `2021-06-07T02:54:59+08:00`，`1611827290000` |
 | end-time   | e    | No      | No     | The end time of the query, which must be UTC time or a timestamp. Example: `2021-06-07T02:54:59+08:00`，`1611827290000` |
 | tail     | -    | No      | No     | Outputs the result in the `tail` mode.                   |
-| access    | a    | No      | No     | The key that is used in the request. You can use the key information that is configured by using the [config command](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#config-add-command), or the [key information that is configured for environment variables](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/docs/en/command/config.md#Configure-keys-by-using-environment-variables). |
-| debug     | -    | No      | No     | Enables the `debug` mode. In this case, more logs are generated.            |
-| help     | h    | No      | No     | Views the help information.                         |
+
+> The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
 
 ### Examples
  
