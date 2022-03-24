@@ -1,6 +1,6 @@
 import * as core from '@serverless-devs/core';
 import { IInputs } from '../interface/interface';
-import * as HELP from '../help/remote'
+import * as HELP from '../help/remote';
 import { componentMethodCaller } from '../utils';
 import logger from '../../common/logger';
 
@@ -33,7 +33,7 @@ export default class FcRemoteDebug {
       return { isHelp: true };
     }
 
-    return { methodName, subCommandHelp: argsData?.help }
+    return { methodName, subCommandHelp: argsData?.help };
   }
 
   static async setup(inputs: IInputs): Promise<any> {

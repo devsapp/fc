@@ -6,7 +6,7 @@ import { getFcNames } from '../utils';
 
 export default class Log {
   static async handlerComponentInputs(inputs) {
-    const { props, args, argsObj } = inputs;  
+    const { props, args, argsObj } = inputs;
     const minimistOpts = {
       boolean: ['help'],
       string: ['region', 'service-name', 'function-name'],

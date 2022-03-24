@@ -4,7 +4,7 @@ import os from 'os';
 import fs from 'fs';
 import logger from './common/logger';
 import InfraAsTemplate from './lib/infra-as-template';
-import { IInputs, IProperties } from "./lib/interface/interface";
+import { IInputs, IProperties } from './lib/interface/interface';
 
 const { lodash: _ } = core;
 
@@ -16,27 +16,27 @@ export default class EntryPublicMethod {
 
   /**
    * 所有方法处理之前执行
-   * @param inputs 
-   * @param options 
-   * @returns 
+   * @param inputs
+   * @param options
+   * @returns
    */
   async handlerPreMethod(inputs: IInputs, options?: { getSecretKey?: boolean }) {
     const { getSecretKey } = options || {};
-  
+
     // 判断是否是 help，如果是则退出不处理
     if (this.isHelp(inputs.args, inputs.argsObj)) {
       return inputs;
     }
 
     await this.updateCore(); // 更新到最新版本的 core
-  
+
     // 处理密钥
     if (getSecretKey) {
       await core.getCredential(inputs, inputs.project?.access);
     }
 
     await InfraAsTemplate.modifyInputs(inputs); // 多环境处理
-  
+
     return inputs;
   }
 
@@ -69,7 +69,7 @@ export default class EntryPublicMethod {
       component: componentName,
       projectName: componentName ? `${projectName}-${componentName}-project` : projectName,
       access,
-    }
+    };
 
     return cloneInputs;
   }

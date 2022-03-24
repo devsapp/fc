@@ -166,6 +166,7 @@ export default class Instance {
     logger.debug(`command-exec command:\n${JSON.stringify(options, null, 2)}`);
     logger.debug('----------------------------------------');
 
+    // @ts-ignore
     await new Promise(async (resolve) => {
       const hooks = {
         onStdout: (msg) => logger.log(`${msg}`),
