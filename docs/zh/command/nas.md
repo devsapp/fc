@@ -9,6 +9,9 @@ category: '其他功能'
 `nas` 命令是对硬盘挂载（NAS）产品操作的接口，包括上传文件、下载文件、执行自定义命令等能力。
 
 - [命令解析](#命令解析)
+- [nas init 命令](#nas-init-命令)
+  - [参数解析](#参数解析)
+  - [操作案例](#操作案例)
 - [nas upload 命令](#nas-upload-命令)
   - [参数解析](#参数解析)
   - [操作案例](#操作案例-1)
@@ -30,9 +33,34 @@ category: '其他功能'
 
 在该命令中，包括了四个子命令：
 
+- [init：初始化 NAS 的命令](#nas-init-命令)
 - [upload：获取别名列表](#nas-upload-命令)
 - [download：发布/更新别名](#nas-download-命令)
 - [command：在 FC 中执行 linux 指令](#nas-command-命令)
+
+## nas init 命令
+
+`nas init` 命令，是初始化 NAS 的命令；通常在完成 `s.yaml`/`s.yml` 文档编写之后，在没有进行项目部署时，NAS 可能处于未被创建的过程，此时可以通过 `nas init` 命令初始化 NAS 相关内容，从而可以直接使用 NAS 相关能力。
+
+当执行命令`nas init -h`/`nas init --help`时，可以获取帮助文档。
+
+> 当前命令支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)
+
+### 操作案例
+
+**有资源描述文件（Yaml）时**，可以直接执行`s nas init `进行 NAS 相关内容初始化，初始化完成的输出示例：
+
+```text
+fc-deploy-test: 
+  userId:      10003
+  groupId:     10003
+  mountPoints: 
+    - 
+      serverAddr: 06c1e48887-rmm92.cn-hangzhou.nas.aliyuncs.com
+      nasDir:     /fc-deploy-service
+      fcDir:      /mnt/auto
+```
+
 
 ## nas upload 命令
 
@@ -119,7 +147,7 @@ template.yml
 
 #### 最小权限
 
-执行命令时，需要检测、部署、调用辅助函数，需要如下权限：
+执行命令时，需要检测、部署、调用辅助函数，如果执行 `nas init` 时 `nasConfig` 为 `auto` 需要创建 nas 的相关资源，因此需要如下权限：
 
 **系统策略**：`AliyunNasReadOnlyAccess`
 
