@@ -33,7 +33,8 @@ You can run the `provision -h` or `provision --help` command to obtain the help 
  
 - [list: views the list of provisioned resources.](#provision-list-command)
 - [put: configures provisioned resources. You can remove the provisioned resources by setting the value to 0.](#provision-put-command)
-- [get: queries the details of a provisioned resource.](#provision-get-command)
+- [get: queries the details of a provisioned resource.](#
+)
 
 ## provision list command
 
@@ -182,7 +183,7 @@ You can run the `provision get -h` or `provision get --help` command to obtain t
 | region    | -    | No      | Yes     | The name of the region. Valid values: `cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1`. |
 | service-name | -    | No      | Yes     | The name of the service.                            |
 | function-name | -    | No      | Yes     | Version description.                           |
-| qualifier   |     | No      | No     | The version for which provisioned resources are configured. Only LATEST and service aliases are supported.          |
+| qualifier   |     | Yes      | Yes     | The version for which provisioned resources are configured. Only LATEST and service aliases are supported.          |
 
 > The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
  
