@@ -182,7 +182,7 @@ When executing the command `remove domain -h`/`remove domain --help`, you can ge
  | Parameter   | Abbreviation | Required in YAML mode | Required in CLI mode | Description                           |
  | ------------ | -------- | -------------- | ------------- | ------------------------------------------------------------ |
  | region    | -    | No      | Yes     | The region of the service. Valid values: `cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, and ap-south-1`. |
- | domain | -    | No      | Yes     | The custom domain name.                            |
+ | domain-name | -    | No      | Yes     | The custom domain name.                            |
  | assume-yes  | y    | No      | No     | By default, `y` is selected.                            |
 
 > The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
@@ -190,7 +190,7 @@ When executing the command `remove domain -h`/`remove domain --help`, you can ge
 ### Examples
  
 - **If the resource description file (YAML) exists**, you can run the `s remove domain` command to delete all custom domain names that are configured in the resource description file (YAML). You can configure the `--domain domain` parameter to specify the custom domain name that you want to delete. 
-- **If the resource description file (YAML) does not exist (only the CLI mode is available)**, you need to specify the region and the name of the service. Example: `s cli fc remove domain --region cn-hangzhou --domain anycodes.cn`. 
+- **If the resource description file (YAML) does not exist (only the CLI mode is available)**, you need to specify the region and the name of the service. Example: `s cli fc remove domain --region cn-hangzhou --domain-name anycodes.cn`. 
  
  Sample command output: 
 ```text
