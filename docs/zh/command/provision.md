@@ -182,7 +182,7 @@ fc-deploy-test:
 | region        | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
 | service-name  | -        | 选填           | 必填          | 服务名                                                       |
 | function-name | -        | 选填           | 必填          | 版本描述                                                     |
-| qualifier     |          | 选填           | 选填          | 配置预留的版本，仅支持服务的 LATEST 和别名                   |
+| qualifier     |          | 必填           | 必填          | 配置预留的版本，仅支持服务的 LATEST 和别名                   |
 
 > 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)
 
