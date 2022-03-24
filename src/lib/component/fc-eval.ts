@@ -86,7 +86,7 @@ export default class FcEval {
     };
 
     const region = props?.region || argsData?.region;
-    return { project, evalOpts, httpTypeOpts, payloadOpts, region, commandName }
+    return { project, evalOpts, httpTypeOpts, payloadOpts, region, commandName };
   }
 
   private readonly httpTypeOpts?: HttpTypeOption;
@@ -147,9 +147,6 @@ export default class FcEval {
       if (this.evalOpts?.rt) {
         args += ` --rt ${this.evalOpts?.rt}`;
       }
-    }
-    if (this.evalOpts?.functionType) {
-      args += ` --function-type ${this.evalOpts?.functionType}`;
     }
 
     if (this.evalOpts?.qualifier) {
