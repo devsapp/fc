@@ -10,7 +10,7 @@ export default class Local {
     const parsedArgs: { [key: string]: any } = core.commandParse(
       // @ts-ignore
       { args, argsObj },
-      { boolean: ['help'], alias: { help: 'h' }},
+      { boolean: ['help'], alias: { help: 'h' } },
     );
     const argsData: any = parsedArgs?.data || {};
     const nonOptionsArgs = parsedArgs.data?._;

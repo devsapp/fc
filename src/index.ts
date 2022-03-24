@@ -637,7 +637,7 @@ export default class FcBaseComponent extends EntryPublicMethod {
   }
 
   async api(inputs: IInputs): Promise<any> {
-    const { props, args, argsObj } = this.handlerComponentInputs(inputs);
+    const { props, args } = this.handlerComponentInputs(inputs);
     return await this.componentMethodCaller(
       inputs,
       'fc-api-component',

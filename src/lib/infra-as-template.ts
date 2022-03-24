@@ -66,7 +66,7 @@ export default class InfraAsTemplate {
 
               try {
                 parsedOverlays = yaml.load(fs.readFileSync(overlays), 'utf8');
-              } catch (e) {
+              } catch (_e) {
                 throw new Error(`Overlays ${overlays} is not a vaild json or yaml object, please check your command args.`);
               }
             }

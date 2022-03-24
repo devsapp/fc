@@ -1,5 +1,5 @@
 import { lodash as _ } from '@serverless-devs/core';
-import { FcInfoProps } from "../interface/component/fc-info";
+import { FcInfoProps } from '../interface/component/fc-info';
 
 export const infoPropsGenerator = (property: any) => {
   if (_.isEmpty(property)) {
