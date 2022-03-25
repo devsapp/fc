@@ -264,7 +264,7 @@ When executing the command `remove provision -h`/`remove provision --help`, you 
  | ------------- | -------- | -------------- | ------------- | ------------------------------------------------------------ |
  | region    | -    | No      | Yes     | The region of the service. Valid values: `cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, and ap-south-1`. |
  | service-name | -    | No      | Yes     | The name of the service.                            |
- | function-name | -    | No      | Yes     | The name of the function.                           |
+ | function-name | -    | No      | No     | The name of the function. It needs to be used together with qualifier.                          |
  | qualifier   |     | No      | No     | The version or alias of the service. Only LATEST is supported for the version. If you specify a value for the `qualifier` parameter, only reserved resources that are specified by using the `qualifier` parameter are deleted. If you do not specify a value for the `qualifier` parameter, reserved resources of all versions of the service are deleted.          |
 
 > The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
@@ -293,7 +293,7 @@ When executing the command `remove ondemand -h`/`remove ondemand --help`, you ca
  | ------------- | -------- | -------------- | ------------- | ------------------------------------------------------------ |
  | region    | -    | No      | Yes     | The region of the service. Valid values: `cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, and ap-south-1`. |
  | service-name | -    | No      | Yes     | The name of the service.                            |
- | function-name | -    | Yes      | Yes     | The name of the function.                            |
+ | function-name | -    | No      | No     | The name of the function. It needs to be used together with qualifier.                          |
  | qualifier   | -    | No      | No      | The version or alias of the service. Only LATEST is supported for the version. If you specify a value for the `qualifier` parameter, only on-demand resources that are specified by using the `qualifier` parameter are deleted. If you do not specify a value for the `qualifier` parameter, on-demand resources of all versions of the service are deleted. |
 
 > The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
