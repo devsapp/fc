@@ -77,9 +77,11 @@ export default class Instance {
       throw new fcCore.CatchableError('No functionName is found, you can specify the parameter with --function-name');
     }
     if (subCommand === 'exec') {
-      if (rawData[0] === 'exec') {
-        rawData.shift(); // 清除执行指令 exec
+      const command = this.handlerCommand(rawData);
+      if (command[0] === 'exec') {
+        command.shift(); // 清除执行指令 exec
       }
+
 
       // 获取实例ID，eg:
       //   s instance exec c-****-1658cb3903eb4644b0ee ls
@@ -88,12 +90,12 @@ export default class Instance {
       //   s instance exec --tty c-****-1658cb3903eb4644b0ee ls
       //   s instance exec -i --tty c-****-1658cb3903eb4644b0ee ls
       let instanceId;
-      if (rawData[0] && !rawData[0].startsWith('-')) {
-        instanceId = rawData.shift();
-      } else if (rawData[1] && !rawData[1].startsWith('-')) {
-        instanceId = rawData.splice(1, 1)[0];
-      } else if (rawData[2] && !rawData[2].startsWith('-')) {
-        instanceId = rawData.splice(2, 1)[0];
+      if (command[0] && !command[0].startsWith('-')) {
+        instanceId = command.shift();
+      } else if (command[1] && !command[1].startsWith('-')) {
+        instanceId = command.splice(1, 1)[0];
+      } else if (command[2] && !command[2].startsWith('-')) {
+        instanceId = command.splice(2, 1)[0];
       } else {
         const command = `s cli fc instance list --region ${region} --service-name ${serviceName} --function-name ${functionName}`;
         throw new fcCore.CatchableError('No instanceId is found', `
@@ -101,6 +103,8 @@ export default class Instance {
 · You can get help by executing 's cli fc instance exec -h'`);
       }
       endProps.instanceId = instanceId;
+
+      endProps.rawData = command;
     }
 
     const credentials: ICredentials = await getCredentials(inputs.credentials, inputs?.project?.access);
@@ -113,6 +117,27 @@ export default class Instance {
       props: endProps,
       table: parsedData.table,
     };
+  }
+
+  private static handlerCommand(rawData) {
+    let nextFilter = false;
+    const command = [];
+    const EXEC_PARAM_BOOL = ['-it', '-t', '-i', '--tty', '--stdin', '--debug'];
+    const EXEC_PARAM_OTHER = ['--region', '--service-name', '--function-name', '--qualifier', '--instance-id', '-a', '--access', '-t', '--template'];
+    // 如果是 exec 的 string 类型参数，则抛出本次输入和下次的输入
+    // 如果是 exec 的 bool 类型的参数，则抛出本次输入
+    // 余下的就认为是用户需要输入的指令
+    for (const raw of rawData) {
+      if (EXEC_PARAM_OTHER.includes(raw)) {
+        nextFilter = true;
+        continue;
+      } else if (EXEC_PARAM_BOOL.includes(raw) || nextFilter) {
+        nextFilter = false;
+        continue;
+      }
+      command.push(raw);
+    }
+    return command;
   }
 
   async list(props) {
@@ -141,9 +166,7 @@ export default class Instance {
     rawData,
     tty,
   }) {
-    const command = this.handlerCommand(rawData);
-
-    if (_.isEmpty(command)) {
+    if (_.isEmpty(rawData)) {
       let paramCommend = ` --region ${region} --service-name ${serviceName} --function-name ${functionName} --instance-id ${instanceId}`;
       if (!_.isEmpty(qualifier)) {
         paramCommend += ` --qualifier ${qualifier}`;
@@ -161,7 +184,7 @@ export default class Instance {
       tty: tty ? 'true' : 'false',
       stdout: 'true',
       stderr: 'true',
-      command: command || [],
+      command: rawData || [],
     };
     logger.debug(`command-exec command:\n${JSON.stringify(options, null, 2)}`);
     logger.debug('----------------------------------------');
@@ -200,17 +223,16 @@ export default class Instance {
     rawData,
     tty,
   }) {
-    const command = this.handlerCommand(rawData);
     const options = {
       idleTimeout,
       stdin: 'true',
       tty: tty ? 'true' : 'false',
       stdout: 'true',
       stderr: 'true',
-      command: _.isEmpty(command) ? ['/bin/bash'] : command,
+      command: _.isEmpty(rawData) ? ['/bin/bash'] : rawData,
     };
 
-    logger.debug('Enter `exit` to open the link on the server side to exit (recommended), or execute `control + ]` to force the client to exit');
+    logger.info('Enter `exit` to open the link on the server side to exit (recommended), or execute `control + ]` to force the client to exit');
     // eslint-disable-next-line no-async-promise-executor
     await new Promise(async (resolve) => {
       const hooks = {
@@ -250,26 +272,5 @@ export default class Instance {
         conn.sendMessage(new Uint8Array(arr));
       });
     });
-  }
-
-  private handlerCommand(rawData) {
-    let nextFilter = false;
-    const command = [];
-    const EXEC_PARAM_BOOL = ['-it', '-t', '-i', '--tty', '--stdin'];
-    const EXEC_PARAM_OTHER = ['--service-name', '--function-name', '--qualifier', '--instance-id'];
-    // 如果是 exec 的 string 类型参数，则抛出本次输入和下次的输入
-    // 如果是 exec 的 bool 类型的参数，则抛出本次输入
-    // 余下的就认为是用户需要输入的指令
-    for (const raw of rawData) {
-      if (EXEC_PARAM_OTHER.includes(raw)) {
-        nextFilter = true;
-        continue;
-      } else if (EXEC_PARAM_BOOL.includes(raw) || nextFilter) {
-        nextFilter = false;
-        continue;
-      }
-      command.push(raw);
-    }
-    return command;
   }
 }
