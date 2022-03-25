@@ -202,7 +202,7 @@ export default class OnDemand {
 
   async removeAll({ serviceName, qualifier, assumeYes }: RemoveAllOnDemand) {
     const onDemandAllList = await this.list({ serviceName });
-    const onDemandList = onDemandAllList?.filter((item) => item.qualifier === qualifier);
+    const onDemandList = qualifier ? onDemandAllList?.filter((item) => item.qualifier === qualifier) : onDemandAllList;
     if (!_.isEmpty(onDemandList)) {
       if (assumeYes) {
         return await this.forDelete(onDemandList);
