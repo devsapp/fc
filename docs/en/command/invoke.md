@@ -73,15 +73,11 @@ During the function invocation, if you need to specify related events, such as O
 
 The following example uses an OSS event for testing. You can run the `s cli fc-event oss` command to obtain the information about the OSS event, and you can find the relative path in the following command output:
 ```
-OSS event template created successfully.
+...
 
 👓 Event Template Path: event-template/oss-event.json
 
-You could user fc/fc-api component invoke method and specify the event.
-E.g: [s projectName invoke --event-file  event-template/oss-event.json]
-
-More information about OSS Trigger: 
-📝 https://help.aliyun.com/document_detail/74763.htm
+...
 ```
 
 You can use the template of the path to trigger functions. The template can be modified based on your business requirements. Example: `s invoke --event-file event-template/oss-event.json`.

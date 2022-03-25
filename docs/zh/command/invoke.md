@@ -72,15 +72,11 @@ Hello world!
 例如：如果使用oss的事件，进行测试，此时可以执行：`s cli fc-event oss`，完成之后，可以看到系统提醒的相对路径信息：
 
 ```
-OSS event template created successfully.
+...
 
 👓 Event Template Path: event-template/oss-event.json
 
-You could user fc/fc-api component invoke method and specify the event.
-E.g: [s projectName invoke --event-file  event-template/oss-event.json]
-
-More information about OSS Trigger: 
-📝 https://help.aliyun.com/document_detail/74763.htm
+... 
 ```
 
 此时，可以利用该路径的模板（可以额外进行修改）触发函数，例如：`s invoke --event-file event-template/oss-event.json`
