@@ -150,7 +150,7 @@ export default class Instance {
   }
 
   async exec(props) {
-    logger.info(`props.rawData: ${JSON.stringify(props.rawData)}`);
+    logger.debug(`props.rawData: ${JSON.stringify(props.rawData)}`);
     if (props.stdin) {
       return await this.stdinExec(props);
     }
