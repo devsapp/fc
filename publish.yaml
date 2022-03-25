@@ -33,7 +33,6 @@ Commands:
     info: Query online resource details
     sync: Synchronize online resources to offline resources
     stress: Stress test for the serverless application
-    fc-api: Directly operate the FC API without yaml support
     fun2s: Convert the Yaml specification of Funcraft to Serverless Devs
     instance: Instance login and operation [beta]
     api: API call directly [beta]
