@@ -1,3 +1,10 @@
+---
+title: 多环境Env
+description: '多环境Env'
+position: 7
+category: '其他功能'
+---
+
 # Env 命令
 
 利用 `env` 命令帮助您构建不同的测试、预发、生产环境，并自动完成基础设施的搭建
