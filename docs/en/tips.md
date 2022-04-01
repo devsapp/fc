@@ -15,6 +15,7 @@ category: 'Overview'
 - [How to process build results](#How-to-process-build-results)
 - [Check whether YAML supports global variables, environment](#Check-whether-YAML-supports-global-variables-environment)
 - [Configure components by using environment variables](#Configure-components-by-using-environment-variables)
+- [Best practice](https://github.com/devsapp/start-realwrold/tree/master/src)
 - [Cases](#Cases)
 
 ## Relationship between Serverless Devs and the FC component
