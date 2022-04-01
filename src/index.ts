@@ -141,7 +141,7 @@ export default class FcBaseComponent extends EntryPublicMethod {
       }
     }
     // https://github.com/devsapp/fc/issues/383
-    if (deployRes.systemDomain && !['custom', 'custom-container'].includes(props.function?.runtime)) {
+    if (deployRes.systemDomain) {
       result.url = {
         system_url: deployRes.systemDomain,
       };
