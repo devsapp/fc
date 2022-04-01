@@ -15,6 +15,7 @@ category: '概览'
 - [函数进行build操作之后如何处理build的产物](#函数进行build操作之后如何处理build的产物)
 - [Yaml是否支持全局变量/环境变量/引用外部文件](#Yaml是否支持全局变量环境变量引用外部文件)
 - [通过环境变量配置组件](#通过环境变量配置组件)
+- [生产环境配置最佳实践](https://github.com/devsapp/start-realwrold/tree/master/src)
 - [项目实践案例](#项目实践案例)
 
 ## Serverless Devs和FC组件的关系
