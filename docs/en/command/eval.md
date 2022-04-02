@@ -109,7 +109,7 @@ This example shows how to perform concurrency detection on an HTTP function in I
 s cli fc eval start --region cn-hangzhou --function-name demo --service-name Service --eval-type concurrency --memory 1536 --concurrency-args 2,25,5 --rt 600 --method=get --path /login  --query 'a=1&b=2'  --headers='{"header_a":"v"}' --access default
 ```
 
-In this example, the configurations of a function whose memory size is of 1.5 GB, concurrency range is from 2 to 20, and step size is 5 is detected. The function is detected in different concurrency values of 2, 7, 12, and 17. 
+In this example, the configurations of a function whose memory size is of 1.5 GB, concurrency range is from 2 to 25, and step size is 5 is detected. The function is detected in different concurrency values of 2, 7, 12, 17, 22 and 25. 
 
 The following command output is returned:
 

@@ -109,7 +109,7 @@ http://memory-tuning.devsapp.cn/#gAAAAQACAAQ=;AIAARwBYgEYAoPdFAHiBRQ==;37w+OH+BP
 s cli fc eval start --region cn-hangzhou --function-name demo --service-name Service --eval-type concurrency --memory 1536 --concurrency-args 2,25,5 --rt 600 --method=get --path /login  --query 'a=1&b=2'  --headers='{"header_a":"v"}' --access default
 ```
 
-本示例表示将被探测的目标函数的内存规格设置为 1.5 GB，并发度范围[2,20]，步长为 5，即被探测的目标函数分别在 2，7，12, 17, 22 和 25 不同并发值模式下实现探测，获取探测信息。
+本示例表示将被探测的目标函数的内存规格设置为 1.5 GB，并发度范围[2,25]，步长为 5，即被探测的目标函数分别在 2，7，12, 17, 22 和 25 不同并发值模式下实现探测，获取探测信息。
 
 输出示例：
 
