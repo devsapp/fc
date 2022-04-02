@@ -42,7 +42,7 @@ category: '调用&调试'
         - [step4：结束断点调试](#step4结束断点调试-1)
         - [断点调试实操视频](#断点调试实操视频-3)
   - [附录](#附录)
-    - [默认调试参数](#默认调试参数)
+    - [默认断点调试参数](#默认断点调试参数)
 
 > ⚠️ 注意：该命令对 Docker 有所依赖，所以在使用该命令时，需要先进行 [Docker 安装](https://docs.docker.com/get-started/#download-and-install-docker) 。
 
@@ -74,7 +74,7 @@ category: '调用&调试'
 | mode          | m        | 选填           |调试模式选择，包括：<br> - `normal`: 默认模式，本地函数运行容器在函数执行完成后立刻退出<br>`server`: 本地函数运行容器一直存在，用户在其他终端发起的本地调用会复用该容器<br>`api`: 支持通过 sdk 调用本地函数|
 | config        | c        | 选填           |指定断点调试时使用的 IDE，取值范围：`vscode, pycharm, intellij`|
 | debug-port    | d        | 选填           |指定断点调试端口|
-| debug-args    | -        | 选填           |断点调试时传入的参数, 详情见附录中的默认调试参数|
+| debug-args    | -        | 选填           |断点调试时传入的参数, 详情见附录中的默认断点调试参数|
 | debugger-path | q        | 选填           |自定义断点调试器路径|
 | tmp-dir       | -        | 选填           |自定义函数运行环境中 `/tmp` 路径的本机挂载路径，默认为 `./.s/tmp/invoke/serviceName/functionName`/|
 | server-port   | -        | 选填           |自定义本地监听 `server` 的端口，默认是在 7000 到 8000 间的随机端口|
@@ -107,7 +107,7 @@ RequestId: 0ba8ac3f-abf8-46d4-b61f-8e0f9f265d6a 	 Billed Duration: 146 ms 	 Memo
 | config        | c        | 选填           | 指定断点调试时使用的 IDE，可选：`vscode, pycharm, intellij` |
 | debug-port    | d        | 选填           | 指定断点调试端口 |
 | custom-domain | -        | 选填           | 以自定义域名作为 HTTP Server 的访问 url |
-| debug-args    | -        | 选填           | 断点调试时传入的参数，详情见附录中的默认调试参数 |
+| debug-args    | -        | 选填           | 断点调试时传入的参数，详情见附录中的默认断点调试参数 |
 | debugger-path | -        | 选填           | 自定义断点调试器路径 |
 | tmp-dir       | -        | 选填           | 自定义函数运行环境中 `/tmp` 路径的本机挂载路径，默认为 `./.s/tmp/invoke/serviceName/functionName/` |
 | server-port   | -        | 选填           | 自定义本地监听 HTTP Server 的端口，默认是在 7000 到 8000 间的随机端口 |
@@ -362,12 +362,13 @@ $ s local start
 
 ## 附录
 
-### 默认调试参数
+### 默认断点调试参数
 
 | **Runtime** | **Default Debug Args** |
 | --- | --- |
 | nodejs 6 | `--debug-brk=${debugPort}` |
 | nodejs 8/10/12/14 | `--inspect-brk=0.0.0.0:${debugPort}` |
-| python 2.7/3 | `-m ptvsd --host 0.0.0.0 --port ${debugPort} --wait` |
-| java 8/11 | `-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,quiet=y,address=${debugPort}` |
+| python 2.7/3/3.9 | `-m ptvsd --host 0.0.0.0 --port ${debugPort} --wait` |
+| java 8 | `-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,quiet=y,address=${debugPort}` |
+| java 11 | `-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,quiet=y,address=*:${debugPort}` |
 | php7.2 | `remote_enable=1 remote_autostart=1 remote_port=${debugPort} remote_host=${ip.address()}` |
