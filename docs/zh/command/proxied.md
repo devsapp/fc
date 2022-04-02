@@ -40,6 +40,8 @@ category: '调用&调试'
         - [断点调试实操视频](#断点调试实操视频-1)
   - [权限与策略说明](#权限与策略说明)
   - [实战场景举例](#实战场景举例)
+  - [附录](#附录)
+    - [默认断点调试参数](#默认断点调试参数)
 
 ## 相关原理
 
@@ -93,7 +95,7 @@ category: '调用&调试'
 | 参数全称      | 参数缩写 | Yaml模式下必填 | 参数含义                                                     |
 | ------------- | -------- | -------------- | ------------------------------------------------------------ |
 | config        | c        | 选填           |指定断点调试使用的 IDE，可选：vscode, intellij|
-| debug-args    | -        | 选填           |断点调试时传入的参数|
+| debug-args    | -        | 选填           |断点调试时传入的参数，详情见附录中的默认断点调试参数|
 | debug-port    | d        | 选填           |断点调试器端口|
 | debugger-path | -        | 选填           |自定义断点调试器路径|
 | tmp-dir       | -        | 选填           |自定义函数运行环境中 `/tmp` 路径的本机挂载路径，默认为 `./.s/tmp/invoke/serviceName/functionName/`|
@@ -177,7 +179,7 @@ Resource cleanup succeeded.
 
 ### 断点调试
 
-通过与常见的 IDE 进行结合，可以在常见的 IDE 上实现端云联调的断点调试。 目前端云联调断点调试支持三种语言: `python、 nodejs 和 java`。
+通过与常见的 IDE 进行结合，可以在常见的 IDE 上实现端云联调的断点调试。 目前端云联调断点调试支持三种语言: `python、 nodejs 和 java`, 非断点调试所有 runtime 均支持。
 
 #### VSCode 断点调试案例
 
@@ -355,3 +357,15 @@ $ s proxied setup --config intellij --debug-port 3000
 ![](https://img.alicdn.com/imgextra/i3/O1CN01tD1TWT1CiiHeYt7rC_!!6000000000115-2-tps-2282-688.png)
 
 我们从本地实例的启动过程信息就可以明确定位到原因是 Nacos 访问不通，我们需要查看函数是否正确配置了 Nacos 所在的 VPC 信息，或者 Nacos 是否有白名单限制等等。
+
+## 附录
+
+### 默认断点调试参数
+
+| **Runtime** | **Default Debug Args** |
+| --- | --- |
+| nodejs 6 | `--debug-brk=${debugPort}` |
+| nodejs 8/10/12/14 | `--inspect-brk=0.0.0.0:${debugPort}` |
+| python 2.7/3/3.9 | `-m debugpy --listen 0.0.0.0:${debugPort}` |
+| java 8 | `-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,quiet=y,address=${debugPort}` |
+| java 11 | `-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,quiet=y,address=*:${debugPort}` |
