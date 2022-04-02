@@ -75,7 +75,7 @@ category: '调用&调试'
 | config        | c        | 选填           |指定断点调试时使用的 IDE，取值范围：`vscode, pycharm, intellij`|
 | debug-port    | d        | 选填           |指定断点调试端口|
 | debug-args    | -        | 选填           |断点调试时传入的参数, 详情见附录中的默认断点调试参数|
-| debugger-path | q        | 选填           |自定义断点调试器路径|
+| debugger-path | q        | 选填           |自定义断点调试器路径，会将本地指定路径挂载到程序运行环境的 /tmp/debugger_file 之中|
 | tmp-dir       | -        | 选填           |自定义函数运行环境中 `/tmp` 路径的本机挂载路径，默认为 `./.s/tmp/invoke/serviceName/functionName`/|
 | server-port   | -        | 选填           |自定义本地监听 `server` 的端口，默认是在 7000 到 8000 间的随机端口|
 
@@ -108,7 +108,7 @@ RequestId: 0ba8ac3f-abf8-46d4-b61f-8e0f9f265d6a 	 Billed Duration: 146 ms 	 Memo
 | debug-port    | d        | 选填           | 指定断点调试端口 |
 | custom-domain | -        | 选填           | 以自定义域名作为 HTTP Server 的访问 url |
 | debug-args    | -        | 选填           | 断点调试时传入的参数，详情见附录中的默认断点调试参数 |
-| debugger-path | -        | 选填           | 自定义断点调试器路径 |
+| debugger-path | -        | 选填           | 自定义断点调试器路径，会将本地指定路径挂载到程序运行环境的 /tmp/debugger_file 之中 |
 | tmp-dir       | -        | 选填           | 自定义函数运行环境中 `/tmp` 路径的本机挂载路径，默认为 `./.s/tmp/invoke/serviceName/functionName/` |
 | server-port   | -        | 选填           | 自定义本地监听 HTTP Server 的端口，默认是在 7000 到 8000 间的随机端口 |
 

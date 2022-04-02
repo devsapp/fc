@@ -97,7 +97,7 @@ category: '调用&调试'
 | config        | c        | 选填           |指定断点调试使用的 IDE，可选：vscode, intellij|
 | debug-args    | -        | 选填           |断点调试时传入的参数，详情见附录中的默认断点调试参数|
 | debug-port    | d        | 选填           |断点调试器端口|
-| debugger-path | -        | 选填           |自定义断点调试器路径|
+| debugger-path | -        | 选填           |自定义断点调试器路径，会将本地指定路径挂载到程序运行环境的 /tmp/debugger_file 之中|
 | tmp-dir       | -        | 选填           |自定义函数运行环境中 `/tmp` 路径的本机挂载路径，默认为 `./.s/tmp/invoke/serviceName/functionName/`|
 
 > 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)
