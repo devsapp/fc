@@ -9,25 +9,37 @@ category: '调用&调试'
 
 `proxied` 命令是实现函数计算端云联调的命令。
 
-- [相关原理](#相关原理)
+- [Proxied 命令](#proxied-命令)
+  - [相关原理](#相关原理)
       - [开启端云联调](#开启端云联调)
       - [关闭端云联调](#关闭端云联调)
-- [命令解析](#命令解析)
-- [proxied setup 命令](#proxied-setup-命令)
+  - [命令解析](#命令解析)
+  - [proxied setup 命令](#proxied-setup-命令)
     - [参数解析](#参数解析)
     - [操作案例](#操作案例)
-- [proxied invoke 命令](#proxied-invoke-命令)
+  - [proxied invoke 命令](#proxied-invoke-命令)
     - [参数解析](#参数解析-1)
     - [操作案例](#操作案例-1)
-- [proxied cleanup 命令](#proxied-cleanup-命令)
+  - [proxied cleanup 命令](#proxied-cleanup-命令)
+    - [参数解析](#参数解析-2)
     - [操作案例](#操作案例-2)
-- [最佳实践](#最佳实践)
+  - [最佳实践](#最佳实践)
     - [三步完成端云联调](#三步完成端云联调)
     - [断点调试](#断点调试)
       - [VSCode 断点调试案例](#vscode-断点调试案例)
+        - [step1: 打开终端，进入目标项目下，输入启动指令开启调试模式的端云联调能力](#step1-打开终端进入目标项目下输入启动指令开启调试模式的端云联调能力)
+        - [step2: 启动调试器](#step2-启动调试器)
+        - [step3: 发起对辅助函数的调用](#step3-发起对辅助函数的调用)
+        - [step4: 结束调试](#step4-结束调试)
+        - [断点调试实操视频](#断点调试实操视频)
       - [Intelli 断点调试案例](#intelli-断点调试案例)
-- [权限与策略说明](#权限与策略说明)
-- [实战场景举例](#实战场景举例)
+        - [step1：打开终端，进入目标项目下，输入启动指令](#step1打开终端进入目标项目下输入启动指令)
+        - [step2：启动断点调试器](#step2启动断点调试器)
+        - [step3: 发起对辅助函数的调用](#step3-发起对辅助函数的调用-1)
+        - [step4: 结束调试](#step4-结束调试-1)
+        - [断点调试实操视频](#断点调试实操视频-1)
+  - [权限与策略说明](#权限与策略说明)
+  - [实战场景举例](#实战场景举例)
 
 ## 相关原理
 
@@ -133,7 +145,7 @@ FC Invoke Result:
 hello world
 ```
 
-> 对于事件函数，需要先明确具体的事件类型（例如 OSS 事件， CDN 事件等），然后创建临时触发器，并将函数计算侧的目标函数和服务修改成生成的辅助 service/function（ [proxied setup 命令操作过程](#操作案例)中输出的`SESSION-S-d1564/python-event`），然后进行通过触发器即可直接触发函数获得端云联调的能力，例如如果是 OSS 创建 object 的事件，可以向指定的 OSS 中上传文件即可实现线上触发器触发本地函数的能力，即端云联调的能力。测试完成之后，不要忘记将临时指向生成的辅助资源的触发器恢复到原有的服务与函数资源上。
+> 对于事件函数，需要先明确具体的事件类型（例如 OSS 事件， CDN 事件等），然后创建临时触发器，并将函数计算侧的目标函数和服务修改成生成的辅助 service/function（ 比如[proxied setup 命令操作过程](#操作案例)中输出的`SESSION-S-d1564/python-event`），然后进行通过触发器即可直接触发函数获得端云联调的能力，例如如果是 OSS 创建 object 的事件，可以向指定的 OSS 中上传文件即可实现线上触发器触发本地函数的能力，即端云联调的能力。测试完成之后，不要忘记将临时指向生成的辅助资源的触发器恢复到原有的服务与函数资源上。
 
 ## proxied cleanup 命令
 
@@ -165,52 +177,94 @@ Resource cleanup succeeded.
 
 ### 断点调试
 
-通过与常见的 IDE 进行结合，可以在常见的 IDE 上实现端云联调的断点调试。
+通过与常见的 IDE 进行结合，可以在常见的 IDE 上实现端云联调的断点调试。 目前端云联调断点调试支持三种语言: `python、 nodejs 和 java`。
 
 #### VSCode 断点调试案例
 
-- 步骤1: 在已有的项目下，开启调试模式的端云联调能力：`$ s proxied setup --config vscode --debug-port 3000`，命令执行完成功后， 本地的函数计算执行环境会阻塞等待调用(执行环境本质是一个 HTTP Server)；
+##### step1: 打开终端，进入目标项目下，输入启动指令开启调试模式的端云联调能力
 
-  此时若要进行断点调试，需要进行以下的操作在 VSCode 上进行相关的配置：Serverless Devs 开发者工具自动在工程目录下面生成 `.vscode/launch.json` 文件, 通过下图完成调试配置：
-
-  ![](https://img.alicdn.com/imgextra/i1/O1CN01kNeLy01Omd2Ge3Q6J_!!6000000001748-2-tps-341-233.png)
-
+```
+$ s proxied setup --config vscode --debug-port 3000
+```
   
+命令执行完成功后， 本地的函数计算执行容器会阻塞等待调用(执行容器本质是一个 `HTTP Server`)，与此同时当前项目会自动生成 .vscode/launch.json 文件，该文件是基于 VSCode 进行调试的配置文件，若该文件已经存在，那么启动指令会打印相应配置文本，需要利用这部分内容覆盖已有 .vscode/launch.json 中的内容。
+![](https://img.alicdn.com/imgextra/i3/O1CN01DcU4ca1VBiSYwrFh4_!!6000000002615-2-tps-1142-387.png)
 
-- 步骤2:  打开一个新的终端，通过`proxied invoke`进行触发（例如`s proxied invoke`，如果是事件函数也可以通过线上触发器进行触发，此时要注意将触发器临时指向辅助函数，详情参考[proxied invoke 命令操作过程](#操作案例-1)），回到 VSCode 界面，既可以进行断点调试了：
+##### step2: 启动调试器
+打开 VSCode 界面，然后打开 s.yml 中 codeUri 所存放的源代码，为其打上断点，接着点击开始调试按钮，具体执行如下图所示。
 
-  ![img](https://img.alicdn.com/imgextra/i4/O1CN01biJncZ1l3V9VNWOd8_!!6000000004763-2-tps-3542-2232.png)
+![](https://img.alicdn.com/imgextra/i3/O1CN01yycXnv1vzLO4cB9pv_!!6000000006243-2-tps-750-410.png)
 
-  调试完成后返回结果。
+##### step3: 发起对辅助函数的调用
+打开一个新的终端，通过`proxied invoke`进行触发（例如`s proxied invoke`，如果是事件函数也可以通过线上触发器进行触发，此时要注意将触发器临时指向辅助函数，详情参考[proxied invoke 命令操作过程](#操作案例-1)），回到 VSCode 界面，既可以进行断点调试了：
 
-  >  若要在调用的时候制定传入的 event 参数，可以使用 `--event`，例如`s proxied invoke -h`
+![img](https://img.alicdn.com/imgextra/i4/O1CN01biJncZ1l3V9VNWOd8_!!6000000004763-2-tps-3542-2232.png)
 
-- 步骤3:  完成端云联调之后，通过`s proxied cleanup`命令，对对因端云联调而产生的辅助资源进行清理；
+调试完成后返回结果。
+
+>  若要在调用的时候制定传入的 event 参数，可以使用 `--event`，例如`s proxied invoke -h`
+
+##### step4: 结束调试
+1.  在开启端云联调的终端， 直接 `CTRL + C` 中断
+2.  或者在另外一个终端，在相同的目录下执行 `s proxied cleanup`
+
+使用上面 1 或者 2 其中一个方法即可， 如果您不放心， 可以多次执行 `s proxied cleanup`
+> 即使您忘记清理， 如果本地开发机关机或者断网， 通道 session 会自动关闭， 预留的资源也会自动清理。
+
+##### 断点调试实操视频
+
+- Event 函数
+  [![Watch the video](https://img.alicdn.com/imgextra/i2/O1CN01pKapFC1yVWReVUHmI_!!6000000006584-2-tps-672-375.png)](https://images.devsapp.cn/s-tool/zh/debug/VSCode%E7%AB%AF%E4%BA%91%E8%81%94%E8%B0%83Event%E5%87%BD%E6%95%B0.mp4)
+
+- Http 函数
+  [![Watch the video](https://img.alicdn.com/imgextra/i2/O1CN01Jv7cEk2A67s9PmkHC_!!6000000008153-2-tps-675-377.png)](https://images.devsapp.cn/s-tool/zh/debug/VSCode%E7%AB%AF%E4%BA%91%E8%81%94%E8%B0%83http%E5%87%BD%E6%95%B0.mp4)
 
 #### Intelli 断点调试案例
 
-- 步骤1: 例如需要在 IDEA 下进行调试，可以在已有的项目下，开启调试模式的端云联调能力：`$ s proxied setup --config intellij --debug-port 3000`，命令执行完成功后， 本地的函数计算执行环境会阻塞等待调用(执行环境本质是一个 HTTP Server)；
+使用 Intellij 开发最多的语言是 Java，接下来我们将以本地调试 Java Event 函数为例，对“启动断点调试器”步骤进行详细说明。
 
-  此时若要进行断点调试，需要进行以下的操作在 IDEA 上进行相关的配置：
+##### step1：打开终端，进入目标项目下，输入启动指令
 
-    1. 在菜单栏选择 Run… > Edit Configurations 。
-       ![img](https://img.alicdn.com/imgextra/i4/O1CN01CffYNv1UbX74nFI0d_!!6000000002536-2-tps-734-432.png)
-     2. 新建一个 Remote Debugging 。
-        ![img](https://img.alicdn.com/imgextra/i2/O1CN014nVPkX1voLpEUKiS9_!!6000000006219-2-tps-2216-1514.png)
-     3. 自定义调试器名称，并将端口配置为 3000 。
-        ![img](https://img.alicdn.com/imgextra/i2/O1CN014xCgf21lnl9h2QGTA_!!6000000004864-2-tps-2142-1620.png)
-     4. 上述配置完成后，在 IDEA 编辑器侧边栏为函数代码增加断点，点击"开始调试"按钮。
-        ![img](https://img.alicdn.com/imgextra/i1/O1CN01PPR4V61RM0qRiP16r_!!6000000002096-2-tps-3528-2166.png)
+由于 Java 是编译型语言，因此在开始前需要对程序进行打包，本文示例会使用 mvn package 对函数打包
 
-- 步骤2:  打开一个新的终端，通过`proxied invoke`进行触发（例如`s proxied invoke`，如果是事件函数也可以通过线上触发器进行触发，此时要注意将触发器临时指向辅助函数，详情参考[proxied invoke 命令操作过程](#操作案例-1)），回到 IDEA 界面，既可以进行断点调试了：
+```
+$ mvn package
+$ s proxied setup --config intellij --debug-port 3000
+```
 
-  ![img](https://img.alicdn.com/imgextra/i2/O1CN01gZdC9B20nxYxFvLTr_!!6000000006895-2-tps-3566-2232.png)
+命令执行完成功后， 本地的函数计算执行容器会阻塞等待调用(执行容器本质是一个 `HTTP Server`)
 
-  调试完成后返回结果。
+##### step2：启动断点调试器
+此时若要进行断点调试，需要进行以下的操作在 IDEA 上进行相关的配置：
 
-  >  若要在调用的时候制定传入的 event 参数，可以使用 `--event`，例如`s proxied invoke -h`
+1. 在菜单栏选择 Run… > Edit Configurations 。
+  ![img](https://img.alicdn.com/imgextra/i4/O1CN01CffYNv1UbX74nFI0d_!!6000000002536-2-tps-734-432.png)
+2. 新建一个 Remote Debugging 。
+  ![img](https://img.alicdn.com/imgextra/i2/O1CN014nVPkX1voLpEUKiS9_!!6000000006219-2-tps-2216-1514.png)
+3. 自定义调试器名称，并将端口配置为 3000 。
+  ![img](https://img.alicdn.com/imgextra/i2/O1CN014xCgf21lnl9h2QGTA_!!6000000004864-2-tps-2142-1620.png)
+4. 上述配置完成后，在 IDEA 编辑器侧边栏为函数代码增加断点，点击"开始调试"按钮。
+  ![img](https://img.alicdn.com/imgextra/i1/O1CN01PPR4V61RM0qRiP16r_!!6000000002096-2-tps-3528-2166.png)
 
-- 步骤3:  完成端云联调之后，通过`s proxied cleanup`命令，对对因端云联调而产生的辅助资源进行清理；
+##### step3: 发起对辅助函数的调用
+打开一个新的终端，通过`proxied invoke`进行触发（例如`s proxied invoke`，如果是事件函数也可以通过线上触发器进行触发，此时要注意将触发器临时指向辅助函数，详情参考[proxied invoke 命令操作过程](#操作案例-1)），回到 IDEA 界面，既可以进行断点调试了：
+
+![img](https://img.alicdn.com/imgextra/i2/O1CN01gZdC9B20nxYxFvLTr_!!6000000006895-2-tps-3566-2232.png)
+
+调试完成后返回结果。
+
+>  若要在调用的时候制定传入的 event 参数，可以使用 `--event`，例如`s proxied invoke -h`
+
+##### step4: 结束调试
+1.  在开启端云联调的终端， 直接 `CTRL + C` 中断
+2.  或者在另外一个终端，在相同的目录下执行 `s proxied cleanup`
+
+使用上面 1 或者 2 其中一个方法即可， 如果您不放心， 可以多次执行 `s proxied cleanup`
+> 即使您忘记清理， 如果本地开发机关机或者断网， 通道 session 会自动关闭， 预留的资源也会自动清理。
+
+##### 断点调试实操视频
+
+[![Watch the video](https://img.alicdn.com/imgextra/i4/O1CN018iSnJ71dYdCVPqlLX_!!6000000003748-2-tps-672-377.png)](https://images.devsapp.cn/s-tool/zh/debug/Intellij-%E7%AB%AF%E4%BA%91%E8%81%94%E8%B0%83event%E5%87%BD%E6%95%B0.mp4)
 
 ## 权限与策略说明
 
