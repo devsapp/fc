@@ -113,8 +113,10 @@ runtime目前支持：`nodejs4.4`、`nodejs6`、`nodejs8`、`nodejs10`、`nodejs
 Object格式，例如：
 
 ```
-TempKey: tempValue
+DB_connection: jdbc:mysql://rm-bp90434sds45c.mysql.rds.aliyuncs.com:3306/litemall
 ```
+当然不推荐通过明文将敏感信息写入到`s.yaml`, 可以配合[.env](https://www.serverless-devs.com/fc/tips#%E5%85%B3%E4%BA%8Eenv%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95) 使用。
+如果在 `CICD`流水线环境中，也可以通过`export DB_connection=xxx`到临时环境变量， 再配合`${env(DB_connection)}` （[$env文档](https://www.serverless-devs.com/fc/tips#yaml%E6%98%AF%E5%90%A6%E6%94%AF%E6%8C%81%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E5%BC%95%E7%94%A8%E5%A4%96%E9%83%A8%E6%96%87%E4%BB%B6)）进行引用
 
 ### instanceLifecycleConfig
 
