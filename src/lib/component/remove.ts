@@ -299,12 +299,13 @@ export default class Remove {
   }
 
   private genInputs(
-    { appName, projectName, access, args, curPath },
+    { appName, projectName, access, args, curPath, credentials },
     componentName,
     props,
     appendArgs?,
   ) {
     return {
+      credentials,
       project: {
         component: componentName,
         projectName: `${projectName}-${componentName}-project`,

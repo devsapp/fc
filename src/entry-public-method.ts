@@ -5,6 +5,7 @@ import fs from 'fs';
 import logger from './common/logger';
 import InfraAsTemplate from './lib/infra-as-template';
 import { IInputs, IProperties } from './lib/interface/interface';
+import { getCredentials } from './lib/utils';
 
 const { lodash: _ } = core;
 
@@ -32,7 +33,7 @@ export default class EntryPublicMethod {
 
     // 处理密钥
     if (getSecretKey) {
-      await core.getCredential(inputs, inputs.project?.access);
+      inputs.credentials = await getCredentials(inputs.credentials, inputs.project?.access);
     }
 
     await InfraAsTemplate.modifyInputs(inputs); // 多环境处理
@@ -49,8 +50,10 @@ export default class EntryPublicMethod {
     const curPath: any = inputs?.path;
     const projectName: string = project?.projectName;
     const appName: string = inputs?.appName;
+    const credentials = inputs?.credentials;
 
     return {
+      credentials,
       appName,
       projectName,
       access,
@@ -109,6 +112,7 @@ export default class EntryPublicMethod {
         const version = result.tag_name;
         const url = `https://registry.devsapp.cn/simple/devsapp/core/zipball/${version}`;
         const filename = `core@${version}.zip`;
+        // @ts-ignore
         await core.downloadRequest(url, corePath, { filename, extract: true, strip: 1 });
         fs.writeFileSync(lockPath, JSON.stringify({ version }, null, 2));
       } catch (error) {
