@@ -14,6 +14,7 @@ category: 'Overview'
 - [Purpose of the `.s` directory in Serverless Devs](#Purpose-of-the-s-directory-in-Serverless-Devs)
 - [How to process build results](#How-to-process-build-results)
 - [Check whether YAML supports global variables, environment](#Check-whether-YAML-supports-global-variables-environment)
+- [Special variables](#Special-variables)
 - [Configure components by using environment variables](#Configure-components-by-using-environment-variables)
 - [Best practice](https://github.com/devsapp/start-realwrold/tree/master/src)
 - [Cases](#Cases)
@@ -181,8 +182,41 @@ The YAML files of the serverless application model supports multiple variable fo
 - Get global variables :${ vars.*}.
 - Get variables of another project :${ projectName.props.*}.
 - Get result variables of another project in the YAML file: ${projectName.output.*}
+- Gets the config variable for the current configuration: ${config(AccountID)}
+  The essence is to get the variable value in `s config get`
+- Gets information about the current module: ${this.xx}
+  Take Yaml as an example:
+  ```
+  edition: 1.0.0
+  name: NextProject
+  access: default-access
 
-For more information, see [YAML specifications of Serverless Devs](https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/en/yaml.md).
+  services:
+    nextjs-portal:
+      component: fc
+      actions:
+        pre-deploy:
+          - run: s invoke ${this.props.url}
+            path: ./backend_src
+      props:
+        codeUri: ./frontend_src
+        url: url
+  ```
+  In `nextjs-portal` Application :
+    - Use `${this.name}` means `nextjs-portal`
+    - Use `${this.props.codeUri}` means `./frontend_src`
+    - Use `${this.access}` means `default-access`;
+
+For more information, see [YAML specifications of Serverless Devs](https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/zh/yaml.md)
+
+## Special-variables
+
+In Serverless-Devs, some special variables have specific purposes, and developers do not have special requirements, so avoid using special variables
+- `${aliyun-cli}`
+  Acts in the value of `access`, obtains the default `profile` from [aliyun cli](https://github.com/aliyun/aliyun-cli), and takes effect
+
+> Execute `aliyun configure list` to view the currently valid `profile`
+
 
 ## Configure components by using environment variables
 
