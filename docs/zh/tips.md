@@ -14,6 +14,7 @@ category: '概览'
 - [工具中`.s`目录是做什么](#工具中s目录是做什么)
 - [函数进行build操作之后如何处理build的产物](#函数进行build操作之后如何处理build的产物)
 - [Yaml是否支持全局变量/环境变量/引用外部文件](#Yaml是否支持全局变量环境变量引用外部文件)
+- [Yaml特殊变量](#Yaml特殊变量)
 - [通过环境变量配置组件](#通过环境变量配置组件)
 - [生产环境配置最佳实践](https://github.com/devsapp/start-realwrold/tree/master/src)
 - [项目实践案例](#项目实践案例)
@@ -179,8 +180,42 @@ Serverless Devs的Yaml规范本身支持全局变量、环境变量以及外部�
 - 获取全局变量：${vars.*}
 - 获取其他项目的变量：${projectName.props.*}
 - 获取Yaml中其他项目的结果变量：${projectName.output.*}
+- 获取当前配置的config变量：${config(AccountID)}
+  本质是获取 `s config get`中变量值
+- 获取当前模块的信息：${this.xx}
+  以下面的Yaml为例：
+  ```
+  edition: 1.0.0
+  name: NextProject
+  access: default-access
 
-> 详情可以参考：[Serverless Devs Yaml规范文档](https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/zh/yaml/readme.md)
+  services:
+    nextjs-portal:
+      component: fc
+      actions:
+        pre-deploy:
+          - run: s invoke ${this.props.url}
+            path: ./backend_src
+      props:
+        codeUri: ./frontend_src
+        url: url
+  ```
+  在`nextjs-portal`中:
+    - 使用`${this.name}`表示`nextjs-portal`
+    - 使用`${this.props.codeUri}`表示 `./frontend_src`
+    - 使用`${this.access}`表示`default-access`
+
+
+> 详情可以参考：[Serverless Devs Yaml规范文档](https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/zh/yaml.md)
+
+
+## Yaml特殊变量
+在Serverless-Devs中有些特殊变量有特定的用途，开发者没有特殊的需求，避免使用特殊变量
+- `${aliyun-cli}`
+ 作用在`access`的值中，从获取[aliyun cli](https://github.com/aliyun/aliyun-cli)的默认的`profile`，并且生效。
+
+ > 执行`aliyun configure list`可以查看当前生效的`profile`
+
 
 ## 通过环境变量配置组件
 
