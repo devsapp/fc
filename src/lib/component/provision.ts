@@ -207,12 +207,19 @@ export default class Provision {
       'provisionConfigs',
       {
         serviceName,
-        qualifier,
+        // qualifier, // 接口异常 https://github.com/devsapp/fc/issues/693 将所有的数据获取出来然后过滤
       },
     );
 
     const data = provisionConfigs
-      ?.filter((item) => item.target || item.current)
+      ?.filter((item) => {
+        let isDesignatedQualifier = true;
+        if (!_.isNil(qualifier)) {
+          const q = item.resource.split('#')[2];
+          isDesignatedQualifier = _.isEqual(qualifier, q);
+        }
+        return (item.target || item.current) && isDesignatedQualifier;
+      })
       .map((item) => ({
         serviceName: item.resource.split('#')[1],
         qualifier: item.resource.split('#')[2],
