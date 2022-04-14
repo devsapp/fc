@@ -87,13 +87,14 @@ export default class Remove {
     const parsedData = parsedArgs?.data || {};
     const rawData = parsedData._ || [];
 
-    const subCommand = rawData[0] || 'service';
+    const subCommand = rawData[0];
     logger.debug(`remove subCommand: ${subCommand}`);
-    if (!COMMAND.includes(subCommand)) {
+    if (subCommand && !COMMAND.includes(subCommand)) {
       core.help(HELP.REMOVE);
       throw new core.CatchableError(`Does not support ${subCommand} command`);
     }
 
+    // TODO: help 怎么输出
     if (parsedData.help) {
       rawData[0]
         ? core.help(HELP[`remove_${subCommand}`.toLocaleUpperCase()])
@@ -228,7 +229,7 @@ export default class Remove {
       return (await core.loadComponent(componentName)).deleteLayer(componentInputs);
     }
 
-    if (subCommand === 'domain') {
+    if (!subCommand || subCommand === 'domain') {
       const componentName = 'devsapp/fc-deploy';
       const componentInputs = this.genInputs(inputs, componentName, inputs.props, planArgs);
       return (await core.loadComponent(componentName)).remove(componentInputs);
@@ -260,7 +261,7 @@ export default class Remove {
       return await this.removeVersion({ region, serviceName, versionId, assumeYes });
     }
 
-    if (!onlyLocal && subCommand === 'service') {
+    if (!onlyLocal && (!subCommand || subCommand === 'service')) {
       await this.removeOnDemand({ region, serviceName, assumeYes });
       await this.removeProvision({ region, serviceName, assumeYes });
       await this.removeAlias({ region, serviceName, assumeYes });
@@ -276,7 +277,7 @@ export default class Remove {
   // 存在子资源选择 no：一定不能被删除，需要退出程序。 返回quit
   // 存在子资源选择 yes：需要强制删除所有资源，需要向下传递 assumeYes。  返回assumeYes
   private async removePlan(subCommand, inputs) {
-    const planArgs = `--plan-type remove --sub-command ${subCommand || 'service'}`;
+    const planArgs = `--plan-type remove ${subCommand ? `--sub-command ${subCommand}` : ''}`;
     const planName = 'devsapp/fc-plan';
     const planInputs = this.genInputs(_.cloneDeep(inputs), planName, inputs.props, planArgs);
     const plan = await (await core.loadComponent(planName)).plan(planInputs);
