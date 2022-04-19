@@ -22,6 +22,7 @@ export const LAYER = [
       { desc: 'list', example: 'Get layer list; help command [s layer list -h]' },
       { desc: 'detail', example: 'Get layer versionConfig; help command [s layer detail -h]' },
       { desc: 'versions', example: 'Get layer versions; help command [s layer verisons -h]' },
+      { desc: 'download', example: 'Download layer version code; help command [s layer download -h]' },
     ],
   },
 ];
@@ -57,6 +58,16 @@ export const LAYER_PUBLISH = [
       {
         name: 'description',
         description: '[Optional] Specify the description parameter',
+        type: String,
+      },
+      {
+        name: 'ossBucket',
+        description: '[Optional] OSS bucket for storing code',
+        type: String,
+      },
+      {
+        name: 'ossKey',
+        description: '[Optional] Full path to store code',
         type: String,
       },
     ],
@@ -146,6 +157,43 @@ export const LAYER_DETAIL = [
   {
     header: 'Examples with CLI',
     content: ['$ s cli fc layer detail --region cn-hangzhou --layer-name layerName --version-id 1'],
+  },
+];
+
+export const LAYER_DOWNLOAD = [
+  {
+    header: 'Download layer',
+    content: 'Download layer version code',
+  },
+  {
+    header: 'Document',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/layer.md',
+  },
+  {
+    header: 'Usage',
+    content: '$ s layer download <options>',
+  },
+  {
+    header: 'Options',
+    optionList: [
+      regionDescribe,
+      layerName,
+      {
+        name: 'version-id',
+        description: '[Required] Specify the version parameter',
+        type: Number,
+      },
+    ],
+  },
+  { ...globalParams },
+  { ...globalDescribe },
+  {
+    header: 'Examples with Yaml',
+    content: ['$ s layer download --layer-name layerName --version-id 1'],
+  },
+  {
+    header: 'Examples with CLI',
+    content: ['$ s cli fc layer download --region cn-hangzhou --layer-name layerName --version-id 1'],
   },
 ];
 
