@@ -4,6 +4,7 @@ description: '层 layer'
 position: 5
 category: '发布&配置'
 ---
+
 # Layer 命令
 
 `layer` 命令是进行层操作的命令。
@@ -21,9 +22,11 @@ category: '发布&配置'
 - [layer versions 命令](#layer-versions-命令)
   - [参数解析](#参数解析-3)
   - [操作案例](#操作案例-3)
+- [layer download 命令](#layer-download-命令)
+  - [参数解析](#参数解析-4)
+  - [操作案例](#操作案例-4)
 - [remove layer 命令](remove.md#remove-layer-命令)
 - [权限与策略说明](#权限与策略说明)
-
 
 ## 命令解析
 
@@ -44,13 +47,13 @@ category: '发布&配置'
 
 ### 参数解析
 
-| 参数全称           | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
-| ------------------ | -------- | -------------- | ------------- | ------------------------------------------------------------ |
-| region             | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| code               | -        | 必填           | 必填          | 层的代码                                                     |
-| compatible-runtime | -        | 选填           | 选填          | 支持的`runtime`，默认值为`nodejs12,nodejs10,nodejs8,nodejs6,python3,python2.7` |
-| description        |          | 选填           | 选填          | 发布层的描述                                                 |
-| layer-name         |          | 必填           | 必填          | 层的名字                                                     |
+| 参数全称           | 参数缩写 | Yaml 模式下必填 | Cli 模式下必填 | 参数含义                                                                                                                                                                                                                                                                                                   |
+| ------------------ | -------- | --------------- | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| region             | -        | 选填            | 必填           | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
+| code               | -        | 必填            | 必填           | 层的代码                                                                                                                                                                                                                                                                                                   |
+| compatible-runtime | -        | 选填            | 选填           | 支持的`runtime`，默认值为`nodejs12,nodejs10,nodejs8,nodejs6,python3,python2.7`                                                                                                                                                                                                                             |
+| description        |          | 选填            | 选填           | 发布层的描述                                                                                                                                                                                                                                                                                               |
+| layer-name         |          | 必填            | 必填           | 层的名字                                                                                                                                                                                                                                                                                                   |
 
 > 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)
 
@@ -65,7 +68,6 @@ category: '发布&配置'
 fc-deploy-test: 544c887879c38e5d0afcaf8b4f8f348e#demo#1
 ```
 
-
 ## layer list 命令
 
 `layer list` 命令，是用于获取层列表的命令。
@@ -74,11 +76,11 @@ fc-deploy-test: 544c887879c38e5d0afcaf8b4f8f348e#demo#1
 
 ### 参数解析
 
-| 参数全称 | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
-| -------- | -------- | -------------- | ------------- | ------------------------------------------------------------ |
-| region   | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| prefix   | -        | 选填           | 选填          |                                                              |
-| table    | -        | 选填           | 选填          |                                                              |
+| 参数全称 | 参数缩写 | Yaml 模式下必填 | Cli 模式下必填 | 参数含义                                                                                                                                                                                                                                                                                                   |
+| -------- | -------- | --------------- | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| region   | -        | 选填            | 必填           | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
+| prefix   | -        | 选填            | 选填           |                                                                                                                                                                                                                                                                                                            |
+| table    | -        | 选填            | 选填           |                                                                                                                                                                                                                                                                                                            |
 
 > 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)
 
@@ -90,13 +92,13 @@ fc-deploy-test: 544c887879c38e5d0afcaf8b4f8f348e#demo#1
 上述命令的执行结果示例：
 
 ```text
-fc-deploy-test: 
-  - 
+fc-deploy-test:
+  -
     layerName:         demo
     arn:               544c887879c38e5d0afcaf8b4f8f348e#demo#1
     version:           1
-    description:       
-    compatibleRuntime: 
+    description:
+    compatibleRuntime:
       - nodejs12
       - nodejs10
       - nodejs8
@@ -113,34 +115,34 @@ fc-deploy-test:
 
 ### 参数解析
 
-| 参数全称   | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
-| ---------- | -------- | -------------- | ------------- | ------------------------------------------------------------ |
-| region     | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| layer-name | -        | 必填           | 必填          | 层名称                                                       |
-| version-id | -        | 必填           | 必填          | 层版本                                                       |
+| 参数全称   | 参数缩写 | Yaml 模式下必填 | Cli 模式下必填 | 参数含义                                                                                                                                                                                                                                                                                                   |
+| ---------- | -------- | --------------- | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| region     | -        | 选填            | 必填           | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
+| layer-name | -        | 必填            | 必填           | 层名称                                                                                                                                                                                                                                                                                                     |
+| version-id | -        | 必填            | 必填           | 层版本                                                                                                                                                                                                                                                                                                     |
 
 > 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)
 
 ### 操作案例
 
 - **有资源描述文件（Yaml）时**，可以直接执行`s layer detail --layer-name layerName --version-id versionId`获取指定层和指定版本详情；
-- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区，例如`s layer detail --layer-name demo --version-id 1 -h`；
+- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区，例如`s cli fc layer detail --region cn-hangzhou --layer-name demo --version-id 1`；
 
 上述命令的执行结果示例：
 
 ```text
-fc-deploy-test: 
+fc-deploy-test:
   layerName:         demo
   version:           1
-  description:       
-  code: 
+  description:
+  code:
     repositoryType: null
     location:       https://fc-hz-yunqi-func-code.oss-cn-hangzhou-internal.aliyuncs.com/1583208943291465%2Fdemo%2Fdecddf35-8705-4f80-9baa-2c4a9ffc512b?Expires=1636621101&OSSAccessKeyId=&Signature=cZZHNSpeewLXVoFd2%2FdFuLBe4cc%3D
   codesize:          550
   codeChecksum:      17221560529872498506
   createTime:        2021-11-11T08:46:38Z
   acl:               0
-  compatibleRuntime: 
+  compatibleRuntime:
     - nodejs12
     - nodejs10
     - nodejs8
@@ -158,11 +160,11 @@ fc-deploy-test:
 
 ### 参数解析
 
-| 参数全称   | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
-| ---------- | -------- | -------------- | ------------- | ------------------------------------------------------------ |
-| region     | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| layer-name | -        | 必填           | 必填          | 层名称                                                       |
-| table      | -        | 选填           | 必填          | 是否以表格形式输出                                           |
+| 参数全称   | 参数缩写 | Yaml 模式下必填 | Cli 模式下必填 | 参数含义                                                                                                                                                                                                                                                                                                   |
+| ---------- | -------- | --------------- | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| region     | -        | 选填            | 必填           | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
+| layer-name | -        | 必填            | 必填           | 层名称                                                                                                                                                                                                                                                                                                     |
+| table      | -        | 选填            | 必填           | 是否以表格形式输出                                                                                                                                                                                                                                                                                         |
 
 > 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)
 
@@ -174,19 +176,47 @@ fc-deploy-test:
 上述命令的执行结果示例：
 
 ```text
-fc-deploy-test: 
-  - 
+fc-deploy-test:
+  -
     layerName:         demo
     arn:               544c887879c38e5d0afcaf8b4f8f348e#demo#1
     version:           1
-    description:       
-    compatibleRuntime: 
+    description:
+    compatibleRuntime:
       - nodejs12
       - nodejs10
       - nodejs8
       - nodejs6
       - python3
       - python2.7
+```
+
+## layer download 命令
+
+`layer download` 命令，是用户下载指定层版本的命令。
+
+当执行命令`layer download -h`/`layer download --help`时，可以获取帮助文档。
+
+### 参数解析
+
+| 参数全称   | 参数缩写 | Yaml 模式下必填 | Cli 模式下必填 | 参数含义                                                                                                                                                                                                                                                                                                   |
+| ---------- | -------- | --------------- | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| region     | -        | 选填            | 必填           | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
+| layer-name | -        | 必填            | 必填           | 层名称                                                                                                                                                                                                                                                                                                     |
+| version-id | -        | 必填            | 必填           | 层版本                                                                                                                                                                                                                                                                                                     |
+
+> 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)
+
+### 操作案例
+
+- **有资源描述文件（Yaml）时**，可以直接执行`s layer download --layer-name layerName --version-id versionId`下载层版本的代码包；
+- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区，例如`s cli fc layer download --region cn-hangzhuo --layer-name demo --version-id 1`；
+
+上述命令的执行结果示例：
+
+```text
+✔ Downloading: [/189******629/test/7d954393-c5a2-4519-94de-d1a4c9e0611f] 144073/144073 100.00% # 下载的进度条
+helloworld: /Users/test/.s/cache/layers/189******629-cn-shenzhen-test/8.zip  # 代码包下载的地址
 ```
 
 ## 权限与策略说明
@@ -197,13 +227,14 @@ fc-deploy-test:
 
   ```yaml
   {
-      "Version": "1",
-      "Statement": [
-          {
-              "Action": "fc:CreateLayerVersion",
-              "Effect": "Allow",
-              "Resource": "acs:fc:<region>:<account-id>:layers/<layerName>/versions/*"
-          }
-      ]
+    'Version': '1',
+    'Statement':
+      [
+        {
+          'Action': 'fc:CreateLayerVersion',
+          'Effect': 'Allow',
+          'Resource': 'acs:fc:<region>:<account-id>:layers/<layerName>/versions/*',
+        },
+      ],
   }
   ```

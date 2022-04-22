@@ -1310,6 +1310,25 @@ Properties:
               certId:
                 title: 获取证书内容
                 type: integer
+              tlsConfig:
+                title: TLS 协议
+                type: object
+                x-decorator-props:
+                  labelWidth: 80
+                required:
+                  - minVersion
+                  - cipherSuites
+                properties:
+                  minVersion:
+                    title: TLS 协议版本
+                    type: string
+                    enum:
+                      - TLSv1.0
+                      - TLSv1.1
+                      - TLSv1.2
+                  cipherSuites:
+                    title: 加密套件
+                    type: array
               certConfig:
                 title: 证书配置
                 type: object

@@ -461,6 +461,7 @@ export default class FcBaseComponent extends EntryPublicMethod {
       detail: LAYER_HELP.LAYER_DETAIL,
       versionConfig: LAYER_HELP.LAYER_DETAIL,
       versions: LAYER_HELP.LAYER_VERSIONS,
+      download: LAYER_HELP.LAYER_DOWNLOAD,
     };
 
     // @ts-ignore
@@ -480,10 +481,6 @@ export default class FcBaseComponent extends EntryPublicMethod {
       return;
     }
 
-    // warning: 2021.12.23 交互修改警告，过段时间可以删除
-    if (commandName === 'versionConfig') {
-      this.logger.warn('The versionConfig command will be removed soon, please use detail');
-    }
     if (argsData?.help) {
       core.help(LAYER_COMMAND[commandName]);
       return;
