@@ -93,12 +93,6 @@ Dir [./code] uploaded successfully.
 
 > ⚠️ 注意：在使用的时候，如果遇到文件已存在，需要按需通过`--override`/`-o`参数进行强制覆盖。
 
-### ignore运用
-
-在需要上传的代码目录放置一个 .nasignore 文件，部署文件的时候可以排除掉 .nasignore 描述的文件或者文件夹（底层实现参考 [ignore-walk](https://www.npmjs.com/package/ignore-walk)）。
-
-但是在实际运用中，需要上传到 nas 的部分常常是通过自动化完成，所以可以通过 `--ignore-file` 指定ignore文件的具体路径，然后我们会将这个文件复制到需要上传的代码根目录下（`.nas_tmp_ignore` 的临时文件）。
-
 
 
 ## nas download 命令
