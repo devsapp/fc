@@ -44,7 +44,6 @@ Properties:
   definitions:
     roleStatement:
       type: object
-      title: 自定义策略
       description: 自定义策略内容
       default: {}
       examples: []
@@ -128,10 +127,6 @@ Properties:
                           examples:
                             - acs:log:*:*:project/*
                           pattern: '^acs:.*$'
-                  Condition:
-                    type: object
-                    title: 策略的条件限制
-                    description: 策略的条件限制
     role:
       type: object
       description: 自定义策略列表创建角色
@@ -150,6 +145,8 @@ Properties:
             - roleName
         policies:
           type: array
+          x-component: RolePolicy
+          x-oneof: component
           title: 策略列表
           description:
             当使用了这个字段，需要本地配置的 ak 具有创建 policy 和 role 的权限，列表中的元素支持字符串和 policy
@@ -160,13 +157,15 @@ Properties:
           uniqueItems: true
           items:
             oneOf:
-              - '$ref': '#/definitions/roleStatement'
               - type: string
-                description: 阿里云系统内置策略
+                title: 阿里云系统内置策略
                 minLength: 1
                 default: ''
                 examples:
                   - AliyunOSSFullAccess
+                x-component: Input
+              - title: 自定义策略
+                '$ref': '#/definitions/roleStatement'
     logConfig:
       type: object
       default: {}
@@ -194,6 +193,7 @@ Properties:
           title: 日志分割规则
           x-tooltip: 开启日志分割后，将按照日期格式分割长日志内容，如包含多个`2021-11-11`内容的单条日志将被默认分割为多行，当前日期以及下一个日期前的所有内容将作为一条独立日志写入SLS
           default: None
+          x-component: Switch
           enum:
             - DefaultRegex
             - None
@@ -205,14 +205,14 @@ Properties:
           title: 请求级别指标
           x-tooltip:
             开启该功能后，您可以查看该服务下所有函数的某次调用所消耗的时间及内存。您可以基于请求级别指标创建 Grafana 大盘，点击<a
-            href='https://help.aliyun.com/document_detail/208005.html' target='blank'>这里</a>查看更多详情。
+            href='https://help.aliyun.com/document_detail/208005.html' target='_blank'>这里</a>查看更多详情。
           default: true
         enableInstanceMetrics:
           type: boolean
           title: 实例级别指标
           x-tooltip:
             开启后，您可以查看实例级别的 CPU 使用情况、内存使用情况、实例网络情况和实例内请求数等核心指标信息。点击<a href='https://help.aliyun.com/document_detail/262088.html'
-            target='blank'>这里</a>查看更多详情。
+            target='_blank'>这里</a>查看更多详情。
           default: false
           examples:
             - true
@@ -230,14 +230,14 @@ Properties:
           title: 专有网络VPC
           x-tooltip:
             当前服务中的函数可以访问的 VPC。点击<a href='https://help.aliyun.com/document_detail/72959.html'
-            target='blank'>这里</a>查看更多详情。
+            target='_blank'>这里</a>查看更多详情。
           default: ''
         vswitchIds:
           type: array
           title: 交换机
           x-tooltip:
             函数计算可以访问的子网。函数服务会在您提供的交换机创建弹性网卡. 您的函数将通过弹性网卡访问您专有网络里面的资源。点击<a href='https://help.aliyun.com/document_detail/72959.html'
-            target='blank'>这里</a>查看更多详情
+            target='_blank'>这里</a>查看更多详情
           default: []
           minItems: 1
           uniqueItems: true
@@ -254,7 +254,7 @@ Properties:
           title: 安全组
           x-tooltip:
             此安全组是ENI所在的安全组，也就是函数计算所在的安全组，安全组限定了函数计算在VPC中的出入站规则。需要设置您的VPC所在安全组的入站规则为允许函数计算所在的安全组访问。否则，函数计算无法顺畅地访问您的VPC内资源。点击<a
-            href='https://help.aliyun.com/document_detail/72959.html' target='blank'>这里</a>查看更多详情。
+            href='https://help.aliyun.com/document_detail/72959.html' target='_blank'>这里</a>查看更多详情。
           default: ''
     nasConfig:
       type: object
@@ -322,28 +322,6 @@ Properties:
                     description: 必须为 /home/ 或者 /mnt/ 的子目录，例如 /home/app
                     examples:
                       - '/mnt/auto'
-    methods:
-      type: array
-      default:
-        - GET
-        - POST
-      items:
-        oneOf:
-          - type: string
-            title: 请求方法
-            default:
-              - GET
-              - POST
-            examples:
-              - GET
-              - POST
-            enum:
-              - GET
-              - POST
-              - PUT
-              - DELETE
-              - HEAD
-              - OPTIONS
     roleArn:
       type: string
       pattern: '^acs:ram.*:role.*$'
@@ -360,7 +338,6 @@ Properties:
       type: string
       pattern: '^[a-zA-Z0-9-_]{1,128}$'
   type: object
-  x-component: FormCollapse
   required:
     - region
     - service
@@ -397,9 +374,6 @@ Properties:
       properties:
         name:
           '$ref': '#/definitions/namePattern'
-          x-component-props:
-            collapse-name: basic
-            collapse-title: 基础信息
         description:
           title: 描述
           description: 服务的描述信息
@@ -412,22 +386,24 @@ Properties:
           type: boolean
         role:
           title: 服务角色
+          x-oneof: component
           x-tooltip:
             当前服务和服务中的函数将会使用这个 RAM 角色（Role）来访问您的阿里云资源。点击<a href='https://help.aliyun.com/document_detail/52885.html'
-            target='blank'>这里</a>查看更多详情。
-          examples:
-            - acs:ram::xxx:role/fc-default-role
+            target='_blank'>这里</a>查看更多详情。
           description:
             注意：在 RAM 控制台创建服务所使用的角色时，需要选择“阿里云服务”，并且“受信服务”为“函数计算”。详情参考<a href='https://ram.console.aliyun.com/roles/AliyunFCDefaultRole'
-            target='blank'>默认角色</a>
+            target='_blank'>默认角色</a>
           pattern: '^acs:ram.*:role.*$'
           oneOf:
             - type: string
-              title: 服务角色
+              title: 简单配置
               description:
                 当前服务和服务中的函数将会使用这个 RAM 角色（Role）来访问您的阿里云资源。点击<a href='https://help.aliyun.com/document_detail/52885.html'
-                target='blank'>这里</a>查看更多详情。
+                target='_blank'>这里</a>查看更多详情。
               pattern: '^acs:ram.*:role.*$'
+              x-component: Input
+              examples:
+                - acs:ram::xxx:role/fc-default-role
             - '$ref': '#/definitions/role'
               title: 高级配置
         tracingConfig:
@@ -435,12 +411,13 @@ Properties:
           x-tooltip:
             启用链路追踪功能后，您可以使用 Jaeger上传链路信息，使您能够跟踪函数的执行，帮助您快速分析和诊断 Serverless
             架构下的性能瓶颈。点击<a href='https://help.aliyun.com/document_detail/189804.html'
-            target='blank'>这里</a>查看更多详情。                注意：函数计算在后台为您创建的链路追踪资源可能会产生费用（有一定的免费额度），详情请参见<a
-            href='https://help.aliyun.com/document_detail/169781.html' target='blank'>链路追踪计费方式。</a>
+            target='_blank'>这里</a>查看更多详情。                注意：函数计算在后台为您创建的链路追踪资源可能会产生费用（有一定的免费额度），详情请参见<a
+            href='https://help.aliyun.com/document_detail/169781.html' target='_blank'>链路追踪计费方式。</a>
           description:
             配置服务的链路追踪功能，启用链路追踪功能后，您可以使用 Jaeger 上传链路信息，使您能够跟踪函数的执行，帮助您快速分析和诊断
             Serverless 架构下的性能瓶颈。
           default: Disable
+          x-component: Switch
           enum:
             - Enable
             - Disable
@@ -449,19 +426,21 @@ Properties:
             - 禁用
         logConfig:
           title: 日志配置
+          x-oneof: void
           x-tooltip: 配置服务的日志功能，启用日志功能后，您可以查看函数的执行日志，从而方便您的代码调试、故障分析、数据分析等操作。
           oneOf:
             - title: 自动配置
               x-tooltip:
                 启用日志功能后，您可以查看函数的执行日志，从而方便您的代码调试、故障分析、数据分析等操作。点击<a href='https://help.aliyun.com/document_detail/73349.html'
-                target='blank'>这里</a>查看更多详情。注意：函数计算在后台为您创建的日志服务资源会产生费用，详情请参见<a href='https://help.aliyun.com/document_detail/107745.htm'
-                target='blank'>日志服务计费方式</a>。
+                target='_blank'>这里</a>查看更多详情。注意：函数计算在后台为您创建的日志服务资源会产生费用，详情请参见<a href='https://help.aliyun.com/document_detail/107745.htm'
+                target='_blank'>日志服务计费方式</a>。
               enum:
                 - auto
             - title: 自定义配置
               '$ref': '#/definitions/logConfig'
         vpcConfig:
           title: VPC网络配置
+          x-oneof: void
           x-tooltip: 配置服务中函数使用的网络，例如配置函数是否可以访问公网，是否可以访问 VPC 中的资源等。
           oneOf:
             - title: 自动配置
@@ -472,6 +451,7 @@ Properties:
               '$ref': '#/definitions/vpcConfig'
         nasConfig:
           title: 存储配置
+          x-oneof: void
           x-tooltip: 配置服务中函数使用的 NAS 文件系统。配置后您的函数可以像访问本地文件系统一样访问存储在其中一个NAS文件系统上的文件。
           oneOf:
             - title: 自动配置
@@ -517,10 +497,11 @@ Properties:
             - '/home/admin'
           x-reactions:
             dependencies:
-              - collapse.function.function.basic.ossBucket
+              - '.ossBucket'
+              - '.ossKey'
             fulfill:
-              schema:
-                x-visible: '{{!$deps[0]}}'
+              state:
+                visible: '{{!$deps[0]&&!$deps[1]}}'
         ossBucket:
           title: ossBucket
           description: 如果指定oss代码，所在的存储桶，不能与codeUri同时出现
@@ -528,10 +509,10 @@ Properties:
           minLength: 1
           x-reactions:
             dependencies:
-              - collapse.function.function.basic.codeUri
+              - '.codeUri'
             fulfill:
-              schema:
-                x-visible: '{{!$deps[0]}}'
+              state:
+                visible: '{{!$deps[0]}}'
         ossKey:
           title: ossKey
           description: 如果指定oss代码，所对应的对象，不能与codeUri同时出现
@@ -539,10 +520,10 @@ Properties:
           minLength: 1
           x-reactions:
             dependencies:
-              - collapse.function.function.basic.codeUri
+              - '.codeUri'
             fulfill:
-              schema:
-                x-visible: '{{!$deps[0]}}'
+              state:
+                visible: '{{!$deps[0]}}'
         handler:
           title: 函数入口
           x-tooltip: 指定调用函数时需要从哪个文件中的哪个函数开始执行。
@@ -552,25 +533,6 @@ Properties:
           examples:
             - index.handler
           type: string
-        memorySize:
-          title: 内存规格
-          description: 函数执行内存。当执行函数时，可使用的最大内存。
-          default: 512
-          type: integer
-          enum:
-            - 128
-            - 256
-            - 512
-            - 1024
-            - 2048
-            - 3072
-          x-enum-label:
-            - 128 MB
-            - 256 MB
-            - 512 MB
-            - 1 GB
-            - 2 GB
-            - 3 GB
         runtime:
           title: 运行环境
           default: nodejs12
@@ -594,10 +556,10 @@ Properties:
         customRuntimeConfig:
           x-reactions:
             dependencies:
-              - collapse.function.function.runtime
+              - '.runtime'
             fulfill:
-              schema:
-                x-visible: "{{$deps[0] === 'custom'}}"
+              state:
+                visible: "{{$deps[0] === 'custom'}}"
           title: custom配置
           type: object
           required:
@@ -623,14 +585,13 @@ Properties:
               items:
                 oneOf:
                   - type: string
-          x-component: FormGrid
         customContainerConfig:
           x-reactions:
             dependencies:
-              - collapse.function.function.runtime
+              - '.runtime'
             fulfill:
-              schema:
-                x-visible: "{{$deps[0] === 'custom-container'}}"
+              state:
+                visible: "{{$deps[0] === 'custom-container'}}"
           title: 自定义镜像配置
           type: object
           required:
@@ -664,6 +625,7 @@ Properties:
               description: 开启函数计算的镜像加速后，可提速 2~5 倍，将分钟级的镜像拉取缩短至秒级。开启镜像加速将会将镜像转存在函数计算的安全镜像加速存储中。点击这里查看更多详情。
               default: Default
               type: string
+              x-component: Switch
               enum:
                 - Default
                 - None
@@ -684,7 +646,24 @@ Properties:
             - GPU实例
           x-tooltip: 函数计算提供性能实例和弹性实例两种实例类型。<br/>                弹性实例：函数计算基本实例，规格小于性能实例，不能执行时间较长的离线任务或平滑地将大应用迁移至函数计算。<br/>                性能实例：大规格实例，包含多种实例规格，资源上限更高，适配场景更多。<br/>                点击这里查看更多详情。
           description: 点击<a href='https://help.aliyun.com/document_detail/179379.html'
-            target='blank'>这里</a>查看实例类型详情，使用限制和使用场景。
+            target='_blank'>这里</a>查看实例类型详情，使用限制和使用场景。
+        memorySize:
+          title: 内存规格
+          description: 函数执行内存。当执行函数时，可使用的最大内存。
+          default: 512
+          type: integer
+          enum:
+            - 128
+            - 256
+            - 512
+            - 1024
+            - 2048
+            - 3072
+            - 4096
+            - 8192
+            - 16384
+            - 32768
+          x-reactions: '{{memorySize}}'
         gpuMemorySize:
           title: GPU内存规格
           description: 函数执行内存。当执行函数时，可使用的最大内存。
@@ -698,10 +677,10 @@ Properties:
             - 16GB
           x-reactions:
             dependencies:
-              - collapse.function.function.envInfo.instanceType
+              - '.instanceType'
             fulfill:
-              schema:
-                x-visible: "{{$deps[0] === 'g1'}}"
+              state:
+                visible: "{{$deps[0] === 'g1'}}"
         timeout:
           title: 执行超时时间
           description: 如果函数在这个时间内未能成功执行，函数计算会返回超时错误，请设置大小合适的超时时间，避免函数执行超时。
@@ -711,7 +690,7 @@ Properties:
           title: 单实例并发数
           description:
             函数计算支持单实例多并发的功能，这个值用来配置单个函数实例可以同时处理多少个请求。点击这里<a href='https://help.aliyun.com/document_detail/144586.html'
-            target='blank'>查看</a>更多详情。
+            target='_blank'>查看</a>更多详情。
           default: 1
           type: integer
         caPort:
@@ -722,7 +701,6 @@ Properties:
         environmentVariables:
           title: 环境变量
           description: 配置函数运行环境中的环境变量。
-          type: object
           x-component: KeyValue
         layers:
           type: array
@@ -785,7 +763,7 @@ Properties:
                   x-tooltip:
                     在每次函数计算决定停止当前函数实例前，您希望函数计算调用的函数。PreStop 函数输入参数没有event参数。PreStop
                     函数无返回值，在函数末尾增加返回逻辑是无效的。所有 Runtime 均支持配置 PreStop 函数。点击<a href='https://help.aliyun.com/document_detail/191143.html'
-                    target='blank'>这里</a>查看更多详情。<br/>                            在“运行环境”为
+                    target='_blank'>这里</a>查看更多详情。<br/>                            在“运行环境”为
                     Node.js 时，当前值的格式为 [文件名].[函数名]。如果当前值为 index.handler，那么在函数被触发时，将执行
                     index.js 文件中的 handler 函数。
                   type: string
@@ -822,12 +800,12 @@ Properties:
             dnsOptions:
               type: array
               title: DNS 选项
+              x-component: KeyValue
               description: 对应 resolv.conf DNS 配置的 Options 项，列表中每一项的键是必填的
               uniqueItems: true
               items:
                 oneOf:
                   - type: object
-                    x-component: FormGrid
                     required:
                       - name
                       - value
@@ -873,26 +851,22 @@ Properties:
               minimum: 0
               maximum: 8
               x-tooltip:
-                在异步调用失败时，函数计算在<a href='blank' target='https://help.aliyun.com/document_detail/52878.html'>某些情况</a>下会自动重试，您可以根据业务需求减少或增加对异步调用的重试。点击<a
-                href='blank' target='https://help.aliyun.com/document_detail/52878.html'>这里</a>查看更多详情。
+                在异步调用失败时，函数计算在<a href='_blank' target='https://help.aliyun.com/document_detail/52878.html'>某些情况</a>下会自动重试，您可以根据业务需求减少或增加对异步调用的重试。点击<a
+                href='_blank' target='https://help.aliyun.com/document_detail/52878.html'>这里</a>查看更多详情。
             statefulInvocation:
               title: 异步调用状态
               type: boolean
               x-tooltip:
                 有状态异步调用可以提供更好的可观测性。支持查询调用的状态，排队情况，执行情况，执行结果等。同时也提供调用级的控制能力。比如可以主动终止调用。有状态的异步调用适用于函数执行时间较长的场景的调用。点击<a
-                href='blank' target='https://help.aliyun.com/document_detail/52878.html'>这里</a>查看更多详情。<br><br>                    无状态异步调用支持的功能较少，但通常可以满足一般的业务场景。点击<a
-                href='blank' target='https://help.aliyun.com/document_detail/52878.html'>这里</a>查看更多详情。
+                href='_blank' target='https://help.aliyun.com/document_detail/52878.html'>这里</a>查看更多详情。<br><br>                    无状态异步调用支持的功能较少，但通常可以满足一般的业务场景。点击<a
+                href='_blank' target='https://help.aliyun.com/document_detail/52878.html'>这里</a>查看更多详情。
     triggers:
       title: 触发器配置
       type: array
-      x-component-props:
-        flag: type
       uniqueItems: true
       items:
         oneOf:
           - type: object
-            title: HTTP触发器
-            x-name: http
             required:
               - type
               - name
@@ -904,14 +878,50 @@ Properties:
                 description: HTTP 函数只能创建 HTTP 类型的触发器。
                 enum:
                   - http
+                  - timer
+                  - oss
+                  - log
+                  - mns_topic
+                  - cdn_events
+                  - tablestore
+                x-enum-label:
+                  - HTTP触发器
+                  - 定时触发器
+                  - OSS触发器
+                  - 日志触发器
+                  - MNS触发器
+                  - CDN触发器
+                  - Tablestore触发器
               name:
                 '$ref': '#/definitions/namePattern'
               config:
-                title: 触发器配置
                 type: object
-                required:
-                  - authType
-                  - methods
+                oneOf:
+                  - required:
+                      - authType
+                      - methods
+                  - required:
+                      - cronExpression
+                      - enable
+                  - required:
+                      - bucketName
+                      - events
+                      - filter
+                  - required:
+                      - logConfig
+                      - jobConfig
+                      - sourceConfig
+                      - enable
+                  - required:
+                      - topicName
+                  - required:
+                      - eventName
+                      - eventVersion
+                      - filter
+                      - notes
+                  - required:
+                      - instanceName
+                      - tableName
                 properties:
                   authType:
                     title: 鉴权类型
@@ -922,139 +932,42 @@ Properties:
                     x-enum-label:
                       - 无需身份验证，支持匿名访问
                       - 需要通过身份验证，不支持匿名访问
+                    x-reactions:
+                      dependencies:
+                        - '..type'
+                      fulfill:
+                        state:
+                          visible: "{{$deps[0] === 'http'}}"
                   methods:
-                    '$ref': '#/definitions/methods'
-          - type: object
-            title: 定时触发器
-            x-name: timer
-            required:
-              - type
-              - name
-              - config
-            properties:
-              type:
-                title: 触发器类型
-                default: timer
-                enum:
-                  - timer
-              name:
-                '$ref': '#/definitions/namePattern'
-              config:
-                title: 触发器配置
-                type: object
-                required:
-                  - cronExpression
-                  - enable
-                properties:
-                  cronExpression:
-                    title: cron表达式
-                    description:
-                      默认 Cron 以 UTC 时间运行，即北京时间减去 8 个小时。例如如果您想要在北京时间每天 12:00 调度函数，那么转化为
-                      UTC 时间就是每天 4:00 调度函数，即 0 0 4 * * *。                                如果您的任务需要按照特定时区运行，可以通过CRON_TZ指定时区，例如在北京时间每个月一号的凌晨四点触发函数执行，则可以使用CRON_TZ=Asia/Shanghai
-                      0 0 4 1 * *。
-                    examples:
-                      - 0 0 8 * * *
-                    type: string
-                  enable:
-                    title: 是否启用
-                    type: boolean
-                  payload:
-                    title: 触发消息
-                    description: 输入自定义的参数。该触发消息将会作为 event 中 payload 的值。
-                    type: string
-          - type: object
-            title: OSS触发器
-            x-name: oss
-            required:
-              - type
-              - name
-              - config
-            properties:
-              type:
-                title: 触发器类型
-                default: oss
-                enum:
-                  - oss
-              name:
-                '$ref': '#/definitions/namePattern'
-              config:
-                title: 触发器配置
-                type: object
-                required:
-                  - bucketName
-                  - events
-                  - filter
-                properties:
-                  bucketName:
-                    title: Bucket 名称
-                    default: ''
-                    type: string
-                    minLength: 1
-                  events:
-                    title: 触发事件
-                    description: 当 OSS 中发生指定的事件时触发当前触发器
                     type: array
-                    minItems: 1
-                    uniqueItems: true
+                    x-type: array-select
+                    title: 请求方法
+                    default:
+                      - GET
+                      - POST
                     items:
                       oneOf:
                         - type: string
-                          minLength: 1
-                  filter:
-                    title: 筛选条件
-                    type: object
-                    required:
-                      - Key
-                    properties:
-                      Key:
-                        title: 筛选条件
-                        type: object
-                        required:
-                          - Prefix
-                          - Suffix
-                        properties:
-                          Prefix:
-                            title: 文件前缀
-                            description: 要匹配的文件名称的前缀。强烈建议配置精准的前缀和后缀，避免触发事件嵌套循环触发引起额外费用，同一个Bucket下的不同触发器条件不能重叠包含。点击这里查看更多详情。
-                            examples:
-                              - source/
-                            type: string
-                            minLength: 1
-                          Suffix:
-                            title: 文件后缀
-                            description: 要匹配的文件名称的后缀。强烈建议配置精准的前缀和后缀，避免触发事件嵌套循环触发引起额外费用，同一个Bucket下的不同触发器条件不能重叠包含。点击这里查看更多详情。
-                            examples:
-                              - '.png'
-                            type: string
-                            minLength: 1
-              role:
-                '$ref': '#/definitions/roleArn'
-              sourceArn:
-                '$ref': '#/definitions/sourceArn'
-          - type: object
-            title: 日志触发器
-            x-name: log
-            required:
-              - type
-              - name
-              - config
-            properties:
-              type:
-                title: 触发器类型
-                default: log
-                enum:
-                  - log
-              name:
-                '$ref': '#/definitions/namePattern'
-              config:
-                title: 触发器配置
-                type: object
-                required:
-                  - logConfig
-                  - jobConfig
-                  - sourceConfig
-                  - enable
-                properties:
+                          title: 请求方法
+                          default:
+                            - GET
+                            - POST
+                          examples:
+                            - GET
+                            - POST
+                          enum:
+                            - GET
+                            - POST
+                            - PUT
+                            - DELETE
+                            - HEAD
+                            - OPTIONS
+                    x-reactions:
+                      dependencies:
+                        - '..type'
+                      fulfill:
+                        state:
+                          visible: "{{$deps[0] === 'http'}}"
                   logConfig:
                     title: log配置
                     type: object
@@ -1072,6 +985,12 @@ Properties:
                         description: 当前触发器会定时从此 logstore 中订阅数据，然后触发函数。
                         type: string
                         minLength: 1
+                    x-reactions:
+                      dependencies:
+                        - '..type'
+                      fulfill:
+                        state:
+                          visible: "{{$deps[0] === 'log'}}"
                   jobConfig:
                     title: job配置
                     type: object
@@ -1084,6 +1003,12 @@ Properties:
                         title: 触发间隔
                         description: 日志服务触发函数运行的间隔，比如每隔 120 秒将 logstore 在最近 120 秒内的数据取出到函数服务，以执行自定义计算。
                         type: integer
+                    x-reactions:
+                      dependencies:
+                        - '..type'
+                      fulfill:
+                        state:
+                          visible: "{{$deps[0] === 'log'}}"
                   sourceConfig:
                     title: source配置
                     type: object
@@ -1091,114 +1016,87 @@ Properties:
                       - logstore
                     properties:
                       logstore:
-                        title: source配置
                         description: 数据源的 Logstore 名称。触发器会定时从该 Logstore 订阅数据到函数计算
                         type: string
                         minLength: 1
+                    x-reactions:
+                      dependencies:
+                        - '..type'
+                      fulfill:
+                        state:
+                          visible: "{{$deps[0] === 'log'}}"
                   functionParameter:
                     title: 参数配置
                     description: 日志服务将该配置内容作为函数 event, 当事件触发时
-                    type: object
-                  enable:
-                    title: 是否开启
-                    type: boolean
-              role:
-                '$ref': '#/definitions/roleArn'
-              sourceArn:
-                '$ref': '#/definitions/sourceArn'
-          - type: object
-            title: MNS触发器
-            x-name: mns_topic
-            required:
-              - type
-              - name
-              - config
-            properties:
-              type:
-                title: 触发器类型
-                default: mns_topic
-                enum:
-                  - mns_topic
-              name:
-                '$ref': '#/definitions/namePattern'
-              config:
-                description: 触发器配置
-                type: object
-                required:
-                  - topicName
-                properties:
-                  region:
-                    title: MNS 地域
-                    description: MNS 中 Topic 所在的地域。强烈建议 MNS Topic 和 函数计算的函数在相同的地域，不同的地域会增加网络延时风险。
-                    type: string
-                  topicName:
-                    title: topic的名字
-                    description: mns topic的名字
-                    type: string
-                    minLength: 1
-                  filterTag:
-                    title: 过滤标签
-                    description: 描述了该订阅中消息过滤的标签（标签一致的消息才会被推送）,不超过 16 个字符的字符串，默认不进行消息过滤，即默认不填写该字段
-                    type: string
-                  notifyContentFormat:
-                    title: Event 格式
-                    description: 推送给函数入参 event 的格式，可选值：STREAM, JSON
-                    type: string
-                    enum:
-                      - STREAM
-                      - JSON
-                  notifyStrategy:
-                    title: 重试策略
+                    x-component: KeyValue
+                    x-reactions:
+                      dependencies:
+                        - '..type'
+                      fulfill:
+                        state:
+                          visible: "{{$deps[0] === 'log'}}"
+                  cronExpression:
+                    title: cron表达式
                     description:
-                      退避重试：重试3次，每次重试的间隔时间是10秒到20秒之间的随机值。                                指数衰减重试：重试176次，每次重试的间隔时间指数递增至512秒，总计重试时间为1天。每次重试的具体间隔为：1，2，4，8，16，32，64，128，256，512，512...512
-                      （共167个512）。
+                      默认 Cron 以 UTC 时间运行，即北京时间减去 8 个小时。例如如果您想要在北京时间每天 12:00
+                      调度函数，那么转化为 UTC 时间就是每天 4:00 调度函数，即 0 0 4 * * *。                                如果您的任务需要按照特定时区运行，可以通过CRON_TZ指定时区，例如在北京时间每个月一号的凌晨四点触发函数执行，则可以使用CRON_TZ=Asia/Shanghai
+                      0 0 4 1 * *。
+                    examples:
+                      - 0 0 8 * * *
                     type: string
-                    enum:
-                      - BACKOFF_RETRY
-                      - EXPONENTIAL_DECAY_RETRY
-                    x-enum-label:
-                      - 退避重试
-                      - 指数衰减重试
-              role:
-                '$ref': '#/definitions/roleArn'
-              sourceArn:
-                '$ref': '#/definitions/sourceArn'
-          - type: object
-            title: CDN触发器
-            x-name: cdn_events
-            required:
-              - type
-              - name
-              - config
-            properties:
-              type:
-                title: 触发器类型
-                default: cdn_events
-                enum:
-                  - cdn_events
-              name:
-                '$ref': '#/definitions/namePattern'
-              config:
-                description: 触发器配置
-                type: object
-                required:
-                  - eventName
-                  - eventVersion
-                  - filter
-                  - notes
-                properties:
-                  eventName:
+                    x-reactions:
+                      dependencies:
+                        - '..type'
+                      fulfill:
+                        state:
+                          visible: "{{$deps[0] === 'timer'}}"
+                  enable:
+                    title: 是否启用
+                    type: boolean
+                    x-reactions:
+                      dependencies:
+                        - '..type'
+                      fulfill:
+                        state:
+                          visible: "{{$deps[0] === 'timer'}}"
+                  payload:
+                    title: 触发消息
+                    description: 输入自定义的参数。该触发消息将会作为 event 中 payload 的值。
+                    type: string
+                    x-reactions:
+                      dependencies:
+                        - '..type'
+                      fulfill:
+                        state:
+                          visible: "{{$deps[0] === 'timer'}}"
+                  bucketName:
+                    title: Bucket 名称
+                    default: ''
+                    type: string
+                    minLength: 1
+                    x-reactions:
+                      dependencies:
+                        - '..type'
+                      fulfill:
+                        state:
+                          visible: "{{$deps[0] === 'oss'}}"
+                  events:
                     title: 触发事件
-                    description: 为 CDN 端触发函数执行的事件，一经创建不能更改
-                    type: string
-                    minLength: 1
-                  eventVersion:
-                    title: 触发事件版本
-                    description: 触发事件的版本号。目前仅支持1.0.0事件版本。
-                    type: string
-                    minLength: 1
+                    description: 当 OSS 中发生指定的事件时触发当前触发器
+                    type: array
+                    minItems: 1
+                    uniqueItems: true
+                    items:
+                      oneOf:
+                        - type: string
+                          minLength: 1
+                    x-reactions:
+                      dependencies:
+                        - '..type'
+                      fulfill:
+                        state:
+                          visible: "{{$deps[0] === 'oss'}}"
                   filter:
-                    description: 过滤器（至少需要一个过滤器）
                     type: object
                     required:
                       - domain
@@ -1213,51 +1111,146 @@ Properties:
                           oneOf:
                             - type: string
                               minLength: 1
+                    x-reactions:
+                      dependencies:
+                        - '..type'
+                      fulfill:
+                        state:
+                          visible: "{{$deps[0] === 'cdn_events'}}"
+                  region:
+                    title: MNS 地域
+                    description: MNS 中 Topic 所在的地域。强烈建议 MNS Topic 和 函数计算的函数在相同的地域，不同的地域会增加网络延时风险。
+                    type: string
+                    x-reactions:
+                      dependencies:
+                        - '..type'
+                      fulfill:
+                        state:
+                          visible: "{{$deps[0] === 'mns_topic'}}"
+                  topicName:
+                    title: topic的名字
+                    description: mns topic的名字
+                    type: string
+                    minLength: 1
+                    x-reactions:
+                      dependencies:
+                        - '..type'
+                      fulfill:
+                        state:
+                          visible: "{{$deps[0] === 'mns_topic'}}"
+                  filterTag:
+                    title: 过滤标签
+                    description: 描述了该订阅中消息过滤的标签（标签一致的消息才会被推送）,不超过 16 个字符的字符串，默认不进行消息过滤，即默认不填写该字段
+                    type: string
+                    x-reactions:
+                      dependencies:
+                        - '..type'
+                      fulfill:
+                        state:
+                          visible: "{{$deps[0] === 'mns_topic'}}"
+                  notifyContentFormat:
+                    title: Event 格式
+                    description: 推送给函数入参 event 的格式，可选值：STREAM, JSON
+                    type: string
+                    enum:
+                      - STREAM
+                      - JSON
+                    x-reactions:
+                      dependencies:
+                        - '..type'
+                      fulfill:
+                        state:
+                          visible: "{{$deps[0] === 'mns_topic'}}"
+                  notifyStrategy:
+                    title: 重试策略
+                    description:
+                      退避重试：重试3次，每次重试的间隔时间是10秒到20秒之间的随机值。                                指数衰减重试：重试176次，每次重试的间隔时间指数递增至512秒，总计重试时间为1天。每次重试的具体间隔为：1，2，4，8，16，32，64，128，256，512，512...512
+                      （共167个512）。
+                    type: string
+                    enum:
+                      - BACKOFF_RETRY
+                      - EXPONENTIAL_DECAY_RETRY
+                    x-enum-label:
+                      - 退避重试
+                      - 指数衰减重试
+                    x-reactions:
+                      dependencies:
+                        - '..type'
+                      fulfill:
+                        state:
+                          visible: "{{$deps[0] === 'mns_topic'}}"
+                  eventName:
+                    title: 触发事件
+                    description: 为 CDN 端触发函数执行的事件，一经创建不能更改
+                    type: string
+                    minLength: 1
+                    x-reactions:
+                      dependencies:
+                        - '..type'
+                      fulfill:
+                        state:
+                          visible: "{{$deps[0] === 'cdn_events'}}"
+                  eventVersion:
+                    title: 触发事件版本
+                    description: 触发事件的版本号。目前仅支持1.0.0事件版本。
+                    type: string
+                    minLength: 1
+                    x-reactions:
+                      dependencies:
+                        - '..type'
+                      fulfill:
+                        state:
+                          visible: "{{$deps[0] === 'cdn_events'}}"
                   notes:
                     title: 备注信息
                     type: string
                     minLength: 1
-
-              role:
-                '$ref': '#/definitions/roleArn'
-              sourceArn:
-                '$ref': '#/definitions/sourceArn'
-          - type: object
-            title: Tablestore触发器
-            x-name: tablestore
-            required:
-              - type
-              - name
-              - config
-            properties:
-              type:
-                title: 触发器类型
-                default: tablestore
-                enum:
-                  - tablestore
-              name:
-                '$ref': '#/definitions/namePattern'
-              config:
-                description: 触发器配置
-                type: object
-                required:
-                  - instanceName
-                  - tableName
-                properties:
+                    x-reactions:
+                      dependencies:
+                        - '..type'
+                      fulfill:
+                        state:
+                          visible: "{{$deps[0] === 'cdn_events'}}"
                   instanceName:
                     title: 实例名
                     description: 请选择表格存储中的实例。表格存储触发器可以在表格存储中的数据更新时自动触发函数执行。
                     type: string
                     minLength: 1
+                    x-reactions:
+                      dependencies:
+                        - '..type'
+                      fulfill:
+                        state:
+                          visible: "{{$deps[0] === 'tablestore'}}"
                   tableName:
                     title: 表名
                     description: 请选择表格存储中的表名称。表格存储触发器可以在表格存储中的数据更新时自动触发函数执行。
                     type: string
                     minLength: 1
+                    x-reactions:
+                      dependencies:
+                        - '..type'
+                      fulfill:
+                        state:
+                          visible: "{{$deps[0] === 'tablestore'}}"
               role:
                 '$ref': '#/definitions/roleArn'
+                x-reactions:
+                  dependencies:
+                    - '.type'
+                  fulfill:
+                    state:
+                      visible: "{{$deps[0] === 'oss'|| $deps[0] === 'log'|| $deps[0] ===
+                        'mns_topic'|| $deps[0] === 'cdn_events'|| $deps[0] === 'tablestore'}}"
               sourceArn:
                 '$ref': '#/definitions/sourceArn'
+                x-reactions:
+                  dependencies:
+                    - '.type'
+                  fulfill:
+                    state:
+                      visible: "{{$deps[0] === 'oss'|| $deps[0] === 'log'|| $deps[0] ===
+                        'mns_topic'|| $deps[0] === 'cdn_events'|| $deps[0] === 'tablestore'}}"
     customDomains:
       title: 域名配置
       description:
@@ -1290,7 +1283,6 @@ Properties:
                 items:
                   oneOf:
                     - type: object
-                      x-component: FormGrid
                       required:
                         - path
                       properties:
@@ -1313,27 +1305,89 @@ Properties:
               tlsConfig:
                 title: TLS 协议
                 type: object
-                x-decorator-props:
-                  labelWidth: 80
                 required:
                   - minVersion
                   - cipherSuites
                 properties:
                   minVersion:
-                    title: TLS 协议版本
                     type: string
+                    title: TLS 协议版本
+                    x-tooltip:
+                      配置 TLS 协议版本。如果不配置，则使用默认 TLS 配置。点击<a href='https://help.aliyun.com/document_detail/90763.html'
+                      target='_blank'>这里</a>查看更多详情。
                     enum:
                       - TLSv1.0
                       - TLSv1.1
                       - TLSv1.2
+                    x-enum-label:
+                      - 支持 TLS1.0 及以上版本，兼容性最高，安全性较低
+                      - 支持 TLS1.1 及以上版本，兼容性较好，安全性较好
+                      - 支持 TLS1.2 及以上版本，兼容性较好，安全性最高
                   cipherSuites:
-                    title: 加密套件
                     type: array
+                    title: 加密套件
+                    x-tooltip:
+                      配置 TLS 加密算法套件。如果不配置，则使用默认 TLS 配置。点击<a href='https://help.aliyun.com/document_detail/90763.html'
+                      target='_blank'>这里</a>查看更多详情。
+                    x-type: array-select
+                    x-reactions:
+                      dependencies:
+                        - '.minVersion'
+                      fulfill:
+                        state:
+                          visible: '{{!!$deps[0]}}'
+                    default:
+                      - TLS_RSA_WITH_AES_128_CBC_SHA
+                      - TLS_RSA_WITH_AES_256_CBC_SHA
+                      - TLS_RSA_WITH_AES_128_GCM_SHA256
+                      - TLS_RSA_WITH_AES_256_GCM_SHA384
+                      - TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA
+                      - TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA
+                      - TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+                      - TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA
+                      - TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
+                      - TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
+                      - TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+                      - TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+                      - TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305
+                      - TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305
+                      - TLS_RSA_WITH_RC4_128_SHA
+                      - TLS_RSA_WITH_3DES_EDE_CBC_SHA
+                      - TLS_RSA_WITH_AES_128_CBC_SHA256
+                      - TLS_ECDHE_ECDSA_WITH_RC4_128_SHA
+                      - TLS_ECDHE_RSA_WITH_RC4_128_SHA
+                      - TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA
+                      - TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256
+                      - TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256
+                    items:
+                      oneOf:
+                        - type: string
+                          enum:
+                            - TLS_RSA_WITH_AES_128_CBC_SHA
+                            - TLS_RSA_WITH_AES_256_CBC_SHA
+                            - TLS_RSA_WITH_AES_128_GCM_SHA256
+                            - TLS_RSA_WITH_AES_256_GCM_SHA384
+                            - TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA
+                            - TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA
+                            - TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+                            - TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA
+                            - TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
+                            - TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
+                            - TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+                            - TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+                            - TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305
+                            - TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305
+                            - TLS_RSA_WITH_RC4_128_SHA
+                            - TLS_RSA_WITH_3DES_EDE_CBC_SHA
+                            - TLS_RSA_WITH_AES_128_CBC_SHA256
+                            - TLS_ECDHE_ECDSA_WITH_RC4_128_SHA
+                            - TLS_ECDHE_RSA_WITH_RC4_128_SHA
+                            - TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA
+                            - TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256
+                            - TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256
               certConfig:
                 title: 证书配置
                 type: object
-                x-decorator-props:
-                  labelWidth: 80
                 required:
                   - certName
                   - certificate
@@ -1342,15 +1396,16 @@ Properties:
                   certName:
                     '$ref': '#/definitions/namePattern'
                   certificate:
-                    title: PEM 证书内容
+                    title: 证书
                     description:
-                      PEM 证书的内容应该以 -----BEGIN CERTIFICATE----- 开头，-----END CERTIFICATE-----
-                      结尾
+                      表示证书，内容仅支持 PEM 格式，点击<a href='https://docs.serverless-devs.com/fc/yaml/customDomains#certconfig'
+                      target='_blank'>这里</a>查看更多详情。
                     type: string
                     minLength: 1
                   privateKey:
-                    title: PEM 证书私钥
-                    description: PEM 证书的密钥应该以 -----BEGIN RSA PRIVATE KEY----- 开头，-----END
-                      RSA PRIVATE KEY----- 结尾
+                    title: 私钥
+                    description:
+                      表示私钥，内容仅支持 PEM 格式，点击<a href='https://docs.serverless-devs.com/fc/yaml/customDomains#certconfig'
+                      target='_blank'>这里</a>查看更多详情。
                     type: string
                     minLength: 1
