@@ -62,6 +62,8 @@ category: '发布&配置'
 - **有资源描述文件（Yaml）时**，可以直接执行`s layer publish`进行层的发布，例如` s layer publish --layer-name demo --code ./code`；
 - **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区，例如`s cli fc layer publish --region cn-hangzhou --layer-name demo --code ./code` ；
 
+Python 项目的依赖库需要放在`./code/python`路径下，比如`./code/python/flask`。
+
 上述命令的执行结果示例：
 
 ```text
