@@ -801,6 +801,8 @@ Properties:
               type: array
               title: DNS 选项
               x-component: KeyValue
+              x-component-props:
+                type: array
               description: 对应 resolv.conf DNS 配置的 Options 项，列表中每一项的键是必填的
               uniqueItems: true
               items:
