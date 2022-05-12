@@ -416,7 +416,6 @@ Properties:
           description:
             配置服务的链路追踪功能，启用链路追踪功能后，您可以使用 Jaeger 上传链路信息，使您能够跟踪函数的执行，帮助您快速分析和诊断
             Serverless 架构下的性能瓶颈。
-          default: Disable
           x-component: Switch
           enum:
             - Enable
@@ -634,7 +633,6 @@ Properties:
                 - 禁用
         instanceType:
           title: 实例类型
-          default: e1
           type: string
           enum:
             - e1
@@ -691,12 +689,10 @@ Properties:
           description:
             函数计算支持单实例多并发的功能，这个值用来配置单个函数实例可以同时处理多少个请求。点击这里<a href='https://help.aliyun.com/document_detail/144586.html'
             target='_blank'>查看</a>更多详情。
-          default: 1
           type: integer
         caPort:
           title: 监听端口
           description: 您的 HTTP Server 所监听的端口。
-          default: 9000
           type: integer
         environmentVariables:
           title: 环境变量
@@ -722,7 +718,6 @@ Properties:
         initializationTimeout:
           title: 初始化函数超时时间
           description: 执行初始化函数的超时时间
-          default: 30
           type: integer
         instanceLifecycleConfig:
           title: 扩展函数
@@ -750,7 +745,6 @@ Properties:
                   title: 超时时间
                   x-tooltip: 执行PreFreeze 函数的超时时间
                   type: integer
-                  default: 30
             preStop:
               type: object
               required:
@@ -772,7 +766,6 @@ Properties:
                   title: 超时时间
                   x-tooltip: 执行PreStop 函数的超时时间
                   type: integer
-                  default: 30
         customDNS:
           title: DNS 配置
           type: object
@@ -849,7 +842,6 @@ Properties:
             maxAsyncRetryAttempts:
               title: 最大重试次数
               type: integer
-              default: 3
               minimum: 0
               maximum: 8
               x-tooltip:
