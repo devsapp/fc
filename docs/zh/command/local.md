@@ -32,20 +32,19 @@ category: '调用&调试'
         - [step4：结束断点调试](#step4结束断点调试)
         - [断点调试实操视频](#断点调试实操视频-1)
     - [Intellij](#intellij)
-        - [step1：打开终端，进入目标项目下，输入启动指令](#step1打开终端进入目标项目下输入启动指令-2)
-        - [step2：启动断点调试器](#step2启动断点调试器-2)
-        - [断点调试实操视频](#断点调试实操视频-2)
+      - [step1：打开终端，进入目标项目下，输入启动指令](#step1打开终端进入目标项目下输入启动指令-2)
+      - [step2：启动断点调试器](#step2启动断点调试器-2)
+      - [断点调试实操视频](#断点调试实操视频-2)
     - [Pycharm](#pycharm)
-        - [step1：打开终端，进入目标项目下，输入启动指令](#step1打开终端进入目标项目下输入启动指令-3)
-        - [step2：启动断点调试器](#step2启动断点调试器-3)
-        - [step3：开始断点调试](#step3开始断点调试-1)
-        - [step4：结束断点调试](#step4结束断点调试-1)
-        - [断点调试实操视频](#断点调试实操视频-3)
+      - [step1：打开终端，进入目标项目下，输入启动指令](#step1打开终端进入目标项目下输入启动指令-3)
+      - [step2：启动断点调试器](#step2启动断点调试器-3)
+      - [step3：开始断点调试](#step3开始断点调试-1)
+      - [step4：结束断点调试](#step4结束断点调试-1)
+      - [断点调试实操视频](#断点调试实操视频-3)
   - [附录](#附录)
     - [默认断点调试参数](#默认断点调试参数)
 
 > ⚠️ 注意：该命令对 Docker 有所依赖，所以在使用该命令时，需要先进行 [Docker 安装](https://docs.docker.com/get-started/#download-and-install-docker) 。
-
 
 ## 命令解析
 
@@ -54,7 +53,7 @@ category: '调用&调试'
 在该命令中，包括了两个个子命令：
 
 - [invoke：本地调试事件函数](#local-invoke-命令)
-- [start：本地调试HTTP函数](#local-start-命令)
+- [start：本地调试 HTTP 函数](#local-start-命令)
 
 ## local invoke 命令
 
@@ -66,18 +65,19 @@ category: '调用&调试'
 
 ### 参数解析
 
-| 参数全称      | 参数缩写 | Yaml模式下必填 | 参数含义                                                     |
-| ------------- | -------- | -------------- | ------------------------------------------------------------ |
-| event         | e        | 选填           |传入 `event` 函数的 `event` 事件数据，可以通过 `s cli fc-event` 指令快速获取事件数据示例，详细操作参考[这里](https://github.com/devsapp/fc/blob/main/docs/zh/command/invoke.md#注意事项)|
-| event-file    | f        | 选填           |以文件形式传入 `event` 事件数据|
-| event-stdin   | s        | 选填           |以标准输入形式传入 `event` 事件数据|
-| mode          | m        | 选填           |调试模式选择，包括：<br> - `normal`: 默认模式，本地函数运行容器在函数执行完成后立刻退出<br>`server`: 本地函数运行容器一直存在，用户在其他终端发起的本地调用会复用该容器<br>`api`: 支持通过 sdk 调用本地函数|
-| config        | c        | 选填           |指定断点调试时使用的 IDE，取值范围：`vscode, pycharm, intellij`|
-| debug-port    | d        | 选填           |指定断点调试端口|
-| debug-args    | -        | 选填           |断点调试时传入的参数, 详情见附录中的默认断点调试参数|
-| debugger-path | q        | 选填           |自定义断点调试器路径，会将本地指定路径挂载到程序运行环境的 /tmp/debugger_file 之中|
-| tmp-dir       | -        | 选填           |自定义函数运行环境中 `/tmp` 路径的本机挂载路径，默认为 `./.s/tmp/invoke/serviceName/functionName`/|
-| server-port   | -        | 选填           |自定义本地监听 `server` 的端口，默认是在 7000 到 8000 间的随机端口|
+| 参数全称      | 参数缩写 | Yaml 模式下必填 | 参数含义                                                                                                                                                                                                    |
+| ------------- | -------- | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| event         | e        | 选填            | 传入 `event` 函数的 `event` 事件数据，可以通过 `s cli fc-event` 指令快速获取事件数据示例，详细操作参考[这里](https://github.com/devsapp/fc/blob/main/docs/zh/command/invoke.md#注意事项)                    |
+| event-file    | f        | 选填            | 以文件形式传入 `event` 事件数据                                                                                                                                                                             |
+| event-stdin   | s        | 选填            | 以标准输入形式传入 `event` 事件数据                                                                                                                                                                         |
+| mode          | m        | 选填            | 调试模式选择，包括：<br> - `normal`: 默认模式，本地函数运行容器在函数执行完成后立刻退出<br>`server`: 本地函数运行容器一直存在，用户在其他终端发起的本地调用会复用该容器<br>`api`: 支持通过 sdk 调用本地函数 |
+| config        | c        | 选填            | 指定断点调试时使用的 IDE，取值范围：`vscode, pycharm, intellij`                                                                                                                                             |
+| debug-port    | d        | 选填            | 指定断点调试端口                                                                                                                                                                                            |
+| debug-args    | -        | 选填            | 断点调试时传入的参数, 详情见附录中的默认断点调试参数                                                                                                                                                        |
+| debugger-path | q        | 选填            | 自定义断点调试器路径，会将本地指定路径挂载到程序运行环境的 /tmp/debugger_file 之中                                                                                                                          |
+| tmp-dir       | -        | 选填            | 自定义函数运行环境中 `/tmp` 路径的本机挂载路径，默认为 `./.s/tmp/invoke/serviceName/functionName`/                                                                                                          |
+| server-port   | -        | 选填            | 自定义本地监听 `server` 的端口，默认是在 7000 到 8000 间的随机端口                                                                                                                                          |
+| sdk-version   | -        | 选填            | 选填                                                                                                                                                                                                        | 使用旧版的路径调用函数。取值范围：`2016-08-15` |
 
 > 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`, `--help`等），详情可参考 [Serverless Devs 全局参数文档](https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/zh/command/readme.md#%E5%85%A8%E5%B1%80%E5%8F%82%E6%95%B0)
 
@@ -102,15 +102,15 @@ RequestId: 0ba8ac3f-abf8-46d4-b61f-8e0f9f265d6a 	 Billed Duration: 146 ms 	 Memo
 
 ### 参数解析
 
-| 参数全称      | 参数缩写 | Yaml模式下必填 | 参数含义                                                     |
-| ------------- | -------- | -------------- | ------------------------------------------------------------ |
-| config        | c        | 选填           | 指定断点调试时使用的 IDE，可选：`vscode, pycharm, intellij` |
-| debug-port    | d        | 选填           | 指定断点调试端口 |
-| custom-domain | -        | 选填           | 以自定义域名作为 HTTP Server 的访问 url |
-| debug-args    | -        | 选填           | 断点调试时传入的参数，详情见附录中的默认断点调试参数 |
-| debugger-path | -        | 选填           | 自定义断点调试器路径，会将本地指定路径挂载到程序运行环境的 /tmp/debugger_file 之中 |
-| tmp-dir       | -        | 选填           | 自定义函数运行环境中 `/tmp` 路径的本机挂载路径，默认为 `./.s/tmp/invoke/serviceName/functionName/` |
-| server-port   | -        | 选填           | 自定义本地监听 HTTP Server 的端口，默认是在 7000 到 8000 间的随机端口 |
+| 参数全称      | 参数缩写 | Yaml 模式下必填 | 参数含义                                                                                           |
+| ------------- | -------- | --------------- | -------------------------------------------------------------------------------------------------- |
+| config        | c        | 选填            | 指定断点调试时使用的 IDE，可选：`vscode, pycharm, intellij`                                        |
+| debug-port    | d        | 选填            | 指定断点调试端口                                                                                   |
+| custom-domain | -        | 选填            | 以自定义域名作为 HTTP Server 的访问 url                                                            |
+| debug-args    | -        | 选填            | 断点调试时传入的参数，详情见附录中的默认断点调试参数                                               |
+| debugger-path | -        | 选填            | 自定义断点调试器路径，会将本地指定路径挂载到程序运行环境的 /tmp/debugger_file 之中                 |
+| tmp-dir       | -        | 选填            | 自定义函数运行环境中 `/tmp` 路径的本机挂载路径，默认为 `./.s/tmp/invoke/serviceName/functionName/` |
+| server-port   | -        | 选填            | 自定义本地监听 HTTP Server 的端口，默认是在 7000 到 8000 间的随机端口                              |
 
 > 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`, `--help`等），详情可参考 [Serverless Devs 全局参数文档](https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/zh/command/readme.md#%E5%85%A8%E5%B1%80%E5%8F%82%E6%95%B0)
 
@@ -159,20 +159,20 @@ RequestId: 0ba8ac3f-abf8-46d4-b61f-8e0f9f265d6a 	 Billed Duration: 146 ms 	 Memo
 - 存在 customDomains 配置
   1. 指定 --custom-domain 参数, 使用指定域名配置的路径
   2. 未指定 --custom-domain
-    2.1 如果 customDomains 仅有一个，直接使用此域名配置的路径
-    2.2 如果存在多个则产生`交互`，选择配置的域名路径
-  > 如果使用系统域名路径，使用 --custom-domain system 或者选择时候选择 system
+     2.1 如果 customDomains 仅有一个，直接使用此域名配置的路径
+     2.2 如果存在多个则产生`交互`，选择配置的域名路径
+     > 如果使用系统域名路径，使用 --custom-domain system 或者选择时候选择 system
 
 ## 调用时模拟 NAS 目录
 
-当yaml中配置了nasConfig时，local 可以模拟 nas 的目录结构，例如：
+当 yaml 中配置了 nasConfig 时，local 可以模拟 nas 的目录结构，例如：
 
 `s.yaml` 配置如下
 
-````yaml
+```yaml
 services:
   helloworld:
-    component:  fc
+    component: fc
     props:
       region: cn-hangzhou
       service:
@@ -194,7 +194,7 @@ services:
         handler: index.handler
         memorySize: 128
         timeout: 60
-````
+```
 
 `code/index.py` 内容如下
 
@@ -215,10 +215,13 @@ def handler(event, context):
 <img src="https://img.alicdn.com/imgextra/i4/O1CN01NqMcAX1h6vhheEDlz_!!6000000004229-2-tps-2494-1536.png"/>
 
 ## 断点调试
+
 ### VSCode
+
 使用 VSCode 进行断点调试时，流程十分简单。
 
 #### 调试 Event 函数
+
 ##### step1：打开终端，进入目标项目下，输入启动指令
 
 ```
@@ -229,6 +232,7 @@ $ s local invoke --config vscode --debug-port 3000
 ![](https://img.alicdn.com/imgextra/i3/O1CN01DcU4ca1VBiSYwrFh4_!!6000000002615-2-tps-1142-387.png)
 
 ##### step2：启动断点调试器
+
 打开 VSCode 界面，然后打开 s.yml 中 codeUri 所存放的源代码，为其打上断点，接着点击开始调试按钮，具体执行如下图所示。
 ![](https://img.alicdn.com/imgextra/i3/O1CN01yycXnv1vzLO4cB9pv_!!6000000006243-2-tps-750-410.png)
 
@@ -241,29 +245,35 @@ $ s local invoke --config vscode --debug-port 3000
   [![Watch the video](https://img.alicdn.com/imgextra/i4/O1CN01ejBHk91EveiZyOm7j_!!6000000000414-2-tps-661-369.png)](https://images.devsapp.cn/s-tool/zh/debug/VScode-%E6%9C%AC%E5%9C%B0%E8%B0%83%E8%AF%95Event%E5%87%BD%E6%95%B0.mp4)
 
 - php7.2 event 函数
-php7.2 runtime 的本地调试 IDE 建议使用 VSCode，其断点调试步骤与其他语言有一定差异性，因此单独进行介绍
+  php7.2 runtime 的本地调试 IDE 建议使用 VSCode，其断点调试步骤与其他语言有一定差异性，因此单独进行介绍
 
   [![Watch the video](https://img.alicdn.com/imgextra/i3/O1CN010wEPmM1rFlVc9UIb6_!!6000000005602-2-tps-673-376.png)](https://images.devsapp.cn/s-tool/zh/debug/VSCode-%E6%9C%AC%E5%9C%B0%E8%B0%83%E8%AF%95php7.2event%E5%87%BD%E6%95%B0.mp4)
 
 #### 调试 HTTP 函数
+
 ##### step1：打开终端，进入目标项目下，输入启动指令
 
 ```
 $ s local start --config vscode --debug-port 3000
 ```
+
 启动指令执行后，本地的函数计算执行容器会阻塞等待调用，并打印访问 http 函数的 url 字段。
 
 ##### step2：启动断点调试器
+
 打开 VSCode 界面，然后打开 s.yml 中 codeUri 存放的源代码，为其打上断点，接着点击开始调试按钮，如图所示。此时在启动指令终端页面，会出现 "Debugger attached." 字段，说明调试器启动成功，等待被调用。
 ![](https://img.alicdn.com/imgextra/i1/O1CN01qE10mn1T09Dv5aCO3_!!6000000002319-2-tps-793-453.png)
 
 ##### step3：开始断点调试
+
 可以通过 curl 指令、浏览器等方式访问 Http 函数的 URL，此时程序启动，断点调试开始。
 
 ##### step4：结束断点调试
+
 调试完成后，主动关闭断点调试器，然后在启动指令终端页面，执行 Ctrl+C 即可退出调试进程。
 
 ##### 断点调试实操视频
+
 - Http 函数
 
   [![Watch the video](https://img.alicdn.com/imgextra/i2/O1CN01MpMnk31IJQ7I1uh9D_!!6000000000872-2-tps-671-375.png)](https://images.devsapp.cn/s-tool/zh/debug/VSCode%E6%9C%AC%E5%9C%B0%E8%B0%83%E8%AF%95HTTP%E5%87%BD%E6%95%B0.mp4)
@@ -286,6 +296,7 @@ $ s local invoke --config intellij --debug-port 3000
 ```
 
 ##### step2：启动断点调试器
+
 - 打开 `Intellij` 界面，在菜单栏依次选择 `Run -> Edit Configurations`, 随后如下图所示，新建一个 `Remote JVM Debug`。
   ![](https://img.alicdn.com/imgextra/i3/O1CN01rauocH1lv5Y3crJOB_!!6000000004880-2-tps-1080-389.png)
 
@@ -300,6 +311,7 @@ $ s local invoke --config intellij --debug-port 3000
 [![Watch the video](https://img.alicdn.com/imgextra/i3/O1CN0189GDWP23hxH8tsgdB_!!6000000007288-2-tps-670-375.png)](https://images.devsapp.cn/s-tool/zh/debug/Intellij-%E6%9C%AC%E5%9C%B0%E8%B0%83%E8%AF%95event%E5%87%BD%E6%95%B0.mp4)
 
 ### Pycharm
+
 Pycharm 支持的运行时有 python2.7 和 python3 两个版本。在 Pycharm 中进行断点调试时，不仅需要在 IDE 中配置断点调试器，还需要对使用者的源码进行侵入式修改，由于操作步骤内容与常规内容有所不同，接下来我们详解一下这部分的调试步骤。
 
 ##### step1：打开终端，进入目标项目下，输入启动指令
@@ -321,19 +333,20 @@ $ s local start --config pycharm --debug-port 3000
 启动断点调试器主要包含 IDE 断点调试器配置和源码更新两部分。
 
 - 打开 pycharm 界面，在菜单栏依次选择 `Run -> Edit Configurations`。
-  
 - 如图中所示，新建一个 `Python Debug Server`。
-![](https://img.alicdn.com/imgextra/i1/O1CN01QlrjAe1pVg2MNLEPp_!!6000000005366-2-tps-1080-391.png)
+  ![](https://img.alicdn.com/imgextra/i1/O1CN01QlrjAe1pVg2MNLEPp_!!6000000005366-2-tps-1080-391.png)
 
 - 设置自定义调试器名称，并基于图五中获取的内容配置 IDE host name、Port 以及 Path mappings 这三个调试器配置的详情，如图中所示。
-![](https://img.alicdn.com/imgextra/i2/O1CN010qBsQo22AgtMCu8NL_!!6000000007080-2-tps-1080-625.png)
+  ![](https://img.alicdn.com/imgextra/i2/O1CN010qBsQo22AgtMCu8NL_!!6000000007080-2-tps-1080-625.png)
 
 - 打开 s.yml 中 codeUri 存放的源代码，将例图中（Tips for PyCharm remote debug 内容示例）的代码内容粘贴到代码开头，然后按需在源码指定位置打上断点，接着点击开始调试按钮，具体操作如图 （pycharm 启动断点调试器）所示。
-![](https://img.alicdn.com/imgextra/i4/O1CN01ENud231UW2PkcpN8x_!!6000000002524-2-tps-1080-264.png)
-![](https://img.alicdn.com/imgextra/i2/O1CN01zRnzCw1LJpJcXBFZN_!!6000000001279-2-tps-1080-676.png)
+  ![](https://img.alicdn.com/imgextra/i4/O1CN01ENud231UW2PkcpN8x_!!6000000002524-2-tps-1080-264.png)
+  ![](https://img.alicdn.com/imgextra/i2/O1CN01zRnzCw1LJpJcXBFZN_!!6000000001279-2-tps-1080-676.png)
 
 ##### step3：开始断点调试
+
 打开终端，并进入目标项目，执行启动指令
+
 > 此时可以不用带上断点调试的相关参数。
 
 ```
@@ -347,11 +360,13 @@ $ s local start
 - Event 函数启动指令执行后会直接进入断点调试阶段
 
 - Http 函数启动指令执行后，可以先通过 curl 指令、浏览器等方式访问 Http 函数的 URL，此时程序会启动，断点调试就开始了。
-  
+
 ##### step4：结束断点调试
+
 调试完成后，主动关闭断点调试器，对于 Http 函数而言，在启动指令终端页面，需执行 `Ctrl+C` 方可退出调试进程。
 
 ##### 断点调试实操视频
+
 - Event 函数
 
   [![Watch the video](https://img.alicdn.com/imgextra/i4/O1CN01DSJxlj28W775uuLns_!!6000000007939-2-tps-671-376.png)](https://images.devsapp.cn/s-tool/zh/debug/Pycharm-%E6%9C%AC%E5%9C%B0%E8%B0%83%E8%AF%95event%E5%87%BD%E6%95%B0.mp4)
@@ -364,11 +379,11 @@ $ s local start
 
 ### 默认断点调试参数
 
-| **Runtime** | **Default Debug Args** |
-| --- | --- |
-| nodejs 6 | `--debug-brk=${debugPort}` |
-| nodejs 8/10/12/14 | `--inspect-brk=0.0.0.0:${debugPort}` |
-| python 2.7/3/3.9 | `-m ptvsd --host 0.0.0.0 --port ${debugPort} --wait` |
-| java 8 | `-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,quiet=y,address=${debugPort}` |
-| java 11 | `-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,quiet=y,address=*:${debugPort}` |
-| php7.2 | `remote_enable=1 remote_autostart=1 remote_port=${debugPort} remote_host=${ip.address()}` |
+| **Runtime**       | **Default Debug Args**                                                                    |
+| ----------------- | ----------------------------------------------------------------------------------------- |
+| nodejs 6          | `--debug-brk=${debugPort}`                                                                |
+| nodejs 8/10/12/14 | `--inspect-brk=0.0.0.0:${debugPort}`                                                      |
+| python 2.7/3/3.9  | `-m ptvsd --host 0.0.0.0 --port ${debugPort} --wait`                                      |
+| java 8            | `-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,quiet=y,address=${debugPort}`      |
+| java 11           | `-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,quiet=y,address=*:${debugPort}`    |
+| php7.2            | `remote_enable=1 remote_autostart=1 remote_port=${debugPort} remote_host=${ip.address()}` |

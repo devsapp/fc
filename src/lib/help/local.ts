@@ -163,6 +163,12 @@ export const LOCAL_START_HELP_INFO = [
         type: String,
       },
       {
+        name: 'sdk-version',
+        description: '[Optional] Old edition call function using path',
+        typeLabel: '{underline [2016-08-15]}',
+        type: String,
+      },
+      {
         name: 'custom-domain',
         description: '[Optional] Access in the form of custom domain',
         type: String,

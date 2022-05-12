@@ -56,6 +56,12 @@ export const INVOKE = [
         type: Boolean,
       },
       {
+        name: 'sdk-version',
+        description: '[Optional] Old edition call function using path',
+        typeLabel: '{underline [2016-08-15]}',
+        type: String,
+      },
+      {
         name: 'invocation-type',
         description: '[Optional] Invocation type, value: async/sync, default: sync',
         typeLabel: '{underline [async/sync]}',

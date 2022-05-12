@@ -17,13 +17,6 @@ export const BUILD_HELP_INFO = [
     header: 'Options',
     optionList: [
       {
-        name: 'dockerfile',
-        description: '[Optional] Specify the dockerfile path',
-        alias: 'f',
-        defaultOption: false,
-        type: String,
-      },
-      {
         name: 'use-docker',
         description: '[Optional] Use docker container to build functions',
         alias: 'd',
@@ -35,6 +28,43 @@ export const BUILD_HELP_INFO = [
         description: '[Optional] Use buildkit to build functions',
         defaultOption: false,
         type: Boolean,
+      },
+      {
+        name: 'use-sandbox',
+        description: '[Optional] Enter the sandbox container of the corresponding runtime',
+        defaultOption: false,
+        type: Boolean,
+      },
+      {
+        name: 'dockerfile',
+        description: '[Optional] Specify the dockerfile path.Use the use docker or use buildkit to build the image of the custom container runtime',
+        alias: 'f',
+        defaultOption: false,
+        type: String,
+      },
+      {
+        name: 'custom-env',
+        description: '[Optional] Custom environment variables injected during build',
+        defaultOption: false,
+        type: String,
+      },
+      {
+        name: 'custom-args',
+        description: '[Optional] Additional parameters when using the default build behavior, such as specifying a pypi or NPM source',
+        defaultOption: false,
+        type: String,
+      },
+      {
+        name: 'command',
+        description: '[Optional] Using custom commands',
+        defaultOption: false,
+        type: String,
+      },
+      {
+        name: 'script-file',
+        description: '[Optional] Using custom shell scripts',
+        defaultOption: false,
+        type: String,
       },
     ],
   },
