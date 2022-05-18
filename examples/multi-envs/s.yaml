@@ -15,17 +15,17 @@ services:
           vpcId: ${environment.outputs.vpcId}
           securityGroupId: ${environment.outputs.securityGroupId}
           vswitchIds:
-          - ${environment.outputs.vswitchId}
+            - ${environment.outputs.vswitchId}
         logConfig:
           project: ${environment.outputs.slsProject}
           logstore: ${environment.outputs.slsLogStore}
-#        nasConfig:
-#          userId: 10003
-#          groupId: 10003
-#          mountPoints:
-#            - serverAddr: ${environment.outputs.nasMountTargetId}
-#              nasDir: /fc-deploy-service
-#              fcDir: /mnt/auto
+        nasConfig:
+          userId: 10003
+          groupId: 10003
+          mountPoints:
+            - serverAddr: ${environment.outputs.nasMountTargetId}
+              nasDir: /fc-deploy-service
+              fcDir: /mnt/auto
       function:
         name: multi-envs
         codeUri: ./

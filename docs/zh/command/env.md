@@ -7,42 +7,283 @@ category: '其他功能'
 
 # Env 命令
 
-利用 `env` 命令帮助您构建不同的测试、预发、生产环境，并自动完成基础设施的搭建
+利用 `env` 命令帮助您可以:
+1. 通过基础设施即代码（IaC）的能力定义可复用的基础设施模板
+2. 基于模板构建不同的测试、预发、生产等互相隔离的环境，并自动完成基础设施的搭建
+3. 将函数的同一份代码部署到不同的环境上
 
 - [命令解析](#命令解析)
-- [权限说明](#权限说明)
-- [env init 命令](#env-init-命令)
-  - [参数解析](#参数解析)
-  - [操作案例](#操作案例)
-- [env deploy 命令](#env-deploy-命令)
-  - [参数解析](#参数解析-1)
-- [env info / list 命令](#env-info--list-命令)
+- [模板操作](#模板操作)
+  - [模板开发](#模板开发)
+    - [模板代码包结构](#模板代码包结构)
+    - [模板示例](#模板示例)
+  - [env init-template 命令](#env-init-template-命令)
+  - [env apply-template 命令](#env-apply-template-命令)
+  - [env describe-template 命令](#env-describe-template-命令)
+  - [env remove-template 命令](#env-remove-template-命令)
+  - [env list-templates 命令](#env-list-templates-命令)
+- [环境操作](#环境操作)
+  - [权限说明](#权限说明)
+  - [env init 命令](#env-init-命令)
+    - [参数解析](#参数解析)
+    - [操作案例](#操作案例)
+  - [env deploy 命令](#env-deploy-命令)
+    - [参数解析](#参数解析-1)
+  - [env info / list 命令](#env-info--list-命令)
 - [进阶操作](#进阶操作)
   - [指定环境部署服务](#指定环境部署服务)
   - [使用环境的信息配置服务](#使用环境的信息配置服务)
   - [使用差异化配置](#使用差异化配置)
 - [背景及原理](#背景及原理)
   - [Serverless Devs多环境](#serverless-devs多环境)
-  - [Infrastructure as Template](#infrastructure-as-template)
+  - [Infrastructure as Code](#infrastructure-as-code)
   - [整体工作流](#整体工作流)
   - [概念组成](#概念组成)
     - [Application](#application)
     - [Service](#service)
     - [Environment](#environment)
-- [操作案例: 使用FC部署NodeJs函数](#操作案例-使用fc部署nodejs函数)
-  - [平台管理员定义基础设施模板](#平台管理员定义基础设施模板)
-  - [研发用户使用 S 进行操作](#研发用户使用-s-进行操作)
-    - [创建工程](#创建工程)
+- [操作案例: 管理员/开发人员围绕 FC 协作](#操作案例-管理员开发人员围绕-fc-协作)
+  - [管理员：定义环境模板](#管理员定义环境模板)
+    - [定义 IaC](#定义-iac)
+    - [定义权限策略](#定义权限策略)
+    - [发布模板](#发布模板)
+  - [管理员：为开发人员提供环境](#管理员为开发人员提供环境)
     - [创建测试环境](#创建测试环境)
-    - [部署服务到测试环境](#部署服务到测试环境)
     - [创建生产环境](#创建生产环境)
+  - [开发人员：将函数部署到指定环境](#开发人员将函数部署到指定环境)
+    - [创建工程](#创建工程)
+    - [部署服务到测试环境](#部署服务到测试环境)
     - [部署服务到生产环境，并使用差异化配置](#部署服务到生产环境并使用差异化配置)
 
 ## 命令解析
 
 当执行命令 `env -h` / `env --help` 时，可以获取帮助文档。
 
-## 权限说明
+## 模板操作
+
+和开发人员开发函数代码不同，环境模板主要针对运维人员和平台管理员，采用基础设施即代码(IaC)来定义资源。通过环境模板，可以对开发人员屏蔽基础设施的复杂性并且有效控制权限半径，让开发人员自助、安全地部署自己的服务。
+
+### 模板开发
+环境模板采用IaC来定义资源，目前只支持 [Terraform](https://www.terraform.io/) 类型的模板。
+#### 模板代码包结构
+
+环境模板的代码目录要包含两类文件：
+1. `IaC` 文件：即 `Terraform` 的 `.tf` 文件，目录中可以有多个 `.tf` 文件，注册模板时组件会将所有 `.tf` 合并成一份 `HCL` 代码，关于一个目录下多个 `.tf` 文件的合并可以参考 [官方文档](https://www.terraform.io/language/files/override)
+2. `policy.json`：[RAM](https://www.aliyun.com/product/ram?spm=5176.19720258.J_3207526240.103.51212c4aruIq9h) 的权限策略 `数组`，支持自定义策略和系统策略，声明了使用该模板创建资源所需要的权限，授信对象是 [函数计算](https://www.aliyun.com/product/fc?spm=5176.19720258.J_3207526240.63.2c5d2c4apUM9KP)。当使用该模板创建环境，组件会创建相应的 [服务角色](https://help.aliyun.com/document_detail/160674.html) 并绑定模板定义的权限策略。部署环境时，函数计算会通过角色扮演的方式访问模板中定义的资源。关于权限策略的介绍可以参考 [官方文档](https://help.aliyun.com/document_detail/93732.html)
+
+模板 IaC 文件的核心要素为：
+1. variable：定义模板的参数，用户使用该模板创建环境时输入参数的值
+2. resource：定义模板的资源，环境部署时完成资源的供给
+3. outputs：定义模板的输出，环境部署成功后返回相应输出，可以被其他服务所访问
+
+![alt](https://img.alicdn.com/imgextra/i3/O1CN01OvoT9W1nkfmVlLi6o_!!6000000005128-2-tps-2234-672.png)
+
+#### 模板示例
+
+定义一个只创VPC、VSwitch的环境模板：
+* IaC（`.tf`）
+  ```hcl
+  resource "random_id" "this" {
+    byte_length = 8
+  }
+  locals {
+    default_description  = "Auto created by serverless devs with terraform"
+    default_name_prefix  = var.namePrefix == "" ? "serverless-devs" : var.namePrefix
+    default_name_suffix  = random_id.this.hex
+    default_name         = "${local.default_name_prefix}-${local.default_name_suffix}"
+    default_vpc_cdir     = "192.168.0.0/16"
+    default_vswitch_cdir = "192.168.1.0/24"
+  }
+
+  resource "alicloud_vpc" "vpc" {
+    vpc_name    = local.default_name
+    cidr_block  = local.default_vpc_cdir
+    description = local.default_description
+  }
+  data "alicloud_fc_zones" "fc-zone" {}
+
+  resource "alicloud_vswitch" "vsw" {
+    vpc_id       = alicloud_vpc.vpc.id
+    vswitch_name = local.default_name
+    cidr_block   = local.default_vswitch_cdir
+    zone_id      = data.alicloud_fc_zones.fc-zone.ids.0
+    description  = local.default_description
+  }
+
+  variable "namePrefix" {
+    default = ""
+    type    = string
+  }
+
+  output "vpcId" {
+    value = alicloud_vpc.vpc.id
+  }
+
+  output "vswitchId" {
+    value = alicloud_vswitch.vsw.id
+  }
+  ``` 
+
+* `policy.json`
+  ```json
+  [
+    {
+      "statement": [
+        {
+          "Effect": "Allow",
+          "Action": [
+            "vpc:CreateVpc",
+            "vpc:CreateVSwitch",
+            "vpc:DeleteVpc",
+            "vpc:DeleteVSwitch",
+            "vpc:ModifyVpcAttribute",
+            "vpc:ModifyVSwitchAttribute"
+          ],
+          "Resource": "*"
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "fc:GetAccountSettings"
+          ],
+          "Resource": "*"
+        }
+      ]
+    },
+    "AliyunVPCReadOnlyAccess"
+  ]
+  ```
+
+### env init-template 命令
+通过 `s env init-template` 可以进入引导式操作创建一个环境模板
+
+```shell
+s env init-template
+```
+
+执行后，会提示您输入一系列参数，具体参数含义如下
+
+| 参数全称    | 例子         | 参数含义                                    |
+| ----------- | ------------ | ------------------------------------------- |
+| name        | testing      | 环境模板名字                                |
+| description | it is a demo | 环境模板描述                                |
+| engine      | terraform    | IaC 执行引擎，目前只支持 `Terraform`        |
+| code        | ./infra      | [模板代码目录](#模板开发)，绝对或者相对路径 |
+
+![Alt Text](https://img.alicdn.com/imgextra/i4/O1CN01uF01GS1VY9sOWHe7Q_!!6000000002664-1-tps-1158-484.gif)
+
+### env apply-template 命令
+通过 `s env apply-template` 可以创建或者更新一个环境模板
+
+```shell
+s env apply-template --name testing --description 'it is a demo' --code ./infra
+```
+参数含义如下：
+
+| 参数全称    | 是否必填 | 参数含义                                    |
+| ----------- | -------- | ------------------------------------------- |
+| name        | True     | 环境模板名字                                |
+| description | False    | 环境模板描述                                |
+| code        | False    | [模板代码目录](#模板开发)，绝对或者相对路径 |
+
+操作成功后，会返回当前模板的 [详细信息](#env-describe-template-命令)
+### env describe-template 命令
+
+通过 `s env describe-template` 可以查看环境模板详情
+
+```shell
+s env describe-template --name testing
+```
+查询结果会返回当前模板的 `varibale`、`outputs`、`状态`、 `policy`、`文本内容`、`版本` 等信息
+```yaml
+  name:        test-template
+  description: test
+  type:        EnvironmentTemplate
+  engine:      terraform
+  version:     1
+  generation:  0
+  status: 
+    observedGeneration: 0
+    observedTime:       2022-05-18T13:17:37Z
+    outputs: 
+      - 
+        name:      vpcId
+        sensitive: false
+      - 
+        name:      vswitchId
+        sensitive: false
+    phase:              DeploySuccess
+    variables: 
+      - 
+        defaultJson: ""
+        name:        namePrefix
+        nullable:    true
+        sensitive:   false
+        type:        string
+    ramPolicy:          [{"statement":[{"Effect":"Allow","Action":["vpc:CreateVpc","vpc:CreateVSwitch","vpc:DeleteVpc","vpc:DeleteVSwitch","vpc:ModifyVpcAttribute","vpc:ModifyVSwitchAttribute"],"Resource":"*"},{"Effect":"Allow","Action":["fc:GetAccountSettings"],"Resource":"*"}]},"AliyunVPCReadOnlyAccess"]
+    rawContent: 
+      """
+        
+        resource "random_id" "this" {
+          byte_length = 8
+        }
+        locals {
+          default_description  = "Auto created by serverless devs with terraform"
+          default_name_prefix  = var.namePrefix == "" ? "serverless-devs" : var.namePrefix
+          default_name_suffix  = random_id.this.hex
+          default_name         = "${local.default_name_prefix}-${local.default_name_suffix}"
+          default_vpc_cdir     = "192.168.0.0/16"
+          default_vswitch_cdir = "192.168.1.0/24"
+        }
+        
+        resource "alicloud_vpc" "vpc" {
+          vpc_name    = local.default_name
+          cidr_block  = local.default_vpc_cdir
+          description = local.default_description
+        }
+        data "alicloud_fc_zones" "fc-zone" {}
+        
+        resource "alicloud_vswitch" "vsw" {
+          vpc_id       = alicloud_vpc.vpc.id
+          vswitch_name = local.default_name
+          cidr_block   = local.default_vswitch_cdir
+          zone_id      = data.alicloud_fc_zones.fc-zone.ids.0
+          description  = local.default_description
+        }
+        
+        variable "namePrefix" {
+          default = ""
+          type    = string
+        }
+        
+        output "vpcId" {
+          value = alicloud_vpc.vpc.id
+        }
+        
+        output "vswitchId" {
+          value = alicloud_vswitch.vsw.id
+        }
+        
+      """
+```
+### env remove-template 命令
+通过 `s env remove-template` 可以删除一个环境模板，但不会删除具体的云资源。
+
+```shell
+s env remove-template --name testing
+```
+**注意：如果环境模板被某个环境所引用，环境模板会删除失败，必须先删除环境后再删除模板**
+
+### env list-templates 命令
+通过 `s env list-templates` 可以查询账号下所有的环境模板。
+
+```shell
+s env list-templates
+```
+
+## 环境操作
+
+### 权限说明
 
 环境操作基础设施时需要操作对应云资源的权限，需要授予函数计算服务账号以角色扮演的方式访问您的云资源，因此需要：
 
@@ -51,7 +292,7 @@ category: '其他功能'
 
 您可以在环境中使用指定的 `roleArn`，也可以授权让 Serverless Devs 自动创建环境所需要的角色
 
-## env init 命令
+### env init 命令
 
 通过 `s env init` 可以创建一个环境
 
@@ -59,7 +300,7 @@ category: '其他功能'
 s env init --filename fc-env-testing.yaml
 ```
 
-执行成功后，会在本地 .s 目录下创建 `env/fc-env-testing.yaml` 描述文件，您可以查看并编辑该文件
+执行成功后，会在本地 `.s` 目录下创建 `env/fc-env-testing.yaml` 描述文件，您可以查看并编辑该文件
 
 ```yaml
 #.s/env/fc-env-testing.yaml
@@ -74,22 +315,22 @@ props: #以下参数由环境模板定义
   createNas: true #是否创建nas文件系统、挂载点，默认false
 ```
 
-### 参数解析
+#### 参数解析
 
 
 | 参数全称  | 参数缩写 | Yaml模式下必填 | 例子         | 参数含义                                            |
-| ----------- | ---------- | ---------------- | -------------- | ----------------------------------------------------- |
+| --------- | -------- | -------------- | ------------ | --------------------------------------------------- |
 | name      | n        | 选填           | testing      | 指定环境名                                          |
 | filename  | f        | 选填           | testing.yaml | 指定环境配置文件进行创建                            |
 | overwrite | o        | 选填           | false        | 当本地存在相同名称的环境时是否进行覆盖，默认值false |
 
-### 操作案例
+#### 操作案例
 
 可以直接通过 `s env init` 命令，执行成功后会进入引导式操作，提示您输入环境名以及其他属性
 
 ![Alt Text](https://img.alicdn.com/imgextra/i4/O1CN01fEkUrH1MnsuywXgX4_!!6000000001480-1-tps-1668-606.gif)
 
-## env deploy 命令
+### env deploy 命令
 
 通过 `s env deploy` 可以部署指定的环境
 
@@ -97,16 +338,16 @@ props: #以下参数由环境模板定义
 s env deploy --name fc-env-testing
 ```
 
-执行指令后，Serverless Devs 会进行环境基础设施的搭建，此时环境的所有信息都是持久化的，您不用担心本地配置文件删除后无法恢复的问题
+执行指令后，Serverless Devs 会使用 [环境模板](#模板操作) 中声明的 IaC 完成环境基础设施的搭建，此时环境的所有信息都是持久化的，您不用担心本地配置文件删除后无法恢复的问题
 
-### 参数解析
+#### 参数解析
 
 
 | 参数全称 | 参数缩写 | Yaml模式下必填 | 例子    | 参数含义   |
-| ---------- | ---------- | ---------------- | --------- | ------------ |
+| -------- | -------- | -------------- | ------- | ---------- |
 | name     | n        | 必填           | testing | 指定环境名 |
 
-## env info / list 命令
+### env info / list 命令
 
 通过 `s env info` 可以查询指定环境信息
 
@@ -122,7 +363,7 @@ s env info --name fc-env-testing
 
 ### 指定环境部署服务
 
-在  `s deploy` 命令的基础上，可以通过 `s deploy --env` 将函数部署到指定的环境中
+在 `s deploy` 命令的基础上，可以通过 `s deploy --env` 将函数部署到指定的环境中
 
 ```
 s deploy --env fc-env-testing
@@ -218,31 +459,29 @@ s deploy --env fc-test-2 --overlays overlay.yaml --patch-strategy merge
 Serverless Devs 是一款面向 Serverless 应用生命周期的 DevsOps 工具，目前缺少对多环境的内在支持。目前的做法是为不同的环境维护不同的 s.yaml，或者
 通过环境变量的方式用以区分多环境，这种方式的弊端主要有3点：
 
-1. 配置维护成本比较高，当需要更新环境时需要重新发起部署，对接 CI/CD 系统时，就要重新发起一次完整的发布上线操作。但通常情况下环境的变化(例如升降配、更新权限)
-   对程序来说是安全的，不需要发起一次上线；
+1. 配置维护成本比较高，当需要更新环境时需要重新发起部署，对接 CI/CD 系统时，就要重新发起一次完整的发布上线操作。但通常情况下环境的变化（例如升降配、更新权限）对程序来说是安全的，不需要发起一次上线；
 2. 难以实现基础设施团队、平台团队、研发团队分层协作的场景。比如研发人员需要将程序使用的 VPC、VSwitch、文件系统ID等无关信息进行明文存储，并且需要对子账号ak/sk进行明文存储，无疑减低了研发效率并增加了安全风险；
-3. 对于一些资源的变更可能会引起实例重建或者不能提供服务(比如更改数据库引擎、ACK 绑定的 SLB)，这些风险组件开发者未必会清楚也可能会忽略，即使清楚也需要 Case By Case 的通过很多判断代码来解决，也增加了组件开发的复杂度和使用成本；
+3. 对于一些资源的变更可能会引起实例重建或者不能提供服务（比如更改数据库引擎、ACK 绑定的 SLB），这些风险组件开发者未必会清楚也可能会忽略，即使清楚也需要 Case By Case 的通过很多判断代码来解决，也增加了组件开发的复杂度和使用成本；
 
 如果采用上面分层的模板化方案，以上问题就可以顺利解决：
 
-1. 平台团队通过封装 Environment 模板，仅需对研发人员暴露安全的参数(比如实例规格)，研发人员可以直接更新环境，而不需要重新发起一次上线操作
+1. 平台团队通过封装 Environment 模板，仅需对研发人员暴露安全的参数（比如实例规格），研发人员可以直接更新环境，而不需要重新发起一次上线操作
 2. 平台团队通过封装 Policy 模板，研发人员在部署环境或者服务涉及到资源的操作时，通过角色扮演的方式安全访问云资源，不需要感知ak/sk
 
-### Infrastructure as Template
+### Infrastructure as Code
 
-Serverless Devs 离不开对云资源的操作，现在的做法是直接使用云产品SDK，或者封装成 Pulumi Stack，但都需要通过 GPL 来完成，这需要开发者对 TypeScript 有一定开发经验，
-对于非 Nodejs 的玩家来说，还是有一定的学习成本的，也不利于组件的功能扩展。
+Serverless Devs 离不开对云资源的操作，现在的做法是在组件中直接使用云产品 SDK，或者封装成 Pulumi Stack，但都需要通过 GPL 来完成，这需要开发者对 TypeScript 有一定开发经验，对于非 Node.js 的玩家来说，还是有一定的学习成本的，也不利于组件的功能扩展。
 
-目前基础设施管理最强大的工具是 Terraform，基本已成为事实标准。Terraform HCL 本身是一种 DSL，任何生态都能很好地兼容，特别是 Provider 极其丰富。
+目前基础设施管理最强大的工具是 [Terraform](https://www.terraform.io/)，基本已成为事实标准。Terraform HCL 本身是一种 DSL，任何生态都能很好地兼容，特别是 Provider 极其丰富。
 阿里云的云产品如果对接 POP，已经可以自动生成 Terraform 的 Provider，其可靠性和接入便捷程度已经相当之高。
 
-如果将 Serverless Devs 关于基础设施操作的能力抽离出来，通过 Terraform 来完成，这样可以极大拓宽用户领域，用户可以通过编写 Terraform 文件来定义自己的基础设施。
+如果将 Serverless Devs 关于基础设施操作的能力抽离出来，通过 IaC 来完成，这样可以极大拓宽用户领域，用户可以通过编写 Terraform 文件来定义自己的基础设施。
 
 结合上述，通过分层化的模板来管理基础设施，并且和 Serverless Devs 相结合，可以为 Serverless Devs 用户带来以下价值:
 
-* 让 Serverless Devs 满足企业级IT基础设施的复杂场景：基础设施团队/平台团队/业务团队自助化操作、安全隔离、多环境 CI/CD
-* 让 Serverless Devs 可以集成各种开源生态，实现应用架构以及基础设施的可定制、可扩展、可重用能力：
-  - 可自定义 IaC(Terraform/Pulumi/Crossplane)、应用交付方式(镜像/代码)、CI/CD Pipeline(GithubAction/Jenkins)
+* 满足企业级IT基础设施的复杂场景：基础设施团队/平台团队/业务团队自助化操作、安全隔离、多环境 CI/CD
+* 集成各种开源生态，实现应用架构以及基础设施的可定制、可扩展、可重用能力：
+  - 可自定义 IaC（Terraform/Pulumi/Crossplane）、应用交付方式(镜像/代码)、CI/CD Pipeline（GithubAction/Jenkins）
   - 环境和服务相解耦，通过模板组合及引用完成能力扩展及复用
 
 ### 整体工作流
@@ -259,7 +498,7 @@ Serverless Devs 离不开对云资源的操作，现在的做法是直接使用�
 
 #### Service
 
-`Application`可以关联一组 `Service`，每个 `Service` 都是对代码、程序的描述，只描述跟程序相关的信息，比如函数配置、日志采集配置(只用关注采集路径)
+`Application` 可以关联一组 `Service`，每个 `Service` 都是对代码、程序的描述，只描述跟程序相关的信息，比如函数配置、日志采集配置(只用关注采集路径)
 
 * 对于函数型应用，`Service` 一般描述一个函数
 * 对于容器化应用，`Service` 一般描述一个Workload
@@ -271,13 +510,12 @@ Serverless Devs 离不开对云资源的操作，现在的做法是直接使用�
 * `Environment` 是部署的范畴，不关注跟代码相关配置
 * `Environment` 可以被多个 `Service` 共享
 
-## 操作案例: 使用FC部署NodeJs函数
+## 操作案例: 管理员/开发人员围绕 FC 协作
 
-### 平台管理员定义基础设施模板
+### 管理员：定义环境模板
 
-**环境模板**：原生 Terraform 文件
-
-每个环境提供完全新建的基础设施，自动创建 VPC、VSwitch、Security、OSS、SLS、NAS
+为每个环境提供完全新建的基础设施，自动创建 VPC、VSwitch、Security、OSS、SLS、NAS
+#### 定义 IaC
 
 ```hcl
 terraform {
@@ -476,52 +714,145 @@ output "ossIntranetEndpoint" {
   value = var.createBucket ? alicloud_oss_bucket.bucket.0.intranet_endpoint : null
 }
 ```
+#### 定义权限策略
+```json
+[
+  {
+    "statement": [
+      {
+        "Effect": "Allow",
+        "Action": [
+          "vpc:CreateVpc",
+          "vpc:CreateVSwitch",
+          "vpc:DeleteVpc",
+          "vpc:DeleteVSwitch",
+          "vpc:ModifyVpcAttribute",
+          "vpc:ModifyVSwitchAttribute"
+        ],
+        "Resource": "*"
+      },
+      {
+        "Effect": "Allow",
+        "Action": [
+          "ecs:CreateSecurityGroup",
+          "ecs:ModifySecurityGroupAttribute",
+          "ecs:ModifySecurityGroupRule",
+          "ecs:ModifySecurityGroupPolicy",
+          "ecs:ModifySecurityGroupEgressRule",
+          "ecs:DeleteSecurityGroup",
+          "ecs:AuthorizeSecurityGroup",
+          "ecs:AuthorizeSecurityGroupEgress",
+          "ecs:RevokeSecurityGroup",
+          "ecs:RevokeSecurityGroupEgress"
+        ],
+        "Resource": "*"
+      },
+      {
+        "Effect": "Allow",
+        "Action": [
+          "nas:CreateMountTarget",
+          "nas:ModifyMountTarget",
+          "nas:CreateFileSystem",
+          "nas:ModifyFileSystem",
+          "nas:CreateAccessGroup",
+          "nas:CreateAccessRule",
+          "nas:ModifyAccessGroup",
+          "nas:ModifyAccessRule",
+          "nas:DeleteAccessGroup",
+          "nas:DeleteAccessRule",
+          "nas:DeleteFileSystem",
+          "nas:DeleteMountTarget"
+        ],
+        "Resource": "*"
+      },
+      {
+        "Effect": "Allow",
+        "Action": [
+          "fc:GetAccountSettings"
+        ],
+        "Resource": "*"
+      }
+    ]
+  },
+  "AliyunFCDefaultRolePolicy",
+  "AliyunECSReadOnlyAccess",
+  "AliyunVPCReadOnlyAccess",
+  "AliyunNASReadOnlyAccess"
+]
+```
+#### 发布模板
+```shell
+s env apply-template --name fc-template --code ./infra
+```
 
-### 研发用户使用 S 进行操作
+### 管理员：为开发人员提供环境
+#### 创建测试环境
+
+```
+s env init --name env-testing --template-name fc-template
+```
+
+#### 创建生产环境
+
+```
+s env init --name env-production --template-name fc-template
+```
+### 开发人员：将函数部署到指定环境
 
 #### 创建工程
 
 ```yaml
 edition: 1.0.0        #  命令行YAML规范版本，遵循语义化版本（Semantic Versioning）规范
-name: alicloud-fc-demo   #  项目名称
+name: component-test   #  项目名称
+access: "default"  #  秘钥别名
 
 services:
   srv-test: #  服务名称
-    component: devsapp/infrastructure-as-template
+    component: ${path(../..)}  # 这里引入的是相对路径，正式配置替换成你自己的component名称即可
     props:
+      #      region: cn-zhangjiakou
       service:
-        name: ${environment.name} #使用环境名作为服务名
-        description: demo service
+        name: my-svc-${environment.name}
+        description: demo for fc-deploy component
         internetAccess: true
+        vpcConfig:
+          vpcId: ${environment.outputs.vpcId}
+          securityGroupId: ${environment.outputs.securityGroupId}
+          vswitchIds:
+            - ${environment.outputs.vswitchId}
+        logConfig:
+          project: ${environment.outputs.slsProject}
+          logstore: ${environment.outputs.slsLogStore}
+        nasConfig:
+          userId: 10003
+          groupId: 10003
+          mountPoints:
+            - serverAddr: ${environment.outputs.nasMountTargetId}
+              nasDir: /fc-deploy-service
+              fcDir: /mnt/auto
       function:
-        name: function-demo
+        name: multi-envs
+        codeUri: ./
         runtime: nodejs12
-        codeUri: './code'
         handler: index.handler
         memorySize: 128
         timeout: 60
-    actions: # 自定义执行逻辑
-      pre-deploy: # 在deploy之前运行
-        - run: s build  # 要运行的命令行
-          path: . # 命令行运行的路径
-```
+        instanceConcurrency: 1
+        instanceType: e1
+      triggers:
+        - name: httpTrigger
+          type: http
+          config:
+            authType: anonymous
+            methods:
+              - GET
 
-#### 创建测试环境
-
-```
-s env init --name env-testing
 ```
 
 #### 部署服务到测试环境
 
 ```
 s deploy --env env-testing
-```
-
-#### 创建生产环境
-
-```
-s env init --name env-production
 ```
 
 #### 部署服务到生产环境，并使用差异化配置
