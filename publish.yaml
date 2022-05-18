@@ -57,14 +57,14 @@ Properties:
           minLength: 1
           title: 策略名称
           description: 策略名称
-          default: ''
+          default: ""
           examples:
             - myPolicy
         description:
           type: string
           title: 策略描述
           description: 策略描述
-          default: ''
+          default: ""
           examples:
             - custom policy
         statement:
@@ -123,10 +123,10 @@ Properties:
                         - type: string
                           title: 策略的目标资源
                           description: 策略的目标资源
-                          default: ''
+                          default: ""
                           examples:
                             - acs:log:*:*:project/*
-                          pattern: '^acs:.*$'
+                          pattern: "^acs:.*$"
     role:
       type: object
       description: 自定义策略列表创建角色
@@ -140,7 +140,7 @@ Properties:
           type: string
           title: 角色名称
           minLength: 1
-          default: ''
+          default: ""
           examples:
             - roleName
         policies:
@@ -160,12 +160,12 @@ Properties:
               - type: string
                 title: 阿里云系统内置策略
                 minLength: 1
-                default: ''
+                default: ""
                 examples:
                   - AliyunOSSFullAccess
                 x-component: Input
               - title: 自定义策略
-                '$ref': '#/definitions/roleStatement'
+                "$ref": "#/definitions/roleStatement"
     logConfig:
       type: object
       default: {}
@@ -179,14 +179,14 @@ Properties:
           type: string
           minLength: 1
           title: 日志项目
-          default: ''
+          default: ""
           examples:
             - xx-project
         logstore:
           type: string
           minLength: 1
           title: 日志仓库
-          default: ''
+          default: ""
           examples:
             - xx-logstore
         logBeginRule:
@@ -231,7 +231,7 @@ Properties:
           x-tooltip:
             当前服务中的函数可以访问的 VPC。点击<a href='https://help.aliyun.com/document_detail/72959.html'
             target='_blank'>这里</a>查看更多详情。
-          default: ''
+          default: ""
         vswitchIds:
           type: array
           title: 交换机
@@ -255,7 +255,7 @@ Properties:
           x-tooltip:
             此安全组是ENI所在的安全组，也就是函数计算所在的安全组，安全组限定了函数计算在VPC中的出入站规则。需要设置您的VPC所在安全组的入站规则为允许函数计算所在的安全组访问。否则，函数计算无法顺畅地访问您的VPC内资源。点击<a
             href='https://help.aliyun.com/document_detail/72959.html' target='_blank'>这里</a>查看更多详情。
-          default: ''
+          default: ""
     nasConfig:
       type: object
       required:
@@ -267,7 +267,7 @@ Properties:
           title: 用户
           minimum: 1
           maximum: 65534
-          description: 访问 NAS 中文件时所用的用户，等同于文件系统中的用户（UID）的概念。UserID 取值范围从 1 到 65534，不包括0（为了执行安全，函数计算暂时不提供root用户的方式）。点击这里查看更多详情。
+          description: 访问 NAS 中文件时所用的用户，等同于文件系统中的用户（UID）的概念。UserID 取值范围从 0 到 65534
           default: 10003
           examples:
             - 10003
@@ -276,14 +276,14 @@ Properties:
           title: 用户组
           minimum: 1
           maximum: 65534
-          description: 访问 NAS 中文件时所用的用户组，等同于文件系统中的用户组（GID）的概念。GroupID 取值范围从 1 到 65534，不包括0（为了执行安全，函数计算暂时不提供root用户的方式）。点击这里查看更多详情。
+          description: 访问 NAS 中文件时所用的用户组，等同于文件系统中的用户组（GID）的概念。GroupID 取值范围从 0 到 65534
           default: 10003
           examples:
             - 10003
         mountPoints:
           type: array
           title: 挂载点
-          description: NAS 的挂载点。点击这里查看更多详情。
+          description: NAS 的挂载点。
           default: []
           examples: []
           minItems: 1
@@ -304,7 +304,7 @@ Properties:
                     type: string
                     minLength: 1
                     title: NAS 挂载点
-                    default: ''
+                    default: ""
                     examples:
                       - xxx-xxx.cn-shenzhen.nas.aliyuncs.com
                   nasDir:
@@ -312,31 +312,31 @@ Properties:
                     minLength: 1
                     title: 远端NAS中目录
                     description: 通用型 NAS 以 / 开头，极速型 NAS 必须以 /share 开头。
-                    default: ''
+                    default: ""
                     examples:
-                      - '/unit-deploy-service'
+                      - "/unit-deploy-service"
                   fcDir:
                     type: string
                     minLength: 1
                     title: 函数运行环境中本地目录
                     description: 必须为 /home/ 或者 /mnt/ 的子目录，例如 /home/app
                     examples:
-                      - '/mnt/auto'
+                      - "/mnt/auto"
     roleArn:
       type: string
-      pattern: '^acs:ram.*:role.*$'
+      pattern: "^acs:ram.*:role.*$"
       title: 角色名称
       description: 使用一个 RAM 角色的 ARN 为函数指定执行角色，事件源会使用该角色触发函数执行，请确保该角色有调用函数的权限
     sourceArn:
       type: string
-      pattern: '^acs:.*$'
+      pattern: "^acs:.*$"
       title: 事件源的 ARN
       description: 触发器事件源的 ARN
     namePattern:
       title: 名称
       description: 只能包含字母、数字、下划线和中划线。不能以数字、中划线开头。长度在 1-128 之间。
       type: string
-      pattern: '^[a-zA-Z0-9-_]{1,128}$'
+      pattern: "^[a-zA-Z0-9-_]{1,128}$"
   type: object
   required:
     - region
@@ -373,7 +373,7 @@ Properties:
         - name
       properties:
         name:
-          '$ref': '#/definitions/namePattern'
+          "$ref": "#/definitions/namePattern"
         description:
           title: 描述
           description: 服务的描述信息
@@ -393,18 +393,18 @@ Properties:
           description:
             注意：在 RAM 控制台创建服务所使用的角色时，需要选择“阿里云服务”，并且“受信服务”为“函数计算”。详情参考<a href='https://ram.console.aliyun.com/roles/AliyunFCDefaultRole'
             target='_blank'>默认角色</a>
-          pattern: '^acs:ram.*:role.*$'
+          pattern: "^acs:ram.*:role.*$"
           oneOf:
             - type: string
               title: 简单配置
               description:
                 当前服务和服务中的函数将会使用这个 RAM 角色（Role）来访问您的阿里云资源。点击<a href='https://help.aliyun.com/document_detail/52885.html'
                 target='_blank'>这里</a>查看更多详情。
-              pattern: '^acs:ram.*:role.*$'
+              pattern: "^acs:ram.*:role.*$"
               x-component: Input
               examples:
                 - acs:ram::xxx:role/fc-default-role
-            - '$ref': '#/definitions/role'
+            - "$ref": "#/definitions/role"
               title: 高级配置
         tracingConfig:
           title: 链路追踪功能
@@ -436,7 +436,7 @@ Properties:
               enum:
                 - auto
             - title: 自定义配置
-              '$ref': '#/definitions/logConfig'
+              "$ref": "#/definitions/logConfig"
         vpcConfig:
           title: VPC网络配置
           x-oneof: void
@@ -447,7 +447,7 @@ Properties:
               enum:
                 - auto
             - title: 自定义配置
-              '$ref': '#/definitions/vpcConfig'
+              "$ref": "#/definitions/vpcConfig"
         nasConfig:
           title: 存储配置
           x-oneof: void
@@ -460,10 +460,10 @@ Properties:
                 NAS 成功后选择禁用再启用，系统将优先匹配上一次 NAS 配置，如有需要可以手动更改配置
               enum:
                 - auto
-            - '$ref': '#/definitions/nasConfig'
+            - "$ref": "#/definitions/nasConfig"
               description:
                 如果您已经为当前函数配置过VPC交换机且和NAS文件系统的可用区不一致，可在NAS中创建一个新的挂载点指向函数计算绑定的交换机。由于同一VPC内不同交换机之间内网互通，因此函数计算可以通过该交换机访问在其他可用区的VPC内资源，但可能会多
-                1～2ms 左右的延时。点击这里查看更多详情。
+                1～2ms 左右的延时。
               title: 自定义配置
     function:
       type: object
@@ -481,7 +481,7 @@ Properties:
             - runtime
       properties:
         name:
-          '$ref': '#/definitions/namePattern'
+          "$ref": "#/definitions/namePattern"
         description:
           title: 描述
           examples:
@@ -493,14 +493,14 @@ Properties:
           minLength: 1
           type: string
           examples:
-            - '/home/admin'
+            - "/home/admin"
           x-reactions:
             dependencies:
-              - '.ossBucket'
-              - '.ossKey'
+              - ".ossBucket"
+              - ".ossKey"
             fulfill:
               state:
-                visible: '{{!$deps[0]&&!$deps[1]}}'
+                visible: "{{!$deps[0]&&!$deps[1]}}"
         ossBucket:
           title: ossBucket
           description: 如果指定oss代码，所在的存储桶，不能与codeUri同时出现
@@ -508,10 +508,10 @@ Properties:
           minLength: 1
           x-reactions:
             dependencies:
-              - '.codeUri'
+              - ".codeUri"
             fulfill:
               state:
-                visible: '{{!$deps[0]}}'
+                visible: "{{!$deps[0]}}"
         ossKey:
           title: ossKey
           description: 如果指定oss代码，所对应的对象，不能与codeUri同时出现
@@ -519,10 +519,10 @@ Properties:
           minLength: 1
           x-reactions:
             dependencies:
-              - '.codeUri'
+              - ".codeUri"
             fulfill:
               state:
-                visible: '{{!$deps[0]}}'
+                visible: "{{!$deps[0]}}"
         handler:
           title: 函数入口
           x-tooltip: 指定调用函数时需要从哪个文件中的哪个函数开始执行。
@@ -555,7 +555,7 @@ Properties:
         customRuntimeConfig:
           x-reactions:
             dependencies:
-              - '.runtime'
+              - ".runtime"
             fulfill:
               state:
                 visible: "{{$deps[0] === 'custom'}}"
@@ -587,7 +587,7 @@ Properties:
         customContainerConfig:
           x-reactions:
             dependencies:
-              - '.runtime'
+              - ".runtime"
             fulfill:
               state:
                 visible: "{{$deps[0] === 'custom-container'}}"
@@ -611,17 +611,17 @@ Properties:
               examples:
                 - '["/code/myserver"]'
               title: Command
-              description: 容器的启动命令，例如["/code/myserver"]。该参数为可选参数，如果不填写，则默认使用镜像中的Entrypoint/CMD。点击这里查看更多详情。
+              description: 容器的启动命令，例如["/code/myserver"]。该参数为可选参数，如果不填写，则默认使用镜像中的Entrypoint/CMD。
               type: string
             args:
               title: Args
-              description: 容器的启动参数，例如["-arg1", "value1"]。该参数为可选参数，如果不填写，则默认使用镜像中的CMD。点击这里查看更多详情。
+              description: 容器的启动参数，例如["-arg1", "value1"]。该参数为可选参数，如果不填写，则默认使用镜像中的CMD。
               examples:
                 - '["-arg1", "value1"]'
               type: string
             accelerationType:
               title: 拉取镜像加速
-              description: 开启函数计算的镜像加速后，可提速 2~5 倍，将分钟级的镜像拉取缩短至秒级。开启镜像加速将会将镜像转存在函数计算的安全镜像加速存储中。点击这里查看更多详情。
+              description: 开启函数计算的镜像加速后，可提速 2~5 倍，将分钟级的镜像拉取缩短至秒级。开启镜像加速将会将镜像转存在函数计算的安全镜像加速存储中。
               default: Default
               type: string
               x-component: Switch
@@ -642,8 +642,9 @@ Properties:
             - 弹性实例
             - 性能实例
             - GPU实例
-          x-tooltip: 函数计算提供性能实例和弹性实例两种实例类型。<br/>                弹性实例：函数计算基本实例，规格小于性能实例，不能执行时间较长的离线任务或平滑地将大应用迁移至函数计算。<br/>                性能实例：大规格实例，包含多种实例规格，资源上限更高，适配场景更多。<br/>                点击这里查看更多详情。
-          description: 点击<a href='https://help.aliyun.com/document_detail/179379.html'
+          x-tooltip: 函数计算提供性能实例和弹性实例两种实例类型。<br/>                弹性实例：函数计算基本实例，规格小于性能实例，不能执行时间较长的离线任务或平滑地将大应用迁移至函数计算。<br/>                性能实例：大规格实例，包含多种实例规格，资源上限更高，适配场景更多。<br/>
+          description:
+            点击<a href='https://help.aliyun.com/document_detail/179379.html'
             target='_blank'>这里</a>查看实例类型详情，使用限制和使用场景。
         memorySize:
           title: 内存规格
@@ -661,7 +662,7 @@ Properties:
             - 8192
             - 16384
             - 32768
-          x-reactions: '{{memorySize}}'
+          x-reactions: "{{memorySize}}"
         gpuMemorySize:
           title: GPU内存规格
           description: 函数执行内存。当执行函数时，可使用的最大内存。
@@ -675,7 +676,7 @@ Properties:
             - 16GB
           x-reactions:
             dependencies:
-              - '.instanceType'
+              - ".instanceType"
             fulfill:
               state:
                 visible: "{{$deps[0] === 'g1'}}"
@@ -709,21 +710,39 @@ Properties:
         initializer:
           title: 初始化函数
           description:
-            函数计算平台会根据请求动态分配实例执行函数，当函数有连续调用时，会复用同一实例。Initializer 是初始化函数，保证在同一实例中执行且成功执行一次。点击这里查看更多详情。                    在“运行环境”为
-            Node.js 时，当前值的格式为 [文件名].[函数名]。如果当前值为 index.handler，那么在函数被触发时，将执行 index.js
-            文件中的 handler 函数。
+            函数计算平台会根据请求动态分配实例执行函数，当函数有连续调用时，会复用同一实例。Initializer 是初始化函数，保证在同一实例中执行且成功执行一次。                    在“运行环境”为
+            Node.js 时，当前值的格式为 [文件名].[函数名]。如果当前值为 index.initializer，那么在函数被触发时，将执行 index.js
+            文件中的 initializer 函数。
           examples:
             - index.initializer
           type: string
+          x-departed: true
         initializationTimeout:
           title: 初始化函数超时时间
           description: 执行初始化函数的超时时间
           type: integer
+          x-departed: true
         instanceLifecycleConfig:
           title: 扩展函数
           type: object
           additionalProperties: false
           properties:
+            initializer:
+              title: 初始化函数
+              type: object
+              required:
+                - handler
+              additionalProperties: false
+              properties:
+                handler:
+                  title: 函数入口
+                  x-tooltip: 函数计算平台会根据请求动态分配实例执行函数，当函数有连续调用时，会复用同一实例。Initializer 是初始化函数，保证在同一实例中执行且成功执行一次。在“运行环境”为 Node.js 时，当前值的格式为 [文件名].[函数名]。如果当前值为 index.init，那么在函数被触发时，将执行 index.js 文件中的 init 函数。
+                  type: string
+                  minLength: 1
+                timeout:
+                  title: 超时时间
+                  x-tooltip: 执行 Initializer 函数的超时时间
+                  type: integer
             preFreeze:
               title: PreFreeze 函数
               type: object
@@ -736,7 +755,7 @@ Properties:
                   x-tooltip:
                     在每次函数计算服务决定冷冻当前函数实例前，您希望函数计算调用的函数。PreFreeze 函数输入参数没有 event
                     参数。PreFreeze 函数无返回值，在函数末尾增加返回逻辑是无效的。Python、PHP 及 C# Runtime 不支持配置
-                    PreFreeze 函数。点击这里查看更多详情。                            在“运行环境”为 Node.js
+                    PreFreeze 函数。   在“运行环境”为 Node.js
                     时，当前值的格式为 [文件名].[函数名]。如果当前值为 index.handler，那么在函数被触发时，将执行 index.js
                     文件中的 handler 函数。
                   type: string
@@ -887,7 +906,7 @@ Properties:
                   - CDN触发器
                   - Tablestore触发器
               name:
-                '$ref': '#/definitions/namePattern'
+                "$ref": "#/definitions/namePattern"
               config:
                 type: object
                 oneOf:
@@ -928,7 +947,7 @@ Properties:
                       - 需要通过身份验证，不支持匿名访问
                     x-reactions:
                       dependencies:
-                        - '..type'
+                        - "..type"
                       fulfill:
                         state:
                           visible: "{{$deps[0] === 'http'}}"
@@ -958,7 +977,7 @@ Properties:
                             - OPTIONS
                     x-reactions:
                       dependencies:
-                        - '..type'
+                        - "..type"
                       fulfill:
                         state:
                           visible: "{{$deps[0] === 'http'}}"
@@ -981,7 +1000,7 @@ Properties:
                         minLength: 1
                     x-reactions:
                       dependencies:
-                        - '..type'
+                        - "..type"
                       fulfill:
                         state:
                           visible: "{{$deps[0] === 'log'}}"
@@ -999,7 +1018,7 @@ Properties:
                         type: integer
                     x-reactions:
                       dependencies:
-                        - '..type'
+                        - "..type"
                       fulfill:
                         state:
                           visible: "{{$deps[0] === 'log'}}"
@@ -1015,7 +1034,7 @@ Properties:
                         minLength: 1
                     x-reactions:
                       dependencies:
-                        - '..type'
+                        - "..type"
                       fulfill:
                         state:
                           visible: "{{$deps[0] === 'log'}}"
@@ -1025,7 +1044,7 @@ Properties:
                     x-component: KeyValue
                     x-reactions:
                       dependencies:
-                        - '..type'
+                        - "..type"
                       fulfill:
                         state:
                           visible: "{{$deps[0] === 'log'}}"
@@ -1040,7 +1059,7 @@ Properties:
                     type: string
                     x-reactions:
                       dependencies:
-                        - '..type'
+                        - "..type"
                       fulfill:
                         state:
                           visible: "{{$deps[0] === 'timer'}}"
@@ -1049,7 +1068,7 @@ Properties:
                     type: boolean
                     x-reactions:
                       dependencies:
-                        - '..type'
+                        - "..type"
                       fulfill:
                         state:
                           visible: "{{$deps[0] === 'timer'}}"
@@ -1059,18 +1078,18 @@ Properties:
                     type: string
                     x-reactions:
                       dependencies:
-                        - '..type'
+                        - "..type"
                       fulfill:
                         state:
                           visible: "{{$deps[0] === 'timer'}}"
                   bucketName:
                     title: Bucket 名称
-                    default: ''
+                    default: ""
                     type: string
                     minLength: 1
                     x-reactions:
                       dependencies:
-                        - '..type'
+                        - "..type"
                       fulfill:
                         state:
                           visible: "{{$deps[0] === 'oss'}}"
@@ -1086,7 +1105,7 @@ Properties:
                           minLength: 1
                     x-reactions:
                       dependencies:
-                        - '..type'
+                        - "..type"
                       fulfill:
                         state:
                           visible: "{{$deps[0] === 'oss'}}"
@@ -1107,7 +1126,7 @@ Properties:
                               minLength: 1
                     x-reactions:
                       dependencies:
-                        - '..type'
+                        - "..type"
                       fulfill:
                         state:
                           visible: "{{$deps[0] === 'cdn_events'}}"
@@ -1117,7 +1136,7 @@ Properties:
                     type: string
                     x-reactions:
                       dependencies:
-                        - '..type'
+                        - "..type"
                       fulfill:
                         state:
                           visible: "{{$deps[0] === 'mns_topic'}}"
@@ -1128,7 +1147,7 @@ Properties:
                     minLength: 1
                     x-reactions:
                       dependencies:
-                        - '..type'
+                        - "..type"
                       fulfill:
                         state:
                           visible: "{{$deps[0] === 'mns_topic'}}"
@@ -1138,7 +1157,7 @@ Properties:
                     type: string
                     x-reactions:
                       dependencies:
-                        - '..type'
+                        - "..type"
                       fulfill:
                         state:
                           visible: "{{$deps[0] === 'mns_topic'}}"
@@ -1151,7 +1170,7 @@ Properties:
                       - JSON
                     x-reactions:
                       dependencies:
-                        - '..type'
+                        - "..type"
                       fulfill:
                         state:
                           visible: "{{$deps[0] === 'mns_topic'}}"
@@ -1169,7 +1188,7 @@ Properties:
                       - 指数衰减重试
                     x-reactions:
                       dependencies:
-                        - '..type'
+                        - "..type"
                       fulfill:
                         state:
                           visible: "{{$deps[0] === 'mns_topic'}}"
@@ -1180,7 +1199,7 @@ Properties:
                     minLength: 1
                     x-reactions:
                       dependencies:
-                        - '..type'
+                        - "..type"
                       fulfill:
                         state:
                           visible: "{{$deps[0] === 'cdn_events'}}"
@@ -1191,7 +1210,7 @@ Properties:
                     minLength: 1
                     x-reactions:
                       dependencies:
-                        - '..type'
+                        - "..type"
                       fulfill:
                         state:
                           visible: "{{$deps[0] === 'cdn_events'}}"
@@ -1201,7 +1220,7 @@ Properties:
                     minLength: 1
                     x-reactions:
                       dependencies:
-                        - '..type'
+                        - "..type"
                       fulfill:
                         state:
                           visible: "{{$deps[0] === 'cdn_events'}}"
@@ -1212,7 +1231,7 @@ Properties:
                     minLength: 1
                     x-reactions:
                       dependencies:
-                        - '..type'
+                        - "..type"
                       fulfill:
                         state:
                           visible: "{{$deps[0] === 'tablestore'}}"
@@ -1223,27 +1242,29 @@ Properties:
                     minLength: 1
                     x-reactions:
                       dependencies:
-                        - '..type'
+                        - "..type"
                       fulfill:
                         state:
                           visible: "{{$deps[0] === 'tablestore'}}"
               role:
-                '$ref': '#/definitions/roleArn'
+                "$ref": "#/definitions/roleArn"
                 x-reactions:
                   dependencies:
-                    - '.type'
+                    - ".type"
                   fulfill:
                     state:
-                      visible: "{{$deps[0] === 'oss'|| $deps[0] === 'log'|| $deps[0] ===
+                      visible:
+                        "{{$deps[0] === 'oss'|| $deps[0] === 'log'|| $deps[0] ===
                         'mns_topic'|| $deps[0] === 'cdn_events'|| $deps[0] === 'tablestore'}}"
               sourceArn:
-                '$ref': '#/definitions/sourceArn'
+                "$ref": "#/definitions/sourceArn"
                 x-reactions:
                   dependencies:
-                    - '.type'
+                    - ".type"
                   fulfill:
                     state:
-                      visible: "{{$deps[0] === 'oss'|| $deps[0] === 'log'|| $deps[0] ===
+                      visible:
+                        "{{$deps[0] === 'oss'|| $deps[0] === 'log'|| $deps[0] ===
                         'mns_topic'|| $deps[0] === 'cdn_events'|| $deps[0] === 'tablestore'}}"
     customDomains:
       title: 域名配置
@@ -1326,10 +1347,10 @@ Properties:
                     x-type: array-select
                     x-reactions:
                       dependencies:
-                        - '.minVersion'
+                        - ".minVersion"
                       fulfill:
                         state:
-                          visible: '{{!!$deps[0]}}'
+                          visible: "{{!!$deps[0]}}"
                     default:
                       - TLS_RSA_WITH_AES_128_CBC_SHA
                       - TLS_RSA_WITH_AES_256_CBC_SHA
@@ -1388,7 +1409,7 @@ Properties:
                   - privateKey
                 properties:
                   certName:
-                    '$ref': '#/definitions/namePattern'
+                    "$ref": "#/definitions/namePattern"
                   certificate:
                     title: 证书
                     description:

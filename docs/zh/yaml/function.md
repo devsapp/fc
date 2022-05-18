@@ -20,8 +20,6 @@ category: 'Yaml规范'
 | caPort                                              | False | Number                                | CustomContainer/Runtime指定端口                        |
 | [customContainerConfig](#customcontainerconfig)     | False | [Struct](#customcontainerconfig)      | 自定义镜像配置                                         |
 | [environmentVariables](#environmentvariables)       | False | [Struct](#environmentvariables) | 环境变量                                               |
-| initializationTimeout                               | False | Number                                | 初始化方法超时时间                                     |
-| initializer                                         | False | String                                | 初始化方法                                             |
 | instanceConcurrency                                 | False | Number                                | 单实例多并发                                           |
 | instanceType                                        | False | String                                | 函数实例类型，可选值为：e1（弹性实例）、c1（性能实例） |
 | layers | False | List\<String\> | 函数绑定层，仅支持 Nodejs、Python；取值是层的 ARN |
@@ -122,10 +120,11 @@ DB_connection: jdbc:mysql://rm-bp90434sds45c.mysql.rds.aliyuncs.com:3306/litemal
 
 | 参数名                           | 必填  | 类型                          | 参数描述       |
 | -------------------------------- | ----- | ----------------------------- | -------------- |
-| [preFreeze](#prefreeze和prestop) | False | [Struct](#prefreeze和prestop) | PreFreeze 函数 |
-| [preStop](#prefreeze和prestop)   | False | [Struct](#prefreeze和prestop) | PreStop 函数   |
+| [preFreeze](#生命周期函数配置) | False | [Struct](#生命周期函数配置) | PreFreeze 函数 |
+| [preStop](#生命周期函数配置)   | False | [Struct](#生命周期函数配置) | PreStop 函数   |
+| [initializer](#生命周期函数配置)   | False | [Struct](#生命周期函数配置) | 初始化函数   |
 
-#### preFreeze和preStop
+#### 生命周期函数配置
 
 | 参数名  | 必填  | 类型   | 参数描述 |
 | ------- | ----- | ------ | -------- |

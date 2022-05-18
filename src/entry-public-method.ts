@@ -36,6 +36,21 @@ export default class EntryPublicMethod {
       inputs.credentials = await getCredentials(inputs.credentials, inputs.project?.access);
     }
 
+    // 处理初始化函数
+    const initializer = _.get(inputs, 'props.function.instanceLifecycleConfig.initializer');
+    if (!_.isEmpty(initializer)) {
+      if (initializer.handler) {
+        _.set(inputs, 'props.function.initializer', initializer.handler);
+      }
+      if (initializer.timeout) {
+        _.set(inputs, 'props.function.initializationTimeout', initializer.timeout);
+      }
+      delete inputs.props.function.instanceLifecycleConfig.initializer;
+      if (_.isEmpty(inputs.props.function.instanceLifecycleConfig)) {
+        delete inputs.props.function.instanceLifecycleConfig;
+      }
+    }
+
     await InfraAsTemplate.modifyInputs(inputs); // 多环境处理
 
     return inputs;

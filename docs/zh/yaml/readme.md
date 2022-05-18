@@ -75,14 +75,15 @@ services:
           accelerationType: Default   # 镜像加速开关，可选值：'Default'、'None'，前者表示开启，后者表示关闭
         environmentVariables:         # 环境变量
           key: 'value'
-        initializationTimeout: 20     # 初始化方法超时时间
-        initializer: index.init       # 初始化方法
         instanceConcurrency: 1        # 单实例多并发
         instanceType: e1              # 函数实例类型，可选值为：e1（弹性实例）、c1（性能实例）
         layers:                       # 函数绑定层，仅支持 Nodejs、Python；取值是层的 ARN
           - xxx
           - xxx
         instanceLifecycleConfig:      # 扩展函数
+          initializer:                # 初始化方法
+            handler: index.xxx        # 函数入口
+            timeout: 60               # 超时时间
           preFreeze:                  # PreFreeze 函数
             handler: index.xxx        # 函数入口
             timeout: 60               # 超时时间

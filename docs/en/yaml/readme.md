@@ -73,14 +73,15 @@ services:
           accelerationType: Default # Mirror acceleration switch, optional values: 'Default', 'None', the former means on, the latter means off
         environmentVariables:       # environment variables
           key: 'value'
-        initializationTimeout: 20   # initialization method timeout
-        initializer: index.init     # initialization method
         instanceConcurrency: 1      # single instance multiple concurrency
         instanceType: e1            # Function instance type, optional values ​​are: e1 (elastic instance), c1 (performance instance)
         layers:                     # Function binding layer, only supports Nodejs and Python; the value is the ARN of the layer
           - xxx
           - xxx
         instanceLifecycleConfig: # extension function
+          initializer:           # initialization
+            handler: index.xxx   # function entry
+            timeout: 60          # timeout
           preFreeze:             # PreFreeze function
             handler: index.xxx   # function entry
             timeout: 60          # timeout
