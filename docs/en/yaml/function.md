@@ -21,8 +21,6 @@ category: 'Yaml-Spec'
 | caPort                                              | False    | Number                             | CustomContainer/Runtime specified port                       |
 | [customContainerConfig](#customcontainerconfig)     | False    | [Struct](#customcontainerconfig)   | Custom image configuration                                   |
 | [environmentVariables](#environmentvariables)       | False    | [Struct](#environmentvariables)    | Environment Variables                                        |
-| initializationTimeout                               | False    | Number                             | initialization method timeout                                |
-| initializer                                         | False    | String                             | Initializer                                                  |
 | instanceConcurrency                                 | False    | Number                             | Single instance with multiple concurrency                    |
 | instanceType                                        | False    | String                             | Function instance type, optional values: e1 (elastic instance), c1 (performance instance) |
 | layers                                               | False    | List\<String\>                     | Function binding layer, only supports Nodejs and Python; the value is the ARN of the layer |
@@ -120,10 +118,11 @@ TempKey: tempValue
 
 | Parameter Name | Required | Type | Parameter Description |
 | -------------------------------- | ----- | ----------------------------- | -------------- |
-| [preFreeze](#prefreeze and prestop) | False | [Struct](#prefreeze and prestop) | PreFreeze function |
-| [preStop](#prefreeze and prestop) | False | [Struct](#prefreeze and prestop) | PreStop function |
+| [preFreeze](#LifecycleEntryConfig) | False | [Struct](#LifecycleEntryConfig) | PreFreeze function |
+| [preStop](#LifecycleEntryConfig) | False | [Struct](#LifecycleEntryConfig) | PreStop function |
+| [initializer](#LifecycleEntryConfig) | False | [Struct](#LifecycleEntryConfig) | Initializer function |
 
-#### preFreeze and preStop
+#### LifecycleEntryConfig
 
 | Parameter Name | Required | Type | Parameter Description |
 | ------- | ----- | ------ | -------- |
