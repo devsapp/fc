@@ -13,29 +13,6 @@ export const ENV_HELP_INFO = [
     header: 'Usage',
     content: '$ s env <sub-command> <options>',
   },
-  // {
-  //   header: 'Options',
-  //   optionList: [
-  //     {
-  //       name: 'name',
-  //       alias: 'n',
-  //       typeLabel: '{underline <name>}',
-  //       description: 'Specify the environment name.',
-  //     },
-  //     {
-  //       name: 'filename',
-  //       alias: 'f',
-  //       typeLabel: '{underline <filename>}',
-  //       description: 'Specify an environment manifest when using `s env init`.',
-  //     },
-  //     {
-  //       name: 'overwrite',
-  //       alias: 'o',
-  //       type: Boolean,
-  //       description: 'Overwrite the environment manifest in local when using `s env init`.',
-  //     },
-  //   ],
-  // },
   { ...globalParams },
   { ...globalDescribe },
   {
@@ -53,15 +30,6 @@ export const ENV_HELP_INFO = [
       // { name: 'remove', summary: 'Destroy an environment and all the resources provisioned by templates.' },
     ],
   },
-  // {
-  //   header: 'Examples with Yaml',
-  //   content: [
-  //     '$ s {bold env} {bold init} {underline --filename test.yaml}',
-  //     '$ s {bold env} {bold deploy} {underline --name testing}',
-  //     '$ s {bold env} {bold info} {underline --name testing}',
-  //     '$ s {bold env} {bold list}',
-  //   ],
-  // },
 ];
 
 export const ENV_APPLY_TEMPLATE = [

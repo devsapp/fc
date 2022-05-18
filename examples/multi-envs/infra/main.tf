@@ -77,6 +77,30 @@ resource "alicloud_security_group" "sg" {
   vpc_id      = alicloud_vpc.vpc.id
 }
 
+resource "alicloud_log_project" "project" {
+  count       = var.createLog ? 1 : 0
+  name        = local.default_name
+  description = local.default_description
+}
+
+resource "alicloud_log_store" "store" {
+  count                 = var.createLog ? 1 : 0
+  project               = alicloud_log_project.project.0.name
+  name                  = local.default_name
+  shard_count           = 3
+  auto_split            = true
+  max_split_shard_count = 60
+  append_meta           = true
+}
+
+resource "alicloud_oss_bucket" "bucket" {
+  count           = var.createBucket ? 1 : 0
+  bucket          = local.default_name
+  acl             = "private"
+  storage_class   = "Standard"
+  redundancy_type = "LRS"
+}
+
 resource "alicloud_nas_file_system" "nas_fs" {
   count         = var.createNas ? 1 : 0
   protocol_type = "NFS"
@@ -99,15 +123,23 @@ resource "alicloud_nas_mount_target" "nas_mt" {
 
 
 variable "namePrefix" {
-  default = "serverless-devs"
+  default = ""
   type    = string
-  description = "When you specify a name, all created resources are prefixed with that name."
+}
+
+variable "createLog" {
+  default = true
+  type    = bool
+}
+
+variable "createBucket" {
+  default = true
+  type    = bool
 }
 
 variable "createNas" {
   default = true
   type    = bool
-  description = "If you need to create a nas file system and mount target."
 }
 
 output "vpcId" {
@@ -128,4 +160,24 @@ output "nasId" {
 
 output "nasMountTargetId" {
   value = var.createNas ? replace(alicloud_nas_mount_target.nas_mt.0.id, "${alicloud_nas_file_system.nas_fs.0.id}:", "") : null
+}
+
+output "slsProject" {
+  value = var.createLog ? alicloud_log_project.project.0.name : null
+}
+
+output "slsLogStore" {
+  value = var.createLog ? alicloud_log_store.store.0.name : null
+}
+
+output "ossBucketName" {
+  value = var.createBucket ? alicloud_oss_bucket.bucket.0.bucket : null
+}
+
+output "ossExtranetEndpoint" {
+  value = var.createBucket ? alicloud_oss_bucket.bucket.0.extranet_endpoint : null
+}
+
+output "ossIntranetEndpoint" {
+  value = var.createBucket ? alicloud_oss_bucket.bucket.0.intranet_endpoint : null
 }

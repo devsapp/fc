@@ -518,18 +518,6 @@ Serverless Devs 离不开对云资源的操作，现在的做法是在组件中�
 #### 定义 IaC
 
 ```hcl
-terraform {
-  required_providers {
-    alicloud = {
-      source  = "aliyun/alicloud"
-      version = "1.138.0"
-    }
-  }
-}
-provider "alicloud" {
-  # ...
-}
-
 resource "random_id" "this" {
   byte_length = 8
 }
