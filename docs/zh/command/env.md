@@ -35,7 +35,7 @@ category: '其他功能'
   - [使用环境的信息配置服务](#使用环境的信息配置服务)
   - [使用差异化配置](#使用差异化配置)
 - [背景及原理](#背景及原理)
-  - [Serverless Devs多环境](#serverless-devs多环境)
+  - [Serverless Devs 多环境](#serverless-devs-多环境)
   - [Infrastructure as Code](#infrastructure-as-code)
   - [整体工作流](#整体工作流)
   - [概念组成](#概念组成)
@@ -61,27 +61,27 @@ category: '其他功能'
 
 ## 模板操作
 
-和开发人员开发函数代码不同，环境模板主要针对运维人员和平台管理员，采用基础设施即代码(IaC)来定义资源。通过环境模板，可以对开发人员屏蔽基础设施的复杂性并且有效控制权限半径，让开发人员自助、安全地部署自己的服务。
+和开发人员开发函数代码不同，环境模板主要针对运维人员和平台管理员，采用基础设施即代码（IaC）来定义资源。通过环境模板，可以对开发人员屏蔽基础设施的复杂性并且有效控制权限半径，让开发人员自助、安全地部署自己的服务。
 
 ### 模板开发
-环境模板采用IaC来定义资源，目前只支持 [Terraform](https://www.terraform.io/) 类型的模板。
+环境模板采用 IaC 来定义资源，目前只支持 [Terraform](https://www.terraform.io/) 类型的模板。
 #### 模板代码包结构
 
 环境模板的代码目录要包含两类文件：
 1. `IaC` 文件：即 `Terraform` 的 `.tf` 文件，目录中可以有多个 `.tf` 文件，注册模板时组件会将所有 `.tf` 合并成一份 `HCL` 代码，关于一个目录下多个 `.tf` 文件的合并可以参考 [官方文档](https://www.terraform.io/language/files/override)
-2. `policy.json`：[RAM](https://www.aliyun.com/product/ram?spm=5176.19720258.J_3207526240.103.51212c4aruIq9h) 的权限策略 `数组`，支持自定义策略和系统策略，声明了使用该模板创建资源所需要的权限，授信对象是 [函数计算](https://www.aliyun.com/product/fc?spm=5176.19720258.J_3207526240.63.2c5d2c4apUM9KP)。当使用该模板创建环境，组件会创建相应的 [服务角色](https://help.aliyun.com/document_detail/160674.html) 并绑定模板定义的权限策略。部署环境时，函数计算会通过角色扮演的方式访问模板中定义的资源。关于权限策略的介绍可以参考 [官方文档](https://help.aliyun.com/document_detail/93732.html)
+2. `policy.json`：[RAM](https://www.aliyun.com/product/ram?spm=5176.19720258.J_3207526240.103.51212c4aruIq9h) 的权限策略 `数组`，支持自定义策略和系统策略，声明了使用该模板创建资源所需要的权限，授信对象是 [函数计算](https://www.aliyun.com/product/fc?spm=5176.19720258.J_3207526240.63.2c5d2c4apUM9KP)。当使用该模板创建环境时，组件会创建相应的 [服务角色](https://help.aliyun.com/document_detail/160674.html) 并绑定模板定义的权限策略。部署环境时，函数计算会通过角色扮演的方式访问模板中定义的资源。关于权限策略的介绍可以参考 [官方文档](https://help.aliyun.com/document_detail/93732.html)
 
 模板 IaC 文件的核心要素为：
 1. variable：定义模板的参数，用户使用该模板创建环境时输入参数的值
 2. resource：定义模板的资源，环境部署时完成资源的供给
-3. outputs：定义模板的输出，环境部署成功后返回相应输出，可以被其他服务所访问
+3. output：定义模板的输出，环境部署成功后透出相应输出，可以被其他服务所访问
 
-![alt](https://img.alicdn.com/imgextra/i3/O1CN01OvoT9W1nkfmVlLi6o_!!6000000005128-2-tps-2234-672.png)
+![alt](https://img.alicdn.com/imgextra/i1/O1CN01mjhF1V1PdIcpVLfUN_!!6000000001863-2-tps-2234-672.png)
 
 #### 模板示例
 
-定义一个只创VPC、VSwitch的环境模板：
-* IaC（`.tf`）
+定义一个只提供 VPC、VSwitch 的环境模板：
+* IaC（`main.tf`）
   ```hcl
   resource "random_id" "this" {
     byte_length = 8
@@ -155,7 +155,7 @@ category: '其他功能'
   ```
 
 ### env init-template 命令
-通过 `s env init-template` 可以进入引导式操作创建一个环境模板
+通过 `s env init-template` 可以进入引导式操作创建一个环境模板。
 
 ```shell
 s env init-template
@@ -173,7 +173,7 @@ s env init-template
 ![Alt Text](https://img.alicdn.com/imgextra/i4/O1CN01uF01GS1VY9sOWHe7Q_!!6000000002664-1-tps-1158-484.gif)
 
 ### env apply-template 命令
-通过 `s env apply-template` 可以创建或者更新一个环境模板
+通过 `s env apply-template` 可以创建或者更新一个环境模板。
 
 ```shell
 s env apply-template --name testing --description 'it is a demo' --code ./infra
@@ -189,12 +189,12 @@ s env apply-template --name testing --description 'it is a demo' --code ./infra
 操作成功后，会返回当前模板的 [详细信息](#env-describe-template-命令)
 ### env describe-template 命令
 
-通过 `s env describe-template` 可以查看环境模板详情
+通过 `s env describe-template` 可以查看环境模板详情。
 
 ```shell
 s env describe-template --name testing
 ```
-查询结果会返回当前模板的 `varibale`、`outputs`、`状态`、 `policy`、`文本内容`、`版本` 等信息
+查询结果会返回当前模板的 `varibale`、`outputs`、`状态`、 `policy`、`文本内容`、`版本` 等信息。
 ```yaml
   name:        test-template
   description: test
@@ -272,7 +272,7 @@ s env describe-template --name testing
 ```shell
 s env remove-template --name testing
 ```
-**注意：如果环境模板被某个环境所引用，环境模板会删除失败，必须先删除环境后再删除模板**
+**注意：如果环境模板被某个环境所引用，环境模板会删除失败，必须先删除环境后再删除模板。**
 
 ### env list-templates 命令
 通过 `s env list-templates` 可以查询账号下所有的环境模板。
@@ -294,13 +294,13 @@ s env list-templates
 
 ### env init 命令
 
-通过 `s env init` 可以创建一个环境
+通过 `s env init` 可以创建一个环境。
 
 ```shell
 s env init --filename fc-env-testing.yaml
 ```
 
-执行成功后，会在本地 `.s` 目录下创建 `env/fc-env-testing.yaml` 描述文件，您可以查看并编辑该文件
+执行成功后，会在本地 `.s` 目录下创建 `env/fc-env-testing.yaml` 描述文件，您可以查看并编辑该文件。
 
 ```yaml
 #.s/env/fc-env-testing.yaml
@@ -326,19 +326,19 @@ props: #以下参数由环境模板定义
 
 #### 操作案例
 
-可以直接通过 `s env init` 命令，执行成功后会进入引导式操作，提示您输入环境名以及其他属性
+可以直接通过 `s env init` 命令，执行成功后会进入引导式操作，提示您输入环境名以及其他属性。
 
 ![Alt Text](https://img.alicdn.com/imgextra/i4/O1CN01fEkUrH1MnsuywXgX4_!!6000000001480-1-tps-1668-606.gif)
 
 ### env deploy 命令
 
-通过 `s env deploy` 可以部署指定的环境
+通过 `s env deploy` 可以部署指定的环境。
 
 ```shell
 s env deploy --name fc-env-testing
 ```
 
-执行指令后，Serverless Devs 会使用 [环境模板](#模板操作) 中声明的 IaC 完成环境基础设施的搭建，此时环境的所有信息都是持久化的，您不用担心本地配置文件删除后无法恢复的问题
+执行指令后，Serverless Devs 会使用 [环境模板](#模板操作) 中声明的 IaC 完成环境基础设施的搭建，此时环境的所有信息都是持久化的，您不用担心本地配置文件删除后无法恢复的问题。
 
 #### 参数解析
 
@@ -349,28 +349,28 @@ s env deploy --name fc-env-testing
 
 ### env info / list 命令
 
-通过 `s env info` 可以查询指定环境信息
+通过 `s env info` 可以查询指定环境信息。
 
 ```
 s env info --name fc-env-testing
 ```
 
-通过 `s env list` 可以查询账号下全部环境的信息
+通过 `s env list` 可以查询账号下全部环境的信息。
 
-执行指令后，组件会返回环境当前的信息，包括基本信息以及资源 output 详情
+执行指令后，组件会返回环境当前的信息，包括基本信息以及资源 output 详情。
 
 ## 进阶操作
 
 ### 指定环境部署服务
 
-在 `s deploy` 命令的基础上，可以通过 `s deploy --env` 将函数部署到指定的环境中
+在 `s deploy` 命令的基础上，可以通过 `s deploy --env` 将函数部署到指定的环境中。
 
 ```
 s deploy --env fc-env-testing
 ```
 
 执行指令后，组件会先判断环境是否已经部署，如果环境状态为 ready 则会将 `s.yaml `中的服务部署到该环境上；
-否则会先部署环境，再部署 `s.yaml` 中的服务
+否则会先部署环境，再部署 `s.yaml` 中的服务。
 
 ### 使用环境的信息配置服务
 
@@ -454,7 +454,7 @@ s deploy --env fc-test-2 --overlays overlay.yaml --patch-strategy merge
 
 通过这种分边界的模板化的处理方式，可以让企业不同的团队自助完成基础设施的搭建，提高生产效率的同时，又保证了权限隔离，让基础设施受到保护。
 
-### Serverless Devs多环境
+### Serverless Devs 多环境
 
 Serverless Devs 是一款面向 Serverless 应用生命周期的 DevsOps 工具，目前缺少对多环境的内在支持。目前的做法是为不同的环境维护不同的 s.yaml，或者
 通过环境变量的方式用以区分多环境，这种方式的弊端主要有3点：
