@@ -1,0 +1,63 @@
+[
+  {
+    "statement": [
+      {
+        "Effect": "Allow",
+        "Action": [
+          "vpc:CreateVpc",
+          "vpc:CreateVSwitch",
+          "vpc:DeleteVpc",
+          "vpc:DeleteVSwitch",
+          "vpc:ModifyVpcAttribute",
+          "vpc:ModifyVSwitchAttribute"
+        ],
+        "Resource": "*"
+      },
+      {
+        "Effect": "Allow",
+        "Action": [
+          "ecs:CreateSecurityGroup",
+          "ecs:ModifySecurityGroupAttribute",
+          "ecs:ModifySecurityGroupRule",
+          "ecs:ModifySecurityGroupPolicy",
+          "ecs:ModifySecurityGroupEgressRule",
+          "ecs:DeleteSecurityGroup",
+          "ecs:AuthorizeSecurityGroup",
+          "ecs:AuthorizeSecurityGroupEgress",
+          "ecs:RevokeSecurityGroup",
+          "ecs:RevokeSecurityGroupEgress"
+        ],
+        "Resource": "*"
+      },
+      {
+        "Effect": "Allow",
+        "Action": [
+          "nas:CreateMountTarget",
+          "nas:ModifyMountTarget",
+          "nas:CreateFileSystem",
+          "nas:ModifyFileSystem",
+          "nas:CreateAccessGroup",
+          "nas:CreateAccessRule",
+          "nas:ModifyAccessGroup",
+          "nas:ModifyAccessRule",
+          "nas:DeleteAccessGroup",
+          "nas:DeleteAccessRule",
+          "nas:DeleteFileSystem",
+          "nas:DeleteMountTarget"
+        ],
+        "Resource": "*"
+      },
+      {
+        "Effect": "Allow",
+        "Action": [
+          "fc:GetAccountSettings"
+        ],
+        "Resource": "*"
+      }
+    ]
+  },
+  "AliyunFCDefaultRolePolicy",
+  "AliyunECSReadOnlyAccess",
+  "AliyunVPCReadOnlyAccess",
+  "AliyunNASReadOnlyAccess"
+]
