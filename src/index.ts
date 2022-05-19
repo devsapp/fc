@@ -618,12 +618,46 @@ export default class FcBaseComponent extends EntryPublicMethod {
 
   async env(inputs: IInputs): Promise<any> {
     await super.handlerPreMethod(inputs, { getSecretKey: true });
-    const { props, args, argsObj } = this.handlerComponentInputs(inputs);
+    const { props, args } = this.handlerComponentInputs(inputs);
 
-    if (this.isHelp(args, argsObj)) {
-      core.help(HELP.ENV_HELP_INFO);
-      return;
+    const parsedArgs: { [key: string]: any } = core.commandParse(inputs, this.MINIMIST_HELP_OPT);
+    const parsedData = parsedArgs?.data || {};
+    const rawData = parsedData._ || [];
+    const commandList = ['undefined', 'init', 'deploy', 'info', 'list', 'init-template', 'apply-template', 'describe-template', 'list-templates', 'remove-template'];
+
+    const subCommand = rawData[0] || 'undefined';
+    this.logger.debug(`env subCommand: ${subCommand}`);
+    if (!commandList.includes(subCommand)) {
+      this.logger.error(`env ${subCommand} is not supported now.`);
+      return core.help(HELP.ENV_HELP_INFO);
     }
+
+    if (parsedData.help) {
+      switch (subCommand) {
+        case 'init':
+          core.help(HELP.ENV_INIT);
+          return;
+        case 'deploy':
+          core.help(HELP.ENV_DEPLOY);
+          return;
+        case 'info':
+          core.help(HELP.ENV_INFO);
+          return;
+        case 'apply-template':
+          core.help(HELP.ENV_APPLY_TEMPLATE);
+          return;
+        case 'describe-template':
+          core.help(HELP.ENV_DESCRIBE_TEMPLATE);
+          return;
+        case 'remove-template':
+          core.help(HELP.ENV_REMOVE_TEMPLATE);
+          return;
+        default:
+          core.help(HELP.ENV_HELP_INFO);
+          return;
+      }
+    }
+
     return await this.componentMethodCaller(
       inputs,
       'devsapp/infrastructure-as-template',

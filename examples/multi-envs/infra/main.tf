@@ -1,15 +1,3 @@
-terraform {
-  required_providers {
-    alicloud = {
-      source  = "aliyun/alicloud"
-      version = "1.138.0"
-    }
-  }
-}
-provider "alicloud" {
-  # ...
-}
-
 resource "random_id" "this" {
   byte_length = 8
 }
