@@ -311,10 +311,14 @@ export const REMOVE_PROVISION = [
       serviceNameDescribe,
       {
         name: 'qualifier',
-        description: '[Required] Specify the qualifier parameter. Only supports LATEST and alias',
+        description: '[Optional] Specify the qualifier parameter. Only supports LATEST and alias',
         type: String,
       },
-      functionNameDescribe,
+      {
+        name: 'function-name',
+        description: '[Optional] Specify the fc function name',
+        type: String,
+      },
       assumeYesDescribe,
     ],
   },
@@ -350,11 +354,15 @@ export const REMOVE_ONDEMAND = [
     optionList: [
       regionDescribe,
       serviceNameDescribe,
-      functionNameDescribe,
+      {
+        name: 'function-name',
+        description: '[Optional] Specify the fc function name',
+        type: String,
+      },
       {
         name: 'qualifier',
         description:
-          '[Required] If qualifier is specified, only all onDemand resources under this alias will be cleared; if not specified, all versions of onDemand resources under this service will be cleared',
+          '[Optional] If qualifier is specified, only all onDemand resources under this alias will be cleared; if not specified, all versions of onDemand resources under this service will be cleared',
         type: String,
       },
       assumeYesDescribe,
