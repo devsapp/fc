@@ -2,10 +2,11 @@ import * as core from '@serverless-devs/core';
 import path from 'path';
 import os from 'os';
 import fs from 'fs';
-import logger from './common/logger';
-import InfraAsTemplate from './lib/infra-as-template';
-import { IInputs, IProperties } from './lib/interface/interface';
-import { getCredentials } from './lib/utils';
+import logger from '../common/logger';
+import InfraAsTemplate from '../lib/infra-as-template';
+import { IInputs, IProperties } from '../lib/interface/interface';
+import { getCredentials } from '../lib/utils';
+import { setDefaultValue } from './set-default-value';
 
 const { lodash: _ } = core;
 
@@ -35,6 +36,8 @@ export default class EntryPublicMethod {
     if (getSecretKey) {
       inputs.credentials = await getCredentials(inputs.credentials, inputs.project?.access);
     }
+
+    setDefaultValue(inputs);
 
     await InfraAsTemplate.modifyInputs(inputs); // 多环境处理
 
