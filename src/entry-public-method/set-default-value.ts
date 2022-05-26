@@ -17,6 +17,9 @@ const EVENTBRIDGE_TRIGGER__CONF_DEFAULT = {
   triggerEnable: true,
   asyncInvocationType: false,
   eventRuleFilterPattern: '{}',
+  eventSourceConfig: {
+    eventSourceType: 'Default'
+  }
 }
 
 export function setDefaultValue(inputs) {
@@ -36,19 +39,6 @@ export function setDefaultValue(inputs) {
       const trigger = triggers[len];
       if (trigger.type?.toLowerCase() === 'eventbridge') {
         _.defaults(triggers[len].config, EVENTBRIDGE_TRIGGER__CONF_DEFAULT);
-        const { eventSourceType, sourceMNSParameters, sourceRocketMQParameters, sourceRabbitMQParameters } = trigger.config;
-
-        if (_.isNil(eventSourceType)) {
-          if (!_.isEmpty(sourceMNSParameters)) {
-            _.set(triggers[len], 'config.eventSourceType', 'MNS');
-          } else if (!_.isEmpty(sourceRocketMQParameters)) {
-            _.set(triggers[len], 'config.eventSourceType', 'RocketMQ');
-          } else if (!_.isEmpty(sourceRabbitMQParameters)) {
-            _.set(triggers[len], 'config.eventSourceType', 'RabbitMQ');
-          } else {
-            _.set(triggers[len], 'config.eventSourceType', 'Default');
-          }
-        }
       }
     }
   }
