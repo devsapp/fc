@@ -30,63 +30,17 @@ You can run `plan -h` or `plan --help` to obtain the help documentation.
 
 **If a resource description file in YAML exists**, you can run the `s plan` command to view resource changes. The following results are returned: 
 
-```text
-Local Last Deploy status => Online status
+<img src="https://img.alicdn.com/imgextra/i2/O1CN017bjBoD1WlGpbZonjX_!!6000000002828-2-tps-1700-622.png"/>
 
-  description: "this is a test" => "ssssssssss. this is a test"
-  timeout: 160 => 100
-```
+> ~: Configuration modified
+> -: Delete the configuration
+> +: Add the configuration
 
-Take note of the following situations:
-
-- Create a new local project：
-    - If the resources of the desired function do not exist in Function Compute, the information about the resource to be created is displayed.
-      ```shell script
-      ✅ Resources to create:
-      
-        service:
-          name: abc
-          description: efg
-      ```
-    - If the resources of the desired function exist in Function Compute, the difference between the resources that need to be created for the local project and the configurations of the desired function in Function Compute is displayed. 
-      ```shell script
-      ✅ Resources to change (release => new):
-        
-        service:
-          name: abc
-          description: efg  =>   demo
-      ```
-- Create an existing local project：
-    - If the resources of the desired function do not exist in Function Compute, the information about the resource to be created is displayed.
-      ```shell script
-      ✅ Resources to create:
-      
-        service:
-          name: abc
-          description: efg
-      ```
-    - The resources of the desired function exist in Function Compute:
-        - If the resource status of the last local deployment is inconsistent with the resource status in Function Compute, the changes of the resource status in Function Compute since the last local deployment and the changed resources are displayed. 
-          ```shell script
-          ⚠️ Hazard change (last state => release):
-            service:
-              name: abc
-              description: test  =>  efg
-          
-          ✅ Resources to change (release => new):
-            
-            service:
-              name: abc
-              description: efg  =>   demo
-          ```
-        - If the resource status of the last local deployment is the same as the resource status in Function Compute, the difference between the resources that need to be updated for the local project and the configurations of the desired function in Function Compute are displayed.
-          ```shell script
-          ✅ Resources to change (release => new):
-            
-            service:
-              name: abc
-              description: efg  =>   demo
-          ```
+The figure shows what is expected after `deploy` is executed：
+1. Function description changed from 'This is default function description by fc-deploy component' to 'test update'
+2. Function memorySize changed from 256 to 512
+3. Removed the TESSDATA_PREFIX configuration for Function environmentVariables
+4. Function environmentVariables added test_add
 
 ## Permissions and policies
 

@@ -31,63 +31,17 @@ category: '构建&部署'
 
 **有资源描述文件（Yaml）时**，可以直接执行`s plan`进行资源变更感知，效果如下：
 
-```text
-Local Last Deploy status => Online status
+<img src="https://img.alicdn.com/imgextra/i2/O1CN017bjBoD1WlGpbZonjX_!!6000000002828-2-tps-1700-622.png"/>
 
-  description: "this is a test" => "ssssssssss. this is a test"
-  timeout: 160 => 100
-```
+> ~: 配置被修改
+> -: 删除配置
+> +: 添加配置
 
-此时需要额外注意几种情况：
-
-- 本地全新项目：
-    - 线上不存在目标函数资源：提示即将创建的资源内容
-      ```shell script
-      ✅ Resources to create:
-      
-        service:
-          name: abc
-          description: efg
-      ```
-    - 线上存在目标函数资源：提示本地项目所需要创建的资源与线上目标函数配置的区别（做 diff 操作）
-      ```shell script
-      ✅ Resources to change (release => new):
-        
-        service:
-          name: abc
-          description: efg  =>   demo
-      ```
-- 本地已存在项目：
-    - 线上不存在目标函数资源：提示即将创建的资源内容
-      ```shell script
-      ✅ Resources to create:
-      
-        service:
-          name: abc
-          description: efg
-      ```
-    - 线上存在目标函数资源：
-        - 本地上一次部署状态和线上资源不一致：提示上次本地部署完成之后，线上资源发生过那些变更，以及即将变成什么样子
-          ```shell script
-          ⚠️ Hazard change (last state => release):
-            service:
-              name: abc
-              description: test  =>  efg
-          
-          ✅ Resources to change (release => new):
-            
-            service:
-              name: abc
-              description: efg  =>   demo
-          ```
-        - 本地上一次部署状态和线上资源一致：提示本地项目所需要更新的资源与线上目标函数配置的区别（做 diff 操作）
-          ```shell script
-          ✅ Resources to change (release => new):
-            
-            service:
-              name: abc
-              description: efg  =>   demo
-          ```
+从图可以看出执行 deploy 之后预期：
+1. function 的 description 由 'This is default function description by fc-deploy component' 变更为 'test update'
+2. function 的 memorySize 由 256 变更为 512
+3. 删除了 function environmentVariables 的 TESSDATA_PREFIX 配置
+4. function environmentVariables 新增 test_add
 
 ## 权限与策略说明
 
