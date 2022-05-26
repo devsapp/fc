@@ -18,7 +18,7 @@ export default class Instance {
   static async handlerInputs(inputs) {
     logger.debug(`inputs.props: ${JSON.stringify(inputs.props)}`);
 
-    const parsedArgs: {[key: string]: any} = core.commandParse(inputs, {
+    const parsedArgs: { [key: string]: any } = core.commandParse(inputs, {
       boolean: ['help', 'stdin', 'tty'],
       string: ['region', 'service-name', 'function-name', 'qualifier'],
       alias: { help: 'h', stdin: 'i', tty: 't' },
@@ -150,7 +150,7 @@ export default class Instance {
   }
 
   async exec(props) {
-    logger.debug(`props.rawData: ${JSON.stringify(props.rawData)}`);
+    logger.debug(`props.rawData: ${JSON.stringify(props, null, 2)}`);
     if (props.stdin) {
       return await this.stdinExec(props);
     }
@@ -257,6 +257,10 @@ export default class Instance {
         hooks,
       );
 
+      if (process.stdin.isPaused()) {
+        logger.debug('In the running state, switch an explicitly paused stream to flow mode');
+        process.stdin.resume();
+      }
       process.stdin.setEncoding('ascii');
       process.stdin.setRawMode(true);
       process.stdin.on('data', (chunk: string) => {
