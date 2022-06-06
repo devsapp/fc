@@ -214,7 +214,7 @@ echo $HOME
 export HOME=/root/workspace
 # 1. install and config s
 curl -o- -L http://cli.so/install.sh | bash
-export PATH=$HOME/.s/node-v14.17.4-linux-x64/bin:$PATH
+export PATH=$HOME/.s/node-v14.19.3-linux-x64/bin:$PATH
 s config add --AccessKeyID ${my-ak-id} --AccessKeySecret ${my-ak-secret}  -a default -f
 
 s clean --all
