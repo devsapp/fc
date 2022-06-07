@@ -18,22 +18,22 @@ const EVENTBRIDGE_TRIGGER__CONF_DEFAULT = {
   asyncInvocationType: false,
   eventRuleFilterPattern: '{}',
   eventSourceConfig: {
-    eventSourceType: 'Default'
-  }
-}
+    eventSourceType: 'Default',
+  },
+};
 
 export function setDefaultValue(inputs) {
   if (_.get(inputs, 'props.service.name')) {
-    _.defaults(inputs.props.service, SERVICE_CONF_DEFAULT)
+    _.defaults(inputs.props.service, SERVICE_CONF_DEFAULT);
   }
   if (_.get(inputs, 'props.function.name')) {
-    _.defaults(inputs.props.function, FUNCTION_CONF_DEFAULT)
+    _.defaults(inputs.props.function, FUNCTION_CONF_DEFAULT);
   }
 
   const triggers = _.get(inputs, 'props.triggers');
   if (!_.isEmpty(triggers)) {
     if (!_.isArray(triggers)) {
-      throw new CatchableError(`triggers expected is array.`);
+      throw new CatchableError('triggers expected is array.');
     }
     for (let len = 0; len < triggers.length; len += 1) {
       const trigger = triggers[len];
