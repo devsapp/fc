@@ -32,6 +32,10 @@ category: '可观测性'
 | end-time      | e        | 选填           | 选填          | 查询的时间点终点，UTC时间或者时间戳，例如`2021-06-07T02:54:59+08:00`，`1611827290000` |
 | tail          | -        | 选填           | 选填          | 以`tail`模式进行日志输出                                     |
 | type          | -        | 选填           | 选填          | 查询的日志类型，成功或者失败,取值范围：`success, fail`         |
+| instance-id          | -        | 选填           | 选填          | 根据 instance-id 过滤         |
+| qualifier          | -        | 选填           | 选填          | 查询指定版本或者别名         |
+| match          | -        | 选填           | 选填          | 匹配到的字符高亮         |
+
 
 > 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)
 

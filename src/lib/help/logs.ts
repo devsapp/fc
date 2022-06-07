@@ -37,6 +37,21 @@ export const LOGS = [
         type: String,
       },
       {
+        name: 'instance-id',
+        description: '[Optional] Query according to instanceId within the time interval',
+        type: String,
+      },
+      {
+        name: 'qualifier',
+        description: '[Optional] Query the specified version or alias',
+        type: String,
+      },
+      {
+        name: 'match',
+        description: '[Optional] The matched character is highlighted',
+        type: String,
+      },
+      {
         name: 'search',
         description:
           '[Optional] Keyword query,Document: https://help.aliyun.com/document_detail/29060.html',
