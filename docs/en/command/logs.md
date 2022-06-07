@@ -32,6 +32,9 @@ You can run the `logs -h` or `logs --help` command to obtain the help document.
 | start-time  | s    | No      | No     | The start time of the query, which must be UTC time or a timestamp. Example: `2021-06-07T02:54:59+08:00`，`1611827290000` |
 | end-time   | e    | No      | No     | The end time of the query, which must be UTC time or a timestamp. Example: `2021-06-07T02:54:59+08:00`，`1611827290000` |
 | tail     | -    | No      | No     | Outputs the result in the `tail` mode.                   |
+| instance-id          | -        | No           | No          | Query according to instanceId within the time interval         |
+| qualifier          | -        | No           | No          | Query the specified version or alias        |
+| match          | -        | No           | No          | The matched character is highlighted         |
 
 > The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
 
