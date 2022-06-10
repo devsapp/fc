@@ -53,11 +53,35 @@
           "fc:GetAccountSettings"
         ],
         "Resource": "*"
+      },
+      {
+        "Effect": "Allow",
+        "Action": [
+            "oss:DeleteBucket",
+            "oss:PutBucket",
+            "oss:PutBucketAcl",
+            "oss:PutBucketPolicy",
+            "oss:DeleteBucketPolicy"
+        ],
+        "Resource": "*"
+      },
+      {
+        "Effect": "Allow",
+        "Action": [
+            "log:CreateProject",
+            "log:DeleteProject",
+            "log:UpdateProject",
+            "log:CreateLogStore",
+            "log:DeleteLogStore",
+            "log:UpdateLogStore"
+        ],
+        "Resource": "*"
       }
     ]
   },
-  "AliyunFCDefaultRolePolicy",
   "AliyunECSReadOnlyAccess",
   "AliyunVPCReadOnlyAccess",
-  "AliyunNASReadOnlyAccess"
+  "AliyunNASReadOnlyAccess",
+  "AliyunOSSReadOnlyAccess",
+  "AliyunLogReadOnlyAccess"
 ]
