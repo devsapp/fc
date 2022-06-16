@@ -25,7 +25,7 @@ category: 'Yaml-Spec'
 | initializer                                         | False    | String                             | Initializer                                                  |
 | instanceConcurrency                                 | False    | Number                             | Single instance with multiple concurrency                    |
 | instanceType                                        | False    | String                             | Function instance type, optional values: e1 (elastic instance), c1 (performance instance) |
-| layers                                               | False    | List\<String\>                     | Function binding layer, only supports Nodejs and Python; the value is the ARN of the layer |
+| layers                                               | False    | List\<String\>                     | Function binding layer,supports Custom and Go1 and Nodejs and Python; the value is the ARN of the layer |
 | [instanceLifecycleConfig](#instancelifecycleconfig) | False    | [Struct](#instancelifecycleconfig) | extension function                                           |
 | [asyncConfiguration](#asyncconfiguration)           | False    | [Struct](#asyncconfiguration)      | Async Configuration                                          |
 | [customDNS](#customdns)                             | False    | [Struct](#customdns)               | DNS Configuration                                            |
