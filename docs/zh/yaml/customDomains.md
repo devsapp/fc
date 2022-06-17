@@ -98,7 +98,7 @@ customDomains:
       privateKey: http://oss.abc.com/privateKey
 ```
 
-**OSS**地址，格式 `oss://{region}/{bucketName}/{objectName}`, 但是需要`子账号`有获`取oss文件`的权限
+**OSS**地址，格式 `oss://{region}/{bucketName}/{objectName}`, 但是需要`子账号`有`获取oss文件`的权限
 
 ```yaml
 customDomains:
