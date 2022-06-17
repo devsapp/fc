@@ -9,7 +9,7 @@ category: 'Release&configuration'
 
 The `layer` commands are used to perform layer operations.
 
-- [Command description](#Command description)
+- [Command description](#Command-description)
 - [layer publish command](#layer-publish-command)
   - [Parameters description](#Parametersdescription)
   - [Examples](#examples)
@@ -51,7 +51,7 @@ You can run the `layer publish -h` or `layer publish --help` command to obtain t
 | ------------------ | ---------- | --------------------- | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | region             | -          | Optional              | Required             | The region. Valid values: cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, and ap-south-1 |
 | code               | -          | Required              | Required             | The code of the layer.                                                                                                                                                                                                                                                                                                 |
-| compatible-runtime | -          | Optional              | Optional             | Supported runtime. Default value: nodejs12,nodejs10,nodejs8,nodejs6,python3,python2.7                                                                                                                                                                                                                                  |
+| compatible-runtime | -          | Optional              | Optional             | Supported runtime. Default value: nodejs14,nodejs12,nodejs10,nodejs8,nodejs6,nodejs4.4,python3.9,python3,python2.7,java11,java8,go1,php7.2,dotnetcore2.1,custom.7                                                                                                                                                                                                                                  |
 | description        |            | Optional              | Optional             | The description of the layer.                                                                                                                                                                                                                                                                                          |
 | layer-name         |            | Required              | Required             | The name of the layer.                                                                                                                                                                                                                                                                                                 |
 
