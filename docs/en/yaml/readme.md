@@ -77,7 +77,7 @@ services:
         initializer: index.init     # initialization method
         instanceConcurrency: 1      # single instance multiple concurrency
         instanceType: e1            # Function instance type, optional values ​​are: e1 (elastic instance), c1 (performance instance)
-        layers:                     # Function binding layer, only supports Nodejs and Python; the value is the ARN of the layer
+        layers:                     # Function binding layer, supports Nodejs, Python, Java, Php, Golang, .NET and Custom Runtime; the value is the ARN of the layer. Multiple layers will be merged in descending order of array subscripts, if the same file appears in multiple layers, the function uses the version in the layer of smaller array subscript
           - xxx
           - xxx
         instanceLifecycleConfig: # extension function
