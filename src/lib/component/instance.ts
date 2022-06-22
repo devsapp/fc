@@ -146,7 +146,9 @@ export default class Instance {
       functionName,
       qualifier,
     } = props;
-    return (await Client.fcClient.listInstances(serviceName, functionName, qualifier)).data;
+    return {
+      functionName: (await Client.fcClient.listInstances(serviceName, functionName, qualifier)).data
+    };
   }
 
   async exec(props) {
