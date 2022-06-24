@@ -774,16 +774,16 @@ resource "alicloud_event_bridge_service_linked_role" "service_linked_role" {
 
 | 参数名                                  | 必填 | 类型                         | 参数描述                                                   |
 | --------------------------------------- | ---- | ---------------------------- | ---------------------------------------------------------- |
-| eventSourceType               | False | String       | 触发器事件源类型，目前支持如下四种触发源：<br> 1. Default：表示 EventBridge 官方触发源<br> 2. MNS：消息队列 MNS 队列作为触发源<br> 3. RocketMQ：消息队列 RockerMQ 作为触发源<br> 4. RabbitMQ：消息队列 RabbitMQ 作为触发源<br><br>注：该字段不可更新，更新时传入该字段将被忽略                                                   |
-| [eventSourceParameters](#eventSourceParameters)           | True | [Struct](#eventSourceParameters)      | 自定义事件源参数，自定义事件源包括：MNS，RocketMQ，RabbitMQ                                                 |
+| eventSourceType               | True | String       | 触发器事件源类型，目前支持如下四种触发源：<br> 1. Default：表示 EventBridge 官方触发源<br> 2. MNS：消息队列 MNS 队列作为触发源<br> 3. RocketMQ：消息队列 RockerMQ 作为触发源<br> 4. RabbitMQ：消息队列 RabbitMQ 作为触发源<br><br>注：该字段不可更新，更新时传入该字段将被忽略                                                   |
+| [eventSourceParameters](#eventSourceParameters)           | False | [Struct](#eventSourceParameters)      | 自定义事件源参数，自定义事件源包括：MNS，RocketMQ，RabbitMQ                                                 |
 
 #### eventSourceParameters
 
 | 参数名                                  | 必填 | 类型                         | 参数描述                                                   |
 | --------------------------------------- | ---- | ---------------------------- | ---------------------------------------------------------- |
-| [sourceMNSParameters](#sourceMNSParameters)           | True | [Struct](#sourceMNSParameters)      | 事件源为消息服务 MNS 时的自定义参数配置                                                 |
-| [sourceRocketMQParameters](#sourceRocketMQParameters)           | True | [Struct](#sourceRocketMQParameters)      | 事件源为消息服务 RockerMQ 时的自定义参数配置                                                 |
-| [sourceRabbitMQParameters](#sourceRabbitMQParameters)           | True | [Struct](#sourceRabbitMQParameters)      | 事件源为消息服务 RabbitMQ 时的自定义参数配置                                                 |
+| [sourceMNSParameters](#sourceMNSParameters)           | False | [Struct](#sourceMNSParameters)      | 事件源为消息服务 MNS 时的自定义参数配置                                                 |
+| [sourceRocketMQParameters](#sourceRocketMQParameters)           | False | [Struct](#sourceRocketMQParameters)      | 事件源为消息服务 RockerMQ 时的自定义参数配置                                                 |
+| [sourceRabbitMQParameters](#sourceRabbitMQParameters)           | False | [Struct](#sourceRabbitMQParameters)      | 事件源为消息服务 RabbitMQ 时的自定义参数配置                                                 |
 
 #### sourceMNSParameters
 
@@ -791,7 +791,7 @@ resource "alicloud_event_bridge_service_linked_role" "service_linked_role" {
 | --------------------------------------- | ---- | ---------------------------- | ---------------------------------------------------------- |
 | RegionId           | False | String      | 消息服务 MNS Queue 所属地域                                                 |
 | QueueName           | True | String      | 消息服务MNS的Queue的名称                                                 |
-| IsBase64Decode           | False | String      | 是否开启Base64编码。默认为true                                                 |
+| IsBase64Decode           | False | Boolean      | 是否开启Base64编码。默认为true                                                 |
 
 #### sourceRocketMQParameters
 
