@@ -231,13 +231,13 @@ export default class Alias {
       const oldId = aliasConfig.versionId;
       var oldIndex = -1;
       for (var i = 0; i < versionList.length; ++i) {
-        if (versionList[i].versionId === oldId){
+        if (versionList[i].versionId === oldId) {
           oldIndex = i;
           break;
         }
       }
       const newIndex = oldIndex + rb;
-      if(newIndex<0||newIndex>=versionList.length){
+      if (newIndex < 0 || newIndex >= versionList.length) {
         throw new core.CatchableError('Please check rollback number.');
       }
       versionId = versionList[newIndex].versionId;
