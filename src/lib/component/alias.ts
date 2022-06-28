@@ -202,96 +202,53 @@ export default class Alias {
     }
   }
 
-  async rollback({
-    serviceName,
-    description,
-    aliasName,
-    versionId,
-    gversion,
-    weight,
-  }: Rollback) {
-    const hasWeight = typeof weight === 'number';
-    if (hasWeight && !gversion) {
-      throw new Error('weight exists, gversion is required');
+  async rollback(props: Rollback) {
+    var {
+      serviceName,
+      aliasName,
+      versionId
+    } = props;
+    const aliasConfig = await this.findAlias({ serviceName, aliasName });
+    if (!aliasConfig) {
+      throw new core.CatchableError(`${aliasName} not found.`);
     }
-    if (gversion && !hasWeight) {
-      throw new Error('gversion exists,weight is required');
-    }
-    const parames = {
-      description,
-      additionalVersionWeight: {},
-    };
-    if (hasWeight) {
-      parames.additionalVersionWeight = { [gversion]: weight / 100 };
-    }
-
-    if (!(aliasName && /^[_a-zA-Z][-_a-zA-Z0-9]*$/.test(aliasName))) {
-      throw new Error(
-        `AliasName doesn't match expected format (allowed: ^[_a-zA-Z][-_a-zA-Z0-9]*$, actual: '${aliasName}')`,
-      );
-    }
-
-    const versionClient = new Version();
-    const versionList = await versionClient.list({ serviceName });
-    if (!versionId) {
-      if (versionList.length === 0) {
-        throw new Error(
-          'Not found version.Please use [s version publish --description xxx] to publish the version',
-        );
-      } else {
-        const answers: any = await inquirer.prompt([
-          {
-            type: 'list',
-            name: 'versionId',
-            message:
-              'VersionId or HEAD is required. Please select the version pointed to by the alias, and display the latest 20 versions. If you want to see more, please execute [s version list --table]',
-            choices: versionList.slice(0, 20).map((item) => item.versionId),
-          },
-        ]);
-        versionId = answers.versionId;
+    if (!_.isNumber(versionId)) {
+      if (!versionId.startsWith('HEAD')) {
+        throw new core.CatchableError('Command format error', 'Example: s alias rollback --alias-name aliasName --version-id HEAD^ / HEAD~1 / version-id');
       }
-    } else if (versionId.indexOf("HEAD") == 0) {
-      // HEAD to versionId number
-      var headBackCount = 0;
-      for (var i = 4; i < versionId.length; ++i) {
-        if (versionId.charAt(i) === '^') {
-          headBackCount += 1;
-        } else {
-          throw new Error(
-            'Wrong versionId.',
-          );
+      const subStr = versionId.substring(4);
+      var rb = 0;
+      if (/^\^+$/.test(subStr)) {
+        rb = subStr.length;
+      } else if (/^~\d$/.test(subStr)) {
+        rb = Number(subStr.substring(1));
+      } else {
+        throw new core.CatchableError('Command format error', 'Example: s alias rollback --alias-name aliasName --version-id HEAD^ / HEAD~1 / version-id');
+      }
+
+      const versionClient = new Version();
+      const versionList = await versionClient.list({ serviceName });
+      const oldId = aliasConfig.versionId;
+      var oldIndex = -1;
+      for (var i = 0; i < versionList.length; ++i) {
+        if (versionList[i].versionId === oldId){
+          oldIndex = i;
+          break;
         }
       }
-
-      // const data = await Client.fcClient.get_all_list_data(
-      //   `/services/${serviceName}/aliases`,
-      //   'aliases',
-      // );
-      // console.log(`headBackCount: ${headBackCount}, data.length: ${data.length}, data[0]: ${data[0].toString()}, versionId: ${data[0].versionId}`)
-      // const index2 = data.length-headBackCount;
-      // if(index2<0||index2>=data.length){
-      //   throw new Error(
-      //     'Please chech the number of ^',
-      //   );
-      // }
-      // const aliasInfo = data[index2];
-      // versionId = aliasInfo.versionId;
-
-      const index = headBackCount;
-      if (index < 0 || index >= versionList.length) {
-        throw new Error(
-          'Please chech the number of ^',
-        );
+      const newIndex = oldIndex + rb;
+      if(newIndex<0||newIndex>=versionList.length){
+        throw new core.CatchableError('Please check rollback number.');
       }
-      versionId = versionList[index].versionId;
+      versionId = versionList[newIndex].versionId;
     }
 
-    const aliasConfig = await this.findAlias({ serviceName, aliasName });
-    if (aliasConfig) {
-      return await this.updateAlias({ aliasName, serviceName, versionId, parames });
-    } else {
-      return await this.createAlias({ aliasName, serviceName, versionId, parames });
-    }
+    const versionLatest = false;
+    return this.publish({
+      ...props,
+      versionId,
+      versionLatest,
+    });
   }
 
   async list({ serviceName }: { serviceName: string }, table?: boolean) {
