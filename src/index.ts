@@ -229,8 +229,9 @@ export default class FcBaseComponent extends EntryPublicMethod {
       core.help(HELP.BUILD_HELP_INFO);
       return;
     }
-    await this.componentMethodCaller(inputs, 'devsapp/fc-build', 'build', props, args);
-    tips.showNextTip(args, tips.showBuildNextTips);
+    const output = await this.componentMethodCaller(inputs, 'devsapp/fc-build', 'build', props, args);
+    tips.showBuildNextTips(output?.buildSaveUri);
+    return output?.buildSaveUri;
   }
 
   async local(inputs: IInputs): Promise<any> {
