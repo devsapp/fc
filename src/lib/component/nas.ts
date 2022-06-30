@@ -96,8 +96,8 @@ export default class Nas {
 
   // 如果是 auto 使用线上配置，不在缓存中获取
   static async getServiceConfig(props, access, credentials) {
-    // @ts-ignore
-    let { name, vpcConfig, nasConfig, role } = props?.service || {};
+    const name = props?.service?.name;
+    let { vpcConfig, nasConfig, role } = props?.service || {};
 
     const fcClient = await Client.setFcClient(props?.region, credentials, access);
     let remoteData;

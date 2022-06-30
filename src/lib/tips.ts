@@ -12,7 +12,7 @@ export function showBuildNextTips(buildSaveUri?: string) {
 * Deploy Resources: ${deployTip}`;
 
   if (buildSaveUri) {
-    logStr = `${logStr}\n* Code Output Path: ${buildSaveUri}\n`
+    logStr = `${logStr}\n* Code Output Path: ${buildSaveUri}\n`;
   }
 
   Logger.log(logStr, 'yellow');

@@ -97,9 +97,9 @@ export default class Instance {
       } else if (command[2] && !command[2].startsWith('-')) {
         instanceId = command.splice(2, 1)[0];
       } else {
-        const command = `s cli fc instance list --region ${region} --service-name ${serviceName} --function-name ${functionName}`;
+        const commandStr = `s cli fc instance list --region ${region} --service-name ${serviceName} --function-name ${functionName}`;
         throw new fcCore.CatchableError('No instanceId is found', `
-· You can get the instance list through '$ ${command}'
+· You can get the instance list through '$ ${commandStr}'
 · You can get help by executing 's cli fc instance exec -h'`);
       }
       endProps.instanceId = instanceId;
@@ -147,7 +147,7 @@ export default class Instance {
       qualifier,
     } = props;
     return {
-      functionName: (await Client.fcClient.listInstances(serviceName, functionName, qualifier)).data
+      functionName: (await Client.fcClient.listInstances(serviceName, functionName, qualifier)).data,
     };
   }
 
@@ -191,7 +191,6 @@ export default class Instance {
     logger.debug(`command-exec command:\n${JSON.stringify(options, null, 2)}`);
     logger.debug('----------------------------------------');
 
-    // @ts-ignore
     await new Promise(async (resolve) => {
       const hooks = {
         onStdout: (msg) => logger.log(`${msg}`),

@@ -2,7 +2,7 @@ Type: Component
 Name: fc
 Provider:
   - 阿里云
-Version: 0.1.51
+Version: 0.1.52
 Description: Basic components of Alibaba cloud functional computing
 HomePage: https://github.com/devsapp/fc
 Tags:
