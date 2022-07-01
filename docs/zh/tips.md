@@ -240,11 +240,11 @@ $ s cli fc-default set enable-fc-endpoint 'true'
 
 2. 通过环境变量配置，环境变量值及规则如下：
 ```
-export s-default-fc-endpoint='http://****.test.aliyun.com'
-export s-default-enable-fc-endpoint='true'
+export s_default_fc_endpoint='http://****.test.aliyun.com'
+export s_default_enable_fc_endpoint='true'
 ```
 
-> 注意：`s-default-fc-endpoint` 等同于 fc-endpoint 字段。`s-default-enable-fc-endpoint` 等同于 enable-fc-endpoint 字段。
+> 注意：`s_default_fc_endpoint` 等同于 fc-endpoint 字段。`s_default_enable_fc_endpoint` 等同于 enable-fc-endpoint 字段。
 
 ## 项目实践案例
 
