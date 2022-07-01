@@ -246,6 +246,13 @@ export s_default_enable_fc_endpoint='true'
 
 > 注意：`s_default_fc_endpoint` 等同于 fc-endpoint 字段。`s_default_enable_fc_endpoint` 等同于 enable-fc-endpoint 字段。
 
+## 私有化部署
+
+1. 通过环境变量配置，环境变量值及规则如下：
+```
+export default_serverless_devs_registry_mode='local'
+```
+
 ## 项目实践案例
 
 - Build相关：
