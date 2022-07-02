@@ -212,12 +212,12 @@ export default class Alias {
     if (!aliasConfig) {
       throw new core.CatchableError(`${aliasName} not found.`);
     }
-    if (!_.isNumber(versionId)) {
+    if (!/^\d+$/.test(versionId)) {
       if (!versionId.startsWith('HEAD')) {
         throw new core.CatchableError('Command format error', 'Example: s alias rollback --alias-name aliasName --version-id HEAD^ / HEAD~1 / version-id');
       }
       const subStr = versionId.substring(4);
-      var rb = 0;
+      let rb = 0;
       if (/^\^+$/.test(subStr)) {
         rb = subStr.length;
       } else if (/^~\d$/.test(subStr)) {
@@ -228,19 +228,13 @@ export default class Alias {
 
       const versionClient = new Version();
       const versionList = await versionClient.list({ serviceName });
-      const oldId = aliasConfig.versionId;
-      var oldIndex = -1;
-      for (var i = 0; i < versionList.length; ++i) {
-        if (versionList[i].versionId === oldId) {
-          oldIndex = i;
-          break;
-        }
-      }
+      const { versionId: oldId } = aliasConfig;
+      const oldIndex = _.findIndex(versionList, ['versionId', oldId]);
       const newIndex = oldIndex + rb;
-      if (newIndex < 0 || newIndex >= versionList.length) {
+      versionId = versionList[newIndex]?.versionId;
+      if (!versionId) {
         throw new core.CatchableError('Please check rollback number.');
       }
-      versionId = versionList[newIndex].versionId;
     }
 
     const versionLatest = false;
