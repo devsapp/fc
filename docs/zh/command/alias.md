@@ -24,6 +24,7 @@ category: '发布&配置'
   - [alias rollback 命令](#alias-rollback-命令)
     - [参数解析](#参数解析-3)
     - [操作案例](#操作案例-3)
+  - [remove alias 命令](remove.md#remove-alias-命令)
   - [权限与策略说明](#权限与策略说明)
 
 ## 命令解析
@@ -184,7 +185,7 @@ fc-deploy-test:
 | service-name | -        | 选填           | 必填          | 服务名                                                       |
 | description  | -        | 选填           | 选填          | 别名描述                                                     |
 | alias-name   | -        | 必填           | 必填          | 别名。需要是已发布的别名。                                                        |
-| version-id   | -        | 选填           | 选填          | 版本Id。三种形式：1. 指定 version-id; 2. 使用"HEAD^^"形式，如："HEAD^"表示回退到上一个版本，"HEAD^^"表示回退到上上一个版本，以此类推；3. 使用"HEAD~数字"形式，如："HEAD~1"表示回退到上一个版本，"HEAD~2"表示回退到上上一个版本 |
+| version-id   | -        | 选填           | 选填          | 版本Id。三种形式：1. 指定 version-id; 2. 使用`HEAD^^`形式，如：`HEAD^`表示回退到上一个版本，`HEAD^^`表示回退到上上一个版本，以此类推；3. 使用`HEAD~数字`形式，如：`HEAD~1`表示回退到上一个版本，`HEAD~2`表示回退到上上一个版本 |
 | gversion     | -        | 选填           | 选填          | 灰度版本Id。灰度版本权重填写时必填|
 | weight       | -        | 选填           | 选填          | 灰度版本权重。灰度版本Id填写时必填 |
 

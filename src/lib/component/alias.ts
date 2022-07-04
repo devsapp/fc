@@ -220,7 +220,7 @@ export default class Alias {
       let rb = 0;
       if (/^\^+$/.test(subStr)) {
         rb = subStr.length;
-      } else if (/^~\d$/.test(subStr)) {
+      } else if (/^~\d+$/.test(subStr)) {
         rb = Number(subStr.substring(1));
       } else {
         throw new core.CatchableError('Command format error', 'Example: s alias rollback --alias-name aliasName --version-id HEAD^ / HEAD~1 / version-id');
