@@ -9,29 +9,34 @@ category: '发布&配置'
 
 `alias` 命令是对函数别名操作的命令；主要包括别名的查看、发布、修改、删除等功能。
 
-- [命令解析](#命令解析)
-- [alias get 命令](#alias-get-命令)
-  - [参数解析](#参数解析)
-  - [操作案例](#操作案例)
-- [alias list 命令](#alias-list-命令)
-  - [参数解析](#参数解析-1)
-  - [操作案例](#操作案例-1)
-- [alias publish 命令](#alias-publish-命令)
-  - [参数解析](#参数解析-2)
-  - [操作案例](#操作案例-2)
-  - [Publish 主版本获取逻辑](#Publish-主版本获取逻辑)
-- [remove alias 命令](remove.md#remove-alias-命令)
-- [权限与策略说明](#权限与策略说明)
+- [Alias 命令](#alias-命令)
+  - [命令解析](#命令解析)
+  - [alias get 命令](#alias-get-命令)
+    - [参数解析](#参数解析)
+    - [操作案例](#操作案例)
+  - [alias list 命令](#alias-list-命令)
+    - [参数解析](#参数解析-1)
+    - [操作案例](#操作案例-1)
+  - [alias publish 命令](#alias-publish-命令)
+    - [参数解析](#参数解析-2)
+    - [操作案例](#操作案例-2)
+    - [Publish 主版本获取逻辑](#publish-主版本获取逻辑)
+  - [alias rollback 命令](#alias-rollback-命令)
+    - [参数解析](#参数解析-3)
+    - [操作案例](#操作案例-3)
+  - [remove alias 命令](remove.md#remove-alias-命令)
+  - [权限与策略说明](#权限与策略说明)
 
 ## 命令解析
 
 当执行命令`alias -h`/`alias --help`时，可以获取帮助文档。
 
-在该命令中，包括了三个子命令：
+在该命令中，包括了四个子命令：
 
 - [get：查看指定别名详情](#alias-get-命令)
 - [list：获取别名列表](#alias-list-命令)
 - [publish：发布/更新别名](#alias-publish-命令)
+- [rollback：回滚别名的版本](#alias-rollback-命令)
 
 ## alias get 命令
 
@@ -165,6 +170,75 @@ fc-deploy-test:
 - 指定 version-id：直接使用指定的 version-id
 - 未指定 version-id，但是指定了 version-latest：获取版本列表，取下标0的版本号（版本列表默认倒序，下标0就是最大的版本号）
 - 未指定 version-id 和 version-latest：获取版本列表，如果仅有一个版本直接使用此版本号；如果是多个版本，那么会产生交互让用户选择
+
+## alias rollback 命令
+
+`alias rollback` 命令，是对指定别名的版本进行回退的命令。
+
+当执行命令`alias rollback -h`/`alias rollback --help`时，可以获取帮助文档。
+
+### 参数解析
+
+| 参数全称     | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
+| ------------ | -------- | -------------- | ------------- | ------------------------------------------------------------ |
+| region       | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
+| service-name | -        | 选填           | 必填          | 服务名                                                       |
+| description  | -        | 选填           | 选填          | 别名描述                                                     |
+| alias-name   | -        | 必填           | 必填          | 别名。需要是已发布的别名。                                                        |
+| version-id   | -        | 选填           | 选填          | 版本Id。三种形式：1. 指定 version-id; 2. 使用`HEAD^^`形式，如：`HEAD^`表示回退到上一个版本，`HEAD^^`表示回退到上上一个版本，以此类推；3. 使用`HEAD~数字`形式，如：`HEAD~1`表示回退到上一个版本，`HEAD~2`表示回退到上上一个版本 |
+| gversion     | -        | 选填           | 选填          | 灰度版本Id。灰度版本权重填写时必填|
+| weight       | -        | 选填           | 选填          | 灰度版本权重。灰度版本Id填写时必填 |
+
+> 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)
+
+### 操作案例
+
+- **有资源描述文件（Yaml）时**，可以直接执行`s alias rollback`进行指定别名的版本回退；
+- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区以及服务名称，例如` s cli fc alias rollback --region cn-hangzhou --service-name fc-deploy-service --alias-name pre --version-id 1`；
+
+1. 执行`s version list`查看版本列表：
+```text
+  - 
+    versionId:        6
+    description:      
+    createdTime:      2022-07-02T01:53:02Z
+    lastModifiedTime: 2022-07-02T01:53:02Z
+  - 
+    versionId:        4
+    description:      
+    createdTime:      2022-06-27T12:30:35Z
+    lastModifiedTime: 2022-06-27T12:30:35Z
+  - 
+    versionId:        3
+    description:      
+    createdTime:      2022-06-27T11:41:50Z
+    lastModifiedTime: 2022-06-27T11:41:50Z
+  - 
+    versionId:        1
+    description:      
+    createdTime:      2022-06-25T04:09:04Z
+    lastModifiedTime: 2022-06-25T04:09:04Z
+```
+
+2. 执行`s alias list`查看别名列表：
+```text
+  - 
+    aliasName:               test1
+    versionId:               6
+    description:             
+    additionalVersionWeight: 
+    createdTime:             2022-06-25T04:10:26Z
+    lastModifiedTime:        2022-07-02T08:38:22Z
+```
+3. 执行`s alias rollback --alias-name test1 --version-id HEAD^^`，将test1回退到上上个版本，查看别名test1的详情：
+```text
+  aliasName:               test1
+  versionId:               3
+  description:             
+  additionalVersionWeight: 
+  createdTime:             2022-06-25T04:10:26Z
+  lastModifiedTime:        2022-07-02T08:47:46Z
+```
 
 ## 权限与策略说明
 

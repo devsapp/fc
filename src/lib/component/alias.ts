@@ -48,10 +48,20 @@ interface Publish {
   weight?: number;
 }
 
+interface Rollback {
+  serviceName: string;
+  aliasName: string;
+  versionId: string;
+  description?: string;
+  gversion?: string;
+  weight?: number;
+}
+
 const ALIAS_COMMAND_HELP_KEY: { [key: string]: string } = {
   list: 'ALIAS_LIST',
   get: 'ALIAS_GET',
   publish: 'ALIAS_PUBLISH',
+  rollback: 'ALIAS_ROLLBACK',
 };
 
 export default class Alias {
@@ -190,6 +200,49 @@ export default class Alias {
     } else {
       return await this.createAlias({ aliasName, serviceName, versionId, parames });
     }
+  }
+
+  async rollback(props: Rollback) {
+    var {
+      serviceName,
+      aliasName,
+      versionId
+    } = props;
+    const aliasConfig = await this.findAlias({ serviceName, aliasName });
+    if (!aliasConfig) {
+      throw new core.CatchableError(`${aliasName} not found.`);
+    }
+    if (!/^\d+$/.test(versionId)) {
+      if (!versionId.startsWith('HEAD')) {
+        throw new core.CatchableError('Command format error', 'Example: s alias rollback --alias-name aliasName --version-id HEAD^ / HEAD~1 / version-id');
+      }
+      const subStr = versionId.substring(4);
+      let rb = 0;
+      if (/^\^+$/.test(subStr)) {
+        rb = subStr.length;
+      } else if (/^~\d+$/.test(subStr)) {
+        rb = Number(subStr.substring(1));
+      } else {
+        throw new core.CatchableError('Command format error', 'Example: s alias rollback --alias-name aliasName --version-id HEAD^ / HEAD~1 / version-id');
+      }
+
+      const versionClient = new Version();
+      const versionList = await versionClient.list({ serviceName });
+      const { versionId: oldId } = aliasConfig;
+      const oldIndex = _.findIndex(versionList, ['versionId', oldId]);
+      const newIndex = oldIndex + rb;
+      versionId = versionList[newIndex]?.versionId;
+      if (!versionId) {
+        throw new core.CatchableError('Please check rollback number.');
+      }
+    }
+
+    const versionLatest = false;
+    return this.publish({
+      ...props,
+      versionId,
+      versionLatest,
+    });
   }
 
   async list({ serviceName }: { serviceName: string }, table?: boolean) {
