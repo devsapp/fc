@@ -17,6 +17,7 @@ category: '概览'
 - [Yaml特殊变量](#Yaml特殊变量)
 - [通过环境变量配置组件](#通过环境变量配置组件)
 - [生产环境配置最佳实践](https://github.com/devsapp/start-realwrold/tree/master/src)
+- [FC endpoint 配置及使用](#FC-endpoint-配置及使用)
 - [项目实践案例](#项目实践案例)
 
 ## Serverless Devs和FC组件的关系
@@ -226,6 +227,31 @@ Serverless Devs的Yaml规范本身支持全局变量、环境变量以及外部�
 `NAS_CHUNK_SIZE`: nas upload/download 切片大小，默认是 4M。例如 export NAS_CHUNK_SIZE=4
 
 `FC_INSTANCE_EXEC_TIMEOUT`: 实例登陆空闲超时时间，默认10分钟。例如 export FC_INSTANCE_EXEC_TIMEOUT=600
+
+## FC endpoint 配置及使用
+
+使用 FC 组件可以配置自定义 endpoint，一共有两种方式：
+
+1. 使用指令的形式，配置命令如下。其中 fc-endpoint 是指 endpoint 地址；enable-fc-endpoint 是启用 fc-endpoint 的开关，仅等于 true 的时候 fc-endpoint 才会生效。
+```
+$ s cli fc-default set fc-endpoint 'http://****.test.aliyun.com'
+$ s cli fc-default set enable-fc-endpoint 'true'
+```
+
+2. 通过环境变量配置，环境变量值及规则如下：
+```
+export s_default_fc_endpoint='http://****.test.aliyun.com'
+export s_default_enable_fc_endpoint='true'
+```
+
+> 注意：`s_default_fc_endpoint` 等同于 fc-endpoint 字段。`s_default_enable_fc_endpoint` 等同于 enable-fc-endpoint 字段。
+
+## 私有化部署
+
+1. 通过环境变量配置，环境变量值及规则如下：
+```
+export default_serverless_devs_registry_mode='local'
+```
 
 ## 项目实践案例
 

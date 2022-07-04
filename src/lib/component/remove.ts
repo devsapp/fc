@@ -229,7 +229,7 @@ export default class Remove {
       return (await core.loadComponent(componentName)).deleteLayer(componentInputs);
     }
 
-    if (!subCommand || subCommand === 'domain') {
+    if (subCommand === 'domain') {
       const componentName = 'devsapp/fc-deploy';
       const componentInputs = this.genInputs(inputs, componentName, inputs.props, planArgs);
       return (await core.loadComponent(componentName)).remove(componentInputs);

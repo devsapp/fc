@@ -1,18 +1,21 @@
 import { Logger, commandParse } from '@serverless-devs/core';
 
-export function showBuildNextTips() {
+export function showBuildNextTips(buildSaveUri?: string) {
   const eventInvokeTip = 's local invoke';
   const httpInvokeTip = 's local start';
   const deployTip = 's deploy';
 
-  Logger.log(
-    `\nTips for next step
+  let logStr = `\nTips for next step
 ======================
 * Invoke Event Function: ${eventInvokeTip}
 * Invoke Http Function: ${httpInvokeTip}
-* Deploy Resources: ${deployTip}`,
-    'yellow',
-  );
+* Deploy Resources: ${deployTip}`;
+
+  if (buildSaveUri) {
+    logStr = `${logStr}\n* Code Output Path: ${buildSaveUri}\n`;
+  }
+
+  Logger.log(logStr, 'yellow');
 }
 
 export function showLocalNextTips() {
