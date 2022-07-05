@@ -89,19 +89,33 @@ services:
 
 ## 关于`.fcignore`使用方法
 
-在代码目录放置一个 .fcignore 文件，部署文件的时候可以排除掉 .fcignore 描述的文件或者文件夹。 例如：
+在代码目录放置一个 .fcignore 文件，部署文件的时候可以排除掉 .fcignore 描述的文件或者文件夹。例如：
 
-```
-# Logs
-logs/
-*.log
- 
-# Dependency directories
-node_modules/
-!demo/node_modules
-```
+**文件结构如下图所示**：
 
-打包时会忽略 logs/ 目录 、*.log 文件。所有层级的 node_modules/ 目录会被忽略，但是 demo/node_modules 会被保留。
+<img src="https://img.alicdn.com/imgextra/i1/O1CN01pFqrAZ1P6mW2Oqv8Z_!!6000000001792-2-tps-1048-660.png" title="文件结构"/>
+
+**.fcignore 的内容如下**：
+```
+aaa
+**/abc
+!abc
+.abc/**
+bcd/fc
+```
+> 文件解读：
+> aaa：忽略**根目录**的 aaa 的文件夹或文件
+> \*\*/abc：忽略所有 abc 的文件夹或者文件
+> !abc：不忽略根目录下的 abc 文件夹或者文件
+> .abc/\*\*：忽略根目录下 .abc 的所有内容，但 .abc 的空文件夹不被忽略
+> bcd/fc：忽略根目录 bcd 下 fc 的文件夹或者文件
+
+
+**解析预期结果**
+<img src="https://img.alicdn.com/imgextra/i3/O1CN013lTzB320pnDxSs2f2_!!6000000006899-2-tps-1474-802.png"/>
+
+**deploy到线上的目录结构**
+<img src="https://img.alicdn.com/imgextra/i1/O1CN01kWLiJf1yxv18HKimw_!!6000000006646-2-tps-852-760.png"/>
 
 **使用场景**：部署大代码包时，通过 nas 命令将项目中的依赖放到 NAS 中，然后通过.fcignore对上传到 nas 的文件忽略掉，再将项目部署到线上。
 
