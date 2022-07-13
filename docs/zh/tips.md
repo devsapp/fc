@@ -114,7 +114,11 @@ services:
         region: ${vars.region}
         customDomain:
           domainName: "fc.example.com"
-          protocol: HTTP
+          protocol: HTTP,HTTPS # HTTP | HTTP,HTTPS
+          certConfig:
+            certName: exampleCert
+            certificate: ./full_chain.pem
+            privateKey: ./private.pem
           routeConfigs:
             - path: "/*"  # 自定义域名路径
               serviceName: ${vars.service.name} # 服务名称
@@ -126,7 +130,9 @@ services:
               methods: ${vars.methods}
 ```
 
-例如上面的 Yaml 中，设置自定义域名`fc.example.com`，把前端资源对应的函数`website`，映射到`/*`路由，把对后端资源对应的函数`admin`映射到`/api/*`路由。
+例如上面的 Yaml 中，设置自定义域名`fc.example.com`，把前端资源对应的函数`website`，映射到`/*`路由，把后端资源对应的函数`admin`映射到`/api/*`路由。
+
+有关HTTPS证书的配置，请参考[certConfig配置](https://docs.serverless-devs.com/fc/yaml/customDomains#certconfig)
 
 ## 关于`.fcignore`使用方法
 

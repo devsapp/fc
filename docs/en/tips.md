@@ -113,7 +113,11 @@ services:
         region: ${vars.region}
         customDomain:
           domainName: "fc.example.com"
-          protocol: HTTP
+          protocol: HTTP,HTTPS # HTTP | HTTP,HTTPS
+          certConfig:
+            certName: exampleCert
+            certificate: ./ssl/full_chain.pem
+            privateKey: ./ssl/private.pem
           routeConfigs:
             - path: "/*"  # The path of the route
               serviceName: ${vars.service.name} # service name
@@ -126,6 +130,8 @@ services:
 ```
 
 In the preceding YAML file, set the custom domain name `fc.example.com`, map the function `website` of the front-end resource to the `/*` route, and map the function `admin` of the back-end resource to the `/api/*` route.
+
+For the configuration of HTTPS certificate, please refer to [certConfig configuration](https://docs.serverless-devs.com/fc/yaml/customDomains#certconfig)
 
 ## How to use a `.fcignore` file
 
