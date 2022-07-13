@@ -9,6 +9,7 @@ category: 'Overview'
 
 - [Relationship between Serverless Devs and the FC component](#Relationship-between-Serverless-Devs-and-the-FC-component)
 - [Declaration and deployment of multiple functions](#Declaration-and-deployment-of-multiple-functions)
+- [How to configure custom domain name routing for different services/functions](#how-to-configure-custom-domain-name-routing-for-different-servicesfunctions)
 - [How to use a `.fcignore` file](#How-to-use-a-fcignore-file)
 - [How to use a `.env` file](#How-to-use-a-env-file)
 - [Purpose of the `.s` directory in Serverless Devs](#Purpose-of-the-s-directory-in-Serverless-Devs)
@@ -76,7 +77,7 @@ services:
         description: this is a test
   project2:
     component: devsapp/fc   # The component name
-    props:# The property value of the component
+    props: # The property value of the component
       region: cn-hangzhou
       service: ${vars.service}
       function:
@@ -85,6 +86,52 @@ services:
 ```
 
 In the preceding YAML file, the global variable `vars` specifies a `service` and `project1` and `project2`. The service is referenced by using the magic variable `${vars.service}`, and the `py-event-function-1` and `py-event-function-2` functions are deployed for the `service`.
+
+## How to configure custom domain name routing for different services/functions
+
+If you need to configure routes with the same custom domain name for different functions, the 'fc-domain' component is recommended. Set up a separate 'service' to establish the mapping between functions and routes.
+
+```yaml
+edition: 1.0.0           # The version of the YAML specification, which conforms to semantic versioning
+name: fcDeployApp        # The project name
+access: "default"  # The alias of the key
+
+vars:
+  service:
+    name: fc-build-demo
+    description: 'demo for fc-deploy component'
+  methods:
+    - GET
+    - POST
+    - DELETE
+    - PUT
+    - HEAD
+services:
+  compose:
+      component: fc-domain
+      props:
+        region: ${vars.region}
+        customDomain:
+          domainName: "fc.example.com"
+          protocol: HTTP,HTTPS # HTTP | HTTP,HTTPS
+          certConfig:
+            certName: exampleCert
+            certificate: ./ssl/full_chain.pem
+            privateKey: ./ssl/private.pem
+          routeConfigs:
+            - path: "/*"  # The path of the route
+              serviceName: ${vars.service.name} # service name
+              functionName: website             # function name
+              methods: ${vars.methods}          # HTTP methods
+            - path: "/api/*"
+              serviceName: ${vars.service.name}
+              functionName: admin
+              methods: ${vars.methods}
+```
+
+In the preceding YAML file, set the custom domain name `fc.example.com`, map the function `website` of the front-end resource to the `/*` route, and map the function `admin` of the back-end resource to the `/api/*` route.
+
+For the configuration of HTTPS certificate, please refer to [certConfig configuration](https://docs.serverless-devs.com/fc/yaml/customDomains#certconfig)
 
 ## How to use a `.fcignore` file
 
