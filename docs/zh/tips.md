@@ -9,6 +9,7 @@ category: '概览'
 
 - [Serverless Devs和FC组件的关系](#serverless-devs和FC组件的关系)
 - [如何声明/部署多个函数](#如何声明部署多个函数)
+- [如何配置不同服务/函数下的自定义域名路由](#如何配置不同服务函数下的自定义域名路由)
 - [关于`.fcignore`使用方法](#关于fcignore使用方法)
 - [关于`.env`使用方法](#关于env使用方法)
 - [工具中`.s`目录是做什么](#工具中s目录是做什么)
@@ -86,6 +87,46 @@ services:
 ```
 
 例如上面的 Yaml 中，全局变量`vars`定义了一个`service`，`project1`和`project2`同时通过魔法变量`${vars.service}`引用了这个`service`，然后分别对应了不同的函数`py-event-function-1`和`py-event-function-2`.
+
+## 如何配置不同服务/函数下的自定义域名路由
+
+如果你有需求，给不同的函数配置相同自定义域名的路由，建议使用`fc-domain`组件。单独设置一个`service`，来建立函数与路由的映射关系。
+
+```yaml
+edition: 1.0.0          #  命令行YAML规范版本，遵循语义化版本（Semantic Versioning）规范
+name: fcDeployApp       #  项目名称
+access: "default"  #  秘钥别名
+
+vars:
+  service:
+    name: fc-build-demo
+    description: 'demo for fc-deploy component'
+  methods:
+    - GET
+    - POST
+    - DELETE
+    - PUT
+    - HEAD
+services:
+  compose:
+      component: fc-domain
+      props:
+        region: ${vars.region}
+        customDomain:
+          domainName: "fc.example.com"
+          protocol: HTTP
+          routeConfigs:
+            - path: "/*"  # 自定义域名路径
+              serviceName: ${vars.service.name} # 服务名称
+              functionName: website             # 函数名称
+              methods: ${vars.methods}          # HTTP访问方法
+            - path: "/api/*"
+              serviceName: ${vars.service.name}
+              functionName: admin
+              methods: ${vars.methods}
+```
+
+例如上面的 Yaml 中，设置自定义域名`fc.example.com`，把前端资源对应的函数`website`，映射到`/*`路由，把对后端资源对应的函数`admin`映射到`/api/*`路由。
 
 ## 关于`.fcignore`使用方法
 
