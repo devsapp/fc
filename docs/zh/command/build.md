@@ -17,6 +17,7 @@ category: '构建&部署'
       - [基础操作 local](#基础操作-local)
       - [高阶自定义操作 use-sandbox](#高阶自定义操作-use-sandbox)
       - [进阶操作 use-buildkit](#进阶操作-use-buildkit)
+  - [apt-get.list文件](#apt-get.list)
 
 ## 命令解析
 
@@ -222,4 +223,14 @@ s clean --all
 s code-function  build --use-buildkit
 s image-function build --use-buildkit --dockerfile ./code-img/Dockerfile
 s deploy -y --use-local
+```
+
+## apt-get.list
+
+此文件顾名思义，就是声明可以使用 apt-get 命令安装但是函数计算没有系统包。
+
+使用方式是在 code 目录的根目录下，创建一个 apt-get.list 的文件，文件内容如下所示。然后部署之前执行 s build --use-docker 即可。
+```
+zip
+unzip
 ```
