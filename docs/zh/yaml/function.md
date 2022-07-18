@@ -23,7 +23,8 @@ category: 'Yaml规范'
 | initializationTimeout                               | False | Number                                | 初始化方法超时时间                                     |
 | initializer                                         | False | String                                | 初始化方法                                             |
 | instanceConcurrency                                 | False | Number                                | 单实例多并发                                           |
-| instanceType                                        | False | String                                | 函数实例类型，可选值为：e1（弹性实例）、c1（性能实例） |
+| instanceType                                        | False | String                                | 函数实例类型，可选值为：e1（弹性实例）、c1（性能实例）、g1（GPU实例） |
+| gpuMemorySize                                        | False | Number                                | GPU实例内存规格 |
 | layers | False | List\<String\> | 函数绑定层，支持 Nodejs、Python、Custom、Go1；取值是层的 ARN |
 | [instanceLifecycleConfig](#instancelifecycleconfig) | False | [Struct](#instancelifecycleconfig)    | 扩展函数                                               |
 | [asyncConfiguration](#asyncconfiguration)            | False | [Struct](#asyncconfiguration)          | 异步配置                                               |

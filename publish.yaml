@@ -668,6 +668,8 @@ Properties:
           default: 8192
           type: integer
           enum:
+            - 2048
+            - 4096
             - 8192
             - 16384
           x-enum-label:

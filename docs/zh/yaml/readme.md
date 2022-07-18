@@ -78,7 +78,7 @@ services:
         initializationTimeout: 20     # 初始化方法超时时间
         initializer: index.init       # 初始化方法
         instanceConcurrency: 1        # 单实例多并发
-        instanceType: e1              # 函数实例类型，可选值为：e1（弹性实例）、c1（性能实例）
+        instanceType: e1              # 函数实例类型，可选值为：e1（弹性实例）、c1（性能实例）、g1（GPU实例）
         layers:                       # 函数绑定层，支持 Nodejs、Python、Java、Php、Golang、.NET和Custom Runtime；取值是层的 ARN; 多个层会按照数组下标从大到小的顺序进行合并，下标小的层的内容会覆盖下标大的层的同名文件
           - xxx
           - xxx
