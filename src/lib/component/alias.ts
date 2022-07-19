@@ -203,10 +203,10 @@ export default class Alias {
   }
 
   async rollback(props: Rollback) {
-    var {
+    let {
       serviceName,
       aliasName,
-      versionId
+      versionId,
     } = props;
     const aliasConfig = await this.findAlias({ serviceName, aliasName });
     if (!aliasConfig) {
