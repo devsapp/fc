@@ -34,8 +34,8 @@ category: '其他功能'
 在该命令中，包括了四个子命令：
 
 - [init：初始化 NAS 的命令](#nas-init-命令)
-- [upload：获取别名列表](#nas-upload-命令)
-- [download：发布/更新别名](#nas-download-命令)
+- [upload：上传本地文件](#nas-upload-命令)
+- [download：下载远程文件](#nas-download-命令)
 - [command：在 FC 中执行 linux 指令](#nas-command-命令)
 
 ## nas init 命令
@@ -97,7 +97,7 @@ Dir [./code] uploaded successfully.
 
 ## nas download 命令
 
-`nas download` 命令，是将挂在在函数计算的 NAS 系统中的文件下载到本地。
+`nas download` 命令，是将挂载在函数计算的 NAS 系统中的文件下载到本地。
 
 当执行命令`nas download -h`/`nas download --help`时，可以获取帮助文档。
 
@@ -122,7 +122,7 @@ File [/mnt/auto/template.yml] download successfully.
 
 ## nas command 命令
 
-`nas command` 命令，是在实例中执行特定指令的命令；例如通过 `nas command` 命令，在已经挂在 NAS 产品的函数实例中创建文件/文件夹/删除文件/文件夹等。
+`nas command` 命令，是在实例中执行特定指令的命令；例如通过 `nas command` 命令，在已经挂载 NAS 产品的函数实例中创建文件/文件夹/删除文件/文件夹等。
 
 当执行命令`nas command -h`/`nas command --help`时，可以获取帮助文档。
 
