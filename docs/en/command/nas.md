@@ -34,8 +34,8 @@ You can run the `nas -h` or `nas --help` command to obtain the help documentatio
 The nas commands include the following subcommands:
 
 - [init: initializes NAS.](#nas-init-command)
-- [upload: queries aliases.](#nas-upload-command)
-- [download: publishes or updates aliases.](#nas-download-command)
+- [upload: Upload local files](#nas-upload-command)
+- [download: Download remote files](#nas-download-command)
 - [command: runs Linux commands in Function Compute.](#nas-command-command) 
  
 ## nas init command
