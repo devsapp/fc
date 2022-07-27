@@ -31,7 +31,7 @@ type目前支持：`http`, `timer`, `oss`, `log`, `mns_topic`, `cdn_events`, `ta
 ```yaml
 triggers:  
   - name: oss    
-    sourceArn: acs:oss:acs:log:<region>:<account-id>:<buckctName>    
+    sourceArn: acs:oss:<region>:<account-id>:<buckctName>    
     type: oss    
     role: acs:ram::<account-id>:role/aliyunosseventnotificationrole    
     # qualifier: LATEST    

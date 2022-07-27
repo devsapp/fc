@@ -31,7 +31,7 @@ Examples:
 ```yaml
 triggers:  
   - name: oss    
-    sourceArn: acs:oss:acs:log:<region>:<account-id>:<buckctName>    
+    sourceArn: acs:oss:<region>:<account-id>:<buckctName>    
     type: oss    
     role: acs:ram::<account-id>:role/aliyunosseventnotificationrole    
     # qualifier: LATEST    
