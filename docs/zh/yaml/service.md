@@ -167,7 +167,9 @@ role:
 
 ### logConfig
 
-当`logConfig`参数为简单配置是，可以是：`auto`
+当`logConfig`参数为简单配置时，可以是：`auto`。在部署阶段会先检测线上是否存在 logConfig 的配置，如果存在则直接复用线上配置，如果不存在则按照以下规则复用或者创建日志资源：
+- 日志服务中的project名称为 `${accountID}-${region}-logproject`
+- 日志服务中的logstore名称规则是：如果服务名称长度小于20则为 `fc-service-${serviceName}-logstore.toLocaleLowerCase()`；如果长度大于20则截取服务名称的前6位作为前缀，然后根据服务名称生成一些随机串
 
 当`logConfig`参数为结构时，可以参考：
 
@@ -192,10 +194,6 @@ service:
         project: XXX
         logstore: XXX
 ```
-
-> logConfig 为 auto时
-> project 名字生成规则 {accountID}-{region}-logproject
-> logstore 名字生成规则 'fc-service-{serviceName}-logstore'.toLocaleLowerCase()
 
 
 #### 权限配置相关
@@ -286,7 +284,10 @@ service:
 
 ### vpcConfig
 
-当`vpcConfig`参数为简单配置是，可以是：`auto`
+当`vpcConfig`参数为简单配置是，可以是：`auto`。在部署阶段会先检测线上是否存在 vpcConfig 的配置，如果存在则直接复用，如果不存在则尝试按照以下规则复用或者创建资源：
+- vpcId 的名称是 `fc-deploy-component-generated-vpc-${this.region}`，当如果存在多个符合规则的 vpc，会复用第一个返回值。在创建时 cidrBlock 固定为 `10.0.0.0/8`。
+- vswitch 的名称是 `fc-deploy-component-generated-vswitch-${this.region}`，当如果存在多个符合规则的 vswitch，会复用第一个返回值。
+- securityGroup 的名称是 `fc-deploy-component-generated-securityGroup-${this.region}`，当如果存在多个符合规则的 securityGroup，会复用第一个返回值。
 
 当`vpcConfig`参数为结构时，可以参考：
 
@@ -381,7 +382,8 @@ service:
 
 ### nasConfig
 
-当`nasConfig`参数为简单配置是，可以是：`auto`
+当`nasConfig`参数为简单配置是，可以是：`auto`。在部署阶段规则如下：
+会先检测服务在线上是否存在 nasConfig 的配置，如果存在配置则验证挂载点是否已经被删除，如果存在直接复用线上配置；如果不存在则再创建一个新的挂载点。
 
 当`nasConfig`参数为结构时，可以参考：
 
