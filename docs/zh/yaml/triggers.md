@@ -14,7 +14,7 @@ category: 'Yaml规范'
 | role      | False | String | 使用一个 RAM 角色的 ARN 为函数指定执行角色，事件源会使用该角色触发函数执行，请确保该角色有调用函数的权限 |
 | sourceArn | False | String | 触发器事件源的 ARN                                           |
 | qualifier | False | String | 触发器函数的版本或者别名，默认 `LATEST`                      |
-| config    | True  | Struct | 触发器配置，包括[OSS触发器](#OSS触发器), [Log触发器](#Log触发器), [Log触发器](#Log触发器), [Timer触发器](#Timer触发器), [Http触发器](#Http触发器), [MNS触发器](#MNS触发器), [CDN触发器](#CDN触发器), [EventBridge触发器](#EventBridge触发器) |
+| config    | True  | Struct | 触发器配置，包括[OSS触发器](#OSS触发器), [Log触发器](#Log触发器), [Timer触发器](#Timer触发器), [Http触发器](#Http触发器), [MNS触发器](#MNS触发器), [CDN触发器](#CDN触发器), [EventBridge触发器](#EventBridge触发器) |
 
 type目前支持：`http`, `timer`, `oss`, `log`, `mns_topic`, `cdn_events`, `tablestore`, `eventbridge`
 
@@ -632,10 +632,12 @@ triggers:
 
 | 参数名                                  | 必填 | 类型                         | 参数描述                                                   |
 | --------------------------------------- | ---- | ---------------------------- | ---------------------------------------------------------- |
-| triggerEnable               | False | Boolean       | 触发器禁用开关。等同于 EventBridge 侧对应事件规则的[禁用开关](https://help.aliyun.com/document_detail/163710.html#section-bnw-ofn-u8d)                                                   |
+| triggerEnable               | False | Boolean       | 触发器禁用开关。对于 event-driven 事件投递模型，等同于 EventBridge 侧对应事件规则的[禁用开关](https://help.aliyun.com/document_detail/163710.html#section-bnw-ofn-u8d)；对于 event-streaming 事件投递模型，等同于 EventBridge 侧对应事件流的启动/停止开关，**由于事件流启动/停止需要一段时间，因此只有事件流成功启动后，读取到的 triggerEnable 字段才会是 true,其他情况下读取到的 triggerEnable 均为 false**                                                   |
 | asyncInvocationType                 | False | Boolean         | 触发器调用函数的方式。目前支持同步调用以及异步调用                                                    |
 | [eventSourceConfig](#eventSourceConfig)           | True | [Struct](#eventSourceConfig)      | 事件源配置                                                 |
 | eventRuleFilterPattern | True | String | 事件模式。JSON 格式，详细规则可以参考 [EventBridge 事件模式官方文档](https://help.aliyun.com/document_detail/181432.html) |
+| [eventSinkConfig](#eventSinkConfig)           | False | [Struct](#eventSinkConfig)      | 事件目标配置                                                 |
+| [runOptions](#runOptions)           | False | [Struct](#runOptions)      | 触发器运行时参数                                                 |
 
 参考案例：
 
@@ -698,6 +700,43 @@ triggers:
             InstanceId: amqp-cn-******   
             QueueName: test-queue    
             VirtualHostName: test-virtual
+  - name: eventbridgeTriggerWithKafkaSource    
+    # sourceArn: acs:eventbridge:<region>:<accountID>:eventstreaming/<eventStreamingName>    
+    type: eventbridge        
+    # qualifier: LATEST    
+    config:      
+      triggerEnable: true
+      asyncInvocationType: false
+      eventRuleFilterPattern: '{}'
+      eventSinkConfig:
+        deliveryOption:
+          mode: event-streaming   # event source 为 Kafka 时，只支持 event-streaming 模式
+      runOptions:
+        mode: event-streaming   # event source 为 Kafka 时，只支持 event-streaming 模式
+        maximumTasks: 3
+        errorsTolerance: "ALL"
+        retryStrategy: 
+          PushRetryStrategy: "BACKOFF_RETRY"
+          MaximumEventAgeInSeconds: 0
+          MaximumRetryAttempts: 0
+        deadLetterQueue:
+          Arn: acs:mns:cn-qingdao:123:/queues/queueName
+        batchWindow: 
+          CountBasedWindow: 2
+          TimeBasedWindow: 10
+      eventSourceConfig:
+        eventSourceType: Kafka
+        eventSourceParameters:
+          sourceKafkaParameters:
+            RegionId: cn-hangzhou
+            InstanceId: myInstanceID
+            Topic: myTopic
+            ConsumerGroup: myConsumerGroup
+            OffsetReset: latest
+            Network: PublicNetwork
+            VpcId: myVpcID
+            VSwitchIds: myVSwitchID
+            SecurityGroupId: mySecurityGroupID
 ```
 
 #### 权限配置相关
@@ -774,8 +813,8 @@ resource "alicloud_event_bridge_service_linked_role" "service_linked_role" {
 
 | 参数名                                  | 必填 | 类型                         | 参数描述                                                   |
 | --------------------------------------- | ---- | ---------------------------- | ---------------------------------------------------------- |
-| eventSourceType               | True | String       | 触发器事件源类型，目前支持如下四种触发源：<br> 1. Default：表示 EventBridge 官方触发源<br> 2. MNS：消息队列 MNS 队列作为触发源<br> 3. RocketMQ：消息队列 RockerMQ 作为触发源<br> 4. RabbitMQ：消息队列 RabbitMQ 作为触发源<br><br>注：该字段不可更新，更新时传入该字段将被忽略                                                   |
-| [eventSourceParameters](#eventSourceParameters)           | False | [Struct](#eventSourceParameters)      | 自定义事件源参数，自定义事件源包括：MNS，RocketMQ，RabbitMQ                                                 |
+| eventSourceType               | True | String       | 触发器事件源类型，目前支持如下四种触发源：<br> 1. Default：表示 EventBridge 官方触发源<br> 2. MNS：消息队列 MNS 队列作为触发源<br> 3. RocketMQ：消息队列 RockerMQ 作为触发源<br> 4. RabbitMQ：消息队列 RabbitMQ 作为触发源<br>5. Kafka: 消息队列 Kafka 作为触发源<br>注：该字段不可更新，更新时传入该字段将被忽略                                                   |
+| [eventSourceParameters](#eventSourceParameters)           | False | [Struct](#eventSourceParameters)      | 自定义事件源参数，自定义事件源包括：MNS，RocketMQ，RabbitMQ，Kafka                                                 |
 
 #### eventSourceParameters
 
@@ -784,6 +823,7 @@ resource "alicloud_event_bridge_service_linked_role" "service_linked_role" {
 | [sourceMNSParameters](#sourceMNSParameters)           | False | [Struct](#sourceMNSParameters)      | 事件源为消息服务 MNS 时的自定义参数配置                                                 |
 | [sourceRocketMQParameters](#sourceRocketMQParameters)           | False | [Struct](#sourceRocketMQParameters)      | 事件源为消息服务 RockerMQ 时的自定义参数配置                                                 |
 | [sourceRabbitMQParameters](#sourceRabbitMQParameters)           | False | [Struct](#sourceRabbitMQParameters)      | 事件源为消息服务 RabbitMQ 时的自定义参数配置                                                 |
+| [sourceKafkaParameters](#sourceKafkaParameters)           | False | [Struct](#sourceKafkaParameters)      | 事件源为消息队列 Kafka 时的自定义参数配置                                                 |
 
 #### sourceMNSParameters
 
@@ -813,3 +853,63 @@ resource "alicloud_event_bridge_service_linked_role" "service_linked_role" {
 | InstanceId           | True | String      | 消息队列RabbitMQ版的实例的ID。更多信息，请参见[使用限制](https://help.aliyun.com/document_detail/101627.htm#concept-101627-zh)                                                 |
 | VirtualHostName           | True | String      | 消息队列RabbitMQ版实例的Vhost的名称。更多信息，请参见[使用限制](https://help.aliyun.com/document_detail/101627.htm#concept-101627-zh)                                                 |
 | QueueName           | True | String      | 消息队列RabbitMQ版实例的Queue的名称。更多信息，请参见[使用限制](https://help.aliyun.com/document_detail/101627.htm#concept-101627-zh)                                                 |
+
+#### sourceKafkaParameters
+
+| 参数名                                  | 必填 | 类型                         | 参数描述                                                   |
+| --------------------------------------- | ---- | ---------------------------- | ---------------------------------------------------------- |
+| RegionId           | False | String      | 消息队列 Kafka 版的实例所属地域                                                 |
+| InstanceId           | True | String      | 消息队列 Kafka 版的实例 ID                                                 |
+| Topic           | True | String      | 消息队列 Kafka 版的 Topic 名称                                                 |
+| ConsumerGroup            | True | String      | 消息队列 Kafka 版的资源组 ID                                                 |
+| OffsetReset           | True | String      | 消息的消费位点，可选值有 lastest 和 earliest，分别表示最新位点以及最早位点                                                 |
+| ExtendConfig           | False | Object      | 扩展参数                                                 |
+| Network           | False | String      | 所用网络类型，可选值有 PublicNetwork 以及 Default，前者表示使用自建 vpc 网络，后者表示使用默认公网                                                 |
+| VpcId           | False | String      | 所用 vpc 网络的 ID，网络类型为 PublicNetwork 时配置                                                 |
+| VSwitchIds           | False | String      | 所用 vpc 网络的交换机 ID，网络类型为 PublicNetwork 时配置                                                 |
+| SecurityGroupId           | False | String      | 所用 vpc 网络的安全组 ID，网络类型为 PublicNetwork 时配置                                                 |
+
+#### eventSinkConfig
+
+| 参数名                                  | 必填 | 类型                         | 参数描述                                                   |
+| --------------------------------------- | ---- | ---------------------------- | ---------------------------------------------------------- |
+| [deliveryOption](#deliveryOption)               | True | [Struct](#deliveryOption)       | 事件投递参数                                                   |
+
+#### deliveryOption
+
+| 参数名                                  | 必填 | 类型                         | 参数描述                                                   |
+| --------------------------------------- | ---- | ---------------------------- | ---------------------------------------------------------- |
+| mode               | False | String       | 事件投递模型，该参数与 [runOptions](#runOptions) 中的 mode 参数含义相同，但是优先级更低                                                   |
+
+#### runOptions
+
+| 参数名                                  | 必填 | 类型                         | 参数描述                                                   |
+| --------------------------------------- | ---- | ---------------------------- | ---------------------------------------------------------- |
+| mode               | True | String       | 事件投递模型，优先级比 EventSinkConfig.DeliveryOption.mode 更高，可选值有 event-driven 以及 event-streaming，前者是事件驱动模型，底层由 eventbridge 的[事件总线](https://help.aliyun.com/document_detail/163897.html)进行实现；后者是事件流模型，底层由 eventbridge 的[事件流](https://help.aliyun.com/document_detail/329940.html)进行实现。**runOptions 中参数只有在 mode 为 event-streaming 时才有效**                                                   |
+| maximumTasks               | False | String       | 并发消费者数量，只有在指定 Kafka 事源时该参数有效                                                   |
+| errorsTolerance               | False | String       | 容错策略，即发生错误时是否选择容错。取值说明如下：<br>ALL: 允许容错<br>NONE: 禁止容错                                                   |
+| [retryStrategy](#retryStrategy)               | False | [Struct](#retryStrategy)       | 事件推送失败时的重试策略相关参数                                                   |
+| [deadLetterQueue](#deadLetterQueue)               | False | [Struct](#deadLetterQueue)       | 死信队列配置，若配置了该配置，超过重试策略后的事件将被放入该队列中                                                   |
+| [batchWindow](#batchWindow)               | False | [Struct](#batchWindow)       | 调用函数时的批处理参数                                                   |
+
+#### retryStrategy
+
+| 参数名                                  | 必填 | 类型                         | 参数描述                                                   |
+| --------------------------------------- | ---- | ---------------------------- | ---------------------------------------------------------- |
+| PushRetryStrategy               | True | String       | 事件推送失败时的重试策略，取值说明如下: <br>BACKOFF_RETRY: 退避重试策略。重试3次，每次重试的间隔时间是10秒到20秒之间的随机值。<br>EXPONENTIAL_DECAY_RETRY: 指数衰减重试。重试176次，每次重试的间隔时间指数递增至512秒，总计重试时间为1天；每次重试的具体间隔为：1，2，4，8，16，32，64，128，256，512，512...512秒（共167个512）。                                                 |
+| MaximumEventAgeInSeconds               | False | String       | 事件消息的最大存活时间，单位是秒                                                 |
+| MaximumRetryAttempts               | False | String       | 事件消息的最大存活时间，单位是秒                                                 |
+
+#### deadLetterQueue
+
+| 参数名                                  | 必填 | 类型                         | 参数描述                                                   |
+| --------------------------------------- | ---- | ---------------------------- | ---------------------------------------------------------- |
+| Arn               | True | String       | 死信队列的 Arn                                                 |
+
+
+#### batchWindow
+
+| 参数名                                  | 必填 | 类型                         | 参数描述                                                   |
+| --------------------------------------- | ---- | ---------------------------- | ---------------------------------------------------------- |
+| CountBasedWindow               | False | String       | 一次调用函数发送的最大批量消息条数，当积压的消息数量到达设定值时才会发送请求，取值范围为 [1, 500]。例如 1。                                                 |
+| TimeBasedWindow               | False | String       | 调用函数的间隔时间，系统每到间隔时间点会将消息聚合后发给函数计算，取值范围为 [0,15]，单位秒。0秒表示无等待时间，直接投递。例如 3。                                                 |
