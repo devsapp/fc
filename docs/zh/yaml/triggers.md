@@ -123,11 +123,12 @@ triggers:
 
 | 参数名                                  | 必填 | 类型                         | 参数描述                                                   |
 | --------------------------------------- | ---- | ---------------------------- | ---------------------------------------------------------- |
-| [logConfig](#logConfig-1)               | True | [Struct](#logConfig-1)       | 日志配置                                                   |
+| [logConfig](#logConfig)               | True | [Struct](#logConfig)       | 日志配置                                                   |
 | [jobConfig](#jobConfig)                 | True | [Struct](#jobConfig)         | job配置                                                    |
 | [sourceConfig](#sourceConfig)           | True | [Struct](#sourceConfig)      | source配置                                                 |
 | [functionParameter](#functionParameter) | True | [Struct](#functionParameter) | 该参数将作为函数Event的Parameter传入函数。默认值为空（{}） |
 | enable                                  | True | Boolean                      | 触发器开关                                                 |
+| [targetConfig](#targetConfig)           | False | [Struct](#targetConfig)      | 跨账号触发函数的相关配置                                        |
 
 
 参考案例：
@@ -141,7 +142,8 @@ triggers:
     # qualifier: LATEST    
     config:      
       sourceConfig:        
-        logstore: log      
+        logstore: log
+        startTime: 1660060680  # Unix 时间戳，单位为秒
       jobConfig:        
         maxRetryTime: 3        
         triggerInterval: 60      
@@ -150,6 +152,11 @@ triggers:
         project: test-data-abc-ss        
         logstore: log2      
       enable: false
+      targetConfig:
+        invocationRole: acs:ram::123***:role/CrossAccountInvocationRole
+        serviceName: crossAccountSerivce
+        functionName: crossAccountFunction
+        qualifier: crossAccountQualifier
 ```
 
 #### 权限配置相关
@@ -254,6 +261,7 @@ triggers:
 | 参数名   | 必填  | 类型   | 参数描述                                                   |
 | -------- | ----- | ------ | ---------------------------------------------------------- |
 | logstore | True | String | 触发器会定时从该日志仓库中订阅数据到函数服务进行自定义加工 |
+| startTime | Flase | Number | 触发器基于该历史时间点之后的日志数据触发函数执行，这种情况下的触发行为有两种：<br>1. 存量模式：在追上实时触发进度之前，会忽略触发时间间隔来追赶消费延迟<br>2. 增量模式：等到触发没有延时之后，开始按照设置的触发时间间隔来触发新的函数调用 |
 
 #### functionParameter
 
@@ -261,6 +269,35 @@ Object格式，例如：
 
 ```
 TempKey: tempValue
+```
+
+#### targetConfig
+
+该参数用于 Log 触发器跨账号触发函数。
+
+| 参数名   | 必填  | 类型   | 参数描述                                                   |
+| -------- | ----- | ------ | ---------------------------------------------------------- |
+| invocationRole | True | String | 跨账号触发函数时，目标账号的角色 ARN。该角色用于 Log 服务扮演原账号触发目标账号的函数
+| serviceName | True | String | 跨账号触发函数时，目标服务的名称 |
+| functionName | True | String | 跨账号触发函数时，目标函数的名称 |
+| qualifier | True | String | 跨账号触发函数时，目标函数的版本 |
+
+上述 InvocationRole 的策略配置需要允许 Log 服务扮演原账号来进行函数调用，其策略内容可以参考：
+```json
+{
+    "Statement": [
+        {
+            "Action": "sts:AssumeRole",
+            "Effect": "Allow",
+            "Principal": {
+                "Service": [
+                    "源Logstore所属的阿里云账号A的ID@log.aliyuncs.com"
+                ]
+            }
+        }
+    ],
+    "Version": "1"
+}
 ```
 
 ### Timer触发器
