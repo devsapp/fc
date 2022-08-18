@@ -463,6 +463,7 @@ export default class FcBaseComponent extends EntryPublicMethod {
       versionConfig: LAYER_HELP.LAYER_DETAIL,
       versions: LAYER_HELP.LAYER_VERSIONS,
       download: LAYER_HELP.LAYER_DOWNLOAD,
+      acl: LAYER_HELP.LAYER_ACL,
     };
 
     // @ts-ignore

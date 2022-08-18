@@ -25,6 +25,9 @@ category: '发布&配置'
 - [layer download 命令](#layer-download-命令)
   - [参数解析](#参数解析-4)
   - [操作案例](#操作案例-4)
+- [layer acl 命令【公测】](#layer-acl-命令)
+  - [参数解析](#参数解析-5)
+  - [操作案例](#操作案例-5)
 - [remove layer 命令](remove.md#remove-layer-命令)
 - [权限与策略说明](#权限与策略说明)
 
@@ -81,7 +84,9 @@ fc-deploy-test: 544c887879c38e5d0afcaf8b4f8f348e#demo#1
 | 参数全称 | 参数缩写 | Yaml 模式下必填 | Cli 模式下必填 | 参数含义                                                                                                                                                                                                                                                                                                   |
 | -------- | -------- | --------------- | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | region   | -        | 选填            | 必填           | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| prefix   | -        | 选填            | 选填           |                                                                                                                                                                                                                                                                                                            |
+| prefix   | -        | 选填            | 选填           |                                                                         层名称的前缀。限定返回的资源名称，假设Prefix为a，则返回的资源名必须以a开头。       |
+| public   | -        | 选填            | 选填           |                                                                       展示个人的公共层         |
+| official   | -        | 选填            | 选填           |                                                                        展示官方的公共层。设置official=true后，public自动设为true，设置为false无效。        |
 | table    | -        | 选填            | 选填           |                                                                                                                                                                                                                                                                                                            |
 
 > 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)
@@ -220,6 +225,31 @@ fc-deploy-test:
 ✔ Downloading: [/189******629/test/7d954393-c5a2-4519-94de-d1a4c9e0611f] 144073/144073 100.00% # 下载的进度条
 helloworld: /Users/test/.s/cache/layers/189******629-cn-shenzhen-test/8.zip  # 代码包下载的地址
 ```
+
+## layer acl 命令
+
+`layer acl` 命令，个人层设置公开。
+
+> 说明：如果函数配置其他账户的公共层时，需要使用 arnV2 版本。
+
+当执行命令`layer acl -h`/`layer acl --help`时，可以获取帮助文档。
+
+### 参数解析
+
+| 参数全称   | 参数缩写 | Yaml 模式下必填 | Cli 模式下必填 | 参数含义                                                                                                                                                                                                                                                                                                   |
+| ---------- | -------- | --------------- | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| region     | -        | 选填            | 必填           | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
+| layer-name | -        | 必填            | 必填           | 层名称 |
+| public | -        | 选填            | 选填           | 个人层设置公开 |
+
+> 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)
+
+### 操作案例
+
+- **有资源描述文件（Yaml）时**，可以直接执行`s layer acl --layer-name layerName --public`设置层公开，或者执行`s layer acl --layer-name layerName --public false` 设置层不公开；
+
+- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区，例如`s cli fc layer acl --region cn-hangzhuo --layer-name demo`；
+
 
 ## 权限与策略说明
 

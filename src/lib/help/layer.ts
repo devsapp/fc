@@ -23,6 +23,7 @@ export const LAYER = [
       { desc: 'detail', example: 'Get layer versionConfig; help command [s layer detail -h]' },
       { desc: 'versions', example: 'Get layer versions; help command [s layer verisons -h]' },
       { desc: 'download', example: 'Download layer version code; help command [s layer download -h]' },
+      { desc: 'acl [beta]', example: 'Set layer to public; help command [s layer acl -h]' },
     ],
   },
 ];
@@ -107,6 +108,16 @@ export const LAYER_LIST = [
         name: 'prefix',
         description: '[Optional] Specify the prefix parameter',
         type: String,
+      },
+      {
+        name: 'public',
+        description: '[Optional] Show the public layer of the individual',
+        type: Boolean,
+      },
+      {
+        name: 'official',
+        description: '[Optional] Display the official public layer',
+        type: Boolean,
       },
       showTableDescribe,
     ],
@@ -223,5 +234,45 @@ export const LAYER_VERSIONS = [
   {
     header: 'Examples with CLI',
     content: ['$ s cli fc layer versions --region cn-hangzhou --layer-name layerName'],
+  },
+];
+
+export const LAYER_ACL = [
+  {
+    header: 'Layer acl',
+    content: 'Get layer acl',
+  },
+  {
+    header: 'Document',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/layer.md',
+  },
+  {
+    header: 'Usage',
+    content: '$ s layer acl <options>',
+  },
+  {
+    header: 'Options',
+    optionList: [
+      regionDescribe,
+      layerName,
+      {
+        name: 'public',
+        description: '[Optional] Set layer to public',
+        type: Boolean,
+      },
+    ],
+  },
+  { ...globalParams },
+  { ...globalDescribe },
+  {
+    header: 'Examples with Yaml',
+    content: [
+      '$ s layer acl --layer-name layerName --public',
+      '$ s layer acl --layer-name layerName',
+    ],
+  },
+  {
+    header: 'Examples with CLI',
+    content: ['$ s cli fc layer acl --region cn-hangzhou --layer-name layerName'],
   },
 ];
