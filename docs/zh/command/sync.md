@@ -27,6 +27,7 @@ category: '其他功能'
 | function-name | -        | 选填           | 选填          | 函数名                                                       |
 | trigger-name  | -        | 选填           | 选填          | 触发器名                                                     |
 | target-dir    | -        | 选填           | 选填          | 目标路径                                                     |
+| qualifier    | -        | 选填           | 选填          | 版本或者别名                                                   |
 | type          | -        | 选填           | 选填          | 类型，包括同步代码和配置，默认是全部同步，可选`code`/`config` |
 
 > 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)

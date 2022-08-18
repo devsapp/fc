@@ -41,6 +41,11 @@ export const SYNC = [
         type: String,
       },
       {
+        name: 'qualifier',
+        description: '[Optional] Specify the qualifier parameter',
+        type: String,
+      },
+      {
         name: 'force',
         description: '[Optional] Mandatory overwrite code file',
         alias: 'f',
