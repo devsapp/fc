@@ -4,7 +4,7 @@ import logger from '../../common/logger';
 import Client from '../client';
 import * as HELP from '../help/provision';
 import { getCredentials, promptForConfirmOrDetails, tableShow } from '../utils';
-import _ from 'lodash';
+import _, { isNumber } from 'lodash';
 import { ICredentials } from '../interface/profile';
 
 const sleep = (time = 1000) => new Promise((r) => setTimeout(r, time));
@@ -15,6 +15,8 @@ interface IProps {
   functionName?: string;
   config?: string;
   target?: number;
+  scheduledActions?: string;
+  targetTrackingPolicies?: string;
 }
 interface GetProvision {
   serviceName: string;
@@ -36,6 +38,8 @@ interface PutProvision {
   functionName: string;
   target?: number;
   config?: string;
+  scheduledActions?: string;
+  targetTrackingPolicies?: string;
 }
 
 const PROVISION_COMMADN_HELP_KEY = {
@@ -67,7 +71,7 @@ export default class Provision {
 
     const parsedArgs: { [key: string]: any } = core.commandParse(inputs, {
       boolean: ['help', 'table'],
-      string: ['region', 'service-name', 'qualifier', 'function-name', 'config'],
+      string: ['region', 'service-name', 'qualifier', 'scheduled-actions', 'target-tracking-policies', 'function-name', 'config'],
       number: ['target'],
       alias: { help: 'h' },
     });
@@ -102,6 +106,8 @@ export default class Provision {
       functionName: parsedData['function-name'] || props.function?.name,
       config: parsedData.config,
       target: parsedData.target,
+      scheduledActions: parsedData['scheduled-actions'],
+      targetTrackingPolicies: parsedData['target-tracking-policies'],
     };
 
     const credentials: ICredentials = await getCredentials(
@@ -141,7 +147,7 @@ export default class Provision {
     }
   }
 
-  async put({ serviceName, qualifier, functionName, config, target }: PutProvision) {
+  async put({ serviceName, qualifier, functionName, config, targetTrackingPolicies, scheduledActions, target }: PutProvision) {
     if (!functionName) {
       throw new Error('Not found function name parameter');
     }
@@ -171,7 +177,28 @@ export default class Provision {
         );
       }
     }
-    if (typeof target === 'number') {
+
+    if (targetTrackingPolicies) {
+      try {
+        options.targetTrackingPolicies = JSON.parse(targetTrackingPolicies);
+      } catch (ex) {
+        throw new Error(
+          `Reading targetTrackingPolicies=${targetTrackingPolicies} failed, please check is a standard JSON`,
+        );
+      }
+    }
+
+    if (scheduledActions) {
+      try {
+        options.scheduledActions = JSON.parse(scheduledActions);
+      } catch (ex) {
+        throw new Error(
+          `Reading scheduledActions=${scheduledActions} failed, please check is a standard JSON`,
+        );
+      }
+    }
+
+    if (isNumber(target)) {
       options.target = target;
     }
 
