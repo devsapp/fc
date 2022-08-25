@@ -16,6 +16,7 @@ category: 'Yaml规范'
 | [logConfig](#logconfig)         | False | Enum[简单配置]/[Struct[详细配置]](#logconfig) | log配置，function产生的log会写入这里配置的logstore           |
 | [vpcConfig](#vpcconfig)         | False | Enum[简单配置]/[Struct[详细配置]](#vpcconfig) | VPC配置, 配置后function可以访问指定VPC                       |
 | [nasConfig](#nasconfig)         | False | Enum[简单配置]/[Struct[详细配置]](#nasconfig) | NAS配置, 配置后function可以访问指定NAS                       |
+| vpcBinding         | False | List\<String\> | 仅允许函数访问VPC [文档](https://help.aliyun.com/document_detail/72959.html)             |
 
 
 参考案例：

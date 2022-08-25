@@ -423,6 +423,16 @@ Properties:
           x-enum-label:
             - 启用
             - 禁用
+        vpcBinding:
+          title: 仅允许函数访问VPC
+          type: array
+          items:
+            oneOf:
+              - type: string
+                minLength: 1
+                examples:
+                  - vpc-xxx1
+                  - vpc-xxx2
         logConfig:
           title: 日志配置
           x-oneof: void
