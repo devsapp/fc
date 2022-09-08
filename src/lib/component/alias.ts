@@ -9,6 +9,8 @@ import logger from '../../common/logger';
 import { tableShow, promptForConfirmOrDetails, getCredentials } from '../utils';
 import inquirer from 'inquirer';
 
+type IResolvePolicy = 'Random' | 'Content';
+
 interface IProps {
   region?: string;
   serviceName: string;
@@ -19,6 +21,8 @@ interface IProps {
   gversion?: string;
   weight?: number;
   assumeYes?: boolean;
+  resolvePolicy?: IResolvePolicy;
+  routePolicy?: any;
 }
 
 interface FindAlias {
@@ -46,6 +50,8 @@ interface Publish {
   description?: string;
   gversion?: string;
   weight?: number;
+  resolvePolicy?: IResolvePolicy;
+  routePolicy?: any;
 }
 
 interface Rollback {
@@ -105,6 +111,8 @@ export default class Alias {
       aliasName: parsedData['alias-name'],
       gversion: parsedData.gversion,
       weight: parsedData.weight,
+      resolvePolicy: parsedData['resolve-policy'],
+      routePolicy: parsedData['route-policy'],
     };
 
     if (!endProps.region) {
@@ -149,6 +157,8 @@ export default class Alias {
     versionLatest,
     gversion,
     weight,
+    resolvePolicy,
+    routePolicy,
   }: Publish) {
     const hasWeight = typeof weight === 'number';
     if (hasWeight && !gversion) {
@@ -157,12 +167,25 @@ export default class Alias {
     if (gversion && !hasWeight) {
       throw new Error('gversion exists,weight is required');
     }
-    const parames = {
+    const parames: any = {
       description,
       additionalVersionWeight: {},
     };
     if (hasWeight) {
       parames.additionalVersionWeight = { [gversion]: weight / 100 };
+
+      if (routePolicy) {
+        try {
+          parames.routePolicy = JSON.parse(routePolicy);
+          parames.resolvePolicy = 'Content';
+          // 'Random' | 'Content';
+        } catch (ex) {
+          logger.error('The incoming routepolicy is not a JSON. Resolvepolicy uses random');
+          parames.resolvePolicy = 'Random';
+        }
+      } else {
+        parames.resolvePolicy = 'Random';
+      }
     }
 
     if (!(aliasName && /^[_a-zA-Z][-_a-zA-Z0-9]*$/.test(aliasName))) {
