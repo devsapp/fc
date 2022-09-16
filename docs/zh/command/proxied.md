@@ -179,7 +179,7 @@ Resource cleanup succeeded.
 
 ### 断点调试
 
-通过与常见的 IDE 进行结合，可以在常见的 IDE 上实现端云联调的断点调试。 目前端云联调断点调试支持三种语言: `python、 nodejs 和 java`, 非断点调试所有 runtime 均支持。
+通过与常见的 IDE 进行结合，可以在常见的 IDE 上实现端云联调的断点调试。 <font color="#ff0000"> 目前端云联调断点调试支持三种语言: `python、 nodejs 和 java`, 非断点调试所有 runtime 均支持。</font>
 
 #### VSCode 断点调试案例
 
