@@ -55,7 +55,7 @@ services:
           logstore: xxx                  # loghub中的logstore名称
           enableRequestMetrics: true     # RequestMetrics开关，取值true/false
           enableInstanceMetrics: true    # InstanceMetrics开关，取值true/false
-          logBeginRule: true             # 日志是否切分，取值 DefaultRegex/None
+          logBeginRule: DefaultRegex             # 日志是否切分，取值 DefaultRegex/None
       function:                       # 函数配置
         name: fc-base-service         # function名称
         description: 'this is test'   # function的简短描述

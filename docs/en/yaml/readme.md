@@ -53,7 +53,7 @@ services:
           logstore: xxx     # logstore name in loghub
           enableRequestMetrics: true    # RequestMetrics switch, value true/false
           enableInstanceMetrics: true   # InstanceMetrics switch, the value is true/false
-          logBeginRule: true            # Whether the log is split, the value DefaultRegex/None
+          logBeginRule: DefaultRegex            # Whether the log is split, the value DefaultRegex/None
       function:                     # function configuration
         name: fc-base-service       # function name
         description: 'this is test' # a short description of the function
