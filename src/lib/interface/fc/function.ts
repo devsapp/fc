@@ -18,6 +18,7 @@ export interface FunctionConfig {
   initializer?: string;
   instanceConcurrency?: number;
   instanceType?: string;
+  layers?: string[];
 }
 
 export interface CustomContainerConfig {

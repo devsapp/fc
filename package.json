@@ -36,6 +36,8 @@
     "typescript": "^4.4.3"
   },
   "scripts": {
+    "preln": "rm -rf ~/.s/components/devsapp.cn/devsapp/fc/dist",
+    "ln": "ln -s $(pwd)/dist ~/.s/components/devsapp.cn/devsapp/fc/dist",
     "start": "npm run dev",
     "dev": "npm run prebuild && npx tsc -w -p tsconfig.json",
     "prebuild": "rm -rf node_modules && rm -rf package-lock.json && npm i && rimraf dist",
