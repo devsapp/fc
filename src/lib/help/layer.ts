@@ -188,11 +188,20 @@ export const LAYER_DOWNLOAD = [
     header: 'Options',
     optionList: [
       regionDescribe,
-      layerName,
+      {
+        name: 'layer-name',
+        description: '[Optional] Specify the layer name parameter',
+        type: String,
+      },
       {
         name: 'version-id',
-        description: '[Required] Specify the version parameter',
+        description: '[Optional] Specify the version parameter',
         type: Number,
+      },
+      {
+        name: 'arn',
+        description: '[Optional] Specify the layer arn parameter',
+        type: String,
       },
     ],
   },
