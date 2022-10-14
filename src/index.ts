@@ -382,6 +382,25 @@ export default class FcBaseComponent extends EntryPublicMethod {
     } = await FcStress.handlerComponentInputs(inputs);
     if (isHelp) { return; }
 
+    if (commandName === 'start' && stressOpts?.functionType === 'http' && !httpTypeOpts?.url) {
+      try {
+        if (inputs.props?.service?.name && inputs.props?.function?.name) {
+          const infoConfig = await this.componentMethodCaller(
+            inputs,
+            'devsapp/fc-info',
+            'info',
+            infoPropsGenerator(inputs.props),
+            '',
+          );
+          httpTypeOpts.url = _.get(infoConfig, 'triggers[0].urlInternet');
+        }
+      } catch (e) { /* 不影响主进程 */}
+
+      if (!httpTypeOpts.url) {
+        throw new core.CatchableError('Function type is http, please specify --url');
+      }
+    }
+
     const fcStress: FcStress = new FcStress(
       access,
       region,
@@ -392,9 +411,6 @@ export default class FcBaseComponent extends EntryPublicMethod {
     );
     let fcStressArgs: string;
     if (commandName === 'start') {
-      if (stressOpts?.functionType === 'http' && !argsData?.url) {
-        this.logger.error('Function type is http, please specify --url');
-      }
       fcStressArgs = fcStress.makeStartArgs();
     } else if (commandName === 'clean') {
       fcStressArgs = fcStress.makeCleanArgs(argsData['assume-yes']);
