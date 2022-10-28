@@ -70,7 +70,7 @@ category: '调用&调试'
 | event         | e        | 选填            | 传入 `event` 函数的 `event` 事件数据，可以通过 `s cli fc-event` 指令快速获取事件数据示例，详细操作参考[这里](https://github.com/devsapp/fc/blob/main/docs/zh/command/invoke.md#注意事项)                    |
 | event-file    | f        | 选填            | 以文件形式传入 `event` 事件数据                                                                                                                                                                             |
 | event-stdin   | s        | 选填            | 以标准输入形式传入 `event` 事件数据                                                                                                                                                                         |
-| mode          | m        | 选填            | 调试模式选择，包括：<br> - `normal`: 默认模式，本地函数运行容器在函数执行完成后立刻退出<br>`server`: 本地函数运行容器一直存在，用户在其他终端发起的本地调用会复用该容器<br>`api`: 支持通过 sdk 调用本地函数 |
+| mode          | m        | 选填            | 调试模式选择，包括：<br> - `normal`: 默认模式，本地函数运行容器在函数执行完成后立刻退出<br>`server`: 本地函数运行容器一直存在，用户在其他终端发起的本地调用（注意两次命令要使用同一个 s.yaml）会复用该容器 <br>`api`: 启动服务供本地 InvokeFunction API 或者 SDK 进行调用，详情请参见 [invokeFunction](https://help.aliyun.com/document_detail/191156.htm#doc-api-58601-InvokeFunction) 和 [SDK 列表](https://help.aliyun.com/document_detail/53277.htm#concept-2260089)。 |
 | config        | c        | 选填            | 指定断点调试时使用的 IDE，取值范围：`vscode, pycharm, intellij`                                                                                                                                             |
 | debug-port    | d        | 选填            | 指定断点调试端口                                                                                                                                                                                            |
 | debug-args    | -        | 选填            | 断点调试时传入的参数, 详情见附录中的默认断点调试参数                                                                                                                                                        |
@@ -150,6 +150,32 @@ RequestId: 0ba8ac3f-abf8-46d4-b61f-8e0f9f265d6a 	 Billed Duration: 146 ms 	 Memo
 >
 > 由于路径的不同，所以在代码开发和处理的时候，都会有所不同，如果使用某个 Web 框架（例如 Express、Django 等），匹配的首页地址为`/`，那么使用系统域名地址则可能会出现`404`，这个时候较为推荐使用自定义域名，获得更原生的体验。所以为了满足开发者在系统域名与自定义域名不同模式下的调试需要，本组件支持`--custom-domain`参数进行自定义域名模式调试。
 > 如果既要使用 custom-runtime/custom-container 函数，又要使用系统域名，还要不处理系统基础路径，那么可以在发给函数的 HTTP 请求中增加 header: `x-fc-invocation-target: 2016-08-15/proxy/$ServiceName/$functionName` 即可
+
+
+执行 `s local invoke --mode api` 使用 Node SDK 调用示例：
+
+1. 执行 `s local invoke --mode api --server-port 7000`
+2. 进入一个测试文件, 执行 `npm install @alicloud/fc2`，编写测试脚本 `index.js`
+```
+const FC = require('@alicloud/fc2');
+
+const client = new FC('AccountId', {
+  accessKeyID: 'accessKeyID',
+  accessKeySecret: 'accessKeySecret',
+  endpoint: 'http://localhost:7000',
+  region: 'region',
+});
+
+(async function () {
+  const res = await client.invokeFunction('servcieName', 'functionName', 'parames');
+  console.log(res.headers);
+  console.log(res.data);
+})()
+```
+3. 调用脚本 `node index`
+
+示意图如下:
+![示例](https://img.alicdn.com/imgextra/i4/O1CN01jglKmG1HIftYGMspX_!!6000000000735-2-tps-2880-1800.png)
 
 ### 注意事项
 
