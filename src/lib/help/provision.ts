@@ -12,7 +12,7 @@ const qualifier = {
   description: '[Required] Specify the qualifier parameter. Only supports LATEST and alias',
   type: String,
 };
-
+  
 export const PROVISION = [
   {
     header: 'Provision',
@@ -20,7 +20,7 @@ export const PROVISION = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/provision.md',
+    content: 'https://serverless.help/t/provision',
   },
   {
     header: 'Usage',
@@ -46,7 +46,7 @@ export const PROVISION_LIST = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/provision.md',
+    content: 'https://serverless.help/t/provision-list',
   },
   {
     header: 'Usage',
@@ -75,7 +75,7 @@ export const PROVISION_PUT = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/provision.md',
+    content: 'https://serverless.help/t/provision-put',
   },
   {
     header: 'Usage',
@@ -96,7 +96,7 @@ export const PROVISION_PUT = [
       {
         name: 'config',
         description:
-          '[Optional] Specify the configuration path parameter,Config format refers to [https://github.com/devsapp/fc/blob/jiangyu-docs/docs/zh/command/provision.md#provision-config]',
+          '[Optional] Specify the configuration path parameter,Config format refers to [https://serverless.help/t/provision-config]',
         type: String,
       },
     ],
@@ -125,7 +125,7 @@ export const PROVISION_GET = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/provision.md',
+    content: 'https://serverless.help/t/provision-get',
   },
   {
     header: 'Usage',

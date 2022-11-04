@@ -7,7 +7,7 @@ export const SYNC = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/sync.md',
+    content: 'https://serverless.help/t/sync',
   },
   {
     header: 'Usage',

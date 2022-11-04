@@ -7,7 +7,7 @@ export const INFO = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/info.md',
+    content: 'https://serverless.help/t/info',
   },
   {
     header: 'Usage',

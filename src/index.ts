@@ -22,7 +22,6 @@ import Plan from './lib/component/plan';
 import Provision from './lib/component/provision';
 import EntryPublicMethod from './entry-public-method';
 import FcProxiedInvoke from './lib/component/fc-proxied-invoke';
-import FcRemoteDebug from './lib/component/fc-remote-debug';
 import FcEval from './lib/component/fc-eval';
 import { FcInvokeProps } from './lib/interface/component/fc-remote-invoke';
 import Log from './lib/component/logs';
@@ -573,33 +572,6 @@ export default class FcBaseComponent extends EntryPublicMethod {
       return core.help(HELP.FUN_TO_S);
     }
     return await this.componentMethodCaller(inputs, 'fc-transform', 'fun2fc', {}, args);
-  }
-
-  async remote(inputs: IInputs): Promise<any> {
-    await super.handlerPreMethod(inputs, { getSecretKey: true });
-    const { methodName, isHelp, subCommandHelp } = await FcRemoteDebug.handlerComponentInputs(inputs);
-    if (isHelp) { return; }
-
-    const fcRemoteDebug: FcRemoteDebug = new FcRemoteDebug(inputs);
-    if (methodName === 'setup') {
-      if (subCommandHelp) {
-        core.help(HELP.REMOTE_SETUP);
-        return;
-      }
-      return await FcRemoteDebug.setup(fcRemoteDebug.makeInputs(methodName));
-    } else if (methodName === 'invoke') {
-      if (subCommandHelp) {
-        core.help(HELP.REMOTE_INVOKE);
-        return;
-      }
-      return await FcRemoteDebug.invoke(fcRemoteDebug.makeInputs(methodName));
-    } else if (methodName === 'cleanup') {
-      if (subCommandHelp) {
-        core.help(HELP.REMOTE_CLEANUP);
-        return;
-      }
-      return await FcRemoteDebug.cleanup(fcRemoteDebug.makeInputs(methodName));
-    }
   }
 
   async eval(inputs: IInputs): Promise<any> {

@@ -35,7 +35,7 @@ export const LAYER_PUBLISH = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/layer.md',
+    content: 'https://serverless.help/t/layer-publish',
   },
   {
     header: 'Usage',
@@ -94,7 +94,7 @@ export const LAYER_LIST = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/layer.md',
+    content: ' https://serverless.help/t/layer-list',
   },
   {
     header: 'Usage',
@@ -141,7 +141,7 @@ export const LAYER_DETAIL = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/layer.md',
+    content: 'https://serverless.help/t/layer-detail',
   },
   {
     header: 'Usage',
@@ -178,7 +178,7 @@ export const LAYER_DOWNLOAD = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/layer.md',
+    content: 'https://serverless.help/t/layer-download',
   },
   {
     header: 'Usage',
@@ -224,7 +224,7 @@ export const LAYER_VERSIONS = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/layer.md',
+    content: 'https://serverless.help/t/layer-versions',
   },
   {
     header: 'Usage',
@@ -253,7 +253,7 @@ export const LAYER_ACL = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/layer.md',
+    content: ' https://serverless.help/t/layer-acl',
   },
   {
     header: 'Usage',

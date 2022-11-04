@@ -20,7 +20,7 @@ export const ON_DEMAND = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/ondemand.md',
+    content: 'https://serverless.help/t/ondemand',
   },
   {
     header: 'Usage',
@@ -46,7 +46,7 @@ export const ON_DEMAND_LIST = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/ondemand.md',
+    content: 'https://serverless.help/t/ondemand-list',
   },
   {
     header: 'Usage',
@@ -75,7 +75,7 @@ export const ON_DEMAND_PUT = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/ondemand.md',
+    content: 'https://serverless.help/t/ondemand-put',
   },
   {
     header: 'Usage',
@@ -116,7 +116,7 @@ export const ON_DEMAND_GET = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/ondemand.md',
+    content: 'https://serverless.help/t/ondemand-get',
   },
   {
     header: 'Usage',

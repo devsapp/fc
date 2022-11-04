@@ -13,7 +13,7 @@ export const VERSION_HELP = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/version.md',
+    content: 'https://serverless.help/t/version',
   },
   {
     header: 'Usage',
@@ -38,7 +38,7 @@ export const VERSION_LIST = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/version.md',
+    content: 'https://serverless.help/t/version-list',
   },
   {
     header: 'Usage',
@@ -67,7 +67,7 @@ export const VERSION_PUBLISH = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/version.md',
+    content: 'https://serverless.help/t/version-publish',
   },
   {
     header: 'Usage',

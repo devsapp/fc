@@ -7,7 +7,7 @@ export const PROXIED = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/proxied.md',
+    content: 'https://serverless.help/t/proxied',
   },
   {
     header: 'Usage',
@@ -39,7 +39,7 @@ export const PROXIED_SETUP = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/proxied.md',
+    content: 'https://serverless.help/t/proxied-setup',
   },
   {
     header: 'Usage',
@@ -96,7 +96,7 @@ export const PROXIED_INVOKE = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/proxied.md',
+    content: 'https://serverless.help/t/proxied-invoke',
   },
   {
     header: 'Usage',
@@ -142,7 +142,7 @@ export const PROXIED_CLEANUP = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/proxied.md',
+    content: 'https://serverless.help/t/proxied-cleanup',
   },
   {
     header: 'Usage',

@@ -14,7 +14,7 @@ export const INSTANCE = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/instance.md',
+    content: 'https://serverless.help/t/instance',
   },
   {
     header: 'Usage',
@@ -36,7 +36,7 @@ export const INSTANCE_LIST = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/instance.md',
+    content: 'https://serverless.help/t/instance-list',
   },
   {
     header: 'Usage',
@@ -69,7 +69,7 @@ export const INSTANCE_EXEC = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/instance.md',
+    content: 'https://serverless.help/t/instance-exec',
   },
   {
     header: 'Usage',
