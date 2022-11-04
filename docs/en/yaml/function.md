@@ -19,6 +19,8 @@ category: 'Yaml-Spec'
 | [runtime](#runtime)                                 | True     | String                             | Runtime                                                      |
 | timeout                                             | False    | Number                             | The timeout time for the function to run                     |
 | caPort                                              | False    | Number                             | CustomContainer/Runtime specified port                       |
+| cpu                                              | False    | Number                             | The CPU specification of the function, in vCPU, is a multiple of 0.05 vCPU.                      |
+| diskSize                                              | False    | Number                             | The disk specification of the function. The unit is MB. The optional values are 512 MB or 10240 MB.                      |
 | [customContainerConfig](#customcontainerconfig)     | False    | [Struct](#customcontainerconfig)   | Custom image configuration                                   |
 | [environmentVariables](#environmentvariables)       | False    | [Struct](#environmentvariables)    | Environment Variables                                        |
 | initializationTimeout                               | False    | Number                             | initialization method timeout                                |

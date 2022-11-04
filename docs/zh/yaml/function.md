@@ -18,6 +18,8 @@ category: 'Yaml规范'
 | [runtime](#runtime)                                 | True  | String                                | 运行时                                                 |
 | timeout                                             | False | Number                                | function运行的超时时间                                 |
 | caPort                                              | False | Number                                | CustomContainer/Runtime指定端口                        |
+| cpu                                              | False | Number                                | 函数的CPU规格，单位为vCPU，为0.05 vCPU的倍数。                        |
+| diskSize                                              | False | Number                                | 函数的磁盘规格，单位为MB，可选值为512 MB或10240 MB。                        |
 | [customContainerConfig](#customcontainerconfig)     | False | [Struct](#customcontainerconfig)      | 自定义镜像配置                                         |
 | [environmentVariables](#environmentvariables)       | False | [Struct](#environmentvariables) | 环境变量                                               |
 | initializationTimeout                               | False | Number                                | 初始化方法超时时间                                     |
