@@ -1,5 +1,5 @@
 import { globalParams, globalDescribe } from './constant';
-
+  
 export const NAS_HELP_INFO = [
   {
     header: 'Nas',
@@ -7,7 +7,7 @@ export const NAS_HELP_INFO = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/nas.md',
+    content: 'https://serverless.help/t/nas',
   },
   {
     header: 'Usage',
@@ -39,7 +39,7 @@ const UPLOADHELP = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/nas.md',
+    content: 'https://serverless.help/t/nas-upload',
   },
   {
     header: 'Usage',
@@ -79,7 +79,7 @@ const DOWNLOADHELP = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/nas.md',
+    content: 'https://serverless.help/t/nas-download',
   },
   {
     header: 'Usage',
@@ -118,7 +118,7 @@ const COMMANDHELP = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/nas.md',
+    content: 'https://serverless.help/t/nas-command',
   },
   {
     header: 'Usage',
@@ -143,7 +143,7 @@ const INITHELP = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/nas.md',
+    content: 'https://serverless.help/t/nas-init',
   },
   {
     header: 'Usage',

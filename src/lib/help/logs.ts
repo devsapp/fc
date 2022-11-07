@@ -13,7 +13,7 @@ export const LOGS = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/logs.md',
+    content: 'https://serverless.help/t/logs',
   },
   {
     header: 'Usage',

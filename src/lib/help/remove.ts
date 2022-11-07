@@ -14,7 +14,7 @@ export const REMOVE = [
   },
   {
     header: 'Document',
-    content: '$  https://github.com/devsapp/fc/blob/main/docs/zh/command/remove.md',
+    content: 'https://serverless.help/t/remove',
   },
   {
     header: 'Usage',
@@ -80,7 +80,7 @@ export const REMOVE_SERVICE = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/remove.md',
+    content: 'https://serverless.help/t/remove-service',
   },
   {
     header: 'Usage',
@@ -109,7 +109,7 @@ export const REMOVE_FUNCTION = [
   },
   {
     header: 'Document',
-    content: '$  https://github.com/devsapp/fc/blob/main/docs/zh/command/remove.md',
+    content: 'https://serverless.help/t/remove-function',
   },
   {
     header: 'Usage',
@@ -140,7 +140,7 @@ export const REMOVE_TRIGGER = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/remove.md',
+    content: 'https://serverless.help/t/remove-trigger',
   },
   {
     header: 'Usage',
@@ -181,7 +181,7 @@ export const REMOVE_DOMAIN = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/remove.md',
+    content: 'https://serverless.help/t/remove-domain',
   },
   {
     header: 'Usage',
@@ -218,7 +218,7 @@ export const REMOVE_VERSION = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/remove.md',
+    content: 'https://serverless.help/t/remove-version',
   },
   {
     header: 'Usage',
@@ -258,7 +258,7 @@ export const REMOVE_ALIAS = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/remove.md',
+    content: 'https://serverless.help/t/remove-alias',
   },
   {
     header: 'Usage',
@@ -298,7 +298,7 @@ export const REMOVE_PROVISION = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/remove.md',
+    content: 'https://serverless.help/t/remove-provision',
   },
   {
     header: 'Usage',
@@ -343,7 +343,7 @@ export const REMOVE_ONDEMAND = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/remove.md',
+    content: 'https://serverless.help/t/remove-ondemand',
   },
   {
     header: 'Usage',
@@ -387,7 +387,7 @@ export const REMOVE_LAYER = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/remove.md',
+    content: 'https://serverless.help/t/remove-layer',
   },
   {
     header: 'Usage',

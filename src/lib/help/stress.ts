@@ -14,7 +14,7 @@ export const STRESS = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/stress.md',
+    content: 'https://serverless.help/t/stress',
   },
   {
     header: 'Usage',
@@ -42,7 +42,7 @@ export const STRESS_START = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/stress.md',
+    content: 'https://serverless.help/t/stress-start',
   },
   {
     header: 'Usage',
@@ -129,7 +129,7 @@ export const STRESS_CLEAN = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/stress.md',
+    content: 'https://serverless.help/t/stress-clean',
   },
   {
     header: 'Usage',

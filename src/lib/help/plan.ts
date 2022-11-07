@@ -7,7 +7,7 @@ export const PLAN_HELP = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/plan.md',
+    content: 'https://serverless.help/t/plan',
   },
   {
     header: 'Usage',

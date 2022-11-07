@@ -7,7 +7,7 @@ export const ENV_HELP_INFO = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/env.md',
+    content: 'https://serverless.help/t/env',
   },
   {
     header: 'Usage',
@@ -39,7 +39,7 @@ export const ENV_APPLY_TEMPLATE = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/env.md',
+    content: 'https://serverless.help/t/env',
   },
   {
     header: 'Usage',
@@ -89,7 +89,7 @@ export const ENV_DESCRIBE_TEMPLATE = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/env.md',
+    content: 'env-describe',
   },
   {
     header: 'Usage',
@@ -124,7 +124,7 @@ export const ENV_REMOVE_TEMPLATE = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/env.md',
+    content: 'https://serverless.help/t/env',
   },
   {
     header: 'Usage',
@@ -159,7 +159,7 @@ export const ENV_INIT = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/env.md',
+    content: 'https://serverless.help/t/env',
   },
   {
     header: 'Usage',
@@ -200,7 +200,7 @@ export const ENV_DEPLOY = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/env.md',
+    content: 'https://serverless.help/t/env',
   },
   {
     header: 'Usage',
@@ -231,7 +231,7 @@ export const ENV_INFO = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/env.md',
+    content: 'https://serverless.help/t/env',
   },
   {
     header: 'Usage',

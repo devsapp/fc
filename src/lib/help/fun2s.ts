@@ -8,7 +8,7 @@ export const FUN_TO_S = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/fun2s.md',
+    content: 'https://serverless.help/t/fun2s',
   },
   {
     header: 'Usage',

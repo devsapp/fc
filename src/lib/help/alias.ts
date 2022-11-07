@@ -19,7 +19,7 @@ export const ALIAS = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/alias.md',
+    content: 'https://serverless.help/t/alias',
   },
   {
     header: 'Usage',
@@ -43,7 +43,7 @@ export const ALIAS_GET = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/alias.md',
+    content: 'https://serverless.help/t/alias-get',
   },
   {
     header: 'Usage',
@@ -74,7 +74,7 @@ export const ALIAS_LIST = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/alias.md',
+    content: 'https://serverless.help/t/alias-list',
   },
   {
     header: 'Usage',
@@ -103,7 +103,7 @@ export const ALIAS_PUBLISH = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/alias.md',
+    content: 'https://serverless.help/t/alias-publish',
   },
   {
     header: 'Usage',
@@ -167,7 +167,7 @@ export const ALIAS_ROLLBACK = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/alias.md',
+    content: 'https://serverless.help/t/alias-rollback',
   },
   {
     header: 'Usage',

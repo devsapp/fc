@@ -13,7 +13,7 @@ export const EVAL = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/eval.md',
+    content: 'https://serverless.help/t/eval',
   },
   {
     header: 'Usage',
@@ -34,7 +34,7 @@ export const EVAL_START = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/eval.md',
+    content: 'https://serverless.help/t/eval-start',
   },
   {
     header: 'Usage',

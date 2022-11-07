@@ -40,7 +40,7 @@ export const DEPLOY = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/deploy.md',
+    content: 'https://serverless.help/t/fc-deploy',
   },
   {
     header: 'Usage',
@@ -91,7 +91,7 @@ export const DEPLOY_SERVICE = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/deploy.md',
+    content: 'https://serverless.help/t/fc-deploy-service',
   },
   {
     header: 'Usage',
@@ -116,7 +116,7 @@ export const DEPLOY_FUNCTION = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/deploy.md',
+    content: 'https://serverless.help/t/fc-deploy-function',
   },
   {
     header: 'Usage',
@@ -145,7 +145,7 @@ export const DEPLOY_TRIGGER = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/deploy.md',
+    content: 'https://serverless.help/t/fc-deploy-trigger',
   },
   {
     header: 'Usage',
@@ -182,7 +182,7 @@ export const DEPLOY_DOMAIN = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/deploy.md',
+    content: 'https://serverless.help/t/fc-deploy-domain',
   },
   {
     header: 'Usage',

@@ -47,6 +47,16 @@ export default class EntryPublicMethod {
 
     await InfraAsTemplate.modifyInputs(inputs); // 多环境处理
 
+    try {
+      const { getEndpointFromFcDefault } = await core.load('devsapp/fc-core');
+      const endpoint = await getEndpointFromFcDefault();
+      if (endpoint) {
+        logger.warn(`Use custom endpoint: ${endpoint}`);
+      }
+    } catch (ex) {
+      /** */
+    }
+
     return inputs;
   }
 

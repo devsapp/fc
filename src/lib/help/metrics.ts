@@ -13,7 +13,7 @@ export const METRICS = [
   },
   {
     header: 'Document',
-    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/metrics.md',
+    content: 'https://serverless.help/t/metrics',
   },
   {
     header: 'Usage',
