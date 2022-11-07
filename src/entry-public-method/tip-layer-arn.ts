@@ -4,7 +4,7 @@ import logger from '../common/logger';
 export function tipLayerArn(region: string, layers: string[], access) {
   const accessStr = access ? `-a ${access}` : '';
 
-  _.forEach(layers, function (layer) {
+  _.forEach(layers, (layer) => {
     if (_.includes(layer, '#')) {
       try {
         const [, layerName, version] = layer.split('#');

@@ -393,7 +393,7 @@ export default class FcBaseComponent extends EntryPublicMethod {
           );
           httpTypeOpts.url = _.get(infoConfig, 'triggers[0].urlInternet');
         }
-      } catch (e) { /* 不影响主进程 */}
+      } catch (e) { /* 不影响主进程 */ }
 
       if (!httpTypeOpts.url) {
         throw new core.CatchableError('Function type is http, please specify --url');

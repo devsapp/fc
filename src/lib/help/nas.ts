@@ -1,5 +1,5 @@
 import { globalParams, globalDescribe } from './constant';
-  
+
 export const NAS_HELP_INFO = [
   {
     header: 'Nas',

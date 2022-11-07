@@ -12,7 +12,7 @@ const qualifier = {
   description: '[Required] Specify the qualifier parameter. Only supports LATEST and alias',
   type: String,
 };
-  
+
 export const PROVISION = [
   {
     header: 'Provision',
