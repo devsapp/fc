@@ -66,6 +66,7 @@ export default class FcBaseComponent extends EntryPublicMethod {
       inputs.props,
       inputs.args,
     );
+    if(process.env.BUILD_IMAGE_ENV === 'fc-backend') return palnRs;
     return Plan.showPlan(palnRs, planType);
   }
 
