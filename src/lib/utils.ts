@@ -7,6 +7,8 @@ import * as core from '@serverless-devs/core';
 import logger from '../common/logger';
 import inquirer from 'inquirer';
 
+export const useFcBackend = process.env.BUILD_IMAGE_ENV === 'fc-backend';
+
 export async function getCredentials(credentials: ICredentials, access: string) {
   if (_.isEmpty(credentials)) {
     return await core.getCredential(access);

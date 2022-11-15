@@ -11,7 +11,7 @@ import { infoPropsGenerator } from './lib/component/info';
 import { FcSyncProps } from './lib/interface/component/fc-sync';
 import Instance from './lib/component/instance';
 import { FcMetricsProps } from './lib/interface/component/fc-metrics';
-import { getFcNames, isAutoConfig } from './lib/utils';
+import { getFcNames, isAutoConfig, useFcBackend } from './lib/utils';
 import * as tips from './lib/tips';
 import FcStress from './lib/component/fc-stress';
 import Version from './lib/component/version';
@@ -57,6 +57,13 @@ export default class FcBaseComponent extends EntryPublicMethod {
     const { isHelp, planType } = Plan.handlerInputs(inputs);
     if (isHelp) {
       return core.help(HELP.PLAN_HELP);
+    }
+
+    if (useFcBackend) {
+      return {
+        remote: await this.info(inputs),
+        local: inputs.props,
+      };
     }
 
     const palnRs = await this.componentMethodCaller(
