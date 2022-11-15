@@ -45,6 +45,17 @@ export default class EntryPublicMethod {
       tipLayerArn(inputs.props?.region, inputs.props?.function?.layers, inputs.project?.access);
     }
 
+    // Fix: https://github.com/devsapp/fc/issues/876
+    if (!_.isEmpty(inputs.props?.customDomains)) {
+      inputs.props.customDomains = _.map(inputs.props.customDomains, (item) => ({
+        ...(item || {}),
+        routeConfigs: _.map(item.routeConfigs || [], i => ({
+          ...(i || {}),
+          qualifier: _.isNumber(i?.qualifier) ? i.qualifier.toString() : i?.qualifier,
+        }))
+      }))
+    }
+
     await InfraAsTemplate.modifyInputs(inputs); // 多环境处理
 
     try {
