@@ -157,7 +157,6 @@ export default class Alias {
     versionLatest,
     gversion,
     weight,
-    resolvePolicy,
     routePolicy,
   }: Publish) {
     const hasWeight = typeof weight === 'number';
@@ -226,11 +225,8 @@ export default class Alias {
   }
 
   async rollback(props: Rollback) {
-    let {
-      serviceName,
-      aliasName,
-      versionId,
-    } = props;
+    let { versionId } = props;
+    const { serviceName, aliasName } = props;
     const aliasConfig = await this.findAlias({ serviceName, aliasName });
     if (!aliasConfig) {
       throw new core.CatchableError(`${aliasName} not found.`);
