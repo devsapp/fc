@@ -6,17 +6,18 @@ category: 'Yaml规范'
 ---
 
 ## service字段
-| 参数名                          | 必填  | 类型                                          | 参数描述                                                     |
-| ------------------------------- | ----- | --------------------------------------------- | ------------------------------------------------------------ |
-| name                            | True  | String                                        | service名称                                                  |
-| description                     | False | String                                        | Service的简短描述                                            |
-| internetAccess                  | False | Boolean                                       | 设为true让function可以访问公网                               |
-| [tracingConfig](#tracingConfig) | False | String                                        | 链路追踪，可取值：Enable、Disable                            |
-| [role](#role)                   | False | String[简单配置]/[Struct[详细配置]](#role)    | 授予函数计算所需权限的RAM role, 使用场景包含 1. 把 function产生的 log 发送到用户的 logstore 中 2. 为function 在执行中访问其它云资源生成 token |
-| [logConfig](#logconfig)         | False | Enum[简单配置]/[Struct[详细配置]](#logconfig) | log配置，function产生的log会写入这里配置的logstore           |
-| [vpcConfig](#vpcconfig)         | False | Enum[简单配置]/[Struct[详细配置]](#vpcconfig) | VPC配置, 配置后function可以访问指定VPC                       |
-| [nasConfig](#nasconfig)         | False | Enum[简单配置]/[Struct[详细配置]](#nasconfig) | NAS配置, 配置后function可以访问指定NAS                       |
-| vpcBinding         | False | List\<String\> | 仅允许函数被指定的VPC访问 [文档](https://help.aliyun.com/document_detail/72959.html)             |
+| 参数名                            | 必填  | 类型                                          | 参数描述                                                     |
+| --------------------------------- | ----- | ----------------------------------------------| ------------------------------------------------------------ |
+| name                              | True  | String                                        | service名称                                                  |
+| description                       | False | String                                        | Service的简短描述                                            |
+| internetAccess                    | False | Boolean                                       | 设为true让function可以访问公网                               |
+| [tracingConfig](#tracingConfig)   | False | String                                        | 链路追踪，可取值：Enable、Disable                            |
+| [role](#role)                     | False | String[简单配置]/[Struct[详细配置]](#role)    | 授予函数计算所需权限的RAM role, 使用场景包含 1. 把 function产生的 log 发送到用户的 logstore 中 2. 为function 在执行中访问其它云资源生成 token |
+| [logConfig](#logconfig)           | False | Enum[简单配置]/[Struct[详细配置]](#logconfig) | log配置，function产生的log会写入这里配置的logstore           |
+| [vpcConfig](#vpcconfig)           | False | Enum[简单配置]/[Struct[详细配置]](#vpcconfig) | VPC配置, 配置后function可以访问指定VPC                       |
+| [nasConfig](#nasconfig)           | False | Enum[简单配置]/[Struct[详细配置]](#nasconfig) | NAS配置, 配置后function可以访问指定NAS                       |
+| [ossMountConfig](#ossmountconfig) | False | [Struct[详细配置]](#ossmountconfig)           | OSS挂载配置, 配置后function可以访问指定OSS bucket            |
+| vpcBinding                        | False | List\<String\>                                | 仅允许函数被指定的VPC访问 [文档](https://help.aliyun.com/document_detail/72959.html) |
 
 
 参考案例：
@@ -516,6 +517,120 @@ service:
 | serverAddr | True | String | NAS 服务器地址 |
 | nasDir     | True | String | NAS目录        |
 | fcDir      | True | String | 函数计算目录   |
+
+### ossMountConfig
+
+当`ossMountConfig`参数为结构时，可以参考：
+
+| 参数名                         | 必填  | 类型                                        | 参数描述             |
+| ------------------------------ | ----- | ------------------------------------------- | -------------------- |
+| [mountPoints](#ossMountPoints) | True | [List\<Struct>[多目录配置]](#ossMountPoints) | 目录配置             |
+
+参考案例：
+
+```yaml
+service:
+  name: unit-deploy-service
+  description: 'demo for fc-deploy component'
+  internetAccess: true
+  role: <role-arn> # role 为已配置好的，配置内容参考服务角色权限
+  ossMountConfig:
+    mountPoints:
+      - endpoint: http://oss-cn-shanghai-internal.aliyuncs.com
+        bucketName: example-bucket0
+        mountDir: /mnt/example-bucket0
+      - endpoint: https://oss-cn-beijing.aliyuncs.com
+        bucketName: example-bucket1
+        mountDir: /mnt/example-bucket1
+        readOnly: true
+```
+
+#### 权限配置相关
+
+##### 子账号需要的权限
+
+###### 最大权限
+
+**系统策略**：`AliyunFCFullAccess`
+
+
+###### 部署最小权限
+
+**自定义策略**
+
+```json
+{
+    "Statement":[
+        {
+            "Action":"ram:PassRole",
+            "Effect":"Allow",
+            "Resource":"*"
+        }
+    ],
+    "Version":"1"
+}
+```
+
+##### 服务角色权限
+
+###### 最大权限
+
+**系统策略**：`AliyunOSSFullAccess`
+
+###### 限定只读访问指定bucket
+
+```
+{
+  "Version": "1",
+  "Statement": [
+    {
+      "Action": [
+        "oss:ListObjects",
+        "oss:GetObject"
+      ],
+      "Resource": [
+        "acs:oss:*:*:bucketName",
+        "acs:oss:*:*:bucketName/*"
+      ],
+      "Effect": "Allow"
+    }
+  ]
+}
+```
+
+###### 限定读写访问指定bucket
+
+```
+{
+  "Version": "1",
+  "Statement": [
+    {
+      "Action": [
+        "oss:ListObjects",
+        "oss:GetObject",
+        "oss:PutObject",
+        "oss:DeleteObject",
+        "oss:AbortMultipartUpload",
+        "oss:ListParts"
+      ],
+      "Resource": [
+        "acs:oss:*:*:bucketName",
+        "acs:oss:*:*:bucketName/*"
+      ],
+      "Effect": "Allow"
+    }
+  ]
+}
+```
+
+#### ossMountPoints
+
+| 参数名     | 必填  | 类型    | 参数描述       |
+| ---------- | ----- | ------- | -------------- |
+| endpoint   | True  | String  | OSS服务地址    |
+| bucketName | True  | String  | OSS bucket名称 |
+| mountDir   | True  | String  | 函数计算目录   |
+| readOnly   | False | Boolean | 是否挂载为只读 |
 
 ### tracingConfig
 
