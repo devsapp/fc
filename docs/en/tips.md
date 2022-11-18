@@ -131,7 +131,7 @@ services:
 
 In the preceding YAML file, set the custom domain name `fc.example.com`, map the function `website` of the front-end resource to the `/*` route, and map the function `admin` of the back-end resource to the `/api/*` route.
 
-For the configuration of HTTPS certificate, please refer to [certConfig configuration](https://docs.serverless-devs.com/fc/yaml/customDomains#certconfig)
+For the configuration of HTTPS certificate, please refer to [certConfig configuration](https://docs.serverless-devs.com/fc/yaml/customdomains#certconfig)
 
 ## How to use a `.fcignore` file
 

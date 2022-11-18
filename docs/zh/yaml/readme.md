@@ -13,7 +13,7 @@ category: 'Yaml规范'
 | [service](./service.md)             | True | [Struct](./service.md)       | 服务       |
 | [function](./function.md)           | False | [Struct](./function.md)      | 函数       |
 | [triggers](./triggers.md)           | False | [Struct](./triggers.md)      | 触发器     |
-| [customDomains](./customDomains.md) | False | [Struct](./customDomains.md) | 自定义域名 |
+| [customDomains](./customdomains.md) | False | [Struct](./customdomains.md) | 自定义域名 |
 
 地区(region)目前支持：`cn-beijing`, `cn-hangzhou`, `cn-shanghai`, `cn-qingdao`, `cn-zhangjiakou`, `cn-huhehaote`, `cn-shenzhen`, `cn-chengdu`, `cn-hongkong`, `ap-southeast-1`, `ap-southeast-2`, `ap-southeast-3`, `ap-southeast-5`, `ap-northeast-1`, `eu-central-1`, `eu-west-1`, `us-west-1`, `us-east-1`, `ap-south-1`
 
