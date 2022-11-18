@@ -12,7 +12,7 @@ category: 'Yaml-Spec'
 | [service](./service.md)             | True     | [Struct](./service.md)       | Service               |
 | [function](./function.md)           | True     | [Struct](./function.md)      | function              |
 | [triggers](./triggers.md)           | True     | [Struct](./triggers.md)      | Triggers              |
-| [customDomains](./customDomains.md) | True     | [Struct](./customDomains.md) | Custom Domain Name    |
+| [customDomains](./customdomains.md) | True     | [Struct](./customdomains.md) | Custom Domain Name    |
 
 Regions currently supported: `cn-beijing`, `cn-hangzhou`, `cn-shanghai`, `cn-qingdao`, `cn-zhangjiakou`, `cn-huhehaote`, `cn-shenzhen`, `cn-chengdu `, `cn-hongkong`, `ap-southeast-1`, `ap-southeast-2`, `ap-southeast-3`, `ap-southeast-5`, `ap-northeast-1`, `eu -central-1`, `eu-west-1`, `us-west-1`, `us-east-1`, `ap-south-1`
 
