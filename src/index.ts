@@ -113,6 +113,9 @@ export default class FcBaseComponent extends EntryPublicMethod {
       args,
     );
     tips.showNextTip(args, tips.showDeployNextTips);
+    if (_.isNil(deployRes)) {
+      return;
+    }
 
     console.log('\n\n');
     const result: any = {};
