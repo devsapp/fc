@@ -49,11 +49,11 @@ export default class EntryPublicMethod {
     if (!_.isEmpty(inputs.props?.customDomains)) {
       inputs.props.customDomains = _.map(inputs.props.customDomains, (item) => ({
         ...(item || {}),
-        routeConfigs: _.map(item.routeConfigs || [], i => ({
+        routeConfigs: _.map(item.routeConfigs || [], (i) => ({
           ...(i || {}),
           qualifier: _.isNumber(i?.qualifier) ? i.qualifier.toString() : i?.qualifier,
-        }))
-      }))
+        })),
+      }));
     }
 
     await InfraAsTemplate.modifyInputs(inputs); // 多环境处理
