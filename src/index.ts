@@ -34,11 +34,7 @@ export default class FcBaseComponent extends EntryPublicMethod {
 
   async instance(inputs) {
     await super.handlerPreMethod(inputs, { getSecretKey: true });
-    const {
-      help,
-      subCommand,
-      props,
-    } = await Instance.handlerInputs(inputs);
+    const { help, subCommand, props } = await Instance.handlerInputs(inputs);
 
     if (help) {
       return;
@@ -60,8 +56,14 @@ export default class FcBaseComponent extends EntryPublicMethod {
     }
 
     if (useFcBackend) {
+      let remote = {};
+      try {
+        remote = await this.info(inputs);
+      } catch (error) {
+        this.logger.debug(`plan error: ${error}`);
+      }
       return {
-        remote: await this.info(inputs),
+        remote,
         local: inputs.props,
       };
     }
@@ -183,7 +185,9 @@ export default class FcBaseComponent extends EntryPublicMethod {
     await super.handlerPreMethod(inputs, { getSecretKey: true });
     const { help, props, subCommand } = await Remove.handlerInputs(inputs);
 
-    if (help) { return; }
+    if (help) {
+      return;
+    }
 
     await new Remove().remove(
       { props, subCommand },
@@ -238,7 +242,13 @@ export default class FcBaseComponent extends EntryPublicMethod {
       core.help(HELP.BUILD_HELP_INFO);
       return;
     }
-    const output = await this.componentMethodCaller(inputs, 'devsapp/fc-build', 'build', props, args);
+    const output = await this.componentMethodCaller(
+      inputs,
+      'devsapp/fc-build',
+      'build',
+      props,
+      args,
+    );
     tips.showBuildNextTips(output?.buildSaveUri);
     return output?.buildSaveUri;
   }
@@ -246,7 +256,9 @@ export default class FcBaseComponent extends EntryPublicMethod {
   async local(inputs: IInputs): Promise<any> {
     await super.handlerPreMethod(inputs);
     const { isHelp, methodName, fcLocalInvokeArgs } = await Local.handlerComponentInputs(inputs);
-    if (isHelp) { return; }
+    if (isHelp) {
+      return;
+    }
 
     const { props, args } = inputs;
     inputs.argsObj?.shift();
@@ -290,7 +302,9 @@ export default class FcBaseComponent extends EntryPublicMethod {
     await super.handlerPreMethod(inputs, { getSecretKey: true });
     const res = await Log.handlerComponentInputs(inputs);
     const { logsPayload, args, isHelp } = res;
-    if (isHelp) { return; }
+    if (isHelp) {
+      return;
+    }
 
     await this.componentMethodCaller(inputs, 'devsapp/sls', 'logs', logsPayload, args);
   }
@@ -329,7 +343,9 @@ export default class FcBaseComponent extends EntryPublicMethod {
       role,
       transformArgs,
     } = await Nas.handlerComponentInputs(inputs);
-    if (isHelp) { return; }
+    if (isHelp) {
+      return;
+    }
 
     if (commandName === 'init' && isAutoConfig(nasConfig)) {
       return await this.componentMethodCaller(
@@ -341,13 +357,7 @@ export default class FcBaseComponent extends EntryPublicMethod {
       );
     } else if (commandName === 'init') {
       this.logger.info('Ensuring nas dir');
-      const payload = await Nas.toNasAbility(
-        props?.region,
-        vpcConfig,
-        name,
-        role,
-        nasConfig,
-      );
+      const payload = await Nas.toNasAbility(props?.region, vpcConfig, name, role, nasConfig);
       await this.componentMethodCaller(
         componentInputs,
         'devsapp/nas',
@@ -357,11 +367,7 @@ export default class FcBaseComponent extends EntryPublicMethod {
       return;
     }
 
-    const payload = await Nas.getServiceConfig(
-      props,
-      inputs.project?.access,
-      inputs.credentials,
-    );
+    const payload = await Nas.getServiceConfig(props, inputs.project?.access, inputs.credentials);
 
     this.logger.debug(`transform nas payload: ${JSON.stringify(payload.payload)}`);
     this.logger.debug(`  args: ${transformArgs}, command: ${commandName}`);
@@ -389,7 +395,9 @@ export default class FcBaseComponent extends EntryPublicMethod {
       payloadOpts,
       argsData,
     } = await FcStress.handlerComponentInputs(inputs);
-    if (isHelp) { return; }
+    if (isHelp) {
+      return;
+    }
 
     if (commandName === 'start' && stressOpts?.functionType === 'http' && !httpTypeOpts?.url) {
       try {
@@ -403,7 +411,9 @@ export default class FcBaseComponent extends EntryPublicMethod {
           );
           httpTypeOpts.url = _.get(infoConfig, 'triggers[0].urlInternet');
         }
-      } catch (e) { /* 不影响主进程 */ }
+      } catch (e) {
+        /* 不影响主进程 */
+      }
 
       if (!httpTypeOpts.url) {
         throw new core.CatchableError('Function type is http, please specify --url');
@@ -438,7 +448,9 @@ export default class FcBaseComponent extends EntryPublicMethod {
   async version(inputs: IInputs): Promise<any> {
     await super.handlerPreMethod(inputs, { getSecretKey: true });
     const { help, props, subCommand, table } = await Version.handlerInputs(inputs);
-    if (help) { return; }
+    if (help) {
+      return;
+    }
 
     const qualifier = new Version();
     return await qualifier[subCommand](props, table);
@@ -447,7 +459,9 @@ export default class FcBaseComponent extends EntryPublicMethod {
   async alias(inputs: IInputs): Promise<any> {
     await super.handlerPreMethod(inputs, { getSecretKey: true });
     const { help, props, subCommand, table } = await Alias.handlerInputs(inputs);
-    if (help) { return; }
+    if (help) {
+      return;
+    }
 
     const qualifier = new Alias();
     return await qualifier[subCommand](props, table);
@@ -456,7 +470,9 @@ export default class FcBaseComponent extends EntryPublicMethod {
   async provision(inputs: IInputs): Promise<any> {
     await super.handlerPreMethod(inputs, { getSecretKey: true });
     const { help, props, subCommand, table } = await Provision.handlerInputs(inputs);
-    if (help) { return; }
+    if (help) {
+      return;
+    }
 
     const provision = new Provision();
     return await provision[subCommand](props, table);
@@ -465,7 +481,9 @@ export default class FcBaseComponent extends EntryPublicMethod {
   async ondemand(inputs: IInputs) {
     await super.handlerPreMethod(inputs, { getSecretKey: true });
     const { help, props, subCommand, table } = await OnDemand.handlerInputs(inputs);
-    if (help) { return; }
+    if (help) {
+      return;
+    }
 
     const ondemand = new OnDemand();
     return await ondemand[subCommand](props, table);
@@ -589,15 +607,11 @@ export default class FcBaseComponent extends EntryPublicMethod {
 
     const { isHelp, project, evalOpts, httpTypeOpts, payloadOpts, region, commandName } =
       await FcEval.handlerComponentInputs(inputs);
-    if (isHelp) { return; }
+    if (isHelp) {
+      return;
+    }
 
-    const fcEval: FcEval = new FcEval(
-      project?.access,
-      region,
-      evalOpts,
-      httpTypeOpts,
-      payloadOpts,
-    );
+    const fcEval: FcEval = new FcEval(project?.access, region, evalOpts, httpTypeOpts, payloadOpts);
     let fcEvalArgs: string;
     if (commandName === 'start') {
       fcEvalArgs = fcEval.makeStartArgs();
@@ -623,7 +637,18 @@ export default class FcBaseComponent extends EntryPublicMethod {
     const parsedArgs: { [key: string]: any } = core.commandParse(inputs, this.MINIMIST_HELP_OPT);
     const parsedData = parsedArgs?.data || {};
     const rawData = parsedData._ || [];
-    const commandList = ['undefined', 'init', 'deploy', 'info', 'list', 'init-template', 'apply-template', 'describe-template', 'list-templates', 'remove-template'];
+    const commandList = [
+      'undefined',
+      'init',
+      'deploy',
+      'info',
+      'list',
+      'init-template',
+      'apply-template',
+      'describe-template',
+      'list-templates',
+      'remove-template',
+    ];
 
     const subCommand = rawData[0] || 'undefined';
     this.logger.debug(`env subCommand: ${subCommand}`);
@@ -669,12 +694,6 @@ export default class FcBaseComponent extends EntryPublicMethod {
 
   async api(inputs: IInputs): Promise<any> {
     const { props, args } = this.handlerComponentInputs(inputs);
-    return await this.componentMethodCaller(
-      inputs,
-      'fc-api-component',
-      'index',
-      props,
-      args,
-    );
+    return await this.componentMethodCaller(inputs, 'fc-api-component', 'index', props, args);
   }
 }
