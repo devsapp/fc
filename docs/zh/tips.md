@@ -317,8 +317,8 @@ export default_serverless_devs_registry_mode='local'
 ## 项目实践案例
 
 - Build相关：
-  - [Python 案例](./../../examples/build/python)
-  - [Node.js 案例](./../../examples/build/nodejs)
-  - [Java 案例](./../../examples/build/java)
-  - [PHP 案例](./../../examples/build/php)
-  - [Custom Container 案例](./../../examples/build/custom-container)
+  - [Python 案例](https://github.com/devsapp/fc/tree/main/examples/build/python)
+  - [Node.js 案例](https://github.com/devsapp/fc/tree/main/examples/build/nodejs)
+  - [Java 案例](https://github.com/devsapp/fc/tree/main/examples/build/java)
+  - [PHP 案例](https://github.com/devsapp/fc/tree/main/examples/build/php)
+  - [Custom Container 案例](https://github.com/devsapp/fc/tree/main/examples/build/custom-container)
