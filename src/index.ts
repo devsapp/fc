@@ -2,6 +2,7 @@
 import * as core from '@serverless-devs/core';
 import * as _ from 'lodash';
 import Logger from './common/logger';
+import { setCodeUri } from './common/utils';
 import * as HELP from './lib/help';
 import * as DEPLOY_HELP from './lib/help/deploy';
 import * as LAYER_HELP from './lib/help/layer';
@@ -79,6 +80,7 @@ export default class FcBaseComponent extends EntryPublicMethod {
   }
 
   async deploy(inputs: IInputs): Promise<any> {
+    setCodeUri(inputs);
     await super.handlerPreMethod(inputs, { getSecretKey: true });
     const { props, args } = this.handlerComponentInputs(inputs);
     const parsedArgs: { [key: string]: any } = core.commandParse(inputs, this.MINIMIST_HELP_OPT);
