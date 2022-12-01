@@ -458,6 +458,63 @@ Properties:
                 - auto
             - title: 自定义配置
               '$ref': '#/definitions/vpcConfig'
+        ossMountConfig:
+          title: OSS挂载
+          type: object
+          required:
+            - mountPoints
+          additionalProperties: false
+          properties:
+            mountPoints:
+              type: array
+              title: 挂载点
+              description: OSS 的挂载点
+              default: []
+              examples: []
+              minItems: 1
+              uniqueItems: true
+              items:
+                oneOf:
+                  - type: object
+                    title: OSS 的挂载点
+                    default: {}
+                    examples: []
+                    required:
+                      - endpoint
+                      - bucketName
+                      - mountDir
+                    additionalProperties: false
+                    properties:
+                      endpoint:
+                        type: string
+                        minLength: 1
+                        title: OSS服务地址
+                        default: ''
+                        examples:
+                          - http://oss-cn-shenzhen.aliyuncs.com
+                      bucketName:
+                        type: string
+                        minLength: 1
+                        title: bucket名称
+                        description: OSS bucket名称
+                        default: ''
+                      mountDir:
+                        type: string
+                        minLength: 1
+                        title: 函数运行环境中本地目录
+                        description: 必须为 /home/ 或者 /mnt/ 的子目录，例如 /home/app
+                        examples:
+                          - '/mnt/auto'
+                      bucketPath:
+                        type: string
+                        title: 挂载的OSS Bucket路径
+                        description: 挂载的OSS Bucket路径
+                        examples:
+                          - '/mnt/auto'
+                      readOnly:
+                        default: true
+                        type: boolean
+                        title: 是否挂载为只读
         nasConfig:
           title: 存储配置
           x-oneof: void
