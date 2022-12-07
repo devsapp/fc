@@ -631,6 +631,7 @@ service:
 | bucketName | True  | String  | OSS bucket名称 |
 | mountDir   | True  | String  | 函数计算目录   |
 | readOnly   | False | Boolean | 是否挂载为只读 |
+| bucketPath   | False | String | 挂载的OSS Bucket路径。留空或者填`/`，都表示挂载bucket根目录 |
 
 ### tracingConfig
 
