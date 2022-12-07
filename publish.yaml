@@ -504,13 +504,13 @@ Properties:
                         title: 函数运行环境中本地目录
                         description: 必须为 /home/ 或者 /mnt/ 的子目录，例如 /home/app
                         examples:
-                          - '/mnt/auto'
+                          - '/mnt/dir'
                       bucketPath:
                         type: string
                         title: 挂载的OSS Bucket路径
                         description: 挂载的OSS Bucket路径
                         examples:
-                          - '/mnt/auto'
+                          - '/my-dir'
                       readOnly:
                         default: true
                         type: boolean
