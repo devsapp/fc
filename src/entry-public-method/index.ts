@@ -5,7 +5,7 @@ import fs from 'fs';
 import logger from '../common/logger';
 import InfraAsTemplate from '../lib/infra-as-template';
 import { IInputs, IProperties } from '../lib/interface/interface';
-import { getCredentials } from '../lib/utils';
+import { getCredentials, useFcBackend } from '../lib/utils';
 import { setDefaultValue } from './set-default-value';
 import { tipLayerArn } from './tip-layer-arn';
 
@@ -33,7 +33,9 @@ export default class EntryPublicMethod {
 
     await this.updateCore(); // 更新到最新版本的 core
 
-    // this.setCodeUri(inputs); // 修改codeUri
+    if (useFcBackend) {
+      this.setCodeUri(inputs); // 修改codeUri
+    }
     // 处理密钥
     if (getSecretKey) {
       inputs.credentials = await getCredentials(inputs.credentials, inputs.project?.access);
