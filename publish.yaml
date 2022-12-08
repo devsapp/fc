@@ -1025,6 +1025,7 @@ Properties:
                             - DELETE
                             - HEAD
                             - OPTIONS
+                            - PATCH
                     x-reactions:
                       dependencies:
                         - '..type'
