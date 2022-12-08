@@ -33,7 +33,6 @@ export default class EntryPublicMethod {
 
     await this.updateCore(); // 更新到最新版本的 core
 
-    // this.setCodeUri(inputs); // 修改codeUri
     // 处理密钥
     if (getSecretKey) {
       inputs.credentials = await getCredentials(inputs.credentials, inputs.project?.access);
@@ -70,15 +69,6 @@ export default class EntryPublicMethod {
     }
 
     return inputs;
-  }
-
-  setCodeUri(inputs: IInputs) {
-    const codeUri = _.get(inputs, 'props.function.codeUri');
-    const spath = _.get(inputs, 'path.configPath');
-    if (path.isAbsolute(codeUri)) return codeUri;
-    const dirName = path.dirname(spath);
-    const realCodeUri = path.join(dirName, codeUri);
-    _.set(inputs, 'props.function.codeUri', realCodeUri);
   }
 
   handlerInputs(inputs: IInputs): any {
