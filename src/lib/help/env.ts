@@ -25,9 +25,9 @@ export const ENV_HELP_INFO = [
       { name: 'list-templates', summary: 'List all environment templates.' },
       { name: 'init', summary: 'Create a new environment interactive. Help command [s env init -h]' },
       { name: 'deploy', summary: 'Deploy an environment associated with templates. Help command [s env deploy -h]' },
+      { name: 'remove', summary: 'Destroy an environment. Help command [s env deploy -h].' },
       { name: 'info', summary: 'Show the information of a environment. Help command [s env info -h]' },
       { name: 'list', summary: 'List all environments associated with specified aliyun account.' },
-      // { name: 'remove', summary: 'Destroy an environment and all the resources provisioned by templates.' },
     ],
   },
 ];
@@ -221,6 +221,42 @@ export const ENV_DEPLOY = [
   {
     header: 'Examples with Yaml',
     content: ['$ s {bold env} {bold deploy} {underline --name testing}'],
+  },
+];
+
+export const ENV_REMOVE = [
+  {
+    header: 'Remove environment',
+    content: 'Remove an environment ',
+  },
+  {
+    header: 'Document',
+    content: 'https://github.com/devsapp/fc/blob/main/docs/zh/command/env.md',
+  },
+  {
+    header: 'Usage',
+    content: '$ s env Remove <options>',
+  },
+  {
+    header: 'Options',
+    optionList: [
+      {
+        name: 'name',
+        typeLabel: '{underline <name>}',
+        description: '[Required] Specify the environment name.',
+      },
+      {
+        name: 'remove-resource',
+        typeLabel: '{underline <remove-resource>}',
+        description: '[Optional] Delete env and resource with --remove-resource; without --remove-resource, the system will only delete env`.',
+      },
+    ],
+  },
+  { ...globalParams },
+  { ...globalDescribe },
+  {
+    header: 'Examples with Yaml',
+    content: ['$ s {bold env} {bold remove} {underline --name testing}'],
   },
 ];
 
