@@ -623,7 +623,7 @@ export default class FcBaseComponent extends EntryPublicMethod {
     const parsedArgs: { [key: string]: any } = core.commandParse(inputs, this.MINIMIST_HELP_OPT);
     const parsedData = parsedArgs?.data || {};
     const rawData = parsedData._ || [];
-    const commandList = ['undefined', 'init', 'deploy', 'info', 'list', 'init-template', 'apply-template', 'describe-template', 'list-templates', 'remove-template'];
+    const commandList = ['undefined', 'init', 'deploy', 'remove', 'info', 'list', 'init-template', 'apply-template', 'describe-template', 'list-templates', 'remove-template'];
 
     const subCommand = rawData[0] || 'undefined';
     this.logger.debug(`env subCommand: ${subCommand}`);
@@ -639,6 +639,9 @@ export default class FcBaseComponent extends EntryPublicMethod {
           return;
         case 'deploy':
           core.help(HELP.ENV_DEPLOY);
+          return;
+        case 'remove':
+          core.help(HELP.ENV_REMOVE);
           return;
         case 'info':
           core.help(HELP.ENV_INFO);
