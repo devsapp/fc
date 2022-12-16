@@ -92,6 +92,11 @@ export const PROVISION_PUT = [
         description: '[Optional] Specify the provision target parameter',
         type: Number,
       },
+      {
+        name: 'enable-idle-billing',
+        description: '[Optional] Enable idle billing',
+        type: Boolean,
+      },
       qualifier,
       {
         name: 'config',
