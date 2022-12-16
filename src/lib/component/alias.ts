@@ -279,7 +279,7 @@ export default class Alias {
 
   async get({ serviceName, aliasName }: GetAlias) {
     logger.info(`Getting alias: ${aliasName}`);
-    const { data } = await Client.fcClient.getAlias(serviceName, aliasName)
+    const { data } = await Client.fcClient.getAlias(serviceName, aliasName);
 
     return {
       ...data,
