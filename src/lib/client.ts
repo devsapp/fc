@@ -40,6 +40,8 @@ export default class Client {
       return data;
     };
 
+    fcClient.region = region;
+
     this.fcClient = fcClient;
 
     return fcClient;
