@@ -17,6 +17,7 @@ interface IProps {
   target?: number;
   scheduledActions?: string;
   targetTrackingPolicies?: string;
+  enableIdleBilling?: boolean;
 }
 interface GetProvision {
   serviceName: string;
@@ -36,6 +37,7 @@ interface PutProvision {
   serviceName: string;
   qualifier: string;
   functionName: string;
+  enableIdleBilling?: boolean;
   target?: number;
   config?: string;
   scheduledActions?: string;
@@ -70,7 +72,7 @@ export default class Provision {
     logger.debug(`inputs.props: ${JSON.stringify(inputs.props)}`);
 
     const parsedArgs: { [key: string]: any } = core.commandParse(inputs, {
-      boolean: ['help', 'table'],
+      boolean: ['help', 'table', 'enable-idle-billing'],
       string: ['region', 'service-name', 'qualifier', 'scheduled-actions', 'target-tracking-policies', 'function-name', 'config'],
       number: ['target'],
       alias: { help: 'h' },
@@ -104,6 +106,7 @@ export default class Provision {
       serviceName: parsedData['service-name'] || props.service?.name,
       qualifier: parsedData.qualifier || props.qualifier,
       functionName: parsedData['function-name'] || props.function?.name,
+      enableIdleBilling: parsedData['enable-idle-billing'],
       config: parsedData.config,
       target: parsedData.target,
       scheduledActions: parsedData['scheduled-actions'],
@@ -147,7 +150,7 @@ export default class Provision {
     }
   }
 
-  async put({ serviceName, qualifier, functionName, config, targetTrackingPolicies, scheduledActions, target }: PutProvision) {
+  async put({ serviceName, qualifier, functionName, config, targetTrackingPolicies, scheduledActions, enableIdleBilling, target }: PutProvision) {
     if (!functionName) {
       throw new Error('Not found function name parameter');
     }
@@ -165,6 +168,7 @@ export default class Provision {
       target: 0,
       scheduledActions: [],
       targetTrackingPolicies: [],
+      alwaysAllocateCPU: !enableIdleBilling,
     };
     if (config) {
       try {
