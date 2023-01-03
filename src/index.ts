@@ -666,9 +666,9 @@ export default class FcBaseComponent extends EntryPublicMethod {
         case 'deploy':
           core.help(HELP.ENV_DEPLOY);
           return;
-        case 'remove':
-          core.help(HELP.ENV_REMOVE);
-          return;
+        // case 'remove':
+        //   core.help(HELP.ENV_REMOVE);
+        //   return;
         case 'info':
           core.help(HELP.ENV_INFO);
           return;

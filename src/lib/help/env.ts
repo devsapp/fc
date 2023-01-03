@@ -25,7 +25,7 @@ export const ENV_HELP_INFO = [
       { name: 'list-templates', summary: 'List all environment templates.' },
       { name: 'init', summary: 'Create a new environment interactive. Help command [s env init -h]' },
       { name: 'deploy', summary: 'Deploy an environment associated with templates. Help command [s env deploy -h]' },
-      { name: 'remove', summary: 'Destroy an environment. Help command [s env deploy -h].' },
+      // { name: 'remove', summary: 'Destroy an environment. Help command [s env deploy -h].' },
       { name: 'info', summary: 'Show the information of a environment. Help command [s env info -h]' },
       { name: 'list', summary: 'List all environments associated with specified aliyun account.' },
     ],
