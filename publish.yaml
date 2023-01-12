@@ -651,6 +651,58 @@ Properties:
               items:
                 oneOf:
                   - type: string
+        customHealthCheckConfig:
+          x-reactions:
+            dependencies:
+              - '.runtime'
+            fulfill:
+              state:
+                visible: "{{$deps[0].startsWith('custom')}}"
+          title: 健康检查
+          type: object
+          required:
+            - httpGetUrl
+          properties:
+            httpGetUrl:
+              title: 请求路径
+              description: 容器自定义健康检查 URL 地址。长度不超过 2048 个字符。
+              type: string
+              minLength: 1
+            initialDelaySeconds:
+              title: 首次探测延迟时间
+              description: 容器启动到发起健康检查的延迟。取值范围 0~120。默认值为 0。
+              default: 0
+              type: integer
+              minimum: 0
+              maximum: 120
+            periodSeconds:
+              title: 探测时间间隔
+              description: 健康检查周期。取值范围 1~120。默认值为 3。
+              default: 3
+              type: integer
+              minimum: 1
+              maximum: 120
+            timeoutSeconds:
+              title: 探测超时时间
+              description: 健康检查超时时间。取值范围 1~3。默认值为 1。
+              default: 1
+              type: integer
+              minimum: 1
+              maximum: 3
+            failureThreshold:
+              title: 最大失败次数
+              description: 健康检查失败次数阈值，达到该值后系统认为检查失败。取值范围 1~120。默认值为 3。
+              default: 3
+              type: integer
+              minimum: 1
+              maximum: 120
+            successThreshold:
+              title: 探测成功阈值
+              description: 健康检查成功次数阈值，达到该值后系统认为检查成功。取值范围 1~120。默认值为 1。
+              default: 3
+              type: integer
+              minimum: 1
+              maximum: 120
         customContainerConfig:
           x-reactions:
             dependencies:
