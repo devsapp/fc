@@ -13,10 +13,12 @@ interface IProps {
   description?: string;
   versionId?: string;
   assumeYes?: boolean;
+  ignoreNoChangError?: boolean;
 }
 interface Publish {
   serviceName: string;
   description?: string;
+  ignoreNoChangError?: boolean;
 }
 interface Remove {
   serviceName: string;
@@ -38,7 +40,7 @@ export default class Version {
     logger.debug(`inputs.props: ${JSON.stringify(inputs.props)}`);
 
     const parsedArgs: { [key: string]: any } = core.commandParse(inputs, {
-      boolean: ['help', 'table', 'y'],
+      boolean: ['help', 'table', 'y', 'ignore-no-chang-error'],
       string: ['region', 'service-name', 'description', 'id'],
       alias: { help: 'h', 'version-id': 'id', 'assume-yes': 'y' },
     });
@@ -70,6 +72,7 @@ export default class Version {
       description: parsedData.description,
       versionId: parsedData.id,
       assumeYes: parsedData.y,
+      ignoreNoChangError: parsedData['ignore-no-chang-error'],
     };
 
     if (!endProps.region) {
@@ -107,9 +110,10 @@ export default class Version {
     }
   }
 
-  async publish({ serviceName, description }: Publish) {
+  async publish({ serviceName, description, ignoreNoChangError }: Publish) {
     logger.info(`Creating service version: ${serviceName}`);
-    const { data } = await Client.fcClient.publishVersion(serviceName, description);
+    const headers = ignoreNoChangError ? { 'x-fc-ignore-version-publish-error': 'true' } : {};
+    const { data } = await Client.fcClient.publishVersion(serviceName, description, headers);
     logger.debug(`publish version: ${JSON.stringify(data)}`);
     return data;
   }

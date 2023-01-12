@@ -83,6 +83,11 @@ export const VERSION_PUBLISH = [
         description: '[Optional] Specify the alias description',
         type: String,
       },
+      {
+        name: 'ignore-no-chang-error',
+        description: '[Optional] Ignore no changes were made since last publish',
+        type: String,
+      },
     ],
   },
   { ...globalParams },
