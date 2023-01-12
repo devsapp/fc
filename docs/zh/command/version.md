@@ -23,7 +23,6 @@ category: '发布&配置'
 
 当执行命令`version -h`/`version --help`时，可以获取帮助文档。
 
-
 在该命令中，包括了两个子命令：
 
 - [list：查看版本列表](#version-list-命令)
@@ -37,11 +36,11 @@ category: '发布&配置'
 
 ### 参数解析
 
-| 参数全称     | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
-| ------------ | -------- | -------------- | ------------- | ------------------------------------------------------------ |
-| region       | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| service-name | -        | 选填           | 必填          | 服务名                                                       |
-| table        | -        | 选填           | 选填          | 是否以表格形式输出                                           |
+| 参数全称     | 参数缩写 | Yaml 模式下必填 | Cli 模式下必填 | 参数含义                                                                                                                                                                                                                                                                                                   |
+| ------------ | -------- | --------------- | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| region       | -        | 选填            | 必填           | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
+| service-name | -        | 选填            | 必填           | 服务名                                                                                                                                                                                                                                                                                                     |
+| table        | -        | 选填            | 选填           | 是否以表格形式输出                                                                                                                                                                                                                                                                                         |
 
 > 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)
 
@@ -53,8 +52,8 @@ category: '发布&配置'
 上述命令的执行结果示例：
 
 ```text
-fc-deploy-test: 
-  - 
+fc-deploy-test:
+  -
     versionId:        1
     description:      test publish version
     createdTime:      2021-11-08T06:07:00Z
@@ -71,7 +70,6 @@ fc-deploy-test:
   └───────────┴──────────────────────┴──────────────────────┴──────────────────────┘
 ```
 
-
 ## version publish 命令
 
 `version publish` 命令，是用于发布版本的命令。
@@ -80,11 +78,12 @@ fc-deploy-test:
 
 ### 参数解析
 
-| 参数全称     | 参数缩写 | Yaml模式下必填 | Cli模式下必填 | 参数含义                                                     |
-| ------------ | -------- | -------------- | ------------- | ------------------------------------------------------------ |
-| region       | -        | 选填           | 必填          | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
-| service-name | -        | 选填           | 必填          | 服务名                                                       |
-| description  | -        | 选填           | 选填          | 版本描述                                                     |
+| 参数全称              | 参数缩写 | Yaml 模式下必填 | Cli 模式下必填 | 参数含义                                                                                                                                                                                                                                                                                                   |
+| --------------------- | -------- | --------------- | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| region                | -        | 选填            | 必填           | 地区，取值范围：`cn-hangzhou, cn-beijing, cn-beijing, cn-hangzhou, cn-shanghai, cn-qingdao, cn-zhangjiakou, cn-huhehaote, cn-shenzhen, cn-chengdu, cn-hongkong, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-southeast-5, ap-northeast-1, eu-central-1, eu-west-1, us-west-1, us-east-1, ap-south-1` |
+| service-name          | -        | 选填            | 必填           | 服务名                                                                                                                                                                                                                                                                                                     |
+| description           | -        | 选填            | 选填           | 版本描述                                                                                                                                                                                                                                                                                                   |
+| ignore-no-chang-error | -        | 选填            | 选填           | 忽略发布版本 `No changes were made since last publish`异常                                                                                                                                                                                                                                                 |
 
 > 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)
 
@@ -96,7 +95,7 @@ fc-deploy-test:
 上述命令的执行结果示例：
 
 ```text
-fc-deploy-test: 
+fc-deploy-test:
   versionId:        1
   description:      test publish version
   createdTime:      2021-11-08T06:07:00Z
@@ -111,13 +110,14 @@ fc-deploy-test:
 
   ```yaml
   {
-      "Version": "1",
-      "Statement": [
-          {
-              "Action": "fc:PublishServiceVersion",
-              "Effect": "Allow",
-              "Resource": "acs:fc:<region>:<account-id>:services/<serviceName>/versions"
-          }
-      ]
+    'Version': '1',
+    'Statement':
+      [
+        {
+          'Action': 'fc:PublishServiceVersion',
+          'Effect': 'Allow',
+          'Resource': 'acs:fc:<region>:<account-id>:services/<serviceName>/versions',
+        },
+      ],
   }
   ```
