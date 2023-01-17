@@ -132,7 +132,7 @@ services:
 
 例如上面的 Yaml 中，设置自定义域名`fc.example.com`，把前端资源对应的函数`website`，映射到`/*`路由，把后端资源对应的函数`admin`映射到`/api/*`路由。
 
-有关HTTPS证书的配置，请参考[certConfig配置](https://docs.serverless-devs.com/fc/yaml/customdomains#certconfig)
+有关HTTPS证书的配置，请参考[certConfig配置](https://docs.serverless-devs.com/fc/yaml/customDomains#certconfig)
 
 ## 关于`.fcignore`使用方法
 

@@ -49,7 +49,7 @@ customDomains:
 
 #### Obtain the certificate content by configuring certId
 
-If certConfig is not configured, you can use 'certId' to obtain the configuration. Will call ali cloud digital certificate management service [interface](https://help.aliyun.com/document_detail/126512.html) access to configuration, so you need to has the authority to obtain the certificate details.
+If certConfig is not configured, you can use 'certId' to obtain the configuration. Will call ali cloud digital certificate management service [interface](https://help.aliyun.com/document_detail/465112.html) access to configuration, so you need to has the authority to obtain the certificate details.
 
 References:
 

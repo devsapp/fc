@@ -40,7 +40,7 @@ customDomains:
 
 #### 通过配置 certId 获取证书内容
 
-当没有配置 certConfig，可以通过 `certId` 获取配置。当填写 certId 时，会调用阿里云数字证书管理服务的[接口](https://help.aliyun.com/document_detail/126512.html)获取配置，所以需要`有获取证书详情`的权限。
+当没有配置 certConfig，可以通过 `certId` 获取配置。当填写 certId 时，会调用阿里云数字证书管理服务的[接口](https://help.aliyun.com/document_detail/465112.html)获取配置，所以需要`有获取证书详情`的权限。
 参考案例：
 
 ```
