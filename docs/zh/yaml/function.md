@@ -170,7 +170,7 @@ DB_connection: jdbc:mysql://rm-bp90434sds45c.mysql.rds.aliyuncs.com:3306/litemal
 | 参数名  | 必填  | 类型           | 参数描述                              |
 | ------- | ----- | -------------- | ------------------------------------- |
 | command | True  | List\<String\> | 启动指令，示例值: ["/code/myserver"]  |
-| args    | False | String         | 启动参数，示例值: ["-arg1", "value1"] |
+| args    | False | List\<String\>         | 启动参数，示例值: ["-arg1", "value1"] |
 
 #### dnsOptions
 
