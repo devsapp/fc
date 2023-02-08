@@ -811,6 +811,12 @@ Properties:
             函数计算支持单实例多并发的功能，这个值用来配置单个函数实例可以同时处理多少个请求。点击这里<a href='https://help.aliyun.com/document_detail/144586.html'
             target='_blank'>查看</a>更多详情。
           type: integer
+        instanceSoftConcurrency:
+          title: 扩容并发度
+          description:
+            扩容并发度用于优雅扩容，当实例上并发数超过扩容并发度时，会触发实例扩容。例如，您的实例启动较慢，可以通过设置合适的扩容并发度，提前启动实例。注意：扩容并发度的值不能大于实例并发度。
+          minimum: 1
+          type: integer
         caPort:
           title: 监听端口
           description: 您的 HTTP Server 所监听的端口。
