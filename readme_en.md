@@ -46,7 +46,7 @@ The following table lists the commands that are supported by the FC component:
 | [**build**](docs/en/command/build.md)   | [logs](docs/en/command/logs.md)       | [invoke](docs/en/command/invoke.md)       | [**alias**](docs/en/command/alias.md)     | [fun2s](docs/en/command/fun2s.md)                 |
 | [remove](docs/en/command/remove.md)     |                                  | [**proxied**](docs/en/command/proxied.md) | [provision](docs/en/command/provision.md) | [info](docs/en/command/info.md)                   |
 | [plan](docs/en/command/plan.md)         |                                  | [instance](docs/en/command/instance.md)       | [ondemand](docs/en/command/ondemand.md)   | [**sync**](docs/en/command/sync.md)               |
-|                                    |                                  | [eval](docs/en/command/eval.md)           | [layer](docs/en/command/layer.md)         | [stress](docs/en/command/stress.md)               |
+|                                    |                                  |            | [layer](docs/en/command/layer.md)         | [stress](docs/en/command/stress.md)               |
 |                                    |                                  |                                      |                                      | [api](docs/en/command/api.md) |
 
 

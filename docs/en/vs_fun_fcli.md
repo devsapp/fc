@@ -6,12 +6,13 @@ category: 'Overview'
 ---
 # Compare among Serverless Devs, Function Compute command line interface (fcli), and Funcraft
 
-- [Format comparison](#Format-comparison)
-- [Feature comparison](#Feature-comparison)
-- [Scenario comparison](#Scenario-comparison)
-- [Migration cases](#Migration-cases)
-    - [Migrate resources from Funcraft to Serverless Devs](#Migrate-resources-from-Funcraft-to-Serverless-Devs)
-    - [Migrate resources from fcli to Serverless Devs](#Migrate-resources-from-fcli-to-Serverless-Devs)
+- [Compare among Serverless Devs, Function Compute command line interface (fcli), and Funcraft](#compare-among-serverless-devs-function-compute-command-line-interface-fcli-and-funcraft)
+  - [Format comparison](#format-comparison)
+  - [Feature comparison](#feature-comparison)
+  - [Scenario comparison](#scenario-comparison)
+  - [Migration cases](#migration-cases)
+    - [Migrate resources from Funcraft to Serverless Devs](#migrate-resources-from-funcraft-to-serverless-devs)
+    - [Migrate resources from fcli to Serverless Devs](#migrate-resources-from-fcli-to-serverless-devs)
     
 
 ## Format comparison
@@ -43,8 +44,7 @@ category: 'Overview'
 | ondemand operation           | ✅            | 🙅        | 🙅️                                          |
 | layer operation              | ✅            | 🙅        | 🙅️                                          |
 | proxied operation            | ✅            | 🙅        | 🙅️                                          |
-| stress operation             | ✅            | 🙅        | 🙅️                                          |
-| eval operation               | ✅            | 🙅        | 🙅️                                          |
+| stress operation             | ✅            | 🙅        | 🙅️                                          |                                          |
 | Remote debugging             | ✅            | 🙅        | 🙅️                                          |
 | Function exception awareness | ✅            | 🙅        | 🙅️                                          |
 | End-to-end deployment        | ✅            | 🙅        | 🙅️                                          |

@@ -7,18 +7,19 @@ category: 'Overview'
 
 # Quick start
 
-- [Tool installation](#Tool-installation)
-- [Key Configuration](#Key-Configuration)
-- [Create a test project](#Create-a-test-project)
-- [Experience features](#Experience-features)
+- [Quick start](#quick-start)
+  - [Tool installation](#tool-installation)
+  - [Key Configuration](#key-configuration)
+  - [Create a test project](#create-a-test-project)
+  - [Experience features](#experience-features)
     - [deploy operation](#deploy-operation)
-    - [Invoke](#Invoke)
-      - [Local invoke](#Local-invoke)
-      - [Remote invoke](#Remote-invoke)
-    - [Observability](#Observability)
-      - [Query logs](#Query-logs)
-      - [Query metrics](#Query-metrics)
-    - [Commands](#Commands)
+    - [Invoke](#invoke)
+      - [Local invoke](#local-invoke)
+      - [Remote invoke](#remote-invoke)
+    - [Observability](#observability)
+      - [Query logs](#query-logs)
+      - [Query metrics](#query-metrics)
+    - [Commands](#commands)
 
 ## Tool installation
 - Step 1: Install Node.js (>=10.8.0) and NPM package management tool;
@@ -251,6 +252,6 @@ For more information about commands, see the command help document.
 | [**build**](command/build.md)   | [logs](command/logs.md)       | [invoke](command/invoke.md)       | [**alias**](command/alias.md)     | [info](command/info.md)     |
 | [remove](command/remove.md)     |                               | [**proxied**](command/proxied.md) | [provision](command/provision.md) | [**sync**](command/sync.md) |
 |                                 |                               | [instance](command/instance.md)       | [ondemand](command/ondemand.md)   | [stress](command/stress.md) |
-|                                 |                               | [eval](command/eval.md)           | [layer](command/layer.md)         | [fun2s](command/fun2s.md)   |
+|                                 |                               |            | [layer](command/layer.md)         | [fun2s](command/fun2s.md)   |
 |                                 |                               |                                   |                                   | [api](command/api.md)       |
 

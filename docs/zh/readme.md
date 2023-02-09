@@ -49,7 +49,7 @@ category: '概览'
 | [**构建 build**](command/build.md)     | [日志查询 logs](command/logs.md)       | [函数触发 invoke](command/invoke.md)    | [**别名 alias**](command/alias.md)         | [Fun项目迁移 fun2s](command/fun2s.md)  | 
 | [移除 remove](command/remove.md)   |                                              | [**端云联调 proxied**](command/proxied.md) | [预留 provision](command/provision.md)   | [查看函数 info](command/info.md) | 
 | [计划变更 plan](command/plan.md)                                         |                                              | [实例登录 instance](command/instance.md)    | [按量资源 ondemand](command/ondemand.md) | [**资源同步 sync**](command/sync.md) | 
-|                                          |                                              | [内存&并发度探测 eval](command/eval.md)  | [层 layer](command/layer.md) |   [压测 stress](command/stress.md)                   | 
+|                                          |                                              |   | [层 layer](command/layer.md) |   [压测 stress](command/stress.md)                   | 
 |                                          |                                              |   |  | [API调用 api【支持中】](command/api.md)                    
 
 在使用函数计算（FC）组件时，还会涉及到资源描述文件的编写，关于函数计算（FC）组件的 Yaml 规范可以参考[**函数计算（FC） Yaml 规范文档**](yaml/readme.md)，除此之外，在使用本组件的时候，还会有一些[小 Tips ](tips.md) 可供学习和了解，例如[如何部署多个函数](tips.md#如何声明部署多个函数) ......
