@@ -250,5 +250,5 @@ FC Invoke End RequestId: eb9cf022-297e-4a27-b3bf-ad304f6e04c9
 | [**构建 build**](command/build.md)     | [日志查询 logs](command/logs.md)       | [远程调用 invoke](command/invoke.md)    | [**别名 alias**](command/alias.md)         | [查看函数 info](command/info.md)  | 
 | [移除 remove](command/remove.md)   |                                              | [**端云联调 proxied**](command/proxied.md) | [预留 provision](command/provision.md)   | [**资源同步 sync**](command/sync.md) | 
 |                                          |                                              | [实例登录 instance](command/instance.md)    | [按量资源 ondemand](command/ondemand.md) | [压测 stress](command/stress.md) | 
-|                                          |                                              | [内存&并发度探测 eval](command/eval.md)  | [层 layer](command/layer.md) | [Fun项目迁移 fun2s](command/fun2s.md)                     | 
+|                                          |                                              |   | [层 layer](command/layer.md) | [Fun项目迁移 fun2s](command/fun2s.md)                     | 
 |                                          |                                              |   |  | [API调用 api](command/api.md)                     | 

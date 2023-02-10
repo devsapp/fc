@@ -44,7 +44,6 @@ category: 'Overview'
 | layer operation              | ✅            | 🙅        | 🙅️                                          |
 | proxied operation            | ✅            | 🙅        | 🙅️                                          |
 | stress operation             | ✅            | 🙅        | 🙅️                                          |
-| eval operation               | ✅            | 🙅        | 🙅️                                          |
 | Remote debugging             | ✅            | 🙅        | 🙅️                                          |
 | Function exception awareness | ✅            | 🙅        | 🙅️                                          |
 | End-to-end deployment        | ✅            | 🙅        | 🙅️                                          |
