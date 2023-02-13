@@ -54,6 +54,9 @@ services:
           enableRequestMetrics: true    # RequestMetrics switch, value true/false
           enableInstanceMetrics: true   # InstanceMetrics switch, the value is true/false
           logBeginRule: DefaultRegex            # Whether the log is split, the value DefaultRegex/None
+        vpcBinding: # Function Invocation only by Specified VPCs
+          - vpc-bpxxxxxxxoeoq
+          - vpc-bpxxxxxxxxxmw
       function:                     # function configuration
         name: fc-base-service       # function name
         description: 'this is test' # a short description of the function
