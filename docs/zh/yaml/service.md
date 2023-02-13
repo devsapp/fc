@@ -17,7 +17,7 @@ category: 'Yaml规范'
 | [vpcConfig](#vpcconfig)           | False | Enum[简单配置]/[Struct[详细配置]](#vpcconfig) | VPC配置, 配置后function可以访问指定VPC                       |
 | [nasConfig](#nasconfig)           | False | Enum[简单配置]/[Struct[详细配置]](#nasconfig) | NAS配置, 配置后function可以访问指定NAS                       |
 | [ossMountConfig](#ossmountconfig) | False | [Struct[详细配置]](#ossmountconfig)           | OSS挂载配置, 配置后function可以访问指定OSS bucket            |
-| vpcBinding                        | False | List\<String\>                                | 仅允许函数被指定的VPC访问 [文档](https://help.aliyun.com/document_detail/72959.html) |
+| vpcBinding                        | False | List\<String\>                                | 仅允许指定 VPC 调用函数 [文档](https://help.aliyun.com/document_detail/72959.html) |
 
 
 参考案例：

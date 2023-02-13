@@ -62,6 +62,9 @@ services:
               bucketPath: /my-dir # 挂载的OSS Bucket路径。留空或者填`/`，都表示挂载bucket根目录
               mountDir: /mnt/example-bucket # 函数计算目录
               readOnly: false # 是否挂载为只读
+        vpcBinding: # 仅允许指定 VPC 调用函数
+          - vpc-bpxxxxxxxoeoq
+          - vpc-bpxxxxxxxxxmw
       function: # 函数配置
         name: fc-base-service # function名称
         description: 'this is test' # function的简短描述
