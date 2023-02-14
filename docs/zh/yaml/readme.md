@@ -140,6 +140,7 @@ services:
           qualifier: xxx # 触发服务的版本
           config: # 触发器配置，包括OSS触发器, Log触发器, Log触发器, Timer触发器, Http触发器, MNS触发器, CDN触发器
             authType: anonymous # 鉴权类型，可选值：anonymous、function
+            disableURLInternet: false # 是否禁用公网访问 URL
             methods: # HTTP 触发器支持的访问方法，可选值：GET、POST、PUT、DELETE、HEAD
               - GET
         - name: timerTrigger # 触发器名称

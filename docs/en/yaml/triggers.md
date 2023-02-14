@@ -288,6 +288,7 @@ triggers:
 | Parameter Name | Required | Type           | Parameter Description                                                                           |
 | -------------- | -------- | -------------- | ----------------------------------------------------------------------------------------------- |
 | authType       | True     | String         | Authentication type, optional values: anonymous, function                                       |
+| disableURLInternet | False | Boolean         |  Disable Internet URL, default: false                                     |
 | methods        | True     | List\<String\> | Access methods supported by HTTP triggers, optional values: GET, POST, PUT, DELETE, PATCH, HEAD |
 
 Examples：
