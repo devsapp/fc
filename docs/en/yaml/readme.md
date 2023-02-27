@@ -203,9 +203,21 @@ services:
           protocol: HTTP          # Protocol, value: HTTP, HTTPS, HTTP, HTTPS
           routeConfigs:           # route configuration
             - path: /a            # path
-              serviceName: fc-depice # service name
+              serviceName: fc-depicted # service name
               functionName: function # function name
               qualifier: 1           # version of the service
+              rewriteConfig: # The URI rewrite configurations
+                equalRules:  # The exact match rules
+                  - match: /old  # The matching rule
+                    replacement: /new # The replacement rule
+                wildcardRules:  # The wildcard match rule
+                  - match: /old  # The matching rule
+                    replacement: /new # The replacement rule
+                regexRules:  # The regex match rule
+                  - match: /old  # The matching rule
+                    replacement: /new # The replacement rule
+          wafConfig:  # The Web Application Firewall (WAF) configuration
+            enableWAF: true # Specifies whether to enable Web Application Firewall (WAF)
           certConfig:          # Domain name certificate
             certName: xxx      # certificate name
             certificate: xxx   # Indicates the private key, the content only supports PEM format

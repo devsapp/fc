@@ -15,6 +15,7 @@ category: 'Yaml规范'
 | [certConfig](#certconfig)     | False | [Struct](#certconfig)          | 域名证书                                             |
 | certId                        | False | Number                         | 域名证书 ID                                          |
 | [tlsConfig](#tlsConfig)       | False | [Struct](#tlsConfig)           | TLS 协议, 注：目前仅支持配置和修改，不支持删除此配置 |
+| [wafConfig](#wafConfig)       | False | [Struct](#wafConfig)           | Web应用防火墙配置信息 |
 
 参考案例：
 
@@ -22,10 +23,23 @@ category: 'Yaml规范'
 customDomains:
   - domainName: auto
     protocol: HTTP
+    wafConfig:
+      enableWAF: true
     routeConfigs:
       - path: /*
         serviceName: unit-deploy-service
         functionName: event-function
+        qualifier: LATEST
+        rewriteConfig:
+          equalRules:
+            - match: /equalRules
+              replacement: /xxxx
+          regexRules:
+            - match: ^/old/[a-z]+/
+              replacement: /xxxx
+          wildcardRules:
+            - match: /api/*
+              replacement: /$1
 ```
 
 > ⚠️ 注意：如果域名配置为`auto`，系统会默认分配测试域名，该域名仅供测试使用，不对其稳定性等做保证，Serverless Devs FC 组件在日后有权对该域名进行回收等处理，如是线上业务，生产需求业务，强烈建议绑定自己的自定义域名。
@@ -119,6 +133,12 @@ customDomains:
 | minVersion   | True | String         | TLS 协议版本，取值：`TLSv1.0`、`TLSv1.1`、`TLSv1.2` |
 | cipherSuites | True | List\<String\> | 加密套件                                            |
 
+### wafConfig
+
+| 参数名       | 必填 | 类型           | 参数描述                                            |
+| ------------ | ---- | -------------- | --------------------------------------------------- |
+| enableWAF   | False | Boolean         | 是否开启Web应用防火墙 |
+
 ### routeConfigs
 
 | 参数名       | 必填  | 类型   | 参数描述   |
@@ -127,6 +147,22 @@ customDomains:
 | serviceName  | False | String | 服务名     |
 | functionName | False | String | 函数名     |
 | qualifier    | False | String | 服务的版本 |
+| rewriteConfig    | False | [Struct](#rewriteConfig) | URI重写配置 |
+
+#### rewriteConfig
+
+| 参数名       | 必填 | 类型           | 参数描述                                            |
+| ------------ | ---- | -------------- | --------------------------------------------------- |
+| equalRules   | False | [List\<Struct>](#rewriteConfigRules)         | 完全匹配规则 |
+| wildcardRules   | False | [List\<Struct>](#rewriteConfigRules)         | 通配符匹配规则 |
+| regexRules   | False | [List\<Struct>](#rewriteConfigRules)         | 正则匹配规则 |
+
+##### rewriteConfigRules
+
+| 参数名       | 必填 | 类型           | 参数描述                                            |
+| ------------ | ---- | -------------- | --------------------------------------------------- |
+| match   | True | String  | 匹配规则 |
+| replacement   | True | String  | 替换规则 |
 
 ### 权限配置相关
 

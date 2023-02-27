@@ -221,6 +221,18 @@ services:
               serviceName: fc-depice # 服务名
               functionName: function # 函数名
               qualifier: 1 # 服务的版本
+              rewriteConfig: # URI重写配置
+                equalRules:  # 完全匹配规则
+                  - match: /old  # 匹配规则
+                    replacement: /new # 替换规则
+                wildcardRules:  # 通配符匹配规则
+                  - match: /old  # 匹配规则
+                    replacement: /new # 替换规则
+                regexRules:  # 正则匹配规则
+                  - match: /old  # 匹配规则
+                    replacement: /new # 替换规则
+          wafConfig:  # Web应用防火墙配置信息
+            enableWAF: true # 是否开启Web应用防火墙
           certConfig: # 域名证书
             certName: xxx # 证书名称
             certificate: xxx # 表示私钥，内容仅支持 PEM 格式
