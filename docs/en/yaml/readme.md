@@ -125,6 +125,7 @@ services:
           qualifier: xxx       # Trigger the version of the service
           config:              # Trigger configuration, including OSS trigger, Log trigger, Log trigger, Timer trigger, Http trigger, MNS trigger, CDN trigger
             authType: anonymous # Authentication type, optional values: anonymous, function
+            disableURLInternet: false # Disable Internet URL
             methods:           # Access methods supported by HTTP triggers, optional values: GET, POST, PUT, DELETE, HEAD
               - GET
         - name: timerTrigger   # trigger name
