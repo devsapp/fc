@@ -15,6 +15,7 @@ category: 'Yaml-Spec'
 | [certConfig](#certconfig)     | False    | [Struct](#certconfig)          | Domain Certificate                                                                   |
 | certId                        | False    | Number                         | cert ID                                                                              |
 | [tlsConfig](#tlsConfig)       | False    | [Struct](#tlsConfig)           | TLS                                                                                  |
+| [wafConfig](#wafConfig)       | False    | [Struct](#wafConfig)          | The Web Application Firewall (WAF) configuration                                                                                  |
 
 References:
 
@@ -22,10 +23,23 @@ References:
 customDomains:
   - domainName: auto
     protocol: HTTP
+    wafConfig:
+      enableWAF: true
     routeConfigs:
       - path: /*
         serviceName: unit-deploy-service
         functionName: event-function
+        qualifier: LATEST
+        rewriteConfig:
+          equalRules:
+            - match: /equalRules
+              replacement: /xxxx
+          regexRules:
+            - match: ^/old/[a-z]+/
+              replacement: /xxxx
+          wildcardRules:
+            - match: /api/*
+              replacement: /$1
 ```
 
 > ⚠️ Note: If the domain name is configured as `auto`, the system will assign a test domain name by default. This domain name is only for testing use, and its stability is not guaranteed. The Serverless Devs FC component has the right to recycle the domain name in the future. In the case of online business and production demand business, it is strongly recommended to bind your own custom domain name.
@@ -46,6 +60,22 @@ customDomains:
 | serviceName  | False    | String | The name of the service.    |
 | functionName | False    | String | The name of the function.   |
 | qualifier    | False    | String | The version of the service. |
+| rewriteConfig    | False | [Struct](#rewriteConfig) | The URI rewrite configurations |
+
+#### rewriteConfig
+
+| Parameter    | Required | Type   | Description                 |
+| ------------ | -------- | ------ | --------------------------- |
+| equalRules         | False     | [List\<Struct>](#rewriteConfigRules) | The exact match rules                   |
+| wildcardRules         | False     | [List\<Struct>](#rewriteConfigRules) | The wildcard match rule                   |
+| regexRules         | False     | [List\<Struct>](#rewriteConfigRules) | The regex match rule                 |
+
+#### rewriteConfigRules
+
+| Parameter    | Required | Type   | Description                 |
+| ------------ | -------- | ------ | --------------------------- |
+| match   | True | String  | The matching rule |
+| replacement   | True | String  | The replacement rule |
 
 #### Obtain the certificate content by configuring certId
 
@@ -130,9 +160,14 @@ customDomains:
 
 | Parameter    | Required | Type           | Description                                         |
 | ------------ | -------- | -------------- | --------------------------------------------------- |
-| ------------ | ----     | -------------- | --------------------------------------------------- |
 | minVersion   | True     | String         | TLS Version, value: `TLSv1.0`、`TLSv1.1`、`TLSv1.2` |
 | cipherSuites | True     | List\<String\> | Cipher Suite                                        |
+
+### wafConfig
+
+| Parameter    | Required | Type           | Description                                         |
+| ------------ | -------- | -------------- | --------------------------------------------------- |
+| enableWAF   | False | Boolean        | Specifies whether to enable Web Application Firewall (WAF) |
 
 ### Permissions
 
