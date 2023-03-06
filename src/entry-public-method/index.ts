@@ -40,7 +40,7 @@ export default class EntryPublicMethod {
     }
 
     setDefaultValue(inputs);
-    checkProps(inputs.props);
+    // checkProps(inputs.props);
 
     // 提示使用 layerArnV2 版本
     if (!_.isEmpty(inputs.props?.function?.layers)) {
