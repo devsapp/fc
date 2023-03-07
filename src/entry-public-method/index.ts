@@ -40,7 +40,6 @@ export default class EntryPublicMethod {
     }
 
     setDefaultValue(inputs);
-    // checkProps(inputs.props);
 
     // 提示使用 layerArnV2 版本
     if (!_.isEmpty(inputs.props?.function?.layers)) {
@@ -59,6 +58,8 @@ export default class EntryPublicMethod {
     }
 
     await InfraAsTemplate.modifyInputs(inputs); // 多环境处理
+
+    checkProps(inputs.props);
 
     try {
       const { getEndpointFromFcDefault } = await core.load('devsapp/fc-core');
