@@ -7,7 +7,6 @@ import InfraAsTemplate from '../lib/infra-as-template';
 import { IInputs, IProperties } from '../lib/interface/interface';
 import { getCredentials } from '../lib/utils';
 import { setDefaultValue } from './set-default-value';
-import { checkProps } from './check';
 import { tipLayerArn } from './tip-layer-arn';
 
 const { lodash: _ } = core;
@@ -58,8 +57,6 @@ export default class EntryPublicMethod {
     }
 
     await InfraAsTemplate.modifyInputs(inputs); // 多环境处理
-
-    checkProps(inputs.props);
 
     try {
       const { getEndpointFromFcDefault } = await core.load('devsapp/fc-core');
