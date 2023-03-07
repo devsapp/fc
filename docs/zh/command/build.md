@@ -31,6 +31,7 @@ category: '构建&部署'
 | use-buildkit | 无       | 通过 buildctl 构建                                                                                                        |
 | use-sandbox  | 无       | 进入对应 runtime 的 sandbox 容器                                                                                          |
 | dockerfile   | f        | 指定构建自定义镜像的文件, use-docker 或 use-buildkit 构建 custom-container runtime 的镜像时使用                           |
+| context      | 无       | custom-container 构建镜像时上下文                          |
 | custom-env   | 无       | build 时注入的自定义环境变量                                                                                              |
 | custom-args  | 无       | 使用默认 build 行为时的附加参数， 比如指定 pypi 或者 npm 源, 需要配合 use-docker 或 use-buildkit 使用， 默认是 use-docker |
 | command      | 无       | 使用自定义命令， 需要配合 use-docker 或 use-buildkit 使用， 默认是 use-docker                                             |

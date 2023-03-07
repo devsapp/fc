@@ -7,7 +7,6 @@ import InfraAsTemplate from '../lib/infra-as-template';
 import { IInputs, IProperties } from '../lib/interface/interface';
 import { getCredentials } from '../lib/utils';
 import { setDefaultValue } from './set-default-value';
-import { checkProps } from './check';
 import { tipLayerArn } from './tip-layer-arn';
 
 const { lodash: _ } = core;
@@ -40,7 +39,6 @@ export default class EntryPublicMethod {
     }
 
     setDefaultValue(inputs);
-    // checkProps(inputs.props);
 
     // 提示使用 layerArnV2 版本
     if (!_.isEmpty(inputs.props?.function?.layers)) {
