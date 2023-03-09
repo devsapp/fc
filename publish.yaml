@@ -232,6 +232,7 @@ Properties:
             当前服务中的函数可以访问的 VPC。点击<a href='https://help.aliyun.com/document_detail/72959.html'
             target='_blank'>这里</a>查看更多详情。
           default: ""
+          pattern: "^vpc-.+$"
         vswitchIds:
           type: array
           title: 交换机
@@ -245,6 +246,7 @@ Properties:
             oneOf:
               - type: string
                 minLength: 1
+                pattern: "^vsw-.+$"
                 examples:
                   - vsw-xxx1
                   - vsw-xxx2
@@ -256,6 +258,7 @@ Properties:
             此安全组是ENI所在的安全组，也就是函数计算所在的安全组，安全组限定了函数计算在VPC中的出入站规则。需要设置您的VPC所在安全组的入站规则为允许函数计算所在的安全组访问。否则，函数计算无法顺畅地访问您的VPC内资源。点击<a
             href='https://help.aliyun.com/document_detail/72959.html' target='_blank'>这里</a>查看更多详情。
           default: ""
+          pattern: "^sg-.+$"
     nasConfig:
       type: object
       required:
@@ -265,19 +268,19 @@ Properties:
         userId:
           type: integer
           title: 用户
-          minimum: 1
+          minimum: 0
           maximum: 65534
           description: 访问 NAS 中文件时所用的用户，等同于文件系统中的用户（UID）的概念。UserID 取值范围从 1 到 65534，不包括0（为了执行安全，函数计算暂时不提供root用户的方式）。点击这里查看更多详情。
-          default: 10003
+          default: 0
           examples:
             - 10003
         groupId:
           type: integer
           title: 用户组
-          minimum: 1
+          minimum: 0
           maximum: 65534
           description: 访问 NAS 中文件时所用的用户组，等同于文件系统中的用户组（GID）的概念。GroupID 取值范围从 1 到 65534，不包括0（为了执行安全，函数计算暂时不提供root用户的方式）。点击这里查看更多详情。
-          default: 10003
+          default: 0
           examples:
             - 10003
         mountPoints:
@@ -604,21 +607,23 @@ Properties:
           default: nodejs12
           type: string
           enum:
+            - nodejs16
             - nodejs14
             - nodejs12
             - nodejs10
             - nodejs8
             - python3
+            - python3.10
             - python3.9
+            - python2.7
             - java8
             - java11
             - php7.2
             - dotnetcore2.1
             - custom
             - custom-container
-            - nodejs4.4
             - nodejs6
-            - python2.7
+            - nodejs4.4
         customRuntimeConfig:
           x-reactions:
             dependencies:
@@ -821,6 +826,17 @@ Properties:
           title: 监听端口
           description: 您的 HTTP Server 所监听的端口。
           type: integer
+        cpu:
+          title: CPU 规格
+          description: 函数的 CPU 规格，单位为 vCPU，为 0.05 vCPU 的倍数。
+          type: integer
+        diskSize:
+          title: 磁盘规格
+          description: 函数的磁盘规格，单位为 MB。
+          type: integer
+          enum:
+            - 512
+            - 10240
         environmentVariables:
           title: 环境变量
           description: 配置函数运行环境中的环境变量。
