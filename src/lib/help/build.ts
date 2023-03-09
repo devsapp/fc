@@ -43,6 +43,12 @@ export const BUILD_HELP_INFO = [
         type: String,
       },
       {
+        name: 'context',
+        description: '[Optional] custom-container Context for constructing the image',
+        defaultOption: false,
+        type: String,
+      },
+      {
         name: 'custom-env',
         description: '[Optional] Custom environment variables injected during build',
         defaultOption: false,
