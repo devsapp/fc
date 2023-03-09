@@ -144,7 +144,6 @@ export default class EntryPublicMethod {
             response.on('end', () => resolve(JSON.parse(data).Response));
           }).on('error', (err) => reject(err));
         });
-        console.log(':::::::', result);
         const version = result.tag_name;
         const url = `https://registry.devsapp.cn/simple/devsapp/core/zipball/${version}`;
         const filename = `core@${version}.zip`;
