@@ -1,6 +1,7 @@
 import * as core from '@serverless-devs/core';
 import path from 'path';
 import os from 'os';
+import https from 'https';
 import fs from 'fs';
 import logger from '../common/logger';
 import InfraAsTemplate from '../lib/infra-as-template';
@@ -136,9 +137,14 @@ export default class EntryPublicMethod {
         const homePath = _.isFunction(core.getRootHome) ? core.getRootHome() : os.homedir();
         const corePath = path.join(homePath, 'cache', 'core');
         const lockPath = path.resolve(corePath, '.s.lock');
-        const result = await core.request(
-          'https://registry.devsapp.cn/simple/devsapp/core/releases/latest',
-        );
+        const result: any = await new Promise((resolve, reject) => {
+          https.get('https://registry.devsapp.cn/simple/devsapp/core/releases/latest', (response) => {
+            let data = '';
+            response.on('data', (chunk) => data += chunk);
+            response.on('end', () => resolve(JSON.parse(data).Response));
+          }).on('error', (err) => reject(err));
+        });
+        console.log(':::::::', result);
         const version = result.tag_name;
         const url = `https://registry.devsapp.cn/simple/devsapp/core/zipball/${version}`;
         const filename = `core@${version}.zip`;
