@@ -28,7 +28,7 @@ category: 'Yaml规范'
 | initializer                                         | False | String                             | 初始化方法                                                             |
 | instanceConcurrency                                 | False | Number                             | 单实例多并发                                                           |
 | instanceSoftConcurrency                                 | False | Number                             | 扩容并发度。扩容并发度用于优雅扩容，当实例上并发数超过扩容并发度时，会触发实例扩容。例如，您的实例启动较慢，可以通过设置合适的扩容并发度，提前启动实例。`注意：扩容并发度的值不能大于实例并发度，最小值为1。线上存在此配置，但是yaml中没有配置，则默认为和 instanceConcurrency 值一致`                                                           |
-| instanceType                                        | False | String                             | 函数实例类型，可选值为：e1（弹性实例）、c1（性能实例）、fc.gpu.tesla.1（GPU T4实例）、fc.gpu.tesla.1（GPU A10实例） |
+| instanceType                                        | False | String                             | 函数实例类型，可选值为：e1（弹性实例）、c1（性能实例）、fc.gpu.tesla.1（GPU T4实例）、fc.gpu.ampere.1（GPU A10实例） |
 | gpuMemorySize                                       | False | Number                             | GPU 实例内存规格                                                       |
 | layers                                              | False | List\<String\>                     | 函数绑定层，支持 Nodejs、Python、Custom、Go1；取值是层的 ARN           |
 | [instanceLifecycleConfig](#instancelifecycleconfig) | False | [Struct](#instancelifecycleconfig) | 扩展函数                                                               |
