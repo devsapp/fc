@@ -26,7 +26,7 @@ category: 'Yaml-Spec'
 | initializationTimeout                               | False    | Number                             | initialization method timeout                                |
 | initializer                                         | False    | String                             | Initializer                                                  |
 | instanceConcurrency                                 | False    | Number                             | Single instance with multiple concurrency                    |
-| instanceType                                        | False    | String                             | Function instance type, optional values: e1 (elastic instance), c1 (performance instance), g1 (GPU instance) |
+| instanceType                                        | False    | String                             | Function instance type, optional values: e1 (elastic instance), c1 (performance instance), fc.gpu.tesla.1 (GPU T4 instance), fc.gpu.ampere.1 (GPU A10 instance) |
 | gpuMemorySize                                        | False | Number                                | GPU instance memory size |
 | layers                                               | False    | List\<String\>                     | Function binding layer,supports Custom and Go1 and Nodejs and Python; the value is the ARN of the layer |
 | [instanceLifecycleConfig](#instancelifecycleconfig) | False    | [Struct](#instancelifecycleconfig) | extension function                                           |
