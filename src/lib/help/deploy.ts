@@ -14,7 +14,7 @@ const useRemote = {
 };
 const skipPush = {
   name: 'skip-push',
-  description: '[Optional] Skip automatic push mirroring',
+  description: '[Optional] Skip automatically pushing docker container images',
   defaultOption: false,
   type: Boolean,
 };
