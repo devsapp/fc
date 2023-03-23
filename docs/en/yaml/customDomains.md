@@ -15,7 +15,7 @@ category: 'Yaml-Spec'
 | [certConfig](#certconfig)     | False    | [Struct](#certconfig)          | Domain Certificate                                                                   |
 | certId                        | False    | Number                         | cert ID                                                                              |
 | [tlsConfig](#tlsConfig)       | False    | [Struct](#tlsConfig)           | TLS                                                                                  |
-| [wafConfig](#wafConfig)       | False    | [Struct](#wafConfig)          | The Web Application Firewall (WAF) configuration                                                                                  |
+| [wafConfig](#wafConfig)       | False    | [Struct](#wafConfig)           | The Web Application Firewall (WAF) configuration                                     |
 
 References:
 
@@ -54,28 +54,28 @@ customDomains:
 
 ### routeConfigs
 
-| Parameter    | Required | Type   | Description                 |
-| ------------ | -------- | ------ | --------------------------- |
-| path         | True     | String | The path.                   |
-| serviceName  | False    | String | The name of the service.    |
-| functionName | False    | String | The name of the function.   |
-| qualifier    | False    | String | The version of the service. |
-| rewriteConfig    | False | [Struct](#rewriteConfig) | The URI rewrite configurations |
+| Parameter     | Required | Type                     | Description                    |
+| ------------- | -------- | ------------------------ | ------------------------------ |
+| path          | True     | String                   | The path.                      |
+| serviceName   | False    | String                   | The name of the service.       |
+| functionName  | False    | String                   | The name of the function.      |
+| qualifier     | False    | String                   | The version of the service.    |
+| rewriteConfig | False    | [Struct](#rewriteConfig) | The URI rewrite configurations |
 
 #### rewriteConfig
 
-| Parameter    | Required | Type   | Description                 |
-| ------------ | -------- | ------ | --------------------------- |
-| equalRules         | False     | [List\<Struct>](#rewriteConfigRules) | The exact match rules                   |
-| wildcardRules         | False     | [List\<Struct>](#rewriteConfigRules) | The wildcard match rule                   |
-| regexRules         | False     | [List\<Struct>](#rewriteConfigRules) | The regex match rule                 |
+| Parameter     | Required | Type                                 | Description             |
+| ------------- | -------- | ------------------------------------ | ----------------------- |
+| equalRules    | False    | [List\<Struct>](#rewriteConfigRules) | The exact match rules   |
+| wildcardRules | False    | [List\<Struct>](#rewriteConfigRules) | The wildcard match rule |
+| regexRules    | False    | [List\<Struct>](#rewriteConfigRules) | The regex match rule    |
 
 #### rewriteConfigRules
 
-| Parameter    | Required | Type   | Description                 |
-| ------------ | -------- | ------ | --------------------------- |
-| match   | True | String  | The matching rule |
-| replacement   | True | String  | The replacement rule |
+| Parameter   | Required | Type   | Description          |
+| ----------- | -------- | ------ | -------------------- |
+| match       | True     | String | The matching rule    |
+| replacement | True     | String | The replacement rule |
 
 #### Obtain the certificate content by configuring certId
 
@@ -161,13 +161,14 @@ customDomains:
 | Parameter    | Required | Type           | Description                                         |
 | ------------ | -------- | -------------- | --------------------------------------------------- |
 | minVersion   | True     | String         | TLS Version, value: `TLSv1.0`、`TLSv1.1`、`TLSv1.2` |
+| maxVersion   | False    | String         | TLS Version, value: `TLSv1.0`、`TLSv1.1`、`TLSv1.2` |
 | cipherSuites | True     | List\<String\> | Cipher Suite                                        |
 
 ### wafConfig
 
-| Parameter    | Required | Type           | Description                                         |
-| ------------ | -------- | -------------- | --------------------------------------------------- |
-| enableWAF   | False | Boolean        | Specifies whether to enable Web Application Firewall (WAF) |
+| Parameter | Required | Type    | Description                                                |
+| --------- | -------- | ------- | ---------------------------------------------------------- |
+| enableWAF | False    | Boolean | Specifies whether to enable Web Application Firewall (WAF) |
 
 ### Permissions
 
