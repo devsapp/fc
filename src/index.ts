@@ -107,6 +107,16 @@ export default class FcBaseComponent extends EntryPublicMethod {
       );
     }
 
+    // checkName
+    const serviceName = _.get(props, 'service.name');
+    if (serviceName) {
+      super.checkName(serviceName, 'ServiceName');
+    }
+    const functionName = _.get(props, 'function.name');
+    if (functionName) {
+      super.checkName(functionName, 'FunctionName');
+    }
+
     const deployRes: any = await this.componentMethodCaller(
       inputs,
       'devsapp/fc-deploy',
