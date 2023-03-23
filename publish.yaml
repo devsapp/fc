@@ -1459,6 +1459,22 @@ Properties:
                       - TLSv1.0
                       - TLSv1.1
                       - TLSv1.2
+                      # - TLSv1.3
+                    x-enum-label:
+                      - 支持 TLS1.0 及以上版本，兼容性最高，安全性较低
+                      - 支持 TLS1.1 及以上版本，兼容性较好，安全性较好
+                      - 支持 TLS1.2 及以上版本，兼容性较好，安全性最高
+                  maxVersion:
+                    type: string
+                    title: TLS 协议版本
+                    x-tooltip:
+                      配置 TLS 协议版本。如果不配置，则使用默认 TLS 配置。点击<a href='https://help.aliyun.com/document_detail/90763.html'
+                      target='_blank'>这里</a>查看更多详情。
+                    enum:
+                      - TLSv1.0
+                      - TLSv1.1
+                      - TLSv1.2
+                      # - TLSv1.3
                     x-enum-label:
                       - 支持 TLS1.0 及以上版本，兼容性最高，安全性较低
                       - 支持 TLS1.1 及以上版本，兼容性较好，安全性较好
