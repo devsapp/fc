@@ -621,6 +621,7 @@ Properties:
             - php7.2
             - dotnetcore2.1
             - custom
+            - custom.debian10
             - custom-container
             - nodejs6
             - nodejs4.4

@@ -92,12 +92,12 @@ function:
 runtime 目前支持
 
 `nodejs14`、`nodejs12`、`nodejs10`、`nodejs8`、`nodejs6`、`nodejs4.4`  
-`python3.9`、`python3`、`python2.7`  
+`python3.10`、`python3.9`、`python3`、`python2.7`  
 `java11`、`java8`  
 `go1`  
 `php7.2`  
 `dotnetcore2.1`  
-`custom`、`custom-container`
+`custom`、`custom.debian10`、`custom-container`
 
 当 runtime 为 custom-container 服务角色权限：
 
