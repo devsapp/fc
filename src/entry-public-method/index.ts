@@ -18,6 +18,12 @@ export default class EntryPublicMethod {
     alias: { help: 'h' },
   };
 
+  checkName(value: string, name?: String): void {
+    if (!/^[_a-zA-Z][-_a-zA-Z0-9]*$/.test(value)) {
+      logger.warn(`${name || 'Name'} doesn't match expected format (allowed: ^[_a-zA-Z][-_a-zA-Z0-9]*$, actual: '${value}')`);
+    }
+  }
+
   /**
    * 所有方法处理之前执行
    * @param inputs
@@ -140,6 +146,7 @@ export default class EntryPublicMethod {
         const result: any = await new Promise((resolve, reject) => {
           https.get('https://registry.devsapp.cn/simple/devsapp/core/releases/latest', (response) => {
             let data = '';
+            // eslint-disable-next-line no-return-assign
             response.on('data', (chunk) => data += chunk);
             response.on('end', () => resolve(JSON.parse(data).Response));
           }).on('error', (err) => reject(err));

@@ -15,7 +15,7 @@ category: 'Yaml规范'
 | [certConfig](#certconfig)     | False | [Struct](#certconfig)          | 域名证书                                             |
 | certId                        | False | Number                         | 域名证书 ID                                          |
 | [tlsConfig](#tlsConfig)       | False | [Struct](#tlsConfig)           | TLS 协议, 注：目前仅支持配置和修改，不支持删除此配置 |
-| [wafConfig](#wafConfig)       | False | [Struct](#wafConfig)           | Web应用防火墙配置信息 |
+| [wafConfig](#wafConfig)       | False | [Struct](#wafConfig)           | Web 应用防火墙配置信息                               |
 
 参考案例：
 
@@ -128,41 +128,42 @@ customDomains:
 
 ### tlsConfig
 
-| 参数名       | 必填 | 类型           | 参数描述                                            |
-| ------------ | ---- | -------------- | --------------------------------------------------- |
-| minVersion   | True | String         | TLS 协议版本，取值：`TLSv1.0`、`TLSv1.1`、`TLSv1.2` |
-| cipherSuites | True | List\<String\> | 加密套件                                            |
+| 参数名       | 必填  | 类型           | 参数描述                                            |
+| ------------ | ----- | -------------- | --------------------------------------------------- |
+| minVersion   | True  | String         | TLS 协议版本，取值：`TLSv1.0`、`TLSv1.1`、`TLSv1.2` |
+| maxVersion   | False | String         | TLS 协议版本，取值：`TLSv1.0`、`TLSv1.1`、`TLSv1.2` |
+| cipherSuites | True  | List\<String\> | 加密套件                                            |
 
 ### wafConfig
 
-| 参数名       | 必填 | 类型           | 参数描述                                            |
-| ------------ | ---- | -------------- | --------------------------------------------------- |
-| enableWAF   | False | Boolean         | 是否开启Web应用防火墙 |
+| 参数名    | 必填  | 类型    | 参数描述                |
+| --------- | ----- | ------- | ----------------------- |
+| enableWAF | False | Boolean | 是否开启 Web 应用防火墙 |
 
 ### routeConfigs
 
-| 参数名       | 必填  | 类型   | 参数描述   |
-| ------------ | ----- | ------ | ---------- |
-| path         | True  | String | 路径       |
-| serviceName  | False | String | 服务名     |
-| functionName | False | String | 函数名     |
-| qualifier    | False | String | 服务的版本 |
-| rewriteConfig    | False | [Struct](#rewriteConfig) | URI重写配置 |
+| 参数名        | 必填  | 类型                     | 参数描述     |
+| ------------- | ----- | ------------------------ | ------------ |
+| path          | True  | String                   | 路径         |
+| serviceName   | False | String                   | 服务名       |
+| functionName  | False | String                   | 函数名       |
+| qualifier     | False | String                   | 服务的版本   |
+| rewriteConfig | False | [Struct](#rewriteConfig) | URI 重写配置 |
 
 #### rewriteConfig
 
-| 参数名       | 必填 | 类型           | 参数描述                                            |
-| ------------ | ---- | -------------- | --------------------------------------------------- |
-| equalRules   | False | [List\<Struct>](#rewriteConfigRules)         | 完全匹配规则 |
-| wildcardRules   | False | [List\<Struct>](#rewriteConfigRules)         | 通配符匹配规则 |
-| regexRules   | False | [List\<Struct>](#rewriteConfigRules)         | 正则匹配规则 |
+| 参数名        | 必填  | 类型                                 | 参数描述       |
+| ------------- | ----- | ------------------------------------ | -------------- |
+| equalRules    | False | [List\<Struct>](#rewriteConfigRules) | 完全匹配规则   |
+| wildcardRules | False | [List\<Struct>](#rewriteConfigRules) | 通配符匹配规则 |
+| regexRules    | False | [List\<Struct>](#rewriteConfigRules) | 正则匹配规则   |
 
 ##### rewriteConfigRules
 
-| 参数名       | 必填 | 类型           | 参数描述                                            |
-| ------------ | ---- | -------------- | --------------------------------------------------- |
-| match   | True | String  | 匹配规则 |
-| replacement   | True | String  | 替换规则 |
+| 参数名      | 必填 | 类型   | 参数描述 |
+| ----------- | ---- | ------ | -------- |
+| match       | True | String | 匹配规则 |
+| replacement | True | String | 替换规则 |
 
 ### 权限配置相关
 

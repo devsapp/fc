@@ -140,6 +140,16 @@ export const ALIAS_PUBLISH = [
         description: '[Optional] The weight for grayscale version',
         type: String,
       },
+      {
+        name: 'resolve-policy',
+        description: '[Optional] Gray scale, value: Random/Content. Random is a random grayscale, the default value; Content is regular grayscale',
+        type: String,
+      },
+      {
+        name: 'route-policy',
+        description: '[Optional] Content grayscale rules',
+        type: String,
+      },
     ],
   },
   { ...globalParams },
@@ -150,6 +160,8 @@ export const ALIAS_PUBLISH = [
       '$ s alias publish --alias-name aliasName --version-id 2',
       '$ s alias publish --alias-name aliasName --version-latest',
       '$ s alias publish --description description --alias-name aliasName --version-id 2 --gversion 3 --weight 20',
+      // eslint-disable-next-line @typescript-eslint/quotes
+      `$ s alias publish --alias-name pre --version-id 1 --gversion 2 --route-policy '\\{"policyItems":[\\{"type":"Param","value":"2","Key":"test","operator":"="\\}],"condition":"AND"\\}'`,
     ],
   },
   {
