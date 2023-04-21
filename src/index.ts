@@ -160,6 +160,11 @@ export default class FcBaseComponent extends EntryPublicMethod {
       if (deployRes.function.timeout) {
         result.function.timeout = deployRes.function.timeout;
       }
+      // https://github.com/devsapp/fc/issues/956
+      if (deployRes.function.cpu) {
+        result.function.cpu = deployRes.function.cpu;
+        result.function.diskSize = deployRes.function.diskSize;
+      }
     }
     // https://github.com/devsapp/fc/issues/383
     if (deployRes.systemDomain) {
