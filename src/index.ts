@@ -170,6 +170,7 @@ export default class FcBaseComponent extends EntryPublicMethod {
     if (deployRes.systemDomain) {
       result.url = {
         system_url: deployRes.systemDomain,
+        system_intranet_url: deployRes.systemIntranetDomain,
       };
     }
     if (deployRes.customDomains) {
