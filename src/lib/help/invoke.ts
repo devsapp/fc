@@ -88,7 +88,7 @@ export const INVOKE = [
   {
     header: 'Examples with CLI',
     content: [
-      '$ s cli fc invoke --region cn-hangzhou --service-name serviceName --function-name functionName --event evnetString',
+      '$ s cli fc invoke --region cn-hangzhou --service-name serviceName --function-name functionName --event eventString',
     ],
   },
 ];
