@@ -138,7 +138,7 @@ export default class EntryPublicMethod {
   }
 
   private async updateCore() {
-    if (!_.isFunction(core.getAvailablePort)) {
+    if (!_.isFunction(core.getCurrentEnvironment)) {
       try {
         const homePath = _.isFunction(core.getRootHome) ? core.getRootHome() : os.homedir();
         const corePath = path.join(homePath, 'cache', 'core');
