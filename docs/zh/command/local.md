@@ -55,6 +55,8 @@ category: '调用&调试'
 - [invoke：本地调试事件函数](#local-invoke-命令)
 - [start：本地调试 HTTP 函数](#local-start-命令)
 
+> 未支持**非webserver模式**
+
 ## local invoke 命令
 
 `local invoke` 命令，是进行本地事件函数调试的命令。
