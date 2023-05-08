@@ -130,7 +130,7 @@ fc-deploy-test:
 ### 操作案例
 
 - **有资源描述文件（Yaml）时**，可以直接执行`s ondemand put --qualifier qualifier` 进行按量资源配置；
-- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区以及服务名称、函数名，例如` s cli fc ondemand put --qualifier LATEST --max 1`；
+- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区以及服务名称、函数名，例如` s cli fc ondemand put --qualifier LATEST --service-name fc-deploy-service --function-name fc-deploy-function --max 1`；
 
 上述命令的执行结果示例：
 
