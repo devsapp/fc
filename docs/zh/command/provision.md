@@ -106,7 +106,7 @@ fc-deploy-test:
 ### 操作案例
 
 - **有资源描述文件（Yaml）时**，可以直接执行`s provision put`进行版本的发布，例如`s provision put --qualifier release --target 1`；
-- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区以及服务名称，例如`s cli fc provision put --region cn-hangzhou --service-name fc-deploy-service --qualifier release --target 1 -h`；
+- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区以及服务名称，例如`s cli fc provision put --region cn-hangzhou --service-name fc-deploy-service --function-name fc-deploy-function --qualifier release --target 1 -h`；
 
 上述命令的执行结果示例：
 
@@ -216,7 +216,7 @@ fc-deploy-test:
 ### 操作案例
 
 - **有资源描述文件（Yaml）时**，可以直接执行`s provision get --qualifier qualifier`获取预留实例详情；
-- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区以及服务名称，例如`s cli fc provision get --region cn-hangzhou --service-name fc-deploy-service --qualifier release`；
+- **纯命令行形式（在没有资源描述 Yaml 文件时）**，需要指定服务所在地区以及服务名称，例如`s cli fc provision get --region cn-hangzhou --service-name fc-deploy-service --function-name fc-deploy-function --qualifier release`；
 
 上述命令的执行结果示例：
 
