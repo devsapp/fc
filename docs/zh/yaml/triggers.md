@@ -670,6 +670,42 @@ triggers:
             VpcId: myVpcID
             VSwitchIds: myVSwitchID
             SecurityGroupId: mySecurityGroupID
+  - name: eventbridgeTriggerWithDTSSource
+    # sourceArn: acs:eventbridge:<region>:<accountID>:eventstreaming/<eventStreamingName>
+    type: eventbridge
+    # qualifier: LATEST
+    config:
+      triggerEnable: true
+      asyncInvocationType: false
+      eventRuleFilterPattern: '{}'
+      eventSinkConfig:
+        deliveryOption:
+          eventSchema: CloudEvents  # 支持 CloudEvents 以及 RawData 两种取值
+      runOptions:
+        mode: event-streaming
+        maximumTasks: 3
+        errorsTolerance: 'ALL'
+        retryStrategy:
+          PushRetryStrategy: 'BACKOFF_RETRY'
+          MaximumEventAgeInSeconds: 0
+          MaximumRetryAttempts: 0
+        deadLetterQueue:
+          Arn: acs:mns:cn-qingdao:123:/queues/queueName
+        batchWindow:
+          CountBasedWindow: 2
+          TimeBasedWindow: 10
+      eventSourceConfig:
+        eventSourceType: DTS
+        eventSourceParameters:
+          sourceDTSParameters:
+            RegionId: cn-hangzhou
+            BrokerUrl: dts-cn-shanghai-vpc.aliyuncs.com:18003	# 数据订阅任务的网络连接地址
+            Topic: cn_shanghai_vpc_rm_uf6398ykj0218rk6t_dts_trigger_upgrade_from_old_version2  # 数据订阅任务的 Topic
+            Sid: dtse34j22j025aq26p	# 数据订阅消费组 ID
+            Username: dts_trigger	# 创建消费组时设置的账号
+            Password: dtsTest123	# 创建消费组时设置的密码
+            InitCheckPoint: 1677340805 # 期望消费第一条数据的时间戳。消费位点必须在订阅实例的数据范围之内
+            TaskId: e34z2gm325qp37m	# DTSJobId
 ```
 
 #### 权限配置相关
@@ -743,7 +779,7 @@ resource "alicloud_event_bridge_service_linked_role" "service_linked_role" {
 
 | 参数名                                          | 必填  | 类型                             | 参数描述                                                                                                                                                                                                                                                                                                          |
 | ----------------------------------------------- | ----- | -------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| eventSourceType                                 | True  | String                           | 触发器事件源类型，目前支持如下四种触发源：<br> 1. Default：表示 EventBridge 官方触发源<br> 2. MNS：消息队列 MNS 队列作为触发源<br> 3. RocketMQ：消息队列 RockerMQ 作为触发源<br> 4. RabbitMQ：消息队列 RabbitMQ 作为触发源<br>5. Kafka: 消息队列 Kafka 作为触发源<br>注：该字段不可更新，更新时传入该字段将被忽略 |
+| eventSourceType                                 | True  | String                           | 触发器事件源类型，目前支持如下几种触发源：<br> 1. Default：表示 EventBridge 官方触发源<br> 2. MNS：消息队列 MNS 队列作为触发源<br> 3. RocketMQ：消息队列 RockerMQ 作为触发源<br> 4. RabbitMQ：消息队列 RabbitMQ 作为触发源<br> 5. Kafka: 消息队列 Kafka 作为触发源<br> 6. DTS: 数据传输服务 DTS 作为触发源<br> 注：该字段不可更新，更新时传入该字段将被忽略 |
 | [eventSourceParameters](#eventSourceParameters) | False | [Struct](#eventSourceParameters) | 自定义事件源参数，自定义事件源包括：MNS，RocketMQ，RabbitMQ，Kafka                                                                                                                                                                                                                                                |
 
 #### eventSourceParameters
@@ -754,6 +790,7 @@ resource "alicloud_event_bridge_service_linked_role" "service_linked_role" {
 | [sourceRocketMQParameters](#sourceRocketMQParameters) | False | [Struct](#sourceRocketMQParameters) | 事件源为消息服务 RockerMQ 时的自定义参数配置 |
 | [sourceRabbitMQParameters](#sourceRabbitMQParameters) | False | [Struct](#sourceRabbitMQParameters) | 事件源为消息服务 RabbitMQ 时的自定义参数配置 |
 | [sourceKafkaParameters](#sourceKafkaParameters)       | False | [Struct](#sourceKafkaParameters)    | 事件源为消息队列 Kafka 时的自定义参数配置    |
+| [sourceDTSParameters](#sourceDTSParameters)       | False | [Struct](#sourceDTSParameters)    | 事件源为数据传输服务 DTS 时的自定义参数配置    |
 
 #### sourceMNSParameters
 
@@ -799,6 +836,20 @@ resource "alicloud_event_bridge_service_linked_role" "service_linked_role" {
 | VSwitchIds      | False | String | 所用 vpc 网络的交换机 ID，网络类型为 PublicNetwork 时配置                                          |
 | SecurityGroupId | False | String | 所用 vpc 网络的安全组 ID，网络类型为 PublicNetwork 时配置                                          |
 
+#### sourceDTSParameters
+
+| 参数名         | 必填  | 类型    | 参数描述                          |
+| -------------- | ----- | ------- | --------------------------------- |
+| RegionId       | True  | String  | 数据传输服务 DTS 任务所属地域       |
+| BrokerUrl      | True  | String  | 数据订阅任务的网络连接地址      |
+| Topic          | True  | String  | 数据订阅任务的 Topic |
+| Sid            | True  | String  | 数据订阅消费组 ID |
+| Username       | True  | String  | 创建消费组时设置的账号 |
+| Password       | True  | String  | 创建消费组时设置的密码 |
+| InitCheckPoint | True  | Number  | 期望消费第一条数据的时间戳，单位是秒。消费位点必须在订阅实例的数据范围之内。 |
+| TaskId         | True  | String  | DTSJobId |
+
+
 #### eventSinkConfig
 
 | 参数名                            | 必填 | 类型                      | 参数描述     |
@@ -809,7 +860,8 @@ resource "alicloud_event_bridge_service_linked_role" "service_linked_role" {
 
 | 参数名 | 必填  | 类型   | 参数描述                                                                                |
 | ------ | ----- | ------ | --------------------------------------------------------------------------------------- |
-| mode   | False | String | 事件投递模型，该参数与 [runOptions](#runOptions) 中的 mode 参数含义相同，但是优先级更低 |
+| mode   | False | String | 事件投递模型，该参数与 [runOptions](#runOptions) 中的 mode 参数含义相同，但是优先级更低，不推荐使用 |
+| eventSchema   | False | String | 指定函数入口参数 event 中每个数据元素的格式，有如下两种取值模式：<br> - CloudEvents: 以通用格式描述事件数据的规范，旨在简化不同服务、平台间的事件声明和传输<br> - RawData: 只投递 CloudEvents 中 $data 引用的数据，不包含 CloudEvents 格式中的其它元数据信息 |
 
 #### runOptions
 
