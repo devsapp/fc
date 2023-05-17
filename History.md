@@ -2,11 +2,10 @@
 
 | 组件名 | 版本号 | 发布内容 | 补充 |
 | --- | --- | --- |--- |
-| fc | 0.1.72 | 针对accountid异常做出友好提示(#984); add env remove help (#983) | - |
+| fc | 0.1.72 | 1. 针对accountid异常做出友好提示(#984) 2. add env remove help (#983) | - |
 | nas | 0.1.14 | 支持自动开通 nas(#36) | - |
-| fc-core | 0.0.31 | fc docker version 升级到 1.10.9; docker.listImages 兼容 | - |
-| fc-deploy | 0.0.118 | 如果代码包大小的问题尝试使用 OSS 上传的方式重新上传一
-次 (#204) | - |
+| fc-core | 0.0.31 | 1. fc docker version 升级到 1.10.9  2. 部分机型获取镜像列表失败， docker.listImages 兼容 | - |
+| fc-deploy | 0.0.118 | 如果代码包大小的问题尝试使用 OSS 上传的方式重新上传一次 (#204) | - |
 
 
 
