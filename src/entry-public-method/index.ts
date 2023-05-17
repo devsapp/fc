@@ -69,6 +69,12 @@ Please use "s config add --AccountID xxxxx --AccessKeyID xxxxx --AccessKeySecret
       }));
     }
 
+    // fc组件镜像 trim 左右空格
+    const image = _.get(inputs, 'props.function.customContainerConfig.image');
+    if (!_.isEmpty(image)) {
+      _.set(inputs, 'props.function.customContainerConfig.image', _.trim(image));
+    }
+
     await InfraAsTemplate.modifyInputs(inputs); // 多环境处理
 
     try {
