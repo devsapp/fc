@@ -43,6 +43,12 @@ export default class EntryPublicMethod {
     // 处理密钥
     if (getSecretKey) {
       inputs.credentials = await getCredentials(inputs.credentials, inputs.project?.access);
+      if (_.isEmpty(inputs.credentials?.AccountID)) {
+        const access = inputs.project?.access;
+        const tip = `请使用 s config add --AccountID xxxxx --AccessKeyID xxxxx --AccessKeySecret xxxxx --access ${access || 'default'} -f 强制覆盖旧的密钥，然后重试一次
+Please use "s config add --AccountID xxxxx --AccessKeyID xxxxx --AccessKeySecret xxxxx --access ${access || 'default'} -f" to force overwrite the old key, then try again.`;
+        throw new core.CatchableError('Account id not obtained', tip);
+      }
     }
 
     setDefaultValue(inputs);
@@ -61,6 +67,12 @@ export default class EntryPublicMethod {
           qualifier: _.isNumber(i?.qualifier) ? i.qualifier.toString() : i?.qualifier,
         })),
       }));
+    }
+
+    // fc组件镜像 trim 左右空格
+    const image = _.get(inputs, 'props.function.customContainerConfig.image');
+    if (!_.isEmpty(image)) {
+      _.set(inputs, 'props.function.customContainerConfig.image', _.trim(image));
     }
 
     await InfraAsTemplate.modifyInputs(inputs); // 多环境处理
