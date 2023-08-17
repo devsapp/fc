@@ -149,7 +149,7 @@ root@fc-nodejs12:/code# ls .s/root/
 etc  usr
 ```
 
-如上所示，so 底层 lib 全部安装到 .s/root 目录下面， 为了能函数能正确使用到这些 so 文件， 最后 deploy 的时候给函数增加下面两个环境变量即可：
+如上所示，so 底层 lib 全部安装到 .s/root 目录下面， 为了使函数能正确使用到这些 so 文件， 最后 deploy 的时候给函数增加下面两个环境变量即可：
 
 ```
 LD_LIBRARY_PATH=/code/.s/root/usr/local/lib:/code/.s/root/usr/lib:/code/.s/root/usr/lib/x86_64-linux-gnu:/code/.s/root/usr/lib64:/code/.s/root/lib:/code/.s/root/lib/x86_64-linux-gnu:/code/.s/root/python/lib/python2.7/site-packages:/code/.s/root/python/lib/python3.6/site-packages:/code:/code/lib:/usr/local/lib
