@@ -289,7 +289,7 @@ triggers:
 | -------- | ---- | -------------- | ---------------------------------------------------------------------- |
 | authType | True | String         | 鉴权类型，可选值：anonymous、function                                  |
 | disableURLInternet | False | Boolean         | 是否禁用公网访问 URL，默认为 false                                  |
-| methods  | True | List\<String\> | HTTP 触发器支持的访问方法，可选值：GET、POST、PUT、DELETE、PATCH、HEAD |
+| methods  | True | List\<String\> | HTTP 触发器支持的访问方法，可选值：GET、POST、PUT、DELETE、PATCH、HEAD、OPTIONS |
 
 参考案例：
 
