@@ -139,7 +139,7 @@ fc-deploy-test:
 | 参数全称    | 参数缩写 | Yaml模式下必填 | 参数含义                                                     |
 | ----------- | -------- | -------------- | ------------------------------------------------------------ |
 | use-local   | -        | 选填           | 优先使用本地配置进行部署                                     |
-| user-remote | -        | 选填           | 优先使用线上配置进行部署                                     |
+| use-remote | -        | 选填           | 优先使用线上配置进行部署                                     |
 | assume-yes  | y        | 选填           | 在交互时，默认选择`y`                                        |
 
 > 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)
@@ -168,7 +168,7 @@ fc-deploy-test:
 | ----------- | -------- | -------------- | ------------------------------------------------------------ |
 | type        | -        | 选填           | 部署类型，可以选择`code, config`                           |
 | use-local   | -        | 选填           | 使用本地配置进行部署                                         |
-| user-remote | -        | 选填           |                                                              |
+| use-remote | -        | 选填           |                                                              |
 | skip-push | -        | 选填           |  跳过自动推送镜像   |
 | assume-yes  | y        | 选填           | 在交互时，默认选择`y`                                        |
 
@@ -206,7 +206,7 @@ fc-deploy-test:
 | ------------ | -------- | -------------- | ------------------------------------------------------------ |
 | trigger-name | -        | 选填           | 仅部署指定的触发器名称 |
 | use-local    | -        | 选填           | 使用本地配置进行部署                                         |
-| user-remote  | -        | 选填           |                                                              |
+| use-remote  | -        | 选填           |                                                              |
 | assume-yes   | y        | 选填           | 在交互时，默认选择`y`                                        |
 
 > 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)
@@ -250,7 +250,7 @@ $ s deploy trigger --trigger-name httpTrigger
 | ----------- | -------- | -------------- | ------------------------------------------------------------ |
 | domain-name      | -        | 选填           | 仅操作指定域名 |
 | use-local   | -        | 选填           | 使用本地配置进行部署 |
-| user-remote | -        | 选填           | 使用线上配置 |
+| use-remote | -        | 选填           | 使用线上配置 |
 | assume-yes  | y        | 选填           | 在交互时，默认选择`y`                                        |
 
 > 当前命令还支持部分全局参数（例如`-a/--access`, `--debug`等），详情可参考 [Serverless Devs 全局参数文档](https://serverless-devs.com/serverless-devs/command/readme#全局参数)

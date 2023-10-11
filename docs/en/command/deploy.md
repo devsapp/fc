@@ -137,7 +137,7 @@ When executing the command `deploy service -h`/`deploy service --help`, you can 
 | Full name   | Abbreviation | Required in YAML mode | Description                                                  |
 | ----------- | ------------ | --------------------- | ------------------------------------------------------------ |
 | use-local   | -            | No                    | Preferentially uses on-premises configurations to deploy resources. |
-| user-remote | -            | No                    | Preferentially uses online configurations to deploy resources. |
+| use-remote | -            | No                    | Preferentially uses online configurations to deploy resources. |
 | assume-yes  | y            | No                    | Selects yes by default for additional operations.            |
 
 > The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
@@ -168,7 +168,7 @@ When executing the command `deploy function -h`/`deploy function --help`, you ca
 | type        | -            | No                    | The deployment type. Valid values: code and config.          |
 | use-local   | -            | No                    | Uses on-premises configurations to deploy resources.         |
 | skip-push | -        | No           |  Skip auto push docker image   |
-| user-remote | -            | No                    |                                                              |
+| use-remote | -            | No                    |                                                              |
 | assume-yes  | y            | No                    | Selects yes by default for additional operations.            |
 
 > The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
@@ -205,7 +205,7 @@ When executing the command `deploy trigger -h`/`deploy trigger --help`, you can 
 | ------------ | ------------ | --------------------- | ------------------------------------------------------------ |
 | trigger-name | -            | No                    | The names of the triggers that you want to deploy.           |
 | use-local    | -            | No                    | Uses on-premises configurations to deploy resources.         |
-| user-remote  | -            | No                    |                                                              |
+| use-remote  | -            | No                    |                                                              |
 | assume-yes   | y            | No                    | Selects yes by default for additional operations.            |
 
 > The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
@@ -249,7 +249,7 @@ When executing the command `deploy domain -h`/`deploy domain --help`, you can ge
 | ----------- | ------------ | --------------------- | ------------------------------------------------------------ |
 | domain      | -            | No                    | The domain names that you want to deploy.                    |
 | use-local   | -            | No                    | Uses on-premises configurations to deploy resources.         |
-| user-remote | -            | No                    | Uses online configurations to deploy resources.              |
+| use-remote | -            | No                    | Uses online configurations to deploy resources.              |
 | assume-yes  | y            | No                    | Selects yes by default for additional operations.            |
 
 > The current command also supports some global parameters (such as `-a/--access`, `--debug`, etc.). For details, please refer to [Serverless Devs global parameters document](https://serverless-devs.com/en/serverless-devs/command/readme#supported-parameters)
