@@ -149,6 +149,7 @@ customDomains:
 | functionName  | False | String                   | 函数名       |
 | qualifier     | False | String                   | 服务的版本   |
 | rewriteConfig | False | [Struct](#rewriteConfig) | URI 重写配置 |
+| methods | False | List\<String> | 请求方法。默认只支持GET、PUT、POST、DELETE。枚举值：HEAD、DELETE、POST、GET、OPTIONS、PUT、PATCH |
 
 #### rewriteConfig
 
