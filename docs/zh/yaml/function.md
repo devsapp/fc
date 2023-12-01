@@ -123,6 +123,7 @@ runtime 目前支持
 | args             | False | String | 容器启动参数，示例值: '["-arg1", "value1"]'                                                                                                                                                |
 | accelerationType | False | String | 镜像加速开关，可选值：'Default'、'None'，前者表示开启，后者表示关闭                                                                                                                        |
 | instanceID       | False | String | 容器镜像服务企业版实例的 ID。当容器镜像选择的是企业版实例时，您需要给容器镜像服务企业版添加实例 ID，该实例的默认解析必须是服务所在的 VPC 网络地址。目前不支持 PrivateZone 产品定义域名解析 |
+| webServerMode | False | Boolean | 镜像运行是否为Web Server模式。取值为true,表示需要在容器镜像中实现Web Server来监听端口并处理请求。取值为false,表示需要容器运行后主动退出进程，并且ExitCode需要为0。| 
 
 ### environmentVariables
 
