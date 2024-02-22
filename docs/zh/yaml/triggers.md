@@ -12,7 +12,7 @@ category: 'Yaml规范'
 | name      | True  | String | 触发器名称                                                                                                                                                                                                                 |
 | type      | True  | Enum   | 触发器类型                                                                                                                                                                                                                 |
 | role      | False | String | 使用一个 RAM 角色的 ARN 为函数指定执行角色，事件源会使用该角色触发函数执行，请确保该角色有调用函数的权限                                                                                                                   |
-| sourceArn | False | String | 触发器事件源的 ARN                                                                                                                                                                                                         |
+| sourceArn | False | String | 触发器事件源的 ARN，对于 EB 触发器，该字段为选填项，若主动填写该字段，表示将 EB 侧已存在资源关联到该触发器，注意，**两个不同 EB 触发器不要配置同一个 sourceArn**，否则触发器的更新/删除操作会相互影响                                                                                                                                                                                                         |
 | qualifier | False | String | 触发器函数的版本或者别名，默认 `LATEST`                                                                                                                                                                                    |
 | config    | True  | Struct | 触发器配置，包括[OSS 触发器](#OSS触发器), [Log 触发器](#Log触发器), [Timer 触发器](#Timer触发器), [Http 触发器](#Http触发器), [MNS 触发器](#MNS触发器), [CDN 触发器](#CDN触发器), [EventBridge 触发器](#EventBridge触发器) |
 
