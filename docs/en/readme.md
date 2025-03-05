@@ -26,7 +26,7 @@ category: 'Overview'
 - **Security release**: automatically detects the changes in functions.
 - **Quick integration**: integrates with common CI/CD tools. For more information, see [CI/CD tools](https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/en/cicd.md).
 - **Observability**: allows you to query metrics and logs on your client. For more information, see [Query metrics](command/metrics.md) and [Query logs](command/logs.md).
-- **Multi-mode debugging**: supports multi-mode debugging to meet different debugging requirements in the development state and O&M state. The modes include [local call](command/local.md), [remote debugging](command/invoke.md), and [cloud-terminal joint debugging](command/proxied.md).
+- **Multi-mode debugging**: supports multi-mode debugging to meet different debugging requirements in the development state and O&M state. The modes include [local call](command/local.md), [remote debugging](command/invoke.md).
 # Quick start
 
 🙋 To use the FC component, perform the following steps:    
@@ -48,7 +48,7 @@ The following table lists the commands that are supported by the FC component:
 | ---------------------------------- | -------------------------------- | ------------------------------------ | ------------------------------------ | -------------------------------------------- |
 | [**deploy**](command/deploy.md) | [metrics](command/metrics.md) | [**local**](command/local.md)     | [**version**](command/version.md) | [**nas**](command/nas.md)                 |
 | [**build**](command/build.md)   | [logs](command/logs.md)       | [invoke](command/invoke.md)       | [**alias**](command/alias.md)     | [fun2s](command/fun2s.md)                 |
-| [remove](command/remove.md)     |                                  | [**proxied**](command/proxied.md) | [provision](command/provision.md) | [info](command/info.md)                   |
+| [remove](command/remove.md)     |                                  |  | [provision](command/provision.md) | [info](command/info.md)                   |
 | [plan](command/plan.md)         |                                  | [instance](command/instance.md)       | [ondemand](command/ondemand.md)   | [**sync**](command/sync.md)               |
 |                                    |                                  |           | [layer](command/layer.md)         | [stress](command/stress.md)               |
 |                                    |                                  |                                      |                                      | [api   (to be supported)](command/api.md) |

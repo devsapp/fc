@@ -46,3 +46,4 @@ doc/*
 !doc/doc.json
 target
 *.iml
+git-statistics.sh

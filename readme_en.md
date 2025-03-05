@@ -22,7 +22,7 @@
 - **Security release**: automatically detects the changes in functions.
 - **Quick integration**: integrates with common CI/CD tools. For more information, see [CI/CD tools](https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/en/cicd.md).
 - **Observability**: allows you to query metrics and logs on your client. For more information, see [Query metrics](docs/en/command/metrics.md) and [Query logs](docs/en/command/logs.md).
-- **Multi-mode debugging**: supports multi-mode debugging to meet different debugging requirements in the development state and O&M state. The modes include [local call](docs/en/command/local.md), [remote debugging](docs/en/command/invoke.md), and [cloud-terminal joint debugging](docs/en/command/proxied.md).
+- **Multi-mode debugging**: supports multi-mode debugging to meet different debugging requirements in the development state and O&M state. The modes include [local call](docs/en/command/local.md), [remote debugging](docs/en/command/invoke.md).
 # Quick start
 
 🙋 To use the FC component, perform the following steps:    
@@ -44,7 +44,7 @@ The following table lists the commands that are supported by the FC component:
 | ---------------------------------- | -------------------------------- | ------------------------------------ | ------------------------------------ | -------------------------------------------- |
 | [**deploy**](docs/en/command/deploy.md) | [metrics](docs/en/command/metrics.md) | [**local**](docs/en/command/local.md)     | [**version**](docs/en/command/version.md) | [**nas**](docs/en/command/nas.md)                 |
 | [**build**](docs/en/command/build.md)   | [logs](docs/en/command/logs.md)       | [invoke](docs/en/command/invoke.md)       | [**alias**](docs/en/command/alias.md)     | [fun2s](docs/en/command/fun2s.md)                 |
-| [remove](docs/en/command/remove.md)     |                                  | [**proxied**](docs/en/command/proxied.md) | [provision](docs/en/command/provision.md) | [info](docs/en/command/info.md)                   |
+| [remove](docs/en/command/remove.md)     |                                  |  | [provision](docs/en/command/provision.md) | [info](docs/en/command/info.md)                   |
 | [plan](docs/en/command/plan.md)         |                                  | [instance](docs/en/command/instance.md)       | [ondemand](docs/en/command/ondemand.md)   | [**sync**](docs/en/command/sync.md)               |
 |                                    |                                  |            | [layer](docs/en/command/layer.md)         | [stress](docs/en/command/stress.md)               |
 |                                    |                                  |                                      |                                      | [api](docs/en/command/api.md) |

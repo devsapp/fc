@@ -7,10 +7,11 @@ category: '概览'
 
 # 快速体验功能
 
-- [工具安装](#工具安装)
-- [密钥配置](#密钥配置)
-- [测试项目创建](#测试项目创建)
-- [功能体验](#功能体验)
+- [快速体验功能](#快速体验功能)
+  - [工具安装](#工具安装)
+  - [密钥配置](#密钥配置)
+  - [测试项目创建](#测试项目创建)
+  - [功能体验](#功能体验)
     - [部署 deploy](#部署-deploy)
     - [调用相关](#调用相关)
       - [本地调用](#本地调用)
@@ -248,7 +249,7 @@ FC Invoke End RequestId: eb9cf022-297e-4a27-b3bf-ad304f6e04c9
 | --- | --- | --- |--- | --- |
 | [**部署 deploy**](command/deploy.md)   | [指标查询 metrics](command/metrics.md) | [**本地调用 local**](command/local.md)      | [**版本 version**](command/version.md)      | [**硬盘挂载 nas**](command/nas.md) | 
 | [**构建 build**](command/build.md)     | [日志查询 logs](command/logs.md)       | [远程调用 invoke](command/invoke.md)    | [**别名 alias**](command/alias.md)         | [查看函数 info](command/info.md)  | 
-| [移除 remove](command/remove.md)   |                                              | [**端云联调 proxied**](command/proxied.md) | [预留 provision](command/provision.md)   | [**资源同步 sync**](command/sync.md) | 
+| [移除 remove](command/remove.md)   |                                              |  | [预留 provision](command/provision.md)   | [**资源同步 sync**](command/sync.md) | 
 |                                          |                                              | [实例登录 instance](command/instance.md)    | [按量资源 ondemand](command/ondemand.md) | [压测 stress](command/stress.md) | 
 |                                          |                                              |   | [层 layer](command/layer.md) | [Fun项目迁移 fun2s](command/fun2s.md)                     | 
 |                                          |                                              |   |  | [API调用 api](command/api.md)                     | 

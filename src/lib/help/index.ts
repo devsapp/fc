@@ -16,7 +16,6 @@ export * from './on-demand';
 export * from './provision';
 export * from './sync';
 export * from './version';
-export * from './proxied';
 export * from './stress';
 export * from './instance';
 export * from './env';

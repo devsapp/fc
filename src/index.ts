@@ -21,7 +21,6 @@ import Remove from './lib/component/remove';
 import Plan from './lib/component/plan';
 import Provision from './lib/component/provision';
 import EntryPublicMethod from './entry-public-method';
-import FcProxiedInvoke from './lib/component/fc-proxied-invoke';
 import FcEval from './lib/component/fc-eval';
 import { FcInvokeProps } from './lib/interface/component/fc-remote-invoke';
 import Log from './lib/component/logs';
@@ -554,59 +553,6 @@ export default class FcBaseComponent extends EntryPublicMethod {
       { region: props?.region },
       args,
     );
-  }
-
-  async proxied(inputs: IInputs): Promise<any> {
-    await super.handlerPreMethod(inputs, { getSecretKey: true });
-    const { args, argsObj } = this.handlerComponentInputs(inputs);
-    const SUPPORTED_METHOD = ['setup', 'invoke', 'clean', 'cleanup'];
-
-    // @ts-ignore
-    const comParse: any = core.commandParse({ args, argsObj }, this.MINIMIST_HELP_OPT);
-    const argsData: any = comParse?.data || {};
-    const nonOptionsArgs = argsData?._ || [];
-    this.logger.debug(`nonOptionsArgs is ${JSON.stringify(nonOptionsArgs)}`);
-
-    const showhelp = nonOptionsArgs.length === 0;
-    if (showhelp || (argsData?.help && showhelp)) {
-      core.help(HELP.PROXIED);
-      return;
-    }
-
-    const methodName: string = nonOptionsArgs[0];
-    if (!SUPPORTED_METHOD.includes(methodName)) {
-      this.logger.error(`Not supported sub-command: [${methodName}]`);
-      core.help(HELP.PROXIED);
-      return;
-    }
-    const fcProxiedInvoke: FcProxiedInvoke = new FcProxiedInvoke(inputs);
-    if (methodName === 'setup') {
-      if (argsData?.help) {
-        core.help(HELP.PROXIED_SETUP);
-        return;
-      }
-      return await FcProxiedInvoke.setup(fcProxiedInvoke.makeInputs(methodName));
-    } else if (methodName === 'invoke') {
-      if (argsData?.help) {
-        core.help(HELP.PROXIED_INVOKE);
-        return;
-      }
-      return await FcProxiedInvoke.invoke(fcProxiedInvoke.makeInputs(methodName));
-    } else if (methodName === 'clean') {
-      // clean
-      if (argsData?.help) {
-        core.help(HELP.PROXIED_CLEANUP);
-        return;
-      }
-      return await FcProxiedInvoke.clean(fcProxiedInvoke.makeInputs(methodName));
-    } else {
-      // cleanup
-      if (argsData?.help) {
-        core.help(HELP.PROXIED_CLEANUP);
-        return;
-      }
-      return await FcProxiedInvoke.cleanup(fcProxiedInvoke.makeInputs(methodName));
-    }
   }
 
   async fun2s(inputs: IInputs): Promise<any> {
