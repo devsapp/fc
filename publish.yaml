@@ -2,7 +2,7 @@ Type: Component
 Name: fc
 Provider:
   - 阿里云
-Version: 0.1.72
+Version: dev
 Description: Basic components of Alibaba cloud functional computing
 HomePage: https://github.com/devsapp/fc
 Tags:
@@ -19,8 +19,6 @@ Commands:
   Invoke & Debug:
     local: Run your serverless application locally for quick development & testing
     invoke: Invoke/Trigger online functions
-    proxied: Local invoke via proxied service.
-    remote: Remote invoke via proxied service.
   Publish & Config:
     version: Service version operation
     alias: Service alias operation

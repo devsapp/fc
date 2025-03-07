@@ -25,7 +25,7 @@
 - **安全发布**：通过其他形式对函数进行变更，组件可以感知并安全更新；
 - **快速集成**：借助于 Serverless Devs 的集成性和被集成性，可以与常见的 [CI/CD 平台工具](https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/zh/cicd.md) 等集成；
 - **可观测性**：拥有完善的可观测性，在客户端可以通过[指标查询 metrics](docs/zh/command/metrics.md) 以及[日志查询 logs](docs/zh/command/logs.md) 等命令，进行业务的数据指标、执行日志等多重维度观测；
-- **多模调试**：提出了多模调试方案，可以同时满足开发态、运维态的不同调试需求；包括[本地运行](docs/zh/command/local.md)、[在线运行](docs/zh/command/invoke.md)、[端云联调](docs/zh/command/proxied.md)等功能；
+- **多模调试**：提出了多模调试方案，可以同时满足开发态、运维态的不同调试需求；包括[本地运行](docs/zh/command/local.md)、[在线运行](docs/zh/command/invoke.md)等功能；
 
 # 快速开始
 
@@ -46,7 +46,7 @@
 | --- | --- | --- |--- | --- |
 | [**部署 deploy**](docs/zh/command/deploy.md)   | [指标查询 metrics](docs/zh/command/metrics.md) | [**本地调用 local**](docs/zh/command/local.md)      | [**版本 version**](docs/zh/command/version.md)      | [**硬盘挂载 nas**](docs/zh/command/nas.md) | 
 | [**构建 build**](docs/zh/command/build.md)     | [日志查询 logs](docs/zh/command/logs.md)       | [函数触发 invoke](docs/zh/command/invoke.md)    | [**别名 alias**](docs/zh/command/alias.md)         | [Fun项目迁移 fun2s](docs/zh/command/fun2s.md)  | 
-| [移除 remove](docs/zh/command/remove.md)   |                                              | [**端云联调 proxied**](docs/zh/command/proxied.md) | [预留 provision](docs/zh/command/provision.md)   | [查看函数 info](docs/zh/command/info.md)  | 
+| [移除 remove](docs/zh/command/remove.md)   |                                              |  | [预留 provision](docs/zh/command/provision.md)   | [查看函数 info](docs/zh/command/info.md)  | 
 |  [计划变更 plan](docs/zh/command/plan.md)                                        |                                              | [实例登录 instance](docs/zh/command/instance.md)    | [按量资源 ondemand](docs/zh/command/ondemand.md) |[**资源同步 sync**](docs/zh/command/sync.md)  | 
 |                                          |                                              |   | [层 layer](docs/zh/command/layer.md) |      [压测 stress](docs/zh/command/stress.md)               | 
 |                                          |                                              |   |  | [API调用 api](docs/zh/command/api.md)                     | 

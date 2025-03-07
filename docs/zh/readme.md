@@ -26,7 +26,7 @@ category: '概览'
 - **安全发布**：通过其他形式对函数进行变更，组件可以感知并安全更新；
 - **快速集成**：借助于 Serverless Devs 的集成性和被集成性，可以与常见的 [CI/CD 平台工具](https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/cicd.md) 等集成；
 - **可观测性**：拥有完善的可观测性，在客户端可以通过[指标查询 metrics](command/metrics.md) 以及[日志查询 logs](command/logs.md) 等命令，进行业务的数据指标、执行日志等多重维度观测；
-- **多模调试**：提出了多模调试方案，可以同时满足开发态、运维态的不同调试需求；包括[本地运行](command/local.md)、[在线运行](command/invoke.md)、[端云联调](command/proxied.md)等功能；
+- **多模调试**：提出了多模调试方案，可以同时满足开发态、运维态的不同调试需求；包括[本地运行](command/local.md)、[在线运行](command/invoke.md)等功能；
 
 # 快速开始
 
@@ -47,7 +47,7 @@ category: '概览'
 | --- | --- | --- |--- | --- |
 | [**部署 deploy**](command/deploy.md)   | [指标查询 metrics](command/metrics.md) | [**本地调用 local**](command/local.md)      | [**版本 version**](command/version.md)      | [**硬盘挂载 nas**](command/nas.md) | 
 | [**构建 build**](command/build.md)     | [日志查询 logs](command/logs.md)       | [函数触发 invoke](command/invoke.md)    | [**别名 alias**](command/alias.md)         | [Fun项目迁移 fun2s](command/fun2s.md)  | 
-| [移除 remove](command/remove.md)   |                                              | [**端云联调 proxied**](command/proxied.md) | [预留 provision](command/provision.md)   | [查看函数 info](command/info.md) | 
+| [移除 remove](command/remove.md)   |                                              |  | [预留 provision](command/provision.md)   | [查看函数 info](command/info.md) | 
 | [计划变更 plan](command/plan.md)                                         |                                              | [实例登录 instance](command/instance.md)    | [按量资源 ondemand](command/ondemand.md) | [**资源同步 sync**](command/sync.md) | 
 |                                          |                                              |   | [层 layer](command/layer.md) |   [压测 stress](command/stress.md)                   | 
 |                                          |                                              |   |  | [API调用 api【支持中】](command/api.md)                    
